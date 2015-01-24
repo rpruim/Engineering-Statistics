@@ -1,0 +1,72 @@
+
+\Sexpr{set_parent('Math241-S14.Rnw')}
+
+\setcounter{chapter}{-1}
+\Chapter{Where do numbers come from?}
+\lhead[\sf \thepage]{\sf \thechapter. \leftmark}
+\rhead[\sf \thechapter. \leftmark]{\sf \thepage}
+
+Scientists and engineers are surrounded by numbers.  Physical constants, values for 
+the specific heat index or measures of strength or flexibility of some material, 
+resistance of some component in an electrical device, etc., etc.
+
+Most of these numbers come from some process that generated data and led to a calculuation
+that produced the number.  Like this one \dots
+\begin{center}
+\includegraphics[width=.8\textwidth]{CalvinBridgeLoad2.png}
+\end{center}
+
+\noindent Or maybe not quite like that one.
+
+\section*{Thought experiment -- How many dimes?}
+Here's a thought experiment for you.  Suppose a middle school class has collected a 
+large number of dimes in a sack.  Before bringing the money to the bank, they would like
+to estimate how many dimes they have (using tools and methods that 6th graders have at
+their disposal).  You've been brought in to consult with them about how they should do this.
+\begin{enumerate}
+	\item
+What method would you suggest?  Why?
+\item
+What other methods would be possible?  What makes your proposed method better?
+\item
+For your favorite method and others, identify factors that lead the resulting estimate
+to be different from the exact number of dimes in the sack.  
+\end{enumerate}
+
+
+\section*{Some important terms}
+
+\begin{description}
+	\item[estimand/measureand]{ The number we want to know.  In our example this is the number
+		of dimes in the bag.  Typically this will be a number that describes some process
+		or population, and typically it will be impossible to know the value exactly.}
+
+	\item[estimate/measurement]{The value calculated from our data.  This may be 
+		as simple as recording a value off of some device, or it may involve
+		recording multiple variables, multiple times, and making some computations
+		with that data.}  
+
+	\item[error]{The difference between the estimate and the estimand.  Because we don't
+		know the estimand exactly, we can't know the error exactly either.  But thinking
+		about what the error could be is a big part of understanding the statistical
+		properties of an estimation method.  Generally, we want methods where errors 
+		tend to be small (so our estimate is ``likely to be close to the estimand")
+		and centered around 0 (so we're ``right on average").}
+	\item
+		[systematic (component of) error]{a component of error that leads our estimate
+		to be an over- or under-estimate.  Example: neglecting the weight of the sack will
+		lead us to overestimate the weight of the dimes, and therefore overestimate 
+		the number of dimes.  This is sometimes expressed as ``a tendency to be off in
+		a certain direction."}
+	\item
+		[random (component of) error]{a component of error that leads to variability
+		in estimates.  If random errors are larger, there will be more variability 
+		in estimates, so we will be less confident that the estimand and estimate are 
+		close together -- although this may still happen by chance.}
+\end{description}
+
+One of the big questions in statistics is this:  
+\emph{What does our estimate tell us about the estimand?}
+We will eventually learn techniques for quantifying (and attempting to reduce)
+the effects of error in our measurements. 
+

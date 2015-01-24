@@ -9,3 +9,17 @@
 
 # RStudio files
 .Rproj.user/
+.Rproj.user
+
+# other stuff
+*~
+*.aux
+*.log
+*.toc
+*.synctex.gz
+*concordance.tex
+*.bbl
+*.blg
+*.idx
+*.notes
+

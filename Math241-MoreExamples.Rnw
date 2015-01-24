@@ -1,0 +1,571 @@
+\Sexpr{set_parent('Math241-S14.Rnw')}
+
+\chapter{More Examples}
+
+\section{Heat Exchanger Example}
+
+
+In this section will discuss several parts of the statistical
+analysis of a laboratory experiment involving a heat exchanger.
+
+% \def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+% \def\Partial#1#2{\frac{\partial}{\partial #2} #1}
+
+\subsection{Apparatus and Measurements}
+
+Figure~\ref{fig:HXer_Figure} shows a diagram illustrating the 
+heat exchanger.  Fluids of different temperatures flow in the annulus 
+($\dot{m}_{3}$) and in the inner tube ($\dot{m}_{1}$).
+The entire apparatus is insulated, 
+so we expect little or no heat to be exchanged with the surroundings.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=3.5in]{images/HXerFig.pdf}
+    \caption{Heat exchanger with statepoints.}
+    \label{fig:HXer_Figure}
+\end{figure}
+
+
+Mass flow rates ($\dot{m}$) are controlled via valves.
+Two mass flow rates ($\dot{m}_{1}$ and $\dot{m}_{3}$)
+are measured by rotameters.\footnote{See 
+\url{http://www.omega.com/prodinfo/rotameters.html}
+for an introduction.}
+Temperatures ($T_{1}$--$T_{4}$) are measured by thermocouples.\footnote{See 
+\url{http://www.omega.com/techref/themointro.html} for an introduction.}
+
+
+%\section{Observations}
+
+Each observation consists of four~(4) temperature measurements 
+and two~(2) mass flow rate measurements. 
+Here is an example data set with one set of measurements at each of 6
+experimental conditions:
+%<<include=FALSE>>=
+%HeatX <- data.frame(
+%  trial = 1:6,
+%  T.cold.in = c(14.3, 14.1, 14.1, 14.2, 14.1, 14.1),
+%  T.cold.out = c(18.6, 18.7, 19.4, 18.4, 17.4, 16.9),
+%  # T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8),
+%  T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8),
+%  T.hot.out = c(33.9, 32.8, 33.4, 31.8, 30.9, 30.4),
+%  m.cold = c(10, 7.5, 5, 5, 7.5, 10),
+%  m.hot = c(10, 10, 10, 5, 5, 5)
+%)  
+%@
+
+<<fig.height=2.25>>=
+HeatX <- read.csv("http://www.calvin.edu/~rpruim/data/HeatX.csv")
+HeatX
+xyplot( m.hot ~ m.cold, data=HeatX, main="Experimental Configurations", cex=2)
+@
+
+Note: \function{read.csv()} can read data from a file as well.  If you are using the server
+version of \RStudio\ you first need to upload your CSV file to the server.  Look in the \tab{Files} 
+pane for the upload button to upload your own data.
+
+\subsection{Standardizing Units}
+
+The recorded flow rates are in L/min.  We will convert them to L/sec and use seconds as
+our standard unit of time troughout the analyses.
+<<>>=
+HeatX <- transform(HeatX,
+				   m.hot = m.hot / 60,
+				   m.cold = m.cold / 60
+				   )
+@
+
+We could also convert temperatures to degrees Kelvin, but since temperatures only appear 
+as differences between two temperatures in the expression used here, we can leave them
+in degrees Celsius.
+
+
+%\subsection{Notation}
+
+Table~\ref{tab:definitions} contains notation and definitions of important quantities
+involved in the heat exchanger experiment.
+
+\begin{table}
+\caption{Notation for quantities involved in the heat exchanger experiment. 
+Note, some of the physical ``constants'' are actually temperature dependant.  
+In these cases, a value has been chosen that reflects the temperature range 
+(approx. 15--35 degrees C) seen in the data.}
+\begin{center}
+\begin{tabular}{r @{\hspace{2em}} lll}
+  \toprule
+	Symbol           &   Definition & Units & Estimate\\
+	\midrule
+	$\dot{Q}$ &  heat transfer rate & W  &\\
+	$\dot{m}$ &  mass flow rate & kg/s & \\
+	$C_{p}$   &  specific heat & kJ/(kg$\cdot$K) & $4.18 \pm 0.1$ \\ % $4185.5 \pm 0.2$ \\
+	$T$       & temperature & K & \\
+	$D$       & diameter of inner tube & m & $0.0143 \pm 0.0004$ m \\
+	          & && ($9/16 \pm 1/64$ inches) \\
+	$L$       & length of the heat exchanger & m &  $1.626 \pm 0.006$ \\
+	          &                              &   &  ($64 \pm 1/4$ inches) \\
+	$A$       & surface area of the inner tube ($\pi D L$) [m$^{2}$] \\
+	$U$       & heat transfer coefficient W/(m$^{2}$$\cdot$K) & \\
+	$h$		  & convective heat transfer coefficient ($\approx 2 U$) & W/(m$^2$$\cdot$K) & \\
+	$\Delta T_{lm}$ & logarithmic mean temperature difference & K & \\
+	$Nu_{D}$  & Nusselt number based on $D$ & -- & \\
+	$Re_{D}$  & Reynolds number based on $D$ & -- & \\
+	$Pr$      & Prandtl number & -- & \\
+	$\mu$     & dynamic viscosity & kg/(m$\cdot$s) & $0.00102 \pm 0.00001$ \\
+	$k$      & water thermal conductivity & W/(m$\cdot$K) & $0.598 \pm 0.004$\\
+	\bottomrule
+\end{tabular}
+\end{center}
+\label{tab:definitions}
+\end{table}
+
+
+
+\iffalse
+\section{Experimental plan}
+
+One possible experimental plan is to take data at
+four~(4) values of $\dot{m_{1}}$ and two~(2) values of $\dot{m}_{3}$,
+for a total of 8 observations.
+Repeated observations could be obtained at one combination of 
+$\dot{m}_{1}$ and $\dot{m}_{3}$.
+\fi
+
+
+\subsection{Calculating the heat transfer, $\dot Q$}
+
+The amount of heat exchanged between the hot and cold water can be determined
+from the temperature change and the mass flow rate as follows:
+
+\begin{equation}
+    \dot{Q}_{1} = \dot{m}_{1} C_{p} (T_{2} - T_{1})
+\end{equation}
+
+\begin{equation}
+    \dot{Q}_{3} = \dot{m}_{3} C_{p} (T_{4} - T_{3})
+\end{equation}
+
+We can estimate the values of $\dot{Q}$ from our data by direct caclulation:
+<<tidy=FALSE>>=
+require(plyr)                 # required for the mutate() command below
+C_p <- 4.18
+HeatX2 <- mutate(HeatX, 
+                 Q.cold = m.cold * C_p * (T.cold.out - T.cold.in),
+                 Q.hot= m.hot * C_p * (T.hot.out- T.hot.in),
+                 Q.env = Q.cold + Q.hot
+)
+HeatX2
+@
+
+\subsection{Estimating heat exchanged with environment}
+If no heat were exchanged with the environment and all measurements were without error,
+then our two estimates of $\dot Q$ would sum to 0.  (Heat lost to one fluid is gained by the 
+other.)  
+
+Assuming any loss to (or gain from) the environment is essentially constant for
+the apparatus over the experimental conditions analysed, we can use our 6
+observations to estimate the amount of heat exchanged with the environment:
+<<>>=
+favstats(~Q.env, data=HeatX2)
+stripplot( ~ Q.env, data=HeatX2, alpha=.6, cex=3, jitter.data=TRUE)
+@
+From this we can compute either a p-value for the hypothesis test that the mean 
+difference in heat change is 0 or create a confidence interval for the mean difference
+in heat change.
+The information about is enough to do this ``by hand'' using the standard error 
+formula $SE = \frac{s}{\sqrt{n}}$ and a t-distribution with $n-1 = 5$ degrees of freedom.
+
+<<tidy=FALSE>>=
+SE = 0.08274 /sqrt(6); SE
+t <- (0.08999 - 0) / SE; t
+2 * pt( -abs(t), df=5 )                        # p-value
+0.09003 + c(-1,1) * qt(0.975, df=5) * SE         # 95% CI
+@
+
+Or we can let \R\ do all the computations for us:
+
+%qplot( Q.env, " ", data=HeatX2, 
+%       geom="point", size=I(6), alpha=I(.5), 
+%       position=position_jitter(width=0, height=.1))
+<<fig.height=2>>=
+t.test( ~ Q.env, data=HeatX2)
+@
+In our example data, there is modest evidence for exchange with the environment, but
+the estimated amount of heat gained from the environment is not very precisely 
+estimated.  Even at the highest end of the confidence interval, the heat exchanged 
+with the environment is an order of magnitude smaller than the heat exchanged 
+within in the apparatus.
+
+Notes:
+\begin{enumerate}
+\item
+The fact that heat is gained suggests that the cold water was in the
+outer pipe and hot water in the inner pipe.
+\item  This analysis assumes that the amount of heat gained/lost is constant over 
+the different set-ups.  From this small data set, there is not clear evidence 
+of some other relationship between heat exchanged with the environment
+and the experimental set up:
+<<fig.height=2.5>>=
+xyplot( Q.env ~ m.cold, data=HeatX2, groups=paste("m.hot =", m.hot), auto.key=TRUE)
+@
+\item
+The t-test and interval are based on the assumption that the distribution
+of deviations between the measured environment heat exchange and the actual
+is normally distributed.  The data set is too small to provide much evidence
+upon which to judge whether this is a reasonable assumption.  The largest value is 
+quite a bit larger than the rest, but even if we remove that observation, our 
+conclusions don't change dramatically:
+<<>>=
+t.test( ~ Q.env, data=subset(HeatX2, Q.env < max(Q.env)) )
+@
+\end{enumerate}
+
+Overall, we conclude that there is likely some heat exchanged with the environment, but 
+the amount of heat exchange with the environment
+appears to be at most a small factor in this situation.
+
+\subsection{Estimating heat transfer between hot and cold water, $\dot{Q}$}
+
+Estimating $\dot{Q}$ with uncertainty is not possible from this data alone since since 
+$\dot{Q}$ is not measured directly, and we have only one measurement for each experimental
+condition (so no way to look at how variable such measurements are without additional information.
+Furthermore, the design doesn't provide a method for estimating the 
+uncertainty in $\dot{m}$ and $T$.
+
+If, however, there are external estimates of the uncertainties for temperature
+and flow rate, and if we can assume these uncertainties are approximately
+independent, then we can use propagation of uncertainty to estimate the
+uncertainty in our estimates for heat exchanged.  Such uncertainties might come 
+from specifications of the equipment used or be based on past experience of the
+researcher.
+
+For example, suppose that the uncertainties in temperature and flow rate 
+measurements  are approximately constant (over the range of temperatures involved): 
+$u_T$, and  $u_{\dot{m}}$.  Then the uncertainty in the difference between two
+independent temperatures is 
+$\sqrt{ u_T^2 + u_T^2 } = \sqrt{2} u_T$, and we can estimate the uncertainty in
+$\dot Q$ using the delta method.
+
+\begin{itemize}
+\item
+Let $f(\dot{m}, \Delta T) = C_p \dot{m} \Delta T$
+\item
+$ \displaystyle \Partial{f}{\dot m} = C_p \Delta T$ and 
+$ \displaystyle \Partial{f}{\Delta T} = C_p \dot{m}$, so
+\item
+$ \displaystyle
+u_{\dot Q} \approx   C_p \sqrt{ (\Delta T)^2 u^2_{\dot m}  + \dot{m}^2 u_{\Delta T}^2 }
+$
+\end{itemize}
+
+If we estimate the uncertainty in measured temperatures
+to be $1$ degree C and the uncertainty in flow rate to be $0.5$ liters per
+minute (so \Sexpr{0.5/60} L/sec), then we can compute the uncertainties in 
+the $\dot{Q}$ values as follows
+<<tidy=FALSE>>=
+HeatX2<- mutate(HeatX2, 
+  u.Q.cold = C_p *sqrt( (T.cold.out -T.cold.in )^2 * (0.5/60)^2  + m.cold^2 * 2),  
+  u.Q.hot =  C_p *sqrt(  (T.hot.out -T.hot.in )^2  * (0.5/60)^2  +  m.hot^2 * 2) 
+) 
+HeatX2
+@
+Note: We are using the fact that $u_{\Delta T} = \sqrt{2} u_T$.
+
+We can also use \function{deltaMethod()} in the \pkg{car} package to do this
+arithmetic for us.  In fact, \function{deltaMathod()} can even handle cases
+where the estimates are not independent.  To do it's job,
+\function{deltaMethod()} requires
+\begin{itemize}
+\item A named vector of estimates,
+<<>>=
+x <- unlist( HeatX[1, c(2:7)] )  # unlist() turns the data frame into a vector
+x
+@
+\item 
+	An expression for the derived quantity as a quoted string 
+	(it will do the derivatives for us!),
+<<>>=
+exprforQ <- "(T.cold.out - T.cold.in) * C_p * m.cold"
+@
+\item A variance-covariance matrix.  In the simple case where things are
+	independent, this is just a matrix with the squared uncertainties on the
+	diagonal and 0 everywhere else.
+<<>>=
+vc <- diag( c(1,1,1,1,.5/60,.5/60)^2)
+vc
+@
+\end{itemize}
+Let's see how it compares to the (first row of the) results above:
+<<>>=
+deltaMethod( x, exprforQ, vc)
+@
+
+
+The \pkg{mosaic} package adds additional interfaces for \function{deltaMethod()} to 
+make this even easier.
+<<>>=
+deltaMethod( HeatX, exprforQ, 
+  uncertainties=c(T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60) )
+@
+
+\subsubsection{Dealing with uncertainties that are not constant}
+
+Sometimes the uncertainties of a given variable are different at different values.
+In that case, we can put the uncertainties into the data frame.  For the current 
+example, this is just extra work, but we include it here to show how it works.
+<<>>=
+HeatX3 <- transform(HeatX, 
+  u.cold.in=1, u.cold.out=1, u.hot.in=1, u.hot.out=1, u.m.cold=.5/60, u.m.hot=.5/60
+)
+HeatX3
+deltaMethod( HeatX3,
+  exprforQ, 
+  estimates = c("T.cold.in","T.cold.out","m.cold"),      # columns with estimates
+  uncertainties = c("u.cold.in", "u.cold.out", "u.m.cold"))   # and uncertainties
+@
+Although our uncertainties are the same in each row, this method allows for uncertainties 
+to be specified separately for each row of the data.
+
+\subsection{Does the uncertainty in $C_p$ matter?}
+
+In the analysis above, we treated $C_p$ as a constant (with arbitrary precision).  
+But this number is also known experimentally and has an uncertainty associated with it.
+Do our results change if we include this uncertainty in our calculations?
+
+<<>>=
+deltaMethod( transform(HeatX, C_p = 4.18), exprforQ,      # add in a column for C_p
+  uncertainties=c(T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60, C_p = 0.1) )
+@
+
+Comparing these results to the results above we see that the uncertainty
+increases, but only by amounts that are barely visible (a few parts per
+1,000 -- not enough to affect how we report the uncertainty given our rules
+for reporting digits).  This has no meaningful impact on our analysis.
+
+We can often simplify propagation of uncertainty calculations by identifying which 
+components of the uncertainty are driving the size of the overall uncertainty.  In this case, 
+the imprecision in the estimated value of $C_p$ is unimportant.  If we want to improve our
+uncertainty, we must improve our measurements of temperature and/or flow rate.
+
+\subsection{Using relative uncertainty}
+
+Recall that for products, their is a Pythagorean relationship for relative uncertainties.
+
+\[
+\frac{u_{\dot Q}}{\dot Q} \approx 
+\sqrt{ 
+(\frac{u_{\dot m}}{\dot{m}})^2
++
+(\frac{u_{\Delta T}}{\Delta T})^2
++
+(\frac{u_{C_p}}{C_p})^2
+}
+\]
+This is useful in determining what uncertainties contribute most to the overall uncertainty.
+For example, using the values in the first row of the data set.
+\begin{itemize}
+	\item
+		$\displaystyle \frac{u_{\dot{m}}}{\dot{m}} = \frac{0.5/60}{10/60} = \Sexpr{0.5/10}$
+	\item
+		$\displaystyle \frac{u_{\Delta T}}{\Delta T} = \frac{\sqrt{2}}{4.5} = \Sexpr{sqrt(2)/4.5}$
+	\item
+		$\displaystyle \frac{u_{C_p}}{C_p} = \frac{0.1}{4.18} = \Sexpr{0.1/4.18}$
+\end{itemize}
+From this we can see that it is the imprecise temperature measurements that are our biggest
+problem.  Even if we eliminated the other uncertainties, we would still have a relative uncertainty
+of over $30$\%.   The details vary a bit from row to row, but the uncertainty in in temperature 
+is our biggest obstacle.  In addition to increasing the precise of our temperature sensors, we could 
+also potentially improve things by designing a heat exchanger with more dramatic changes in 
+temperature.
+
+
+\subsection{Estimating the heat transfer coefficient, $U$}
+
+Next, we estimate a heat transfer coefficient ($U$) for both streams,
+
+\begin{equation}
+    U = \frac{\dot{Q}}{A \Delta T_{lm}},
+\end{equation}
+
+\noindent{} where 
+
+\begin{equation}
+    \Delta T_{lm} \equiv \frac{(T_{1} - T_{4}) - (T_{2} - T_{3})}{\log\left( \frac{T_{1} - T_{4}}{T_{2} - T_{3}} \right)}.
+\end{equation}
+
+We can apply the same ideas to estimate the uncertainty in $U$.  This time,
+working it out by hand would be considerably more tedious because of the number
+of variables involved and the form of the expression to be differentiated.
+Fortunately, \R\ is happy to take care of those details if we just specify the
+information needed.
+
+<<tidy=FALSE>>=
+exprforU <- paste("C_p * m.cold * (T.cold.out - T.cold.in) /",
+                  "( pi * D *  L  * ((T.cold.out - T.hot.in) - (T.cold.in - T.hot.out)) /",
+                  " log ( (T.cold.out - T.hot.in) / (T.cold.in - T.hot.out) ) )")
+HeatX4 <- transform(HeatX, D=0.0143, L=1.626, C_p=4.18)
+HeatX4
+deltaMethod( HeatX4, exprforU, 
+  uncertainties=c(
+	T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60, 
+	T.hot.in=1.0, T.hot.out=1.0, m.hot = 0.5/60, 
+	C_p = 0.1, D=0.0004, L=0.0006),
+  constants = list(pi=pi)
+)
+@
+
+Note the use of the \option{constants} argument here to specify the value of \variable{pi}.  
+We could also have specified $C_p$ this way if we decided to ignore the uncertainty
+in that value.  But since it is no harder to include that uncertainty, we included it.
+
+
+\subsection{Estimating the Nusselt number correlation,  $a$}
+
+Finally, we can estimate
+the parameter $a$ in a Nusselt number correlation
+for turbulent flow ($Re_{D} > 2300$):
+
+\begin{equation}
+    a = \frac{Nu_D}{Re_{D}^{0.8} Pr^{1/3}},
+\end{equation}
+
+\noindent{}where
+
+\begin{equation}
+	Nu_{D} = \frac{h D}{k} \approx \frac{ 2 U D}{k}, 
+\end{equation}
+
+\begin{equation}
+    Re_{D} = \frac{4 \dot{m}}{\pi D \mu},
+\end{equation}
+
+\noindent{}and
+
+\begin{equation}
+    Pr = \frac{\mu C_{p}}{k}.
+\end{equation}
+
+The uncertainty in the estimates for $a$ can be estimated in a similar manner.
+For that purpose, we assume that the exponents on $Re_{D}$ and $Pr$
+(0.8 and 1/3, respectively)
+are constant.
+The values of $C_{p}$, $k$, and $\mu$ are given in Table~\ref{tab:definitions}.
+
+To complete our uncertainty calculation we must
+\begin{enumerate}
+	\item
+		Create an expression for the quantity we are interested in (as a quoted string).
+	\item
+		Create a data frame that has all of the components of this expression
+		that have uncertainties.
+	\item
+		Create a named vector of uncertainties.  The names should correspond 
+		to the variables names in the data frame, the values are the uncertainties.
+		(Alternatively, the uncertainties can be put inside the data frame and 
+		the arguments \option{estimtates} and \option{uncertainties} can be 
+		used to specify which columns are the estimates and which are the
+		corresponding uncertainties.)
+	\item
+		Create a list that contains the value of any constants (or values for which
+		we are ignoring that there is uncertainty because the uncertainty is so 
+		small that it doesn't affect the analysis).
+\end{enumerate}
+
+This is left as an exercise for you.
+
+\begin{problem}
+	Give an estimate with uncertainty for the
+	Nusselt number correlation using the data in \dataframe{HeatX} used
+	in this chapter.
+\end{problem}
+
+\section{Standard Errors in \texttt{fitdistr()} output}
+
+We had not yet learned about uncertainty and standard errors when we learned about 
+\function{fitdistr()}, but the output from the function includes an estimated standard
+error.
+<<>>=
+require(fastR)
+fitdistr(Jordan8687$Points, "normal")
+@
+The parenthesized numbers are the estimated standard errors associated with each
+parameter estimate.
+In this case, it is easy to compute the standard error for the mean ourselves
+using $SE = s / \sqrt{n}$.
+<<>>=
+sd(~Points, data=Jordan8687) / sqrt(82)
+@
+
+
+\section{$R^2$}
+\label{sec:Rsquared}
+
+\begin{center}
+	\emph{Note: the methods in this section assume a linear model with an intercept term.}
+\end{center}
+
+Recall that linear models are fit by minimizing the sum of the squares of the residuals:%
+\footnote{$RSS$ stands for Residual Sum of Squares; $SSE$ stands for Error Sum of Squares.}
+\[
+RSS = SSE = \sum_{i=1}^{n} ( y_i - \hat y)^2
+\]
+This expression reminds us of%
+\footnote{$SST$ stands for Total Sum of Squares.}
+\[
+SST = \sum_{i=1}^{n} ( y_i - \mean y)^2 \;,
+\]
+the numerator of the variance of $y$.  $SST$ is a measure
+of the total variation in the response variable.
+
+A little algebra shows that\footnote{SSM stands for Model Sum of Squares.}
+\[
+SSM = SST - SSE = 
+\sum_{i=1}^{n} ( \hat y - \mean y)^2 \;,
+\]
+We can now define $R^2$ by
+\[
+R^2 = \frac{SSM}{SST}  = \frac{SSM}{ SSM + SSE }
+= \mbox{proportion of variability in the response explained by the model.}
+\]
+$R^2$ is always between 0 and 1 and is reported in the summary output
+for linear models.  It is the square of the correlation coefficient
+that we saw earlier.
+<<>>=
+summary(lm( sat ~ expend, data=SAT ))  # how does the average SAT score depend on money spent?
+@
+Notice that $R^2 < 15\%$ and that the coefficient on \variable{expend} is negative -- indicating 
+that spending more is associated with \emph{worse} scores on the SAT.
+
+One reason for this is that in some states most college bound students take the SAT, but in 
+other states, the ACT is more common so the pool of students taking the SAT is stronger.
+If we add \variable{frac} -- the fraction of students in a given state who took the SAT.
+<<>>=
+summary(lm( sat ~ expend + frac, data=SAT ))
+@
+Notice how much larger $R^2$ is now, and that the sign of the coefficient on \variable{expend}
+is not positive -- as we would have expected.
+
+It is important to note that adding in the additional variable \variable{frac} gives a very
+different impression of the effect of \variable{expend} on \variable{sat}.  Most of our examples 
+have dealt with one response to one predictor, but in many situations, this is too simplistic and
+the inclusion of multiple predictors in the model is required to understand their impact on 
+the response.
+
+
+
+
+
+
+\newpage
+\section*{Exercises}
+
+\shipoutProblems
+
+
+\ifsolutions
+\ifsolutionslocal
+\newpage
+\section*{Solutions}
+\shipoutSolutions
+\fi
+\fi

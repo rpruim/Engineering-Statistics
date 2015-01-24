@@ -1,0 +1,1068 @@
+\Sexpr{set_parent('Math241-S14.Rnw')}
+
+\Chapter{Probability}
+
+\section{Key Definitions and Ideas}
+
+\begin{description}
+\item[random process]
+A repeatable process that has multiple unpredictable potential outcomes.
+
+Although we sometimes use language that suggests that a particular result is 
+random, it is really the \emph{process} that is random, not its results.
+
+\item[outcome]
+A potential result of a random process.
+
+\item[sample space]
+The set of all potential outcomes of a random process.
+
+\item[event]
+A subset of the sample space.  
+That is, a set of outcomes (possibly all or none of the outcomes).
+
+Statisticians often use capital letters from the beginning of the alphabet
+for events.
+
+\item[trial]One repetition of a random process.
+
+\item[mutually exclusive] events.
+Events that cannot happen on the same trial.
+
+\item[probability]A numerical value between 0 and 1 assigned to 
+an event to indicate how often the event occurs (in the long run).
+
+\item[random variable]
+A random process that results in a numerical value.
+
+Examples: 
+\begin{itemize}
+\item
+Roll a die and record the number.
+\item
+Roll two dice and record the sum.
+\item
+Flip 100 coins and count the number of heads.
+\item
+Sample 1000 people and count how many approve of the job the president is doing.
+\end{itemize}
+
+Note: Statisticians usually use capital letters (often from the end of the alphabet)
+for random variables, like this:  
+Let $X$ be the number of heads in 10 flips of a fair coin.  What is $\Prob(X=5)$?
+
+
+\item[probability distribution]
+The distribution of a random variable.
+(Remember that a distribution describes \emph{what values?} and 
+\emph{with what freqency?})
+\end{description}
+
+\newpage
+
+\section{Calculating Probabilities}
+
+There are two main ways to calculate the probability of an event
+$A$, denoted $\Prob(A)$.
+
+\subsection{Empirical Method: Just Do It}
+
+Since random processes are repeatable, we could simply repeat the process
+over and over and keep track of how often the event $A$ occurs.
+For example, we could flip a coin 10,000 times and see what fraction 
+are heads.\footnote{This has actually been done a couple of times 
+in history, including once by a mathematician who was a prisoner of war
+and had lots of time on his hands.}
+
+\[
+\mbox{Empirical Probability} = 
+\frac{\mbox{number of times $A$ occured}}
+{\mbox{number of times random process was repeated}}
+\]
+
+Now that we have computers, there is a new wrinkle on empirical probability.
+If we can simulate our random process in the computer, then we can 
+repeat the process many times very quickly.  
+
+\begin{example}
+\question
+What is the probability of getting exactly 5 heads 
+if you flip a fair coin 10 times.  Using our random variable notation, let $X$ 
+be the number of heads in 10 flips of a fair coin.  We want to know $\Prob(X=5)$.
+
+\answer 
+The \function{rflip()} function simulates flipping a coin as many times as we like.
+<<rflip>>=
+rflip(10)
+@
+The \function{do()} function allows us to do this over and over.  First we'll do it
+three times and show the results.  Then we'll do 10,000 and store the results so we 
+can create a table and a plot showing the empirical distribution.
+<<coin-tosses,cache=TRUE>>=
+do(3) * rflip(10)
+do(10000) * rflip(10) -> tosses
+tally(~ heads, data=tosses, format="prop")
+histogram( ~ heads, data=tosses, width=1 )
+@
+
+<<include=FALSE>>=
+ans <- prop( ~(heads == 5), data=tosses)
+@
+Based on this sample, we would estimate that 
+$\Prob(X=5) \approx \Sexpr{ans}$.
+\end{example}
+
+\begin{example}
+\question Use simulations to estimate the probability of rolling doubles
+using 2 fair standard dice.
+
+\answer
+We can simulate rolling a die with the following code:
+<<>>=
+1:6                # the numbers 1 through 6
+resample(1:6, 10)  # ten rolls of a 6-sided die
+@
+If we do this 10,000 times for each of two dice
+<<>>=
+die1 <- resample(1:6, 10000)
+die2 <- resample(1:6, 10000)
+head(die1)     # let's check that things look reasonable
+head(die2)
+@
+Then we can tabulate how often the two numbers matched in one of two ways:
+<<>>=
+tally( ~(die1==die2) )    # NOTE the double == here
+prop( ~(die1==die2) )     # NOTE the double == here
+@
+So the probability appears to be approximately \Sexpr{ prop( ~ die1 == die2 ) }.
+
+\end{example}
+
+
+\begin{example}
+\question
+	Use simulation to estimate the probability of rolling a sum of 8 when rolling
+	two fair six-sided dice.
+
+\answer
+We have already generated 10000 random rolls, so let's just reuse them.  (Alternatively, we 
+could generate new rolls.)
+<<>>=
+s <- die1 + die2       # R adds first to first, second to second, etc.
+prop( ~ (s == 8) )
+@
+
+We can estimate the probability of any sum the same way.
+<<>>=
+tally( ~ s )
+tally( ~ s, format="percent" )   # if we are too lazy to divide by 10000 ourselves
+@
+
+Here's a slightly fancier version that puts all the information into a data frame:
+<<>>=
+rolls <- data.frame( first = die1, second = die2, sum = die1 + die2 )
+head(rolls)
+tally( ~sum, data=rolls, format="proportion")
+histogram( ~sum, data=rolls, width=1 )    # setting width is important for integer data
+@
+\end{example}
+
+\subsection{Theoretical Method: Just Think About It}
+
+The theoretical method combines
+\begin{enumerate}
+\item Some basic facts that are true about every probability situation,
+\item Some assumptions about the particular situation at hand, and 
+\item Mathematical reasoning (arithmetic, algebra, logic, etc.).
+\end{enumerate}
+
+\section{Probability Axioms and Rules}
+
+\subsection{The Three Axioms}
+
+Let $S$ be the sample space and let $A$ and $B$ be events.
+\begin{enumerate}
+\item Probability is between 0 and 1: $0 \le \Prob(A) \le 1$.
+\item The probability of the sample space is 1: $\Prob(S) = 1$.
+\item Additivity: 
+If $A$ and $B$ are mutually exclusive, then 
+$\Prob(A \tor B) = \Prob(A) + \Prob(B)$.
+\end{enumerate}
+
+\subsubsection{Notation Notes}
+$\Prob(A \tor B)$ is the probability that either $A$ or $B$ (or both) 
+occurs.  Often this is written $\Prob(A \union B)$.  $A \union B$ is usually read
+``$A$ union $B$''.  The union of two sets is the set that contains all elements of either 
+set.  
+
+$\Prob(A \tand B)$ is the probability that \emph{both} $A$ and $B$ occur.
+This is also written $\Prob (A \intersect B)$.  $A \intersect B$ is usually read
+``$A$ intersect $B$''.  
+
+$A$ and $B$ are mutually exclusive is the same as saying that there are no
+outcomes in $A\intersect B$, i.e., that $A \intersect B = \emptyset$.
+
+\subsection{Other Probability Rules}
+These rules all follow from the axioms.
+\subsubsection*{The Addition Rule}
+
+If events $A$  and $B$ are mutually exclusive, then 
+\[
+\Prob(A \tor B) = \Prob(A) + \Prob(B)
+\; .
+\]
+
+More generally,
+\[
+\Prob(A \tor B) = \Prob(A) + \Prob(B) - \Prob(A \tand B)
+\; .
+\]
+
+
+\subsubsection*{The Complement Rule}
+
+\[
+\Prob(\tnot A) = 1 - \Prob(A)
+\]
+
+
+\subsubsection*{The Equally Likely Rule}
+
+If the sample space consists of $n$ equally likely outcomes, then
+the probability of an event $A$ is given by
+\[
+\Prob(A) = \frac{ \mbox{number of outcomes in $A$}}{n}
+=\frac{ \card{A} }{\card{S} }\; .
+\]
+
+\emph{Warning:} One of the most common mistakes in probability is to apply this rule
+when the outcomes are not equally likely.
+
+\begin{examples}
+\begin{enumerate}
+\item Coin Toss: $\Prob(\mbox{heads}) = \frac{1}{2}$ if heads and tails are 
+equally likely.
+\item Rolling a Die: $\Prob(\mbox{even}) = \frac{3}{6}$ if the die is 
+fair (each of the six numbers equally likely to occur).
+\item
+Sum of two Dice: the sum is a number between 2 and 12, but these numbers
+are NOT equally likely.  
+
+There are 36 equally likely combinations of two dice:
+
+\begin{center}
+\large
+\begin{tabular}{|*{6}{c|}}
+\hline
+1,1 & 2,1 & 3,1 & 4,1 & 5,1 & 6,1 
+\\ \hline
+1,2 & 2,2 & 3,2 & 4,2 & 5,2 & 6,2 
+\\ \hline
+1,3 & 2,3 & 3,3 & 4,3 & 5,3 & 6,3 
+\\ \hline
+1,4 & 2,4 & 3,4 & 4,4 & 5,4 & 6,4 
+\\ \hline
+1,5 & 2,5 & 3,5 & 4,5 & 5,5 & 6,5 
+\\ \hline
+1,6 & 2,6 & 3,6 & 4,6 & 5,6 & 6,6
+\\ \hline
+\end{tabular}
+\end{center}
+
+Let $X$ be the sum of two dice.
+\begin{itemize}
+\item $\Prob(X=3) = \frac{2}{36} = \frac{1}{18}$
+\item $\Prob(X=7) = \frac{6}{36} = \frac{1}{6}$
+\item $\Prob(\mbox{doubles}) = \frac{6}{36} = \frac{1}{6}$
+\end{itemize}
+
+\newpage
+
+\item
+Punnet Squares
+
+\begin{center}
+\large
+\begin{tabular}{c|cc}
+& A & a \\ \hline
+A & AA & Aa \\ 
+a & Aa & aa \\ 
+\end{tabular}
+\end{center}
+In an $Aa \times Aa$ cross,
+if A is the dominant allele, then the probability of the dominant
+phenotype is $\frac{3}{4}$, and the probability of the recessive 
+phenotype is $\frac{1}{4}$ because each of the four possible crossings 
+is equally likely.
+
+\begin{center}
+	\includegraphics[width=.5\textwidth]{date-punnet.png}
+\end{center}
+
+\end{enumerate}
+
+\end{examples}
+
+\newpage
+
+\section{Conditional Probability}
+
+
+\begin{example}
+\label{condKids}%
+\label{example:condKids}%
+  \question
+  Suppose a family has two children and one of them is a boy.
+  What is the probability that the other is a girl?
+
+  \answer
+ % First we introduce some notation.  Let $X$ be a random variable
+ % that counts the number of girls and let $Y$ be a random variable
+ % that counts the number of boys (since they have Y chromosomes).
+ % We'll also 
+  We'll make the simplifying assumption that boys and girls are 
+  equally likely (which is not exactly true).  Under that assumption,
+  there are four equally likely families:  BB, BG, GB, and GG.  But only three
+  of these have at least one boy, so our sample space is really
+  $\set{ BB, BG, GB}$.
+  Of these, two have a girl as well as a boy.
+  So the probability is $2/3$ (see Figure~\ref{fig:condKids}).  
+  \authNote{moved illustration to a figure -- 2010-12-06}%
+
+\begin{figure}[h]
+	\begin{center}
+	  GG \qquad \fbox{\textbf{GB} \qquad \textbf{BG} \qquad {BB}}  
+	\qquad \qquad $\mbox{probability}=2/3$
+  \end{center}
+\caption{Illustrating the sample space for Example~\ref{example:condKids}.}
+\label{fig:condKids}%
+\end{figure}
+
+  We can also think of this in a different way.   In our original sample space
+  of four equally likely families,
+  \begin{align*}
+	\evProb{at least one girl} & =  3/4 \; , \\ % \mbox{ , and } \\
+	\evProb{at least one girl \emph{and} at least one boy} & =  2/4 \; , \tand\\
+	\frac{2/4}{3/4} & =  2/3 \; ;
+  \end{align*}
+  so $2/3$ of the time when there is at least one boy, there is also a girl.
+  We will denote this probability as 
+  $\evProb{at least one girl $\mid$ at least one boy}$.
+  We'll read this as ``the probability that there is at least one girl \emph{given that} 
+  there is at least one boy''.  
+  See Figure~\ref{fig:VennConditional} and Definition~\ref{def:condProb}.
+\end{example}
+
+
+\begin{figure}[h]
+\begin{center}
+\begin{tikzpicture}
+  \draw(0,0) rectangle (6,4);
+  \draw(1,3.6) node{$A$};
+  \draw(5,3.4) node{$B$};
+  \draw[thick,fill=black!80,opacity=0.3](4,2) circle(1.3cm);
+  \draw[thick,pattern=horizontal lines](2.2,2) circle(1.6cm);
+  \draw[thick](2.2,2) circle(1.6cm);
+  \draw[thick](4,2) circle(1.3cm);
+\end{tikzpicture}
+\end{center}
+\caption{A Venn diagram illustrating the definition of conditional probability.
+$\Prob(A \mid B)$ is the ratio of the area of the football shaped region that is both
+shaded and striped ($A \intersect B$) to the area of the shaded circle ($B$).
+}
+\label{fig:VennConditional}
+\end{figure}
+
+%The example above indicates how we should define conditional probability 
+%generally.
+
+%\todo{Venn Diagram}
+
+\begin{boxedText}
+%\begin{definition}[Conditional Probability]
+  \label{def:condProb}%
+  \myindex{conditional probability|defidx}%
+  Let $A$ and $B$ be two events such that $\Prob(B) \neq 0$.  
+  The \textbf{conditional probability} of $A$ given $B$ is defined by
+  \[
+  \Prob(A \mid B) = \frac{\Prob(A \intersect B) }{ \Prob(B) }
+  \; .
+  \]
+  If $\Prob(B) = 0$, then $\Prob(A \mid B)$ is undefined.
+%  \qed
+\end{boxedText}
+
+\begin{example}
+  A class of $5$th graders was asked what color should be used for the class
+  T-shirt, red or purple. 
+  The table below contains a summary of the students' responses:
+
+  \begin{center}
+	\medskip
+	\begin{tabular}{|l||r|r|}
+	  \hline
+  & \multicolumn{2}{c|}{Color}\\ 
+          & Red & Purple \\ \hline \hline
+	Girls & $7$    & $9$ \\ \hline
+	Boys  & $10$   & $8$ \\ \hline
+  \end{tabular}
+  \medskip
+\end{center}
+
+  \question Suppose we randomly select a student from this class.
+  Let $R$ be the event that a child prefers a red T-shirt.
+  Let $B$ be the event that the child is a boy, and let $G$ be 
+  the event that the child is a girl.  
+  Express each of the following probabilities in words and 
+  determine their values:
+  \begin{multicols}{3}
+  \begin{itemize}
+	\item
+	  $\Prob(R)$,
+	\item
+	  $\Prob(R \mid B)$,
+	\item
+	  $\Prob(B \mid R)$,
+	\item
+	  $\Prob(R \mid G)$,
+	\item
+	  $\Prob(G \mid R)$,
+	\item
+	  $\Prob(B \mid G)$.
+  \end{itemize}
+  \end{multicols}
+
+  \answer 
+  The conditional probabilities can be computed in two ways.  We can use the
+  formula from the definition of conditional probability directly,
+  or we can consider the condition event to be a new, smaller sample space
+  and read the conditional probability from the table.
+  \begin{itemize}
+	\item
+	  $\Prob(R) = 17/34 = 1/2$ because $17$ of the $34$ kids prefer red
+
+	  This is the probability that a randomly selected student prefers red
+	\item
+	  $\displaystyle \Prob(R \mid B) = \frac{10/34}{18/34} = \frac{10}{18}$ 
+	  because $10$ of the $18$ boys prefer red
+
+	  This is the probability that a randomly selected boy prefers red
+	\item
+	  $\displaystyle \Prob(B \mid R)= \frac{10/34}{17/34} = \frac{10}{17}$ 
+	  because $10$ of the $17$ students who prefer red are boys.
+
+	  This is the probability that a randomly selected student who
+	  prefers red is a boy.
+	\item
+	  $\displaystyle \Prob(R \mid G) = \frac{7/34}{16/34} = \frac{7}{16}$ 
+	  because $7$ of the $16$ girls prefer red
+
+	  This is the probability that a randomly selected girl prefers red
+
+	\item
+	  $\displaystyle \Prob(G \mid R) = \frac{7/34}{17/34} = \frac{7}{17}$ 
+	  because $7$ of the $17$ kids who prefer red are girls.
+
+	  This is the probability that a randomly selected kid who prefers red
+	  is a girl.
+
+	\item
+	  $\displaystyle \Prob(B \mid G) = \frac{0}{16/34} = 0 $ because none of
+	  the girls are boys.
+
+	  This is the probability that a randomly selected girl is a boy.
+%	  \qedskip
+  \end{itemize}
+\end{example}
+
+One important use of conditional probability is as a tool to calculate the 
+probability of an intersection.
+
+\bigskip  %improve page break
+
+\begin{boxedText}
+  \label{lem:probOfInt}
+  Let $A$ and $B$ be events with non-zero probability.  Then 
+  \begin{align*}
+  \Prob(A \intersect B) & =  \Prob(A) \cdot \Prob(B \mid A) \\
+  	& =  \Prob(B) \cdot \Prob(A \mid B)  \;.
+\end{align*}
+
+  This follows directly from the definition of conditional probability by
+  a little bit of algebra and can be generalized to more than two events.
+\end{boxedText}
+
+\begin{example}
+  \question
+  \myindex{dice|exampleidx}%
+  If you roll two standard dice, what is the probability of doubles?
+  (Doubles is when the two numbers match.)
+
+  \answer
+  Let $A$ be the event that we get a number between $1$ and $6$ on the first die.
+  So $\Prob(A) = 1$.  Let $B$ be the event that the second number matches
+  the first.  Then the probability of doubles is 
+  $\Prob(A \intersect B) = \Prob(A) \cdot \Prob(B \mid A) = 1 \cdot \frac16 = \frac16$
+  since regardless of what is rolled on the first die, $1$ of the $6$ possibilities 
+  for the second die will match it.
+\end{example}
+
+
+\bigskip % improve page break
+
+\begin{example}
+  \myindex{cards|exampleidx}%
+  \question
+  A $5$-card hand is dealt from a standard $52$-card deck.
+  What is the probability of getting a flush (all cards the same suit)?
+
+  \answer
+  Imagine dealing the cards in order.
+  Let $A_i$ be the event that the $i$th card is the same suit as all
+  previous cards.
+  Then 
+  \begin{eqnarray*}
+\evProb{flush} & = & \Prob(A_1 
+  \intersect  A_2
+  \intersect  A_3
+  \intersect  A_4
+  \intersect  A_5) \\
+  & = &  \Prob(A_1) 
+  	\cdot \Prob(A_2 \mid A_1)
+  	\cdot \Prob(A_3 \mid A_1 \intersect A_2)
+  	\cdot \Prob(A_4 \mid A_1 \intersect A_2 \intersect A_3)
+	\\ & &
+  	\cdot \Prob(A_5 \mid A_1 \intersect A_2 \intersect A_3 \intersect A_4) \\
+	& = & 1 \cdot \frac{12}{51} \cdot \frac{11}{50} \cdot \frac{10}{49} 
+	\cdot \frac{9}{48} \; .
+\end{eqnarray*}
+%\otherqedskip
+\end{example}
+
+\begin{example}
+\newcommand*\redheart{\Large \ensuremath{{\color{red!80!white}\heartsuit}}}
+\newcommand*\blueheart{\Large \ensuremath{{\color{blue!80!black}\varheartsuit}}}
+	\question
+	In a bowl are 4 red Valentine hearts and 2 blue Valentine hearts.  
+
+	If you reach in
+	without looking and select two of the Valentines, let $X$ be the number of blue
+	Valentines.  Fill in the following probability table.
+
+	\begin{center}
+		\begin{tabular}{|l|c|c|c|}
+			\hline
+			value of $X$ & \qquad 0 \ \qquad & \qquad 1 \ \qquad & \qquad 2 \ \qquad  
+			\\
+			\hline
+			probability & & & 
+			\\
+			\hline
+		\end{tabular}
+	\end{center}
+
+	\answer
+$\Prob(X=2) 
+	= \Prob(\mbox{first is blue} \tand \mbox{second is blue})
+	= \Prob(\mbox{first is blue}) \cdot \Prob( \mbox{second is blue} \mid \mbox{first is blue})
+	= \frac26 \cdot \frac15 = \frac{2}{30}
+$.
+Similarly $\Prob(X=0) 
+	= \Prob(\mbox{first is red} \tand \mbox{second is red})
+	= \Prob(\mbox{first is red}) \cdot \Prob( \mbox{second is red} \mid \mbox{first is red})
+	= \frac46 \cdot \frac35 = \frac{12}{30}
+$
+Finally, $\Prob(X=1) = 1 - \Prob(X=0) - \Prob(X=2) = 1 - \frac{14}{30} = \frac{16}{30}$
+
+We can represent this using a \term{tree diagram} as well.
+
+\begin{center}
+	\begin{tikzpicture}
+		[level 1/.style={sibling distance=25mm},
+		 level 2/.style={sibling distance=11mm},
+		 level distance=25mm] 
+			\node {} [grow'=right]
+			child {node {\blueheart} 
+				child {node (bb) {\blueheart} edge from parent node[above]{$\frac15$}} 
+				child {node (br) {\redheart}  edge from parent  node[below]{$\frac45$}} 
+				edge from parent node[above]{$\frac26$} 
+				}
+			child {node {\redheart}  
+				child {node (rb) {\blueheart} edge from parent  node[above]{$\frac25$}} 
+				child {node (rr) {\redheart}  edge from parent  node[below]{$\frac35$}} 
+				edge from parent node[below]{$\frac46$} 
+			} ; 
+			\node [right of=bb] {$\frac26 \cdot \frac15 = \frac{2}{30}$};
+			\node [right of=br] {$\frac26 \cdot \frac45 = \frac{8}{30}$};
+			\node [right of=rb] {$\frac46 \cdot \frac25 = \frac{8}{30}$};
+			\node [right of=rr] {$\frac46 \cdot \frac35 = \frac{12}{30}$};
+	\end{tikzpicture}
+\end{center}
+The edges in the tree represent conditional probabilities which we can multiply together
+to the probability that all events on a particular branch happen.  The first leve of branching 
+represents what kind of Valentine is selected first, the second level represents the 
+second selection.
+	
+\end{example}
+
+\newpage
+
+\begin{example}
+  \label{example:sensitivitySpecificity}%
+  \question
+  Suppose a test correctly 
+%  \myindex{sensitivity|exampleidx}%
+%  \myindex{specificity|exampleidx}%
+  \myindex{medical testing|exampleidx}%
+  identifies diseased people $99$\% of the time and correctly
+  identifies healthy people $98$\% of the time.  
+  Furthermore assume that in a certain population,
+  one person in $1000$ has the disease.  
+  If a random person is tested and the test comes back positive, 
+  what is the probability that the person has the disease?
+
+  \answer
+  We begin by introducing some notation.  Let $D$ be the event that
+  a person has the disease.  Let $H$ be the event that the person is
+  healthy.  Let $+$ be the event that the test comes back positive (meaning 
+  it indicates disease -- probably a negative from the perspective 
+  of the person tested).  Let $-$ be the event that the test is negative.
+	\begin{itemize}
+	  \item $\Prob(D) = 0.001$, so $\Prob(H) = 0.999$.
+
+	  \item $\Prob(+ \mid D) = 0.99$, so 
+	  $\Prob(- \mid D) = 0.01$.
+
+		$\Prob(+ \mid D)$ is called the \term{sensitivity} of the test.
+		(It tells how sensitive the test is to the presence of the disease.)
+	  \item 
+		$\Prob(-\mid H) = 0.98$, so $\Prob(+\mid H) = 0.02$.
+		\medskip
+
+	  $\Prob(- \mid H)$ is called the \term{specificity} of the test.
+		\smallskip
+
+	  \item $\!\!\!\!\!$
+	  \begin{tabular}[t]{rcl}
+	  $\ds \Prob(D \mid +) $
+		&$\!=\!$& $\displaystyle \frac{\Prob(D \intersect +)}{\Prob(+)}$
+		\\[5mm]
+		&$\; = \;$& 
+		$\displaystyle \frac{\Prob(D) \cdot \Prob(+ \mid D)}{\Prob(D \intersect +) 
+			+ \Prob(H \intersect +)  }$
+			\\[5mm]
+			& $\!=\!$ & $\displaystyle 
+				\frac{0.001 \cdot 0.99}{0.001 \cdot 0.99 + 0.999 \cdot 0.02}
+		            \; = \;  \Sexpr{ signif(0.001 * 0.99 / (0.001 * 0.99 + 0.999 * 0.02), 3) }$. 
+		\end{tabular}
+	  \end{itemize}
+	  A tree diagram is a useful way to visualize these calculations.
+\begin{center}
+	\begin{tikzpicture}
+		[level 1/.style={sibling distance=25mm},
+		 level 2/.style={sibling distance=11mm},
+		 level distance=25mm] 
+			\node {} [grow'=right]
+			child {node {H} 
+				child {node (bb) {$+$} edge from parent node[above]{$0.02$}} 
+				child {node (br) {$-$}  edge from parent  node[below]{$0.98$}} 
+				edge from parent node[above]{$0.999$} 
+				}
+			child {node {D}  
+				child {node (rb) {$+$} edge from parent  node[above]{$0.99$}} 
+				child {node (rr) {$-$}  edge from parent  node[below]{$0.01$}} 
+				edge from parent node[below]{$0.001$} 
+			} ; 
+			\node [right of=bb] {\Sexpr{format(0.999 * 0.02,sci=FALSE)} };
+			\node [right of=br] {\Sexpr{format(0.999 * 0.98,sci=FALSE)} };
+			\node [right of=rb] {\Sexpr{format(0.001 * 0.99,sci=FALSE)} };
+			\node [right of=rr] {\Sexpr{format(0.001 * 0.01,sci=FALSE)} };
+	\end{tikzpicture}
+\end{center}
+
+	  This low probability surprises most people the first time they see it.
+	  This means that if the test result of a random person comes back positive,
+	  the probability that that person has the disease is less than $5$\%, 
+	  even though the test is ``highly accurate''.   
+	  This is one reason why we do not routinely 
+	  screen an entire population for a rare disease -- such screening would 
+	  produce many more false positives than true positives.
+
+	  Of course, if a doctor orders a test, it is usually because there 
+	  are some other symptoms.  This changes the \emph{a priori} probability
+	  that the patient has the disease.  
+%	  Exercise~\ref{prob:bayesDisease}
+%	  gives you a chance to explore this further.
+\end{example}
+
+\newpage
+
+\subsection{Independence}
+
+\begin{boxedText}
+  \label{def:independentEvents}%
+  \myindex{independent events|defidx}%
+  Let $A$ and $B$ be two events such that $\Prob(B) = \Prob(B \mid A)$.
+  Such events are called \term{independent}.
+\end{boxedText}
+
+When events are independent, then 
+$\Prob(A \tand B) = \Prob(A) \cdot \Prob(B \mid A) = \Prob(A) \cdot \Prob(B)$.
+This makes probability calculations much simpler -- but it only applies
+for independent events.
+
+\begin{example}
+	\question 
+	What is the probability of rolling double sixes with standard 6-sided dice?
+
+	\answer
+	Let $A$ be the event that the first die is a 6 and let $B$ be the event that the 
+	second die is a 6.  Since $A$ and $B$ are independent, 
+	$\Prob(A \tand B) = \Prob(A) \cdot \Prob(B) = \frac16 \cdot \frac16 = \frac{1}{36}$.
+\end{example}
+
+\begin{example}
+	\question What is the probability of flipping a coin five times and getting 5 heads?
+
+	\answer  Since each coin toss is independent of the others, the probability
+	of getting five heads is the product of the probabilities of each coin coming up
+	heads:
+
+	\[ 
+	\Prob(\mbox{5 heads in 5 flips}) = (0.5)^5 = \Sexpr{0.5^5} 
+	\]
+
+	
+\end{example}
+
+\begin{example}
+	\question
+	A manufacturer claims that 99\% of its parts will still be functioning properly 
+	two years after purchase.  If you purchase 10 of these parts, what is the probability
+	that all 10 of them are still functioning properly two years later (assuming the
+	manufacturer's claim is correct)?
+
+	\answer
+	Let $G_i$ be the event that part $i$ is still functioning properly after two years.
+	We want to calculate 
+	\[
+	\Prob(G_1 \tand G_2 \tand \cdots \tand G_{10})\;.
+	\]
+	If we assume the lifetimes of the parts are independent, then 
+	\[
+	\Prob(G_1 \tand G_2 \tand \cdots \tand G_{10})
+	=
+	\underbrace{.99 \cdot .99 \cdot .99 \cdots .99 = .99^{10}}_{\mbox{10 of these}}
+	= \Sexpr{.99^(10)}\;.
+	\]
+
+	The independence assumption may or may not be valid.  That depends on the manufacturing
+	process.  For example, if the primary way a part goes bad is that the package 
+	is dropped during shipping, then if you by a box of 10 and the first part is bad, 
+	they will all be bad.  And if the first one is good, they will all be good.  So in
+	that extreme case, the probability that all 10 are functioning properly after two years
+	is 99\%.
+
+
+
+\end{example}
+
+\newpage
+\section*{Exercises}
+
+\begin{problem}
+	Amy is a 92\% free throw shooter.  If she shoots
+	100 free throws after practice, what is the probability that she
+	makes at least 95 of them?  Use simulation to estimate this probability.
+
+	(You can use \function{rflip()} to simulate shooting free throws.
+	The \option{prob} argument lets you set the probability.  In this case,
+	you need to set it to $0.92$.  Then think of a head as a made free throw
+	and a tail as a missed free throw.)
+\end{problem}
+
+\begin{solution}
+<<>>=
+set.seed(123)    # so we get the same simulated results each time we compile.
+sims <- do(1000) * rflip(100, prob=0.92)
+tally( ~ heads > 95, data=sims)
+@
+So the probability that Amy makes more than 95 shots in 100 attempts is approximately
+\Sexpr{ tally( ~ heads > 95, data=sims, format="proportion")[1]}
+\end{solution}
+
+\begin{problem}
+	\begin{enumerate}
+		\item
+	Use simulation to estimate the probability of rolling a difference of 2 when rolling
+	two fair six-sided dice.
+\item
+	Make a histogram showing the results for all of the possible differences.
+	\end{enumerate}
+
+\end{problem}
+
+\begin{solution}
+<<>>=
+d <- die1 - die2
+tally( ~ d )
+prop( ~ (d == 8) )
+histogram( ~d, width=1 )    # setting width is important for integer data
+@
+\end{solution}
+
+\begin{problem}
+	Use simulation to estimate the probability that when dealing 
+	5 cards from a standard (well-shuffled) deck of 52 cards
+	all five are diamonds.  
+
+	You can simulate the deck of cards using the numbers 1 through 52 and consider the numbers
+	1 through 13 to be the diamonds.  Instead of using \function{resample()}, which would allow
+	you to get the same card more than once, we need to use \function{sample()}, which does not.
+	(You can also use \function{deal()} which does the same thing.)
+<<>>=
+sample(1:52, 5)
+sample(1:52, 5)
+deal(1:52, 5)
+deal(1:52, 5)
+@
+	\R\ can tell you if how many cards are below 14 like this because \R\ turns TRUE into 1
+	and FALSE into 0 when you do the sum.
+<<>>=
+sum( sample(1:52, 5) < 14 )     
+sum( sample(1:52, 5) < 14 )
+sum( sample(1:52, 5) < 14 )
+@
+	You can use \function{do()} to do this many times. (Three is not many, this is just 
+	for illustration purposes.)
+<<>>=
+do(3) * sum( sample( 1:52, 5 ) < 14 )
+@
+\end{problem}
+
+\begin{solution}
+<<>>=
+tally( ~ result, do(10000) * sum(sample(1:52, 5) < 14) )
+@
+\end{solution}
+
+\begin{problem}
+Parts in a manufacturing plant go through two quality control checks before they
+are shipped.  99\% of parts pass inspection A and 98\% parts pass inspection B.
+0.5\% fail both inspections.  
+
+What percentage of parts pass both inspections?
+\end{problem}
+
+\begin{solution}
+	$\Prob(\mbox{fail at least one}) = \Prob(\mbox{fail A or fail B}) =
+	\Prob(\mbox{fail A}) + \Prob(\mbox{fail B}) - \Prob(\mbox{fail both})
+	= 0.01 + 0.02 - 0.05 = 0.025$.
+
+	So $\Prob(\mbox{pass both}) = 1 - 0.025 = 0.975$.
+\end{solution}
+
+\begin{problem} 
+	Let $X$ be the sum of the results of rolling two fair six-sided dice.
+	\begin{enumerate}
+		\item
+			What is $\Prob(\mbox{$X$ is even and $X < 5$})$?
+		\item
+			What is $\Prob(\mbox{$X$ is even or $X < 5$})$? 
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+	$\Prob(\mbox{$X$ is even and $X < 5$}) 
+	= \Prob(X = 2 \tor X=4) = 1/36 + 3/36 = 4/36 = \Sexpr{3/36}$
+
+$\Prob(\mbox{$X$ is even or $X < 5$}) = \Prob(\mbox{$X$ is even}) + \Prob(X=3)
+= 18/36 + 2/36 = 20/36 = \Sexpr{20/36}$.
+\end{solution}
+
+\begin{problem}
+Let $Y$ be the difference between the larger and smaller number when two fair dice 
+are rolled.  (So if you roll a 2 and a 4, then the value of $Y$ is 2.)  
+\begin{enumerate}
+	\item 
+		What is $\Prob(Y=2)$?
+	\item
+		What are the other possible values of $Y$?
+	\item 
+		Calculate the probability for each possible value of $Y$
+		and put those values in a table.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+	$Y = 2$ for rolls of $(3,1)$, $(4,2)$, $(5,3)$, and $(6,4)$.  Each of these 
+	can also happen in the other order, so the probability is $8/36 = 2/9 = \Sexpr{2/9}$.
+
+\begin{center}
+	\begin{tabular}{lrrrrrr}
+		\hline
+		value of $Y$ & 0 & 1 & 2 & 3 & 4 & 5 \\
+		\hline
+		probability & 6/36 & 10/36 & 8/36 & 6/36 & 4/36 & 2/36 \\
+		\hline
+	\end{tabular}
+\end{center}
+<<>>=
+c(6,10,8,6,4,2) / 36
+@
+\end{solution}
+
+\begin{problem}
+	A device is assembled from two primary parts.  2\% of the first type of part
+	are defective and 3\% of the other type of part are defective.  The device
+	only functions properly if both parts are functioning properly.
+	\begin{enumerate}
+	\item
+	What assumption do you need to make to calculate the probability
+	that a device assembled in this way will function properly?
+	Is it a reasonable assumption in this situation?  Explain.
+	\item
+	What is the probability that that a device assembled in this way will 
+	function properly?
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+	Assuming failure of each part is independent of failure of the other,
+	the probability that both function properly is 
+	$0.98 \cdot 0.97 = \Sexpr{0.98 * 0.97}$.
+\end{solution}
+
+\begin{problem}
+According to the CDC, ``Compared to nonsmokers, men who smoke are about 23
+times more likely to develop lung cancer and women who smoke are about 13 times
+more likely.''  According to the American Lung Association: 
+``In 2008, 21.1 million (18.3\%) women smoked in the United States 
+compared to 24.8 million (23.1\%) men.''
+
+\begin{enumerate}
+	\item
+		If you learn that a person is a smoker and no nothing else 
+		about the person, what is the probability that the person is a woman?
+	\item
+		If you learn that a woman has been diagnosed with lung cancer,
+		and you know nothing else about her, what is the probability that she is a
+		smoker?
+	\item
+		If you learn that a man has been diagnosed with lung cancer,
+		and you know nothing else about him, what is the probability that he is a
+		smoker?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+# a)
+21.1 / ( 21.1 + 24.8)
+@
+Part b is the most interesting (once you can do that, you can do part c the same way).
+Let $W$ be the event that someone is a woman, $S$ that they are a smoker, and $C$ that they
+get cancer. Let $x = \Prob( C | W \intersect S^c)$.  Then $\Prob( C | W \intersect S ) = 13x$.
+
+\begin{align*}
+	\Prob( S | W \intersect C ) 
+	& = \frac{ \Prob(S \intersect W \intersect C) }{\Prob(W \intersect C)}
+	\\
+	& = \frac{ \Prob(S \intersect W \intersect C) }
+	{\Prob(S \intersect W \intersect C) + \Prob( S^c \intersect W \intersect C)}
+\end{align*}
+So we just need to compute the two probabilities in the denominator.
+\begin{align*}
+	\Prob(S \intersect W \intersect C)
+	&= \Prob(W) \cdot \Prob(S \mid W) \cdot \Prob(C \mid W \intersect S) 
+	\\
+	&= \Prob(W) \cdot 0.183 \cdot 13x
+	\\
+	\Prob(S^c \intersect W \intersect C)
+	&= \Prob(W) \cdot \Prob(S^c \mid W) \cdot \Prob(C \mid W \intersect S^c) 
+	\\
+	&= \Prob(W) \cdot 0.817 \cdot x
+\end{align*}
+After factoring out $x \cdot \Prob(W)$, the arithmetic is now easy:
+
+<<>>=
+# b) After factoring out a constant from numerator and denominator we are left with
+0.183 * 13 / ( 0.183 * 13 + .817 * 1 )
+# c) After factoring out a constant from numerator and denominator we are left with
+0.231 * 23 / ( 0.231 * 23 + .769 * 1 )
+@
+
+Note: Another approach to part b is to consider the sample space to be only the women.
+If you do it that way, you can avoid mentioning any probabilities involving $W$.  (In the end, 
+they factor out anyway.)  Of course, you can do a similar thing for the men.
+\end{solution}
+
+\begin{problem}
+A manufacturing plant has kept records that show that the number of parts produced each 
+day and on the proportion of parts that are defective.
+
+\begin{center}
+\begin{tabular}{|lrrrr|}
+	\hline
+	& Monday & Tuesday & Wednesday & Thursday \\
+	\hline
+	Proportion of weekly production & 20\% & 25\% & 28\% & 27\%  
+	\\
+	Rate of defective parts & 2\% & 1.5\% & 1\%  & 3\% 
+	\\
+	\hline
+\end{tabular}
+\end{center}
+\begin{enumerate}
+	\item
+		If you order a part from this company, what is the probability that it was produced
+		on a Monday or a Thursday?
+\item
+If you order a part from this company and it is defective, 
+what is the probability that it was produced on a Monday or a Thursday?
+\item
+	If you order a part from this company and it functions properly, 
+	what is the probability that it was produced on a Monday or Thursday?
+\end{enumerate}
+Express your answers to 3 significant digits and avoid internal rounding.
+
+\end{problem}
+
+\begin{solution}
+You may find a tree diagram useful here to visualize these probabilities.
+<<tidy=FALSE>>=
+# part a
+.20 + .27
+
+# part b: P( Wed-Thur | defective ) = P( Wed-Thur and defective ) / P(defective)
+a <- .20 * .02 +       # Monday and defective
+     .27 * .03         # Thursday and defective
+b <- .25 * .015 +      # Tuesday and defective
+     .28 * .01         # Wednesday and defective 
+a / (a + b)
+
+# part c: P( Wed-Thur | good ) = P( Wed-Thur and good ) / P(good)
+c <- .20 * .98 +       # Monday and good
+     .27 * .97         # Thursday and good
+d <- .25 * .985 +      # Tuesday and good
+     .28 * .99         # Wednesday and good 
+c / (c + d)
+@
+\end{solution}
+
+
+\shipoutProblems
+
+\vfill
+
+\begin{center}
+	\includegraphics[width=.4\textwidth]{cigarettes-cartoon}
+\end{center}
+
+\ifsolutions
+\ifsolutionslocal
+\newpage
+\section*{Solutions}
+\shipoutSolutions
+\fi
+\fi

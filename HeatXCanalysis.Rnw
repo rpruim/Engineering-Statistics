@@ -1,0 +1,379 @@
+<<setup, include=FALSE>>=
+require(knitr)
+require(car)
+require(mosaic)
+trellis.par.set(theme=col.mosaic())
+require(ggplot2)
+require(plyr)
+opts_chunk$set(size="small", 
+               tidy=FALSE, 
+               fig.show="hold",
+               fig.align='center',
+               fig.width=5, fig.height=4, 
+               out.width=".47\\textwidth")
+@
+
+\documentclass{article}
+\usepackage[margin=1in, right=1.5in]{geometry}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{probstat}
+\usepackage{language}
+
+\def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+\def\Partial#1#2{\frac{\partial}{\partial #2} #1}
+
+\begin{document}
+
+\title{Basic Heat Exchanger Equations}
+\author{Randall Pruim}
+
+\maketitle
+
+\begin{abstract}
+Exploring possible ways to analyze data from heat exchanger lab.
+\end{abstract}
+
+
+\section{Introduction}
+
+On 22 January 2014, Randy Pruim, Wayne Wentzheimer, and Matt Heun
+met to discuss possible exercises for Math241 that would be used to 
+analyse data  from a counterflow heat exchanger
+laboratory experiment that all students perform in Engr209.
+
+
+\subsection{Apparatus}
+
+Figure~\ref{fig:HXer_Figure} shows the heat exchanger.
+Hot fluid flows in the annulus ($\dot{m}_{3}$)
+and cold fluid flows in the inner tube ($\dot{m}_{1}$).
+The entire apparatus is insulated, 
+so we expect no heat to be exchanged with the surroundings.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=3.5in]{images/HXerFig.pdf}
+    \caption{Heat exchanger with statepoints.}
+    \label{fig:HXer_Figure}
+\end{figure}
+
+\subsection{Measurements and Data}
+
+Mass flow rates ($\dot{m}$) are controlled via valves.
+Two mass flow rates ($\dot{m}_{1}$ and $\dot{m}_{3}$)
+are measured by rotameters.\footnote{See 
+\url{http://www.omega.com/prodinfo/rotameters.html}
+for an introduction.}
+
+Temperatures ($T_{1}$--$T_{4}$) are measured by thermocouples.\footnote{See 
+\url{http://www.omega.com/techref/themointro.html} for an introduction.}
+
+
+%\section{Observations}
+
+Each observation consists of four~(4) temperature measurements 
+and two~(2) mass flow rate measurements. 
+
+Here is an example data set with one set of measurements at each of 6
+experimental conditions:
+<<include=FALSE>>=
+HeatX <- data.frame(
+  trial = 1:6,
+  T.cold.in = c(14.3, 14.1, 14.1, 14.2, 14.1, 14.1),
+  T.cold.out = c(18.6, 18.7, 19.4, 18.4, 17.4, 16.9),
+  T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8),
+  T.hot.out = c(33.9, 32.8, 33.4, 31.8, 30.9, 30.4),
+  m.cold = c(10, 7.5, 5, 5, 7.5, 10),
+  m.hot = c(10, 10, 10, 5, 5, 5)
+)  
+@
+
+<<fig.height=2.25>>=
+HeatX
+xyplot( m.hot ~ m.cold, data=HeatX, main="Experimental Configurations")
+@
+
+
+\iffalse
+\section{Experimental plan}
+
+One possible experimental plan is to take data at
+four~(4) values of $\dot{m_{1}}$ and two~(2) values of $\dot{m}_{3}$,
+for a total of 8 observations.
+Repeated observations could be obtained at one combination of 
+$\dot{m}_{1}$ and $\dot{m}_{3}$.
+\fi
+
+
+\section{Analysis}
+
+\subsection{Heat exchanged}
+
+The amount of heat exchanged between the hot and cold water can be determined
+from the temparature change and the mass flow rate as follows:
+
+\begin{equation}
+    \dot{Q}_{1} = \dot{m}_{1} C_{p} (T_{2} - T_{1})
+\end{equation}
+
+\begin{equation}
+    \dot{Q}_{3} = \dot{m}_{3} C_{p} (T_{3} - T_{4})
+\end{equation}
+
+We can estimate the vlues of $\dot{Q}$ from our data by direct caclulation:
+<<>>=
+C_p <- 4.182 / 60  # / 60 because measureing m in L/min
+HeatX2 <- mutate(HeatX, 
+                 Q.cold = m.cold * C_p * (T.cold.out - T.cold.in),
+                 Q.hot= m.hot * C_p * (T.hot.out- T.hot.in),
+                 Q.env = Q.cold + Q.hot
+)
+HeatX2
+@
+
+\subsubsection{Estimating heat exchanged with environment}
+If no heat were exchanged with the enviroment and all measurements were without error,
+then our two estimates of $Q$ would sum to 0.  (Heat lost to one is gained by the 
+other.)  
+
+Assuming any loss to (or gain from) the environment is essentially constant for the apparatus over the experimental conditions analysed, we can use our 6 observations to estimate the amount of heat exchanged with the environment:
+
+<<fig.height=2>>=
+confint(t.test( ~ Q.env, data=HeatX2))
+qplot( Q.env, " ", data=HeatX2, 
+       geom="point", size=I(6), alpha=I(.5), 
+       position=position_jitter(width=0, height=.1))
+stripplot( ~ Q.env, data=HeatX2, alpha=.6, cex=3)
+@
+In our example data, there is modest evidence for exchange with the enironment, but
+the estimated amount of heat gained from the environment is not very precisely 
+estiamted.  Even at the highest end of the confidence interval, the heat exchanged 
+with the environment is an order of magnitude smaller than the heat exchanged 
+within in the apparatus.
+
+Notes:
+\begin{enumerate}
+\item  This analysis assumes that the amount of heat gained/lost is constant over 
+the different set-ups.  From this small dat set, there is not clear evidence 
+of some other relationship between heat exchanged with the environment
+and the experimental set up:
+<<fig.height=2.5>>=
+xyplot( Q.env ~ m.cold, data=HeatX2, groups=m.hot)
+@
+\item
+The t test and interval are based on the assumption that the distribution
+of deviations between the measured environment heat exchange and the actual
+is normal with a mean of 0.  The data set is too small go provide much evidence
+upon which to judge whether this is a reasonable assumption.  The largest value is 
+quite a bit larger than the rest, but even if we remove that observation, our 
+conclusions don't change dramatically:
+<<>>=
+confint(t.test( ~ Q.env, data=subset(HeatX2, Q.env < max(Q.env)) ) )
+@
+\end{enumerate}
+
+\subsubsection{Estimating heat transfer, $\dot{Q}$}
+
+Estimating $\dot{Q}$ with uncertainty is not possible from this data since since $\dot{Q}$ is 
+not measured and the design doesn't provide a method for estimating the 
+uncertainty in $\dot{m}$ and $T$.
+
+If, however, there are external estimates of the uncertainties for temperature and flow rate, and if we can assume these uncertainties are approximately independent, then we
+can use propagation of uncertainty to estimate the uncertainty in our estimates 
+for heat exchanged.
+
+For example, suppose that the uncertainties in temperature and flow rate 
+measurements  are approximately constant (over the range of temperatures involved): 
+$u_T$, and  $u_{\dot{m}}$.  Then the undertainty in a temperature difference is 
+$\sqrt{ u_T^2 + u_T^2} = \sqrt{2} u_T$, and we can estimate the uncertainty in
+$Q$ using the delta method.
+
+\begin{itemize}
+\item
+Let $f(\dot{m}, \Delta T) = C_p \dot{m} \Delta T$
+\item
+$ \displaystyle \Partial{f}{\dot m} = C_p \Delta T$ and 
+$ \displaystyle \Partial{f}{\Delta T} = C_p \dot{m}$, so
+\item
+$ \displaystyle
+u_{\dot Q} \approx   C_p \sqrt{ (\Delta T)^2 u^2_{\dot m}  + \dot{m}^2 2 u_T^2 }
+$
+\end{itemize}
+
+\marginpar{Need to get reasonable estimates for these uncertainties.}
+For example, if we estimate the uncertainty in temperature measurements to be $0.1$
+and the undcertainty in flow rate to be $0.2$, then we can compute the undertainties
+in the Q values as follows
+<<>>=
+HeatX2<- mutate(HeatX2, 
+  u.Q.cold = C_p *sqrt( (T.cold.out -T.cold.in )^2 * 0.2^2  + m.cold^2 * 2 * 0.1^2),  
+  u.Q.hot = C_p *sqrt( (T.hot.out -T.hot.in )^2 * 0.2^2  + m.hot^2 * 2 * 0.1^2) 
+) 
+HeatX2
+@
+
+We can also use \function{deltaMethod()} in the \pkg{car} package to do this arithmetic for us.  In fact, \function{deltaMathod()} can even handle cases where the estimates are not independent.  
+To do it's job, \function{deltaMethod()} requires
+\begin{itemize}
+\item A named vector of estimates,
+<<>>=
+x <- unlist( HeatX[1, c(2:7)] )  # unlist() turns the data frame into a vector
+x
+@
+\item An expression for the derived quantity as a quoted string (it will do the derivatives for us!),
+<<>>=
+exprforQ <- "(T.cold.out - T.cold.in) * C_p * m.cold"
+@
+\item A variance-covariance matrix.  In the simple case where things are indipendent, this is just a matrix
+with the squared uncertainties on the diagonal and 0 everywhere else.
+<<>>=
+vc <- diag( c(.1,.1,.1,.1,.2,.2)^2)
+vc
+@
+\end{itemize}
+Let's see how it compares to the results above:
+<<>>=
+deltaMethod( x, exprforQ, vc)
+@
+
+With a little programming, we can add to the interface for \function{deltaMethod()}:
+<<>>=
+# Ignore the code behind the curtain. This could be put into the mosaic package.  
+#
+deltaMethod.data.frame <- function(object, g, vcov., func=g, constants=c(), ...) {
+  if (is.data.frame(vcov.)) {
+    if (ncol(object) != ncol(vcov.) ) stop( "Data frames are not of equal width")
+    combined <- cbind( object, vcov.)
+    w <- ncol(object)
+    return( ddply( combined, names(combined), 
+         function(d) { deltaMethod( unlist(d[1,1:w]), g=g, vcov.=diag(unlist(d[1, (w+1):(2*w)])^2), 
+                                    func=func, constants=constants, ...) }
+  ) )
+  } 
+
+  if (! is.numeric(vcov.) ) stop("I don't know what to do with that kind of .vcov")
+  
+  if (!is.matrix(vcov.)) {
+    vcov. <- diag(vcov.^2)
+    message("Converting uncertainties in .vcov to a var-covar matrix assuming independence ...")
+  }
+  
+  ddply( object, names(object), 
+         function(x) { deltaMethod( unlist(x[1,]), g=g, vcov.=vcov., func=func, constants=constants, ...) }
+  )
+}
+@
+
+Now we can do things like:
+
+<<>>=
+deltaMethod( HeatX[, c("T.cold.in","T.cold.out","m.cold")], exprforQ, c(.1,.1,.2) )
+# This is just wordier in this example, but would allow the uncertainties to vary from row to row
+HeatX3 <- transform(HeatX, 
+  u.cold.in=.1, u.cold.out=.1, u.hot.in=.1, u.hot.out=.1, u.m.cold=.2, u.m.hot=.2
+)
+deltaMethod( HeatX3[, c("T.cold.in","T.cold.out","m.cold")], exprforQ, 
+             HeatX3[, c("u.cold.in", "u.cold.out", "u.m.cold")])
+@
+The latter of these would allow for uncertainties to be specified for each row of the data.
+
+\subsection{Estimating heat transfer coefficient, $U$}
+
+Next, we estimate a heat transfer coefficient ($U$) for both streams,
+
+\begin{equation}
+    U = \frac{\dot{Q}}{A \Delta T_{lm}},
+\end{equation}
+
+\noindent{} where 
+
+\begin{equation}
+    \Delta T_{lm} \equiv \frac{(T_{1} - T_{4}) - (T_{2} - T_{3})}{ln\left( \frac{T_{1} - T_{4}}{T_{2} - T_{3}} \right)}.
+\end{equation}
+
+We can apply the same ideas to estimate the uncertainty in $U$.  This time, working it out by hand would be considerably more 
+tedious because of the number of variables involved and the form of the expression to be differentiated.
+Fortunately, \R\ is happy to take care of those details if we just specify the information needed.
+
+<<>>=
+HeatX3
+exprforU <- "C_p * m.cold * (T.cold.out - T.cold.in) / 
+  ( A  * ((T.cold.out - T.hot.in) - (T.cold.in - T.hot.out)) / 
+  log ( (T.cold.out - T.hot.in) / (T.cold.in - T.hot.out) ) )"
+deltaMethod( HeatX3[,2:7], exprforU, HeatX3[, 8:13], constants=list(A=1.2) )
+@
+
+Note the use of the \option{constants} argument here to specify the value of \variable{A}.  
+We could also have specified $C_p$ this way rather than to define it in the global environment.
+
+
+\subsection{Estimating a correlation coefficient, $a$}
+
+Finally, we can estimate
+the parameter $a$ in a Nusselt number correlation
+for turbulent flow ($Re_{D} > 2300$):
+
+\begin{equation}
+    a = \frac{Nu_D}{Re_{D}^{0.8} Pr^{1/3}},
+\end{equation}
+
+\noindent{}where
+
+\begin{equation}
+    Nu_{D} = \frac{h D}{k}, 
+\end{equation}
+
+\begin{equation}
+    Re_{D} = \frac{4 \dot{m}}{\pi D \mu},
+\end{equation}
+
+\noindent{}and
+
+\begin{equation}
+    Pr = \frac{\mu C_{p}}{k}.
+\end{equation}
+
+The uncertainty in the estimates for $a$ can be estimated in a similar manner.
+For that purpose, we assume that the exponents on $Re_{D}$ and $Pr$
+(0.8 and 1/3, respectively)
+are constant.
+Furthermore, we would assume that $C_{p}$, $k$, and $\mu$ are constant
+at the values given in Table~\ref{tab:definitions}.
+
+\section{Definitions}
+
+Table~\ref{tab:definitions} contains definitions of important quantities
+in these equations.
+
+\begin{table}[b]
+\caption{Definitions and constants.}
+\begin{center}
+\begin{tabular}{r @{\hspace{2em}} l}
+  \toprule
+	Symbol           &   Definition \\
+	\midrule
+	$\dot{Q}$ &  heat transfer rate [W] \\
+	$\dot{m}$ &  mass flow rate [kg/s] \\
+	$C_{p}$   &  specific heat, 4182 kJ/kg-K\\
+	$T$       & temperature [K]\\
+	$A$       & surface area of the inner tube ($\pi D L$) [m$^{2}$] \\
+	$L$       & length of the heat exchanger [m] \\
+	$U$       & heat transfer coefficient [W/m$^{2}$-K] \\
+	$D$       & tube diameter [m] \\
+	$\Delta T_{lm}$ & logarithmic mean temperature difference [K] \\
+	$Nu_{D}$  & Nusselt number based on $D$ [--] \\
+	$Re_{D}$  & Reynolds number based on $D$ [--] \\
+	$Pr$      & Prandtl number [--] \\
+	$\mu$     & dynamic viscosity, 0.00102 kg/m-s \\
+	$k$      & water thermal conductivity, 0.598 W/m-K \\
+	\bottomrule
+\end{tabular}
+\end{center}
+\label{tab:definitions}
+\end{table}
+
+
+
+\end{document}

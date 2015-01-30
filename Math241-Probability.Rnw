@@ -296,7 +296,7 @@ phenotype is $\frac{1}{4}$ because each of the four possible crossings
 is equally likely.
 
 \begin{center}
-	\includegraphics[width=.5\textwidth]{date-punnet.png}
+	\includegraphics[width=.5\textwidth]{images/date-punnet.png}
 \end{center}
 
 \end{enumerate}
@@ -1056,7 +1056,7 @@ c / (c + d)
 \vfill
 
 \begin{center}
-	\includegraphics[width=.4\textwidth]{cigarettes-cartoon}
+	\includegraphics[width=.4\textwidth]{images/cigarettes-cartoon}
 \end{center}
 
 \ifsolutions

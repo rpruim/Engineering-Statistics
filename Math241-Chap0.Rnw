@@ -11,9 +11,7 @@ the specific heat index or measures of strength or flexibility of some material,
 resistance of some component in an electrical device, etc., etc.
 Most of these numbers come from some process that generated data and led to a calculuation
 that produced the number.  Like this one \dots
-\begin{center}
  
-\includegraphics[width=.8\textwidth]{CalvinBridgeLoad2.png}
 \begin{center}
 	\includegraphics[width=.8\textwidth]{images/CalvinBridgeLoad2.png}
 \end{center}

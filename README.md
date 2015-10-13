@@ -1,3 +1,3 @@
 # Engineering-Statistics
-Course notes for Math 241.  Based on original by Randall Pruim (rpruim on Github).
-This is really a branch of his repository Engineering-Stats and it's all my fault that it doesn't look that way...
+Course notes for Math 241.  A branch of the original by Randall Pruim (rpruim on Github).
+

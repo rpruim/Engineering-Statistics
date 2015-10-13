@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Math241-S15.Rnw')}
 
 \Chapter{Graphical Summaries of Data}
 
@@ -6,51 +6,53 @@
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=.85\textwidth]{images/RStudio-Welcome}
+\includegraphics[width=.85\textwidth]{images/RStudio-Welcome2}
 \end{center}
 \caption{Welcome to \Rstudio.}
 \label{fig:Rstudio-welcome}%
 \end{figure}
 
-%You can access the Calvin \RStudio{} server via links from our course
-%web site (\url{http://www.calvin.edu/~rpruim/courses/m241/S13/}) or from
-%\url{http://dahl.calvin.edu}.
 \RStudio{} is an integrated development environment (IDE) for \R,  
 a freely available language and environment for statistical computing and graphics.
-Both are freely available for Mac, PC, and Linux.  
+Both \R and \RStudio{} are freely available for Mac, PC, and Linux.  
 
-In addition to running \RStudio{} on your local machine, you have the option
-of accessing an \RStudio{} server via a web browser.  (For best results, avoid 
+We have set up an RStudio server on campus, which allows you to run R in a web browser on any computer without installing the software yourself.  Your session is restored each time you log in, so you can work on multiple computers without losing your work when you move from one to the other.  The RStudio server is the recommended interface for using R and RStudio for this course. You can access the \RStudio{} server via a web browser.  (For best results, avoid 
 Internet Explorer.)
 
-\subsection{Logging in and changing your password}
-When you navigate to an \RStudio{} server, you will be prompted to login.  
+If you prefer to install R and RStudio directly on your own computer, you can get R at \url{<http://cran.r-project.org>} and RStudio at \url{<http://rstudio.org/>}.    
+
+To access the Calvin \RStudio{} server, use the links from our course
+Moodle site, or connect directly at \url{http://rstudio.calvin.edu:8787}.
+
+\subsection{Logging in}
+When you navigate to the \RStudio{} server, you will be prompted to login.  
 % Your login and password are both your Calvin
 % userid.  
+Your login is your Calvin Gmail address, and your password is the corresponding password. 
 Once you are logged in, you will see something like 
 Figure~\ref{fig:Rstudio-welcome}.
 
-To change your password:
-\begin{enumerate}
-	\item From the \tab{Tools} menu, select \tab{Shell...}
-	\item
-		Type \code{yppasswd}
-	\item
-		You will be prompted for your old password, then your new password twice.
-	\item
-		If you give a sufficiently strong new password, then
-		you will receive notice that your password has been reset.  
-		If there was a problem, you will see a message about it and can try again.
-	\item
-		Once you have reset your password, click on \tab{Close} to close the 
-		shell and get back to \RStudio.
-\end{enumerate}
+% To change your password:
+% \begin{enumerate}
+% 	\item From the \tab{Tools} menu, select \tab{Shell...}
+% 	\item
+% 		Type \code{yppasswd}
+% 	\item
+% 		You will be prompted for your old password, then your new password twice.
+% 	\item
+% 		If you give a sufficiently strong new password, then
+% 		you will receive notice that your password has been reset.  
+% 		If there was a problem, you will see a message about it and can try again.
+% 	\item
+% 		Once you have reset your password, click on \tab{Close} to close the 
+% 		shell and get back to \RStudio.
+% \end{enumerate}
 
 \subsection{Using R as a calculator}
 
 Notice that \Rstudio\ divides its world into four panels.  Several of the panels
 are further subdivided into multiple tabs.
-The console panel is where we type commands that \R\ will execute. 
+The \textbf{Console} panel is where we type commands that \R\ will execute. 
 
 \R\ can be used as a calculator.  Try typing the following commands in the console panel.
 \Rindex{sqrt()}%
@@ -76,22 +78,29 @@ log(product,base=2)         # base 2 log of the product
 @
 
 The semi-colon can be used to place multiple commands on one line.  
-One frequent use of this is to save and print a value all in one go:
+One frequent use of the semi-colon is to save and print a value all 
+in one line of code:
 <<variables-semi2,tidy=FALSE>>=
 15.3 * 23.4 -> product; product    # save result and show it
 @
 
 \subsection{Loading packages}
 
-\R\ is divided up into packages.  A few of these are loaded every time you
+\R\ is divided up into packages.  You can think of the packages as software toolkits designed to do 
+particular jobs.  A few of these, known as ``base \R", are loaded every time you
 run \R, but most have to be selected.  This way you only have as much of \R\ as you
-need.
+need.  There are two steps to follow before you can use a package in \R :
+
+\begin{enumerate}
+\item{Install the package.} This operation downloads the relevant files to your computer, and lets \R\ know where they are located.  It does \textit{not} give the current \R\ session permission to use the tools contained in the package!  The packages you will need for work in this course have already been installed on the Calvin \Rstudio\ server. For this course, you will probably not need to install any packages yourself, unless you are using a local copy of \R\ and \RStudio\ installed on your own computer.  If you need to install packages, an easy way to do it is to use the \textbf{Packages} tab in the lower right panel of \RStudio. Just click on \textbf{Install} (upper left corner of the \textbf{Packages} tab) and then type the name of the package.
+\item{Load the package.} This operation gives the current \R\ session permission to access and use the tools contained in the package.  Even if you are using the \RStudio server, you will often need to load required packages at the beginning of each \R\ session.  There are several ways to load packages, as detailed below.
+\end{enumerate}
 
 In the \tab{Packages} tab, check the boxes next to the following packages to
 load them:
 \begin{itemize}
 	\item \pkg{mosaic}  (a package from Project MOSAIC; this should already be loaded)
-	\item \pkg{DAAG}  (a package that goes with the book \textit{Data Analysis and Graphic};
+	\item \pkg{DAAG}  (a package that goes with the book \textit{Data Analysis and Graphics};
 		probably not loaded, check the box to load it.)
 \end{itemize}
 You an also load packages by typing, for example
@@ -120,12 +129,12 @@ have no required arguments, but you still need the parentheses.
 
 \item
 If you type a function name without the parentheses, you will see the \emph{code} for that
-function -- which probably isn't what you want at this point.
+function printed out to the console window -- which probably isn't what you want at this point.
 \end{itemize}
 \item
 TAB completion and arrows can improve typing speed and accuracy.
 
-If you begin a command and hit the TAB key, \R\ will show you a list of
+If you begin typing a command and hit the TAB key, \R\ will show you a list of
 possible ways to complete the command.  If you hit TAB after the opening
 parenthesis of a function, it will show you the list of arguments it expects.
 The up and down arrows can be used to retrieve past commands.
@@ -140,21 +149,23 @@ The up and down arrows can be used to retrieve past commands.
 
 \section{Data in \R}
 
-\subsection{Data in Packages}
+\subsection{Data Frames}
 Most often, data sets in \R\ are stored in a structure called a 
 \term{data frame}.  A data frame is designed to hold ``rectangular data".  The people or things
 being measured or observed are called \term{observational units} (or subjects or cases when 
-they are people).  Each observational unit is represented by one row.
+they are people).  For measurements collected over time, the observational units would be the individual 
+time-points at which data points were collected. Each observational unit is represented by one row in the data frame.
 The different pieces of information recorded for each observational unit are stored in
 separate columns, called \term{variables}.  
 
 \subsection{Data in Packages}
 There are a number of data sets built into \R\
-and many more that come in various add on packages.  
+and many more that come in various add-on packages.  
 
 You can see a list of data sets in a particular package like this:
 <<datasets,eval=FALSE>>=
-data(mosaic)
+data(package="mosaicData")
+data(package="DAAG")
 @
 
 You can find a longer list of all data sets available in any loaded package
@@ -194,7 +205,7 @@ show you the names of the variables and the kind of data in them:
 head(HELPrct)
 dim(HELPrct)
 @
-From this we see that there are \Sexpr{nrow(HELPrct)} observational
+The commands and \R\ output above tell us that there are \Sexpr{nrow(HELPrct)} observational
 units in this data set and \Sexpr{ncol(HELPrct)} variables.
 That's plenty of variables to get us started with exploration of data.
 
@@ -212,7 +223,7 @@ by typing the command
 require(alr3)
 @
 Once you have done that, you will have access to the data set containing information about
-Old Faithful eruptions.
+eruptions of Old Faithful, a geyser in Yellowstone National Park.
 <<>>=
 head(oldfaith)
 @
@@ -239,7 +250,7 @@ into \RStudio\ pretty easily.
 
 \section{Graphing the Distribution of One Variable}
 
-A \textbf{distribution} is described by telling what values occur 
+A \textbf{distribution} tells which values a variable takes on, 
 and with what frequency.  That is, the distribution answers two 
 questions:
 \begin{itemize}
@@ -247,7 +258,7 @@ questions:
 	\item How often?
 \end{itemize}
 
-Statisticians have devised a number of graphs to help us see 
+Several standard statistical graphs can help us see 
 distributions visually.  
 
 The general syntax for making a graph or numerical summary
@@ -271,8 +282,8 @@ Note: The same syntax works for numerical summaries as well -- thanks to the \pk
 package we can apply the same syntax for 
 		\function{mean}, \function{median}, \function{sd},
 		\function{var}, \function{max}, \function{min}, etc.
-		Later we will use this syntax again to compute linear and 
-		nonlinear models.
+		Later we will use this syntax again to fit linear and 
+		nonlinear models to data.
 
 \subsection{Histograms (and density plots) for quantitative variables}
 
@@ -291,9 +302,9 @@ argument, which may be abbreviated as \option{n}.
 The number of bins (and to a lesser extent the positions of the bins)
 can make a histogram look quite different.
 <<histogram2, fig.width=3,out.width='.3\\textwidth'>>=
-histogram( ~ Duration, data=oldfaith, n=8 )
 histogram( ~ Duration, data=oldfaith, n=15 )
 histogram( ~ Duration, data=oldfaith, n=30 )
+histogram( ~ Duration, data=oldfaith, n=50 )
 @
 
 The \function{histogram()}%
@@ -302,7 +313,7 @@ extra features (like the \option{width} argument) but is otherwise is very simil
 regular \function{histogram()} function in \pkg{lattice}.}
 function in the \pkg{mosaic} package lets you describe
 the bins in terms of center and width instead of in terms of the number
-of bins.  This is especially nice for count data
+of bins.  This is especially nice for count data.
 
 <<xhistogram,fig.width=3,out.width=".3\\textwidth">>=
 histogram( ~ Duration, data=oldfaith, width=60 )
@@ -325,14 +336,17 @@ freqpolygon( ~ Duration, data=oldfaith )
 
 If we make a histogram of our data, we can describe the overall shape of the distribution.
 Keep in mind that the shape of a particular histogram may depend on the choice of bins.
-Choosing too many or too few bins can hide the true shape of the distribution.  (When in doubt, make
-more than one histogram.)
+Choosing too many or too few bins can hide the true shape of the distribution.  (When in doubt, compare several
+histograms with different bin settings before you decide which one provides the most informative
+summary of the data.)
 
 Here are some words we use to describe shapes of distributions.
 \begin{description}
 \item[symmetric] The left and right sides are mirror images of each other.
 \item[skewed] The distribution stretches out farther in one direction than in the other.  
-(We say the distribution is skewed toward the long tail.)
+(We say the distribution is skewed toward the long tail. So right-skewed 
+(also known as positive-skewed)
+data have a ``fat right tail" -- more observations of larger values than of small ones.)
 \item[uniform] The heights of all the bars are (roughly) the same.  
 (So the data are equally likely to be anywhere within some range.)
 \item[unimodal] There is one major ``bump'' where there is a lot of data.
@@ -355,7 +369,10 @@ bargraph( ~ substance, data=HELPrct)
 bargraph( ~ substance, data=HELPrct, horizontal=TRUE )
 @
 
-Statisticians rarely use pie charts because they are harder to read.
+A side note: we will be unlikely to use pie charts in this course.
+Many data analysts argue that pie charts are difficult to read and interpret,
+and often use space ineffectively, especially if they are divided into more than two slices.  Unless you are \textit{sure} 
+there is a good reason to use one, don't.
 
 \section{Looking at Multiple Variables at Once}
 
@@ -385,14 +402,15 @@ bargraph( ~ substance | sex, data=HELPrct)
 
 \subsection{Grouping}
 Another way to look at multiple groups simultaneously is by using 
-the \argument{groups} argument.  What groups does depends a bit on the type of 
+the \argument{groups} argument.  What \argument{groups} does depends a bit on the type of 
 graph, but it will put the information in one panel rather than multiple panels.
 Using \argument{groups} with \function{histogram()} doesn't work so well because
 it is difficult to overlay histograms.%
 \footnote{The \pkg{mosaic} function
 \function{histogram()} does do something meaningful with \argument{groups}
 in some situations.}
-Density plots work better for this.
+Density plots work better when you wish to look at the shapes of several distributions 
+in a single plot panel.
 
 Here are some examples.  We use \argument{auto.key=TRUE} to build 
 a simple legend so we can tell which groups are which.
@@ -431,7 +449,7 @@ xyplot( Sepal.Length ~ Sepal.Width, data=iris )
 @
 
 Grouping and conditioning work just as before and can be used to see the relationship
-between sepal length and sepal width broken down by species.
+between sepal length and sepal width broken down by species of iris plant.
 With large data set, it can be helpful to make the dots semi-transparent so it is
 easier to see where there are overlaps.  This is done with \argument{alpha}.
 We can also make the dots smaller (or larger) using \argument{cex}.
@@ -451,39 +469,54 @@ shape you want.
 
 \section{Reproducible Research}
 
-Copy-and-paste is a bad workflow for lots of reasons, including:
+When starting to learn to use \R\ for data analysis, it may be tempting to work 
+by typing commands into the \R\ console directly, or maybe by copying and pasting commands
+from some other source (for example, these notes, a website, etc.).
+
+There are many reasons to avoid working this way, including:
 \begin{itemize}
-	\item It is tedious, unless there is very little to copy and paste.
-	\item It is error-prone -- it's easy to copy to little or too much, or to grab the wrong thing,
+	\item It is tedious, unless there is very little to type, or to copy and paste.
+	\item It is error-prone -- it's easy to copy too little or too much, or to grab the wrong thing,
 		or to copy when you want to cut or cut when you want to copy.
 	\item
 		If something changes, you have to start all over.
 	\item
 		You have no record of what you did (unless you are an unusual person who
-		takes detailed notes about all the copying and pasting).
+		takes detailed notes about everything you copied and pasted, or typed into the \R\ console).
 \end{itemize}
-So while copy and paste seems easy and convenient, it is not \emph{reproducible}.
+So while copy and paste seems easy and convenient at first, it is not \emph{reproducible}.  Reproducible, here,
+means something that can easily be repeated in exactly the same way (or with some desired modification), because
+the exact procedure that was followed has been clearly documented in a format that is simple to access.
 Reproducibility is important when projects are large, when it is important to have record of 
-exactly what was done, or when the same analysis is applied to multiple data sets (or a data set
+exactly what was done, or when the same analysis will be applied to multiple data sets (or a data set
 that is growing over time).
 
 \RStudio\ makes it easy to use techniques of reproducible research to create
 documents that include text, \R\ commands, \R\ output, and \R\ graphics.  
 
 \subsection{R Markdown}
-The simplest version of this uses a format called R Markdown.  Markdown is a simple
+One simple way to do reproducible work is to use a format called R Markdown.
+Markdown is a simple
 mark up language that allows for a few basic improvements on plain text
 (section headers, bulleted lists, numbered lists, bold, italics, etc.)  R
-Markdown adds the ability to mix in the \R\ stuff.  
+Markdown adds the ability to mix in the \R\ stuff (\R\ commands and output,
+including figures).  
 The end product is an HTML file, so it is especially good for producing web 
 documents.\footnote{You can actually mix in arbirary HTML and even css, so if you
-are good at HTML, you can have quite a bit of control over how things look.  Here will
+are good at HTML, you can have quite a bit of control over how things look.  Here we
 will focus on the basics.}
 
 \subsubsection{Creating a new document}
-To create a new R Markdown document, go to ``File", ``New", then ``R Markdown":
+To create a new R Markdown document in \RStudio, go to ``File", ``New File", then ``R Markdown":
 \begin{center}
 	\includegraphics[width=3in]{images/NewRMarkdown}
+\end{center}
+
+A small pop-up window will appear; for current purposes, you can select all the default
+options (a Document, with HTML output format, with the Title and Author blanks
+filled in or left blank, as you wish).
+\begin{center}
+  \includegraphics[width=3in]{images/NewRMarkdownPopup}
 \end{center}
 
 When you do this, a file editing pane will open with a template inserted.  If
@@ -497,7 +530,7 @@ If you look at the template file you will see that the file has two kinds of
 sections.  Some of this file is just normal text (with some extra symbols to
 make things bold, add in headings, etc.)  You can get a list of all of these
 mark up options by selecting the ``Markdown Quick Reference" in the question
-mark menu.
+mark menu (at the top of the Markdown document in the editing pane).
 
 \begin{center}
 	\includegraphics[width=2in]{images/MardownQuickReference}
@@ -515,15 +548,22 @@ rather type.)
 You can put any \R\ code in these code chunks and the results (text output or graphics) as well
 as the \R\ code will be displayed in your HTML file.
 
+In addition to knitting the document to HTML, you can do a number of other things that will
+make your work more efficient.  In the ``Chunk" menu, you can choose to run a single chunk 
+or all the chunks.  This will execute your commands in the console so you can make sure 
+your \R\ code is working one chunk at a time.  There is also a ``run" button that allows you
+to run just one line from within a chunk.
+
 %There are options to do things like (a) run \R\ code without displayng it, (b) run \R\ code without
 %displaying the output, (c) controling size of plots, etc., etc.  
 %But for starting out, this is really all you need to know.
 
 \subsection*{R Markdown files must be self-contained}
 R Markdown files do not have access to things you have done in your console.  (This is good, else 
-your document would change based on things not in the file.)  This means that you must explicitly
+your document would change based on things not in the file.)  Within each R Markdown file, you must explicitly
 load data, and require packages \emph{in the R Markdown file} in order to use them.  In this class,
-this means that most of your R Markdown files will have a chunk near the beginning that includes
+this means that most of your R Markdown files will have a chunk near the beginning that loads required
+packages and datasets.
 
 
 \iffalse
@@ -555,7 +595,7 @@ data or some package loaded inside your file.  (Typos are another cause for thes
 check your spelling and capitalization.)
 \fi
 
-\subsubsection{Chunk options}
+\subsection*{Chunk options}
 R Markdown provides a number of chunk options that control how \R\ code is processed.  
 You can use them to do things like:
 \begin{itemize}
@@ -577,24 +617,17 @@ opts_chunk$set( fig.width=5, fig.height=2, fig.align="center", fig.show="hold" )
 @
 
 \subsection{knitr/latex}
-There is another system that produces PDFs by combining \LaTeX\ and \R.  This is the system
-used to create this document and it gives much more control over paper-like formatting.  The
-quality is good enough for profession publishing.  If you already knwow \LaTeX, it is very
+There is another system that produces PDFs by combining \LaTeX\ and \R, using the \R package
+\pkg{knitr}.  This is the system
+used to create this document; it gives much more control over document formatting.  The
+quality is good enough for professional publishing.  If you already knwow \LaTeX, it is very
 easy to learn.  If you don't know \LaTeX, then you need to learn the basics of \LaTeX\ to get
-going, but it isn't very difficult.
+going, which is not covered in detail here.  If you are interested in learning more,
+consult the documentation for the \pkg{knitr} package, or 
+the \href{http://yihui.name/knitr/}{knitr website}.
 
-\R\ code and output can be copied and pasted as well.  It's best to use a 
-fixed width font (like Courier) for \R\ code so that things align properly.
-
-Note:  \RStudio\ provide some nice utilities for creating documents that include
-text, code, graphics, and statistical analyses all in one document.  That's how this 
-document was produced.  The simpler of these is called RMarkdown.  The resulting file
-will be an HTML file with embedded plots.  You can gain more control over the output
-by using \pkg{knitr} which provides a way to combine \LaTeX\ and \R in a single
-document.  The resulting document in this case is a high quality PDF
-
-\section{A Few Bells and Whistles}
-There are lots of arguments that control how these plots look.  Here are just a
+\section{Customizing Graphics: A Few Bells and Whistles}
+There are lots of arguments that control the appearance of plots created in \R.  Here are just a
 few examples, some of which we have already seen.
 
 \subsection{auto.key}
@@ -645,9 +678,10 @@ where \code{cols} is the number of columns and \code{rows} is the number of
 rows.  (Columns first because that is the $x$-coordinate of the plot.)
 
 \subsubsection*{lty, lwd, pch, col}
-These can be used to change the line type, line width, plot character, and
-color.  To specify multiples (one for each group), use the \function{c()} function 
-(see below).
+These can be used to change the line type, line width, plot symbol, and
+color, respectively.  To specify multiples (one for each group), use the \function{c()} function
+(to remember this function, remember that ``c" is for ``concatenate").  An example is below.
+
 
 <<pch-lwd-lty,cache=TRUE,fig.width=3,fig.height=2.2>>=
 densityplot( ~age, data=HELPrct, groups=sex, lty=1, lwd=c(2,4) )
@@ -659,7 +693,7 @@ xyplot( Sepal.Length ~ Sepal.Width, data=iris, groups=Species,
 	    pch=c(1,2,3), col=c('brown', 'darkgreen', 'purple'), cex=.75 )  
 @
 
-Note: If you change this this way, they will \emph{not} match what is 
+Note: If you change the colors and symbols this way, they will \emph{not} match what is 
 generated in the legend using \argument{auto.key=TRUE}.  So it can be better
 to set these things in a different way if you are using \option{groups}.  
 See below.
@@ -673,7 +707,8 @@ colors()
 \subsection{trellis.par.set()}
 Default settings for lattice graphics are set using 
 \function{trellis.par.set()}.
-Don't like the default font sizes?  You can change to a 7 point (base) font using
+Don't like the default font sizes?  You can change them! For example,
+change to a 7 point (base) font using
 
 <<fontsize,eval=TRUE>>=
 trellis.par.set(fontsize=list(text=7))    # base size for text is 7 point 
@@ -683,7 +718,8 @@ Nearly every feature of a lattice plot can be controlled: fonts, colors,
 symbols, line thicknesses, colors, etc.  Rather than describe them all here,
 we'll mention only that groups of these settings 
 can be collected into a theme.  
-\function{show.settings()} will show you what the theme looks like.
+\function{show.settings()} will show you what the current theme looks like.
+Below are a few examples of changing the theme settings, then viewing the results.
 
 <<themes-whitbg,cache=TRUE,fig.height=5,fig.width=6>>=
 trellis.par.set(theme=col.whitebg())      # a theme in the lattice package
@@ -692,6 +728,7 @@ show.settings()
 \newpage
 
 <<themes-abd,cache=TRUE,fig.height=4.0,fig.width=6,out.height=".4\\textheight">>=
+require(abd)
 trellis.par.set(theme=col.abd())          # a theme in the abd package
 show.settings()
 @
@@ -739,9 +776,9 @@ are looking for.
 
 \subsection{Tab completion}
 As you type the name of a function in \RStudio, you can hit the tab key and it
-will show you a list of all the ways you could complete that name, and after
+will show you a list of all the ways you could complete that name. After
 you type the opening parenthesis, if you hit the tab key, you will get a list
-of all the arguments and (sometimes) some helpful hints about what they are.)
+of all the possible input arguments and (sometimes) some helpful hints about what they are.)
 
 \subsection{History}
 If you know you have done something before, but can't remember how, you can
@@ -750,16 +787,20 @@ commands.  There is also a search bar to help you find things from longer ago.
 
 \subsection{Error messages}
 When things go wrong, \R\ tries to help you out by providing an error message.
-If you can't make sense of the message, you can try copying and pasting your
-command and the error message and sending to me in an email.  One common error
-message is illustrated below.
+Typos are probably the most common cause of errors: for example, you might
+misspell a function or argument name, forget to close a set of parentheses or 
+brackets, or misplace a comma.  
+One common error message is illustrated below.
 <<error-message>>=
 fred <- 23
 frd
 @
 The object \code{frd} is not found because it was mistyped.  It should have
-been \code{fred}.  If you see an ``object not found'' message, check your
+been \code{fred}.  Another common mistake is forgetting to load required packages.
+If you see an ``object not found'' message, check your
 typing and check to make sure that the necessary packages have been loaded.
+If you get an error and can't make sense of the message, you can try copying and pasting your
+command and the error message and sending to me in an email. 
 
 \section{Graphical Summaries -- Important Ideas}
 
@@ -796,7 +837,7 @@ y ~ x | z
 \end{itemize}
 
 \subsection{Patterns and Deviations from Patterns}
-The goal of a statistical plot is to help us see 
+The goal of a statistical plot is to help us \emph{see} 
 \begin{itemize}
 \item 
 potential patterns in the data, and 
@@ -807,15 +848,12 @@ deviations from those patterns.
 \subsection{Different Plots for Different Kinds of Variables}
 Graphical summaries can help us see the \emph{distribution} of a variable 
 or the \emph{relationships} between two (or more) variables.  The type of plot
-used will depend on the kinds of variables involved.
-There is a nice summary of these on page~48.  You can use \function{demo()} to see how
-to get \R\ to make the plots in this section.
-
-Later, when we do statistical analysis, we will see that the analysis we use will 
+used will depend on the kinds of variables involved. Later, when we do more quantitative 
+statistical analysis, we will see that the analysis we use will 
 also depend on the kinds of variables involved, so this is an important idea.
 
 \subsection{Side-by-side Plots and Overlays Can Reveal Importance of Additional Factors}
-The \pkg{lattice} graphics plots make it particularly easy to generate plats that 
+The \pkg{lattice} graphics plots make it particularly easy to generate plots that 
 divide the data into groups and either produce a panel for each group (using \verb!|!)
 or display each group in a different way (different colors or symbols, using 
 the \argument{groups} argument).  These plots can reveal the 
@@ -856,9 +894,9 @@ between 5.0 and 5.5.
 
 It would be incorrect to choose \option{type="count"} or \option{type="proportion"} since
 this distorts the picture of the data.  Fortunately, \R\ will warn you if you try:
-<<hist-unequal-bins-bad-echo,fig.width=3,fig.height=2,eval=FALSE>>=
-histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9), type='count')
-@
+%<<hist-unequal-bins-bad-echo,fig.width=3,fig.height=2,eval=FALSE>>=
+% histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9), type='count')
+% @
 <<hist-unequal-bins-bad,fig.width=3,fig.height=2,echo=FALSE>>=
 trellis.par.set(theme=col.fastR(bw=T))
 histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9),type="count")
@@ -875,17 +913,23 @@ frequency, but this makes the wider bars have too much area.
 
 \section*{Exercises}
 
-The solutions to these exercises should be done using an RMarkdown document
-and knitTHML in RStudio.
-Include both the plots and the code you used to make them as well as any
-required discussion.  Once you get the plots figured out, feel free to 
-use some of the bells and whistles to make the plots even better.
+In your answers to these questions, include both the plots and the code you used 
+to make them as well as any required discussion.  Once you have obtained a basic
+plot that satisfies the requirements of the question, feel free to 
+use some of the ``bells and whistles" to make the plots even better.
 
 \begin{problem}
 	Create a scatterplot using the two variables in the \dataframe{oldfaith}
 	data frame.  What do we learn about Old Faithful eruptions from this plot?
 \end{problem}
 
+\begin{solution}
+<<>>=
+require(oldfaith)
+xyplot(Duration ~ Interval, data=oldfaith)
+@
+The figure shows that the time between Old Faithful eruptions was generally longer after eruptions that were longer in duration.
+\end{solution}
 
 \begin{problem}
 	Where do the data in the \dataframe{CPS85} data frame (in the 
@@ -893,15 +937,46 @@ use some of the bells and whistles to make the plots even better.
 	units?  How many are there?
 \end{problem}
 
+\begin{solution}
+<<>>=
+require(mosaic)
+help(CPS85)
+# or alternately:
+?CPS85
+#to find the number of observational units:
+dim(CPS85)
+#or
+nrow(CPS85)
+@
+The CPS85 data comes from the Current Population Survey, which collects data on the US population between US Census years.  These data are from 1985. The observational units in this dataset are the individual persons surveyed.  There are 534 observational units (individual people) included in the dataset.
+\end{solution}
+
 \begin{problem}
 	Choose a quantitative variable that interests you in the \dataframe{CPS85}
 	data set.  Make an appropriate plot and comment on what you see.
 \end{problem}
 
+\begin{solution}
+<<>>=
+#an example:
+histogram( ~ age , data=CPS85)
+@
+The CPS85 respondents range in age from under 20 to nearly 70 years old.  The distribution of ages of respondents is unimodal, but not symmetric -- there is a wider spread of ages at the high end of the distribution (in the right tail) than at the left. 
+\end{solution}
+
 \begin{problem}
 	Choose a categorical variable that interests you in the \dataframe{CPS85}
 	data set.  Make an appropriate plot and comment on what you see.
 \end{problem}
+
+\begin{solution}
+<<>>=
+#an example:
+bargraph( ~ married , data=CPS85)
+@
+There were nearly twice as many married people as single people included in the 1985 CPS. 
+\end{solution}
+
 
 \begin{problem}
 	Create a plot that displays two or more variables from the 
@@ -910,21 +985,63 @@ use some of the bells and whistles to make the plots even better.
 	Comment on what you can learn from your plot.
 \end{problem}
 
+\begin{solution}
+<<>>=
+#a simple example:
+densityplot(~ age , groups=married , data=CPS85,
+            auto.key=TRUE)
+@
+The single CPS85 respondents were mostly younger than the married ones, with single respondents over 50 making up a very small proportion of the dataset. 
+\end{solution}
+
 \begin{problem}
 	Where do the data in the \dataframe{mpg} data frame (in the 
 	\pkg{ggplot2} package) come from?  What are the observational 
 	units?  How many are there?
 \end{problem}
 
+\begin{solution}
+<<>>=
+require(ggplot2)
+data(mpg)
+#or
+?mpg
+#or
+help(mpg)
+#to get the number of units:
+#use information above, or
+nrow(mpg)
+#or
+dim(mpg)
+@
+The mpg dataset contains information on fuel economy of several models of cars (car model years 1999 and 2008). The data were collected by the EPA, and are available on the web site \url{http://fueleconomy.gov}.  The observational units are car types (a particular model, from a particular year).  There are 234 observational units in the data set.
+\end{solution}
+
 \begin{problem}
 	Choose a quantitative variable that interests you in the \dataframe{mpg}
 	data set.  Make an appropriate plot and comment on what you see.
 \end{problem}
+\begin{solution}
+<<>>=
+#an example:
+densityplot(~ cty , data=mpg, 
+        xlab="Miles per Gallon (city)")
+@
+Most car models in the dataset got between about 15-20 miles per gallon in the city, and although the distribution of city fuel economy was slightly right-skewed, only a few models got better than 30 miles per gallon. 
+\end{solution}
 
 \begin{problem}
 	Choose a categorical variable that interests you in the \dataframe{mpg}
 	data set.  Make an appropriate plot and comment on what you see.
 \end{problem}
+\begin{solution}
+<<>>=
+#an example:
+bargraph(~ class , data=mpg,
+          xlab="Car Type")
+@
+SUV is the most common car type in the dataset, although pickups, compact cars, subcompact cars, and mid-size cars are also well-represented.  There are relatively few minivans and even fewer 2-seaters in the dataset.
+\end{solution}
 
 \begin{problem}
 	Create a plot that displays two or more variables from the 
@@ -932,6 +1049,17 @@ use some of the bells and whistles to make the plots even better.
 	and at least one should be categorical.
 	Comment on what you can learn from your plot.
 \end{problem}
+
+\begin{solution}
+<<>>=
+#an example:
+histogram(~ hwy | class , data=mpg,
+          xlab="Miles per Gallon (highway)",
+          main="Highway fuel economy by car type")
+@
+Larger types of vehicles (like pickups, SUVs, and mini-vans) generally have lower fuel economy than smaller ones (like compact, subcompact, and midsize).
+\end{solution}
+
 
 \begin{problem}The file at \url{http://www.calvin.edu/~rpruim/data/Fires.csv}
 	is a csv file containing data on wild lands fires in the US over a number of years.
@@ -960,14 +1088,44 @@ web URL, so this is a good way to get your own data into \R.
 <<>>=
 Fires2 <- subset(Fires, Year > 1966)
 @
-		Be sure to use a new name if you want to keep the original data available.
+		Be sure to use a new name for the subset data frame if you want to keep the original data available.
 
-		Do this to create a data set that contains only the data from the new data regime (based on your answer in the previous problem).
+		Use \function{subset()} to create a data set that contains only the data from the new data regime (based on your answer in the previous problem).
 	\item
-		Using only the data from this smaller set, how would describe what is happening with 
+		Using only the data from this smaller set, how would you describe what is happening with 
 		fires over time?
 \end{enumerate}
 \end{problem}
+
+\begin{solution}
+
+<<>>=
+#read in the data
+Fires <- read.csv("http://www.calvin.edu/~rpruim/data/Fires.csv")
+#get information about the dataset
+head(Fires)
+#plot number of fires over time
+xyplot(Fires ~ Year, data=Fires)
+#plot number of acres burned over time
+xyplot(Acres ~ Year, data=Fires)
+@
+There is an abrupt change in the number of fires per year starting in 1983. (There is no such obvious break-point in the data on the number of acres burned, although you might argue that the number of acres burned began to increase in about 1990-95.)
+
+<<>>=
+#trim the data, keeping only data after 1982
+Fires2 <- subset(Fires, Year > 1982)
+#plot number of fires over time
+xyplot(Fires ~ Year, data=Fires2)
+#plot number of acres burned over time
+xyplot(Acres ~ Year, data=Fires2)
+#number of acres burned per fire over time
+xyplot(Acres/Fires ~ Year, data=Fires2,
+       ylab="Acres burned per fire")
+@
+
+The number of fires per year is relatively constant (excluding unusually low numbers in 1983-84), but the number of acres burned per year has increased over time.  Specifically, the fires have been larger in size (on average) since about 2000.
+\end{solution}
+
 
 \begin{problem}
 	Use \R's help system to find out what the \variable{i1} and \variable{i2}
@@ -976,15 +1134,31 @@ Fires2 <- subset(Fires, Year > 1966)
 	the shape of these distributions?  Do you see any outliers (observations
 	that don't seem to fit the pattern of the rest of the data)?  
 \end{problem}
+
+\begin{solution}
+<<>>=
+require(mosaic) #only if you have not yet done it this session!
+?HELPrct
+@
+i1 is the average number of drinks consumed per day over the past 30 days, in standard units.  i2 is the maxium number of drinks per day (measured in the same way).  
+
+<<>>=
+histogram(~ i1, data=HELPrct, type="count")
+histogram(~ i2, data=HELPrct, type="count")
+@
+The distributions of both i1 and i2 are heavily right-skewed. There are few observations of very heavy drinking (greater than about 75 for i1, or 100 for i2), but they are not necessarily obvious outliers (they fit the right-skewed pattern of the overall dataset).
+\end{solution}
+
 \begin{problem}
 	Compare the distributions of \variable{i1} and \variable{i2} among men
 	and women.
 \end{problem}
 \begin{solution}
 <<>>=
-densityplot( ~i1, groups=sex, data=HELPrct )
-densityplot( ~i2, groups=sex, data=HELPrct )
+densityplot( ~i1, groups=sex, data=HELPrct , auto.key=T)
+densityplot( ~i2, groups=sex, data=HELPrct , auto.key=T)
 @
+Overall, the distribution for males is more right-skewed in both cases, indicating a greater proportion of males than females who drink more heavily.  The extreme right tail of the i1 (average consumption) distribution extends much further toward high values for males, again indicating more males than females with extremely high consumption.  Both female distributions also have a small second peak in density at higher consumption levels, perhaps indicating a subset of women who are consistently heavier drinkers. This bimodality is especially apparent in the i1 (average drinks per day) data.  
 \end{solution}
 
 \begin{problem}
@@ -993,43 +1167,46 @@ densityplot( ~i2, groups=sex, data=HELPrct )
 \end{problem}
 \begin{solution}
 <<>>=
-densityplot( ~i1, groups=substance, data=HELPrct )
-densityplot( ~i2, groups=substance, data=HELPrct )
+densityplot( ~i1, groups=substance, data=HELPrct , auto.key=T)
+densityplot( ~i2, groups=substance, data=HELPrct , auto.key=T)
 @
 <<>>=
-densityplot( ~i1|sex, groups=substance, data=HELPrct )
-densityplot( ~i2|sex, groups=substance, data=HELPrct )
+densityplot( ~i1|sex, groups=substance, data=HELPrct , auto.key=T)
+densityplot( ~i2|sex, groups=substance, data=HELPrct , auto.key=T)
 @
-<<>>=
-xyplot( i2 ~ i1, groups=sex, data= HELPrct, alpha=.6, cex=.6 )
-@
+Alcohol use is heavier among people whose primary substance of abuse is alcohol, whether we are considering i1 (average use) or i2 (maximum use). Among people whose primary drug of abuse is heroin or cocaine, the distribution of alcohol use among cocaine users is more right-skewed than among heroin users, suggesting that heavier alcohol consumption is more common in combination with cocaine than with heroin.  The observed patterns are relatively similar for males and females.
 \end{solution}
 
 \begin{problem}
 	The \dataframe{SnowGR} contains historical data on snowfall in Grand Rapids, MI.
-	The snowfall total for January, 2014 was 36.6 inches.
+	The snowfall totals for November and December 2014 were 31 inches and 1 inch, respectively.
 	\begin{enumerate}
 		\item
-			Create a histogram of January snowfall totals.  How unusual is 36.6 inches of 
-			snow in January?
+			Create histograms of November and December snowfall totals.  How unusual were the snowfall totals we had in 2014?
 		\item
-			If there is a lot of snow in January, should we expect to have unusually much
-			or little snow in February?  Make a scatter plot comparing January and February
-			snowfall totals and comment on what you see there.
+			If there is very little snow in December, should we expect to have unusually much
+			or little snow in February?  Make a scatter plot comparing December and February
+			historic snowfall totals and comment on what you see there.
 	\end{enumerate}
 \end{problem}
 
 \begin{solution}
 <<>>=
-histogram(~Jan, data=SnowGR)
+histogram(~Nov, data=SnowGR)
+histogram(~Dec, data=SnowGR)
 @
-36.6 inches is pretty high, but not the highest ever for a January.  Certainly well above average.
+November and December 2014 were both very unusual in terms of snowfall. 31 inches was a record high snowfall
+total for November.  For December, tallies as low as or lower than 1 inch have been recorded before 2014, 
+but were rare.
 
 <<>>=
 xyplot(Feb ~ Jan, data=SnowGR)
+xyplot(Feb ~ Jan, data=SnowGR)
 @
-There is no clear trend.  Somtime the snow keeps on coming, but a heavy snow
-January could be followed by either a heavy or light snow February.
+There is no clear relationship between December snowfall and February snowfall.  
+Sometimes little snow falls in February after minimal snow in December, but sometimes
+there is plenty of February snow despite little snow in December.  (So February 2015 might
+yet be snowy!)
 \end{solution}
 \shipoutProblems
 

@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Math241-S15.Rnw')}
 
 \Chapter{Numerical Summaries}
 
@@ -63,7 +63,7 @@ tally( ~age, data=HELPrct )
 @
 
 \subsubsection*{Tabulating in bins (optional)}
-It is more convenient to group them into bins.  We just have to tell \R\ what the bins are.
+It is often more convenient to group quantitative data into bins.  We just have to tell \R\ what the bins are.
 For example, suppose we wanted to group the 20s, 30s, 40s, etc. together.
 \Rindex{cut()}%
 \Rindex{xtabs()}%
@@ -93,7 +93,7 @@ more useful.
 \subsubsection*{Labeling a histogram}
 
 The \function{histogram()} function offers you the option of 
-adding the counts to the graph.
+adding the counts to the graph, via the logical (TRUE/FALSE) \code{label} argument.
 <<xhistogram-counts,fig.width=6>>=
 histogram( ~age, data=HELPrct, label=TRUE, type='count', 
   width=10, center=5, ylim=c(0,300), right=FALSE )
@@ -116,13 +116,16 @@ calls \function{barchart()} to do the plotting.}
 <<teen-deaths>>=
 require(abd)           # data sets from Analysis of Biological Data
 TeenDeaths
-barchart(deaths ~ cause, data=TeenDeaths)
+barchart(deaths ~ cause, data=TeenDeaths, 
+         scales=list(x=list(rot=30)))
+#("scales" argument above is to rotate the x-labels so they don't overlap)
+#  you may find it useful, but learning it is optional.
 barchart(cause ~ deaths, data=TeenDeaths)
 @
 Notice that by default the causes are displayed in alphabetical order.  \R\
-assumes that categorical data is nominal unless you say otherwise.  
+assumes that categorical data is nominal (that is, there is no particular natural or logical ordering to the categories) unless you say otherwise.  
 Here are two ways to have things appear in a different order. The first uses 
-the order in which things appear in the \dataframe{TeenDeaths} data frame.
+the order in which categories (to \R\, ``levels") appear in the \dataframe{TeenDeaths} data frame.
 The second reorders based on the value of the \variable{deaths} variable.
 <<teen-deaths-order>>=
 barchart( ordered(cause, levels=cause) ~ deaths, TeenDeaths)
@@ -134,9 +137,7 @@ barchart( reorder(cause, deaths) ~ deaths, TeenDeaths)
 \subsubsection*{Important Note}
 Numerical summaries are a convenient way to 
 describe a distribution, but remember that numerical summaries 
-do not tell you everything there is to know about a distribution any
-more than know a few facts (e.g., age, employment, sex) tell you everything 
-there is to know about a person.
+do not necessarily tell you everything there is to know about a distribution.  When working with a new dataset, it is \emph{always} important to explore the data as fully as possible (commonly including graphical as well as numerical summaries, and sometimes even examining the data table directly) before accepting any simplified summary as a good representation of the data.  You might discover certain patterns in the data, interesting features, or even outliers or mistakes in the data, that make certain summaries misrepresentations of the whole.
 
 \subsubsection*{Notation}
 In statistics $n$ (or sometimes $N$) almost always means the number 
@@ -169,14 +170,16 @@ typical value for the distribution.
 \\[3mm]
 \mbox{median of $y$}
 &=
-\mbox{the ``middle'' number (after putting the numbers in increasing order)}
+\mbox{the ``middle'' number (after putting the numbers in increasing order)
+} 
 \end{align*}
 
 \begin{itemize}
 \item
 The mean is the ``balancing point'' of the distribution.
 \item
-The median is the 50th percentile: half of the distribution is below the median,
+The median\footnote{A note about calculating medians: If the number of datapoints is odd, the median is the middle value (after putting the observations in increasing order). In cases where there is an even number of observations, the median is the
+  average of the middle two observations.} is the 50th percentile: half of the distribution is below the median,
 half is above.
 \item
 If the distribution is symmetric, then the mean and median are the same.
@@ -187,8 +190,7 @@ In a skewed distribution, the mean is pulled farther toward the tail than the me
 so the mean is \term{sensitive to outliers} and is a better measure of center
 when the distribution is symmetric than when it is skewed.
 \item
-The median is a \term{resistant measure} -- it is not affected much
-by a few very large or very small values.
+The median is a \term{resistant measure} (resistant to the presence of outlier) -- it is not affected much by a few very large or very small values.
 \end{itemize}
 
 
@@ -270,7 +272,7 @@ favstats( ~ age | sex, data=HELPrct )
 
 \subsection{A word of caution}
 None of these measures (especially the mean and median) 
-is a particularly good summary if the distribution is not unimodal.  
+is a particularly good summary of a set of data if the distribution of the data is not unimodal.  
 The histogram below shows the lengths of eruptions of the Old Faithful geyser
 at Yellowstone National Park.
 <<faithful,fig.width=6,fig.height=2.0,tidy=FALSE>>=
@@ -299,8 +301,8 @@ the five \term{quantiles}:
 bwplot(~age, data=HELPrct)
 @
 
-Boxplots really shine when comparing multiple groups.  Here is one way to do so that 
-should look familiar from what we know about histogram:
+Boxplots provide a way of comparing multiple groups that is especially informative and visually effective.  Here is one way to make boxplots of multiple groups (it 
+should look familiar from what we know about histogram):
 <<bwplot1>>=
 bwplot(~age | substance, data=HELPrct, layout=c(1,3))
 @
@@ -317,7 +319,8 @@ bwplot(substance ~ age | sex, data=HELPrct)
 @
 
 \subsection{Small data sets}
-When we have relatively small data sets, it does not make sense to use a boxplot.  Then it is better to 
+When we have relatively small data sets, it may not make sense to use a boxplot.  With very few observations, boxplots can be misleading, in that they suggest the presence of more observations than are really contained in the dataset.  
+In these cases, it is better to 
 display all the data.  \function{xyplot()} allows you to put a categorical variable along one axis and a 
 quantitative variable along the other.  
 For some data sets, either option can produce a plot that gives a good picture
@@ -327,8 +330,9 @@ xyplot( sex ~ weight, data=Mosquitoes, cex=.5, alpha=.6)
 bwplot( sex ~ weight, data=Mosquitoes)
 @
 
-\R\ actually provides a separate function for this type of scatter plot (where one 
-variable is categorical). 
+\R\ actually provides a separate function, \function{stripplot()}, 
+for this type of scatter plot (where one 
+variable is categorical). Note the effect of the \code{jitter} argument -- it moves each data point slightly up or down, to reduce overplotting (data points being plotted exactly on top of one another) and make it clearer how many data-points were observed for each possible combination of x- and y-values.
 \Rindex{stripplot()}%
 <<stripplot,fig.height=2.0>>=
 stripplot( substance ~ age, data=HELPrct) 
@@ -367,7 +371,8 @@ interquartile range  & IQR & IQR $+\; k$ & IQR $\cdot \;c$
 
 \section{Summarizing Categorical Variables}
 
-The most common summary of a categorical variable is the \term{proportion}:
+The most common summary of a categorical variable is the \term{proportion} 
+of observations in each category. For a single category:
 \begin{align*}
 \hat p & = \frac{\mbox{number in one category}}{n}
 \end{align*}
@@ -378,7 +383,8 @@ For example, if there are
 \hat p = \frac{10}{25} = \frac{2}{5} =  0.40 = 40\%
 \]
 
-If we code our categorical variable using 1 for observations in ``the one category"
+If we code our categorical variable using 1 for observations in a
+single category of interst -- ``the one category" --
 and 0 for observations in any other category, then
 \emph{a proportion is a sample mean}.
 
@@ -394,7 +400,7 @@ between two variables.  The most common one is the \term{correlation coefficient
 which we will learn about later.
 
 \newpage
-\section*{Exercises}
+\section*{Practice Exercises}
 
 \begin{problem}
 	Create a data set with $n=6$ values, each an integer between 0 and 10 (inclusive) 

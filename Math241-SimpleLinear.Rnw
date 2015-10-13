@@ -8,7 +8,7 @@ number of dimes in a sack of dimes from our estimates of the weight of the
 dimes and the average weight of a dime.  
 
 In this chapter we will explore how to use data to determine the relationship among
-two or more variables when this relationship is not know in advance.  The general
+two or more variables when this relationship is not known in advance.  The general
 framework we will use is 
 
 \[
@@ -16,7 +16,7 @@ Y = f(x_1, x_2, \dots, x_k) + \varepsilon
 \]
 \begin{itemize}
 	\item $Y$ is the \term{response} variable that we are trying to estimate
-		from $k$ \term{explanatory} variables $x_1, x_2, \dots, x_k$.
+		from $k$ \term{explanatory} or \term{predictor} variables $x_1, x_2, \dots, x_k$.
 	\item
 		The relationship between the explanatory variables and the response 
 		variables is described by a function $f$.
@@ -70,7 +70,7 @@ There are many different things we might want to do with a linear model, for exa
 
 We want to determine the best fitting line to the data.  The usual method is 
 the method of least squares\footnote{In this case, it turns out that the least 
-squares and maximum likelihood methods produce exactly the same results.}
+squares and maximum likelihood methods produce exactly the same results.},
 which chooses the line that has the 
 \emph{ smallest possible sum of squares of residuals}, where residuals are defined by
 
@@ -235,7 +235,7 @@ xyplot( OSA ~ palpebral, data=xmp12.01, type=c('p','r') )
 @
 \end{center}
 
-We see that the line does run roughly ``through the middle'' of the dat but that
+We see that the line does run roughly ``through the middle'' of the data but that
 there is some variability above and below the line.
 \end{example}
 
@@ -284,11 +284,14 @@ The corresponding OSA of 3.76 means that the residual for this observation is
 \]
 \end{example}
 
+\subsection{Cautionary Note: Don't Extrapolate\!}
+While it often makes sense to generate model predictions corresponding to x-values \emph{within} the range of values measured in the dataset, it is dangerous to \emph{extrapolate} and make predictions for values \emph{outside} the range included in the dataset.  To assume that the linear relationship observed in the dataset holds for explanatory variable values outside the observed range, we would need a convincing, valid justification, which is usually not available.  If we extrapolate anyway, we risk generating erroneous or even nonsense predictions.  The problem generally gets worse as we stray further from the observed range of explanatory-variable values.
+
 \section{Parameter Estimates}
 \subsection{Interpreting the Coefficients}
 The coefficients of the linear model tell us how to construct the linear function
 that we use to estimate response values, but they can be interesting in their own
-rite as well.
+right as well.
 
 The intercept $\beta_0$ is the mean response value when the 
 explanatory variable is 0.  This may or may not be interesting.
@@ -296,14 +299,13 @@ Often $\beta_0$ is not interesting because we are not interested
 in the value of the response variable when the predictor is 0.  (That might not 
 even be a possible value for the predictor.)  Furthermore, 
 if we do not collect data with values of the explanatory variable near 0, then
-we will be extrapolating from our data when we talk about the intercept.
+we will be extrapolating from our data when we talk about the intercept. (Extrapolating is dangerous because we can't really be sure that the relationships we've uncovered with our model really hold for variable values outside the range we measured.)
 
 The estimate for $\beta_1$, on the other hand, is nearly always of interest.
 The slope coefficient $\beta_1$ tells us how quickly the response variable changes 
 per unit change in the predictor.  This is an interesting value in many more situations.
 Furthermore, when $\beta_1 = 0$, then our model does not depend on the predictor at all.
-So when 0 is contained in the confidence interval for $\beta_1$, we do not have sufficient 
-evidence to be convinced that our predictor is of any use in predicting the response.
+So if we construct a confidence interval for $\beta_1$, and it contains 0, then we do \emph{not} have sufficient evidence to be convinced that our predictor is of any use in predicting the response.
 
 \subsection{Estimating $\sigma$}
 
@@ -349,6 +351,14 @@ Much is known about the estimator $\sigma^2$, including
 
 
 \section{Checking Assumptions}
+\subsection{What have we assumed?}
+In fitting a linear regression model, we have assumed:
+\begin{itemize}
+\item A linear relationship between the explanatory and response variables
+\item The errors ($\epsilon$) are Normally distributed
+\item Independence of the errors (in particular, no correlation over time between successive errors for data points collected over time)
+\item Homoscedasticity of the errors -- this means that the variance (spread) of the errors is constant over time, and over the full range of explanatory and predictor variables
+\end{itemize}
 
 \subsection{Don't Fit a Line If a Line Doesn't Fit}
 
@@ -360,26 +370,47 @@ we should look for some other model that does a better job of describing the
 relationship between our two variables.  
 
 \subsection{Checking the Residuals}
+We look at the residuals (not just the data scatter plot) because some of our assumptions refer specifically to them.  Also, often, it is easier to assess the linear fit by looking at a plot of the 
+residuals than by looking at the natural scatter plot, because on the scale 
+of the residuals, violations of our assumptions are easier to see.
 
-Residuals should also be checked to see that the distribution looks approximately
-normal and that that standard deviation remains consistent across the range of
-our data (and across time).
-Often it is easier to asses the linear fit by looking at a plot of the 
-residuals than by looking at the natural scatter plot because on the scale 
-of the residuals, discrepancies are easier to see.
+So, to verify that our linear regression assumptions are sensible, we can examine the model residuals. Residuals should be checked to see that their distribution looks approximately
+normal and that thier standard deviation (the spread of the residuals) remains consistent across the range of our data (and across time).
+
+In addition, especially if the data were collected over time (measurements made in order during an experiment; data points collected at a series of time points), it is important to verify that the residuals are \emph{independent} of one another over time.  To look for this problem, we can look at a scatter plot of the residuals as a function of time, and suspect a problem if we see series of very large, or very small, residuals all in a row.  Another plot that can help us look for non-independence in the residuals is a plot of the autocorrelation function (ACF), obtained using the \texttt{acf()} function in R.  This function computes and plots the correlation coefficient R for the residuals at various ``lags".  For example, the correlation coefficient for lag 1 is the correlation coefficient between each residual (corresponding to the \textit{i}th datapoint) and the preceding one (the \textit{i-1}th data point).  Lag 2 is between the \textit{i}th and \textit{i-2}th data point, and so on.  If the residuals are not independent, then these coefficients will have large absolute values.  (Note: the ``lag 0" coefficient measures the correlation of the \textit{i}th residual with itself, so it is always 1.  This does NOT indicate any problem with the linear regression model.)
+
+In general, we might want to check the following plots of the residuals:
+\begin{itemize}
+\item Residuals as a function of ``fitted values", or model predictions for the x-values obseved in the actual data set.
+\item Residuals as a function of the observed values of the explanatory variable (from the actual data set).
+\item Normal quantile-quantile plot of the residuals (note: in Chapter 4, we made these by hand for any distribution; you may also use the shortcut function qqmath() as illustrated below, to make them for the Normal distribution.)
+\item Residuals as a function of time (if you know the order in which they were collected, or if the explanatory variable is a time-related one).
+\item Residual autocorrelation function plot (if the data points were collected over time, or if the explanatory variable is a time-related one).
+\end{itemize}
+
+For all the scatter plots, we want to make sure the residuals ``look random" -- the extent of the spread of the residuals should not vary with time or x or y (``trumpet"-shaped plot).  If there is a pattern, it suggests a problem with the homoscedasticity assumption.  There should not be long runs of similar residuals, especially over time; if there are, it suggests non-independence of the residuals.  There should also be no apparent trends in the plot, linear or non-linear; if there are, it suggests that the relationship between the predictor and response variables was not linear.  In an autocorrelation plot, the correlation coefficients (except for lag 0) should not be too large, far exceeding the dotted guide-lines on the plot; if they are, there is probably a problem with the independence assumption.
 
 \begin{example}
-Returning to our OSA data, we can make plots of all the residuals using the 
-\function{resid()} function.
+Returning to our OSA data, we can obtain the residuals using the 
+\function{resid()} function and plot them.
 <<>>=
-xyplot( resid(osa.model) ~ palpebral, data=xmp12.01 )
-qqmath( ~ resid(osa.model),  data=xmp12.01 )
+osa.hat <- makeFun(osa.model)
+preds <- osa.hat(xmp12.01$palpebral)
+xyplot( resid(osa.model) ~ preds, data=xmp12.01,
+        main="Residuals versus fitted values")
+qqmath( ~ resid(osa.model),  data=xmp12.01 , main='Normal QQ plot')
+xyplot( resid(osa.model) ~ palpebral, data=xmp12.01,
+        main="Residuals versus explanatory variable")
+@
+
+<<acfplot, fig.width=6, fig.height=5>>=
+acf(resid(osa.model), ylab="Residual ACF", main="")
 @
 \end{example}
-If the assumptions of the model are correct, there should be no distinct patterns to this scatter
-plot (usually called a residual plot) and the normal-quantile plot should be roughly linear
-since the model says that differences between observed responses and the true linear fit
-should be random noise following a normal distribution with constant standard deviation.
+If the assumptions of the model are correct, there should be no distinct patterns to these scatter
+plots of the residuals, and the normal-quantile plot should be roughly linear
+(since the model says that differences between observed responses and the true linear fit
+should be random noise following a normal distribution with constant standard deviation).
 
 In this case things look pretty good. 
 
@@ -391,12 +422,13 @@ Outliers cannot be removed just because we don't like them, but they should be
 explored to see what is going on (data entry error? special case? etc.)
 
 Some researchers will do ``leave-one-out'' analysis, or ``leave some out'' analysis
-where they refit the regression with each data point left out once.  If the regression
-summary changes very little when we do this, this means that the regression line
+where they refit the regression with each data point left out once.  If the regression summary changes very little when we do this, this means that the regression line
 is summarizing information that is shared among all the points relatively equally.
 But if removing one or a small number of values makes a dramatic change, then
 we know that that point is exerting a lot of influence over the resulting
 analysis (a cause for caution).   
+
+This kind of analysis can be very helpful, especially if you have one or several large potential outliers in your data set, but in this class, we will not generally do it as a matter of course (it's not a required part of model assessment for coursework).
 
 \section{How Good Are Our Estimates?}
 Assuming our diagnostics indicate that fitting a linear model is reasonable for our data,
@@ -500,21 +532,21 @@ estimated.osa( 0.8, interval="confidence")
 @
 These intervals are confidence intervals for the \emph{mean} response.  Sometimes it
 is desirable to create an interval that will have a 95\% chance of containing a new 
-observation.  These intervals are called \term{prediction intervals} to distinguish
+\emph{observation} -- that is, including the anticipated error as well as the mean response.  These intervals are called \term{prediction intervals} to distinguish
 them from the usual confidence interval.
 <<>>=
 estimated.osa <- makeFun(osa.model)
 estimated.osa( 1.2, interval="prediction")
 estimated.osa( 0.8, interval="prediction")
 @
-Prediction intervals are typically much wider than confidence intervals.  (It is more challenging
+Prediction intervals are typically much wider than confidence intervals.  We have to ``cast a wider net" 
 to create an interval that contains a new observation (which might be quite a bit above 
 or below the mean) than it is to contain the mean of the distribution.
 
 The widths of both types of intervals depend on the value(s) of the explanatory
 variable(s) from which we are making the estimate.  Estimates are more
-precise near the mean predictor variable and become less precise as we move
-away from there.  Extrapolation beyond the data is both less precise and risky
+precise near the mean of the predictor variable and become less precise as we move
+away from there.  Extrapolation beyond the observed data range is both less precise, and risky,
 because we don't have data to know whether the linear pattern seen in the data
 extends into that region.
 
@@ -530,7 +562,7 @@ xyplot( OSA ~ palpebral, data=xmp12.01, panel=panel.lmbands )
 Prediction intervals are much more sensitive to the normality assumption
 than confidence intervals are because the Central Limit Theorem does not 
 help when we are thinking about individual observations (essentially samples of 
-size 1).
+size 1).  So if the true distribution of errors is not really normal, then the prediction intervals we compute using the normality assumption will not be accurate.
 
 \begin{problem}
 	Use the output below to answer some questions about rainfall volume  and 

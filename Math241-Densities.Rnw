@@ -95,7 +95,7 @@ variable, and compute the following probabilities:
 \answer
 While we could set up integrals for these, it is easier to solve them using geometry.%
 \footnote{\R\ cleverly turns TRUE and FALSE into 1 and 0 when you use them in arithmetic
-expressions.  The definition of \code{f()} make use of this conversion to simplify specifying
+expressions.  The definition of \code{f()} makes use of this conversion to simplify specifying
 the cases.}
 <<>>=
 f <- makeFun( (1 - abs(x)) * (abs(x) <= 1) ~ x )
@@ -205,7 +205,7 @@ be our primary way to calculate probabilities in applications.
 \myindex{kernel|defidx}%
 The \term{kernel} of a random variable is a function that is a 
 constant multiple of the pdf.  The reason that these are interesting
-is that any kernel can be converted into a pdf by dividing by this constant.
+is that any kernel can be converted into a pdf by dividing by the appropriate constant.
 In particular, if 
 \[ 
 \int_{-\infty}^{\infty} k(x) \; dx = A \;, 
@@ -277,10 +277,9 @@ probabilities with our density function to get the following definition:
 \E(X) = \mu_X = \int_{-\infty}^{\infty} x f(x) \; dx
 \]
 
-If you recall doing centers of mass problems you may recognize this integral as 
+If you recall doing center of mass problems you may recognize this integral as 
 the first moment.
-(We don't need to divide by the ``mass'' because the total ``mass'' is the area under
-the curve which will always be 1 for a random variable).
+(For pdfs, we don't need to divide by the ``mass'' because the total ``mass'' is the area under the curve, which will always be 1 for a random variable).
 
 Note: It is possible that the integral used to define the mean will fail to converge.
 In that case, we say that the random variable has no mean or that the mean fails to exist.%
@@ -456,6 +455,8 @@ $x = -1 + y$.
 \section{Some Important Families of Distributions}
 
 \myindex{parameter}%
+For now, we will consider only distributions of continuous random variables (probability density functions).  We will leave set aside discrete random variables (probability mass function) until quite a bit later in the course.
+
 A family of distributions is a collection of distributions that share some
 common features.  Typically, these are described by giving a pdf that has
 one or more \term{parameters}. A parameter is simply a number that describes
@@ -613,7 +614,7 @@ for a uniform distribution.  Despite its simplicity, the family of uniform distr
 has many applications.
 
 We will let $X \sim \Unif(a,b)$ denote that $X$ is a uniform random variable on 
-the interval from $a$ to $b$.  
+the interval from $a$ to $b$. 
 In \R\, the parameters $a$ and $b$ are given more meaningful names: \code{min} and \code{max}.
 We can use the following code to graph the $\Unif(1,4)$ distribution.
 
@@ -621,10 +622,10 @@ We can use the following code to graph the $\Unif(1,4)$ distribution.
 plotDist("unif", params=list(min=1, max=4), xlim=c(0,5))  # using parameter names
 plotDist("unif", params=list(1, 4), xlim=c(0,5))          # without names
 @
-Notice that the width of the non-zero portion of the pdf is 3, so the hight must be $1/3$.
+Notice that the width of the non-zero portion of the pdf is 3, so the height must be $1/3$.
 
 Probabilities involving uniform distributions are easily calculated using simple geometry,
-but \R\ also provides several functions for working with probability distributions.
+but \R\ also provides several functions for working with uniform probability distributions.
 
 \begin{center}
 \begin{tabular}{ll}
@@ -648,8 +649,8 @@ but \R\ also provides several functions for working with probability distributio
 
 Notice the pattern to these names.  They start with the same letters as 
 the functions for the triangle distributions, but replace \texttt{triangle}
-with \texttt{unif}.  There are similar functions for all of the distributions
-in this chapter.
+with \texttt{unif}.  \emph{There are similar functions for all of the distributions
+in this chapter.}
 
 \begin{example}
 	\question
@@ -696,7 +697,7 @@ occurs.  The model is based on the assumptions that
 		is proportional to the length of the time interval.  The constant
 		of proportionality is the rate parameter, usually denoted by $\lambda$.
 	\item
-		The events of an event occurring in two small non-overlapping intervals
+		The probabilities of events occurring in two small non-overlapping intervals
 		are independent.
 \end{enumerate}
 
@@ -704,8 +705,7 @@ occurs.  The model is based on the assumptions that
 	Here are some situations that might be well modeled by an exponential distribution:
 	\begin{enumerate}
 \item
-	The time until the next click on a Geiger counter (which measures radio-active
-	decay) 
+	The time until the next radioactive decay event is detected on a Geiger counter 
 
 \item
 	The time until a space satellite is struck by a meteor (or some other space junk) 
@@ -720,8 +720,7 @@ occurs.  The model is based on the assumptions that
 \item
 	The lifetime of some manufactured device.
 
-	This is a pretty simple model (we'll learn better ones later) and most often is two
-	simple.  In this model, failure is due to some external happening to the device; the 
+	This is a pretty simple model (we'll learn better ones later) and most often is \emph{too} simple to describe the interesting features of the lifetime of a device.  In this model, failure is due to some external thing ``happening to" the device; the 
 	device itself does not wear (or improve) over time.
 	\end{enumerate}
 \end{examples}
@@ -732,7 +731,9 @@ The kernel of such a distribution is
 \[
 k(x; \lambda) = e^{-\lambda x} \; \boolval{x \ge 0}
 \]
-This is a pretty easy function to integrate, but \R\ provides the now familiar
+Notice that the function describing this distribution is defined only for x-values that are real numbers greater than or equal to zero (in mathematical notation, the interval $[0, \infty)$.) This interval is sometimes called the ``support" of the distribution.  When using probability distributions to model data, it's important to think about whether the support of the distribution matches well with the range of possible values observed in the data.
+
+The exponential distribution function is a pretty easy function to integrate, but \R\ provides the now familiar
 functions to make things even easier.
 
 \begin{center}
@@ -807,17 +808,17 @@ antiD( x * dexp(x, 1/5) ~ x, lower.bound=0)(Inf)
 \end{solution}
 
 
-\newpage
+%\newpage
 \subsection{Gamma and Weibull Distributions}
 \myindex{Gamma distribution|defidx}%
 \myindex{Weibull distribution|defidx}%
 
-The Gamma and Weibull distributions are generalizations of the exponential
-distributions.  Each family has two parameters, a rate parameter as in 
+The Gamma and Weibull familities of distributions are generalizations of the exponential
+distribution.  Each family has two parameters, a rate parameter as in 
 the exponential distribution, and an additional parameter called the shape 
 parameter (denoted by $\alpha$ below).  The reciprocal of the rate parameter
-is called the scale parameter.  For the Gamma distribution, \R\ let's us use
-either rate or scale (default is rate).  For the Weibull, we must use the 
+is called the scale parameter.  For the Gamma distribution, \R\ lets us use
+either rate or scale (and the default is rate).  For the Weibull, we must use the 
 scale.
 
 \begin{center}
@@ -833,8 +834,9 @@ scale.
 		\hline
 	\end{tabular}
 \end{center}
-For the most part, we won't need these formulas, 
-we'll let \R\ do the work for us, but notice that each
+Both families of distributions are supported on the interval $[0, \infty)$.)
+For the most part, we won't use these formulas in calculations, 
+preferring to let \R\ do the work for us. However, notice that each
 of these distributions has a pdf that allows for relatively simple integration.  For the 
 Gamma distributions, we need to use integration by parts ($\alpha - 1$ times).  For 
 the Weibull distributions we can use a substitution: $u = x^{\alpha}$.
@@ -942,7 +944,7 @@ of the normal distributions are always at $\mu-\sigma$ and $\mu+\sigma$.
 
 Among the normal distributions is one special distribution -- the \term{standard normal
 distribution} -- which has mean 0 and standard deviation 1. All other normal 
-distributions are simply linear transformation of the standard normal distribution.
+distributions are simply linear transformations of the standard normal distribution.
 That is,
 If $Z \sim \Norm(0,1)$ and $Y = a + b X$ , then $Y \sim \Norm(a, b)$.  Conversely,
 if $Y \sim \Norm(\mu, \sigma)$, then $Z = \frac{ Y - \mu }{\sigma} \sim \Norm(0,1)$.
@@ -975,7 +977,7 @@ that allow us to work with normal distributions in \R:
 \subsubsection{The 68-95-99.7 Rule}
 
 Also known as the ``Empirical Rule", the 68-95-99.7 Rule provides a set of probability
-benchmarks for the normal distributions because for any normal distribution 
+benchmarks for the normal distributions because for any normal distribution: 
 \begin{itemize} 
 	\item
 		$\approx 68$\% of the normal distribution is between 
@@ -1040,7 +1042,7 @@ qnorm(.75, 500, 100)
 \subsection{Beta Distributions}
 \myindex{Beta distribution|defidx}%
 
-The Beta distributions provide a model for proportions or other quantities that
+The Beta distributions have support on the interval $(0,1)$, so they can provide a model for proportions or other quantities that
 are bounded between 0 and 1.\footnote{A more general version of the Beta
 distributions can do the same thing for quantities bounded by any two numbers.
 This more general family of distributions has four parameters.}
@@ -1161,7 +1163,7 @@ pgamma(1, 2, scale=1/2)   - pgamma(0.5, 2, scale=1/2)
 
 Suppose we think a family of distributions would make a good model for some 
 situation.  How do we decide which member of the family to use?  The simple answer
-is that we should choose the one that fits best.  The trick is deciding what it 
+is that we should choose the one that fits ``best."  The trick is deciding what it 
 means to fit well.  In fact there is more than one way to measure how well 
 a distribution fits a data set.  
 
@@ -1258,7 +1260,7 @@ the very poor games are below average).  Weibull and Gamma distributions have
 the built in feature that scores cannot be negative and would allow for a
 skewed distribution.
 The \function{fitdistr()} function in the \pkg{MASS} package can fit each of these.
-<<>>=
+<<jordan1, warning=FALSE>>=
 require(fastR)     # the Jordan8687 data set is in this package
 fitdistr(Jordan8687$Points, "normal")
 fitdistr(Jordan8687$Points, "weibull")
@@ -1266,7 +1268,7 @@ fitdistr(Jordan8687$Points, "gamma")
 @
 We can use a histogram with overlaid density curve to see how well these fits compare 
 to the data.
-<<>>=
+<<jordan2, warning=FALSE>>=
 histogram(~ Points, Jordan8687, fit="normal", width=5, main="Normal Fit")
 histogram(~ Points, Jordan8687, fit="weibull", width=5, main="Weibull Fit")
 histogram(~ Points, Jordan8687, fit="gamma", width=5, main="Gamma Fit")
@@ -1280,7 +1282,23 @@ The \function{fitdistr()} function uses the maximum likelihood method to estimat
 distribution parameters.
 The maximum likelihood method is one of the most commonly used estimation methods
 in all of statistics because (1) it can be used in a wide range of applications,
-and (2) the resulting estimators have some some desirable properties.
+and (2) the resulting estimators have some some desirable properties.  Maximum likelihood estimation tries to choose the parameter values that \emph{maximize} the \emph{likelihood} of the observed data.  
+
+First, let's think about the ``likelihood" of an individual observed data-point.  The likelihood of the data-point is just the probability density function (or probability mass function) for the distribution of interest, evaluated at the value observed in the data. The likelihood gives some indication of how frequently we'd expect to observe this value, but it is \emph{not} a probability (for one thing, likelihoods can exceed 1).  The figure below illustrates that the likelihood of observing a person 80 inches (6 feet, 8 inches) tall, if the person comes from a population whose heights are Normally distributed with a mean of 68 inches and a standard deviation of 6 inches is about \Sexpr{round(dnorm(80,mean=68, sd=6), digits=3)}: 
+<<likelihood, echo=FALSE, fig.keep="last">>=
+h <- 80; mu <- 68; sdev <- 6
+plotDist("norm", params=list(mean=mu, sd=sdev), main="", 
+         xlab="Height (inches)", ylab="Density or Likelihood")
+trellis.focus()
+k <- lpoints(h, dnorm(h,mean=mu, sd=sdev), pch=17)
+lsegments(h, 0, h, dnorm(h,mean=mu, sd=sdev), lwd=2)
+
+trellis.unfocus()
+@
+
+
+Given a set of specific parameter values, the likelihood of an entire observed data-set can be calculated by obtaining the value of the likelihood of each observed data-point, and summing these over all the observed data points.  Then, we can find the maximum likelihood parameter estimates by trying many candidate parameter values until satisfied that we have found the ones that maximize the likelihood. (The numerical methods used are usually a bit more sophisticated than ``guessing lots of random candidate values", but we won't get into the details here. In some cases, it is also possible to write down a mathematical expression for the likelihood of the data given the parameters, and maximize it analytically.)
+
 We'll illustrate the main ideas of maximum likelihood with a simple example.
 
 \begin{example}
@@ -1324,7 +1342,7 @@ then the probability of obtaining exactly Michael's data is
 If $\evProb{roll 1 or 2}  = \frac12$, 
 then the probability of obtaining exactly Michael's data is 
 \[
-\left(\frac12\right)^3 \left(\frac12\right)^7 = \Sexpr{.5^3 * .5^7}
+\left(\frac12\right)^3 \left(\frac12\right)^7 = \Sexpr{.2^3 * .8^7}
 \;.
 \]
 \end{itemize}
@@ -1341,7 +1359,7 @@ one parameter, there may be multiple parameters.  So techniques from (multi-vari
 calculus or numerical approximation methods are often used to maximize the likelihood function.
 The \function{fitdistr()} function uses pre-derived formulas for some distributions
 and numerical approximation methods for others.  In some cases, you will get warning
-messages about attempts to apply a function to values that dont' make sense (trying to
+messages about attempts to apply a function to values that don't make sense (trying to
 take logs or square roots of negative numbers, zero in the denominator, etc.) as the 
 numerical approximation algorithm explores options in an attempt to find the best fit.
 The help documenation for \function{fitdistr()} explains which distributions it can 
@@ -1353,14 +1371,9 @@ is the method of moments.  You will often see this method used in engineering te
 espeically if they do not rely on software that implements others methods (like the 
 maximum likelihood method).
 
-The basic idea is to set up a system equations 
-where we set the mean of the data equal to the mean of the distribution,
-the variance of the data equal to the variance of the distribution, etc.\footnote{If our
-distribution has more than 2 parameters, we will need higher moments, which we will
-not cover here.}  To employ this method, we need to know the means and variances
-of our favorite families of distributions.  For all of the distributions we have seen,
-one can work out formauls for the means and variances in terms of the parameters 
-involved.  These are listed in Table~\ref{table:contDist}
+The basic idea is to set up a system of  equations where we set the mean of the data equal to the mean of the distribution, the variance of the data equal to the variance of the distribution, etc.\footnote{If our distribution has more than 2 parameters, we will need higher moments, which we will not cover here.}  
+
+To employ this method, we need to know the means and variances of our favorite families of distributions (in terms of the parameters of the distributions).  For all of the distributions we have seen, one can work out formulas for the means and variances in terms of the parameters involved.  These are listed in Table~\ref{table:contDist}
 
 \begin{example}
 	Let's return to the wind speeds in Example~\ref{ex:windspeed}.

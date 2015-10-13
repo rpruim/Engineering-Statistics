@@ -1,0 +1,63 @@
+\BOOKMARK [0][-]{chapter.0}{Where do numbers come from?}{}% 1
+\BOOKMARK [0][-]{chapter.1}{Graphical Summaries of Data}{}% 2
+\BOOKMARK [1][-]{section.1.1}{Getting Started With RStudio}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.2}{Data in R}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.3}{Graphing the Distribution of One Variable}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.4}{Looking at Multiple Variables at Once}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.5}{Exporting Plots}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.6}{Reproducible Research}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.7}{Customizing Graphics: A Few Bells and Whistles}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.8}{Getting Help in RStudio}{chapter.1}% 10
+\BOOKMARK [1][-]{section.1.9}{Graphical Summaries \205 Important Ideas}{chapter.1}% 11
+\BOOKMARK [0][-]{chapter.2}{Numerical Summaries}{}% 12
+\BOOKMARK [1][-]{section.2.1}{Tabulating Data}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.2}{Working with Pre-Tabulated Data}{chapter.2}% 14
+\BOOKMARK [1][-]{section.2.3}{Summarizing Distributions of Quantitative Variables}{chapter.2}% 15
+\BOOKMARK [1][-]{section.2.4}{Measures of Center}{chapter.2}% 16
+\BOOKMARK [1][-]{section.2.5}{Measures of Spread}{chapter.2}% 17
+\BOOKMARK [1][-]{section.2.6}{Summarizing Categorical Variables}{chapter.2}% 18
+\BOOKMARK [1][-]{section.2.7}{Relationships Between Two Variables}{chapter.2}% 19
+\BOOKMARK [0][-]{chapter.3}{Probability}{}% 20
+\BOOKMARK [1][-]{section.3.1}{Key Definitions and Ideas}{chapter.3}% 21
+\BOOKMARK [1][-]{section.3.2}{Calculating Probabilities Empirically}{chapter.3}% 22
+\BOOKMARK [1][-]{section.3.3}{Calculating Probabilities Theoretically}{chapter.3}% 23
+\BOOKMARK [1][-]{section.3.4}{Conditional Probability}{chapter.3}% 24
+\BOOKMARK [0][-]{chapter.4}{Densities}{}% 25
+\BOOKMARK [1][-]{section.4.1}{Density histograms, density plots, density functions}{chapter.4}% 26
+\BOOKMARK [1][-]{section.4.2}{Working with Probability Density Funcitons}{chapter.4}% 27
+\BOOKMARK [1][-]{section.4.3}{Some Important Families of Distributions}{chapter.4}% 28
+\BOOKMARK [1][-]{section.4.4}{Fitting Distributions to Data}{chapter.4}% 29
+\BOOKMARK [1][-]{section.4.5}{Quantile-Quantile Plots}{chapter.4}% 30
+\BOOKMARK [0][-]{chapter.5}{Propagation of Uncertainty}{}% 31
+\BOOKMARK [1][-]{section.5.1}{Error and Uncertainty}{chapter.5}% 32
+\BOOKMARK [1][-]{section.5.2}{An Example: Estimating the number of dimes in a sack of dimes}{chapter.5}% 33
+\BOOKMARK [1][-]{section.5.3}{Reporting Measurements and Estimates}{chapter.5}% 34
+\BOOKMARK [1][-]{section.5.4}{Additional Propagation of Uncertainty Examples}{chapter.5}% 35
+\BOOKMARK [1][-]{section.5.5}{Experimental Error and Its Causes}{chapter.5}% 36
+\BOOKMARK [1][-]{section.5.6}{Uncertainty \205 How Much Error Might There Be?}{chapter.5}% 37
+\BOOKMARK [0][-]{chapter.6}{Random Sampling, Central Limit Theorem, and Confidence Intervals}{}% 38
+\BOOKMARK [1][-]{section.6.1}{Estimating the Mean of a Population by Sampling}{chapter.6}% 39
+\BOOKMARK [1][-]{section.6.2}{Simulations}{chapter.6}% 40
+\BOOKMARK [1][-]{section.6.3}{Normal distributions are special}{chapter.6}% 41
+\BOOKMARK [0][-]{chapter.7}{Linear Models}{}% 42
+\BOOKMARK [1][-]{section.7.1}{The Simple Linear Regression Model}{chapter.7}% 43
+\BOOKMARK [1][-]{section.7.2}{Fitting the Simple Linear Model}{chapter.7}% 44
+\BOOKMARK [1][-]{section.7.3}{Estimating the Response}{chapter.7}% 45
+\BOOKMARK [1][-]{section.7.4}{Parameter Estimates}{chapter.7}% 46
+\BOOKMARK [1][-]{section.7.5}{Checking Assumptions}{chapter.7}% 47
+\BOOKMARK [1][-]{section.7.6}{How Good Are Our Estimates?}{chapter.7}% 48
+\BOOKMARK [0][-]{chapter.8}{Beyond Linear Regression}{}% 49
+\BOOKMARK [1][-]{section.8.1}{How big is your R2?}{chapter.8}% 50
+\BOOKMARK [1][-]{section.8.2}{Violations of Linear Regression Assumptions}{chapter.8}% 51
+\BOOKMARK [1][-]{section.8.3}{Non-Normal Errors}{chapter.8}% 52
+\BOOKMARK [1][-]{section.8.4}{Non-Independence of Errors}{chapter.8}% 53
+\BOOKMARK [1][-]{section.8.5}{Heteroscedasticity \(Non-constant Error Variance\)}{chapter.8}% 54
+\BOOKMARK [1][-]{section.8.6}{Non-linear Relationships}{chapter.8}% 55
+\BOOKMARK [1][-]{section.8.7}{Transformations in Linear Regression}{chapter.8}% 56
+\BOOKMARK [1][-]{section.8.8}{Nonlinear Least Squares}{chapter.8}% 57
+\BOOKMARK [0][-]{chapter.9}{Hypothesis Testing}{}% 58
+\BOOKMARK [1][-]{section.9.1}{Experimental Design in Statistics}{chapter.9}% 59
+\BOOKMARK [1][-]{section.9.2}{A General Framework}{chapter.9}% 60
+\BOOKMARK [1][-]{section.9.3}{Statistical Significance}{chapter.9}% 61
+\BOOKMARK [1][-]{section.9.4}{T-tests}{chapter.9}% 62
+\BOOKMARK [1][-]{section.9.5}{Connection to Confidence Intervals}{chapter.9}% 63

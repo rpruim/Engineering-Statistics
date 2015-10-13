@@ -2,29 +2,11 @@
 
 \chapter{Hypothesis Testing}
 
-\section{The Lady Tasting Tea}
+This chapter is concerned with statistical hypothesis testing, and how we can use it to make inferences and draw conclusions from data about questions of scientific interest.
 
-\myindex{lady tasting tea|exampleidx}%
-%\myindex{tea|seeonly{lady tasting tea}}%
-There is a famous story about a lady who claimed that
-tea with milk tasted different depending on whether the milk was 
-added to the tea or the tea added to the milk.
-The story is famous because of the setting in which she made this claim.  
-She was attending a party in Cambridge, England, in the $1920$s.
-Also in attendance were a number of university dons and their wives.
-The scientists in attendance scoffed at the woman and her claim.
-What, after all, could be the difference?
+\section{Experimental Design in Statistics}
+Before we begin to talk about hypothesis testing, let's review the general process of designing and carrying out a statistical experiment.
 
-\myindex{Fisher, R. A.}%
-All the scientists but one, that is.  Rather than simply dismiss the 
-woman's claim, he proposed that they decide how one 
-should \emph{test} the claim.  The tenor of the conversation changed at 
-this suggestion, and the scientists began to discuss how the claim should be 
-tested.  Within a few minutes cups of tea with milk had been prepared and 
-presented to the woman for tasting.
-
-Let's take this simple example as a prototype for a statistical study.
-What steps are involved?  
 \begin{enumerate}
   \item Determine the question of interest.
 
@@ -37,20 +19,13 @@ What steps are involved?
 	not exactly what we wanted but is something we can study and will
 	(we hope) give us some information about our original question.
 
-	In our example this question seems fairly easy to state:
-	Can the lady tell the difference between the two tea preparations?
-	But we need to refine this question.  For example, are we 
-	asking if she \emph{always} correctly identifies cups of tea
-	or merely if she does better than we could do ourselves (by 
-	guessing)?  
 
   \item 
 	Determine the \term{population}. 
 	\myindex{population}%
 
-	Just who or what do we want to know about?  Are we only interested in
-	this one woman or women in general or only women who claim to
-	be able to distinguish tea preparations?
+	Just who or what do we want to know about?  For example, are we only interested in
+	one specific person, or women in general, or all women, or all people?  Or, are we interested in the energy efficiency of one particular device, or all the machines in a certain factory, or all machines of a certain type, or all machines of a certain class, or all factories in a certain industry?
 
   \item
 	Select \term{measurements}.
@@ -68,11 +43,7 @@ What steps are involved?
 	The recorded values of these measurements are called
 	\term{variables} (because the values vary from one individual to another).
 
-	In our example, a measurement may consist of recording for a given
-	cup of tea whether the woman's claim is correct or incorrect.
-	%it is milk-into-tea or tea-into-milk.
-
-  \item
+	  \item
 	Determine the \term{sample}.
 	\myindex{sample}%
 
@@ -83,34 +54,14 @@ What steps are involved?
 	Generally speaking, bigger is better, but it is also more expensive.
 	Moreover, no size is large enough if the sample is selected inappropriately.
 
-	Suppose we gave the lady one cup of tea.  If she correctly identifies
-	the mixing procedure, will we be convinced of her claim?  She might just
-	be guessing; so we should probably have her taste more than one 
-	cup.  Will we be convinced if she correctly identifies $5$ cups? $10$ cups?
-	$50$ cups?
+  For example, if we wanted to draw conclusions about energy use across a whole industry, we would have to be careful not to sample from just a single factory, or a single type of manufacturing device.  If we wanted to draw conclusions about all people, we would have to be careful not to study only male college students.  The sample should be a random selection from the whole population (or as close as we can get to that standard).	
 
-	What if she makes a mistake?  If we present her with $10$ cups and she
-	correctly identifies $9$ of the $10$, what will we conclude?  
-	\authNote{added A success rate of -- 2010-10-23}%
-	A success rate of $90$\% is, it seems,
-	much better than just guessing, and anyone can make a mistake now and then.
-	But what if she correctly identifies $8$ out of $10$? $80$ out of $100$?
-	
-	And how should we prepare the cups?  Should we make $5$ each way?  
-	\authNote{Left it as "and how" -- 2010-10-23}%
-	Does it matter if we tell the woman that there are $5$ prepared 
-	each way?
-	Should we flip a coin to decide even if that means we might end 
-	up with $3$ prepared one way and $7$ the other way?  
-	Do any of these differences matter?
 
   \item
 	Make and record the measurements.
 
 	Once we have the design figured out, we have to do the legwork of 
 	data collection.  This can be a time-consuming and tedious process.
-	In the case of the lady tasting tea, the scientists decided to 
-	present her with ten cups of tea which were quickly prepared.
 	A study of public opinion may require many thousands of phone calls or 
 	personal interviews.
 	In a laboratory setting, each measurement might be the result 
@@ -133,19 +84,7 @@ What steps are involved?
 
 	Once the data have been collected, organized, and analyzed, we need
 	to reach a conclusion.  
-	Do we believe the woman's claim?  
-	Or do we think she is merely guessing?  How sure are we that this
-	conclusion is correct?
-
-%	In Parts~\ref{part:inf1}--\ref{part:inf2} 
-	Eventually we will
-	learn a number of important and frequently used methods for 
-	drawing inferences from data.  More importantly, we will learn
-	the basic framework used for such procedures so that it should 
-	become easier and easier to learn new procedures as we become 
-	familiar with the framework.
-	
-	%How strongly do we believe it?  
+	What is the answer to our scientific question? Is our idea or hypothesis about the way things work incorrect, or do the data support it? How sure are we about these conclusions?
 
   \item Produce a report.
 
@@ -158,167 +97,34 @@ What steps are involved?
 		is that it provides the essential information about each 
 		of the steps of the study.
 
-		As we go along, we will learn some of the standard terminology and
-		procedures that you are likely to see in basic statistical reports and 
-		will gain a framework for learning more.  
 \end{enumerate}
-
-At this point, you may be wondering who the innovative scientist was and 
-what the results of the experiment were.
-\myindex{Fisher, R. A.}%
-The scientist was R. A. Fisher, who first described this situation
-as a pedagogical example in his 1925 book on 
-statistical methodology \cite{Fisher:1925:Methods}.
-Fisher developed statistical methods that are among the most
-important and widely used methods to this day, and most of his 
-applications were biological.
-\nocite{Fisher:1970:Methods}%
-
-
-\section{Coins and Cups}
-You might also be curious about how the experiment came out.
-How many cups of tea were prepared?  How many did the woman 
-correctly identify?  What was the conclusion?
-
-Fisher never says.  In his book he is interested in the method, not the 
-particular results.  But let's suppose we decide to test the lady with
-ten cups of tea.  
-We'll flip a coin to decide which way to prepare the cups.  
-If we flip a head, we will pour the milk in first; if tails, we 
-put the tea in first.
-Then we present the ten cups to the lady and have her state which ones she
-thinks were prepared each way.  
-
-It is easy to give her a score (9 out of 10, or 7 out of 10, or whatever
-it happens to be).  It is trickier to figure out what to do with her score.
-Even if she is just guessing and has no idea, she could get lucky and 
-get quite a few correct -- maybe even all 10.  But how likely is that?
-
-Let's try an experiment.  I'll flip 10 coins.  You guess which are heads and
-which are tails, and we'll see how you do.  
-
-$\vdots$
-
-Comparing with your classmates, we will undoubtedly see that some 
-of you did better and others worse.
-
-Now let's suppose the lady gets 9 out of 10 correct.  That's not perfect,
-but it is better than we would expect for someone who was just guessing.
-On the other hand, it is not impossible to get 9 out of 10 just by guessing.
-So here is Fisher's great idea:  Let's figure out how hard it is to get
-9 out of 10 by guessing.  If it's not so hard to do, then perhaps that's 
-just what happened, so we won't be too impressed with the lady's tea tasting
-ability.  On the other hand, if it is really unusual to get 9 out of 10 
-correct by guessing, then we will have some evidence that she must 
-be able to tell something.
-
-But how do we figure out how unusual it is to get 9 out of 10 just by 
-guessing?  We'll learn another method later, but for now, let's just 
-flip a bunch of coins and keep track.  If the lady is just guessing, she 
-might as well be flipping a coin.
-
-So here's the plan.  We'll flip 10 coins.  We'll call the heads correct 
-guesses and the tails incorrect guesses.  Then we'll flip 10 more coins,
-and 10 more, and 10 more, and \dots.  That would get pretty tedious.
-Fortunately, computers are good at tedious things, so we'll let the computer 
-do the flipping for us using a tool in the \pkg{mosaic} package.
-%This package is already installed in our \RStudio\ server.  If you are running
-%your own installation of \R\ you can install \pkg{mosaic} using the following 
-%command:
-%<<install-mosaic,eval=FALSE>>=
-%install.packages("mosaic")
-%@
-The \function{rflip()} function can flip one coin
-
-<<flip1coin,cache=TRUE>>=
-require(mosaic)
-rflip()
-@
-or a number of coins
-<<flip10coins,cache=TRUE>>=
-rflip(10)
-@
-and show us the results.
-
-Typing \code{rflip(10)} a bunch of times is almost as tedious as 
-flipping all those coins.   But it is not too hard to 
-tell \R\ to \function{do()} this a bunch of times.
-<<flip2,cache=TRUE>>=
-do(2) * rflip(10)
-@
-Let's get \R\ to \function{do()} it for us 10,000 times and make 
-a table and a histogram of the results.
-<<seed123,echo=FALSE>>=
-set.seed(123)
-@
-<<flip4,cache=TRUE>>=
-results <- do(10000) * rflip(10)
-table(results$heads)
-histogram(~heads, data=results, width=1)  
-@
-<<flip5,cache=TRUE>>=
-perctable(results$heads)     #  the table in percents
-proptable(results$heads)     #  the table in proportions (i.e., decimals)
-@
-We could also use \function{tally()} for this.
-<<tally>>=
-tally(~heads, data=results)
-tally(~heads, data=results, format='percent')
-tally(~heads, data=results, format='proportion')
-@
-
-
-You might be surprised to see that the number of correct guesses
-is exactly 5 (half of the 10 tries) only 
-\Sexpr{round(as.numeric(table(results$heads)[6]/100,1))}\%
-of the time.  But most of the results are quite close to 5 correct.
-\Sexpr{round(sum(table(results$heads)[5:7]/100,1))}\% of the results are 
-4, 5, or 6, for example.
-And \Sexpr{round(sum(table(results)[4:8]/100,1))}\% of the results 
-are  between 3 and 7 (inclusive).
-But getting 8 correct is a bit unusual, and getting 9 or 10 correct is even 
-more unusual.  
-
-So what do we conclude?  It is possible that the lady could get 9 or 10 correct
-just by guessing, but it is not very likely (it only happened in about
-\Sexpr{round( sum(table(results$heads)[10:11]/100), 1 )}\% of our simulations). 
-So \emph{one of two things must be true}:
-\begin{itemize}
-\item The lady got unusually ``lucky", or 
-\item The lady is not just guessing.
-\end{itemize}
-
-Although Fisher did not say how the experiment came out, others have reported
-that the lady correctly identified all 10 cups!
-\cite{salsburg}
-
-This same reasoning can be applied to answer a wide range of questions that
-have a similar form.  For example, the question of whether dogs can smell
-cancer could be answered essentially the same way (although it would be a bit
-more involved than preparing tea and presenting cups to the Lady).
-
-
 
 
 \section{A General Framework}
+In statistical hypothesis testing, we can follow the following general procedure.  We usually begin with some idea about how the process we are studying should work.  For example, we might have a hunch that highway bridges with higher traffic flows are in poorer condition, and therefore merit more frequent repairs.  For statistical hypothesis testing, we must translate that ``hunch" into a \emph{testable} \textbf{null hypothesis}, often called $H_0$:  one that can be demonstrated to be very unlikely in light of our data.  In the case of the bridges, a testable null hypothesis might be that bridge condition \emph{does not} depend on traffic flow.  Then, if our data shows a strong apparent relationship between condition and traffic, we have evidence to \emph{reject} the null hypothesis, and the data support the idea that there is some relationship between condition and traffic.
 
+Null hypothesis are usually ``boring," no-result hypotheses:  there is no pattern; there is no relationship between the variables of interest; there is no difference between the two samples of interest.  If we can reject the null hypothesis in a certain case, we have some evidence -- but \emph{NOT} proof -- that there \emph{is} an interesting pattern in our data, and thus in the population we are trying to draw conclusions about. 
+
+The alternative to the null hypothesis is called the alternative hypothesis, often called $H_1$.  The alternative hypothesis, stated most generally, is usually some form of ``the null hypothesis is not true" -- so there IS a pattern in the data, or a difference between the samples, etc.
 
 \begin{description}
 	\item[hypothesis] A statement that can be true or false.
 	\item[statistical hypothesis] A hypothesis about a parameter or parameters.
 \end{description}
 
+In our bridge example, a statistical null hypothesis $H_0$ might be: the true slope of the regression of condition as a function of traffic is 0.
+
 \begin{examples}
 	The following are examples of null hypotheses.
 	\begin{enumerate}
 		\item
-			$\mu = 0$.  (The population mean is 0.)
+			$H_0: \mu = 0$.  (The population mean is 0.)
 		\item
-			$\beta_1=0$.  (The ``true'' slope is 0 -- assuming a model like $\E(Y) = \beta_0 + \beta_1 x$.)
+			$H_0: \beta_1=0$.  (The ``true'' slope is 0 -- assuming a model like $\E(Y) = \beta_0 + \beta_1 x$.)  
 		\item
-			$\beta_1 = \beta_2$ (Two parameters in the model are equal.)
+			$H_0: \beta_1 = \beta_2$ (Two parameters in the model are equal.)
 		\item
-			$\beta_2 = \beta_3 = 0$ (Two parameters in the model are both equal to 0.)
+			$H_0: \beta_2 = \beta_3 = 0$ (Two parameters in the model are both equal to 0.)
 	\end{enumerate}
 \end{examples}
 
@@ -326,16 +132,16 @@ more involved than preparing tea and presenting cups to the Lady).
 Hypothesis testing generally follows a four-step process.
 \begin{enumerate}
 	\item 
-		State the null and alternative hypotheses.
+		State the null ($H_0$) and alternative ($H_1$) hypotheses.
 
 		The null hypothesis is on trial and innocent until proven guilty.  We will
 		render one of two verdicts:  Reject the null hypothesis (guilty) or do not reject
-		the null hypothesis (not guilty).  
+		the null hypothesis (not guilty).  \emph{Important!  We can never \textbf{accept} or \textbf{prove} either hypothesis -- only reject the null as unlikely, or fail to reject the null since it seems likely.}
 
 	\item
 		Compute a test statistic.
 
-		All the evidence against the null hypothesis must be summarized in a
+		For a statistical hypothesis test, all the evidence against the null hypothesis must be summarized in a
 		single number called the test statistic.  It is a statistic because 
 		it is a number computed from the data.  It is called a test statistic
 		because we are using it to do hypothesis testing.
@@ -343,90 +149,54 @@ Hypothesis testing generally follows a four-step process.
 	\item
 		Determine the p-value.
 
-		The p-value is a probability:  Assuming the null hypothesis is true,
-		how likely are we to get at least as much evidence against it (i.e., a
-		test statistic as anusual as the one observed) just by random chance?
+		The p-value is a probability:  \emph{Assuming} the null hypothesis is true,
+		how likely are we to get at least as much evidence against it as we have in our data (i.e., \emph{a
+		test statistic at least as unusual as the one observed}) just by random chance?
 
 	\item
 		Interpret the results.
 
 		If the p-value is small, then one of two things is true:
 		\begin{enumerate}
-			\item The null hypothesis is true and something unlikely occurred
+			\item The null hypothesis is true and something very unlikely occurred
 				in our sample, or 
-			\item The null hypothesis is false (and the
-				p-value is a counter-factual probability).
+			\item The null hypothesis is false, so it is unsurprising that our observed data yield statistics that seem unlikely based on that (incorrect, untrue) hypothesis.
 		\end{enumerate}
-		For this reason we consider small p-values as evidence against the null
+		For this reason we consider small p-values to provide evidence against the null
 		hypothesis.
 \end{enumerate}
 
-\subsection{The Lady Tasting Tea, Revisted}
-\begin{example}
-\label{example:lady-binom}
-For the lady tasting tea, this process looks like
-\begin{enumerate}
-	\item
-		$H_0$: The probability of being correct is $0.5$ (she's just guessing).
+How small is ``small", and how small does a p-value have to be before we reject the null hypothesis?  Often, a \textbf{significance level} (usually called $\alpha$) of 0.05 is used.  Sometimes $\alpha = 0.01$ is used instead.  Basically, this corresponds to a 5\% chance of seeing results as extreme as those found in our data, were the null hypothesis really true.  If we want to be more conservative about our judgement (not rejecting the null hypothesis unless the evidence in the data is stronger against it), we could use a smaller $\alpha$ value.
 
-		$H_a$ The probability of being correct is larger than $0.5$ (she can do
-		better than someone who just guesses).
-	\item
-		Test statistic: $x=9$ of $n=10$ were correct.
-	\item
-		P-value
+It is also common for researchers to simply report the p-values they obtain from their analysis, allowing readers to draw conclusions on their own.
 
-		\begin{enumerate}
-			\item
-				Based on our empirical method, we estimate a p-value of
-<<>>=
-prop( ~(heads >= 9), data=results )
-@
+If talking about the results of a statistical hypothesis test in a report, the following language may be useful.  It relates statements about the strength of the evidence found in the data with p-values (approximately -- there are no universal standards and rules here, just guidelines).
 
-	\item
-		The probabilities for the number of correct guesses 
-		can be worked out theoretically as well.  The resulting distribution
-		is called a \term{binomial} distribution.  As with other distributions we 
-		have seen, \R\ includes the functions 
-		\function{dbinom()}, 
-		\function{pbinom()}, 
-		\function{qbinom()}, and 
-		\function{rbinom()}. 
-<<>>=
-plotDist("binom", size=10, prob=0.5)    # size = # of flips; prob=probability of heads
-dbinom(9, 10, .5) + dbinom(10, 10, .5)
-1 - pbinom(8, 10, .5)        # Note: P(X >=9) = 1 - P(X <=8)
-@
-\end{enumerate}
-\item Interpret the p-value.
+\begin{center}
+\begin{tabular}{r|r}
+Approximate p-value & Translation\\
+\hline
+$> 0.10$ & No convincing evidence against the null hypothesis\\
+$0.05-0.10$ & Weak evidence against the null hypothesis\\
+$0.01-0.05$ & Some evidence against the null hypothesis\\
+$<0.01$ & Strong evidence against the null hypothesis\\
+$<0.001$ & Very strong evidence against the null hypothesis\\
+\hline
+\end{tabular}
+\end{center}
 
-	The p-value is fairly small.  While it is possible that the woman is just guessing,
-	it would be pretty unlikely for a guesser to do this well, so we reject the 
-	null hypothesis.
+\section{Statistical Significance}
+The word ``significant" has a special meaning in statistics.  If we say that a difference or relationship between variables is significant, that means that we have applied a hypothesis test, and have \emph{failed} to reject the null hypothesis -- in other words, we have data that provides some evidence against the null hypothesis, and supporting the alternative.
 
-\end{enumerate}
-\end{example}
-
-\begin{example}
-	This situation is so common that there is a function to do the calculations for us.
-	We just need to provide the values of $x$ and $n$:
-<<>>=
-binom.test(x=9, n=10)           # default test is 2-sided
-@
-	The output above doesn't match what we obtained in Example~\ref{example:lady-binom}
-	because the alternative hypothesis is different.  It accepts both low number of correct
-	identifications (0 or 1) and high numbers (9 or 10) as evidence against the null
-	hypothesis.  If we want a one-sided p-value, we just need to ask:
-<<>>=
-binom.test(x=9, n=10, alternative="greater")        
-@
-
-\end{example}
-
+So, a pattern strong enough cause us to reject a null hypothesis of ``no difference" or ``no pattern" or ``no relationship" is called a \term{statistically significant} difference, pattern, or relationship.  Differences or relationships may fail to be statistically
+significant if they are small or weak, if they are masked by underlying variability, or if there is too 
+little data.  Good studies will collect enough data and work to reduce variability (if that is possible)
+in order to have a reasonable expectation of detecting differences if they are large enough to 
+be scientifically interesting.
 
 \section{T-tests}
 
-Many hypothesis tests are based on a $t$-distribution.  These tests all use a similar sort
+Many hypothesis tests are conducted based on a $t$-distribution, and so they are called ``t-tests". This is because, according to the Central Limit Theorem, the sampling distributions of most of our statistics (parameter estimates calculated from data) follow Normal distributions.  But just as we did when computing confidence intervals, we'll always have to use the t-distribution rather than the normal distribution, since we don't know $\sigma$ (the true population standard deviation), and since our sample size is finite.   These t-tests all use a similar sort
 of test statistic:
 
 \[
@@ -439,7 +209,7 @@ deviation is small than when the standard deviation is large.
 
 The test statistic is converted to a p-value by comparing it to the t-distribution with appropriate
 degrees of freedom.  For linear models, this is the degrees of freedom associated with the 
-residual standard error.
+residual standard error.  If considering some statistic (say, the mean value) for a single variable, the degrees of freedom will be n-1, where n is the sample size.
 
 \subsection{The 1-sample t-test}
 The 1-sample t-test tests the null hypothesis
@@ -448,17 +218,18 @@ The 1-sample t-test tests the null hypothesis
 	\item $H_a: \mu \neq 0$.
 \end{itemize}
 That is, it tests whether there is evidence that the mean of some population ($\mu$) is different
-from some hypothesized value ($\mu_0$).
+from some hypothesized value ($\mu_0$) -- often $\mu_0 = 0$.
 
 \begin{example}
 Let's look at some data on weight loss programs.  In this data set, there were two groups.  One group
-received a monetary incentive if they lost weight.  The controls
-did not receive a monetary incentive.  Let's see whether on average the controls lost weight
+received a monetary incentive if they lost weight while following a weight loss program.  The controls
+did not receive a monetary incentive, but followed the same program otherwise.  Our null hypothesis is that the control participants would not lose weight -- that the true weight loss without incentives would average 0 pounds. Let's see whether on average the controls lost weight:
 <<>>=
 require(Stat2Data)
 data(WeightLossIncentive)
 Controls <- subset(WeightLossIncentive, Group=="Control")
 favstats( ~ WeightLoss, data=Controls )
+bwplot( ~WeightLoss, data=Controls)
 @
 The standard error when doing inference for a mean is 
 \[
@@ -478,71 +249,183 @@ If we want to test our null hypothesis, then we compute a t-statistic:
 <<tidy=FALSE>>=
 t <- (3.92 - 0) / SE; t
 @
-and from this a p-value, which is the tails probability for a t-distribution with 18 degrees of freedom.
+and from this a p-value, which is the tails probability for a t-distribution with 18 degrees of freedom.  In other words, the p-value gives the probability of getting a test statistic at least as big as the one we really got, assuming that the test statistic follows a t-distribution with $n-1$ degrees of freedom.
+
+First, we find the probability of observing a test statistic of $t= \Sexpr{t}$ or larger.  Then, we have to double this value -- it would be at least as unlikely to see a test statistic of $\Sexpr{-t}$ or smaller.  Our p-value should give the area under the t-distribution curve for x-values smaller than $\Sexpr{-t}$ \emph{and} larger than $\Sexpr{t}$; it's the shaded area in the figure below:
+<<echo=FALSE, fig.width=6, fig.height=5>>=
+x <- seq(from=-5, by=0.01, to=5)
+dtvals <- dt(x, df=18)
+par(lwd=2.5, cex=1.25, cex.lab=1.25, cex.axis=1.25, cex.main=1.25)
+plot(x,dtvals, type="l", xlab="Test Statistic T", ylab="Probability Density", lwd=2.5)
+points(x=c(-t,t), y=dt(c(-t,t),df=18), pch=19, cex=1.5)
+text(x=c(-t,t)+ c(-0.2, 0.2), y=dt(c(-t,t),df=18)+0.04, labels=c("-t", "t"), cex=1.27)
+lines(x=c(-t,-t), y=c(0,dt(-t,df=18) ), lwd=3)
+lines(x=c(t,t), y=c(0,dt(t,df=18) ), lwd=3)
+xspots <- seq(from=t, by=0.025, to=5)
+for (k in 1:length(xspots)){
+  lines(x=c(-xspots[k], -xspots[k]), y=c(0,dt(-xspots[k],df=18) ), lwd=1, lty=3)
+  lines(x=c(xspots[k], xspots[k]), y=c(0,dt(xspots[k],df=18) ), lwd=1, lty=3)
+}
+@
+
 <<>>=
 1 - pt( t, df=19-1 )
 2 * ( 1 - pt( t, df=19-1 ) )
 @
-This p-value can also be generated from a linear model.
-<<>>=
-model <- lm ( WeightLoss ~ 1, data = Controls )    # only an intercept term in the model
-coef(summary(model))
-@
-What is this model?
-	\[
-	Y = \beta_0 \cdot 1 + \varepsilon
-	\]
-So $\beta_0$ is the mean value of the response (\variable{WeightLoss}).
-
-Either way, our p-value is $0.077$ (1 or 2 significant digits are sufficient for reporting 
-p-values).  This is not
-compelling evidence that the weight loss program actually leads to a change in weight.  A change this
-large could occur just by chance in nearly 8\% of samples.
+Our p-value is $0.077$ (1 or 2 significant digits are sufficient for reporting 
+p-values).  This is not compelling evidence that the weight loss program (without incentives) actually leads to a change in weight.  A change this large could occur just by chance in nearly 8\% of samples.
 \end{example}
 
 \begin{example}
-Again, there is a function to automate this test:
+In R, there is also a function to automate this t-test:
 <<>>=
 t.test( ~ WeightLoss, data=Controls )
 @
-	If we don't want so much out put, we can cull out only the p-value:
+	If we don't want so much out put, we can ask R to report only the p-value:
 <<>>=
 pval( t.test( ~ WeightLoss, data=Controls ) )
 @
+By default, \texttt{t.test()} uses a significance level $\alpha = 0.05$. If we want to specify a different $\alpha$, we can use the input \texttt{conf.level} as follows:
+<<>>=
+t.test( ~WeightLoss, data=Controls, conf.level=0.01)
+@
 \end{example}
+
+\subsection{The paired 2-sample t-test}
+Sometimes, a dataset contains \emph{paired} observations.  These might be, for example, two measurements on the same experimental subject before and after some experimental treatment; measurements on the same subject at two times, or in two different situations; (or others).  In this case, we can not consider the measurements within a pair to be independent of each other.  But what we are really interested in is the magnitude of the difference between the 2 observations in each pair.  So this ``paired t-test" problem reduces to a one-sample t-test, where the test statistic is constructed using the \emph{differences} $D$ between the 2 measurements in each pair:
+
+\[
+t = \frac{\mbox{observed average difference} - \mbox{hypothesized average difference}}{\mbox{standard error}}
+\]
+
+Let's consider an example.
+\begin{example}
+The following table provides the corneal thickness in microns of
+both eyes of patients who have glaucoma in one eye:
+
+\begin{center}
+\begin{tabular}{c|cccccccc}
+Healthy & 484 & 478 & 492 & 444 & 436 & 398 & 464 & 476 \\
+Glaucoma & 488 & 478 & 480 & 426 & 440 & 410 & 458 & 460 \\
+\hline Difference & 4 & 0 & -12 & -18 & 4 & 12 & -6 & -16
+\end{tabular}
+\end{center}
+
+The corneal thickness is likely to be similar in the two eyes of any
+single patient, so that the two observations on the same patient
+cannot be assumed to be independent. But maybe (after accounting for differences between people), there is some difference in corneal thickness that has to do with the presence or absence of glaucoma.  First, we can have a look at the data:
+<<echo=FALSE, fig.width=6, fig.height=4.5>>=
+par(cex=1.2)
+plot(x=c(1:length(glaucoma)), y=glaucoma, pch=19,
+     ylab="Corneal Thickness (um)", col="black",
+     xlab="Subject Number", ylim=c(400,500))
+points(c(1:length(healthy)), healthy, pch=17, col="grey", 
+       ylab="Corneal Thickness (um)", 
+     xlab="Subject Number", cex=1)
+
+legend("bottomleft", legend=c("Glaucoma", "Healthy"),
+       pch=c(19,17), col=c("black", "grey"), bty="n")
+@
+
+It looks like healthy corneas are often thicker.  To try to quantify this, we consider the difference
+between each pair of observations, denoted by $d_i$. We wish to
+test,
+\[
+H_0: \mu = 0 \qquad \mbox{ vs } \qquad H_1: \mu \ne 0.
+\]
+Under $H_0$,
+\[
+T = \frac{\bar{D}}{S/\sqrt{n}} \sim t_{n-1}.
+\]
+
+In R, we can compute $D$ (the average of $d_i$) and its standard error to obtain the test statistic $t$ and the corresponding p-value:
+<<>>=
+n <- 8
+healthy <- c(484 , 478 , 492 , 444 , 436 , 398 , 464 , 476)
+glaucoma <- c(488 , 478 , 480 , 426 , 440 , 410 , 458 , 460)
+diffs <- glaucoma-healthy
+D <- mean(diffs)
+SE <- sd(diffs)/sqrt(n)
+t <- (D - 0)/SE; t
+pval <- 2 * pt(t, df=n-1); pval
+@
+
+Note that we used 2 * pt(...) because our test statistic $t$ was negative.  If it had been positive, we would have used 2 * (1-pt(...)) instead.  The illustration below may help make this clearer -- the p-value we are computing corresponds to the shaded areas in the plot. 
+<<echo=FALSE, fig.width=6, fig.height=5>>=
+x <- seq(from=-5, by=0.01, to=5)
+dtvals <- dt(x, df=7)
+par(lwd=2.5, cex=1.25, cex.lab=1.25, cex.axis=1.25, cex.main=1.25)
+plot(x,dtvals, type="l", xlab="Test Statistic T", ylab="Probability Density", lwd=2.5)
+points(x=c(-t,t), y=dt(c(-t,t),df=7), pch=19, cex=1.5)
+text(x=c(-t,t)+ c(0.2, -0.2), y=dt(c(-t,t),df=7)+0.04, labels=c("-t", "t"), cex=1.27)
+lines(x=c(-t,-t), y=c(0,dt(-t,df=7) ), lwd=3)
+lines(x=c(t,t), y=c(0,dt(t,df=7) ), lwd=3)
+xspots <- seq(from=-t, by=0.025, to=5)
+for (k in 1:length(xspots)){
+  lines(x=c(-xspots[k], -xspots[k]), y=c(0,dt(-xspots[k],df=7) ), lwd=1, lty=3)
+  lines(x=c(xspots[k], xspots[k]), y=c(0,dt(xspots[k],df=7) ), lwd=1, lty=3)
+}
+@
+
+We can also let R make all the computations for us. Notice that we use the \emph{differences} between pairs as the input data, rather than the raw data itself.
+<<>>=
+t.test(~ diffs, df=7)
+@
+
+\end{example}
+
+\subsection{The (unpaired) 2-sample t-test}
+In some cases, our research sample may contain data from 2 different categories of observational units.  For example, in the weight loss data, there were the control participants we considered above; there were also a number of incentivized participants, who received money if they lost weight.  We might be interested in considering whether the incentive made a difference.  Before we begin, we can plot the data:
+<<>>=
+bwplot(WeightLoss~Group, data=WeightLossIncentive)
+@
+
+It looks like the incentive group lost more weight.  But how can we judge whether the difference between groups is really an effect of the incentive, and not just random variation?
+
+In this case, the null hypothesis $H_0$ would be that the average weight loss by control participants ($\mu_c$) was the same as the average weight loss by incentivized participants ($\mu_i$) -- $H_0: \mu_c = \mu_i$.  The alternative hypothesis would be $H_1: \mu_c \neq \mu_i$ -- there was a difference between the two groups.
+
+But in this case -- with data from 2 different categories -- how can we compute the appropriate standard error and test statistic for a t-test?  We have to consider the fact that there may be different numbers of data points in the 2 categories.  Let $n$ be the sample size within the first category $X$ (control participants in the example), and $m$ be the sample size in the other category $Y$ (incentive participants in the example). How can we compute a standard error for a difference in means between the two groups?
+
+In this case, if we assume that the sample variaces are equal between the two categories, then we can define the pooled sample variance $s_p$:
+
+$$s^2_p = \frac{(n-1)s_X^2 + (m-1)s_Y^2}{(m+n-2)}$$
+
+Here, $s_Y$ and $s_X$ are the sample standard deviations within each category.  We will not provide proof here, but it is known that in this case, the test statistic is:
+
+\[
+T = \frac{\bar{X}-\bar{Y}}{S_p\sqrt{\frac{1}{m}+\frac{1}{n}}}
+\sim t_{m+n-2}.
+\]
+
+As written in the equation above, this test statistic follows a t-distribution with $m+n-2$ degrees of freedom.  We could carry out a two-sample t-test by hand using the test statistic defined above, or we can use the function \texttt{t.test()} and R will do the computations for us. For the weight loss example:
+
+<<>>=
+head(WeightLossIncentive,4)
+t.test(~WeightLoss, groups=Group, data=WeightLossIncentive,
+       var.equal=TRUE)
+@
+
+Note the ``var.equal=TRUE" input argument.  With this input, R will carry out the t-test assuming equal variance between the two categories.  If we want to avoid making this assumption, there is a modified version of the two-sample t-test called the Welch two-sample t-test, which does not assume equal variances.  If we omit the ``var.equal" input, or set it to ``var.equal=FALSE", then R will do a Welch two-sample t-test for us. (We will not cover in this course how to do a Welch test by hand).
+
+We might be able to judge informally whether the equal-variance assumption is valid by looking at the distributions of our variable of interest grouped by category, and computing the sample standard deviations by groups:
+<<>>=
+densityplot(~WeightLoss, groups=Group, data=WeightLossIncentive)
+sd(~WeightLoss|Group, data=WeightLossIncentive, na.rm=TRUE)
+@
+
+We don't have an obvious indication of unequal variances. (This assumption can also be tested statistically, although we won't learn how in this class, and it's generally not recommended to do such a test prior to running a t-test).  If we wanted to do the t-test without the equal variance assumption, in R, we would use:
+<<>>=
+t.test(~WeightLoss, groups=Group, data=WeightLossIncentive)
+@
+
+\emph{In practice, there is no real disadvantage to simply using Welch's test all the time.}  So in general, if you are doing a 2-sample unpaired test, you should always use \texttt{var.equal=FALSE} (or omit the input \texttt{var.equal}, and it will default to FALSE).
+
 
 \subsection{Testing Model Coefficients}
 
-\begin{example}
-	Now let's compare the controls to the incentive group.  That is the question 
-	the study was primarily interested in.
-<<>>=
-model2 <- lm ( WeightLoss ~ Group, data=WeightLossIncentive )
-@
-	What is this model?
-	\[
-	Y = \beta_0 + \beta_1 x + \varepsilon
-	\]
-where $x$ is 0 for the controls and 1 for the incentive group.  That is, $Y \sim \Norm(\beta_0, \sigma)$
-for the control group and $Y \sim \Norm(\beta_0 + \beta_1, \sigma)$ for the incentive group.
-A test of the null hypothesis $\beta_1 = 0$ tests whether the two groups had different amounts 
-of weight loss (on average).   (Note that this model also assumes that the two groups have the same 
-standard deviation.  There are ways to test this hypothesis without that assumption.)
-<<>>=
-favstats( WeightLoss ~ Group, data=WeightLossIncentive )
-coef(summary( model2 ) )
-@
-The small p-value provides evidence against the null hypothesis.  That is, we have evidence that
-there is a difference between the mean amount of weight lost in the two groups.  (Those with a monetary
-incentive lost more.)  
-\end{example}
+We can also use t-tests to test the null hypothesis that there is no relationship between the predictor and explanatory variables in a regression model.  If we can't reject that hypothesis, then we have evidence that there \emph{is} really some relationship, and that the response can be predicted based upon the explanatory variable.
 
-A difference large enough cause us to reject a null hypothesis of ``no difference" 
-is called a \term{statistically significant} difference.  Differences may fail to be statistically
-significant if they are small, if they are masked by underlying variability, or if there is too 
-little data.  Good studies will collect enough data and work to reduce variability (if that is possible)
-in order to have a reasonable expectation of detecting differences if they are large enough to 
-be scientifically interesting.
+
 
 \begin{example}
 Suppose you suspect that drag force should be proportional to the square of velocity.  Let's see
@@ -554,13 +437,13 @@ is equal to the drag force (because there is no acceleration).
 
 We'll fit a power law model
 \[
-\variable{force.drag} = A \cdot \variable{velocity}^p
+\variable{force.drag} = A \cdot \variable{velocity}^a
 \]
-and test the hypothesis that $p=2$.  We can fit this model using a log-log transformation:
+and test the hypothesis that $a=2$.  We can fit this model using a log-log transformation:
 \[
-\log(\variable{force.drag}) = \log(A)  +  p \log( \variable{velocity} )
+\log(\variable{force.drag}) = \log(A)  +  a \log( \variable{velocity} )
 \]
-So $p=\beta_1$ in our usual linear model notation.
+So $a=\beta_1$ in our usual linear model notation.
 
 <<drag-again>>=
 drag.model <- lm(log(force.drag) ~ log(velocity), data=drag)
@@ -592,26 +475,10 @@ SE <- 0.05366
 t <-  ( beta1.hat - 2 ) / SE; t
 2 * pt( - abs(t), df= 40 )
 @
-With this large a p-value, we cannot reject the null hypothesis that $p=2$.
-\textbf{A large p-value does not prove that $p=2$, 
+With this large a p-value, we cannot reject the null hypothesis that $a=2$.
+\textbf{A large p-value does not prove that $a=2$, 
 but it does say that our data are consistent with that value.}  
-Of course, our data may be consistent with many other values of $p$ as well.
-\end{example}
-
-\begin{example}
-	We could also do the previous example using a nonlinear model
-<<>>=
-drag.model2 <- nls( force.drag ~ A * velocity^p, data=drag, start=list(A=1,p=2) )
-summary(drag.model2)
-@
-Again, the p-values listed are not of interest (they are testing the hypotheses that 
-each coefficient is 0).  But we can compute the p-value of interest as follows:
-<<>>=
-t <- ( 2 - 1.92989 ) / 0.0944; t
-2 * pt( - abs(t), df=40 ) 
-@
-Although the two p-values are different, the conclusion is the same using either model:  
-Our data are consistent with the hypothesis that $p=2$.
+Of course, our data may be consistent with many other values of $a$ as well.
 \end{example}
 
 \begin{example}
@@ -627,7 +494,7 @@ The model looks reasonable.  What are the two hypotheses being tested?
 \begin{enumerate}
 	\item $H_0: \beta_0 = 0$.
 
-		Often this is not an interesting test because often we are not so interested in
+		Often this is not an interesting test because often we are not so interested in the intercept
 		$\beta_0$, and especially not in whether it is 0.  In this case, the intercept might
 		be interesting because it tells us the price of a Porsche with no miles.  On the other hand,
 		we might not expect a used car, even one with very few miles to fit the same pattern as 
@@ -647,10 +514,9 @@ confint(porsche.model)
 		$H_0: \beta_1 = 0$.
 
 		There is strong evidence against this hypothesis as well.  This is also not surprising.
-		If $\beta_1 = 0$, this means that the price of the cars does not depend on the mileage.
+		If $\beta_1 = 0$, that would mean that the price of the cars does not depend on the mileage.
 
-		A test of $\beta_1=0$ in a simple linear model is often called the \term{model utility test}
-		because it is testing whether the predictor is of any use to us or not.
+		A test of $\beta_1=0$ in a regression model is often used for \emph{model selection} -- if we can not reject the null hypothesis of no relationship between the predictor and the response, then the predictor is not really a useful predictor at all. We might want to use (or \emph{select}) a model without that predictor, instead.
 
 	\item
 		$H_0: \beta_1 = \beta_{10}$.
@@ -661,6 +527,8 @@ confint(porsche.model)
 		
 		For example, let's test $\beta_1 = -1$.  That the hypothesis that the value 
 		drops one dollar per mile driven.
+    
+    While this example is interesting as an exercise, it is quite rare to have a sensible hypothesized value for a regression slope parameter that we want to test.  It is much more common to ask, as we did above, ``is there a pattern here indicating that the predictor is a useful predictor of the response"?
 
 <<tidy=FALSE>>=
 t <- (-0.5894 - (-1) ) / 0.566; t
@@ -682,7 +550,7 @@ be made for other confidence levels.)
 
 \begin{example}
 	In the preceding example we rejected the null hypothesis that $\beta_1 = -1$.
-In fact, we will reject (at the $alpha=0.05$ level) any hypothesized value not contained 
+In fact, we will reject (at the $\alpha=0.05$ level) any hypothesized value not contained 
 in the 95\% confidence interval.
 <<>>=
 t <- (-0.5894 - (- .75)) / 0.566; t
@@ -795,21 +663,6 @@ t <- ( 31.5 - 29.812) / 1.0; t     # test statistic
 \end{solution}
 
 
-\begin{problem} %[title=Gentleman Tasting Wine]
-\myindex{wine!gentleman tasting|probidx}%
-  A gentleman claims he can distinguish between four vintages of 
-  a particular wine.  His friends, assuming he has probably just 
-  had too much of each, decide to test him.  They prepare one glass
-  of each vintage and present the gentleman with four unlabeled glasses
-  of wine.  What is the probability that the gentleman correctly 
-  identifies all four simply by guessing?
-\end{problem}
-
-\begin{solution}
-  The wines can be presented in $4 \cdot 3 \cdot 2 \cdot 1 = 24$ different
-  orders, so the probability of guessing correctly is $1/24$.
-\end{solution}
-
 \begin{problem}
 \label{prob:drag-refit}
 	Redo the drag force analysis after removing observations that appear not to have reached
@@ -880,7 +733,7 @@ t_star <- qt(.975, df=11); t_star
 \end{solution}
 
 \begin{problem}
-	The Charpy V-notch impact test is the basis for sutdy many amterial toughness criteria.
+	The Charpy V-notch impact test is the basis for many material toughness criteria.
 	This test was applied to 42 specimens of a particular alloy at 110 degrees F.
 	The mean amount of transverse lateral expansion was computed to be
 	73.1 mils with a sample standard deviation of 5.9 mils.

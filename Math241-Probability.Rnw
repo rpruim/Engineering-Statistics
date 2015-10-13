@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Math241-S15.Rnw')}
 
 \Chapter{Probability}
 
@@ -8,14 +8,14 @@
 \item[random process]
 A repeatable process that has multiple unpredictable potential outcomes.
 
-Although we sometimes use language that suggests that a particular result is 
+Although we sometimes use language that suggests that a \emph{particular result} is 
 random, it is really the \emph{process} that is random, not its results.
 
 \item[outcome]
 A potential result of a random process.
 
 \item[sample space]
-The set of all potential outcomes of a random process.
+The set of all possible potential outcomes of a random process.
 
 \item[event]
 A subset of the sample space.  
@@ -24,18 +24,18 @@ That is, a set of outcomes (possibly all or none of the outcomes).
 Statisticians often use capital letters from the beginning of the alphabet
 for events.
 
-\item[trial]One repetition of a random process.
+\item[trial] One repetition of a random process.
 
 \item[mutually exclusive] events.
 Events that cannot happen on the same trial.
 
-\item[probability]A numerical value between 0 and 1 assigned to 
+\item[probability] A numerical value between 0 and 1 assigned to 
 an event to indicate how often the event occurs (in the long run).
 
 \item[random variable]
-A random process that results in a numerical value.
+A random variable is a variable whose value is a numerical outcome of a random process.
 
-Examples: 
+Examples of random variables: 
 \begin{itemize}
 \item
 Roll a die and record the number.
@@ -58,21 +58,33 @@ The distribution of a random variable.
 \emph{with what freqency?})
 \end{description}
 
+As an example of a probability distribution, we can first consider a \emph{discrete} random variable.  Most of the examples of random variables given above are discrete. In other words, the values they can take on come from a set containing a finite number of possible values.  For example, if you roll a 6-sided die and record the number that comes up, there are only size possible outcomes, which are equally likely: the integers 1, 2, 3, 4, 5 and 6.  For discrete random variables, the probability distribution shows all the possible values on the x-axis, and the likelihood of observing each of those values on the y-axis.  Since there are a finite number of possible values that can be observed, these likelihoods are actually the \emph{probabilities} of observing each outcome, and the sum of all the probabilities must be 1 (see section 3.3 for details).  For our example, where we rolled a die and recorded the value:
+
+<<discrete_pmf, echo=FALSE>>=
+histogram(~c(1:6), width=1, ylab="Probability", xlab="Outcome of Rolling Die")
+@
+
+Things are a bit more complicated for \emph{continuous} random variables (the ones that can take on any numerical value).  Here, there sample space (the set of possible distinct values the random variable can take on) is infinite.  One consequence of this fact is that the interpretation of the y-axis values of the probability distribution changes.  The y-axis will still indicate the relative likelihood of observing any given value of the random variable.  However, here the random variable can take on an infinite number of possible values.  In this case, we can't interpret the y-axis values as probabilities.  They y axis units are called ``Likelihood" or "Density", and they indicate the relative frequency of each outcome. For a densityplot, Density is scaled such that the integral over all possible x-values (the area under the curve) is 1. (For a histogram, Density is scaled so that the total area of all the boxes added together is 1.)  We can think of the histograms and density plots we have been creating using continuous variables from R datasets as attempts to use data to approximate the distributions of random variables.  For example, we might consider the growth of flower petals of the iris \textit{Iris setosa} as a random process, and let \texttt{X} be a random variable that is the length of each iris petal.  We could plot a histogram to approximate the distribution of \texttt{X} using the variable \texttt{Petal.Length} from the \dataframe{iris} data (from the \pkg{datasets} package in base R).
+
+<<cont_pdf, echo=FALSE>>=
+Is <- iris[iris$Species=="setosa",]
+histogram(~Petal.Length, data=Is, xlab="Petal Length (cm)")
+@
+
 \newpage
 
-\section{Calculating Probabilities}
+\section{Calculating Probabilities Empirically}
 
-There are two main ways to calculate the probability of an event
+We would like to calculate the probability of an event
 $A$, denoted $\Prob(A)$.
 
-\subsection{Empirical Method: Just Do It}
+In the next section, we will see how to calculate probabilities based on the Axioms of probability, and logic.  But first, we will consider ways to make the calculations empirically -- based on observing many repetitions of a random process (in real life or in a computer simulation) and observing how often an event of interest occurs.
 
-Since random processes are repeatable, we could simply repeat the process
-over and over and keep track of how often the event $A$ occurs.
+Random processes are repeatable, so practically, we can calculate empirical probabilities by simply repeating the process
+over and over and keeping track of how often the event $A$ occurs.
 For example, we could flip a coin 10,000 times and see what fraction 
 are heads.\footnote{This has actually been done a couple of times 
-in history, including once by a mathematician who was a prisoner of war
-and had lots of time on his hands.}
+in history, including once by mathematician John Kerrich while he was a prisoner of war during World War II.}
 
 \[
 \mbox{Empirical Probability} = 
@@ -80,14 +92,14 @@ and had lots of time on his hands.}
 {\mbox{number of times random process was repeated}}
 \]
 
-Now that we have computers, there is a new wrinkle on empirical probability.
-If we can simulate our random process in the computer, then we can 
+Modern computing provides another way to compute empirical probabilities.
+If we can simulate our random process on a computer, then we can 
 repeat the process many times very quickly.  
 
 \begin{example}
 \question
 What is the probability of getting exactly 5 heads 
-if you flip a fair coin 10 times.  Using our random variable notation, let $X$ 
+if you flip a fair coin 10 times?  Using our random variable notation, let $X$ 
 be the number of heads in 10 flips of a fair coin.  We want to know $\Prob(X=5)$.
 
 \answer 
@@ -95,8 +107,9 @@ The \function{rflip()} function simulates flipping a coin as many times as we li
 <<rflip>>=
 rflip(10)
 @
-The \function{do()} function allows us to do this over and over.  First we'll do it
-three times and show the results.  Then we'll do 10,000 and store the results so we 
+The \function{do()} function allows us to execute an R command ("do" somthing in R) over and over, as many times as we choose.  Here, our \function{rflip()} command simulates 10 coin-flips.  First we'll "do" our command three times and show the results.  
+
+Then we'll do it 10,000 times and store the results in a variable called \texttt{tosses}, so we 
 can create a table and a plot showing the empirical distribution.
 <<coin-tosses,cache=TRUE>>=
 do(3) * rflip(10)
@@ -114,7 +127,7 @@ $\Prob(X=5) \approx \Sexpr{ans}$.
 
 \begin{example}
 \question Use simulations to estimate the probability of rolling doubles
-using 2 fair standard dice.
+using two fair standard dice.
 
 \answer
 We can simulate rolling a die with the following code:
@@ -122,11 +135,14 @@ We can simulate rolling a die with the following code:
 1:6                # the numbers 1 through 6
 resample(1:6, 10)  # ten rolls of a 6-sided die
 @
-If we do this 10,000 times for each of two dice
+The first 2 input arguments of \function{resample()} are \texttt{x} (the set of values from which you want to resample) and \texttt{size} (the number of items to choose from \texttt{x}).  You can also think of \texttt{size} as the number of \emph{times} to sample from \texttt{x}, if you are imagining sampling one item from \texttt{x} each time.
+
+If we do this 10,000 times for each of two dice...
 <<>>=
 die1 <- resample(1:6, 10000)
 die2 <- resample(1:6, 10000)
-head(die1)     # let's check that things look reasonable
+# let's check that things look reasonable
+head(die1)     
 head(die2)
 @
 Then we can tabulate how often the two numbers matched in one of two ways:
@@ -141,24 +157,26 @@ So the probability appears to be approximately \Sexpr{ prop( ~ die1 == die2 ) }.
 
 \begin{example}
 \question
-	Use simulation to estimate the probability of rolling a sum of 8 when rolling
-	two fair six-sided dice.
+	Use simulation to estimate the probability of rolling a sum of 8 when rolling two fair six-sided dice.
 
 \answer
-We have already generated 10000 random rolls, so let's just reuse them.  (Alternatively, we 
-could generate new rolls.)
+We have already generated 10000 random rolls, so let's just reuse them.  (Alternatively, we could generate new rolls.)
 <<>>=
-s <- die1 + die2       # R adds first to first, second to second, etc.
+s <- die1 + die2       
+# R adds element-wise: 
+#   first entry of die1 + first of die2, 
+#   second to second, etc.
 prop( ~ (s == 8) )
 @
 
 We can estimate the probability of any sum the same way.
 <<>>=
 tally( ~ s )
-tally( ~ s, format="percent" )   # if we are too lazy to divide by 10000 ourselves
+# if we are too lazy to divide by 10000 ourselves:
+tally( ~ s, format="percent" )   
 @
 
-Here's a slightly fancier version that puts all the information into a data frame:
+Here's a slightly fancier version that puts all the information into a data frame.  Note the use of the function \function{data.frame()} to create the data table:
 <<>>=
 rolls <- data.frame( first = die1, second = die2, sum = die1 + die2 )
 head(rolls)
@@ -167,18 +185,16 @@ histogram( ~sum, data=rolls, width=1 )    # setting width is important for integ
 @
 \end{example}
 
-\subsection{Theoretical Method: Just Think About It}
+\section{Calculating Probabilities Theoretically}
 
 The theoretical method combines
 \begin{enumerate}
-\item Some basic facts that are true about every probability situation,
+\item Some basic facts about probability (the Probability Axioms and Rules),
 \item Some assumptions about the particular situation at hand, and 
 \item Mathematical reasoning (arithmetic, algebra, logic, etc.).
 \end{enumerate}
 
-\section{Probability Axioms and Rules}
-
-\subsection{The Three Axioms}
+\subsection{The Three Probability Axioms}
 
 Let $S$ be the sample space and let $A$ and $B$ be events.
 \begin{enumerate}
@@ -192,18 +208,17 @@ $\Prob(A \tor B) = \Prob(A) + \Prob(B)$.
 \subsubsection{Notation Notes}
 $\Prob(A \tor B)$ is the probability that either $A$ or $B$ (or both) 
 occurs.  Often this is written $\Prob(A \union B)$.  $A \union B$ is usually read
-``$A$ union $B$''.  The union of two sets is the set that contains all elements of either 
-set.  
+``$A$ union $B$''.  The union of two sets is the set that contains all elements of both sets.
 
 $\Prob(A \tand B)$ is the probability that \emph{both} $A$ and $B$ occur.
 This is also written $\Prob (A \intersect B)$.  $A \intersect B$ is usually read
 ``$A$ intersect $B$''.  
 
-$A$ and $B$ are mutually exclusive is the same as saying that there are no
+Saying that $A$ and $B$ are mutually exclusive is the same as saying that there are no
 outcomes in $A\intersect B$, i.e., that $A \intersect B = \emptyset$.
 
 \subsection{Other Probability Rules}
-These rules all follow from the axioms.
+These rules all follow from the axioms (although we will not necessarily prove them all here).
 \subsubsection*{The Addition Rule}
 
 If events $A$  and $B$ are mutually exclusive, then 
@@ -289,14 +304,15 @@ A & AA & Aa \\
 a & Aa & aa \\ 
 \end{tabular}
 \end{center}
-In an $Aa \times Aa$ cross,
+This example comes from animal or human genetics. Here, we consider a gene with two alleles:  A is the dominant allele, and a is the recessive one.  Each individual has two copies of every gene, so there are three possible combinations of alleles (called ``genotypes"): AA, Aa, and aa. AA and Aa individuals have the dominant A physical characteristic (called the ``phenotype"); aa individuals have the recessive a phenotype. Imagine that two Aa individuals mate and produce offspring. In this Aa $\times$ Aa cross,
 if A is the dominant allele, then the probability of the dominant
 phenotype is $\frac{3}{4}$, and the probability of the recessive 
-phenotype is $\frac{1}{4}$ because each of the four possible crossings 
-is equally likely.
+phenotype is $\frac{1}{4}$ because each of the four possible crossings is equally likely.
 
 \begin{center}
 	\includegraphics[width=.5\textwidth]{images/date-punnet.png}
+  
+  Cartoon credit: \url{http://xkcd.com/634/}
 \end{center}
 
 \end{enumerate}
@@ -323,7 +339,7 @@ is equally likely.
   We'll make the simplifying assumption that boys and girls are 
   equally likely (which is not exactly true).  Under that assumption,
   there are four equally likely families:  BB, BG, GB, and GG.  But only three
-  of these have at least one boy, so our sample space is really
+  of these have at least one boy, and we already know our family has at least one boy, so our sample space is really
   $\set{ BB, BG, GB}$.
   Of these, two have a girl as well as a boy.
   So the probability is $2/3$ (see Figure~\ref{fig:condKids}).  
@@ -534,7 +550,7 @@ probability of an intersection.
 	\\ & &
   	\cdot \Prob(A_5 \mid A_1 \intersect A_2 \intersect A_3 \intersect A_4) \\
 	& = & 1 \cdot \frac{12}{51} \cdot \frac{11}{50} \cdot \frac{10}{49} 
-	\cdot \frac{9}{48} \; .
+	\cdot \frac{9}{48} \; 
 \end{eqnarray*}
 %\otherqedskip
 \end{example}
@@ -599,7 +615,7 @@ We can represent this using a \term{tree diagram} as well.
 	\end{tikzpicture}
 \end{center}
 The edges in the tree represent conditional probabilities which we can multiply together
-to the probability that all events on a particular branch happen.  The first leve of branching 
+to the probability that all events on a particular branch happen.  The first level of branching 
 represents what kind of Valentine is selected first, the second level represents the 
 second selection.
 	
@@ -759,7 +775,7 @@ for independent events.
 	The independence assumption may or may not be valid.  That depends on the manufacturing
 	process.  For example, if the primary way a part goes bad is that the package 
 	is dropped during shipping, then if you by a box of 10 and the first part is bad, 
-	they will all be bad.  And if the first one is good, they will all be good.  So in
+	they will all be bad.  And if the box was handled carefully and never dropped, and the first part used is good, they will likely all be good.  So in
 	that extreme case, the probability that all 10 are functioning properly after two years
 	is 99\%.
 
@@ -826,14 +842,14 @@ sample(1:52, 5)
 deal(1:52, 5)
 deal(1:52, 5)
 @
-	\R\ can tell you if how many cards are below 14 like this because \R\ turns TRUE into 1
-	and FALSE into 0 when you do the sum.
+	There is another way to make the calculation, using the function \function{sum}. \R\ can tell you how many cards are below 14 using \function{sum} because \R\ turns TRUE into 1
+	and FALSE into 0 when you do a sum.
 <<>>=
 sum( sample(1:52, 5) < 14 )     
 sum( sample(1:52, 5) < 14 )
 sum( sample(1:52, 5) < 14 )
 @
-	You can use \function{do()} to do this many times. (Three is not many, this is just 
+	You can use \function{do()} to do this many times. (Three is \emph{not} many\! We just do a small number here 
 	for illustration purposes.)
 <<>>=
 do(3) * sum( sample( 1:52, 5 ) < 14 )

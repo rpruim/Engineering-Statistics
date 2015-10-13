@@ -1,0 +1,127 @@
+\contentsline {chapter}{\numberline {0}Where do numbers come from?}{5}{chapter.0}
+\contentsline {chapter}{\numberline {1}Graphical Summaries of Data}{7}{chapter.1}
+\contentsline {section}{\numberline {1.1}Getting Started With \unhbox \voidb@x \hbox {\sf {R}Studio}}{7}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Logging in}{7}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Using R as a calculator}{7}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}Loading packages}{9}{subsection.1.1.3}
+\contentsline {subsection}{\numberline {1.1.4}Four Things to Know About {\sf R}}{10}{subsection.1.1.4}
+\contentsline {section}{\numberline {1.2}Data in {\sf R}}{10}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Data Frames}{10}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Data in Packages}{10}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}The HELPrct data set}{11}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}The KidsFeet data set}{12}{subsection.1.2.4}
+\contentsline {subsection}{\numberline {1.2.5}The oldfaith data set}{12}{subsection.1.2.5}
+\contentsline {subsection}{\numberline {1.2.6}Using your own data}{13}{subsection.1.2.6}
+\contentsline {section}{\numberline {1.3}Graphing the Distribution of One Variable}{13}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Histograms (and density plots) for quantitative variables}{13}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}The shape of a distribution}{15}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}Bar graphs for categorical variables}{15}{subsection.1.3.3}
+\contentsline {section}{\numberline {1.4}Looking at Multiple Variables at Once}{16}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}Conditional plots}{16}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}Grouping}{17}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.4.3}Scatterplots}{18}{subsection.1.4.3}
+\contentsline {section}{\numberline {1.5}Exporting Plots}{20}{section.1.5}
+\contentsline {section}{\numberline {1.6}Reproducible Research}{20}{section.1.6}
+\contentsline {subsection}{\numberline {1.6.1}R Markdown}{21}{subsection.1.6.1}
+\contentsline {subsubsection}{Creating a new document}{21}{section*.3}
+\contentsline {subsection}{\numberline {1.6.2}knitr/latex}{23}{subsection.1.6.2}
+\contentsline {section}{\numberline {1.7}Customizing Graphics: A Few Bells and Whistles}{23}{section.1.7}
+\contentsline {subsection}{\numberline {1.7.1}auto.key}{23}{subsection.1.7.1}
+\contentsline {subsection}{\numberline {1.7.2}alpha, cex}{24}{subsection.1.7.2}
+\contentsline {subsection}{\numberline {1.7.3}trellis.par.set()}{26}{subsection.1.7.3}
+\contentsline {section}{\numberline {1.8}Getting Help in RStudio}{29}{section.1.8}
+\contentsline {subsection}{\numberline {1.8.1}The \unhbox \voidb@x \hbox {\sf {R}Studio}\ help system}{29}{subsection.1.8.1}
+\contentsline {subsection}{\numberline {1.8.2}Tab completion}{30}{subsection.1.8.2}
+\contentsline {subsection}{\numberline {1.8.3}History}{30}{subsection.1.8.3}
+\contentsline {subsection}{\numberline {1.8.4}Error messages}{30}{subsection.1.8.4}
+\contentsline {section}{\numberline {1.9}Graphical Summaries -- Important Ideas}{30}{section.1.9}
+\contentsline {subsection}{\numberline {1.9.1}The Most Important Template}{30}{subsection.1.9.1}
+\contentsline {subsection}{\numberline {1.9.2}Patterns and Deviations from Patterns}{31}{subsection.1.9.2}
+\contentsline {subsection}{\numberline {1.9.3}Different Plots for Different Kinds of Variables}{31}{subsection.1.9.3}
+\contentsline {subsection}{\numberline {1.9.4}Side-by-side Plots and Overlays Can Reveal Importance of Additional Factors}{31}{subsection.1.9.4}
+\contentsline {subsection}{\numberline {1.9.5}Area = (relative) frequency}{31}{subsection.1.9.5}
+\contentsline {chapter}{\numberline {2}Numerical Summaries}{35}{chapter.2}
+\contentsline {section}{\numberline {2.1}Tabulating Data}{35}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Tabulating a categorical variable}{35}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Tabulating a quantitative variable}{37}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Cross-tables: Tabulating two or more variables}{39}{subsection.2.1.3}
+\contentsline {section}{\numberline {2.2}Working with Pre-Tabulated Data}{39}{section.2.2}
+\contentsline {section}{\numberline {2.3}Summarizing Distributions of Quantitative Variables}{40}{section.2.3}
+\contentsline {section}{\numberline {2.4}Measures of Center}{40}{section.2.4}
+\contentsline {section}{\numberline {2.5}Measures of Spread}{41}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}A word of caution}{43}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Box plots}{44}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}Small data sets}{45}{subsection.2.5.3}
+\contentsline {section}{\numberline {2.6}Summarizing Categorical Variables}{46}{section.2.6}
+\contentsline {section}{\numberline {2.7}Relationships Between Two Variables}{46}{section.2.7}
+\contentsline {chapter}{\numberline {3}Probability}{49}{chapter.3}
+\contentsline {section}{\numberline {3.1}Key Definitions and Ideas}{49}{section.3.1}
+\contentsline {section}{\numberline {3.2}Calculating Probabilities Empirically}{51}{section.3.2}
+\contentsline {section}{\numberline {3.3}Calculating Probabilities Theoretically}{54}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}The Three Probability Axioms}{54}{subsection.3.3.1}
+\contentsline {subsubsection}{Notation Notes}{55}{section*.19}
+\contentsline {subsection}{\numberline {3.3.2}Other Probability Rules}{55}{subsection.3.3.2}
+\contentsline {section}{\numberline {3.4}Conditional Probability}{58}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Independence}{62}{subsection.3.4.1}
+\contentsline {chapter}{\numberline {4}Densities}{67}{chapter.4}
+\contentsline {section}{\numberline {4.1}Density histograms, density plots, density functions}{67}{section.4.1}
+\contentsline {section}{\numberline {4.2}Working with Probability Density Funcitons}{71}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Kernels}{71}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}The mean of a continuous random variable}{72}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}The variance of a continuous random variable}{74}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Quantiles}{75}{subsection.4.2.4}
+\contentsline {section}{\numberline {4.3}Some Important Families of Distributions}{75}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Triangle Distributions}{76}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Uniform Distributions}{77}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Exponential Distributions}{79}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}Gamma and Weibull Distributions}{80}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}Normal Distributions}{82}{subsection.4.3.5}
+\contentsline {subsubsection}{The 68-95-99.7 Rule}{83}{section*.24}
+\contentsline {subsection}{\numberline {4.3.6}Beta Distributions}{85}{subsection.4.3.6}
+\contentsline {section}{\numberline {4.4}Fitting Distributions to Data}{86}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Maximum Likelihood}{89}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}The method of moments}{91}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Quantile-Quantile Plots}{93}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Normal-Quantile Plots}{93}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Other distributions}{97}{subsection.4.5.2}
+\contentsline {chapter}{\numberline {5}Propagation of Uncertainty}{105}{chapter.5}
+\contentsline {section}{\numberline {5.1}Error and Uncertainty}{105}{section.5.1}
+\contentsline {section}{\numberline {5.2}An Example: Estimating the number of dimes in a sack of dimes}{106}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Calculating a Standard Uncertainty without Using Data}{106}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Calculating a Standard Uncertainty Using Data}{106}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Propagating Error by the Delta Method}{107}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}Estimating Uncertainty via Simulations}{108}{subsection.5.2.4}
+\contentsline {section}{\numberline {5.3}Reporting Measurements and Estimates}{110}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}What to record, What to report}{110}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}How many decimal places?}{110}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Reporting numbers in a table}{111}{subsection.5.3.3}
+\contentsline {section}{\numberline {5.4}Additional Propagation of Uncertainty Examples}{111}{section.5.4}
+\contentsline {section}{\numberline {5.5}Experimental Error and Its Causes}{114}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}Random error: Same procedure, different results}{114}{subsection.5.5.1}
+\contentsline {subsubsection}{The moving target}{114}{section*.26}
+\contentsline {subsubsection}{Measurement error}{114}{section*.27}
+\contentsline {subsubsection}{Invisible measurement error}{115}{section*.28}
+\contentsline {subsection}{\numberline {5.5.2}Systematic error: A tendency to over- or under-estimate}{115}{subsection.5.5.2}
+\contentsline {subsubsection}{Calibration errors}{115}{section*.29}
+\contentsline {subsubsection}{Design flaws}{115}{section*.30}
+\contentsline {subsubsection}{Dealing with systematic error}{116}{section*.31}
+\contentsline {subsection}{\numberline {5.5.3}Relative Magnitudes of Errors from Different Sources}{116}{subsection.5.5.3}
+\contentsline {section}{\numberline {5.6}Uncertainty -- How Much Error Might There Be?}{116}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}Looking at variability in your data}{116}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}Estimating uncertainty from your data}{117}{subsection.5.6.2}
+\contentsline {subsection}{\numberline {5.6.3}Estimating uncertainty in other ways}{117}{subsection.5.6.3}
+\contentsline {subsubsection}{The uniform model for measurement (im)precision}{117}{section*.32}
+\contentsline {subsubsection}{Other models for measurement (im)precision}{118}{section*.33}
+\contentsline {subsubsection}{Taking advantage of other data}{118}{section*.34}
+\contentsline {chapter}{\numberline {6}Random Sampling, Central Limit Theorem, and Confidence Intervals}{121}{chapter.6}
+\contentsline {section}{\numberline {6.1}Estimating the Mean of a Population by Sampling}{122}{section.6.1}
+\contentsline {section}{\numberline {6.2}Simulations}{123}{section.6.2}
+\contentsline {section}{\numberline {6.3}Normal distributions are special}{124}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Estimands, estimates, estimators}{125}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}If we knew $\sigma $}{126}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}Confidence Intervals ($\sigma $ known)}{126}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}Confidence Intervals ($\sigma $ unknown)}{127}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {6.3.5}Standard Error}{128}{subsection.6.3.5}
+\contentsline {subsection}{\numberline {6.3.6}Interpreting Confidence Intervals}{130}{subsection.6.3.6}
+\contentsline {subsection}{\numberline {6.3.7}Other confidence levels}{130}{subsection.6.3.7}
+\contentsline {subsection}{\numberline {6.3.8}Robustness}{132}{subsection.6.3.8}

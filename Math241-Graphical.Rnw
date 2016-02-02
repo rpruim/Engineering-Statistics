@@ -23,28 +23,28 @@ In addition to running \RStudio{} on your local machine, you have the option
 of accessing an \RStudio{} server via a web browser.  (For best results, avoid 
 Internet Explorer.)
 
-\subsection{Logging in and changing your password}
-When you navigate to an \RStudio{} server, you will be prompted to login.  
-% Your login and password are both your Calvin
-% userid.  
-Once you are logged in, you will see something like 
-Figure~\ref{fig:Rstudio-welcome}.
-
-To change your password:
-\begin{enumerate}
-	\item From the \tab{Tools} menu, select \tab{Shell...}
-	\item
-		Type \code{yppasswd}
-	\item
-		You will be prompted for your old password, then your new password twice.
-	\item
-		If you give a sufficiently strong new password, then
-		you will receive notice that your password has been reset.  
-		If there was a problem, you will see a message about it and can try again.
-	\item
-		Once you have reset your password, click on \tab{Close} to close the 
-		shell and get back to \RStudio.
-\end{enumerate}
+% \subsection{Logging in and changing your password}
+% When you navigate to an \RStudio{} server, you will be prompted to login.  
+% % Your login and password are both your Calvin
+% % userid.  
+% Once you are logged in, you will see something like 
+% Figure~\ref{fig:Rstudio-welcome}.
+% 
+% To change your password:
+% \begin{enumerate}
+% 	\item From the \tab{Tools} menu, select \tab{Shell...}
+% 	\item
+% 		Type \code{yppasswd}
+% 	\item
+% 		You will be prompted for your old password, then your new password twice.
+% 	\item
+% 		If you give a sufficiently strong new password, then
+% 		you will receive notice that your password has been reset.  
+% 		If there was a problem, you will see a message about it and can try again.
+% 	\item
+% 		Once you have reset your password, click on \tab{Close} to close the 
+% 		shell and get back to \RStudio.
+% \end{enumerate}
 
 \subsection{Using R as a calculator}
 

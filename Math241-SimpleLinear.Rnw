@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Math241-Notes.Rnw')}
 
 \chapter{Linear Models}
 
@@ -184,7 +184,7 @@ to be able to estimate ocular surface area (OSA) from palpebral fissure (the
 horizontal width of the eye opening in cm) because palpebral fissue is easier
 to measure than OSA.
 <<>>=
-require(Devore6)
+require(Devore7)
 head(xmp12.01, 3)
 # note misspelling in this data set; let's fix it
 names(xmp12.01)[1] <- "palpebral"
@@ -593,7 +593,7 @@ like an uncertainty).
 
 \begin{problem}
 Data from a 1993 study to see how well lichens serve as an indicator for air pollution
-are in the \dataframe{ex12.20} data set in the \pkg{Devore6} package.  In that paper,
+are in the \dataframe{ex12.20} data set in the \pkg{Devore7} package.  In that paper,
 a simple linear model was fit to see how the wet deposition of $\mathrm{NO}_{3}^{-}$
 ($g N/m^2$) related to the percentage dry weight of lichen.
 \begin{enumerate}
@@ -613,7 +613,7 @@ a simple linear model was fit to see how the wet deposition of $\mathrm{NO}_{3}^
 
 \begin{solution}
 <<>>=
-require(Devore6)
+require(Devore7)
 lichen.lm <- lm( deposition ~ LichenN, data=ex12.20)
 # a)
 lichen.lm       
@@ -674,7 +674,7 @@ but we can estimate the average foot width for all kids with a foot length of
 	determined by averaging based on photography over an extend period of time).
 	Data were collected at 10 different sites with bicycle lanes.
 	The data are available in the \dataframe{ex12.21} data set in 
-	the \pkg{Devore6} package.
+	the \pkg{Devore7} package.
 
 	\begin{enumerate}
 		\item Write out an equation for the least squares regression line for 

@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Math241-Notes.Rnw')}
 
 \chapter{More Examples}
 

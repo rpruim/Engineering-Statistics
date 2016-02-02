@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Math241-Notes.Rnw')}
 
 <<include=FALSE>>=
 require(Hmisc)
@@ -1121,7 +1121,7 @@ answers
 	of healthy men.
 
 <<echo=FALSE>>=
-require(Devore6)
+require(Devore7)
 names(ex07.37) <- "strideRate"
 qqmath(~strideRate, data=ex07.37)
 favstats(~strideRate,data=ex07.37)
@@ -1238,7 +1238,7 @@ xyplot(Length ~ factor(Age), data=lakemary, cex=2, alpha=0.3)
 \end{solution}
 
 \begin{problem}
-	% Devore6; prob 7.32
+	% Devore7; prob 7.32
 	A random sample of size $n=8$ E-glass fiber test specimens of a certain 
 	type yielded a sample mean interfacial shear yield stress of 30.2 and a sample
 	standard deviation of 3.1.  Assuming that the population of interfacial shear 
@@ -1257,7 +1257,7 @@ me <- t_star * SE; me                # margin of error
 
 
 \begin{problem}
-	% Devore6; prob 7.33
+	% Devore7; prob 7.33
 	The code below will create a data set containing a sample of observations
 	of polymerization degree for some paper specimens.  The data have been 
 	sorted to assist in typing.  (If the data actually occurred in this order,

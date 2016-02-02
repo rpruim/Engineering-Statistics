@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Math241-Notes.Rnw')}
 
 \chapter{Hypothesis Testing}
 
@@ -928,7 +928,7 @@ t_star <- qt(.99, df=41)
 
 \begin{problem}
 	Data from a 1993 study to see how well lichens serve as an indicator for air pollution are in the 
-	\dataframe{ex12.20} data set in the \pkg{Devore6} package. 
+	\dataframe{ex12.20} data set in the \pkg{Devore7} package. 
 	In that paper, a simple linear model was fit to see how the wet deposition of $NO^{-}_3$ 
 	related to the percentage dry weight of lichen.
 	Using this model, 
@@ -939,7 +939,7 @@ t_star <- qt(.99, df=41)
 			Compute a 90\% confidence interval for the slope of the linear relationship.
 	\end{enumerate}
 <<>>=
-require(Devore6)
+require(Devore7)
 summary( lm( LichenN ~ deposition, data=ex12.20) )
 @
 \end{problem}

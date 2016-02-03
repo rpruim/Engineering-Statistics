@@ -243,28 +243,28 @@ knit_hooks$set(document = function(x) {
 <<child="Math241-Numerical.Rnw">>=
 @
 
-<<child="Math241-Probability.Rnw">>=
+<<child="Math241-Probability.Rnw", eval = FALSE>>=
 @
 
-<<child="Math241-Densities.Rnw">>=
+<<child="Math241-Densities.Rnw", eval = FALSE>>=
 @
 
-<<child="Math241-Transformations.Rnw">>=
+<<child="Math241-Transformations.Rnw", eval = FALSE>>=
 @
 
-<<child="Math241-Propagation.Rnw", eval=TRUE>>=
+<<child="Math241-Propagation.Rnw", eval=FALSE>>=
 @
 
-<<child="Math241-SimpleLinear.Rnw", eval=TRUE>>=
+<<child="Math241-SimpleLinear.Rnw", eval=FALSE>>=
 @
 
-<<child="Math241-NonLinear.Rnw", eval=TRUE>>=
+<<child="Math241-NonLinear.Rnw", eval=FALSE>>=
 @
 
-<<child="Math241-HypothesisTesting.Rnw", eval=TRUE>>=
+<<child="Math241-HypothesisTesting.Rnw", eval=FALSE>>=
 @
 
-<<child="Math241-MoreExamples.Rnw", eval=TRUE>>=
+<<child="Math241-MoreExamples.Rnw", eval=FALSE>>=
 @
 
 \backmatter

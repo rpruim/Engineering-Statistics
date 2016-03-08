@@ -895,7 +895,8 @@ use some of the bells and whistles to make the plots even better.
 
 \begin{problem}
 	Create a scatterplot using the two variables in the \dataframe{oldfaith}
-	data frame.  What do we learn about Old Faithful eruptions from this plot?
+	data frame (available in the \pkg{alr3} package).  
+	What do we learn about Old Faithful eruptions from this plot?
 \end{problem}
 
 

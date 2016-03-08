@@ -158,8 +158,8 @@
 
 
 \newif\ifsolutions
-\solutionstrue
 \solutionsfalse
+\solutionstrue
 
 \newif\ifsolutionslocal
 \solutionslocaltrue
@@ -243,10 +243,10 @@ knit_hooks$set(document = function(x) {
 <<child="Math241-Numerical.Rnw">>=
 @
 
-<<child="Math241-Probability.Rnw", eval = FALSE>>=
+<<child="Math241-Probability.Rnw", eval = TRUE>>=
 @
 
-<<child="Math241-Densities.Rnw", eval = FALSE>>=
+<<child="Math241-Densities.Rnw", eval = TRUE>>=
 @
 
 <<child="Math241-Transformations.Rnw", eval = FALSE>>=

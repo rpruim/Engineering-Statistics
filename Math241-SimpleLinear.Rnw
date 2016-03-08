@@ -184,16 +184,13 @@ to be able to estimate ocular surface area (OSA) from palpebral fissure (the
 horizontal width of the eye opening in cm) because palpebral fissue is easier
 to measure than OSA.
 <<>>=
-require(Devore7)
-head(xmp12.01, 3)
-# note misspelling in this data set; let's fix it
-names(xmp12.01)[1] <- "palpebral"
-names(xmp12.01)
-x.bar <- mean( ~palpebral, data=xmp12.01)  
-y.bar <- mean( ~OSA, data=xmp12.01)
-s_x <- sd( ~palpebral, data=xmp12.01)
-s_y <- sd( ~OSA, data=xmp12.01)
-r <- cor( xmp12.01$palpebral, xmp12.01$OSA)
+Eyes <- read.file("http://www.calvin.edu/~rpruim/data/PalpebralFissure.txt")
+head(Eyes, 3)
+x.bar <- mean( ~palpebral, data=Eyes)  
+y.bar <- mean( ~OSA, data=Eyes)
+s_x <- sd( ~palpebral, data=Eyes)
+s_y <- sd( ~OSA, data=Eyes)
+r <- cor( palpebral ~ OSA, data = Eyes)
 c( x.bar = x.bar, y.bar=y.bar, s_x=s_x, s_y=s_y, r=r )
 slope <- r * s_y/s_x
 intercept <- y.bar - slope * x.bar
@@ -210,7 +207,7 @@ to be able to estimate ocular surface area (OSA) from palpebral fissure (the
 horizontal width of the eye opening in cm) because palpebral fissue is easier
 to measure than OSA.
 <<>>=
-osa.model <- lm( OSA ~ palpebral, data=xmp12.01) 
+osa.model <- lm( OSA ~ palpebral, data=Eyes) 
 osa.model
 @
 \function{lm()} stands for linear model.  The default output includes the estimates
@@ -231,7 +228,7 @@ but an estimated value (based on the linear equation given).
 \R\ can add a regression line to our scatter plot if we ask it to.
 \begin{center}
 <<osa-scatter>>=
-xyplot( OSA ~ palpebral, data=xmp12.01, type=c('p','r') )
+xyplot( OSA ~ palpebral, data=Eyes, type=c('p','r') )
 @
 \end{center}
 
@@ -275,7 +272,7 @@ estimated.osa(1.2)
 As it turns out, the 17th measurement in our data set had a
 \variable{palpebral} measurement of 1.2 cm.
 <<>>=
-xmp12.01[17,]
+Eyes[17,]
 @
 The corresponding OSA of 3.76 means that the residual for this observation is 
 \[
@@ -372,8 +369,8 @@ of the residuals, discrepancies are easier to see.
 Returning to our OSA data, we can make plots of all the residuals using the 
 \function{resid()} function.
 <<>>=
-xyplot( resid(osa.model) ~ palpebral, data=xmp12.01 )
-qqmath( ~ resid(osa.model),  data=xmp12.01 )
+xyplot( resid(osa.model) ~ palpebral, data=Eyes )
+qqmath( ~ resid(osa.model),  data=Eyes )
 @
 \end{example}
 If the assumptions of the model are correct, there should be no distinct patterns to this scatter
@@ -523,7 +520,7 @@ intervals.
 Notice how most of the dots are within the prediction bands, but not within the 
 confidence bands.
 <<fig.width=6, out.width=".9\\textwidth", fig.height=3>>=
-xyplot( OSA ~ palpebral, data=xmp12.01, panel=panel.lmbands )
+xyplot( OSA ~ palpebral, data=Eyes, panel=panel.lmbands )
 @
 
 \subsubsection{A Caution Regarding Prediction Intervals}
@@ -739,7 +736,7 @@ a large genetics study.  You can find out more about the data set with
 	\begin{enumerate}
 		\item
 <<>>=
-model <- lm( weight ~ height, data=men )
+model <- lm( weight ~ height, data = men )
 coef(summary(model))
 @
 			So the equation is 

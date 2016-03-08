@@ -234,37 +234,37 @@ knit_hooks$set(document = function(x) {
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% main content starts here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<child="Math241-Chap0.Rnw">>=
+<<child="Stat241-Chap0.Rnw">>=
 @
 
-<<child="Math241-Graphical.Rnw">>=
+<<child="Stat241-Graphical.Rnw">>=
 @
 
-<<child="Math241-Numerical.Rnw">>=
+<<child="Stat241-Numerical.Rnw">>=
 @
 
-<<child="Math241-Probability.Rnw", eval = TRUE>>=
+<<child="Stat241-Probability.Rnw", eval = TRUE>>=
 @
 
-<<child="Math241-Densities.Rnw", eval = TRUE>>=
+<<child="Stat241-RandomVariables.Rnw", eval = TRUE>>=
 @
 
-<<child="Math241-Transformations.Rnw", eval = FALSE>>=
+<<child="Stat241-Transformations.Rnw", eval = TRUE>>=
 @
 
-<<child="Math241-Propagation.Rnw", eval=FALSE>>=
+<<child="Stat241-Propagation.Rnw", eval=FALSE>>=
 @
 
-<<child="Math241-SimpleLinear.Rnw", eval=FALSE>>=
+<<child="Stat241-SimpleLinear.Rnw", eval=FALSE>>=
 @
 
-<<child="Math241-NonLinear.Rnw", eval=FALSE>>=
+<<child="Stat241-NonLinear.Rnw", eval=FALSE>>=
 @
 
-<<child="Math241-HypothesisTesting.Rnw", eval=FALSE>>=
+<<child="Stat241-HypothesisTesting.Rnw", eval=FALSE>>=
 @
 
-<<child="Math241-MoreExamples.Rnw", eval=FALSE>>=
+<<child="Stat241-MoreExamples.Rnw", eval=FALSE>>=
 @
 
 \backmatter

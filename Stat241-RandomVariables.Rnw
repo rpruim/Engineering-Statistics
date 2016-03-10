@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-Notes.Rnw')}
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
 
 \chapter{Random Variables}
 
@@ -2248,7 +2248,9 @@ histogram(~ values | ind,
 	)
 qqmath(~values | ind, data=sD2, as.table=TRUE, scales=list(draw=FALSE))
 @
+
 \end{problem}
+
 \begin{solution}
 a) Y  b) V c) Z d) W  e) X f) U
 \end{solution}
@@ -2313,8 +2315,36 @@ a) Y  b) V c) Z d) W  e) X f) U
 	\end{enumerate}
 \end{problem}
 
+\begin{solution}
+\begin{enumerate}
+\item
+<<>>=
+(68 - 64.3)/2.6
+@
+
+\item
+<<>>=
+(74 - 70) / 2.8
+@
+
+\item
+It's pretty close, but the z-score for the man is slightly
+larger, so it is slightly more unusual for a man to be that tall.
+
+\item
+<<>>=
+64.3 + 2 * 2.6
+@
+
+\item
+<<>>=
+70 + 2 * 2.8
+@
+\end{enumerate}
+\end{solution}
+
 \begin{problem}
-	Use the infromation from the previous problem to answer the following questions.
+	Use the information from the previous problem to answer the following questions.
 	\begin{enumerate}
 		\item
 			What proportion of women are 5'10" or taller?
@@ -2326,6 +2356,31 @@ a) Y  b) V c) Z d) W  e) X f) U
 			If a woman is in the 30th percentile for height, how tall is she?
 	\end{enumerate}
 \end{problem}
+
+\begin{solution}
+\begin{enumerate}
+\item
+<<>>=
+1 - pnorm(70, mean = 64.3, sd = 2.6)
+@
+
+\item
+<<>>=
+1 - pnorm(76, mean = 70, sd = 2.8)
+@
+
+\item
+<<>>=
+qnorm(.75, mean = 70, sd = 2.8)
+@
+
+\item
+<<>>=
+qnorm(.30, mean = 64.3, sd = 2.6)
+@
+
+\end{enumerate}
+\end{solution}
 
 \shipoutProblems
 

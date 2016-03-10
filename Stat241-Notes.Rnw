@@ -74,7 +74,7 @@
 \rhead[\sf \thechapter. \leftmark]{\sf \thepage}
 \cfoot{}
 \lfoot[\sf Last Modified: \today]{\sf Math 241 : Spring 2016 : Pruim}
-\rfoot[\sf Math 241 : Spring 2016 : Pruim]{\sf Last Modified: \today}
+\rfoot[\sf Stat 241 : Spring 2016 : Pruim]{\sf Last Modified: \today}
 
 \pagestyle{fancy}
 
@@ -212,7 +212,7 @@ knit_hooks$set(document = function(x) {
 
 %%%%%%%%%%%%%%%%%%%%%% title page info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Math 241: Statistics for the Physical Sciences and Engineering}
+\title{Stat 241: Statistics for the Physical Sciences and Engineering}
 
 \author{R Pruim}
 

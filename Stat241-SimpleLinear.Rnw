@@ -1,4 +1,10 @@
-\Sexpr{set_parent('Math241-Notes.Rnw')}
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
+
+<<include = FALSE>>=
+theme_set(theme_minimal())
+@
+
+\setcounter{chapter}{6}
 
 \chapter{Linear Models}
 
@@ -48,7 +54,7 @@ The mean response for a given predictor value $x$ is given by a linear formula
 \]
 This can also be written as 
 \[
-\E(Y \mid X=x) = \beta_0 + \beta_1 x)
+\E(Y \mid X=x) = \beta_0 + \beta_1 x
 \]
 \item
 The distribution of all responses for a given predictor value $x$ is normal.
@@ -83,17 +89,59 @@ Consider the following small data set.
 \begin{multicols}{2}
 <<tidy=FALSE>>=
 someData <- data.frame(
-  x=1:5, 
-  y=c(1,3,2,4,4)
+  x=c(1,2,4,5,6),
+  y=c(1,4,3,6,5)
 )
 someData
 @
-<<tidy=FALSE,fig.height=3.0>>=
+<<tidy=FALSE,fig.height=3.2>>=
 xyplot( y ~ x, 
   data=someData, type=c('p','g'), 
-  ylim=c(0,5), xlim=c(0,6))
+  ylim=c(0,7), xlim=c(0,7))
 @
 \end{multicols}
+
+<<include = FALSE>>=
+fitLine <- function(intercept = 0, slope = 1, 
+                    data = NULL, squares = FALSE) {
+  
+  f <- function(x) { intercept + slope * x }
+ 
+  if (is.null(data))   
+    data <- data.frame(
+    x = c(1,2,4,5,6),
+    y = c(1,4,3,6,5)
+  )
+  
+  data$fx <- f(data$x)
+  data$resid <- data$y - data$fx
+  
+  data2 <- data.frame(
+    x = c(data$x, data$x, data$x -data$resid, data$x - data$resid, data$x),
+    y = c(data$y, data$fx, data$fx, data$y, data$y),
+    id = rep(1:nrow(data), times = 5)
+  ) %>% arrange(id)
+  
+  resids <- data$y - data$fx
+  sse <- sum(resids^2)
+  p <- 
+    ggplot(aes(x,y), data = data) 
+  p <-
+    if (squares)
+      p + geom_path(aes(x = x, y = y, group = id), data = data2, colour = "red")  
+    else 
+      p + geom_segment(aes(xend = x, yend = fx), colour = "red")
+  p <- p +
+    geom_abline(slope = slope, intercept = intercept) +
+    geom_point() +
+    labs(title = paste0("SSE = ", signif(sse, 4))) +
+    theme(plot.title = element_text(colour = "red", size = rel(1.4)))
+
+  print(p) 
+  c(slope = slope, intercept = intercept, sse = sum(resids^2))
+}
+
+@
 
 \begin{enumerate}
 	\item
@@ -108,11 +156,11 @@ xyplot( y ~ x,
 \end{enumerate}
 
 \newpage
-For example, suppose we we select a line that passes through $(0,1)$ and $(5,4)$. 
-the equation for this line is $y = 1 + .6 x$, and it looks like a pretty good fit:
-<<>>=
-xyplot( y ~ x, data=someData, xlim=c(0,6), ylim=c(0,5) )
-f <- makeFun( 1 + .6 * x ~ x)
+For example, suppose we we select a line that passes through $(1,2)$ and $(6,6)$. 
+the equation for this line is $y = 1.2 + 0.8 x$, and it looks like a pretty good fit:
+<<fig.keep = "last", fig.height = 3>>=
+xyplot( y ~ x, data=someData, xlim=c(0,7), ylim=c(0,7), type = c("p", "g") )
+f <- makeFun( 1.2 + 0.8 * x ~ x)
 plotFun( f(x) ~ x, add=TRUE, col="gray50" )
 @
 The residuals for this function are 
@@ -123,6 +171,11 @@ and $SSE$ is
 <<>>=
 sum(resids^2)
 @
+The following plot provides a way to visualize the sum of the squared residuals (SSE).
+<<echo = FALSE, results = "hide", fig.height = 2.8>>=
+fitLine(1.2, 0.8, squares = TRUE)
+@
+
 If your line is a good fit, then $SSE$ will be small.  
 The best fitting line will have the smallest possible $SSE$.   
 The \function{lm()} function will find this best fitting line for us.
@@ -134,12 +187,15 @@ This says that the equation of the best fit line is
 \hat y = \Sexpr{coef(model1)[1]} + \Sexpr{coef(model1)[2]} x
 \]
 
-<<>>=
-xyplot( y ~ x, data=someData, type=c('p','r') )
+<<fig.height = 2.8>>=
+xyplot( y ~ x, data=someData, type=c('p','r','g') )
 @
 We can compute $SSE$ using the \function{resid()} function.
 <<tidy=FALSE>>=
 SSE <- sum ( resid(model1)^2 ); SSE
+@
+<<echo = FALSE, results = "hide", fig.height = 2.8>>=
+fitLine(coef(model1)[1], coef(model1)[2], squares = TRUE)
 @
 As we see, this is a better fit than our first attempt -- 
 at least according to the least squares criterion.
@@ -232,7 +288,7 @@ xyplot( OSA ~ palpebral, data=Eyes, type=c('p','r') )
 @
 \end{center}
 
-We see that the line does run roughly ``through the middle'' of the dat but that
+We see that the line does run roughly ``through the middle'' of the data but that
 there is some variability above and below the line.
 \end{example}
 
@@ -588,6 +644,7 @@ like an uncertainty).
 	\end{enumerate}
 \end{solution}
 
+\iffalse
 \begin{problem}
 Data from a 1993 study to see how well lichens serve as an indicator for air pollution
 are in the \dataframe{ex12.20} data set in the \pkg{Devore7} package.  In that paper,
@@ -624,6 +681,7 @@ estimated.dep(0.7)
 estimated.dep(0.7, interval="confidence")
 @
 \end{solution}
+\fi
 
 \begin{problem}
 	The \dataframe{KidsFeet} data set contains variables giving the widths and lengths
@@ -703,8 +761,9 @@ f( 15, interval="confidence" )
 \begin{problem}
 	Select only the non-diabetic men from the \dataframe{pheno} data set using
 <<>>=
-men <- subset(pheno, sex=="M" & t2d=="control")  # note the double == and quotes here
-head(men,3)
+require(fastR)
+Men <- subset(pheno, sex=="M" & t2d=="control")  # note the double == and quotes here
+head(Men,3)
 @
 This data set contains some phenotype information for subjects in
 a large genetics study.  You can find out more about the data set with
@@ -736,15 +795,15 @@ a large genetics study.  You can find out more about the data set with
 	\begin{enumerate}
 		\item
 <<>>=
-model <- lm( weight ~ height, data = men )
+model <- lm( weight ~ height, data = Men )
 coef(summary(model))
 @
-			So the equation is 
-			\[
-			\variable{weight} = 
-			\Sexpr{round(coef(model)[1])} + 
-			\Sexpr{round(coef(model)[2],2)} \cdot \variable{height}
-			\]
+% So the equation is 
+% 			\[
+% 			\variable{weight} = 
+% 			\Sexpr{as.vector(round(coef(model)[1]))} + 
+% 			\Sexpr{as.vector(round(coef(model)[2],2))} \cdot \variable{height}
+% 			\]
 		\item
 <<>>=
 # we can ask for just the parameter we want, if we like
@@ -778,7 +837,7 @@ In this particular case, a log transformation of the weights improves the
 residual distribution.  There is still one man whose weight is quite high for
 his height, but otherwise things look quite good.
 <<>>=
-model2 <- lm( log(weight) ~ height, data=men )
+model2 <- lm( log(weight) ~ height, data = Men )
 coef(summary(model2))
 xyplot( resid(model2) ~ fitted(model2) )
 qqmath( ~resid(model2) )
@@ -809,7 +868,7 @@ So
 			For each of the four pairs, us \R\ to fit a linear model and 
 			compare the results.  Use, for example,
 <<eval=FALSE>>=
-model1 <- lm( y1 ~ x1, data=anscombe ); summary(model1)
+model1 <- lm( y1 ~ x1, data = anscombe ); summary(model1)
 @
 			Briefly describe what you notice looking at this output.  (You do not have
 			to submit the output itself -- let's save some paper.)

@@ -192,10 +192,13 @@ require(fastR)
 require(ggplot2)
 trellis.par.set(theme=col.mosaic())
 trellis.par.set(fontsize=list(text=9))
-options(keep.blank.line=FALSE)
+#options(keep.blank.line=FALSE)
+options(formatR.blank = FALSE)
 options(show.signif.stars=FALSE)
 options(width=90)
+options(digits=3)
 opts_chunk$set(tidy=TRUE,
+               digits = 4,
 			   dev='pdf',
 			   fig.path='figures/fig-',  
 			   fig.width=3, fig.height=2,
@@ -208,6 +211,14 @@ knit_hooks$set(document = function(x) {
 			   sub('\\usepackage[]{color}', '\\usepackage[]{xcolor}', 
 			   x, fixed = TRUE) 
 }) 
+
+knit_hooks$set(digits = function(before, options, envir) {
+    if (before) {
+      options(digits = options$digits)
+    } else {
+      options(digits = 3)
+    }
+})
 @ 
 
 %%%%%%%%%%%%%%%%%%%%%% title page info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -252,13 +263,13 @@ knit_hooks$set(document = function(x) {
 <<child="Stat241-Transformations.Rnw", eval = TRUE>>=
 @
 
-<<child="Stat241-Propagation.Rnw", eval=FALSE>>=
+<<child="Stat241-Propagation.Rnw", eval=TRUE>>=
 @
 
-<<child="Stat241-SimpleLinear.Rnw", eval=FALSE>>=
+<<child="Stat241-SimpleLinear.Rnw", eval=TRUE>>=
 @
 
-<<child="Stat241-NonLinear.Rnw", eval=FALSE>>=
+<<child="Stat241-NonLinear.Rnw", eval=TRUE>>=
 @
 
 <<child="Stat241-HypothesisTesting.Rnw", eval=FALSE>>=
@@ -282,7 +293,6 @@ knit_hooks$set(document = function(x) {
 \shipoutSolutions
 \fi
 \fi
-
 
 \end{document}
 

@@ -73,8 +73,8 @@
 \lhead[\sf \thepage]{\sf \thechapter. \leftmark}
 \rhead[\sf \thechapter. \leftmark]{\sf \thepage}
 \cfoot{}
-\lfoot[\sf Last Modified: \today]{\sf Math 241 : Spring 2016 : Pruim}
-\rfoot[\sf Stat 241 : Spring 2016 : Pruim]{\sf Last Modified: \today}
+\lfoot[\sf Last Modified: \today]{\sf Math 241 : Spring 2017 : Pruim}
+\rfoot[\sf Stat 241 : Spring 2017 : Pruim]{\sf Last Modified: \today}
 
 \pagestyle{fancy}
 
@@ -226,7 +226,7 @@ knit_hooks$set(digits = function(before, options, envir) {
 
 \author{R Pruim}
 
-\date{Spring 2016}
+\date{Spring 2017}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeindex

@@ -48,7 +48,7 @@ f(x) = \Prob(X = x)
 Sometimes instead of providing a table, we will be able to specify
 the pmf using a formula.  For example, we could define a pmf $g$ by
 
-\[ g(y) = (2 - |1-y|) / 4 \mbox{ for $y \in \{0, 1, 2\}} \]
+\[ g(y) = (2 - |1-y|) / 4 \mbox{ for $y \in \{0, 1, 2\}$} \]
 which is the same as specifying $g$ with the following table.
 
 \begin{center}
@@ -78,7 +78,7 @@ $\Prob( Y > 0) = 0.5 + 0.25$
 \item
 $\Prob(W > 0) = \frac14 + \frac18 + \frac1{16} + \cdots = \frac12$
 \item
-$\Prob(W > 0) = 1 - \Prob(W = 0) = 1 - \frac{1}{2} = \frac{1}2}$
+$\Prob(W > 0) = 1 - \Prob(W = 0) = 1 - \frac{1}{2} = \frac{1}{2}$
 \end{itemize}
 
 The only restrictions on a pmf are that 
@@ -398,10 +398,10 @@ probability & 0.2 & 0.5 & 0.3 \\
 \end{tabular}
 \end{center}
 
-\Question What is the mean (expected value) of $X$?
+\question What is the mean (expected value) of $X$?
 
-\Answer
-$E(X) = 0 \cdot 0.2 + 1 \cdot 0.5 + 2 \cdt 0.3 = 0.5 + 0.6 = 1.1$
+\answer
+$E(X) = 0 \cdot 0.2 + 1 \cdot 0.5 + 2 \cdot 0.3 = 0.5 + 0.6 = 1.1$
 This value reflects the fact that the random variable is larger than
 1 a bit more often than it is less than 1.
 \end{example}
@@ -439,7 +439,7 @@ This value reflects the fact that the random variable is larger than
 # R can help us set up this sum:
 sum(c(25, 50, 100, 1000, 2000) * 0.001)
 @
-\qedskip
+%%% \qedskip
 \end{example}
 
 
@@ -506,7 +506,7 @@ continuous:
 \(
 \Var(X) = \sigma^2_X = \int_{-\infty}^{\infty} (x-\mu_X)^2 f(x) \; dx
 \)
-\end{enumerate}
+\end{itemize}
 These can be combined into a single definition by writing
 \[
 \Var(X) = \E((X - \mu_X)^2) \;.
@@ -1408,6 +1408,8 @@ As with the continuous distributions, we have our usual functions available.
 	\hline
 \end{tabular}
 \end{center}
+
+\end{example}
 
 
 \subsection{Poisson Distributions}

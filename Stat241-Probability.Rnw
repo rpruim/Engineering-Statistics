@@ -1145,13 +1145,13 @@ Then our question becomes
 \end{align*}
 The individual probabilities can be worked out as
 \[
-\Prob(\mbox{Y_4 \tand G_6}) = \Prob(Y_4) \cdot \Prob(G_6 \mid Y_4)
+\Prob(Y_4 \tand G_6) = \Prob(Y_4) \cdot \Prob(G_6 \mid Y_4)
 =
 .20 \cdot .20 = 0.04
 \]
 
 \[
-\Prob(\mbox{Y_6 \tand G_4}) = \Prob(Y_6) \cdot \Prob(G_4 \mid Y_6)
+\Prob(Y_6 \tand G_4) = \Prob(Y_6) \cdot \Prob(G_4 \mid Y_6)
 =
 .14 \cdot .10 = 0.014
 \]

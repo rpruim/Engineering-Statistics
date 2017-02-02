@@ -309,7 +309,7 @@ make this even easier.
 <<>>=
 require(deltaMethod)
 deltaMethod(HeatX, exprforQ, 
-  uncertainties=c(T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60))
+  uncertainties=c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5 / 60))
 @
 
 \subsubsection{Dealing with uncertainties that are not constant}
@@ -317,15 +317,16 @@ deltaMethod(HeatX, exprforQ,
 Sometimes the uncertainties of a given variable are different at different values.
 In that case, we can put the uncertainties into the data frame.  For the current 
 example, this is just extra work, but we include it here to show how it works.
-<<>>=
+<<tidy = FALSE>>=
 HeatX3 <- HeatX %>%
   mutate(
-    u.cold.in=1, u.cold.out=1, u.hot.in=1, u.hot.out=1, u.m.cold=.5/60, u.m.hot=.5/60
+    u.cold.in = 1, u.cold.out = 1, u.hot.in = 1, u.hot.out = 1, 
+    u.m.cold = 0.5/60, u.m.hot = 0.5/60
   )
 HeatX3
 deltaMethod(HeatX3,
   exprforQ, 
-  estimates = c("T.cold.in","T.cold.out","m.cold"),      # columns with estimates
+  estimates = c("T.cold.in", "T.cold.out", "m.cold"),    # columns with estimates
   uncertainties = c("u.cold.in", "u.cold.out", "u.m.cold"))   # and uncertainties
 @
 Although our uncertainties are the same in each row, this method allows for uncertainties 
@@ -337,7 +338,7 @@ In the analysis above, we treated $C_p$ as a constant (with arbitrary precision)
 But this number is also known experimentally and has an uncertainty associated with it.
 Do our results change if we include this uncertainty in our calculations?
 
-<<>>=
+<<tidy = FALSE>>=
 deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
   uncertainties=c(T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60, C_p = 0.1) )
 @

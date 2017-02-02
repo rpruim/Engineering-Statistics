@@ -1230,13 +1230,13 @@ where $k$ is the cars per person, $P$ is total population, $d$ is average distan
 driven per car, and $E$ is the average efficiency.
 
 \begin{align*}
-\Parital{F}{k} &= \frac{Pd}{E} 
+\Partial{F}{k} &= \frac{Pd}{E} 
 \\
-\Parital{F}{P} &= \frac{kd}{E}
+\Partial{F}{P} &= \frac{kd}{E}
 \\
-\Parital{F}{d} &= \frac{kP}{E}
+\Partial{F}{d} &= \frac{kP}{E}
 \\
-\Parital{F}{E} &= \frac{-kPd}{E^2}
+\Partial{F}{E} &= \frac{-kPd}{E^2}
 \end{align*}
 
 So the estimated amount of fuel consumed (in millions of gallons) is 

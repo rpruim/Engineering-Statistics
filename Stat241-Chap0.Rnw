@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-Notes.Rnw')}
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
 \setcounter{chapter}{-1}
 
 \Chapter{Where do numbers come from?}

@@ -237,9 +237,10 @@ statistical packages), you need to make sure your data are also in this shape.
 
 \subsection{Using your own data}
 
-We will postpone for now a discussion about getting your own data into \RStudio,
-but any data you can get into a reasonable format (like csv) can be imported
-into \RStudio\ pretty easily.
+In the Environment tab you will ``Import Dataset".  Click on this import data 
+from a CSV file, Excel spreadsheet, or a few other formats.  When you 
+do this, the R code will be displayed, so you can see how it is done in 
+\R{} code.
 
 \section{Graphing the Distribution of One Variable}
 
@@ -451,7 +452,8 @@ You can save plots to files or copy them to the clipboard using the
 \tab{Export} menu in the \tab{Plots} tab.  It is quite simple to copy the 
 plots to the clipboard and then paste them into a Word document, for example.
 You can even adjust the height and width of the plot first to get it the 
-shape you want.
+shape you want.  But there are much better ways to produce documents 
+with \R{} graphics in them.
 
 \section{Reproducible Research}
 
@@ -508,18 +510,18 @@ computer.
 If you look at the template file you will see that the file has two kinds of
 sections.  Some of this file is just normal text (with some extra symbols to
 make things bold, add in headings, etc.)  You can get a list of all of these
-mark up options by selecting the ``Markdown Quick Reference" in the question
-mark menu.
+mark up options by selecting the ``Markdown Quick Reference" in the help
+menu.
 
 \begin{center}
-	\includegraphics[width=2in]{images/MardownQuickReference}
+	\includegraphics[width=3.5in]{images/MarkdownQuickReference}
 \end{center}
 
 The second type of section is an \R\ code chunk.  These are colored differently to make them
-easier to see.  You can insert a new code chunk by selecting ``Insert Chunk" from the ``Chunks" 
-menu:
+easier to see.  You can insert a new code chunk by selecting by selecting
+the appropriate chunk type (R in our case) from the menu below.
 \begin{center}
-	\includegraphics[width=2in]{images/InsertChunk}
+	\includegraphics[width=1.2in]{images/InsertChunk}
 \end{center}
 \noindent
 (You can also type \verb!```{r}! to begin and \verb!```! to end the code chunk if you would 
@@ -535,7 +537,16 @@ as the \R\ code will be displayed in your HTML file.
 R Markdown files do not have access to things you have done in your console.  (This is good, else 
 your document would change based on things not in the file.)  This means that you must explicitly
 load data, and require packages \emph{in the R Markdown file} in order to use them.  In this class,
-this means that most of your R Markdown files will have a chunk near the beginning that includes
+this means that most of your R Markdown files will have a chunk near the beginning that 
+includes
+
+<<eval = FALSE>>=
+require(mosaic)
+@
+
+\noindent
+If you use the \pkg{mosaic} templates, this will be included in the template.
+
 
 
 \iffalse
@@ -567,7 +578,7 @@ data or some package loaded inside your file.  (Typos are another cause for thes
 check your spelling and capitalization.)
 \fi
 
-\subsubsection{Chunk options}
+\subsection{Chunk options}
 R Markdown provides a number of chunk options that control how \R\ code is processed.  
 You can use them to do things like:
 \begin{itemize}
@@ -585,8 +596,11 @@ The default plots are often bigger than required.  The following chunk options a
 start.  They can be adjusted as necessary.
 <<eval=FALSE>>=
 require(knitr)
-opts_chunk$set( fig.width=5, fig.height=2, fig.align="center", fig.show="hold" )
+opts_chunk$set(fig.width=5, fig.height=2, fig.align="center", fig.show="hold")
 @
+
+Some of these document settings can also be set in the YAML header 
+(the top few lines of the RMarkdown file).
 
 \subsection{knitr/latex}
 There is another system that produces PDFs by combining \LaTeX\ and \R.  This is the system

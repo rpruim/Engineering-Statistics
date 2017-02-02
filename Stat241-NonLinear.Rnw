@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-Notes.Rnw')}
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
 
 <<include=FALSE>>=
 require(gdata)
@@ -7,6 +7,7 @@ haveInternet <- tryCatch( {
 	error=function(e) TRUE)
 @
 
+\setcounter{chapter}{7}
 \chapter{Non-Linear Relationships}
 
 %\section{Two approaches to Non-linear Relationships}
@@ -35,34 +36,50 @@ the predictor or response (or both).
   \item To correspond to a theoretical model.
 
 	Sometimes we have \emph{a priori} information that tells us what 
-	kind of non-linear relationship we should anticipate.  As a simple example,
-	if we have an apparatus that can accelerate objects by applying a constant
-	(but unknown) force $F$, 
-	then since $F = ma$, we would expect the relationship between 
-	the mass of the objects tested and the acceleration measured to satisfy
+	kind of non-linear relationship we should anticipate.  
+	For example, an experiment to estimate Planck's constant ($\hbar$) using 
+	LED lights and a voltage meter is based on the relationship
+	
 	\[
-	a = \frac{F}{m}
-	\;.
+	V_a = \frac{\hbar c }{e \lambda} + k
 	\]
-	This might lead us to fit a model with no intercept 
-	(see Exercise~\ref{prob:noIntercept}) after applying an inverse transformation
-	to the predictor $m$:
+	where $V_a$ is the activation voltage (the voltage at which the LED just begins to emit
+	light), $c$ is the speed of light, $e$ is the energy of an electron, $\lambda$ is the 
+	frequency of the light emitted, and $k$ is a constant that relates to the energy 
+	losses inside the semiconductor’s p-n junction.
+	If we take $c$ and $e$ as known for now (in a fancier version we would work their
+	uncertainties into this, too), we can design an experiment that measures $V_a$
+	and $\lambda$ for a number of different colors.
+	
+	A little algebra gives us
 	\[
-	a = \beta_1 \cdot \frac{1}{m}
-	\;.
+	V_a = \frac{\hbar c }{e} \cdot \frac{1}{\lambda} + k
 	\]
-	The parameter $\beta_1$ corresponds to the (unknown) force being applied
-	and could be estimated by fitting this model.
+	So if we fit a model with $V_a$ as the response and $\frac{1}{\lambda}$ as the predictor,
+	then the slope and intercept of the resulting least squares regression line will 
+	give us and estimate for $\frac{\hbar c }{e}$, from which we can solve for $\hbar$.
+	(Note: if we know uncertainties for $c$, for $e$, and for the slope, we can compute
+	an estimated uncertainty for $\hbar$ using our propagation of uncertainty methods.)
 
-	Alternatively, we could use a logarithmic transformation
-	\begin{align*}
-	\log(a) &= \beta_0 + \beta_1 \log(m) \,,
-	\\
-	a &= e^{\beta_0}  m^{\beta_1}  \;.
-	\end{align*}
-	In this model, $e^\beta_0$ corresponds to the unknown force and 
-	we can test whether $\beta_1 = -1$ is consistent with our data.
+  Theory says that a scatter plot of $V_a$ and $1/\lambda$ should form a straight line,
+  so the the model we would fit would look something like
+<<eval = FALSE>>=
+lm(voltage ~ I(1/wavelength), data = mydata)
+@
+\noindent
+We need to wrap \code{1/lambda} in \code{I()} because the arithmetic symbols 
+(
+\code{+},
+\code{-},
+\code{*},
+\code{/},
+and 
+\verb!^!
+have special meanings inside a formula.  \code{I()} stands for \emph{inhibit} special interpretation.
 
+Notice that the intercpet is not directly involved in estimating $\hbar$, but that we can't fit
+the line and obtain our slope without it.
+	
 	Many non-linear relationships can be transformed to linearity.  
 	Exercise~\ref{prob:transformations} presents several examples
 	and asks you to determine a suitable transformation.
@@ -79,10 +96,10 @@ the predictor or response (or both).
 
   \item To obtain better residual behavior.
 
-	Some transformations are used to improve the agreement between the
+	Sometimes transformations are used to improve the agreement between the
 	data and the assumptions about the error terms in the model.  For example,
 	if the variance in the response appears to increases as the predictor 
-	increases, a logarithmic or square root transformation of the response will 
+	increases, a logarithmic or square root transformation of the response may 
 	decrease the disparity in variance.  
 \end{itemize}
 
@@ -115,7 +132,7 @@ Power laws can be linearized by taking logarithms:
 \[ \log(y) = \log(A x^p) = \log(A) + p \log(x) \]
 So if we fit a model of the form
 <<eval=FALSE>>=
-lm( log(y) ~ x )
+lm(log(y) ~ log(x))
 @
 Then $\beta_0 = \log(A)$ and $\beta_1 = p$.  
 If a power law is a good fit for the data then
@@ -129,11 +146,10 @@ Note that we can use logarithms with any base for this transformation.  Typicall
 (that's what \function{log()} does in \R).  
 In some specific applications base 10 logarithms (\function{log10()} in \R) 
 or base 2 logarithms (\function{log2()} in \R) 
-this yields the commonly used scale for 
-$\beta_0 = \log(A)$, the constant of proportionality.
+yield the commonly used scale for $\beta_0 = \log(A)$, the constant of proportionality.
 
-Some common situations that are modeled with power laws include drag force vs speed, velocity vs. force, and
-frequency vs. force.
+Some common situations that are modeled with power laws include drag force vs speed, 
+velocity vs. force, and frequency vs. force.
 
 \subsubsection{Exponential Laws}
 
@@ -145,7 +161,7 @@ Exponential laws can also be linearized by taking logarithms:
 \[ \log(y) = \log(A B^x) = \log(A) + x \log(B) \]
 So if we fit a model of the form
 <<eval=FALSE>>=
-lm( log(y) ~ x )
+lm(log(y) ~ x)
 @
 Then $\beta_0 = \log(A)$ and $\beta_1 = \log(B) = C$.  
 If an exponential law is a good fit for the data then
@@ -175,15 +191,22 @@ In practice, the fit won't be perfect, but the plot is a useful diagnostic.
 
 In the old days, before computers could readily transform the data, special
 graph paper was produced with semi-log or log-log scales to facilitate this
-sort of plot.  \R\ can also create plots with transformed scales.
+sort of plot.  \R\ can also create plots with transformed scales.  Here are some
+examples using artifical data satisfying a power law (with exponent 1.5).
 <<>>=
 x <- 1:10
 y <- 3 * x^1.5
+xyplot(y ~ x)
+@
+<<>>=
 xyplot(log(y) ~ log(x))
 xyplot(log(y) ~ x)
 xyplot(y ~ x, scales=list(x=list(log=TRUE), y=list(log=TRUE)))
 xyplot(y ~ x, scales=list(y=list(log=TRUE)))
 @
+\noindent
+As expected, the log-log transformation makes things linear.  Of course, with real data, the 
+fit won't be perfect like this.
 
 \subsection{Other Models That Can Be Transformed to Linear}
 
@@ -213,7 +236,7 @@ C^{-\beta} & = \beta k t + \beta d
 If we know $\beta = \alpha - 1$ (i.e., if we know $\alpha$), 
 then we can fit a linear model using
 <<eval=FALSE>>=
-lm( C^(-1/beta) ~ t )
+lm(C^(-1/beta) ~ t)
 @
 The intercept of such a model will be $\beta d$ and the slope will be $\beta k$,
 from which we can easily recover $d$ and $k$.
@@ -227,7 +250,7 @@ then we can use
 \end{align*}
 Now if we fit a model of the form 
 <<eval=FALSE>>=
-lm(  C ~ log(t) )
+lm(C ~ log(t))
 @
 the intercept will be $\frac{-\log(\beta k)}{\beta}$ and the slope will be 
 $\frac{-1}{\beta}$.  From this we can solve for $k$ and $\beta$.
@@ -249,7 +272,7 @@ $\alpha=2$, so $\beta = 1$.  In this case, our relationship becomes
  \]
 We can now fit a model and see how well it does.
 <<>>=
-conc.model <- lm( 1/concentration ~ time, data=Concentration)
+conc.model <- lm(1/concentration ~ time, data = Concentration)
 summary(conc.model)
 confint(conc.model)
 @
@@ -261,7 +284,7 @@ We can divide by $-\beta$ to obtain estimates for $d$ and $k$.
 
 Of course, we should always look to see whether the fit is a good fit.
 <<>>=
-xplot(conc.model, w=1:2)  # residual plot and qq-plot of residuals
+xplot(conc.model, w = 1:2)  # residual plot and qq-plot of residuals
 @
 Notice that these residuals are very small relative to the values for
 concentration.  (We can see this from the vertical scale of the plot and 
@@ -269,15 +292,21 @@ also from the small value for residual standard error in the summary output.)
 The shape of the residual plot would be more disturbing if the
 magnitudes were larger and if there were more data.  
 As is, even if there is some systematic problem, it is roughly five orders of 
-magnitude smaller than our concentration measuremnts, which likely can't be 
+magnitude smaller than our concentration measurements, which likely can't be 
 measured to that degree of accuracy.
 
 If we want to show the fit on top of the original data, we must remember to
-untransform the response, since the model is a model for $1/C$:
+untransform the response, since the model is a model for $1/C$.  There are two ways
+to do that.
 <<fig.keep='last'>>=
-C <- makeFun(conc.model)
-xyplot( concentration ~ time, data=Concentration )
-plotFun( 1/C(t) ~ t, add=TRUE)
+oneOverC <- makeFun(conc.model)
+xyplot( concentration ~ time, data = Concentration )
+plotFun( 1/oneOverC(t) ~ t, add=TRUE)
+@
+<<fig.keep='last'>>=
+C <- makeFun(conc.model, transform = makeFun(1/x ~ x))
+xyplot( concentration ~ time, data = Concentration )
+plotFun( C(t) ~ t, add=TRUE)
 @
 \end{example}
 
@@ -459,7 +488,7 @@ Some physics students conducted an experiment in which they dropped steel
 balls from various heights and recorded the time until the ball hit the 
 floor.   We begin by fitting a linear model to this data.
 <<balldrop>>=
-ball.model <- lm(time~height,balldrop)
+ball.model <- lm(time ~ height, data = balldrop)
 summary(ball.model)
 xyplot(time~height,balldrop,type=c('p','r'))
 xplot(ball.model,w=1)
@@ -478,9 +507,9 @@ This transformation agrees with Tukey's ladder of re-expression, which suggests
 moving down the ladder for \variable{height} or up the ladder for \variable{time}.
 
 <<balldrop-transT>>=
-ball.modelT <- lm(time ~ sqrt(height),balldrop)
+ball.modelT <- lm(time ~ sqrt(height), data = balldrop)
 summary(ball.modelT)
-xyplot(time~height,balldrop, panel=panel.lm, model=ball.modelT)
+plotModel(ball.modelT)
 xplot(ball.modelT, w=1)
 @
 This model does indeed fit better, but the residual plot indicates that
@@ -521,14 +550,18 @@ not systematic).
 %\pagebreak
 % # balldropavg <- aggregate(balldrop$time, by=list(balldrop$height), mean)
 % # names(balldropavg) <- c('height','time')
-<<balldrop-avg, message=FALSE>>=
-require(plyr)  # to access ddply
-balldropavg <- ddply( balldrop, .(height), summarise, time=mean(time) )
-balldropavg
-ball.modelA <- lm(time ~ sqrt(height),balldropavg)
+<<balldrop-avg, tidy = FALSE>>=
+balldropavg <- 
+  balldrop %>%
+  group_by(height) %>%
+  summarise(time = mean(time))
+balldropavg 
+@
+<<>>=
+ball.modelA <- lm(time ~ sqrt(height), data = balldropavg)
 summary(ball.modelA)
-xyplot(time~height,balldropavg, panel=panel.lm,model=ball.modelA)
-xyplot(resid(ball.modelA) ~ fitted(ball.modelA))
+plotModel(ball.modelA)
+xplot(ball.modelA, w = 1)
 @
 Using a square root transformation on averaged \texttt{height}
 measurements in the \texttt{balldrop} data gives a similar fit but
@@ -605,7 +638,7 @@ W^{1/3} = k t + C
 We can fit untransformed and transformed models 
 (\verb!Weight^(1/3) ~ Day!) to this data and compare.
 <<lm-soap>>=
-soap.model1 <- lm(Weight~Day,soap)
+soap.model1 <- lm(Weight ~ Day, data = soap)
 summary(soap.model1)
 @
 The high value of $r^2$ and the scatterplot in Figure~\ref{fig:soap} 
@@ -616,7 +649,7 @@ to know that larger values of $r^2$ generally indicate a better fit.
 We will discuss $r^2$ and what it measures in Section~\ref{sec:Rsquared}.
 }
 <<lm-soap-trans>>=
-soap.model2 <- lm(I(Weight^(1/3))~Day,soap)
+soap.model2 <- lm(I(Weight^(1/3)) ~ Day, data = soap)
 summary(soap.model2)
 @
 \begin{figure}
@@ -822,7 +855,7 @@ of the pendulum.
 The students constructed pendulums of lengths varying from
 $10$ cm to $16$ m and recorded the period length (averaged over several
 swings of the pendulum).  The resulting data are in
-the \dataframe{pendulum} data set.
+the \dataframe{pendulum} data set in the \pkg{fastR} package.
 
 \begin{enumerate}
 	\item
@@ -843,18 +876,19 @@ What is the estimated power in the power law based on this model?
 
 \begin{solution}
 	At first glance, the two models might appear equally good.  In each case the 
-	power is a bit below 2 and the fits look good on top of the raw data.  (Note: the 
-	function produced by \function{makeFun()} does not know how to invert the log
-	transformation on the response variable, so we have to do that ourselves.)
+	power is a bit below 2 and the fits look good on top of the raw data.  
+	% (Note: the 
+	% function produced by \function{makeFun()} does not know how to invert the log
+	% transformation on the response variable, so we have to do that ourselves.)
 <<warning=FALSE>>=
-model <- lm( log(period) ~ log(length), data=pendulum )
-model2 <- nls( period ~ A * length^power, data=pendulum, start=list(A=1, power=2) )
+model <- lm(log(period) ~ log(length), data = pendulum)
+model2 <- nls(period ~ A * length^power, data = pendulum, start = list(A=1, power=2))
 f <- makeFun(model)
 g <- makeFun(model2)
-xyplot(period ~ length, data=pendulum)
-plotFun(exp(f(x)) ~ x, col='gray50',add=TRUE)
-xyplot(period ~ length, data=pendulum)
-plotFun(g(x) ~ x, col='red', lty=2, add=TRUE)
+xyplot(period ~ length, data = pendulum)
+plotFun(f(x) ~ x, col = 'gray50',add = TRUE)
+xyplot(period ~ length, data = pendulum)
+plotFun(g(x) ~ x, col = 'red', lty = 2, add = TRUE)
 coef(summary(model))
 coef(summary(model2))
 @
@@ -876,8 +910,9 @@ qqmath(~resid(model2))
 	in variance as the fitted value increases.  This is counteracted by the logarithmic
 	transformation of the explanatory variable.  (In other cases, the non-linaer model
 	might have the preferred residual distribution.)
+	
+The estimated power based on the linear model is $0.478 \pm 0.004$.
 \end{solution}
-
 
 
 \begin{problem}
@@ -891,6 +926,36 @@ how you chose your best model.
 What does your model say about the relationship between 
 pressure and temperature?
 \end{problem}
+
+\begin{solution}
+Using Tukey's buldge rules it is pretty easy to land at something like one of the following
+
+<<>>=
+xyplot(log(pressure) ~ temperature, data = pressure)
+xyplot(log(pressure) ~ log(temperature), data = pressure)
+@
+
+Neither of these is pefect (although both are much more linear than the original untransformed relationship).
+But if you think in degrees Kelvin instead, you might find a much better transformation.
+<<>>=
+xyplot(log(pressure) ~ (273.15 + temperature), data = pressure)
+xyplot(log(pressure) ~ log(273.15 + temperature), data = pressure)
+xyplot(log(pressure) ~ 1/(273.15 + temperature), data = pressure)
+@
+
+Ah, that last one looks quite good.  Let's try that one.
+<<>>=
+model <- lm(log(pressure) ~ I(1/(273.15 + temperature)), data = pressure)
+mplot(model, 1:2)
+@
+Things still aren't perfect. There's a bit of a bow in the residual plot, but the size of the residuals is
+quite small relative to the scale of the log-of-pressure values:
+<<>>=
+range( ~ resid(model))
+range( ~ log(pressure), data = pressure)
+@
+Also the residual for the fourth observation is quite a bit larger than the rest.
+\end{solution}
 
 \begin{problem}
 \Rindex{cornit}%
@@ -911,7 +976,7 @@ how you chose your best model.
 \Rindex{actgpa}%
 \myindex{ACT}%
 \myindex{grade point average}%
-The data set \verb!actgpa!
+The data set \verb!actgpa! (in the \pkg{fastR} package)
 %  \url{http://www.calvin.edu/~stob/courses/m344/S07/data/actgpanona.csv}
 contains the ACT composite scores and GPAs of some randomly selected seniors 
 at a Midwest liberal arts college.
@@ -942,7 +1007,7 @@ at a Midwest liberal arts college.
 			a model with only an intercept term.
 <<act-gpa, tidy=FALSE>>=
 grades <- actgpa
-confint(lm(ACT ~ 1, data=grades))
+confint(lm(ACT ~ 1, data = grades))
 @
 But this isn't the only way to do it.  Here are some other ways.
 <<>>=
@@ -960,12 +1025,12 @@ ME <- t.star * SE; ME
 			$\Sexpr{round(x.bar,1)} \pm \Sexpr{round(ME,1)}$.  
 		\item
 <<>>=
-confint(lm(GPA ~ 1, data=grades))
+confint(lm(GPA ~ 1, data = grades))
 # this could also be done the other ways shown above.
 @
 		\item
 <<>>=
-grades.model <- lm(GPA~ACT,grades)
+grades.model <- lm(GPA ~ ACT, data = grades)
 f <- makeFun(grades.model)
 f(ACT=25, interval="confidence")
 @
@@ -976,8 +1041,8 @@ f(ACT=30, interval="prediction")
 @
 		\item
 <<>>=
-xyplot(GPA~ACT,data=grades,panel=panel.lmbands)
-xyplot(resid(grades.model) ~ fitted(grades.model),type=c('p','smooth'))
+xyplot(GPA ~ ACT, data = grades, panel = panel.lmbands)
+xyplot(resid(grades.model) ~ fitted(grades.model), type = c('p','smooth'))
 @
 			There are no major concerns with the regression model. The
 			residuals look pretty good.  (There is perhaps a bit more variability
@@ -1038,9 +1103,9 @@ Given the design of the experiment, it makes the most sense to fit
 velocity as a function of drag force.  Here are several ways we could 
 do the fit:
 <<drag>>=
-model1 <- lm(velocity^2 ~ force.drag, drag)
-model2 <- lm(velocity ~ sqrt(force.drag), drag)
-model3 <- lm(log(velocity) ~ log(force.drag), drag)
+model1 <- lm(velocity^2 ~ force.drag, data = drag)
+model2 <- lm(velocity ~ sqrt(force.drag), data = drag)
+model3 <- lm(log(velocity) ~ log(force.drag), data = drag)
 @
 <<>>=
 coef(summary(model1))
@@ -1071,10 +1136,12 @@ In both groups, the velocities for the greatest drag forces are
 not as fast as the pattern of the remaining data would lead us to expect.
 
 <<drag-plots>>=
-xyplot(velocity^2 ~ force.drag, drag, groups=height)
-xplot(model1,w=1)
-xyplot(velocity ~ force.drag, drag, scales=list(log=T),groups=height)
-xplot(model3,w=1)
+xyplot(velocity^2 ~ force.drag, drag, groups = height)
+plot(model1, w = 1)
+xyplot(log(velocity) ~ log(force.drag), data = drag, groups = height)
+xyplot(velocity ~ force.drag, data = drag, groups = height, 
+       scales = list(log = TRUE))
+plot(model3, w=1)
 @
 \end{solution}
 
@@ -1170,7 +1237,7 @@ but there are some important differences:
 			parameters of the model are.  (Each quantity with a starting value
 			is considered a parameter, and the algorithm will adjust all the parameters
 			looking for the best fit -- i.e., the smallest MSE (and hence also
-			the smallest SSE nd RMSE).
+			the smallest SSE and RMSE).
 	\end{enumerate}
 
 Let's illustrate with an example.
@@ -1183,13 +1250,13 @@ Let's illustrate with an example.
 	\end{align}
 	using nonlinear least squares.  
 <<tidy=FALSE>>=
-nls.model <- nls( time ~ alpha0 + alpha1 * sqrt(height), 
-                  data=balldrop, 
-                  start=list(alpha0=0, alpha1=1) )
+nls.model <- nls(time ~ alpha0 + alpha1 * sqrt(height), 
+                  data = balldrop, 
+                  start = list(alpha0 = 0, alpha1 = 1))
 @
 	Notice how the model formula compares with the formula in (\ref{eq:balldrop}).
 	The starting point for the algorithm is specified with 
-	\code{start=list(alpha0=0, alpha1=1)}, which also declares that 
+	\code{start=list(alpha0 = 0, alpha1 = 1)}, which also declares 
 	the parameters to be fit.
 
 	We can obtain the coefficients of the fitted model with
@@ -1213,15 +1280,15 @@ coef(summary(nls.model))
 f <- makeFun(nls.model)
 xyplot( time ~ height, data=balldrop )
 plotFun( f(height) ~ height, add=TRUE, col='gray40' )
-xyplot( resid(nls.model) ~ fitted(nls.model) )
+xyplot(resid(nls.model) ~ fitted(nls.model))
 @
 
 We can compare this to the ordinary least squares model by plotting both together on the same plot.
 <<fig.keep='last'>>=
-lm.model <- lm( time ~ sqrt(height), data=balldrop)
+lm.model <- lm( time ~ sqrt(height), data = balldrop)
 g <- makeFun(lm.model)
-xyplot( time ~ height, data=balldrop )
-plotFun( f(height) ~ height, add=TRUE, col='gray40', lwd=3 )
+xyplot(time ~ height, data = balldrop)
+plotFun(f(height) ~ height, add=TRUE, col='gray40', lwd=3)
 plotFun(g(height) ~ height, add=TRUE, col='red', lwd=1, lty=2)
 @
 In this particular case, there is very little difference between the two models, but this is not always the case.
@@ -1237,14 +1304,14 @@ coef(lm.model)
 	\variable{time} = \alpha * \variable{height}^p
 	\]
 <<tidy=FALSE>>=
-power.model <- nls( time ~ alpha * height^power, data=balldrop, 
-                    start=c(alpha=1, power=.5) )
+power.model <- nls(time ~ alpha * height^power, data = balldrop, 
+                   start = c(alpha = 1, power = .5))
 coef(summary(power.model))
 @
 
 A power law can also be fit using \function{lm()} by using a log-log transformation.
 <<>>=
-power.model2 <- lm( log(time) ~ log(height), data=balldrop )
+power.model2 <- lm(log(time) ~ log(height), data = balldrop)
 coef(summary(power.model2))
 @
 Again, the parameter estimates (and uncertainties) are very similar.  Recall that to 
@@ -1279,8 +1346,8 @@ $\frac{d}{dx} e^x = e^x$ the uncertainty is approximately
 			this flaw in the design of the experiment.
 		\end{enumerate}
 <<>>=
+qqmath(resid(power.model), main = "model 1")
 qqmath(resid(power.model2))
-qqmath(resid(power.model))
 xyplot( resid(power.model) ~ fitted(power.model) )
 xyplot( resid(power.model2) ~ fitted(power.model2) )
 @
@@ -1299,8 +1366,8 @@ xyplot( temp ~ time, data=CoolingWater, ylab="temp (C)", xlab="time (sec)")
 
 Our first guess might be some sort of exponential decay
 <<tidy=FALSE, fig.keep='last'>>=
-cooling.model1 <- nls( temp ~ A * exp( -k * time), data=CoolingWater, 
-                       start=list(A=100, k=0.1) )
+cooling.model1 <- nls(temp ~ A * exp( -k * time), data=CoolingWater, 
+                      start=list(A=100, k=0.1))
 f1 <- makeFun(cooling.model1)
 xyplot( temp ~ time, data=CoolingWater, xlim=c(-50,300), ylim=c(0,110), 
         ylab="temp (C)", xlab="time (sec)")
@@ -1314,7 +1381,7 @@ That doesn't fit very well, and there is a good reason.  The model says that eve
 when $k >0$.  But clearly our water isn't going to freeze sitting on a lab table.  We can fix this by 
 adding in an offset to account for the ambient temperature:
 <<tidy=FALSE, fig.keep="last">>=
-cooling.model2 <- nls( temp ~ ambient + A * exp( k * (1+time) ), data=CoolingWater,
+cooling.model2 <- nls(temp ~ ambient + A * exp( k * (1+time)), data=CoolingWater,
                       start=list(ambient=20, A=80, k=-.1) )
 f2 <- makeFun(cooling.model2)
 xyplot( temp ~ time, data=CoolingWater, xlim=c(-50,300), ylim=c(0,110),

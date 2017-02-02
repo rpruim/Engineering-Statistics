@@ -187,7 +187,6 @@ require(knitr)
 require(alr3)
 require(mosaic)
 require(mosaicData)
-require(plyr)
 require(fastR)
 require(ggplot2)
 trellis.par.set(theme=col.mosaic())
@@ -272,10 +271,10 @@ knit_hooks$set(digits = function(before, options, envir) {
 <<child="Stat241-NonLinear.Rnw", eval=TRUE>>=
 @
 
-<<child="Stat241-HypothesisTesting.Rnw", eval=FALSE>>=
+<<child="Stat241-HypothesisTesting.Rnw", eval=TRUE>>=
 @
 
-<<child="Stat241-MoreExamples.Rnw", eval=FALSE>>=
+<<child="Stat241-MoreExamples.Rnw", eval=TRUE>>=
 @
 
 \backmatter

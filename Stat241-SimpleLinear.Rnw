@@ -395,9 +395,13 @@ Much is known about the estimator $\sigma^2$, including
 \begin{itemize}
 	\item $\hat \sigma^2$ is unbiased (on average it is $\sigma^2$), and 
 	\item
-		the sampling distribution is a Chi-Squared distribution with
+		the sampling distribution is related to a Chi-Squared distribution with
 		$n-2$ degrees of freedom.  
 		(Chi-Squared distributions are a special case of Gamma distributions.)
+		More specifically,
+		\[
+		\frac{SSE}{\sigma^2} = \frac{(n - 2) \hat \sigma^2}{\sigma^2} \sim \Chisq(n-2) \;.
+		\]
 \end{itemize}
 
 
@@ -435,6 +439,24 @@ since the model says that differences between observed responses and the true li
 should be random noise following a normal distribution with constant standard deviation.
 
 In this case things look pretty good. 
+
+We can save ourselves a little typing if we create these plots using 
+\function{plot()} or \function{mplot()}.
+<<fig.height = 3>>=
+plot(osa.model, w=1:2)
+@
+\noindent
+The ``standardized" residuals are the residuals that have been adjusted to
+have an expected variance (and hence also standard deviation) of 1.  Roughly,
+they are the residuals divided by $\hat \sigma$, but there is an additional 
+adjustment that is made as well.  This gives us a kind of unitless version
+of the residual and the normal-quantile plot using standardized residuals does a 
+better job of indicating whether the normality assumption is compatibly with
+the data.  (Remember, the normality assumption is about the \emph{errors} not 
+the residuals.  The standardized residuals should behave roughly like a normal
+distribution if the errors are normally distributed.)  Typically the shape of
+the normal-quantile plot made with raw residuals and the one made with standarized
+residuals will be very similar.
 
 \subsection{Outliers in Regression}
 
@@ -537,8 +559,9 @@ confint(osa.model)
 A 68\% confidence interval should have a margin of error of approximately 1 standard
 uncertainty:
 <<>>=
-confint(osa.model, level=0.68)
-apply(confint(osa.model, level=0.68) , 1, diff) / 2  # half width of CIs
+confint(osa.model, level=0.68, "palpebral")
+(3.2325 - 2.9275) / 2   # margin of error
+coef(summary(osa.model))
 @
 
 \end{example}
@@ -644,44 +667,6 @@ like an uncertainty).
 	\end{enumerate}
 \end{solution}
 
-\iffalse
-\begin{problem}
-Data from a 1993 study to see how well lichens serve as an indicator for air pollution
-are in the \dataframe{ex12.20} data set in the \pkg{Devore7} package.  In that paper,
-a simple linear model was fit to see how the wet deposition of $\mathrm{NO}_{3}^{-}$
-($g N/m^2$) related to the percentage dry weight of lichen.
-\begin{enumerate}
-	\item What are the least squares estimates for the intercept and slope of a line
-		that can be used to estimate deposition
-		from the amount of lichen?
-	\item
-		What is the estimated value of $\sigma$?
-	\item
-		Predict the amount of deposition if the dry weight of the 
-		lichen is measured to be $0.7$.
-	\item
-		Give a 95\% confidence interval for the mean amount deposition among
-		among samples with a dry weight of lichen measured to be $0.7\%$.
-\end{enumerate}
-\end{problem}
-
-\begin{solution}
-<<>>=
-require(Devore7)
-lichen.lm <- lm( deposition ~ LichenN, data=ex12.20)
-# a)
-lichen.lm       
-coef(lichen.lm)      # this includes standard errors; could also use summary() 
-# b)
-sigmaHat(lichen.lm)  # can also be read off of the summary() output
-# c)
-estimated.dep <- makeFun(lichen.lm)
-estimated.dep(0.7)
-# d) 
-estimated.dep(0.7, interval="confidence")
-@
-\end{solution}
-\fi
 
 \begin{problem}
 	The \dataframe{KidsFeet} data set contains variables giving the widths and lengths
@@ -734,7 +719,7 @@ but we can estimate the average foot width for all kids with a foot length of
 	\begin{enumerate}
 		\item Write out an equation for the least squares regression line for 
 			predicting separation distance from available space.
-		\item Given an estimate (with uncertainty) for the slope and interpret it.
+		\item Give an estimate (with uncertainty) for the slope and interpret it.
 		\item A new bicycle lane is planned for a street that has 15 feet of available
 			space.  Give an interval estimate for the separation distance 
 			on this new street.  Should you use a confidence interval or a prediction
@@ -761,7 +746,7 @@ f( 15, interval="confidence" )
 \begin{problem}
 	Select only the non-diabetic men from the \dataframe{pheno} data set using
 <<>>=
-require(fastR)
+data(pheno, package = "fastR")
 Men <- subset(pheno, sex=="M" & t2d=="control")  # note the double == and quotes here
 head(Men,3)
 @
@@ -875,8 +860,8 @@ model1 <- lm( y1 ~ x1, data = anscombe ); summary(model1)
 		\item
 			For each model, create a scatterplot that includes the regression line.
 			(Make the plots fairly small and submit them.
-			Use \texttt{fig.width} and \texttt{fig.height} to control the size of 
-			the plots in RMarkdown.)
+			Use \texttt{fig.width} and \texttt{fig.height} or ``output options" (the little gear icon)
+			to control the size of the plots in RMarkdown.)
 		\item
 			Comment on the results.  Why do you think Anscombe invented these data?
 	\end{enumerate}
@@ -939,6 +924,55 @@ model1 <- lm( y1 ~ x1, data = anscombe ); summary(model1)
 	It's easiest to do this if you can give me a URL for locating the paper online.
 \end{problem}
 
+
+\begin{problem}
+High population density in Japan leads to many resource usage problems, including
+human waste removal.  In a study of a new (in the 1990's) copression machine for 
+processing sewage sludge, researchers measures the moisture content of the 
+compressed pellets (\%) and the machines filtration rate (kg-DS/m/hr).
+You can load the data using
+<<>>=
+data(xmp12.06, package = "Devore7")
+@
+
+\begin{enumerate}
+	\item What are the least squares estimates for the intercept and slope of a line
+		that can be used to estimate the moisture content from the filtration rate?
+		(Give them in our usual manner with both estimate and uncertainty.)
+	\item
+		The first row of the data is
+<<>>=
+head(xmp12.06, 1)
+@
+\noindent
+Compute the residual for this observation.
+	\item
+		What is $\hat \sigma$, the estimated value of $\sigma$?
+	\item
+		Give a 95\% confidence interval for the slope.
+	\item
+		Give a 95\% confidence interval for the mean moisture content
+		when the filtration rate is 170 kg-DS/m/hr.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+data(xmp12.06, package = "Devore7")
+sewage.model <- lm( moistcon ~ filtrate, data=xmp12.06)
+# a)
+coef(summary(sewage.model))  # this includes standard errors; could also use summary() 
+# b)
+resid(sewage.model)[1]
+# c)
+sigma(sewage.model)  # can also be read off of the summary() output
+# d)
+confint(sewage.model)[2, , drop = FALSE]
+# e) 
+estimated.moisture <- makeFun(sewage.model)
+estimated.moisture(170, interval = "confidence")
+@
+\end{solution}
 
 \newpage
 \section*{Exercises}

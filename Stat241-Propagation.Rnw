@@ -1035,7 +1035,7 @@ ME <- t.star *  1.9 / sqrt(30); ME
 # 99 % CI
 t.star <- qt(.995, df = 29); t.star
 ME <- t.star *  1.9 / sqrt(30); ME
-1.2 + c(-1,1) * ME
+10.2 + c(-1,1) * ME
 # standard uncertainty = SE = s / sqrt(n)
 1.9 / sqrt(30)
 @
@@ -1239,7 +1239,7 @@ driven per car, and $E$ is the average efficiency.
 \Parital{F}{E} &= \frac{-kPd}{E^2}
 \end{align*}
 
-So the estimated amount of fuel consumed (in gallons) is 
+So the estimated amount of fuel consumed (in millions of gallons) is 
 \[
 \frac{kPd}{E} = \frac{0.8 \cdot 311.6 \cdot 12000 }{23.7}
 = \Sexpr{0.8 * 311.6 * 12000 / 23.7}
@@ -1250,6 +1250,14 @@ k <- 0.8; u_k <- 0.12
 P <- 311.6; u_P <- 0.2
 d <- 12000; u_d <- 2000
 E <- 23.7; u_E <- 1.7
+variances <- c(
+            (P*d/E)^2 * u_k^2 , 
+            (k*d/E)^2 * u_P^2 , 
+            (k*P/E)^2 * u_d^2 , 
+            (k * P * d/E^2)^2 * u_E^2
+)
+variances
+
 u_F <- 
   sqrt( 
             (P*d/E)^2 * u_k^2 + 
@@ -1258,6 +1266,7 @@ u_F <-
     (k * P * d/E^2)^2 * u_E^2
     )
 u_F
+sqrt(sum(variances))
 @
 \noindent
 So we might report fuel consumption as 
@@ -1265,6 +1274,34 @@ So we might report fuel consumption as
 \Sexpr{round(u_F, -4)} millions of gallons or 
 \Sexpr{round(0.8 * 311.6 * 12000 / 23.7 / 1000, -1)} $\pm$ 
 \Sexpr{round(u_F/1000, -1)} billions of gallons.
+
+Note: This problem can also be done in stages.  First we estimate the number 
+of (millions of) cars using
+\[
+C = k P \;.
+\]
+
+<<>>=
+C <- k * P; C
+u_C <- sqrt( P^2 * u_k^2 + k^2 * u_P^2); u_C
+@
+
+The number of (millions of) miles driven is estimated by $M = C d$:
+<<>>=
+M <- C * d; M
+u_M <- sqrt( d^2 * u_C^2 + C^2 * u_d^2); u_M
+@
+
+Finally, the fuel used is $F = M / E$.
+<<>>=
+F = M / E
+u_F = sqrt( (1/E)^2 * u_M^2 + (M/E^2)^2 * u_E^2); u_F
+@
+
+This gives the same result (again in millions of gallons of gasoline).
+
+It would also be possible to relative uncertainty to do this problem, since 
+we have nice formulas for the relative uncertainty in products and quotients.
 \end{solution}
 
 \begin{problem}
@@ -1300,7 +1337,7 @@ So we might report fuel consumption as
 \\
 & = \sqrt{ \frac{ Y^{-2} u_X^2 + X^2 Y^{-4} u_Y^2}{X^2Y^{-2}} }
 \\
-& = \sqrt{ \frac{ u_X^2}{u_X^2} + \frac{u_Y^2}{Y^2} }
+& = \sqrt{ \frac{ u_X^2}{X^2} + \frac{u_Y^2}{Y^2} }
 \\
 & = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
 \end{align*}

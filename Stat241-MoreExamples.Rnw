@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-Notes.Rnw')}
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
 
 \chapter{More Examples}
 
@@ -58,7 +58,7 @@ experimental conditions:
 <<fig.height=2.25>>=
 HeatX <- read.csv("http://www.calvin.edu/~rpruim/data/HeatX.csv")
 HeatX
-xyplot( m.hot ~ m.cold, data=HeatX, main="Experimental Configurations", cex=2)
+xyplot(m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations", cex = 2)
 @
 
 Note: \function{read.csv()} can read data from a file as well.  If you are using the server
@@ -69,11 +69,12 @@ pane for the upload button to upload your own data.
 
 The recorded flow rates are in L/min.  We will convert them to L/sec and use seconds as
 our standard unit of time troughout the analyses.
-<<>>=
-HeatX <- transform(HeatX,
-				   m.hot = m.hot / 60,
-				   m.cold = m.cold / 60
-				   )
+<<tidy = FALSE>>=
+HeatX <- HeatX %>%
+  transform(
+    m.hot = m.hot / 60,
+    m.cold = m.cold / 60
+  )
 @
 
 We could also convert temperatures to degrees Kelvin, but since temperatures only appear 
@@ -149,11 +150,12 @@ We can estimate the values of $\dot{Q}$ from our data by direct caclulation:
 <<tidy=FALSE>>=
 require(plyr)                 # required for the mutate() command below
 C_p <- 4.18
-HeatX2 <- mutate(HeatX, 
-                 Q.cold = m.cold * C_p * (T.cold.out - T.cold.in),
-                 Q.hot= m.hot * C_p * (T.hot.out- T.hot.in),
-                 Q.env = Q.cold + Q.hot
-)
+HeatX2 <- HeatX %>%
+  mutate(
+    Q.cold = m.cold * C_p * (T.cold.out - T.cold.in),
+    Q.hot= m.hot * C_p * (T.hot.out- T.hot.in),
+    Q.env = Q.cold + Q.hot
+  )
 HeatX2
 @
 
@@ -166,8 +168,8 @@ Assuming any loss to (or gain from) the environment is essentially constant for
 the apparatus over the experimental conditions analysed, we can use our 6
 observations to estimate the amount of heat exchanged with the environment:
 <<>>=
-favstats(~Q.env, data=HeatX2)
-stripplot( ~ Q.env, data=HeatX2, alpha=.6, cex=3, jitter.data=TRUE)
+favstats(~Q.env, data = HeatX2)
+stripplot( ~ Q.env, data = HeatX2, alpha = .6, cex = 3, jitter.data = TRUE)
 @
 From this we can compute either a p-value for the hypothesis test that the mean 
 difference in heat change is 0 or create a confidence interval for the mean difference
@@ -179,7 +181,7 @@ formula $SE = \frac{s}{\sqrt{n}}$ and a t-distribution with $n-1 = 5$ degrees of
 SE = 0.08274 /sqrt(6); SE
 t <- (0.08999 - 0) / SE; t
 2 * pt( -abs(t), df=5 )                        # p-value
-0.09003 + c(-1,1) * qt(0.975, df=5) * SE         # 95% CI
+0.09003 + c(-1,1) * qt(0.975, df=5) * SE       # 95% CI
 @
 
 Or we can let \R\ do all the computations for us:
@@ -188,7 +190,7 @@ Or we can let \R\ do all the computations for us:
 %       geom="point", size=I(6), alpha=I(.5), 
 %       position=position_jitter(width=0, height=.1))
 <<fig.height=2>>=
-t.test( ~ Q.env, data=HeatX2)
+t.test( ~ Q.env, data = HeatX2)
 @
 In our example data, there is modest evidence for exchange with the environment, but
 the estimated amount of heat gained from the environment is not very precisely 
@@ -206,7 +208,7 @@ the different set-ups.  From this small data set, there is not clear evidence
 of some other relationship between heat exchanged with the environment
 and the experimental set up:
 <<fig.height=2.5>>=
-xyplot( Q.env ~ m.cold, data=HeatX2, groups=paste("m.hot =", m.hot), auto.key=TRUE)
+xyplot( Q.env ~ m.cold, data = HeatX2, groups = paste("m.hot =", m.hot), auto.key=TRUE)
 @
 \item
 The t-test and interval are based on the assumption that the distribution
@@ -216,7 +218,7 @@ upon which to judge whether this is a reasonable assumption.  The largest value 
 quite a bit larger than the rest, but even if we remove that observation, our 
 conclusions don't change dramatically:
 <<>>=
-t.test( ~ Q.env, data=subset(HeatX2, Q.env < max(Q.env)) )
+t.test( ~ Q.env, data = subset(HeatX2, Q.env < max(Q.env)) )
 @
 \end{enumerate}
 
@@ -263,10 +265,11 @@ to be $1$ degree C and the uncertainty in flow rate to be $0.5$ liters per
 minute (so \Sexpr{0.5/60} L/sec), then we can compute the uncertainties in 
 the $\dot{Q}$ values as follows
 <<tidy=FALSE>>=
-HeatX2<- mutate(HeatX2, 
-  u.Q.cold = C_p *sqrt( (T.cold.out -T.cold.in )^2 * (0.5/60)^2  + m.cold^2 * 2),  
-  u.Q.hot =  C_p *sqrt(  (T.hot.out -T.hot.in )^2  * (0.5/60)^2  +  m.hot^2 * 2) 
-) 
+HeatX2<- HeatX2 %>%
+  mutate(
+    u.Q.cold = C_p *sqrt( (T.cold.out -T.cold.in )^2 * (0.5/60)^2  + m.cold^2 * 2),  
+    u.Q.hot =  C_p *sqrt(  (T.hot.out -T.hot.in )^2  * (0.5/60)^2  +  m.hot^2 * 2) 
+  ) 
 HeatX2
 @
 Note: We are using the fact that $u_{\Delta T} = \sqrt{2} u_T$.
@@ -297,15 +300,16 @@ vc
 \end{itemize}
 Let's see how it compares to the (first row of the) results above:
 <<>>=
-deltaMethod( x, exprforQ, vc)
+deltaMethod(x, exprforQ, vc)
 @
 
 
-The \pkg{mosaic} package adds additional interfaces for \function{deltaMethod()} to 
+The \pkg{deltaMethod} package adds additional interfaces for \function{deltaMethod()} to 
 make this even easier.
 <<>>=
-deltaMethod( HeatX, exprforQ, 
-  uncertainties=c(T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60) )
+require(deltaMethod)
+deltaMethod(HeatX, exprforQ, 
+  uncertainties=c(T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60))
 @
 
 \subsubsection{Dealing with uncertainties that are not constant}
@@ -314,11 +318,12 @@ Sometimes the uncertainties of a given variable are different at different value
 In that case, we can put the uncertainties into the data frame.  For the current 
 example, this is just extra work, but we include it here to show how it works.
 <<>>=
-HeatX3 <- transform(HeatX, 
-  u.cold.in=1, u.cold.out=1, u.hot.in=1, u.hot.out=1, u.m.cold=.5/60, u.m.hot=.5/60
-)
+HeatX3 <- HeatX %>%
+  mutate(
+    u.cold.in=1, u.cold.out=1, u.hot.in=1, u.hot.out=1, u.m.cold=.5/60, u.m.hot=.5/60
+  )
 HeatX3
-deltaMethod( HeatX3,
+deltaMethod(HeatX3,
   exprforQ, 
   estimates = c("T.cold.in","T.cold.out","m.cold"),      # columns with estimates
   uncertainties = c("u.cold.in", "u.cold.out", "u.m.cold"))   # and uncertainties
@@ -333,7 +338,7 @@ But this number is also known experimentally and has an uncertainty associated w
 Do our results change if we include this uncertainty in our calculations?
 
 <<>>=
-deltaMethod( transform(HeatX, C_p = 4.18), exprforQ,      # add in a column for C_p
+deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
   uncertainties=c(T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60, C_p = 0.1) )
 @
 
@@ -403,9 +408,9 @@ information needed.
 exprforU <- paste("C_p * m.cold * (T.cold.out - T.cold.in) /",
                   "( pi * D *  L  * ((T.cold.out - T.hot.in) - (T.cold.in - T.hot.out)) /",
                   " log ( (T.cold.out - T.hot.in) / (T.cold.in - T.hot.out) ) )")
-HeatX4 <- transform(HeatX, D=0.0143, L=1.626, C_p=4.18)
+HeatX4 <- transform(HeatX, D = 0.0143, L = 1.626, C_p = 4.18)
 HeatX4
-deltaMethod( HeatX4, exprforU, 
+deltaMethod(HeatX4, exprforU, 
   uncertainties=c(
 	T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60, 
 	T.hot.in=1.0, T.hot.out=1.0, m.hot = 0.5/60, 
@@ -493,7 +498,7 @@ parameter estimate.
 In this case, it is easy to compute the standard error for the mean ourselves
 using $SE = s / \sqrt{n}$.
 <<>>=
-sd(~Points, data=Jordan8687) / sqrt(82)
+sd(~Points, data = Jordan8687) / sqrt(82)
 @
 
 
@@ -531,7 +536,7 @@ $R^2$ is always between 0 and 1 and is reported in the summary output
 for linear models.  It is the square of the correlation coefficient
 that we saw earlier.
 <<>>=
-summary(lm( sat ~ expend, data=SAT ))  # how does the average SAT score depend on money spent?
+summary(lm(sat ~ expend, data = SAT))  # how does the average SAT score depend on money spent?
 @
 Notice that $R^2 < 15\%$ and that the coefficient on \variable{expend} is negative -- indicating 
 that spending more is associated with \emph{worse} scores on the SAT.
@@ -540,7 +545,7 @@ One reason for this is that in some states most college bound students take the 
 other states, the ACT is more common so the pool of students taking the SAT is stronger.
 If we add \variable{frac} -- the fraction of students in a given state who took the SAT.
 <<>>=
-summary(lm( sat ~ expend + frac, data=SAT ))
+summary(lm(sat ~ expend + frac, data = SAT))
 @
 Notice how much larger $R^2$ is now, and that the sign of the coefficient on \variable{expend}
 is not positive -- as we would have expected.

@@ -91,6 +91,34 @@ the sum (over all possible values of the random variable) must be 1.
 That way the probabilities will behave the way probabilities should.
 
 
+\begin{example}
+\question
+Amy is a 92\% free throw shooter.  We watch her take shots until she misses and let 
+$X$ be the number of shots.  What is the pmf for $X$?
+
+\answer
+This time our table would be infinite (since there is no limit to how many consecutive
+free throws Amy might make), so we won't be able to write the whole table down.
+But we can work out the first few probabilities:
+
+\begin{itemize}
+\item
+$f(0) = \Prob(X = 0) = 0.08$.  (She has to miss the first shot.)
+\item
+$f(1) = \Prob(X = 1) = (0.92)(0.08)$.  (She has to make the first and miss the second.)
+\item
+$f(2) = \Prob(X = 2) = (0.92)^2(0.08)$.  (She has to make the first two, then miss the third.)
+\end{itemize}
+At this point, we see there is a general pattern that allows us to write down an 
+algebraic form for the pmf:
+\[
+f(x) = \Prob(X = x) = (0.92)^{x-1}(0.08)
+\]
+where $x$ is a positive integer.  (If $x$ is not an integer, or $x < 1$, then $f(x) = 0$, since
+those values are not possible.)
+\end{example}
+
+
 \section{Continuous Random Variables}
 
 \subsection{Density histograms, density plots, density functions}
@@ -237,7 +265,9 @@ integrate( f, -Inf, 1 )
 integrate( f, -1, 1)
 integrate( f, -.5, .5 )
 # if you just want the value without the text saying how accurate the approximation is
-integrate( f, -.5, .5 )$value
+# here are two equivalent ways to get it
+value(integrate( f, -.5, .5 ))        # extract the value using val()
+integrate( f, -.5, .5 ) %>% value()   # %>% is the "then" operator
 @
 
 An alternative approach uses \function{antiD()} from the \pkg{mosaic} package.

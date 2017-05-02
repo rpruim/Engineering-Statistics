@@ -913,6 +913,24 @@ c(6,10,8,6,4,2) / 36
 \end{solution}
 
 \begin{problem}
+For the probabilities below, you may assume the that for each birth,
+the probability of having a boy or a girl is $1/2$ and that each birth is
+independent of other births.
+\begin{enumerate}
+\item
+Suppose a family has three kids. 
+What is the probability that at least one of the kids is a boy?
+\item
+Suppose a family has three kids, at least one of which is a girl.
+Now what is the probability that at least one of the kids is a boy?
+\item
+Suppose a family has three kids, at least two of which are girls.
+Now what is the probability that at least one of the kids is a boy?
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}
 	A device is assembled from two primary parts.  2\% of the first type of part
 	are defective and 3\% of the other type of part are defective.  The device
 	only functions properly if both parts are functioning properly.
@@ -931,6 +949,34 @@ c(6,10,8,6,4,2) / 36
 	Assuming failure of each part is independent of failure of the other,
 	the probability that both function properly is 
 	$0.98 \cdot 0.97 = \Sexpr{0.98 * 0.97}$.
+	
+	Alternatively, if we assume that failures are mutually exclusive, then the probability of 
+	failure would be $0.02 + 0.03 = 0.05$ and the probability of proper functioning would be 
+	$0.95$.
+	
+	The independence assumption is reasonable if, for example, the two parts are made 
+	by separate manufacturing processes and the device is assembled by randomly selecting a 
+	part of each type, which may or may not be a good part right from the start.  
+	
+	The mutually exclusive failure is probably harder to justify, since likely there will
+	be some situations in which both parts fail.
+\end{solution}
+
+\begin{problem}
+In the situation of Example \ref{example:sensitivitySpecificity},
+how does the answer change if the baseline probability of having 
+the disease is $1/10$ instead of $1/1000$? (This might be the case 
+if a person is exhibiting symptoms, for example.)
+\end{problem}
+
+
+\begin{solution}
+<<>>=
+# P(D) = 0.001
+0.001 * 0.99 / (0.001 * 0.99 + 0.999 * 0.02)
+# P(D) = 0.10
+0.1 * 0.9 / (0.10 * 0.99 + 0.9 * 0.02)
+@
 \end{solution}
 
 \begin{problem}

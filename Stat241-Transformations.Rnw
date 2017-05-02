@@ -43,7 +43,7 @@ variable $Y$ if
 and we already know the distributions of $X_1, X_2, \dots, X_n$.
 There are methods for working out the distribution of $Y$ in many such situations, 
 Often it is possible to figure out the distribution of variables formed this way,
-but the methods require more techniques of probability that we will develop in this 
+but the methods require more techniques of probability than we will develop in this 
 course.  We will generally be satisfied with one of the following approaches:
 \begin{enumerate}
 	\item
@@ -170,7 +170,7 @@ The most important combination of two random variables is a sum.
 \begin{align*}
 	\E(X + Y) &= a \E(X) + \E(Y) \; \mbox{, and}
 	\\
-	\Var(X + Y) &= \Var (X)  + \Var(Y) \; \mbox{, provide $X$ and $Y$ are independent.}
+	\Var(X + Y) &= \Var (X)  + \Var(Y) \; \mbox{, provided $X$ and $Y$ are independent.}
 \end{align*}
 
 That is,
@@ -1557,7 +1557,7 @@ on the interval $[-2,2]$.
 
 \begin{solution}
 <<tidy=FALSE>>=
-F <- antiD( 4 - x^2 ~ x )
+F <- antiD(4 - x^2 ~ x)
 F(2) - F(-2) 
 @
 	So the pdf is 

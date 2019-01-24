@@ -1,0 +1,14 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: STAT241-S19.aux
+The style file: amsalpha.bst
+I couldn't open database file StatsBook.bib
+---line 255 of file STAT241-S19.aux
+ : \bibdata{StatsBook
+ :                   ,DataSets,jamstatassoc,RS,R,kaplan}
+I'm skipping whatever remains of this command
+I found no database files---while reading file STAT241-S19.aux
+Warning--I didn't find a database entry for "Morgan2011:WindSpeed"
+Warning--I didn't find a database entry for "Student1908"
+Warning--I didn't find a database entry for "Anscombe:1973:Graphs"
+Warning--I didn't find a database entry for "Tukey:1977:EDA"
+Warning--I didn't find a database entry for "Mosteller:1977:DataAnalysis"
+(There were 2 error messages)

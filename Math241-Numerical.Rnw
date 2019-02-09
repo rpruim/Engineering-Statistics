@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S15.Rnw')}
+\Sexpr{set_parent('STAT241-S19.Rnw')}
 
 \Chapter{Numerical Summaries}
 
@@ -14,7 +14,7 @@ have the table itself.  \R\ provides several ways of obtaining such tables.
 There are several functions for tabulating categorical variables.  
 \function{tally()}  uses a syntax that is very similar to \function{bargraph()}.    
 We'll call this method the \term{formula interface}.
-(\R\ calls anything with a wiggle (\code{\~}) a formula.)
+(\R\ calls anything with a tilde (\code{\~}) a formula.)
 <<xtabs>>=
 tally( ~ substance, data=HELPrct )
 tally( ~ substance, data=HELPrct, format="prop" )
@@ -44,7 +44,7 @@ formula interface for many functions that only had a \code{\$}-interface
 before.}
 For example, histogram will also work like this.
 <<histogram-dollar>>=
-histogram( HELPrct$age )
+gf_histogram( ~HELPrct$age )
 @
 But notice that the output is not quite as nice, since the default label 
 for the horizontal axis now shows both the data frame name and the variable name
@@ -63,7 +63,7 @@ tally( ~age, data=HELPrct )
 @
 
 \subsubsection*{Tabulating in bins (optional)}
-It is often more convenient to group quantitative data into bins.  We just have to tell \R\ what the bins are.
+Usually a graph is the best way to display and summarize quantitative data, but if you need to creat a summary table, you may need to group quantitative data into bins.  We just have to tell \R\ what the bins are.
 For example, suppose we wanted to group the 20s, 30s, 40s, etc. together.
 \Rindex{cut()}%
 \Rindex{xtabs()}%
@@ -71,7 +71,8 @@ For example, suppose we wanted to group the 20s, 30s, 40s, etc. together.
 \Rindex{table()}%
 <<cut>>=
 # let's add a new variable to HELPrct
-HELPrct <- transform(HELPrct, binnedAge = cut(age, breaks=c(10,20,30,40,50,60,70) ))
+HELPrct <- HELPrct %>%
+  mutate(binnedAge = cut(age, breaks=c(10,20,30,40,50,60,70) ))
 head(HELPrct)
 tally( ~binnedAge, data=HELPrct ) 
 table( HELPrct$binnedAge)        
@@ -80,8 +81,8 @@ That's not quite what we wanted: 30 is in with the 20s, for example.
 Here's how we fix that.
 
 <<cut2, tidy=FALSE>>=
-HELPrct <- transform( HELPrct, 
-  binnedAge = cut(age, breaks=c(10,20,30,40,50,60,70), right=FALSE) )
+HELPrct <- HELPrct %>%
+  mutate(binnedAge = cut(age, breaks=c(10,20,30,40,50,60,70), right=FALSE) )
 tally( ~binnedAge, data=HELPrct )   
 table( HELPrct$binnedAge)
 @
@@ -90,46 +91,33 @@ table( HELPrct$binnedAge)
 We won't use this very often, since typically seeing this information in a histogram is 
 more useful.  
 
-\subsubsection*{Labeling a histogram}
-
-The \function{histogram()} function offers you the option of 
-adding the counts to the graph, via the logical (TRUE/FALSE) \code{label} argument.
-<<xhistogram-counts,fig.width=6>>=
-histogram( ~age, data=HELPrct, label=TRUE, type='count', 
-  width=10, center=5, ylim=c(0,300), right=FALSE )
-@
-
 \subsection{Cross-tables: Tabulating two or more variables}
 
-\function{xtabs()} can also compute cross tables for two (or more) variables.
+\function{tally()} can also compute cross tables for two (or more) variables.
 <<xtabs-2way>>=
 tally(~ sex + substance, data=HELPrct)
 @
 
 \section{Working with Pre-Tabulated Data}
 
-Sometimes data arrive pre-tabulated.  We can use \function{barchart()} instead
-of \function{bargraph()} to graph pre-tabulated data.%
-\footnote{\function{bargraph()} converts raw data into a summary table and then
-calls \function{barchart()} to do the plotting.}
+Sometimes data arrive pre-tabulated.  We can use \function{gf_col()} instead
+of \function{gf_bar()} to graph pre-tabulated data.
 
 <<teen-deaths>>=
 require(abd)           # data sets from Analysis of Biological Data
 TeenDeaths
-barchart(deaths ~ cause, data=TeenDeaths, 
-         scales=list(x=list(rot=30)))
-#("scales" argument above is to rotate the x-labels so they don't overlap)
-#  you may find it useful, but learning it is optional.
-barchart(cause ~ deaths, data=TeenDeaths)
+gf_col(deaths ~ cause, data=TeenDeaths) %>%
+  gf_refine(coord_flip())
 @
+
 Notice that by default the causes are displayed in alphabetical order.  \R\
-assumes that categorical data is nominal (that is, there is no particular natural or logical ordering to the categories) unless you say otherwise.  
-Here are two ways to have things appear in a different order. The first uses 
-the order in which categories (to \R\, ``levels") appear in the \dataframe{TeenDeaths} data frame.
-The second reorders based on the value of the \variable{deaths} variable.
+assumes that categorical data is nominal (that is, there is no particular natural or logical ordering to the categories) unless you say otherwise.
+
+Here is an easy way to have things appear in a different order. The causes of death are reordered in order of increasing number of \variable{deaths} caused.
 <<teen-deaths-order>>=
-barchart( ordered(cause, levels=cause) ~ deaths, TeenDeaths)
-barchart( reorder(cause, deaths) ~ deaths, TeenDeaths)
+gf_col( deaths ~ fct_reorder(cause,deaths), data=TeenDeaths) %>%
+  gf_refine(coord_flip()) %>%
+  gf_labs(x = 'Cause of Death', y = 'Number of Deaths')
 @
 
 
@@ -143,7 +131,7 @@ do not necessarily tell you everything there is to know about a distribution.  W
 In statistics $n$ (or sometimes $N$) almost always means the number 
 of observations (i.e., the number of rows in a data frame).
 
-If $y$ is a variable in a data set with $n$ observational units, we 
+If $y$ is a variable in a data set with $n$ cases, we 
 can denote the $n$ values of $y$ as 
 \begin{itemize}
 \item
@@ -239,9 +227,8 @@ There several ways we can do this in \R.
 Here are several ways to get the mean, for example:
 \Rindex{mean()}%
 <<mean,tidy=FALSE>>=
-mean(HELPrct$age)          # this is the most traditional way; should always work
+mean(HELPrct$age)          # this is the old fashioned way
 mean(~age, data=HELPrct)   # similar to our plotting methods; only works for some functions
-with(HELPrct, mean(age))   # one more way this can be done
 @
 Using the formula style, we can now compute several different statistics.
 \Rindex{sd()}%
@@ -277,8 +264,8 @@ The histogram below shows the lengths of eruptions of the Old Faithful geyser
 at Yellowstone National Park.
 <<faithful,fig.width=6,fig.height=2.0,tidy=FALSE>>=
 favstats(~ Duration, data=oldfaith)
-histogram( ~ Duration, data=oldfaith,  n=20, 
-	main="Old Faithful Eruption Times", xlab="duration (sec)") 
+gf_histogram( ~ Duration, data=oldfaith,  bins=20) %>% 
+	gf_labs(title="Old Faithful Eruption Times", x="duration (sec)") 
 @
 Notice that the mean and median do not represent typical eruption times very well.  
 Nearly all eruptions are either quite a bit shorter or quite a bit longer.  
@@ -298,76 +285,40 @@ the five \term{quantiles}:
 	\item $Q_4$, the maximum
 \end{itemize}
 <<bwplot>>=
-bwplot(~age, data=HELPrct)
+gf_boxplot(~age, data=HELPrct)
 @
 
 Boxplots provide a way of comparing multiple groups that is especially informative and visually effective.  Here is one way to make boxplots of multiple groups (it 
 should look familiar from what we know about histogram):
 <<bwplot1>>=
-bwplot(~age | substance, data=HELPrct, layout=c(1,3))
+gf_boxplot(~age | substance, data=HELPrct)
 @
-But \function{bwplot()} has a better way.  Put the quantitative variable on one side of the
+But \function{gf_boxplot()} has a better way.  Put the quantitative variable on one side of the
 wiggle and the categorical on the other.  The placement determines which goes along the 
-vertical axis and which along the horizontal axis -- just like it did for \function{xyplot()}.
+vertical axis and which along the horizontal axis -- just like it did for \function{gf_point()}.
 <<bwplot2>>=
-bwplot(substance ~ age, data=HELPrct)
-bwplot(age ~ substance, data=HELPrct)
+gf_boxplot(substance ~ age, data=HELPrct)
+gf_boxplot(age ~ substance, data=HELPrct)
 @
-And we can combine this idea with conditioning:
+
+And we can combine this idea with conditioning. Careful: The quantitative variable must be the ``y" variable in the formula.
+
 <<bwplot3>>=
-bwplot(substance ~ age | sex, data=HELPrct)
+gf_boxplot(age ~ substance | homeless, data=HELPrct)
 @
 
 \subsection{Small data sets}
 When we have relatively small data sets, it may not make sense to use a boxplot.  With very few observations, boxplots can be misleading, in that they suggest the presence of more observations than are really contained in the dataset.  
 In these cases, it is better to 
-display all the data.  \function{xyplot()} allows you to put a categorical variable along one axis and a 
-quantitative variable along the other.  
+display all the data.  \function{gf_jitter()} allows you to put a categorical variable along one axis and a quantitative variable along the other.  
 For some data sets, either option can produce a plot that gives a good picture
 of the data.
 <<xyplot-quant-by-cat,fig.height=1.5>>=
-xyplot( sex ~ weight, data=Mosquitoes, cex=.5, alpha=.6)
-bwplot( sex ~ weight, data=Mosquitoes)
+gf_jitter( weight ~ sex, data=Mosquitoes, width=0.1)
+gf_boxplot( weight ~ sex, data=Mosquitoes)
 @
 
-\R\ actually provides a separate function, \function{stripplot()}, 
-for this type of scatter plot (where one 
-variable is categorical). Note the effect of the \code{jitter} argument -- it moves each data point slightly up or down, to reduce overplotting (data points being plotted exactly on top of one another) and make it clearer how many data-points were observed for each possible combination of x- and y-values.
-\Rindex{stripplot()}%
-<<stripplot,fig.height=2.0>>=
-stripplot( substance ~ age, data=HELPrct) 
-stripplot( substance ~ age, data=HELPrct, jitter=TRUE, alpha=.6)
-@
-
-
-\iffalse
-\section{Summary Statistics and Transforming Data}
-
-
-\begin{center}
-\begin{tabular}{lccc}
-\hline
-          &               & shifted data & rescaled data
-\\
-statistic & original data & original data $+\;k$ & original data $\times \;c$ 
-\\
-\hline
-\hline
-mean & $\mean y$ & $\mean y + k$ & $\mean y \cdot c$
-\\
-standard deviation & $s$ & $s$ & $s \cdot |c|$
-\\
-variance & $s^2$ & $s^2$ & $s^2 \cdot c^2$
-\\
-median & $m$ & $m + k$ & $m \cdot c$
-\\
-interquartile range  & IQR & IQR $+\; k$ & IQR $\cdot \;c$
-\\
-\hline
-\end{tabular}
-\end{center}
-
-\fi
+Note the effect of the \code{width} argument -- \function{gf_jitter()} moves each data point slightly up or down, to reduce overplotting (data points being plotted exactly on top of one another) and make it clearer how many data-points were observed for each possible combination of x- and y-values. The \code{width} input controls the amount of ``jittering."
 
 \section{Summarizing Categorical Variables}
 
@@ -459,7 +410,7 @@ sd(~x)
 
 \begin{solution}
 <<>>=
-bwplot(substance ~ i1, data=HELPrct)
+gf_boxplot(i1 ~ substance , data=HELPrct)
 @
 	The means are larger because the distributions have longer tails in the 
 	higher direction.  

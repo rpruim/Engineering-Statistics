@@ -16,6 +16,7 @@
 \def\tnot{\operatorname{not}}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{underscore}
 \usepackage{tikz}
 \usetikzlibrary{patterns}
 \usepackage[hidenotes]{authNote}
@@ -186,6 +187,7 @@ require(abd)
 require(knitr)
 require(alr3)
 require(plyr)
+require(triangle)
 require(mosaic)
 require(mosaicData)
 require(fastR)
@@ -263,7 +265,8 @@ knit_hooks$set(document = function(x) {
  
 <<child="STAT243-Densities.Rnw">>=
 @
- 
+
+
 % <<child="Math241-Transformations.Rnw">>=
 % @
 

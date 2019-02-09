@@ -116,12 +116,8 @@ The situation for our estimated mean weight of a dime is a little different.  We
 % divided by 30 to get the average.  Second, we are interested in how accurately we can
 % estimate the mean weight of the dimes in the sack, 
 % not in how accurately we can estimate the weight of any particular dime.  
-%  
-% <<>>=
-% require(Stob)
-% favstats(~Mass, data=dimes)
-% @
-% 
+%
+
 \[
 u_{\hat D} = \frac{s}{\sqrt{n}} 
 = \frac{\Sexpr{sD}}{\sqrt{30}} 
@@ -131,14 +127,6 @@ So we would report our estimate for the mean weight of a dime as
 \[
 \Sexpr{D} \pm \Sexpr{uD} \;.
 \]
-
-% This notation looks like a confidence interval, and indeed it is a confidence interval.  
-% Since we are using $t_* = 1$, this is a 
-% \Sexpr{ round(100 * (pt(1,df=29) - pt(-1,df=29)),1)} \% confidence interval.
-% <<>>=
-% pt(1,df=29) - pt(-1,df=29)
-% @
-
 
 \subsection{Propagating Error by the Delta Method}
 Now that we have computed the uncertainties for $B$ and $D$, we need to find a way to combine
@@ -288,13 +276,13 @@ head(SampleMeans ,3)
 D <- SampleMeans$result
 N <- B/D
 histogram(~N)
-qqmath(~N)
+gf_qq(~N)
 sd(N)
 @
 A few explanatory notes regarding the computation above.
 \begin{enumerate}
 	\item
-		\function{resample()} samples from a data frame with replacement.  That is,
+		\function{resample()} samples from a data frame \emph{with replacement}.  That is,
 		some of the rows may appear more than once, others not at all.  Resampling
 		is a common way to estimate a sampling distribution from a single sample.
 		\function{resample()} can also be used on a ``bare" vector (that is, a vector of data points not contained within a data frame, as exemplified below).
@@ -315,7 +303,7 @@ shuffle(1:10)     # this also shuffles
 	variance.  Sometimes the distribution will be skewed or have heavier or lighter
 	tails than a normal distribution.
 \item
-	The results of the Delta Method and simulation are very close.  Each is approximating 
+	The results of the Delta Method and simulation are very close.  Each is an acceptable method for approximating 
 	the same thing, so this is not surprising.
 \end{enumerate}
 
@@ -323,10 +311,11 @@ shuffle(1:10)     # this also shuffles
 
 \subsection{What to record, What to report}
  
-%When you record the results of a measurement for which there is an \emph{a priori}
-%estimate of uncertainty,  the uncertainty should be recorded along with 
-%the measurement itself.  Similarly, when reports of quantities estimated from data
-%should also include estimated uncertainties.
+When you record the results of a measurement for which there is an \emph{a priori}
+estimate of uncertainty,  the uncertainty should be recorded along with
+the measurement itself.  Similarly, reports of quantities estimated from data
+should also include estimated uncertainties.
+
 As a general guideline, a properly reported scientific estimated quantity includes 
 the following five elements: 
 

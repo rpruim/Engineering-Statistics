@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('STAT241-S19.Rnw')}
 
 <<include=FALSE>>=
 require(gdata)
@@ -16,14 +16,14 @@ Often, the predictive power of a model, and the $R^2$ value, can be improved by 
 $$ y ~ \beta_0 + \beta_1*x_1 + \beta_2*x_2 + \beta_3*x_3 ...$$
 
 Multiple regression often makes sense when you are studying a complex process where there is most likely "more than one thing going on."  For example, you might consider modelling population growth rates worldwide using a data set including a set of social, economic, health, and political indicators compiled using data from the World Health Organization and partner organizations. The dataset description is available online: \url{http://www.exploredata.net/Downloads/WHO-Data-Set}.  One idea might be to look for a linear relationship between per-capita income and population growth rate:
-<<who_slm, fig.show="hold", tidy=FALSE>>=
+<<who-slm, fig.show="hold", tidy=FALSE>>=
 whodat <- read.csv("http://www.exploredata.net/ftp/WHO.csv", 
                    header=TRUE, strip.white=TRUE, sep=",")
 #simplify some variable names
 names(whodat)[10] <- "PopGrowthRate"
 names(whodat)[6] <- "IncomePerCapita"
 names(whodat)[7] <- "FemaleSchoolEnrollment"
-xyplot(PopGrowthRate~IncomePerCapita, data=whodat)
+gf_point(PopGrowthRate~IncomePerCapita, data=whodat)
 who.m1 <- lm(PopGrowthRate~IncomePerCapita , data=whodat)
 summary(who.m1)
 @ 
@@ -31,8 +31,8 @@ summary(who.m1)
 The $R^2$ value of this model is very low. But that could be because, unsurprisingly, there are \emph{many} factors contributing to population growth rate, not \emph{just} income.  For example, what about education? Perhaps more-educated women have fewer children, lowering the population growth rate.  So we might want to model population growth rate as a function of \emph{both} income and education.
 
 In R, a multiple regression model can be fitted with a call to \texttt{lm()}.  We just add additional predictors to the right hand side of the model formula, separated by $+$ signs. For the WHO example discussed above, for example, we could try:
-<<who_slm2, fig.show="hold">>=
-xyplot(PopGrowthRate~FemaleSchoolEnrollment, data=whodat)
+<<who-slm2, fig.show="hold">>=
+gf_point(PopGrowthRate~FemaleSchoolEnrollment, data=whodat)
 who.m2 <- lm(PopGrowthRate~IncomePerCapita + FemaleSchoolEnrollment, data=whodat)
 summary(who.m2)
 @ 
@@ -72,15 +72,14 @@ Sometimes, regression diagnostics (particularly a plot of residuals as a functio
 We will consider a simple example using the price of chicken over time (in constant dollars, adjusted for inflation over time).  It seems to make sense to try to predict the price of chicken as a function of time (it's been getting progressively cheaper for the last century or so):
 <<chickn, fig.show='hold'>>=
 chickn <- read.csv("http://www.calvin.edu/~sld33/data/chickn.csv", header=TRUE)
-xyplot(Price~Year, data=chickn, type=c("p", "r"))
+gf_point(Price~Year, data=chickn ) %>% gf_lm()
 chick.mod <- lm(Price~Year, data=chickn)
 summary(chick.mod)
 @ 
 
 However, there seems to be a problem with non-independence of the residuals.  Price is not independent from year to year; if you know the price was a bit high one year, it's likely to remain so for the next several years:
-<<chick_acf, fig.show='hold', fig.height=5>>=
-chick.resid <- resid(chick.mod)
-acf(chick.resid)
+<<chick-acf, fig.show='hold', fig.height=5>>=
+acf(resid(chick.mod))
 @
 
 This is a big problem, because it tends to result in standard error estimates that are artificially small. In other words: we think we have estimated our slope and intercept parameters \emph{much} more precisely than we really have, and would report falsely narrow confidence intervals.
@@ -109,12 +108,9 @@ Finally, if none of the previous options provide a solution, you can fit a model
 Here is a brief example, using the \texttt{Ornstein} dataset from the \texttt{car} package.  It gives data on 248 Canadian companies, collected in the mid-1970s.  The variable \texttt{assets} gives each company's assets in millions of dollars, and \texttt{interconnects} gives the number of director and executive positions that are shared with other firms.  A scatter plot shows that the richest companies have many of these "interlocks", so we might model assets as a function of interlocks...however, the residuals have non-constant variance:
 <<Ornstein>>=
 require(car)
-xyplot(assets ~interlocks, data=Ornstein)
+gf_point(assets ~interlocks, data=Ornstein)
 om <- lm(assets ~interlocks, data=Ornstein)
-om.resid <- resid(om)
-f <- makeFun(om)
-fitted <- f(Ornstein$interlocks)
-xyplot(om.resid ~ fitted)
+gf_point(resid(om) ~ fitted(om))
 @
 
 We can try to correct for this problem by fitting a model that "expects" this non-constant variance, by using the function \texttt{gls} with the input \texttt{weights=varPower()}.  (There are many other ways to model non-constant error variance; this small example gives you just a taste, and for this course, you would not be expected to deal with any cases other than ones like this, where error variance increases with fitted values.)
@@ -232,7 +228,7 @@ lm( log(y) ~ x )
 Then $\beta_0 = \log(A)$ and $\beta_1 = p$.  
 If a power law is a good fit for the data then
 <<eval=FALSE>>=
-xyplot( log(y) ~ log(x) )
+gf_point( log(y) ~ log(x) )
 @
 will produce a roughly linear plot.
 
@@ -262,7 +258,7 @@ lm( log(y) ~ x )
 Then $\beta_0 = \log(A)$ and $\beta_1 = \log(B) = C$.  
 If an exponential law is a good fit for the data then
 <<eval=FALSE>>=
-xyplot( log(y) ~ x )
+gf_point( log(y) ~ x )
 @
 will produce a roughly linear plot.
 
@@ -285,14 +281,17 @@ in a given situation.  If the law were a perfect description of the situation,
 all the points on the log-log or semi-log plot would fall along a straight line.
 In practice, the fit won't be perfect, but the plot is a useful diagnostic.  For example, you can compare a plot of $y$ as a function of $x$ with a log-log or semi-log plot, and see which one shows the most linear relationship between the two variables.
 
-\R\ can easily create plots with transformed scales.  Simply add the input \texttt{scales} to your call to \texttt{xyplot()}, as detailed in the example below:
+\R\ can easily create plots with transformed scales.  Use \function{gf_refine()} with input \texttt{scales_*_log10()} to your call to \texttt{gf_point()}, as detailed in the example below:
 <<>>=
 x <- 1:10
 y <- 3 * x^1.5
-xyplot(log(y) ~ log(x))
-xyplot(log(y) ~ x)
-xyplot(y ~ x, scales=list(x=list(log=TRUE), y=list(log=TRUE)))
-xyplot(y ~ x, scales=list(y=list(log=TRUE)))
+gf_point(log(y) ~ log(x))
+gf_point(log(y) ~ x)
+gf_point(y ~ x) %>%
+  gf_refine(scale_x_log10(), scale_y_log10())
+
+gf_point(y ~ x) %>%
+  gf_refine(scale_y_log10())
 @
 
 \subsection{Other Models That Can Be Transformed to Linear}
@@ -350,7 +349,7 @@ Concentration <- data.frame(
   time=c(0, 50, 100, 150, 200, 250, 300),               # minutes
   concentration=c(50, 38, 30.6, 25.6, 22.2, 19.5, 17.4) # mol/dm^3 * 10^3
 )
-xyplot(concentration ~ time, data=Concentration)
+gf_point(concentration ~ time, data=Concentration)
 @
 under the assumption that 
 $\alpha=2$, so $\beta = 1$.  In this case, our relationship becomes
@@ -371,7 +370,8 @@ We can divide by $-\beta$ to obtain estimates for $d$ and $k$.
 
 Of course, we should always look to see whether the fit is a good fit.
 <<>>=
-xplot(conc.model, w=1:2)  # residual plot and qq-plot of residuals
+gf_point(resid(conc.model) ~ fitted(conc.model))
+gf_qq(~resid(conc.model)) %>% gf_qqline()
 @
 Notice that these residuals are very small relative to the values for
 concentration.  (We can see this from the vertical scale of the plot and 
@@ -383,11 +383,10 @@ magnitude smaller than our concentration measurements, which likely can't be
 measured to that degree of accuracy.
 
 If we want to show the fit on top of the original data, we must remember to
-untransform the response, since the model we fitted is a model for $1/C$, but we want to show a models for $C$:
+untransform the response, since the model we fitted is a model for $1/C$, but we want to show a model for $C$:
 <<fig.keep='last'>>=
-C <- makeFun(conc.model)
-xyplot( concentration ~ time, data=Concentration )
-plotFun( 1/C(t) ~ t, add=TRUE)
+gf_point( concentration ~ time, data=Concentration ) %>%
+gf_line( 1/fitted(conc.model) ~ time, data=Concentration)
 @
 \end{example}
 
@@ -532,7 +531,7 @@ X <- power(x,a)
 Y <- power(y,b)
 original <- (a==1 & b==1)
 ddd <- data.frame(X=X,Y=Y,a=a,b=b,original=original)
-xyplot(y~x)
+gf_point(y~x)
 @
 \caption{A scatterplot illustrating a non-linear relationship between $x$ and $y$.}
 \label{fig:tukey-bulge-example}%
@@ -571,8 +570,8 @@ floor.   We begin by fitting a linear model to this data.
 <<balldrop>>=
 ball.model <- lm(time~height,balldrop)
 summary(ball.model)
-xyplot(time~height,balldrop,type=c('p','r'))
-xplot(ball.model,w=1)
+gf_point(time~height,data=balldrop) %>% gf_lm()
+gf_point(resid(ball.model) ~ fitted(ball.model))
 @
 
 
@@ -588,10 +587,11 @@ This transformation agrees with Tukey's ladder of re-expression, which suggests
 moving down the ladder for \variable{height} or up the ladder for \variable{time}.
 
 <<balldrop-transT>>=
-ball.modelT <- lm(time ~ sqrt(height),balldrop)
+ball.modelT <- lm(time ~ sqrt(height), data=balldrop)
 summary(ball.modelT)
-xyplot(time~height,balldrop, panel=panel.lm, model=ball.modelT)
-xplot(ball.modelT, w=1)
+gf_point(time ~ sqrt(height), data=balldrop) %>%
+  gf_lm(time~sqrt(height), data=balldrop) 
+gf_point(resid(ball.modelT) ~ fitted(ball.modelT))
 @
 This model does indeed fit better, but the residual plot indicates that
 there may be some inaccuracy in the measurement of the height.  
@@ -632,13 +632,14 @@ not systematic).
 % # balldropavg <- aggregate(balldrop$time, by=list(balldrop$height), mean)
 % # names(balldropavg) <- c('height','time')
 <<balldrop-avg, message=FALSE>>=
-require(plyr)  # to access ddply
-balldropavg <- ddply( balldrop, .(height), summarise, time=mean(time) )
-balldropavg
+balldropavg <- balldrop %>%
+  group_by(height) %>%
+  dplyr::summarize(time = mean(time))
+
 ball.modelA <- lm(time ~ sqrt(height),balldropavg)
 summary(ball.modelA)
-xyplot(time~height,balldropavg, panel=panel.lm,model=ball.modelA)
-xyplot(resid(ball.modelA) ~ fitted(ball.modelA))
+gf_point(time~height, data=balldropavg) %>% gf_lm()
+gf_point(resid(ball.modelA) ~ fitted(ball.modelA))
 @
 Using a square root transformation on averaged \texttt{height}
 measurements in the \texttt{balldrop} data gives a similar fit but

@@ -1,4 +1,4 @@
-\Sexpr{set_parent('STAT243-S16.Rnw')}
+\Sexpr{set_parent('STAT241-S19.Rnw')}
 
 \chapter{Linear Models}
 
@@ -84,9 +84,8 @@ someData <- data.frame(
 someData
 @
 <<tidy=FALSE,fig.height=3.0>>=
-xyplot( y ~ x, 
-  data=someData, type=c('p','g'), 
-  ylim=c(0,5), xlim=c(0,6))
+gf_point( y ~ x, data=someData) %>% 
+  gf_lims(y=c(0,5), x=c(0,6))
 @
 \end{multicols}
 
@@ -106,17 +105,20 @@ xyplot( y ~ x,
 For example, suppose we we select a line that passes through $(0,1)$ and $(5,4)$. 
 the equation for this line is $y = 1 + .6 x$, and it looks like a pretty good fit:
 <<>>=
-xyplot( y ~ x, data=someData, xlim=c(0,6), ylim=c(0,5) )
 f <- makeFun( 1 + .6 * x ~ x)
-plotFun( f(x) ~ x, add=TRUE, col="gray50" )
+gf_point( y ~ x, data=someData, xlim=c(0,6), ylim=c(0,5) ) %>%
+gf_fun( f(x) ~ x, color="gray50")
 @
 The residuals for this function are 
 <<tidy=FALSE>>=
-resids <- with(someData, y - f(x)) ; resids 
+someData <- someData %>%
+  mutate(resids = y - f(x))
+someData %>% select(resids) 
 @
 and $SSE$ is 
 <<>>=
-sum(resids^2)
+someData %>% 
+  summarize(SEE = sum(resids^2))
 @
 If your line is a good fit, then $SSE$ will be small.  
 The best fitting line will have the smallest possible $SSE$.   
@@ -130,7 +132,8 @@ This says that the equation of the best fit line is
 \]
 
 <<>>=
-xyplot( y ~ x, data=someData, type=c('p','r') )
+gf_point( y ~ x, data=someData ) %>%
+  gf_lm()
 @
 We can compute $SSE$ using the \function{resid()} function.
 <<tidy=FALSE>>=
@@ -226,7 +229,8 @@ but an estimated value (based on the linear equation given).
 \R\ can add a regression line to our scatter plot if we ask it to.
 \begin{center}
 <<osa-scatter>>=
-xyplot( OSA ~ palpebral, data=xmp12.01, type=c('p','r') )
+gf_point( OSA ~ palpebral, data=xmp12.01 ) %>%
+  gf_lm(color='grey44')
 @
 \end{center}
 
@@ -271,6 +275,22 @@ will return the estimated OSA.
 <<>>=
 estimated.osa <- makeFun(osa.model)
 estimated.osa(1.2)
+@
+
+We can also use the built-in R function \function{predict()} or \function{fitted()} if we want to make predictions for the original dataset (\function{predict()} can also make predictions for a new dataset that contains new values of the predictor variable -- see example below).
+
+<<>>=
+predict(osa.model)
+new.data <- data.frame(palpebral = c(0.5, 0.77))
+predict(osa.model, newdata = new.data)
+@
+
+It might be neater to store these predictions in the dataset with the predictor variable, to keep them together and make plotting easier later on:
+
+<<>>=
+new.data <- new.data %>%
+  mutate(preds = predict(osa.model, newdata = new.data))
+new.data
 @
 
 As it turns out, the 17th measurement in our data set had a
@@ -394,13 +414,14 @@ For all the scatter plots, we want to make sure the residuals ``look random" -- 
 Returning to our OSA data, we can obtain the residuals using the 
 \function{resid()} function and plot them.
 <<>>=
-osa.hat <- makeFun(osa.model)
-preds <- osa.hat(xmp12.01$palpebral)
-xyplot( resid(osa.model) ~ preds, data=xmp12.01,
-        main="Residuals versus fitted values")
-qqmath( ~ resid(osa.model),  data=xmp12.01 , main='Normal QQ plot')
-xyplot( resid(osa.model) ~ palpebral, data=xmp12.01,
-        main="Residuals versus explanatory variable")
+xmp12.01 <- xmp12.01 %>%
+  mutate(preds = predict(osa.model),
+         resids = resid(osa.model))
+gf_point( resids ~ preds, data=xmp12.01,
+        title="Residuals versus fitted values")
+gf_qq( ~ resids,  data=xmp12.01 , title='Normal QQ plot')
+gf_point( resids ~ palpebral, data=xmp12.01,
+        title="Residuals versus explanatory variable")
 @
 
 <<acfplot, fig.width=6, fig.height=5>>=
@@ -513,11 +534,18 @@ t.star * 0.151
 <<>>=
 confint(osa.model)
 @
+
 A 68\% confidence interval should have a margin of error of approximately 1 standard
 uncertainty:
 <<>>=
 confint(osa.model, level=0.68)
 apply(confint(osa.model, level=0.68) , 1, diff) / 2  # half width of CIs
+@
+
+Compare this with the standard error from the model summary - does it check out?
+
+<<>>=
+summary(osa.model)
 @
 
 \end{example}
@@ -530,6 +558,13 @@ estimated.osa <- makeFun(osa.model)
 estimated.osa( 1.2, interval="confidence")
 estimated.osa( 0.8, interval="confidence")
 @
+
+Or alternatively:
+
+<<>>=
+predict(osa.model, interval = 'confidence')
+@
+
 These intervals are confidence intervals for the \emph{mean} response.  Sometimes it
 is desirable to create an interval that will have a 95\% chance of containing a new 
 \emph{observation} -- that is, including the anticipated error as well as the mean response.  These intervals are called \term{prediction intervals} to distinguish
@@ -539,6 +574,14 @@ estimated.osa <- makeFun(osa.model)
 estimated.osa( 1.2, interval="prediction")
 estimated.osa( 0.8, interval="prediction")
 @
+
+or, for the full (original) dataset:
+
+<<>>=
+newdat <- data.frame(palpebral = c(0.8, 1.2))
+predict(osa.model, newdata = newdat, interval = 'prediction')
+@
+
 Prediction intervals are typically much wider than confidence intervals.  We have to ``cast a wider net" 
 to create an interval that contains a new observation (which might be quite a bit above 
 or below the mean) than it is to contain the mean of the distribution.
@@ -555,7 +598,9 @@ intervals.
 Notice how most of the dots are within the prediction bands, but not within the 
 confidence bands.
 <<fig.width=6, out.width=".9\\textwidth", fig.height=3>>=
-xyplot( OSA ~ palpebral, data=xmp12.01, panel=panel.lmbands )
+gf_point( OSA ~ palpebral, data=xmp12.01) %>%
+  gf_lm(interval = 'confidence') %>%
+  gf_lm(interval = 'prediction')
 @
 
 \subsubsection{A Caution Regarding Prediction Intervals}

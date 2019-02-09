@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('STAT241-S19.Rnw')}
 
 <<include=FALSE>>=
 require(Hmisc)
@@ -175,12 +175,12 @@ x <- runif( 1000, 0,1 )
 y <- runif( 1000, 0,1 )
 S <- x + y
 P <- x * y
-histogram( ~ x , main="Sample from Unif(0,1)", width=.05)
-histogram( ~ y , main="Another sample from Unif(0,1)", width=.05)
+gf_histogram( ~ x , main="Sample from Unif(0,1)", binwidth=.05)
+gf_histogram( ~ y , main="Another sample from Unif(0,1)", binwidth=.05)
 @
 <<sum-product-uniform-iid>>=
-histogram( ~ S , main="Sum of two iid Unif(0,1) rvs", width=0.1)
-histogram( ~ P , main="Product of two iid Unif(0,1) rvs", width=0.05)
+gf_histogram( ~ S , main="Sum of two iid Unif(0,1) rvs", binwidth=0.1)
+gf_histogram( ~ P , main="Product of two iid Unif(0,1) rvs", binwidth=0.05)
 @
 
 \subsubsection*{Independence Matters}
@@ -193,8 +193,8 @@ use the values of \texttt{x} in both roles (so we'll use \texttt{x} and \texttt{
 <<sum-product-uniform-non-iid>>=
 S2 <- x + x
 P2 <- x * x 
-histogram( ~ S2 , main="Sum of two non-iid Unif(0,1) rvs", width=0.1)
-histogram( ~ P2 , main="Product of two non-iid Unif(0,1) rvs", width=0.05)
+gf_histogram( ~ S2 , main="Sum of two non-iid Unif(0,1) rvs", binwidth=0.1)
+gf_histogram( ~ P2 , main="Product of two non-iid Unif(0,1) rvs", binwidth=0.05)
 @
 Notice how different the resulting distributions are, especially for the sum.
 
@@ -500,8 +500,7 @@ of a large enough random sample is approximately normally distributed.  In fact,
 The approximations are better 
 \begin{itemize}
 \item
-when the population distribution is similar to a normal distribution, and 
-%(unimodal, nearly symmetric, etc.)
+when the population distribution is similar to a normal distribution, (unimodal, nearly symmetric, bell-shaped)
 \item
 when the sample size is larger,
 \end{itemize}
@@ -660,11 +659,12 @@ similar to the normal distributions -- but ``shorter and fatter''.  This means t
 one must go farther into the tails of a $t$-distribution to capture the central 95\%.
 
 <<fig.width=8, fig.height=4, fig.keep='last'>>=
-plotDist("norm", main="Normal and T-distributions")
-plotFun( dt(x,df=2) ~ x, col='gray80', add=TRUE)
-plotFun( dt(x,df=4) ~ x, col='gray60', add=TRUE)
-plotFun( dt(x,df=8) ~ x, col='gray40', add=TRUE)
-plotFun( dt(x,df=16) ~ x, col='gray20', add=TRUE)
+x <- seq(from=-3, by=0.05, to = 3)
+gf_dist(dist="norm", title="Normal and T-distributions") %>%
+gf_line( dt(x,df=2) ~ x, col='gray80') %>%
+gf_line( dt(x,df=4) ~ x, col='gray60') %>%
+gf_line( dt(x,df=8) ~ x, col='gray40') %>%
+gf_line( dt(x,df=16) ~ x, col='gray20')
 @
 
 The resulting confidence interval has the form
@@ -918,21 +918,21 @@ D <- X - Y
 @
 <<warning=FALSE>>=
 fitdistr( S, "normal")
-qqmath( ~ S )
-densityplot( ~ S )
+gf_qq( ~ S )
+gf_density( ~ S )
 @
 <<warning=FALSE>>=
 fitdistr( S, "gamma")
-qqmath( ~ S, distribution=function(x) qgamma(x, shape=4.04, rate=0.333 ) )
-densityplot( ~ S )
+gf_qq( ~ S, distribution=qgamma, dparams = list(shape=4.04, rate=0.333 ) )
+gf_density( ~ S )
 @
 The gamma distribution fits $S$ much better than the normal does.  But notice that the 
 shape parameter is larger than the shape parameters for $X$ and $Y$.
 
 <<warning=FALSE>>=
 fitdistr( D, "normal")
-qqmath( ~ D )
-densityplot( ~ D )
+gf_qq( ~ D )
+gf_density( ~ D )
 @
 
 This time the distribution is symmetric, so the problems are not as obvious as for $S$, but the 
@@ -1126,7 +1126,7 @@ answers
 <<echo=FALSE>>=
 require(Devore6)
 names(ex07.37) <- "strideRate"
-qqmath(~strideRate, data=ex07.37)
+gf_qq(~strideRate, data=ex07.37)
 favstats(~strideRate,data=ex07.37)
 @
 	\begin{enumerate}
@@ -1200,7 +1200,7 @@ larger fish than for smaller fish, or vice versa, would be problematic.)
 A normal-quantile plot doesn't suggest any reason to be overly worried about
 the normality assumption.
 <<>>=
-qqmath(~Length, data=fish4)
+gf_qq(~Length, data=fish4)
 @
 <<tidy=FALSE>>=
 int <- confint(t.test( ~Length, data=fish4))
@@ -1218,8 +1218,9 @@ there were no fish of those lengths.)
 
 \item 3-year-old fish
 <<tidy=FALSE>>=
-fish3 <- subset(lakemary, Age==3)  # note the double == here
-qqmath(~Length, data=fish3)
+fish3 <- lakemary %>%
+  filter(Age==3)  # note the double == here
+gf_qq(~Length, data=fish3)
 int <- confint(t.test(~Length, data=fish3))
 int
 lo <- int[2]; hi <- int[3]
@@ -1234,8 +1235,8 @@ tally ( ~ ( lo < Length & Length < hi ), data=fish3 )
 
 		Here is a plot that shows how length varies by age.
 <<>>=
-bwplot(Length ~ factor(Age), data=lakemary)
-xyplot(Length ~ factor(Age), data=lakemary, cex=2, alpha=0.3)
+gf_boxplot(Length ~ factor(Age), data=lakemary)
+gf_point(Length ~ factor(Age), data=lakemary, size=2, alpha=0.3)
 @
 \end{enumerate}
 \end{solution}
@@ -1286,8 +1287,8 @@ Paper <-
 
 \begin{solution}
 <<>>=
-qqmath( ~ polymer, data=Paper )
-densityplot( ~ polymer, data=Paper )
+gf_qq( ~ polymer, data=Paper )
+gf_density( ~ polymer, data=Paper )
 t.test( ~polymer, data=Paper )
 @
 The tails of the sample distribution do not stretch quite as far as we would expect 

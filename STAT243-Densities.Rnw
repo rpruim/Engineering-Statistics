@@ -1,4 +1,4 @@
-\Sexpr{set_parent('STAT243-S16.Rnw')}
+\Sexpr{set_parent('STAT241-S19.Rnw')}
 
 \chapter{Densities}
 
@@ -9,35 +9,21 @@ Histogram bars are tall in regions where there is more data -- i.e., where the d
 more ``dense''.  
 <<histograms-count-density>>=
 require(alr3)
-histogram( ~ Duration, data=oldfaith )
-histogram( ~ Duration, data=oldfaith, type="count" )
+gf_dhistogram( ~ Duration, data=oldfaith )
+gf_histogram( ~ Duration, data=oldfaith, type="count" )
 @
 
-The density scale is the same scale that is used by \function{densityplot()}, and it
-is the default scale for histograms created using \function{histogram()} when
+The density scale is the same scale that is used by \function{gf_density()}, and it
+is the default scale for histograms created using \function{gf_dhistogram()} when
 the \pkg{mosaic} package is loaded.
 <<histogram-density>>=
 require(alr3)
-histogram( ~ Duration, data=oldfaith, width=20, center=110 )
-densityplot( ~ Duration, data=oldfaith)
+gf_dhistogram( ~ Duration, data=oldfaith, binwidth=25 )
+gf_density( ~ Duration, data=oldfaith)
 @
 
 The density scale is chosen so that the area of each rectangular bar (width times height)
 is equal to the proportion of the data set represented by the rectangle. 
-
-\begin{example}
-	\question Use the histogram of Old Faithful eruption times to estimate
-	the proportion of eruptions that last between 100 and 120 seconds.
-
-	\answer
-In our histogram of Old Faithful eruption durations, the bar corresponding to the 
-bin from 100--120 appears to have a height of about 0.09.  That gives an area of 
-0.18 and indicates that approximately 18\% of the eruptions last between 100 and 120
-seconds.
-<<>>=
-tally( ~ ( 100 < Duration & Duration <= 120), data=oldfaith, format="prop" )
-@
-\end{example}
 
 The key idea behind the density scale can be expressed as 
 
@@ -516,14 +502,13 @@ of the triangle distributions, these functions are
 		\item What is the median of $X$?
 		\item What is the mean of $X$?
 	\end{enumerate}
-	
+
 \answer
-The \function{plotDist} function in the \pkg{mosaic} package allows us to 
+The \function{gf_dist()} function in the \pkg{mosaic} package allows us to 
 graph the pdf for any function \R\ knows how to work with in the standard way.
 For example, here is a plot of the pdf of a $\Tri(0, 4, 1)$-distribution.
 <<>>=
-require(triangle)      # a package that knows about triangle distributions
-plotDist("triangle", params=list(a=0, b=4, c=1))
+gf_dist("triangle", params=list(a=0, b=4, c=1))
 @
 Here is the \R\ code to answer the remaining questions.
 <<>>=
@@ -619,8 +604,7 @@ In \R\, the parameters $a$ and $b$ are given more meaningful names: \code{min} a
 We can use the following code to graph the $\Unif(1,4)$ distribution.
 
 <<>>=
-plotDist("unif", params=list(min=1, max=4), xlim=c(0,5))  # using parameter names
-plotDist("unif", params=list(1, 4), xlim=c(0,5))          # without names
+gf_dist(dist="unif", params=list(min=1, max=4), xlim=c(0,5))  # using parameter names
 @
 Notice that the width of the non-zero portion of the pdf is 3, so the height must be $1/3$.
 
@@ -781,8 +765,8 @@ functions to make things even easier.
 \fi
 
 
-<<plotDist-eponential>>=
-plotDist("exp", params=list(rate=4))
+<<gfdist-exponential>>=
+gf_dist("exp", params=list(rate=4))
 @
 
 \begin{problem}
@@ -886,17 +870,17 @@ for lifetime.  As the pictures below indicate, the shape and scale parameters
 are aptly named.
 
 <<>>=
-plotDist("gamma", params=list(shape=2, rate=1), main="Gamma(2,1)")
-plotDist("gamma", params=list(shape=5, rate=1), main="Gamma(5,1)")
-plotDist("gamma", params=list(shape=2, scale=10), main="Gamma(5,10)")
-plotDist("gamma", params=list(shape=5, scale=10), main="Gamma(5,10)")
+gf_dist("gamma", params=list(shape=2, rate=1), main="Gamma(2,1)")
+gf_dist("gamma", params=list(shape=5, rate=1), main="Gamma(5,1)")
+gf_dist("gamma", params=list(shape=2, scale=10), main="Gamma(5,10)")
+gf_dist("gamma", params=list(shape=5, scale=10), main="Gamma(5,10)")
 @
 
 <<>>=
-plotDist("weibull", params=list(shape=2, scale=1),main="Weibull(2,1)")
-plotDist("weibull", params=list(shape=5, scale=1),main="Weibull(5,1)")
-plotDist("weibull", params=list(shape=2, scale=10),main="Weibull(2,10)")
-plotDist("weibull", params=list(shape=5, scale=10),main="Weibull(5,10)")
+gf_dist("weibull", params=list(shape=2, scale=1),main="Weibull(2,1)")
+gf_dist("weibull", params=list(shape=5, scale=1),main="Weibull(5,1)")
+gf_dist("weibull", params=list(shape=2, scale=10),main="Weibull(2,10)")
+gf_dist("weibull", params=list(shape=5, scale=10),main="Weibull(5,10)")
 @
 
 \subsection{Normal Distributions}
@@ -923,10 +907,9 @@ distribution is
 
 
 <<echo=FALSE, fig.width=7>>=
-plotDist("norm", 
-         scales=list(y=list(draw=FALSE), 
-					 x=list(at=-3:3,
-                            labels=c( 
+gf_dist("norm", xlab='', ylab='Density') %>%
+  gf_refine(scale_x_continuous(breaks = c(-3:3),
+                               labels = (c( 
                               expression(mu - 3 * sigma),
                               expression(mu - 2 * sigma),
                               expression(mu - 1 * sigma),
@@ -934,10 +917,9 @@ plotDist("norm",
                               expression(mu + 1 * sigma),
                               expression(mu + 2 * sigma),
                               expression(mu + 3 * sigma) 
-                              )  
-                            )
-         )
-)
+                              ))))  
+
+ 
 @
 The inflection points 
 of the normal distributions are always at $\mu-\sigma$ and $\mu+\sigma$.
@@ -1058,10 +1040,10 @@ $\alpha = \beta =1$, we have the $\Unif(0,1)$-distribution.
 The two shape parameters provide a wide variety of shapes.
 
 <<>>=
-plotDist("beta", params=list(shape1=2, shape2=2), main="Beta(2,2)")
-plotDist("beta", params=list(shape1=2, shape2=0.9), main="Beta(2,0.9)")
-plotDist("beta", params=list(shape1=4, shape2=2), main="Beta(4,2)")
-plotDist("beta", params=list(shape1=0.9, shape2=0.85), main="Beta(0.9,0.85)")
+gf_dist("beta", params=list(shape1=2, shape2=2), main="Beta(2,2)")
+gf_dist("beta", params=list(shape1=2, shape2=0.9), main="Beta(2,0.9)")
+gf_dist("beta", params=list(shape1=4, shape2=2), main="Beta(4,2)")
+gf_dist("beta", params=list(shape1=0.9, shape2=0.85), main="Beta(0.9,0.85)")
 @
 
 \begin{center}
@@ -1174,17 +1156,11 @@ We can use the following code to load a data set that contains three year's wort
 of mean hourly wind speeds (mph) in Twin Falls, ID.  This kind of data is often used
 to estimate how much power could be generated from a windmill placed in a given location.
 
-<<include=!onLine,eval=!onLine>>=
-read.csv('~/public_html/data/stob/TwinfallsWind.csv') -> Wind
-head(Wind, 2)
-tail(Wind, 2)
-histogram( ~ speed, data=Wind, width=1 )
-@
 <<include=onLine,eval=onLine>>=
 read.csv('http://www.calvin.edu/~rpruim/data/stob/TwinfallsWind.csv') -> Wind
 head(Wind, 2)
 tail(Wind, 2)
-histogram( ~ speed, data=Wind, width=1 )
+gf_histogram( ~ speed, data=Wind, binwidth=1 )
 @
 As we can see, the distribution is skewed, but it doesn't look like an 
 exponential distribution would be a good fit.  Of the distributions we have seen,
@@ -1218,7 +1194,8 @@ would round to 0.01, then 0 represents anything in the range 0 to 0.005.
 0.0025 is the middle of that range.
 
 <<fitdistr-windspeed2,warning=FALSE>>=
-Wind <- transform(Wind, speed2 = ifelse( speed > 0, speed, 0.0025) )
+Wind <- Wind %>%
+  mutate(speed2 = ifelse( speed > 0, speed, 0.0025) )
 fitdistr( Wind$speed2, "weibull" )
 @
 <<include=FALSE>>=
@@ -1227,10 +1204,10 @@ mle <- fitdistr( Wind$speed2, "weibull" )
 This says that the best fitting (in the sense of maximum likelihood) Weibull
 distribution is the $\Weibull(\Sexpr{paste(round(mle$est,2),sep=",")})$-distribution.
 
-The \function{histogram()} function has an option to overlay the distribution
-fit by \function{fitdistr()} so we can see how good the fit is graphically.
+We can combine the \function{gf_dhistogram()} function with \function{gf_fitdistr()} so we can see how good the fit is graphically.
 <<xhistogram-Wind,warning=FALSE>>=
-histogram( ~ speed2, data=Wind, fit="weibull" )
+gf_dhistogram( ~ speed2, data=Wind) %>%
+  gf_fitdistr(dist="weibull")
 @
 \end{example}
 
@@ -1238,7 +1215,8 @@ histogram( ~ speed2, data=Wind, fit="weibull" )
 As an alternative, we could fit a Gamma distribution to the wind speed data.
 <<warning=FALSE>>=
 fitdistr(Wind$speed2, "gamma")
-histogram( ~ speed2, data=Wind, fit="gamma" )
+gf_dhistogram( ~ speed2, data=Wind, fit="gamma" ) %>% 
+  gf_fitdistr(dist='gamma')
 @
 By eye, it appears that the Gamma distribution fits this data set slightly better, but
 there may other reasons to prefer the Weibull distribution.  In fact,
@@ -1262,16 +1240,19 @@ skewed distribution.
 The \function{fitdistr()} function in the \pkg{MASS} package can fit each of these.
 <<jordan1, warning=FALSE>>=
 require(fastR)     # the Jordan8687 data set is in this package
-fitdistr(Jordan8687$Points, "normal")
-fitdistr(Jordan8687$Points, "weibull")
-fitdistr(Jordan8687$Points, "gamma")
+fitdistr(Jordan8687$points, "normal")
+fitdistr(Jordan8687$points, "weibull")
+fitdistr(Jordan8687$points, "gamma")
 @
 We can use a histogram with overlaid density curve to see how well these fits compare 
 to the data.
 <<jordan2, warning=FALSE>>=
-histogram(~ Points, Jordan8687, fit="normal", width=5, main="Normal Fit")
-histogram(~ Points, Jordan8687, fit="weibull", width=5, main="Weibull Fit")
-histogram(~ Points, Jordan8687, fit="gamma", width=5, main="Gamma Fit")
+gf_dhistogram(~ points, data=Jordan8687, binwidth=5, title="Normal Fit") %>%
+  gf_fitdistr(dist='norm')
+gf_dhistogram(~ points, data=Jordan8687, binwidth=5, title="Weibull Fit") %>%
+  gf_fitdistr(dist='weibull')
+gf_dhistogram(~ points, data=Jordan8687, binwidth=5, title="Gamma Fit") %>%
+  gf_fitdistr(dist='gamma')
 @
 The three fits are similar, but not identical.  
 
@@ -1287,13 +1268,11 @@ and (2) the resulting estimators have some some desirable properties.  Maximum l
 First, let's think about the ``likelihood" of an individual observed data-point.  The likelihood of the data-point is just the probability density function (or probability mass function) for the distribution of interest, evaluated at the value observed in the data. The likelihood gives some indication of how frequently we'd expect to observe this value, but it is \emph{not} a probability (for one thing, likelihoods can exceed 1).  The figure below illustrates that the likelihood of observing a person 80 inches (6 feet, 8 inches) tall, if the person comes from a population whose heights are Normally distributed with a mean of 68 inches and a standard deviation of 6 inches is about \Sexpr{round(dnorm(80,mean=68, sd=6), digits=3)}: 
 <<likelihood, echo=FALSE, fig.keep="last">>=
 h <- 80; mu <- 68; sdev <- 6
-plotDist("norm", params=list(mean=mu, sd=sdev), main="", 
-         xlab="Height (inches)", ylab="Density or Likelihood")
-trellis.focus()
 k <- lpoints(h, dnorm(h,mean=mu, sd=sdev), pch=17)
-lsegments(h, 0, h, dnorm(h,mean=mu, sd=sdev), lwd=2)
-
-trellis.unfocus()
+gf_dist("norm", params=list(mean=mu, sd=sdev), main="", 
+         xlab="Height (inches)", ylab="Density or Likelihood") %>%
+gf_segment(0 + dnorm(h,mean=mu, sd=sdev) ~ h+h) %>%
+  gf_point(dnorm(h,mean=mu, sd=sdev) ~ h)
 @
 
 
@@ -1455,7 +1434,8 @@ never negative.  So choosing one of those seems like a better idea.
 The following plot shows, as we expected, that the normal distribution is not a particularly
 good fit.
 <<>>=
-histogram(~speed, data=Wind, fit="normal")
+gf_dhistogram(~speed, data=Wind) %>%
+  gf_fitdistr(dist="norm")
 @
 It is important to remember that the best fit using a poor choice for the family
 of distriubtions might not be a useful fit.  
@@ -1570,7 +1550,7 @@ Quantile-quantile plots offer an alternative approach.  As the name suggests, th
 to compare the quantiles of our data to the quantiles of a theoretical distribution.  These
 are then plotted as a scatter plot.  Let's go through those steps with a small data
 set so we can see all the moving parts, then we'll learn how to automate the whole
-process using \function{qqmath()}.
+process using \function{gf_qq()}.
 
 \subsection{Normal-Quantile Plots}
 The normal distributions are especially important for statistics, so normal-quantile
@@ -1591,7 +1571,7 @@ SmallJordan
 <<tidy=FALSE>>=
 probs <- seq(0.05, 0.95, by=0.10)
 probs
-observed <- sort(SmallJordan$Points)                                # sorted observations
+observed <- sort(SmallJordan$points)                                # sorted observations
 theoretical <- qnorm( probs, mean=mean(observed), sd=sd(observed) ) # theoretical quantiles
 QQData <- data.frame(observed=observed, theoretical=theoretical)
 QQData
@@ -1600,8 +1580,8 @@ If the observed data matched the theoretical quantiles perfectly, a scatter plot
 would place all the points on the line with slope 1 passing through the origin.
 
 <<hand-qqplot>>=
-xyplot( observed ~ theoretical, data=QQData, main="Hand made QQ-plot" )
-plotFun( x ~ x, add=TRUE, alpha=0.6)
+gf_point( observed ~ theoretical, data=QQData, title="Hand made QQ-plot" ) %>%
+  gf_abline(intercept = 0, slope=1)
 @
 Even better, we don't need to know the mean and standard deviation in advance, because
 all normal distributions are linear transformations of the $\Norm(0,1)$-distribution.
@@ -1612,16 +1592,16 @@ a plot of $X$ vs. $Z$ will have slope $\sigma$ and intercept $\mu$.
 <<>>=
 theoretical2 <- qnorm( probs, mean=0, sd=1 ) # theoretical quantiles from Norm(0,1)
 QQData2 <- data.frame(observed=observed, theoretical=theoretical2)
-xyplot( observed ~ theoretical, data=QQData2, main="Hand made QQ-plot", xlab="theoretical (z)" )
-ladd(panel.abline(mean(SmallJordan$Points), sd(SmallJordan$Points), alpha=0.5, col="navy"))
-ladd(panel.abline(h = mean(SmallJordan$Points), alpha=0.5))
-ladd(panel.abline(v = 0, alpha=0.5))
+gf_point( observed ~ theoretical, data=QQData2, title="Hand made QQ-plot", xlab="theoretical (z)" ) %>%
+  gf_abline(slope = sd(SmallJordan$points), intercept = mean(SmallJordan$points), color='navy') %>%
+  gf_hline(yintercept = mean(SmallJordan$points)) %>%
+  gf_vline(xintercept = 0)
 @
 
-This whole process is automated by the \function{qqmath()} function.
+This whole process is automated by the \function{gf_qq()} function.
 <<>>=
-qqmath( ~ Points, SmallJordan, main="Sub-sample" )
-qqmath( ~ Points, Jordan8687, main="Full data set" )
+gf_qq( ~ points, data=SmallJordan, title="Sub-sample" )
+gf_qq( ~ points, data=Jordan8687, title="Full data set" )
 @
 \end{example}
 
@@ -1640,7 +1620,7 @@ of the prototype.  The exponential family is one such family.}
 \iffalse
 	As in the previous section, we'll begin by creating it manually using 
 	a small subset of the data and then show how to automate the process 
-	using \function{qqmath()}.
+	using \function{gf_qq()}.
 <<>>=
 SmallWind <- sample(Wind, 10)
 SmallWind
@@ -1655,22 +1635,22 @@ probs
 Now we compute the quantiles for these probabilities using the parameters
 we fit previously.
 <<tidy=FALSE>>=
-y <- qdata( probs, SmallWind$speed2)                     # quantiles from data
+y <- qdata(~speed2, p=probs, data=SmallWind)                     # quantiles from data
 x.gamma <- qgamma( probs, shape=2.496, rate=0.421 )      # quantiles from Gamma dist
 x.weibull <- qweibull( probs, shape=1.694, scale=6.651 ) # quantiles from Weibull dist
 x.normal <- qnorm( probs, mean=5.925 , sd=3.653  )       # quantiles from Normal dist
 @
 Finally, we create the scatter plot
 <<>>=
-xyplot( y ~ x.gamma )
-xyplot( y ~ x.weibull )
-xyplot( y ~ x.normal )
+gf_point( y$p ~ x.gamma )
+gf_point( y$p ~ x.weibull )
+gf_point( y$p ~ x.normal )
 @
 \fi
-We can automate this, but we need to tell \function{qqmath()} how to calculate
+We can automate this, but we need to tell \function{gf_qq()} how to calculate
 the quantiles.
 <<>>=
-qqmath( ~ speed2, data=Wind )  # normal-quantile plot; normal is not a good model
+gf_qq( ~ speed2, data=Wind )  # normal-quantile plot; normal is not a good model
 @
 
 The normal model does not fit well, but both Gamma and Weibull are reasonable models:
@@ -1679,8 +1659,8 @@ fitdistr(Wind$speed2, "gamma")
 fitdistr(Wind$speed2, "Weibull")
 fittedqgamma <- makeFun( qgamma(p, shape=2.496, rate=0.421 ) ~ p )
 fittedqweibull <- makeFun( qweibull(p, shape=1.694, scale=6.651) ~ p ) 
-qqmath( ~speed2, data=Wind, distribution=fittedqgamma )
-qqmath( ~speed2, data=Wind, distribution=fittedqweibull )
+gf_qq( ~speed2, data=Wind, distribution=fittedqgamma )
+gf_qq( ~speed2, data=Wind, distribution=fittedqweibull )
 @
 \end{example}
 
@@ -1723,8 +1703,9 @@ fitdistr(Wind$speed, "exponential")
 		\item
 			This fit is not that great.
 <<>>=
-histogram(~speed, data=Wind, fit="exponential")
-qqmath(~speed, data=Wind, distribution=qexp)
+gf_dhistogram(~speed, data=Wind) %>%
+  gf_fitdistr(dist="exp")
+gf_qq(~speed, data=Wind, distribution=qexp)
 @
 	\end{enumerate}
 \end{solution}

@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('STAT241-S19.Rnw')}
 
 <<include=FALSE>>=
 require(Hmisc)
@@ -339,10 +339,10 @@ Sum <- X + Y
 Diff <- X - Y
 fitdistr(Sum, "normal")
 fitdistr(Diff, "normal")
-histogram(~ Sum, fit="normal") 
-histogram(~ Diff, fit="normal") 
-qqmath(~ Sum) 
-qqmath(~ Diff) 
+gf_dhistogram(~ Sum) %>% gf_fitdistr(dist="norm") 
+gf_dhistogram(~ Diff) %>% gf_fitdistr(dist="norm") 
+gf_qq(~ Sum) 
+gf_qq(~ Diff) 
 @
 \end{example}
 
@@ -364,8 +364,8 @@ X7 <- runif(5000,0,1); X8 <- runif(5000,0,1); X9 <- runif(5000,0,1)
 X10 <- runif(5000,0,1); X11 <- runif(5000,0,1); X12 <- runif(5000,0,1) 
 S <- X1 + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12
 fitdistr(S, "normal")
-histogram(~S, fit="normal")
-qqmath(~S)
+gf_dhistogram(~S)  %>% gf_fitdistr(dist="norm")
+gf_qq(~S)
 @
 This means that $S - 6 \approx \Norm(0,1)$.  This has been used in computer software
 as a relatively easy way to simulate normal data given a good psuedorandom number generator
@@ -763,12 +763,12 @@ with the data.
 \myindex{critical value}%
 We can use other \term{confidence levels} by using a different 
 \term{critical value} $t_*$.  
-%So the general
-%form for our confidence interval is
-%
-%\[
-%\mean x \pm t_* SE  
-%\]
+So the general
+form for our confidence interval is
+
+\[
+\mean x \pm t_* SE
+\]
 
 \begin{example}
 	A 98\% confidence interval, for example, requires a larger value of $t_*$.
@@ -864,7 +864,7 @@ For assistance in particular applications, we offer the following rules of thumb
 		to outliers, one should proceed with caution when outliers 
 		are present.
 
-		Outliers that can be corrected, should be.  Outliers that can be verified
+		Outliers that are due to mistakes and can be corrected, should be.  Outliers that can be verified
 		to be incorrect but cannot be corrected should be removed.  It is not
 		acceptable to remove an outlier just because you don't want it in your data.
 		But sometimes statisticians do ``leave one out analysis" where they run the 
@@ -915,21 +915,21 @@ D <- X - Y
 @
 <<warning=FALSE>>=
 fitdistr( S, "normal")
-qqmath( ~ S )
-densityplot( ~ S )
+gf_qq( ~ S )
+gf_density( ~ S )
 @
 <<warning=FALSE>>=
 fitdistr( S, "gamma")
-qqmath( ~ S, distribution=function(x) qgamma(x, shape=4.04, rate=0.333 ) )
-densityplot( ~ S )
+gf_qq( ~ S, distribution=qgamma, dparams = list(shape=4.04, rate=0.333 ) )
+gf_density( ~ S )
 @
 The gamma distribution fits $S$ much better than the normal does.  But notice that the 
 shape parameter is larger than the shape parameters for $X$ and $Y$.
 
 <<warning=FALSE>>=
 fitdistr( D, "normal")
-qqmath( ~ D )
-densityplot( ~ D )
+gf_qq( ~ D )
+gf_density( ~ D )
 @
 
 This time the distribution is symmetric, so the problems are not as obvious as for $S$, but the 
@@ -1123,7 +1123,7 @@ answers
 <<echo=FALSE>>=
 require(Devore6)
 names(ex07.37) <- "strideRate"
-qqmath(~strideRate, data=ex07.37)
+gf_qq(~strideRate, data=ex07.37)
 favstats(~strideRate,data=ex07.37)
 @
 	\begin{enumerate}
@@ -1159,7 +1159,8 @@ t.test( ~ strideRate, data=ex07.37, conf.level=0.98 )
 	that are 4 years old:
 <<>>=
 tally(~Age, lakemary)
-fish4 <- subset(lakemary, Age==4)  # note the double == here
+fish4 <- lakemary %>%
+  filter(Age==4)  # note the double == here
 tally(~Age, fish4)
 @
 	\begin{enumerate}
@@ -1197,7 +1198,7 @@ larger fish than for smaller fish, or vice versa, would be problematic.)
 A normal-quantile plot doesn't suggest any reason to be overly worried about
 the normality assumption.
 <<>>=
-qqmath(~Length, data=fish4)
+gf_qq(~Length, data=fish4)
 @
 <<tidy=FALSE>>=
 int <- confint(t.test( ~Length, data=fish4))
@@ -1215,8 +1216,9 @@ there were no fish of those lengths.)
 
 \item 3-year-old fish
 <<tidy=FALSE>>=
-fish3 <- subset(lakemary, Age==3)  # note the double == here
-qqmath(~Length, data=fish3)
+fish3 <- lakemary %>%
+  filter(Age==3)  # note the double == here
+gf_qq(~Length, data=fish3)
 int <- confint(t.test(~Length, data=fish3))
 int
 lo <- int[2]; hi <- int[3]
@@ -1231,8 +1233,8 @@ tally ( ~ ( lo < Length & Length < hi ), data=fish3 )
 
 		Here is a plot that shows how length varies by age.
 <<>>=
-bwplot(Length ~ factor(Age), data=lakemary)
-xyplot(Length ~ factor(Age), data=lakemary, cex=2, alpha=0.3)
+gf_boxplot(Length ~ factor(Age), data=lakemary)
+gf_point(Length ~ factor(Age), data=lakemary, size=2, alpha=0.3)
 @
 \end{enumerate}
 \end{solution}
@@ -1283,8 +1285,8 @@ Paper <-
 
 \begin{solution}
 <<>>=
-qqmath( ~ polymer, data=Paper )
-densityplot( ~ polymer, data=Paper )
+gf_qq( ~ polymer, data=Paper )
+gf_density( ~ polymer, data=Paper )
 t.test( ~polymer, data=Paper )
 @
 The tails of the sample distribution do not stretch quite as far as we would expect 
@@ -1436,14 +1438,14 @@ good parts in the QC process.
 Here is a normal quantile plot from a data set.
 <<echo=FALSE>>=
 x <- rgamma(100, shape=2)
-qqmath( ~x , xlab="", ylab="")
+gf_qq( ~x , xlab="", ylab="")
 @
 Sketch what a density plot of this same data would look like.
 \end{problem}
 
 \begin{solution}
 <<echo=FALSE>>=
-densityplot( ~ x )
+gf_density( ~ x )
 @
 The important feature to get right is the direction of the skew.
 \end{solution}
@@ -1489,14 +1491,14 @@ SE <- s / sqrt(n) ; SE
 t_star <- qt( .95, df=38 ) ; t_star
 me <- t_star * SE; me
 interval( t.test( ~length, data=KidsFeet) ) 
-qqmath( ~length, data=KidsFeet )
+gf_qq( ~length, data=KidsFeet )
 @
 The normal-quantile plot does not reveal any causes for concern, but 
 we might be concerned that the distributions for boys and girls are different.  Let's do
 a graphical check to see if that is a problem.
 <<>>=
-bwplot( length ~ sex, data=KidsFeet )
-densityplot( ~ length, groups=sex, data=KidsFeet )
+gf_boxplot( length ~ sex, data=KidsFeet )
+gf_density( ~ length, groups=sex, data=KidsFeet )
 @
 Indeed, it appears that the girls' feet are on average a bit shorter, so perhaps 
 we should create a confidence intervals separately for each group.  Now you have two
@@ -1600,7 +1602,7 @@ xxF(2) - xxF(-2) - m^2        # variance
 
 \begin{solution}
 <<tidy=FALSE>>=
-plotDist("gamma", params=list(shape=3,rate=2))
+gf_dist(dist="gamma", params=list(shape=3,rate=2))
 pgamma(1, shape=3, rate=2)
 pgamma(3, shape=3, rate=2) -  pgamma(1, shape=3, rate=2)
 F <- antiD( dgamma(x, shape=3, rate=2) ~ x )
@@ -1699,9 +1701,9 @@ mean( ~ Exer, data=StudentSurvey )
 mean( ~ Exer, data=StudentSurvey, na.rm=TRUE )
 sd( ~ Exer, data=StudentSurvey, na.rm=TRUE )
 tally( ~ (Exer == 0) , data=StudentSurvey, format="percent" )
-histogram( ~ Exer, data=StudentSurvey )
-densityplot( ~ Exer, data=StudentSurvey )
-qqmath( ~ Exer, data=StudentSurvey )
+gf_dhistogram( ~ Exer, data=StudentSurvey )
+gf_density( ~ Exer, data=StudentSurvey )
+gf_qq( ~ Exer, data=StudentSurvey )
 @
 Let's fit a gamma, since values cannot be below 0 and the distribution is clearly skewed.
 (Weibull might be another choice.)
@@ -1709,11 +1711,13 @@ Remember that we need to remove any values of 0 before we do the fit.  In this c
 do this by mapping them to a value of 0.5 since the smallest non-zero value in the data set
 is 1.  We also have to remove the two students who did not report.
 <<eval=TRUE, warning=FALSE>>=
-StudentSurvey2 <- subset(StudentSurvey, !is.na( Exer ) )  # remove non-responders
-StudentSurvey2 <- transform(StudentSurvey2, Exer2 = ifelse( Exer<=0, 0.5, Exer ) )
+StudentSurvey2 <- StudentSurvey %>%
+  filter(!is.na( Exer ) ) %>%  # remove non-responders
+  mutate(Exer2 = ifelse( Exer<=0, 0.5, Exer ))
 fitdistr( StudentSurvey2$Exer2, "gamma")
-histogram( ~ Exer2, data=StudentSurvey2, fit="gamma" )
-qqmath( ~ Exer2, data=StudentSurvey2, dist=makeFun( qgamma(x, shape=0.442, rate=0.0124) ~ x ) )
+gf_dhistogram( ~ Exer2, data=StudentSurvey2) %>% 
+  gf_fitdistr(dist="gamma")
+gf_qq( ~ Exer2, data=StudentSurvey2, dist=qgamma, dparams = list(shape=0.442, rate=0.0124) )
 @
 \end{solution}
 \fi
@@ -1750,8 +1754,9 @@ the answer might be? (Does eye color matter?)
 \begin{solution}
 Here are two possibilities:
 <<>>=
-bwplot( Flicker ~ Colour, data=Flicker )
-densityplot( ~ Flicker, groups = Colour, data=Flicker, col=c("steelblue", "brown", "darkgreen"))
+gf_boxplot( Flicker ~ Colour, data=Flicker )
+gf_density( ~ Flicker, fill=~Colour, data=Flicker) %>%
+  gf_refine(scale_fill_manual(values = c('steelblue', 'tan4', 'forestgreen')))
 @
 The general trend appears to be that lighter colored eyes (if you consider blue
 to be lighter than green) appear to be able to detect higher flicker rates, but

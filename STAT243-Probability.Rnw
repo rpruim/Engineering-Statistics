@@ -1,4 +1,4 @@
-\Sexpr{set_parent('STAT243-S16.Rnw')}
+\Sexpr{set_parent('STAT243-S19.Rnw')}
 
 \Chapter{Random Variables and Probability}
 
@@ -61,8 +61,10 @@ The distribution of a random variable.
 
 As an example of a probability distribution, we can first consider a \emph{discrete} random variable.  Most of the examples of random variables given above are discrete. In other words, the values they can take on come from a set containing a finite number of possible values.  For example, if you roll a 6-sided die and record the number that comes up, there are only size possible outcomes, which are equally likely: the integers 1, 2, 3, 4, 5 and 6.  For discrete random variables, the probability distribution shows all the possible values on the x-axis, and the likelihood of observing each of those values on the y-axis.  Since there are a finite number of possible values that can be observed, these likelihoods are actually the \emph{probabilities} of observing each outcome, and the sum of all the probabilities must be 1.  For our example, where we rolled a die and recorded the value:
 
-<<discrete_pmf, echo=FALSE, results='markup'>>=
-histogram(~c(1:6), width=1, ylab="Probability", xlab="Outcome of Rolling Die")
+<<discrete-pmf, echo=FALSE, results='markup'>>=
+gf_point(rep(1/6,6) ~ c(1:6), ylab="Probability", xlab="Outcome of Rolling Die") %>%
+  gf_lims(y=c(0,1)) %>%
+  gf_segment(rep(1/6,6) + rep(0,6) ~ c(1:6) + c(1:6))
 @
 
 Things are a bit more complicated for \emph{continuous} random variables (the ones that can take on any numerical value).  Here, there sample space (the set of possible distinct values the random variable can take on) is infinite.  One consequence of this fact is that the interpretation of the y-axis values of the probability distribution changes.  The y-axis will still indicate the relative likelihood of observing any given value of the random variable.  However, here the random variable can take on an infinite number of possible values.  In this case, we can't interpret the y-axis values as probabilities.  They y axis units are called ``Likelihood" or "Density", and they indicate the relative frequency of each outcome. 
@@ -71,9 +73,9 @@ For a densityplot, which shows a smoothed version of the silhouette of a histogr
 
 For example, we might consider the growth of flower petals of the iris \textit{Iris setosa} as a random process, and let \texttt{X} be a random variable that is the length of each iris petal.  We could plot a histogram to approximate the distribution of \texttt{X} using the variable \texttt{Petal.Length} from the \dataframe{iris} data (from the \pkg{datasets} package in base R).
 
-<<cont_pdf, echo=FALSE>>=
+<<cont-pdf, echo=FALSE>>=
 Is <- iris[iris$Species=="setosa",]
-histogram(~Petal.Length, data=Is, xlab="Petal Length (cm)")
+gf_dhistogram(~Petal.Length, data=Is, xlab="Petal Length (cm)", binwidth = 0.1)
 @
 
 \newpage
@@ -120,7 +122,7 @@ can create a table and a plot showing the empirical distribution.
 do(3) * rflip(10)
 do(10000) * rflip(10) -> tosses
 tally(~ heads, data=tosses, format="prop")
-histogram( ~ heads, data=tosses, width=1 )
+gf_histogram( ~ heads, data=tosses, binwidth=1 )
 @
 
 <<include=FALSE>>=
@@ -138,7 +140,7 @@ using two fair standard dice.
 We can simulate rolling a die with the following code:
 <<>>=
 1:6                # the numbers 1 through 6
-resample(1:6, 10)  # ten rolls of a 6-sided die
+resample(x = 1:6, size=10)  # ten rolls of a 6-sided die
 @
 The first 2 input arguments of \function{resample()} are \texttt{x} (the set of values from which you want to resample) and \texttt{size} (the number of items to choose from \texttt{x}).  You can also think of \texttt{size} as the number of \emph{times} to sample from \texttt{x}, if you are imagining sampling one item from \texttt{x} each time.
 
@@ -186,7 +188,7 @@ Here's a slightly fancier version that puts all the information into a data fram
 rolls <- data.frame( first = die1, second = die2, sum = die1 + die2 )
 head(rolls)
 tally( ~sum, data=rolls, format="proportion")
-histogram( ~sum, data=rolls, width=1 )    # setting width is important for integer data
+gf_histogram( ~sum, data=rolls, binwidth=1 )     # setting width is important for integer data
 @
 \end{example}
 
@@ -828,7 +830,7 @@ So the probability that Amy makes more than 95 shots in 100 attempts is approxim
 d <- die1 - die2
 tally( ~ d )
 prop( ~ (d == 8) )
-histogram( ~d, width=1 )    # setting width is important for integer data
+gf_histogram( ~d, binwidth=1 )    # setting width is important for integer data
 @
 \end{solution}
 

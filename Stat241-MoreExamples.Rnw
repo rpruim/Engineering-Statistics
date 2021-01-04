@@ -57,7 +57,7 @@ experimental conditions:
 
 <<fig.height=2.25>>=
 HeatX <- read.csv("http://www.calvin.edu/~rpruim/data/HeatX.csv")
-HeatX
+HeatX   # This also lives in the mosaicData package, so read.csv() isn't required
 xyplot(m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations", cex = 2)
 @
 
@@ -71,7 +71,7 @@ The recorded flow rates are in L/min.  We will convert them to L/sec and use sec
 our standard unit of time troughout the analyses.
 <<tidy = FALSE>>=
 HeatX <- HeatX %>%
-  transform(
+  mutate(
     m.hot = m.hot / 60,
     m.cold = m.cold / 60
   )
@@ -148,13 +148,12 @@ from the temperature change and the mass flow rate as follows:
 
 We can estimate the values of $\dot{Q}$ from our data by direct caclulation:
 <<tidy=FALSE>>=
-require(plyr)                 # required for the mutate() command below
 C_p <- 4.18
 HeatX2 <- HeatX %>%
   mutate(
     Q.cold = m.cold * C_p * (T.cold.out - T.cold.in),
-    Q.hot= m.hot * C_p * (T.hot.out- T.hot.in),
-    Q.env = Q.cold + Q.hot
+    Q.hot  = m.hot  * C_p * (T.hot.out  - T.hot.in),
+    Q.env  = Q.cold + Q.hot
   )
 HeatX2
 @
@@ -168,20 +167,20 @@ Assuming any loss to (or gain from) the environment is essentially constant for
 the apparatus over the experimental conditions analysed, we can use our 6
 observations to estimate the amount of heat exchanged with the environment:
 <<>>=
-favstats(~Q.env, data = HeatX2)
+favstats( ~ Q.env, data = HeatX2)
 stripplot( ~ Q.env, data = HeatX2, alpha = .6, cex = 3, jitter.data = TRUE)
 @
 From this we can compute either a p-value for the hypothesis test that the mean 
 difference in heat change is 0 or create a confidence interval for the mean difference
 in heat change.
-The information about is enough to do this ``by hand'' using the standard error 
+The information above is enough to do this ``by hand'' using the standard error 
 formula $SE = \frac{s}{\sqrt{n}}$ and a t-distribution with $n-1 = 5$ degrees of freedom.
 
 <<tidy=FALSE>>=
 SE = 0.08274 /sqrt(6); SE
+0.09003 + c(-1,1) * qt(0.975, df=5) * SE       # 95% CI
 t <- (0.08999 - 0) / SE; t
 2 * pt( -abs(t), df=5 )                        # p-value
-0.09003 + c(-1,1) * qt(0.975, df=5) * SE       # 95% CI
 @
 
 Or we can let \R\ do all the computations for us:
@@ -201,14 +200,14 @@ within in the apparatus.
 Notes:
 \begin{enumerate}
 \item
-The fact that heat is gained suggests that the cold water was in the
+The fact that heat is gained to the system suggests that the cold water was in the
 outer pipe and hot water in the inner pipe.
 \item  This analysis assumes that the amount of heat gained/lost is constant over 
 the different set-ups.  From this small data set, there is not clear evidence 
 of some other relationship between heat exchanged with the environment
 and the experimental set up:
 <<fig.height=2.5>>=
-xyplot( Q.env ~ m.cold, data = HeatX2, groups = paste("m.hot =", m.hot), auto.key=TRUE)
+xyplot( Q.env ~ m.cold, data = HeatX2, groups = paste("m.hot =", round(m.hot,2)), auto.key=TRUE)
 @
 \item
 The t-test and interval are based on the assumption that the distribution
@@ -250,25 +249,25 @@ $\dot Q$ using the delta method.
 
 \begin{itemize}
 \item
-Let $f(\dot{m}, \Delta T) = C_p \dot{m} \Delta T$
+Let $\dot{Q}(\dot{m}, \Delta T) = C_p \dot{m} \Delta T$
 \item
-$ \displaystyle \Partial{f}{\dot m} = C_p \Delta T$ and 
-$ \displaystyle \Partial{f}{\Delta T} = C_p \dot{m}$, so
+$ \displaystyle \Partial{\dot{Q}}{\dot m} = C_p \Delta T$ and 
+$ \displaystyle \Partial{\dot{Q}}{\Delta T} = C_p \dot{m}$, so
 \item
 $ \displaystyle
-u_{\dot Q} \approx   C_p \sqrt{ (\Delta T)^2 u^2_{\dot m}  + \dot{m}^2 u_{\Delta T}^2 }
+u_{\dot Q} \approx C_p \sqrt{ (\Delta T)^2 u^2_{\dot m}  + \dot{m}^2 u_{\Delta T}^2 }
 $
 \end{itemize}
 
 If we estimate the uncertainty in measured temperatures
 to be $1$ degree C and the uncertainty in flow rate to be $0.5$ liters per
-minute (so \Sexpr{0.5/60} L/sec), then we can compute the uncertainties in 
+minute (i.e., \Sexpr{0.5/60} L/sec), then we can compute the uncertainties in 
 the $\dot{Q}$ values as follows
 <<tidy=FALSE>>=
 HeatX2<- HeatX2 %>%
   mutate(
-    u.Q.cold = C_p *sqrt( (T.cold.out -T.cold.in )^2 * (0.5/60)^2  + m.cold^2 * 2),  
-    u.Q.hot =  C_p *sqrt(  (T.hot.out -T.hot.in )^2  * (0.5/60)^2  +  m.hot^2 * 2) 
+    u.Q.cold = C_p *sqrt( (T.cold.out - T.cold.in)^2 * (0.5/60)^2  + m.cold^2 * 2),  
+    u.Q.hot =  C_p *sqrt( (T.hot.out  - T.hot.in)^2  * (0.5/60)^2  +  m.hot^2 * 2) 
   ) 
 HeatX2
 @
@@ -281,8 +280,8 @@ where the estimates are not independent.  To do it's job,
 \begin{itemize}
 \item A named vector of estimates,
 <<>>=
-x <- unlist( HeatX[1, c(2:7)] )  # unlist() turns the data frame into a vector
-x
+estimates <- HeatX[1, 2:7] %>% unlist()  # unlist() turns the data frame into a vector
+estimates
 @
 \item 
 	An expression for the derived quantity as a quoted string 
@@ -300,7 +299,7 @@ vc
 \end{itemize}
 Let's see how it compares to the (first row of the) results above:
 <<>>=
-deltaMethod(x, exprforQ, vc)
+deltaMethod(estimates, exprforQ, vc)
 @
 
 
@@ -326,8 +325,8 @@ HeatX3 <- HeatX %>%
 HeatX3
 deltaMethod(HeatX3,
   exprforQ, 
-  estimates = c("T.cold.in", "T.cold.out", "m.cold"),    # columns with estimates
-  uncertainties = c("u.cold.in", "u.cold.out", "u.m.cold"))   # and uncertainties
+  estimates     = c("T.cold.in", "T.cold.out", "m.cold"),    # columns with estimates
+  uncertainties = c("u.cold.in", "u.cold.out", "u.m.cold"))  # and uncertainties
 @
 Although our uncertainties are the same in each row, this method allows for uncertainties 
 to be specified separately for each row of the data.
@@ -340,7 +339,7 @@ Do our results change if we include this uncertainty in our calculations?
 
 <<tidy = FALSE>>=
 deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
-  uncertainties=c(T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60, C_p = 0.1) )
+  uncertainties=c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/60, C_p = 0.1))
 @
 
 Comparing these results to the results above we see that the uncertainty
@@ -355,7 +354,7 @@ uncertainty, we must improve our measurements of temperature and/or flow rate.
 
 \subsection{Using relative uncertainty}
 
-Recall that for products, their is a Pythagorean relationship for relative uncertainties.
+Recall that for products, there is a Pythagorean relationship for relative uncertainties.
 
 \[
 \frac{u_{\dot Q}}{\dot Q} \approx 
@@ -380,10 +379,26 @@ For example, using the values in the first row of the data set.
 From this we can see that it is the imprecise temperature measurements that are our biggest
 problem.  Even if we eliminated the other uncertainties, we would still have a relative uncertainty
 of over $30$\%.   The details vary a bit from row to row, but the uncertainty in in temperature 
-is our biggest obstacle.  In addition to increasing the precise of our temperature sensors, we could 
+is our biggest obstacle.  In addition to increasing the precision of our temperature sensors, we could 
 also potentially improve things by designing a heat exchanger with more dramatic changes in 
 temperature.
 
+Suppose, for example, we could estimate temperature with an uncertainty of 0.1 degrees (ten times 
+better than we have been assuming).  Then our uncertainties for $\dot{Q}$ would change pretty
+dramatically.
+
+<<>>=
+deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
+  uncertainties=c(T.cold.in = 0.1, T.cold.out = 0.1, m.cold = 0.5/60, C_p = 0.1))
+@
+
+But if we improve the uncertainty in the mass flow rate by a factor of 10, it has only a 
+modest impact on our uncertainty for $\dot{Q}$.
+
+<<>>=
+deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
+  uncertainties=c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/600, C_p = 0.1))
+@
 
 \subsection{Estimating the heat transfer coefficient, $U$}
 
@@ -409,14 +424,15 @@ information needed.
 exprforU <- paste("C_p * m.cold * (T.cold.out - T.cold.in) /",
                   "( pi * D *  L  * ((T.cold.out - T.hot.in) - (T.cold.in - T.hot.out)) /",
                   " log ( (T.cold.out - T.hot.in) / (T.cold.in - T.hot.out) ) )")
-HeatX4 <- transform(HeatX, D = 0.0143, L = 1.626, C_p = 4.18)
+HeatX4 <- HeatX %>%
+  mutate(D = 0.0143, L = 1.626, C_p = 4.18)
 HeatX4
 deltaMethod(HeatX4, exprforU, 
-  uncertainties=c(
-	T.cold.in=1.0, T.cold.out=1.0, m.cold = 0.5/60, 
-	T.hot.in=1.0, T.hot.out=1.0, m.hot = 0.5/60, 
-	C_p = 0.1, D=0.0004, L=0.0006),
-  constants = list(pi=pi)
+  uncertainties = c(
+	T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/60, 
+	T.hot.in = 1.0, T.hot.out = 1.0, m.hot = 0.5/60, 
+	C_p = 0.1, D = 0.0004, L = 0.0006),
+  constants = list(pi = pi)
 )
 @
 
@@ -492,14 +508,14 @@ We had not yet learned about uncertainty and standard errors when we learned abo
 error.
 <<>>=
 require(fastR)
-fitdistr(Jordan8687$Points, "normal")
+fitdistr(Jordan8687$points, "normal")
 @
 The parenthesized numbers are the estimated standard errors associated with each
 parameter estimate.
 In this case, it is easy to compute the standard error for the mean ourselves
 using $SE = s / \sqrt{n}$.
 <<>>=
-sd(~Points, data = Jordan8687) / sqrt(82)
+sd( ~ points, data = Jordan8687) / sqrt(82)
 @
 
 

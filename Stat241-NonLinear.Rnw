@@ -559,7 +559,7 @@ BallDropAvg <-
   summarise(time = mean(time))
 BallDropAvg 
 @
-<<>>=
+<<warning = FALSE>>=
 ball.modelA <- lm(time ~ sqrt(height), data = BallDropAvg)
 summary(ball.modelA)
 plotModel(ball.modelA)
@@ -685,7 +685,7 @@ The data do not support Rex's assumption that a transformation
 is necessary.  
 We can also fit a quadratic model of the form \verb!weight~I(day^2)!,
 but this model is worse still.  Fitting a full quadratic model requires 
-two predictors (\verb!day! and \verb!day^2!) and so will have to wait
+two predictors (\variable{day} and \verb!day^2!) and so will have to wait
 until our discussion of multiple linear regression.  
 The scatterplot and especially the residual plot both show that the 
 residuals are mostly positive near the ends of the data and negative
@@ -918,7 +918,7 @@ The estimated power based on the linear model is $0.478 \pm 0.004$.
 
 
 \begin{problem}
-The \dataframe{pressure} data set contains 
+The \dataframe{Pressure} data set contains 
 data on the relation between temperature in degrees Celsius and 
 vapor pressure in millimeters (of mercury).
 With temperature as the predictor and pressure as the response,
@@ -933,28 +933,28 @@ pressure and temperature?
 Using Tukey's buldge rules it is pretty easy to land at something like one of the following
 
 <<>>=
-xyplot(log(pressure) ~ temperature, data = pressure)
-xyplot(log(pressure) ~ log(temperature), data = pressure)
+xyplot(log(pressure) ~ temperature, data = Pressure)
+xyplot(log(pressure) ~ log(temperature), data = Pressure)
 @
 
 Neither of these is pefect (although both are much more linear than the original untransformed relationship).
 But if you think in degrees Kelvin instead, you might find a much better transformation.
 <<>>=
-xyplot(log(pressure) ~ (273.15 + temperature), data = pressure)
-xyplot(log(pressure) ~ log(273.15 + temperature), data = pressure)
-xyplot(log(pressure) ~ 1/(273.15 + temperature), data = pressure)
+xyplot(log(pressure) ~ (273.15 + temperature), data = Pressure)
+xyplot(log(pressure) ~ log(273.15 + temperature), data = Pressure)
+xyplot(log(pressure) ~ 1/(273.15 + temperature), data = Pressure)
 @
 
 Ah, that last one looks quite good.  Let's try that one.
 <<>>=
-model <- lm(log(pressure) ~ I(1/(273.15 + temperature)), data = pressure)
-mplot(model, 1:2)
+model <- lm(log(pressure) ~ I(1/(273.15 + temperature)), data = Pressure)
+plot(model, 1:2)
 @
 Things still aren't perfect. There's a bit of a bow in the residual plot, but the size of the residuals is
 quite small relative to the scale of the log-of-pressure values:
 <<>>=
 range( ~ resid(model))
-range( ~ log(pressure), data = pressure)
+range( ~ log(pressure), data = Pressure)
 @
 Also the residual for the fourth observation is quite a bit larger than the rest.
 \end{solution}
@@ -978,7 +978,7 @@ how you chose your best model.
 \Rindex{ACTgpa}%
 \myindex{ACT}%
 \myindex{grade point average}%
-The data set \verb!ACTgpa! (in the \pkg{fastR2} package)
+The data set \dataframe{ACTgpa} (in the \pkg{fastR2} package)
 %  \url{http://www.calvin.edu/~stob/courses/m344/S07/data/actgpanona.csv}
 contains the ACT composite scores and GPAs of some randomly selected seniors 
 at a Midwest liberal arts college.
@@ -1079,11 +1079,12 @@ just the right ballast to make it neutrally buoyant.  Mass is then added
 and the terminal velocity is calculated by measuring the time it takes to
 fall between two sensors once terminal velocity has been reached.
 
-The \verb!Drag! data set contains the results of such an experiment
+The \dataframe{Drag} data set (in the \pkg{fastR2} package) contains the results 
+of such an experiment
 conducted by some undergraduate physics students.  Mass is measured 
 in grams and velocity in meters per second.  
 (The distance between the two sensors used for determining
-terminal velocity is given in the \verb!height! variable.)
+terminal velocity is given in the \variable{height} variable.)
 
 By fitting models to this data, determine which of the following ``drag laws'' matches the data best:
 \begin{itemize}
@@ -1118,8 +1119,8 @@ coef(summary(model2))
 <<>>=
 coef(summary(model3))
 @
-Note that \verb!model1!, \verb!model2!, and \verb!model3! are not equivalent, 
-but they all tell roughly the same story.
+Note that \variable{model1}, \variable{model2}, and \variable{model3} are not 
+equivalent, but they all tell roughly the same story.
 <<warning=FALSE>>=
 xyplot(velocity ~ force.drag, data=Drag)
 f1 <- makeFun(model1)
@@ -1152,7 +1153,7 @@ plot(model3, w=1)
 \myindex{physics|probidx}%
 \label{prob:drag-problems}%
 Construct a plot that reveals a likely systematic problem with the 
-\verb!drag! (see Exercise~\ref{prob:drag1}) data set.
+\dataframe{Drag} (see Exercise~\ref{prob:drag1}) data set.
 Speculate about a potential cause for this.
 \end{problem}
 
@@ -1164,14 +1165,15 @@ See previous problem.
 \Rindex{drag}%
 \myindex{physics|probidx}%
 Exercise~\ref{prob:drag-problems} suggests that some
-of the data should be removed before analyzing the \verb!Drag! data set.
+of the data should be removed before analyzing the \dataframe{Drag} data set.
 Redo Exercise~\ref{prob:drag1} after removing this data.
 \end{problem}
 
 \begin{problem}
-\Rindex{spheres}%
+\Rindex{Spheres}%
 \myindex{physics|probidx}%
-The \verb!spheres! data set contains measurements of the diameter (in meters)
+The \dataframe{Spheres} data set (in the \pkg{fastR2} package)
+contains measurements of the diameter (in meters)
 and mass (in kilograms) of a set of steel ball bearings.  We would expect
 the mass to be proportional to the cube of the diameter.  Fit a model 
 and see if the data reflect this.
@@ -1179,9 +1181,10 @@ and see if the data reflect this.
 
 
 \begin{problem}
-\Rindex{spheres}%
+\Rindex{Spheres}%
 \myindex{physics|probidx}%
-The \verb!spheres! data set contains measurements of the diameter (in meters)
+The \dataframe{Spheres} data set (in the \pkg{fastR2} package)
+contains measurements of the diameter (in meters)
 and mass (in kilograms) of a set of steel ball bearings.  We would expect
 the mass to be proportional to the cube of the diameter.  
 Using appropriate transformations fit two models: one that predicts 
@@ -1192,7 +1195,7 @@ How do the two models compare?
 \begin{problem}
 \label{prob:utilities-therms-by-temp}%
 \Rindex{utilities}%
-The \verb!utilities! data set has information from utilities
+The \dataframe{Utilities} data set has information from utilities
 bills at a Minnesota residence.
 Fit a linear model that predicts \variable{thermsPerDay} from \variable{temp}.
 \begin{enumerate}

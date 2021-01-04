@@ -23,3 +23,11 @@
 *.idx
 *.notes
 
+# tex/Rnw
+
+*.bk
+*.ind
+*.ilg
+*.tex
+*.pdf
+

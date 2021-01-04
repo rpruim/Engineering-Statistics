@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
 
 \Chapter{Numerical Summaries}
 
@@ -15,26 +15,24 @@ There are several functions for tabulating categorical variables.
 \function{tally()}  uses a syntax that is very similar to \function{bargraph()}.    
 We'll call this method the \term{formula interface}.
 (\R\ calls anything with a wiggle (\code{\~}) a formula.)
+\Rindex{tally}%
+\Rindex{table}%
 <<xtabs>>=
-tally( ~ substance, data=HELPrct )
-tally( ~ substance, data=HELPrct, format="prop" )
-tally( ~ substance, data=HELPrct, format="perc" )
+tally( ~ sex, data=KidsFeet )
+tally( ~ sex, data=KidsFeet, format="prop" )
+tally( ~ sex, data=KidsFeet, format="perc" )
 @
 
 \subsubsection*{The \$-interface}
-\function{table()} and its cousins use the \code{\$} operator which selects one variable out of a 
-data frame.
+\function{table()} and its cousins use the \code{\$} operator which selects one variable 
+out of a data frame.
 <<dollar-sign,tidy=FALSE>>=
 KidsFeet$sex      # general syntax: dataframe$variable
+table(KidsFeet$sex)
+# tally() is ambidextrous:
+tally(KidsFeet$sex)
 @
 We'll call this interface the \code{\$}-interface.
-\Rindex{perctable}%
-\Rindex{proptable}%
-<<table>>=
-table( HELPrct$substance )
-perctable( HELPrct$substance )     # display percents instead of counts
-proptable( HELPrct$substance )     # display proportions instead of counts
-@
 
 \subsubsection*{Two interfaces}
 Some functions in \R\ require the formula interface, some require the
@@ -71,7 +69,7 @@ For example, suppose we wanted to group the 20s, 30s, 40s, etc. together.
 \Rindex{table()}%
 <<cut>>=
 # let's add a new variable to HELPrct
-HELPrct <- transform(HELPrct, binnedAge = cut(age, breaks=c(10,20,30,40,50,60,70) ))
+HELPrct <- mutate(HELPrct, binnedAge = cut(age, breaks=c(10,20,30,40,50,60,70) ))
 head(HELPrct)
 tally( ~binnedAge, data=HELPrct ) 
 table( HELPrct$binnedAge)        
@@ -80,7 +78,7 @@ That's not quite what we wanted: 30 is in with the 20s, for example.
 Here's how we fix that.
 
 <<cut2, tidy=FALSE>>=
-HELPrct <- transform( HELPrct, 
+HELPrct <- mutate( HELPrct, 
   binnedAge = cut(age, breaks=c(10,20,30,40,50,60,70), right=FALSE) )
 tally( ~binnedAge, data=HELPrct )   
 table( HELPrct$binnedAge)
@@ -101,8 +99,8 @@ histogram( ~age, data=HELPrct, label=TRUE, type='count',
 
 \subsection{Cross-tables: Tabulating two or more variables}
 
-\function{xtabs()} can also compute cross tables for two (or more) variables.
-<<xtabs-2way>>=
+\function{tally()} can also compute cross tables for two (or more) variables.
+<<tally-2way>>=
 tally(~ sex + substance, data=HELPrct)
 @
 

@@ -1,8 +1,127 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
 
-\chapter{Densities}
+\chapter{Random Variables}
 
-\section{Density histograms, density plots, density functions}
+\begin{description}
+\item[random variable]a random process that results in a number
+\end{description}
+
+We have already seen notation for and a few examples of random variables.
+In this chapter we will learn a bit more about random variables.  We will
+focus our attention on two types of random variables: discrete random variables
+and continuous random variables.\footnote{There are important examples 
+of random variables that are neither discrete nor continuous.}
+
+\section{Discrete Random Variables}
+
+A discrete random variable takes on values from a discrete set of possibilities,
+typically either a finite set or a subset of the integers.  Here are some examples.
+\begin{enumerate}
+\item If we roll a die and record the number, there are six possible values,
+so the random variable is discrete.
+\item
+If we keep flipping a coin until we get a head and record the number of coin
+tosses, then the possible values of the random variable are $1, 2, 3, \dots$
+This is also a discrete random variable.
+\end{enumerate}
+
+
+For each of the possible values of a discrete random variable, there is some
+probability of that value occuring.  So to specify a discrete random variable,
+we need to specify those probabilities.  When there are only a small number 
+of possible value, we can do this with a table.
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+value of $X$ & 0 & 1 & 2 \\
+probability & 0.2 & 0.5 & 0.3 \\
+\hline
+\end{tabular}
+\end{center}
+
+This is really just one way of describing a function, called the 
+\textbf{probability mass function} (or pmf).  The pmf satisfies
+\[
+f(x) = \Prob(X = x)
+\]
+Sometimes instead of providing a table, we will be able to specify
+the pmf using a formula.  For example, we could define a pmf $g$ by
+
+\[ g(y) = (2 - |1-y|) / 4 \mbox{ for $y \in \{0, 1, 2\}$} \]
+which is the same as specifying $g$ with the following table.
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+value of $Y$ & 0 & 1 & 2 \\
+probability & 0.25 & 0.5 & 0.25 \\
+\hline
+\end{tabular}
+\end{center}
+
+Here's one more example.  Let $W$ be a random varaible that can take on any integer
+value and has pmf given by
+\[
+h(w) = \left(\frac{1}{2}\right)^{w+1} \mbox {for $w = 0, 1, 2, 3, \dots$}
+\]
+So, for example, $\Prob(W = 2) = h(2) = \left(\frac12 \right)^3 = \frac18$.
+
+Probabilities can be obtained from the pmf by adding:
+
+
+\begin{itemize}
+\item
+$\Prob( X > 0 ) = 0.5 + 0.3 - 0.8$
+\item
+$\Prob( Y > 0) = 0.5 + 0.25$
+\item
+$\Prob(W > 0) = \frac14 + \frac18 + \frac1{16} + \cdots = \frac12$
+\item
+$\Prob(W > 0) = 1 - \Prob(W = 0) = 1 - \frac{1}{2} = \frac{1}{2}$
+\end{itemize}
+
+The only restrictions on a pmf are that 
+\begin{enumerate}
+\item
+the values must all be non-negative, and 
+\item
+the sum (over all possible values of the random variable) must be 1.
+\end{enumerate}
+That way the probabilities will behave the way probabilities should.
+
+
+\begin{example}
+\question
+Amy is a 92\% free throw shooter.  We watch her take shots until she misses and let 
+$X$ be the number of shots.  What is the pmf for $X$?
+
+\answer
+This time our table would be infinite (since there is no limit to how many consecutive
+free throws Amy might make), so we won't be able to write the whole table down.
+But we can work out the first few probabilities:
+
+\begin{itemize}
+\item
+$f(0) = \Prob(X = 0) = 0.08$.  (She has to miss the first shot.)
+\item
+$f(1) = \Prob(X = 1) = (0.92)(0.08)$.  (She has to make the first and miss the second.)
+\item
+$f(2) = \Prob(X = 2) = (0.92)^2(0.08)$.  (She has to make the first two, then miss the third.)
+\end{itemize}
+At this point, we see there is a general pattern that allows us to write down an 
+algebraic form for the pmf:
+\[
+f(x) = \Prob(X = x) = (0.92)^{x-1}(0.08)
+\]
+where $x$ is a positive integer.  (If $x$ is not an integer, or $x < 1$, then $f(x) = 0$, since
+those values are not possible.)
+\end{example}
+
+
+\section{Continuous Random Variables}
+
+\subsection{Density histograms, density plots, density functions}
 \myindex{density|defidx}%
 A histogram is a simple picture describing the ``density" of data. 
 Histogram bars are tall in regions where there is more data -- i.e., where the data are 
@@ -146,7 +265,9 @@ integrate( f, -Inf, 1 )
 integrate( f, -1, 1)
 integrate( f, -.5, .5 )
 # if you just want the value without the text saying how accurate the approximation is
-integrate( f, -.5, .5 )$value
+# here are two equivalent ways to get it
+value(integrate( f, -.5, .5 ))        # extract the value using val()
+integrate( f, -.5, .5 ) %>% value()   # %>% is the "then" operator
 @
 
 An alternative approach uses \function{antiD()} from the \pkg{mosaic} package.
@@ -157,49 +278,6 @@ F(.5) - F(-1)       # P( -1 <= X <= 0.5 )
 F(.5) - F(-.5)      # P( -.5 <= X <= .5 )
 @
 \end{example}
-
-\myindex{cumulative distribution function|defidx}%
-\myindex{cdf|see{cumulative distribution function}}%
-If we help \R\ choose the anti-derivative, we get a useful function called 
-the \term{cumulative distribution function}, abbreviated cdf.
-
-
-\begin{boxedText}
-	If $X$ is a random variable, then the \term{cumulative distribution function} (cdf) for 
-	$X$, often denoted $F_X$, is the function defined by
-	\[
-	F_X(x)  = \Prob(X \le x)
-	\]
-	That is, the output of the cdf reports the probability of being below a particular value.
-	The derivative of the cdf is the pdf.
-\end{boxedText}
-
-\begin{example}
-Continuing with our previous example, if we choose -1 as our lower endpoint,
-then the anti-derivative will be the cdf.
-<<tidy=FALSE>>=
-F <- antiD( f(x) ~ x, lower.bound = -1)   # We can use -1 instead of -Inf here.
-F(-1)               # this should be 0 since we chose -1 as the lower bound.
-F(1)                # P(X <= 1); should be 1
-F(.5)               # P(X <= 0.5)
-F(.5) - F(-.5)      # P( -0.5 <= X <= 0.5 )
-@
-\end{example}
-
-\section{Working with Probability Density Funcitons}
-
-We have already seen that we can use a pdf $f$ to calculate probabilities via integration, 
-and that there is a special anti-derivative of $f$ called the cdf such that the cdf $F$
-satisfies
-\[
-F(x) = \Prob(X \le x)
-\]
-This function can also be used to compute probabilities, since
-\[
-\Prob(a \le X \le b) = \int_a^b f(x) \; dx = F(b) - F(a)
-\]
-Indeed, once we learn how to get the cdf function in \R\ this will 
-be our primary way to calculate probabilities in applications.
 
 \subsection{Kernels}
 \myindex{kernel|defidx}%
@@ -238,10 +316,69 @@ K(2)
 Since the total area is $8/3$, if $\frac{k(x)}{8/3}$ is the pdf.
 \end{example}
 
-\subsection{The mean of a continuous random variable}
+\subsection{Cumulative distribution functions}
 
-The definition for the mean of a continuous random variable will be motivated 
+\myindex{cumulative distribution function|defidx}%
+\myindex{cdf|see{cumulative distribution function}}%
+
+% The \textbf{cumulative distribution function} (cdf) returns the probability of being
+% less than or equal to some value.  We generally use a capital letter ($F$, $G$, etc.)
+% to denote a cdf.
+% \[
+% F_X(x) = \Prob( X \le x)  \; .
+% \]
+
+% If we help \R\ choose the anti-derivative, we get a useful function called 
+% the \term{cumulative distribution function}, abbreviated cdf.
+
+
+\begin{boxedText}
+	If $X$ is a random variable, then the \term{cumulative distribution function} (cdf) for 
+	$X$, often denoted $F_X$, is the function defined by
+	\[
+	F_X(x)  = \Prob(X \le x)
+	\]
+	That is, the output of the cdf reports the probability of being below a particular value.
+\end{boxedText}
+
+For a continuous random variable, the cdf is a particular anti-derivative
+of the pdf.  The derivative of the cdf is the pdf.
+
+\begin{example}
+Continuing with our previous example, if we choose -1 as our lower endpoint,
+then the anti-derivative will be the cdf.
+<<tidy=FALSE>>=
+f <- makeFun((1 - abs(x)) * (abs(x) <= 1) ~ x)
+F <- antiD( f(x) ~ x, lower.bound = -1)   # We can use -1 instead of -Inf here.
+F(-1)               # this should be 0 since we chose -1 as the lower bound.
+F(1)                # P(X <= 1); should be 1
+F(.5)               # P(X <= 0.5)
+F(.5) - F(-.5)      # P( -0.5 <= X <= 0.5 )
+@
+\end{example}
+
+%\section{Working with Probability Density Funcitons}
+
+We have already seen that we can use a pdf $f$ to calculate probabilities via integration, 
+and that there is a special anti-derivative of $f$ called the cdf such that the cdf $F$
+satisfies
+\[
+F(x) = \Prob(X \le x)
+\]
+This function can also be used to compute probabilities, since
+\[
+\Prob(a \le X \le b) = \int_a^b f(x) \; dx = F(b) - F(a)
+\]
+Indeed, once we learn how to get the cdf function in \R\ this will 
+be our primary way to calculate probabilities in applications.
+
+\section{Mean and Variance}
+
+\subsection{The mean of a random variable}
+
+The definition for the mean of a random variable will be motivated 
 by the calculation of a mean of some data.
+
 \begin{example}
 	\question
   Suppose a student has taken $10$ courses
@@ -269,6 +406,73 @@ The key idea here is that the mean is a \textbf{sum of values times probabilitie
 \[
 \mbox{mean} = \sum \mbox{value} \cdot \mbox{probability}
 \]
+For a discrete random variable this translates to
+\[
+\E(X) = \sum x f(x)
+\]
+where the sum is taken over all possible values of $X$.
+
+The mean of a random variable also goes by another name: \textbf{expected value}.  We 
+can denote the mean of $X$ by either $\mu_X$ or $\E(X)$.
+
+\begin{example}
+Let $X$ be discrete random variable with probablilities given in the table 
+below.
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+value of $X$ & 0 & 1 & 2 \\
+probability & 0.2 & 0.5 & 0.3 \\
+\hline
+\end{tabular}
+\end{center}
+
+\question What is the mean (expected value) of $X$?
+
+\answer
+$E(X) = 0 \cdot 0.2 + 1 \cdot 0.5 + 2 \cdot 0.3 = 0.5 + 0.6 = 1.1$
+This value reflects the fact that the random variable is larger than
+1 a bit more often than it is less than 1.
+\end{example}
+
+
+
+\begin{example}
+\label{ex:raffle}%
+\label{ex:raffle2}%
+  A local charity is holding a raffle.  They are selling $1000$ raffle tickets 
+  for \$$5$ each.  The owners of five of the raffle tickets will win a prize.  The 
+  five prizes are valued at \$$25$, \$$50$, \$$100$, \$$1000$, and \$$2000$.  Let $X$ 
+  be the value of the prize associated with a random raffle ticket ($0$ for 
+  non-winning tickets). 
+  Then:
+  \begin{itemize}
+	\item $\evProb{the ticket wins a prize} = \Prob(X > 0) = 5/1000$.
+	\item $\evProb{the ticket wins the grand prize} = \Prob(X = 2000) = 1/1000$.
+	\item $\evProb{the ticket wins a prize worth more than \$$75$} 
+	  	= \Prob(X > 75) = 3/1000$.
+  \end{itemize}
+  
+  The expected value of a ticket is
+  
+\[
+  0 \cdot \frac{995}{1000} 
+  + 25 \cdot \frac{1}{1000}
+  + 50 \cdot \frac{1}{1000}
+  + 100 \cdot \frac{1}{1000}
+  + 1000 \cdot \frac{1}{1000}
+  + 2000 \cdot \frac{1}{1000}
+\]
+<<>>=
+25 * .001 + 50 * 0.001 + 100 * 0.001 + 1000 * 0.001 + 2000 * 0.001
+# R can help us set up this sum:
+sum(c(25, 50, 100, 1000, 2000) * 0.001)
+@
+%%% \qedskip
+\end{example}
+
+
 When working with a continuous random variable, 
 we replace the sum with an integral and replace the 
 probabilities with our density function to get the following definition:
@@ -318,12 +522,24 @@ F(1)
 @
 \end{example}
 
-\subsection{The variance of a continuous random variable}
+\subsection{Variance}
 
-Arguing similarly, we can compute the variance of a continuous random
-variable using
-\[
+Arguing similarly, we can compute the variance of a discrete or continuous random
+variable using 
+\begin{itemize}
+\item discrete:
+\(
+\Var(X) = \sigma^2_X = \sum_x (x-\mu_X)^2 f(x) \; dx  
+\)
+\item
+continuous:
+\(
 \Var(X) = \sigma^2_X = \int_{-\infty}^{\infty} (x-\mu_X)^2 f(x) \; dx
+\)
+\end{itemize}
+These can be combined into a single definition by writing
+\[
+\Var(X) = \E((X - \mu_X)^2) \;.
 \]
 
 Note: It is possible that the integral used to define the variance will fail to converge.
@@ -346,7 +562,7 @@ G(1) - G(-1)
 @
 \end{example}
 
-Some simple algebraic manipulations of the integral above shows that
+Some simple algebraic manipulations of the sum or integral above shows that
 \begin{align}
 \Var(X) &= \E(X^2) - \E(X)^2
 \label{eqn:varshortcut}
@@ -1155,6 +1371,140 @@ pgamma(1, 2, scale=1/2)   - pgamma(0.5, 2, scale=1/2)
 @
 \end{solution}
 
+\subsection{Binomial Distributions}
+
+A binomial distribution is a discrete distribution with two parameters ($n$ and $p$,
+or as R calls them \verb!size! and \verb!prob!) describing a situation in which
+\begin{enumerate}
+\item Our random process consists of $n$ identical sub-processes (called trials).
+\item Each trial has one of two outcomes (traditionally called success and failure).
+\item The probability of success is $p$ for each trial.
+\item The outcome of each trial is independent of the others.
+\end{enumerate}
+The binomial random varialbe counts the number of successes.
+
+\begin{example}
+\begin{enumerate}
+\item
+If we flip a coin 100 times and let $X$ be the number of heads, then
+$X \sim \Binom( 100, 0.5)$.
+\item
+Amy is a 92\% free throw shooter.  If she attempts 50 free throws and we let 
+$Y$ be the number that she makes, then $Y \sim \Binom(50, 0.92)$ (assuming that 
+each shot is independent of the others.\footnote{Whether an individual shooter's 
+shots are independent or exhibit longer runs of ``hot" and ``cold"
+streaks that we would expect under indpendence has been investigated by 
+many people.  The general conclusion seems to be that the independence 
+assumption matches reality pretty closely.})
+\end{enumerate}
+
+Here are some example binomial distributions. The distributions are symmetric
+when $p = 0.5$.  For a fixed size $n$, the distributions become
+more and more skewed as $p$ gets closer to 0 or 1.  For a fixed probability
+$p$, the distributions become more and more symmetric as $n$ gets larger.
+
+<<>>=
+plotDist("binom", size = 10, prob = 0.5, main = "Binom(10, 0.5)")
+plotDist("binom", size = 10, prob = 0.05, main = "Binom(10, 0.05)")
+plotDist("binom", size = 100, prob = 0.5, main = "Binom(100, 0.5)")
+plotDist("binom", size = 100, prob = 0.05, main = "Binom(100, 0.05)")
+@
+
+The pmf for a binomial distribution is given by
+\[
+f(x) = \binom{n}{x} p^x (1-p)^{n-x}
+\]
+where $\binom{n}{x} = \frac{n!}{x!(n-x)!}$ is the binomial coefficient.
+As with the continuous distributions, we have our usual functions available.
+
+\begin{center}
+\begin{tabular}{ll}
+	\hline
+	Function & What it does \\
+	\hline
+	\texttt{dbinom(x, size, prob)} & Computes value of the pmf at \texttt{x}
+	\\
+	\texttt{pbinom(q, size, prob)} 
+		& Computes value of the cdf at \texttt{x}, i.e., 
+	$\Prob(X \le \texttt{q})$
+	\\
+	\texttt{qbinom(p, size, prob)} 
+		& Computes quantiles, that is the smallest value of $x$ so that 
+	$\Prob(X \le \texttt{x}) \ge \texttt{p}$
+    \\
+	\texttt{rbinom(n, size, prob)} & Randomly samples \texttt{n} values from a
+	Binomial distribution.
+	\\
+	\hline
+\end{tabular}
+\end{center}
+
+\end{example}
+
+
+\subsection{Poisson Distributions}
+
+The Poisson distributions are generally used as models for counting ``events" that
+happen in a specified amount of time or space.  If the probability of an 
+event happening at any moment is the same and independent of events happening
+at other moments, then the count of events in a fixed amount of time will be 
+a Poisson random variable.  The Poisson family has one parameter -- often denoted
+$\lambda$ and called the \emph{rate parameter} -- which is the average number
+of events that happen over the fixed amount of time or space we are observing.
+
+\begin{example}
+\begin{enumerate}
+\item Let $X$ be the number of clicks of a Gieger counter in a 1 second interval.
+Since each click corresponds to a radioactive decay event which we generally assume
+occur ``at random'' but according to some average rate, a Poisson random variable
+would be a good model for this.  The rate parameter would be the average number 
+of decay events per second.
+\item
+If you stand on along a busy highway and count the number of red cars that go 
+by in 30 minutes, a Poisson random variable might be a good model.  Sometimes 
+you will get bunches of red cars or periods of time with few or no red cars,
+that is just as a Poisson model predicts.
+\end{enumerate}
+\end{example}
+
+The Poisson distributions are skewed right, but become less and less skewed as 
+the rate parameter increases.  Here are a few example plots.
+<<>>=
+plotDist("pois", lambda = 1, main = "Pois(1)")
+plotDist("pois", lambda = 5, main = "Pois(5)")
+plotDist("pois", lambda = 15, main = "Pois(15)")
+plotDist("pois", lambda = 50, main = "Pois(50)")
+@
+
+The pmf for a $\Pois(\lambda)$ random variable is 
+\[
+f(x) = \frac{ e^{-\lambda} \lambda^x}{x!}
+\]
+and the functions in R for working with Poisson distributions are 
+the following:
+
+\begin{center}
+\begin{tabular}{ll}
+	\hline
+	Function & What it does \\
+	\hline
+	\texttt{dpois(x, lambda)} & Computes value of the pmf at \texttt{x}
+	\\
+	\texttt{ppois(q, lambda)} 
+		& Computes value of the cdf at \texttt{x}, i.e., 
+	$\Prob(X \le \texttt{q})$
+	\\
+	\texttt{qpois(p, lambda)} 
+		& Computes quantiles, that is the smallest value of $x$ so that 
+	$\Prob(X \le \texttt{x}) \ge \texttt{p}$
+    \\
+	\texttt{rpois(n, lambda)} & Randomly samples \texttt{n} values from a
+	Poisson distribution.
+	\\
+	\hline
+\end{tabular}
+\end{center}
+
 
 
 \section{Fitting Distributions to Data}
@@ -1460,7 +1810,7 @@ the fit for the data set at hand.
 \multicolumn{2}{|l}{\textbf{\sf distribution} }
 &&
 \\
-  & \textbf{\sf pdf} 
+  & \textbf{\sf pdf or pmf} 
   & \textbf{\sf mean} 
   & \textbf{\sf variance} 
 \\[.5mm] \hline
@@ -1527,6 +1877,23 @@ the fit for the data set at hand.
 	  $\displaystyle \frac{\alpha}{\alpha + \beta}$
 	  &
 	  $\displaystyle \frac{\alpha \beta }{(\alpha + \beta)^2(\alpha + \beta + 1)}$
+\\[4mm]
+\hline
+\multicolumn{2}{|l}{  Binomial: $\Binom(n, p)$ } && \\
+	& 
+	$\displaystyle \binom{n}{x} p^x (1-p)^{n-x}$
+	&
+	$np$
+	&
+	$np(1-p)$
+\\[4mm]
+\multicolumn{2}{|l}{  Poisson: $\Pois(\lambda)$ } && \\
+	& 
+	$\displaystyle \frac{e^{-\lambda} \lambda^x} {x!}$
+	&
+	$\lambda$
+	&
+	$\lambda$
 \\[4mm]
 \hline
 \end{tabular}
@@ -1913,7 +2280,9 @@ histogram(~ values | ind,
 	)
 qqmath(~values | ind, data=sD2, as.table=TRUE, scales=list(draw=FALSE))
 @
+
 \end{problem}
+
 \begin{solution}
 a) Y  b) V c) Z d) W  e) X f) U
 \end{solution}
@@ -1978,8 +2347,36 @@ a) Y  b) V c) Z d) W  e) X f) U
 	\end{enumerate}
 \end{problem}
 
+\begin{solution}
+\begin{enumerate}
+\item
+<<>>=
+(68 - 64.3)/2.6
+@
+
+\item
+<<>>=
+(74 - 70) / 2.8
+@
+
+\item
+It's pretty close, but the z-score for the man is slightly
+larger, so it is slightly more unusual for a man to be that tall.
+
+\item
+<<>>=
+64.3 + 2 * 2.6
+@
+
+\item
+<<>>=
+70 + 2 * 2.8
+@
+\end{enumerate}
+\end{solution}
+
 \begin{problem}
-	Use the infromation from the previous problem to answer the following questions.
+	Use the information from the previous problem to answer the following questions.
 	\begin{enumerate}
 		\item
 			What proportion of women are 5'10" or taller?
@@ -1991,6 +2388,31 @@ a) Y  b) V c) Z d) W  e) X f) U
 			If a woman is in the 30th percentile for height, how tall is she?
 	\end{enumerate}
 \end{problem}
+
+\begin{solution}
+\begin{enumerate}
+\item
+<<>>=
+1 - pnorm(70, mean = 64.3, sd = 2.6)
+@
+
+\item
+<<>>=
+1 - pnorm(76, mean = 70, sd = 2.8)
+@
+
+\item
+<<>>=
+qnorm(.75, mean = 70, sd = 2.8)
+@
+
+\item
+<<>>=
+qnorm(.30, mean = 64.3, sd = 2.6)
+@
+
+\end{enumerate}
+\end{solution}
 
 \shipoutProblems
 

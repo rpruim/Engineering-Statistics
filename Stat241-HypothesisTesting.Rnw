@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
 
 \chapter{Hypothesis Testing}
 
@@ -252,36 +252,30 @@ a table and a histogram of the results.
 set.seed(123)
 @
 <<flip4,cache=TRUE>>=
-results <- do(10000) * rflip(10)
-table(results$heads)
-histogram(~heads, data=results, width=1)  
+RandomLadies <- do(10000) * rflip(10)
+histogram( ~ heads, data = RandomLadies, width = 1)  
 @
-<<flip5,cache=TRUE>>=
-perctable(results$heads)     #  the table in percents
-proptable(results$heads)     #  the table in proportions (i.e., decimals)
-@
-We could also use \function{tally()} for this.
 <<tally>>=
-tally(~heads, data=results)
-tally(~heads, data=results, format='percent')
-tally(~heads, data=results, format='proportion')
+tally(~heads, data = RandomLadies)
+tally(~heads, data = RandomLadies, format = 'percent')
+tally(~heads, data = RandomLadies, format = 'proportion')
 @
 
 
 You might be surprised to see that the number of correct guesses
 is exactly 5 (half of the 10 tries) only 
-\Sexpr{round(as.numeric(table(results$heads)[6]/100,1))}\%
+\Sexpr{round(as.numeric(table(RandomLadies$heads)[6]/100,1))}\%
 of the time.  But most of the results are quite close to 5 correct.
-\Sexpr{round(sum(table(results$heads)[5:7]/100,1))}\% of the results are 
+\Sexpr{round(sum(table(RandomLadies$heads)[5:7]/100,1))}\% of the results are 
 4, 5, or 6, for example.
-And \Sexpr{round(sum(table(results)[4:8]/100,1))}\% of the results 
+And \Sexpr{round(sum(table(RandomLadies$heads)[4:8]/100,1))}\% of the results 
 are  between 3 and 7 (inclusive).
 But getting 8 correct is a bit unusual, and getting 9 or 10 correct is even 
 more unusual.  
 
 So what do we conclude?  It is possible that the lady could get 9 or 10 correct
 just by guessing, but it is not very likely (it only happened in about
-\Sexpr{round( sum(table(results$heads)[10:11]/100), 1 )}\% of our simulations). 
+\Sexpr{round( sum(table(RandomLadies$heads)[10:11]/100), 1 )}\% of our simulations). 
 So \emph{one of two things must be true}:
 \begin{itemize}
 \item The lady got unusually ``lucky", or 
@@ -372,7 +366,7 @@ For the lady tasting tea, this process looks like
 		$H_a$ The probability of being correct is larger than $0.5$ (she can do
 		better than someone who just guesses).
 	\item
-		Test statistic: $x=9$ of $n=10$ were correct.
+		Test statistic: $x=9$ (of $n=10$) were correct.
 	\item
 		P-value
 
@@ -380,7 +374,7 @@ For the lady tasting tea, this process looks like
 			\item
 				Based on our empirical method, we estimate a p-value of
 <<>>=
-prop( ~(heads >= 9), data=results )
+prop( ~(heads >= 9), data = RandomLadies)
 @
 
 	\item
@@ -393,7 +387,7 @@ prop( ~(heads >= 9), data=results )
 		\function{qbinom()}, and 
 		\function{rbinom()}. 
 <<>>=
-plotDist("binom", size=10, prob=0.5)    # size = # of flips; prob=probability of heads
+plotDist("binom", size = 10, prob = 0.5)    # size = # of flips; prob=probability of heads
 dbinom(9, 10, .5) + dbinom(10, 10, .5)
 1 - pbinom(8, 10, .5)        # Note: P(X >=9) = 1 - P(X <=8)
 @
@@ -411,14 +405,14 @@ dbinom(9, 10, .5) + dbinom(10, 10, .5)
 	This situation is so common that there is a function to do the calculations for us.
 	We just need to provide the values of $x$ and $n$:
 <<>>=
-binom.test(x=9, n=10)           # default test is 2-sided
+binom.test(x = 9, n = 10)           # default test is 2-sided
 @
 	The output above doesn't match what we obtained in Example~\ref{example:lady-binom}
 	because the alternative hypothesis is different.  It accepts both low number of correct
 	identifications (0 or 1) and high numbers (9 or 10) as evidence against the null
 	hypothesis.  If we want a one-sided p-value, we just need to ask:
 <<>>=
-binom.test(x=9, n=10, alternative="greater")        
+binom.test(x = 9, n = 10, alternative = "greater")        
 @
 
 \end{example}
@@ -455,10 +449,9 @@ Let's look at some data on weight loss programs.  In this data set, there were t
 received a monetary incentive if they lost weight.  The controls
 did not receive a monetary incentive.  Let's see whether on average the controls lost weight
 <<>>=
-require(Stat2Data)
-data(WeightLossIncentive)
-Controls <- subset(WeightLossIncentive, Group=="Control")
-favstats( ~ WeightLoss, data=Controls )
+data(WeightLossIncentive, package = "Stat2Data")
+Controls <- subset(WeightLossIncentive, Group == "Control")
+favstats( ~ WeightLoss, data = Controls )
 @
 The standard error when doing inference for a mean is 
 \[
@@ -480,8 +473,8 @@ t <- (3.92 - 0) / SE; t
 @
 and from this a p-value, which is the tails probability for a t-distribution with 18 degrees of freedom.
 <<>>=
-1 - pt( t, df=19-1 )
-2 * ( 1 - pt( t, df=19-1 ) )
+1 - pt( t, df = 19-1 )
+2 * ( 1 - pt( t, df = 19-1 ) )
 @
 This p-value can also be generated from a linear model.
 <<>>=
@@ -503,11 +496,11 @@ large could occur just by chance in nearly 8\% of samples.
 \begin{example}
 Again, there is a function to automate this test:
 <<>>=
-t.test( ~ WeightLoss, data=Controls )
+t.test( ~ WeightLoss, data = Controls)
 @
-	If we don't want so much out put, we can cull out only the p-value:
+	If we don't want so much output, we can cull out only the p-value:
 <<>>=
-pval( t.test( ~ WeightLoss, data=Controls ) )
+pval(t.test( ~ WeightLoss, data = Controls))
 @
 \end{example}
 
@@ -517,7 +510,7 @@ pval( t.test( ~ WeightLoss, data=Controls ) )
 	Now let's compare the controls to the incentive group.  That is the question 
 	the study was primarily interested in.
 <<>>=
-model2 <- lm ( WeightLoss ~ Group, data=WeightLossIncentive )
+model2 <- lm(WeightLoss ~ Group, data = WeightLossIncentive)
 @
 	What is this model?
 	\[
@@ -529,8 +522,8 @@ A test of the null hypothesis $\beta_1 = 0$ tests whether the two groups had dif
 of weight loss (on average).   (Note that this model also assumes that the two groups have the same 
 standard deviation.  There are ways to test this hypothesis without that assumption.)
 <<>>=
-favstats( WeightLoss ~ Group, data=WeightLossIncentive )
-coef(summary( model2 ) )
+favstats(WeightLoss ~ Group, data = WeightLossIncentive)
+coef(summary(model2))
 @
 The small p-value provides evidence against the null hypothesis.  That is, we have evidence that
 there is a difference between the mean amount of weight lost in the two groups.  (Those with a monetary
@@ -563,8 +556,8 @@ and test the hypothesis that $p=2$.  We can fit this model using a log-log trans
 So $p=\beta_1$ in our usual linear model notation.
 
 <<drag-again>>=
-drag.model <- lm(log(force.drag) ~ log(velocity), data=drag)
-xyplot(log(force.drag) ~ log(velocity), data=drag)
+drag.model <- lm(log(force.drag) ~ log(velocity), data = drag)
+xyplot(log(force.drag) ~ log(velocity), data = drag)
 @
 The fit is not perfect, and in fact suggests a systematic problem with the way
 these data were collected:%
@@ -586,11 +579,10 @@ They are testing the hypotheses that $\beta_0=$ and that $\beta_1 = 0$.
 $\beta_1 = 0$.  
 But we can easily calculate the p-value we want since we have the standard error
 and degrees of freedom.
-<<tidy=FALSE>>=
-beta1.hat <- 2.051
-SE <- 0.05366
-t <-  ( beta1.hat - 2 ) / SE; t
-2 * pt( - abs(t), df= 40 )
+<<drag-pvalue, tidy=FALSE>>=
+beta1.hat <- 2.051; SE <- 0.05366
+t <-  (beta1.hat - 2) / SE; t
+2 * pt( - abs(t), df = 40)
 @
 With this large a p-value, we cannot reject the null hypothesis that $p=2$.
 \textbf{A large p-value does not prove that $p=2$, 
@@ -601,14 +593,14 @@ Of course, our data may be consistent with many other values of $p$ as well.
 \begin{example}
 	We could also do the previous example using a nonlinear model
 <<>>=
-drag.model2 <- nls( force.drag ~ A * velocity^p, data=drag, start=list(A=1,p=2) )
+drag.model2 <- nls(force.drag ~ A * velocity^p, data=drag, start=list(A=1,p=2))
 summary(drag.model2)
 @
 Again, the p-values listed are not of interest (they are testing the hypotheses that 
 each coefficient is 0).  But we can compute the p-value of interest as follows:
-<<>>=
-t <- ( 2 - 1.92989 ) / 0.0944; t
-2 * pt( - abs(t), df=40 ) 
+<<tidy = FALSE>>=
+t <- (2 - 1.92989) / 0.0944; t
+2 * pt( - abs(t), df=40) 
 @
 Although the two p-values are different, the conclusion is the same using either model:  
 Our data are consistent with the hypothesis that $p=2$.
@@ -616,9 +608,9 @@ Our data are consistent with the hypothesis that $p=2$.
 
 \begin{example}
 <<>>=
-data(PorschePrice)
+data(PorschePrice, package = "Stat2Data")
 head(PorschePrice)
-porsche.model <- lm( Price ~ Mileage, data=PorschePrice )
+porsche.model <- lm(Price ~ Mileage, data = PorschePrice)
 summary(porsche.model)
 xyplot( resid(porsche.model) ~ fitted(porsche.model), type=c('p','smooth'))
 qqmath( ~ resid(porsche.model) )
@@ -663,10 +655,10 @@ confint(porsche.model)
 		drops one dollar per mile driven.
 
 <<tidy=FALSE>>=
-t <- (-0.5894 - (-1) ) / 0.566; t
+t <- (-0.5894 - (-1) ) / 0.0566; t
 2 * pt( - abs(t), df=28 )
 @
-The small p-value would lead us to reject this value for $\beta_1$.
+This p-value is small enough to cause us to reject this value for $\beta_1$.
 \end{enumerate}
 \end{example}
 
@@ -682,15 +674,15 @@ be made for other confidence levels.)
 
 \begin{example}
 	In the preceding example we rejected the null hypothesis that $\beta_1 = -1$.
-In fact, we will reject (at the $alpha=0.05$ level) any hypothesized value not contained 
+In fact, we will reject (at the $\alpha=0.05$ level) any hypothesized value not contained 
 in the 95\% confidence interval.
 <<>>=
-t <- (-0.5894 - (- .75)) / 0.566; t
-2 * pt( - abs(t), df=28 )
+t <- (-0.5894 - (- .71)) / 0.0566; t
+2 * pt( - abs(t), df = 28)
 @
 But we won't reject values inside the confidence interval.
 <<>>=
-t <- (-0.5894 - (- .70)) / 0.566; t
+t <- (-0.5894 - (- .70)) / 0.0566; t
 2 * pt( - abs(t), df=28 )
 @
 \end{example}
@@ -698,13 +690,15 @@ t <- (-0.5894 - (- .70)) / 0.566; t
 
 \begin{example}
 	The output below illustrates this duality.
-<<>>=
-drag.model
+<<tidy = FALSE>>=
+drag.model <- lm(log(force.drag) ~ log(velocity), data = drag)
+coef(summary(drag.model))
+<<drag-pvalue>>
 confint(drag.model)
 @
 Since the confidence interval for $p$ (i.e., for $\beta_1$) includes 2, 
 2 is a plausible value for the power (i.e., consistent with our data).
-A p-value larger than 0.05 says the same thing at the same level of confidence.  
+A 2-sided p-value larger than 0.05 says the same thing at the same level of confidence.  
 \end{example}
 
 \begin{problem}
@@ -760,10 +754,11 @@ this question.  Carefully show all four steps.
 	\begin{enumerate}
 			\item
 				The normal-quantile plot looks pretty good for a sample of this size.
-				The residual plot is not as ``noisy'' as we would like (the first few residuals
-				cluster above zero, then next few below.  Ideally we would like to have a larger 
-				data set to see whether this pattern persists or whether things "fill-in" with more
-				data.
+				The residual plot is perhaps not quite as ``noisy'' as we would like 
+				(the first few residuals cluster above zero, then next few below), but it 
+				is not terrible either. Ideally we would like to have a larger 
+				data set to see whether this pattern persists or whether things look more
+				noisy as we "fill-in" with more data.
 			\item
 				$A$ is a measure of background radiation levels, it is the amount of clicks 
 				we would get if our test substance were ``at infinity'', i.e., so far away (or 
@@ -771,7 +766,7 @@ this question.  Carefully show all four steps.
 			\item
 				$114 \pm 11$
 			\item
-				\Sexpr{5.5E-06}.  This gives strong evidence that there some background radiation
+				\Sexpr{5.5E-06}.  This gives strong evidence that there is some background radiation
 				being measured by the Geiger counter.
 			\item
 				$k$ measures the rate at which our test substance is emitting radioactive 
@@ -785,8 +780,8 @@ this question.  Carefully show all four steps.
 			\item
 				$H_0: k = 29.812$;  $H_a: k \neq 29.812$
 <<ticy=FALSE>>=
-t <- ( 31.5 - 29.812) / 1.0; t     # test statistic
-2 * pt ( - abs(t), df=8 )          # p -value
+t <- (31.5 - 29.812) / 1.0; t     # test statistic
+2 * (1 - pt(t, df = 8))           # p -value
 @
 				Conclusion.  With a p-value this large, we cannot reject the null hypothesis.
 				Our data are consistent with the hypothesis that our test substance is the same
@@ -806,6 +801,19 @@ t <- ( 31.5 - 29.812) / 1.0; t     # test statistic
 \end{problem}
 
 \begin{solution}
+  We can use the product of conditional probabilities:
+  
+  \[ \
+  frac14 \cdot \frac13 \cdot \frac12 \cdot \frac11 = \frac1{24}
+  \]
+  Since the probability of guessing the first glass correctly is $\frac 14$,
+  the probability of guess the second correctly -- assuming the first was 
+  correctly guessed -- is $\frac13$; 
+  the probability of guessing the third correctly -- assuming the first two were 
+  correctly guessed -- is $\frac 12$; and if 
+  the first three are guessed correctly, the last is guaranteed to be correct.
+
+  Altnernative solution:
   The wines can be presented in $4 \cdot 3 \cdot 2 \cdot 1 = 24$ different
   orders, so the probability of guessing correctly is $1/24$.
 \end{solution}
@@ -819,12 +827,12 @@ t <- ( 31.5 - 29.812) / 1.0; t     # test statistic
 	works well for this.  You can also remove rows by row number.  For example, the following
 	removes rows 1, 3, 5 and 7:
 <<results='hide'>>=
-drag[ -c(1,3,5,7), ] 
+drag[ - c(1, 3, 5, 7), ] 
 @
 \end{problem}
 
 \begin{solution}
-Let's remove the fastest values at each setting.  Although they are the fastest, it appears 
+Let's remove the fastest values at each height setting.  Although they are the fastest, it appears 
 that terminal velocity has not yet been reached.  At least, these points would fit the 
 overall pattern better if the velocity were larger.
 <<>>=
@@ -866,7 +874,7 @@ with the hypothesis that this exponent should be 2.
 <<tidy=FALSE>>=
 SE <- 1.2 / sqrt(16); SE
 t <- (94.32 - 95) / SE; t
-p_val <- 2 * pt( - abs(t), df=15 ); p_val    # p-value
+p_val <- 2 * pt(t, df = 15); p_val    # p-value
 @
 	95 will be 
 	\Sexpr{ if( p_val < 0.05 ) "outside" else "inside" } 
@@ -880,7 +888,8 @@ t_star <- qt(.975, df=11); t_star
 \end{solution}
 
 \begin{problem}
-	The Charpy V-notch impact test is the basis for sutdy many amterial toughness criteria.
+	The Charpy V-notch impact test (\url{https://en.wikipedia.org/wiki/Charpy_impact_test})
+	is a common way to test the toughness of a material.
 	This test was applied to 42 specimens of a particular alloy at 110 degrees F.
 	The mean amount of transverse lateral expansion was computed to be
 	73.1 mils with a sample standard deviation of 5.9 mils.
@@ -915,52 +924,51 @@ pt(t, df=41)
 			we could make a 98\% confidence interval (1\% in each tail).  The upper end of this
 			would be the same as for a 1-sided 99\% confidence interval
 <<>>=
-t_star <- qt(.99, df=41)
-73.1 + c(-1,1) * t_star * SE
+t_star <- qt(0.99, df = 41)
+73.1 + c(-1, 1) * t_star * SE
 @
 		\item
 			If all we are interested in is a decision, the two methods are equivalent.
 			I confidence interval might be easier to explain to someone less familiar with
 			statistics.
 	\end{enumerate}
-
 \end{solution}
 
-\begin{problem}
-	Data from a 1993 study to see how well lichens serve as an indicator for air pollution are in the 
-	\dataframe{ex12.20} data set in the \pkg{Devore6} package. 
-	In that paper, a simple linear model was fit to see how the wet deposition of $NO^{-}_3$ 
-	related to the percentage dry weight of lichen.
-	Using this model, 
-	\begin{enumerate}
-		\item
-			Test the hypothesis that the slope of the linear relationship is 1.
-		\item
-			Compute a 90\% confidence interval for the slope of the linear relationship.
-	\end{enumerate}
-<<>>=
-require(Devore6)
-summary( lm( LichenN ~ deposition, data=ex12.20) )
-@
-\end{problem}
-\begin{solution}
-<<tidy=FALSE>>=
-t <- (0.967 - 1) / 0.183
-2 * pt( -abs(t), df=11 )           # p-value
-@
-With such a large p-value, we do not reject the null hypothesis.  Our data are consistent 
-with the hypothesis that the slope is 1.
-<<>>=
-t_star <- qt(.95, df=11); t_star
-.967 + c(-1,1) * t_star * 0.183    # 90% CI
-@
-Notice that this interval includes 1.  We knew it would because 1 would not be rejected at the 
-$\alpha = 0.10$ level.
-<<>>=
-t_star <- qt(.975, df=11)
-95 + c(-1,1) * t_star * SE
-@
-\end{solution}
+% \begin{problem}
+% 	Data from a 1993 study to see how well lichens serve as an indicator for air pollution are in the 
+% 	\dataframe{ex12.20} data set in the \pkg{Devore7} package. 
+% 	In that paper, a simple linear model was fit to see how the wet deposition of $NO^{-}_3$ 
+% 	related to the percentage dry weight of lichen.
+% 	Using this model, 
+% 	\begin{enumerate}
+% 		\item
+% 			Test the hypothesis that the slope of the linear relationship is 1.
+% 		\item
+% 			Compute a 90\% confidence interval for the slope of the linear relationship.
+% 	\end{enumerate}
+% <<>>=
+% require(Devore7)
+% summary(lm( LichenN ~ deposition, data = ex12.20))
+% @
+% \end{problem}
+% \begin{solution}
+% <<tidy=FALSE>>=
+% t <- (0.967 - 1) / 0.183
+% 2 * pt( -abs(t), df=11 )           # p-value
+% @
+% With such a large p-value, we do not reject the null hypothesis.  Our data are consistent 
+% with the hypothesis that the slope is 1.
+% <<>>=
+% t_star <- qt(.95, df=11); t_star
+% .967 + c(-1,1) * t_star * 0.183    # 90% CI
+% @
+% Notice that this interval includes 1.  We knew it would because 1 would not be rejected at the 
+% $\alpha = 0.10$ level.
+% <<>>=
+% t_star <- qt(.975, df=11)
+% 95 + c(-1,1) * t_star * SE
+% @
+% \end{solution}
 
 \newpage
 \section*{Exercises}
@@ -968,9 +976,9 @@ t_star <- qt(.975, df=11)
 
 
 \ifsolutions
-%\ifsolutionslocal
+\ifsolutionslocal
 \newpage
 \section*{Solutions}
 \shipoutSolutions
-%\fi
+\fi
 \fi

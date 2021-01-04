@@ -73,8 +73,8 @@
 \lhead[\sf \thepage]{\sf \thechapter. \leftmark}
 \rhead[\sf \thechapter. \leftmark]{\sf \thepage}
 \cfoot{}
-\lfoot[\sf Last Modified: \today]{\sf Math 241 : Spring 2014 : Pruim}
-\rfoot[\sf Math 241 : Spring 2014 : Pruim]{\sf Last Modified: \today}
+\lfoot[\sf Last Modified: \today]{\sf Math 241 : Spring 2017 : Pruim}
+\rfoot[\sf Stat 241 : Spring 2017 : Pruim]{\sf Last Modified: \today}
 
 \pagestyle{fancy}
 
@@ -158,8 +158,8 @@
 
 
 \newif\ifsolutions
-\solutionstrue
 \solutionsfalse
+\solutionstrue
 
 \newif\ifsolutionslocal
 \solutionslocaltrue
@@ -172,7 +172,7 @@
 
 <<setup,echo=FALSE,message=FALSE>>=
 require(DAAG)
-require(Devore6)
+require(Devore7)
 require(MASS)
 require(grDevices)
 require(datasets)
@@ -187,15 +187,18 @@ require(knitr)
 require(alr3)
 require(mosaic)
 require(mosaicData)
-require(plyr)
+require(mosaicCalc)
 require(fastR)
 require(ggplot2)
 trellis.par.set(theme=col.mosaic())
 trellis.par.set(fontsize=list(text=9))
-options(keep.blank.line=FALSE)
+#options(keep.blank.line=FALSE)
+options(formatR.blank = FALSE)
 options(show.signif.stars=FALSE)
 options(width=90)
+options(digits=3)
 opts_chunk$set(tidy=TRUE,
+               digits = 4,
 			   dev='pdf',
 			   fig.path='figures/fig-',  
 			   fig.width=3, fig.height=2,
@@ -208,15 +211,23 @@ knit_hooks$set(document = function(x) {
 			   sub('\\usepackage[]{color}', '\\usepackage[]{xcolor}', 
 			   x, fixed = TRUE) 
 }) 
+
+knit_hooks$set(digits = function(before, options, envir) {
+    if (before) {
+      options(digits = options$digits)
+    } else {
+      options(digits = 3)
+    }
+})
 @ 
 
 %%%%%%%%%%%%%%%%%%%%%% title page info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Math 241: Statistics for the Physical Sciences and Engineering}
+\title{Stat 241: Statistics for the Physical Sciences and Engineering}
 
 \author{R Pruim}
 
-\date{Spring 2014}
+\date{Spring 2017}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeindex
@@ -234,37 +245,37 @@ knit_hooks$set(document = function(x) {
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% main content starts here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<child="Math241-Chap0.Rnw">>=
+<<child="Stat241-Chap0.Rnw">>=
 @
 
-<<child="Math241-Graphical.Rnw">>=
+<<child="Stat241-Graphical.Rnw">>=
 @
 
-<<child="Math241-Numerical.Rnw">>=
+<<child="Stat241-Numerical.Rnw">>=
 @
 
-<<child="Math241-Probability.Rnw">>=
+<<child="Stat241-Probability.Rnw", eval = TRUE>>=
 @
 
-<<child="Math241-Densities.Rnw">>=
+<<child="Stat241-RandomVariables.Rnw", eval = TRUE>>=
 @
 
-<<child="Math241-Transformations.Rnw">>=
+<<child="Stat241-Transformations.Rnw", eval = TRUE>>=
 @
 
-<<child="Math241-Propagation.Rnw", eval=TRUE>>=
+<<child="Stat241-Propagation.Rnw", eval=TRUE>>=
 @
 
-<<child="Math241-SimpleLinear.Rnw", eval=TRUE>>=
+<<child="Stat241-SimpleLinear.Rnw", eval=TRUE>>=
 @
 
-<<child="Math241-NonLinear.Rnw", eval=TRUE>>=
+<<child="Stat241-NonLinear.Rnw", eval=TRUE>>=
 @
 
-<<child="Math241-HypothesisTesting.Rnw", eval=TRUE>>=
+<<child="Stat241-HypothesisTesting.Rnw", eval=TRUE>>=
 @
 
-<<child="Math241-MoreExamples.Rnw", eval=TRUE>>=
+<<child="Stat241-MoreExamples.Rnw", eval=TRUE>>=
 @
 
 \backmatter
@@ -282,7 +293,6 @@ knit_hooks$set(document = function(x) {
 \shipoutSolutions
 \fi
 \fi
-
 
 \end{document}
 

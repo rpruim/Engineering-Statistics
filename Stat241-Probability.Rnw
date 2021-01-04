@@ -1,4 +1,4 @@
-\Sexpr{set_parent('Math241-S14.Rnw')}
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
 
 \Chapter{Probability}
 
@@ -842,7 +842,7 @@ do(3) * sum( sample( 1:52, 5 ) < 14 )
 
 \begin{solution}
 <<>>=
-tally( ~ result, do(10000) * sum(sample(1:52, 5) < 14) )
+tally( ~ sum, do(10000) * sum(sample(1:52, 5) < 14) )
 @
 \end{solution}
 
@@ -913,6 +913,24 @@ c(6,10,8,6,4,2) / 36
 \end{solution}
 
 \begin{problem}
+For the probabilities below, you may assume the that for each birth,
+the probability of having a boy or a girl is $1/2$ and that each birth is
+independent of other births.
+\begin{enumerate}
+\item
+Suppose a family has three kids. 
+What is the probability that at least one of the kids is a boy?
+\item
+Suppose a family has three kids, at least one of which is a girl.
+Now what is the probability that at least one of the kids is a boy?
+\item
+Suppose a family has three kids, at least two of which are girls.
+Now what is the probability that at least one of the kids is a boy?
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}
 	A device is assembled from two primary parts.  2\% of the first type of part
 	are defective and 3\% of the other type of part are defective.  The device
 	only functions properly if both parts are functioning properly.
@@ -931,6 +949,34 @@ c(6,10,8,6,4,2) / 36
 	Assuming failure of each part is independent of failure of the other,
 	the probability that both function properly is 
 	$0.98 \cdot 0.97 = \Sexpr{0.98 * 0.97}$.
+	
+	Alternatively, if we assume that failures are mutually exclusive, then the probability of 
+	failure would be $0.02 + 0.03 = 0.05$ and the probability of proper functioning would be 
+	$0.95$.
+	
+	The independence assumption is reasonable if, for example, the two parts are made 
+	by separate manufacturing processes and the device is assembled by randomly selecting a 
+	part of each type, which may or may not be a good part right from the start.  
+	
+	The mutually exclusive failure is probably harder to justify, since likely there will
+	be some situations in which both parts fail.
+\end{solution}
+
+\begin{problem}
+In the situation of Example \ref{example:sensitivitySpecificity},
+how does the answer change if the baseline probability of having 
+the disease is $1/10$ instead of $1/1000$? (This might be the case 
+if a person is exhibiting symptoms, for example.)
+\end{problem}
+
+
+\begin{solution}
+<<>>=
+# P(D) = 0.001
+0.001 * 0.99 / (0.001 * 0.99 + 0.999 * 0.02)
+# P(D) = 0.10
+0.1 * 0.9 / (0.10 * 0.99 + 0.9 * 0.02)
+@
 \end{solution}
 
 \begin{problem}
@@ -1050,6 +1096,122 @@ c / (c + d)
 @
 \end{solution}
 
+% \begin{problem}
+% %% modified from
+% %% http://allendowney.blogspot.com/2011/10/my-favorite-bayess-theorem-problems.html
+% %% Note: not a Bayes Theorem probelm
+% John had a twin brother who died at birth.  
+% What is the probability that John was an identical twin?
+% 
+% To answer this one, you need some background information. 
+% According to a Wikipedia article on twins:  
+% ``Twins are estimated to be approximately 1.9\% of the world population, 
+% with monozygotic [identical] twins making up 0.15\% of the total popultion---and 8\% 
+% of all twins.''
+% \end{problem}
+
+\begin{problem}
+An engineers orders a shipment of 100 indentical parts.  
+Before accepting the shipment, he tests three  of them.  
+If the they all test good, he accepts the entire shipment.  
+If any of them tests bad, he rejects the shipment.
+
+Given the good price he has gotten on these parts, the engineer
+would be satisfied if at least 95\% of the parts are good.
+\begin{enumerate}
+\item
+Suppose that there are 5 bad parts in the shipment.  What is the probability
+that the shipment is rejected (even though the engineer would actually have
+been satisfied with the shipment)?
+\item
+Suppose that there are 10 bad parts in the shipment.  What is the probability
+that the shipment is accepted (even though the engineer would not be satisfied 
+with this shipment)?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+
+\begin{enumerate}
+\item The engineer will accept if all three are among the 95 good parts.
+The probability of accepting is
+<<>>=
+95/100 * 94/99 * 93/98
+@
+The probability of rejecting is 
+<<>>=
+1 - 95/100 * 94/99 * 93/98
+@
+
+\item
+Now we accept if all three are among the 90 good parts. 
+The probability of accepting is
+<<>>=
+90/100 * 89/99 * 88/98
+@
+\end{enumerate}
+We see that this is not the most effective test.  It could be improved by taking 
+a larger sample, and similar arithmetic could be used to determine how well a 
+new protocol works (perhaps one that takes a larger sample).
+\end{solution}
+
+\begin{problem}
+%% http://allendowney.blogspot.com/2011/10/my-favorite-bayess-theorem-problems.html
+The blue M\&M was introduced in 1995.  
+Before then, the color mix in a bag of plain M\&Ms was 
+30\% Brown, 20\% Yellow, 20\% Red, 10\% Green, 10\% Orange, 10\% Tan.  
+Afterward it was 24\% Blue , 20\% Green, 16\% Orange, 14\% Yellow, 13\% Red, 
+13\% Brown. 
+
+A friend of mine has two bags of M\&Ms, and he tells me that one is from 
+1994 and one from 1996.  He won't tell me which is which, but he gives me one 
+M\&M from each bag.  One is yellow and one is green.  
+What is the probability that the yellow M\&M came from the 1994 bag?
+\end{problem}
+
+\begin{solution}
+Let's use the following notation for events related to this problem:
+  \begin{itemize}
+  \item $G_4 = $ green from 1994 bag
+  \item $G_6 = $ green from 1996 bag
+  \item $Y_4 = $ yellow from 1994 bag
+  \item $Y_6 = $ yellow from 1996 bag
+  \end{itemize}
+
+Then our question becomes 
+\begin{align*}
+\Prob( Y_4 \tand G_6 \mid 
+       (Y_4 \tand G_6) \tor (Y_6 \tand G_4) )
+       & =
+\frac{\Prob( Y_4 \tand G_6 ) }
+     {\Prob( (Y_4 \tand G_6) \tor (Y_6 \tand G_4) )}
+\\
+& = \frac{\Prob( Y_4 \tand G_6 ) }
+     {\Prob(Y_4 \tand G_6) + \Prob(Y_6 \tand G_4)}
+\end{align*}
+The individual probabilities can be worked out as
+\[
+\Prob(Y_4 \tand G_6) = \Prob(Y_4) \cdot \Prob(G_6 \mid Y_4)
+=
+.20 \cdot .20 = 0.04
+\]
+
+\[
+\Prob(Y_6 \tand G_4) = \Prob(Y_6) \cdot \Prob(G_4 \mid Y_6)
+=
+.14 \cdot .10 = 0.014
+\]
+
+Putting this all together we get
+
+% O: .20 Y, .10 G
+% N: .14 Y, .20 G
+<<>>=
+.20 * .20 / (.20 * .20 + .14 * .10)   
+@
+
+A tree diagram could be used to depict these probabilities as well.
+\end{solution}
 
 \shipoutProblems
 

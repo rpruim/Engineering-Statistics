@@ -1,3 +1,5 @@
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
+
 \setcounter{chapter}{5}
 
 \chapter{Propagation of Uncertainty}
@@ -16,7 +18,7 @@ But what is uncertainty and how is it calculated?  These are topics for this cha
 Although many people mistakenly conflate the terms \term{error} and \term{uncertainty}, 
 these are two different, but related concepts.  
 The word ``error" in the context of scientific measurement has a rather
-different meaning than it does in everyday English. It does not mean blunder or
+different meaning from its use in everyday English. It does not mean blunder or
 goof (although a blunder or goof could increase the amount of experimental error). 
 Instead, error refers to the unavoidable fact that
 the measurements scientists record are not exactly correct.
@@ -137,13 +139,13 @@ So we would report our estimate for the mean weight of a dime as
 \Sexpr{D} \pm \Sexpr{uD} \;.
 \]
 
-This notation looks like a confidence interval, and indeed it is a confidence interval.  
-Since we are using $t_* = 1$, this is a 
-\Sexpr{ round(100 * (pt(1,df=29) - pt(-1,df=29)),1)} \% confidence interval.
+This notation looks like a confidence interval, 
+and indeed it is a confidence interval.
+Since we are using $t_* = 1$, this is approximately a 68\% confidence interval:
+% \Sexpr{ round(100 * (pt(1,df=29) - pt(-1,df=29)),1)} \% confidence interval.
 <<>>=
 pt(1,df=29) - pt(-1,df=29)
 @
-
 
 \subsection{Propagating Error by the Delta Method}
 Now that we have computed the uncertainties for $B$ and $D$, we need to find a way to combine
@@ -225,7 +227,8 @@ we get
 +
 \left(\frac{\partial f}{\partial \hat D}\right)^2 \Var(\hat D)
 \end{align*}
-where again we evaluate the partial derivatives with $B$ and $D$.
+where again we evaluate the partial derivatives should be 
+evaluated at $B$ and $D$.
 
 Applying this to $f(\hat B,\hat D) = \hat B/\hat D$, we get
 \begin{align*}
@@ -272,7 +275,7 @@ dropped the hats.
 
 	\medskip
 
-	The Delta Method can be extend to functions of more (or fewer) than two variables by
+	The Delta Method can be extended to functions of more (or fewer) than two variables by
 	adding (or removing) terms.  Slightly more complicated formulas exist to handle
 	situations where the estimators are not independent.
 
@@ -292,7 +295,7 @@ We can also estimate the uncertainty in the estimated number of dimes using simu
 B <- runif(10000, 10150, 10250)
 SampleMeans <- do(10000) * mean( ~Mass, data=resample(dimes) )
 head(SampleMeans ,3)
-D <- SampleMeans$result
+D <- SampleMeans$mean
 N <- B/D
 histogram(~N)
 qqmath(~N)
@@ -849,12 +852,12 @@ error.
 \section{Uncertainty -- How Much Error Might There Be?}
 
 In Section~\ref{sec:propagationExamples} we did several examples of propagation of 
-uncertainty.  But uncertainty cannot be propagated to new estimates unless we already
-have estimated uncertainties for the prior estimates.  Where do these uncertainty estimates 
-come from?
+uncertainty.  But uncertainty cannot be propagated to derived estimates unless we already
+have estimated uncertainties for the components of the derivation.
+Where do these uncertainty estimates come from?
 
 As we have mentioned before, it is not possible to measure error directly.  
-If we new the amount of an error, we would correct it and have the exact value.  
+If we knew the amount of an error, we would correct it and have the exact value.  
 This makes dealing with error a bit tricky.  In our dimes example we illustrated
 two common ways that uncertainty estimates are obtained.  In this section we focus 
 our attention on this part of the uncertainty calculation.
@@ -1003,6 +1006,98 @@ estimate for the uncertainty even before we collect our data.  In such cases, we
 use these \emph{a priori} uncertainties both in planning and in analysis, but it is also
 good to check that the data collected are consistent with the estimated uncertainties.
 
+\begin{problem}
+A clinical trial with 30 patients has been performed in
+which the volume of distribution 
+(the theoretical volume that would be necessary to contain the total 
+amount of an administered drug at the same concentration that it is observed 
+in the blood plasma) of a new anti-diabetes drug 
+was measured for each patient.  The sample mean was 10.2 L with a 
+standard deviation of 1.9 L.
+\begin{enumerate}
+\item
+Calculate a 95\% confidence interval
+for the the mean volume of distribution.
+\item
+Calculate a 99\% confidence interval
+for the the mean volume of distribution.
+\item
+Calculate the standard uncertainty for the mean volume of distribution.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+# 95 % CI
+t.star <- qt(.975, df = 29); t.star
+ME <- t.star *  1.9 / sqrt(30); ME
+1.2 + c(-1,1) * ME
+# 99 % CI
+t.star <- qt(.995, df = 29); t.star
+ME <- t.star *  1.9 / sqrt(30); ME
+10.2 + c(-1,1) * ME
+# standard uncertainty = SE = s / sqrt(n)
+1.9 / sqrt(30)
+@
+\end{solution}
+
+\begin{problem}
+A handbook gives the value of the coefficient of linear thermal expansion of 
+pure copper at 20 degrees C, $\alpha_{20}$(Cu), as 
+$16.52 \times 10^{−6} \ {}^\circ C^{-1}$
+and simply states that ``the error in this value should not exceed 
+$0.40 \times 10^{−6} \ {}^{\circ} C^{-1}$.''
+\begin{enumerate}
+\item
+Based on this limited information, and assuming a rectangular distribution,
+compute the standard uncertainty.
+\item
+Based on this limited information, and assuming a triangular distribution,
+compute the standard uncertainty.
+\item
+Why might one prefer one of these over the other?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+# rectangualr: sd = width / sqrt(12) = width / (2 * sqrt(3))
+0.4 * 2 / sqrt(12)
+0.4 / sqrt(3)
+# triangular: sd = width / (2 * sqrt(6))
+0.4 * 2 / (2 * sqrt(6))
+0.4 / sqrt(6)
+@
+
+The uniform distribution is a more conservative assumption.  The trianlge distribution should only
+be used in situations where errors are more likely to be smaller than larger 
+(with the the specified bounds).
+\end{solution}
+
+\begin{problem}
+The following data are given in in the certificate of a standard solution: 
+C(HCl) = ($0.10000 \pm 0.00010$) mol/l. 
+No additional information is given on the type of the uncertainty. 
+(The $\pm$ part here is not the uncertainty but is supposed to indicate
+upper and lower bounds on  the error.)
+\begin{enumerate}
+\item
+Convert the uncertainty to standard uncertainty assuming a
+rectangular distribution.
+\item
+Convert the uncertainty to standard uncertainty assuming a
+triangular distribution.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+# rectangular
+0.0001 / sqrt(3)
+# trianglular
+0.0001 / sqrt(6)
+@
+\end{solution}
 
 \begin{problem}
 The area of a circle is to be calculated from a measured radius.  The measurement and its
@@ -1126,6 +1221,88 @@ uV <- sqrt( (uL/L)^2 + (uW/W)^2 + (uH/H)^2) * V; uV
 \end{problem}
 
 
+\begin{solution}
+The total fuel consumed is given by
+\[
+F = \frac{kPd}{E}
+\]
+where $k$ is the cars per person, $P$ is total population, $d$ is average distance 
+driven per car, and $E$ is the average efficiency.
+
+\begin{align*}
+\Partial{F}{k} &= \frac{Pd}{E} 
+\\
+\Partial{F}{P} &= \frac{kd}{E}
+\\
+\Partial{F}{d} &= \frac{kP}{E}
+\\
+\Partial{F}{E} &= \frac{-kPd}{E^2}
+\end{align*}
+
+So the estimated amount of fuel consumed (in millions of gallons) is 
+\[
+\frac{kPd}{E} = \frac{0.8 \cdot 311.6 \cdot 12000 }{23.7}
+= \Sexpr{0.8 * 311.6 * 12000 / 23.7}
+\]
+and the uncertainty can be computed as follows:
+<<tidy = FALSE>>=
+k <- 0.8; u_k <- 0.12
+P <- 311.6; u_P <- 0.2
+d <- 12000; u_d <- 2000
+E <- 23.7; u_E <- 1.7
+variances <- c(
+            (P*d/E)^2 * u_k^2 , 
+            (k*d/E)^2 * u_P^2 , 
+            (k*P/E)^2 * u_d^2 , 
+            (k * P * d/E^2)^2 * u_E^2
+)
+variances
+
+u_F <- 
+  sqrt( 
+            (P*d/E)^2 * u_k^2 + 
+            (k*d/E)^2 * u_P^2 + 
+            (k*P/E)^2 * u_d^2 + 
+    (k * P * d/E^2)^2 * u_E^2
+    )
+u_F
+sqrt(sum(variances))
+@
+\noindent
+So we might report fuel consumption as 
+\Sexpr{round(0.8 * 311.6 * 12000 / 23.7, -4)} $\pm$ 
+\Sexpr{round(u_F, -4)} millions of gallons or 
+\Sexpr{round(0.8 * 311.6 * 12000 / 23.7 / 1000, -1)} $\pm$ 
+\Sexpr{round(u_F/1000, -1)} billions of gallons.
+
+Note: This problem can also be done in stages.  First we estimate the number 
+of (millions of) cars using
+\[
+C = k P \;.
+\]
+
+<<>>=
+C <- k * P; C
+u_C <- sqrt( P^2 * u_k^2 + k^2 * u_P^2); u_C
+@
+
+The number of (millions of) miles driven is estimated by $M = C d$:
+<<>>=
+M <- C * d; M
+u_M <- sqrt( d^2 * u_C^2 + C^2 * u_d^2); u_M
+@
+
+Finally, the fuel used is $F = M / E$.
+<<>>=
+F = M / E
+u_F = sqrt( (1/E)^2 * u_M^2 + (M/E^2)^2 * u_E^2); u_F
+@
+
+This gives the same result (again in millions of gallons of gasoline).
+
+It would also be possible to relative uncertainty to do this problem, since 
+we have nice formulas for the relative uncertainty in products and quotients.
+\end{solution}
 
 \begin{problem}
 	\label{prob:speed-propagation}%
@@ -1160,7 +1337,7 @@ uV <- sqrt( (uL/L)^2 + (uW/W)^2 + (uH/H)^2) * V; uV
 \\
 & = \sqrt{ \frac{ Y^{-2} u_X^2 + X^2 Y^{-4} u_Y^2}{X^2Y^{-2}} }
 \\
-& = \sqrt{ \frac{ u_X^2}{u_X^2} + \frac{u_Y^2}{Y^2} }
+& = \sqrt{ \frac{ u_X^2}{X^2} + \frac{u_Y^2}{Y^2} }
 \\
 & = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
 \end{align*}

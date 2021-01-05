@@ -1,0 +1,14 @@
+---
+title: "Statistics for the Physical Sciences and Engineering"
+author: "Randall Pruim"
+output: 
+  html_document:
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This website has resources for an introductory statistics course taken by engineering students
+at Calvin University.

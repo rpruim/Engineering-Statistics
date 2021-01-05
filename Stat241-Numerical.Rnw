@@ -18,15 +18,15 @@ We'll call this method the \term{formula interface}.
 \Rindex{tally}%
 \Rindex{table}%
 <<xtabs>>=
-tally( ~ sex, data=KidsFeet )
-tally( ~ sex, data=KidsFeet, format="prop" )
-tally( ~ sex, data=KidsFeet, format="perc" )
+tally( ~ sex, data = KidsFeet )
+tally( ~ sex, data = KidsFeet, format = "prop" )
+tally( ~ sex, data = KidsFeet, format = "perc" )
 @
 
 \subsubsection*{The \$-interface}
 \function{table()} and its cousins use the \code{\$} operator which selects one variable 
 out of a data frame.
-<<dollar-sign,tidy=FALSE>>=
+<<dollar-sign,tidy = FALSE>>=
 KidsFeet$sex      # general syntax: dataframe$variable
 table(KidsFeet$sex)
 # tally() is ambidextrous:
@@ -57,7 +57,7 @@ as well as categorical variables, this is only useful when there are not too
 many different values for the variable.
 
 <<xtabs-quantitative>>=
-tally( ~age, data=HELPrct )
+tally( ~age, data = HELPrct )
 @
 
 \subsubsection*{Tabulating in bins (optional)}
@@ -69,18 +69,18 @@ For example, suppose we wanted to group the 20s, 30s, 40s, etc. together.
 \Rindex{table()}%
 <<cut>>=
 # let's add a new variable to HELPrct
-HELPrct <- mutate(HELPrct, binnedAge = cut(age, breaks=c(10,20,30,40,50,60,70) ))
+HELPrct <- mutate(HELPrct, binnedAge = cut(age, breaks = c(10,20,30,40,50,60,70) ))
 head(HELPrct)
-tally( ~binnedAge, data=HELPrct ) 
+tally( ~binnedAge, data = HELPrct ) 
 table( HELPrct$binnedAge)        
 @
 That's not quite what we wanted: 30 is in with the 20s, for example.
 Here's how we fix that.
 
-<<cut2, tidy=FALSE>>=
+<<cut2, tidy = FALSE>>=
 HELPrct <- mutate( HELPrct, 
-  binnedAge = cut(age, breaks=c(10,20,30,40,50,60,70), right=FALSE) )
-tally( ~binnedAge, data=HELPrct )   
+  binnedAge = cut(age, breaks = c(10,20,30,40,50,60,70), right = FALSE) )
+tally( ~binnedAge, data = HELPrct )   
 table( HELPrct$binnedAge)
 @
 
@@ -92,16 +92,16 @@ more useful.
 
 The \function{histogram()} function offers you the option of 
 adding the counts to the graph.
-<<xhistogram-counts,fig.width=6>>=
-histogram( ~age, data=HELPrct, label=TRUE, type='count', 
-  width=10, center=5, ylim=c(0,300), right=FALSE )
+<<xhistogram-counts,fig.width = 6>>=
+histogram( ~age, data = HELPrct, label = TRUE, type = 'count', 
+  width = 10, center = 5, ylim = c(0,300), right = FALSE )
 @
 
 \subsection{Cross-tables: Tabulating two or more variables}
 
 \function{tally()} can also compute cross tables for two (or more) variables.
 <<tally-2way>>=
-tally(~ sex + substance, data=HELPrct)
+tally(~ sex + substance, data = HELPrct)
 @
 
 \section{Working with Pre-Tabulated Data}
@@ -112,10 +112,10 @@ of \function{bargraph()} to graph pre-tabulated data.%
 calls \function{barchart()} to do the plotting.}
 
 <<teen-deaths>>=
-require(abd)           # data sets from Analysis of Biological Data
+library(abd)           # data sets from Analysis of Biological Data
 TeenDeaths
-barchart(deaths ~ cause, data=TeenDeaths)
-barchart(cause ~ deaths, data=TeenDeaths)
+barchart(deaths ~ cause, data = TeenDeaths)
+barchart(cause ~ deaths, data = TeenDeaths)
 @
 Notice that by default the causes are displayed in alphabetical order.  \R\
 assumes that categorical data is nominal unless you say otherwise.  
@@ -123,7 +123,7 @@ Here are two ways to have things appear in a different order. The first uses
 the order in which things appear in the \dataframe{TeenDeaths} data frame.
 The second reorders based on the value of the \variable{deaths} variable.
 <<teen-deaths-order>>=
-barchart( ordered(cause, levels=cause) ~ deaths, TeenDeaths)
+barchart( ordered(cause, levels = cause) ~ deaths, TeenDeaths)
 barchart( reorder(cause, deaths) ~ deaths, TeenDeaths)
 @
 
@@ -162,7 +162,7 @@ typical value for the distribution.
 \mbox{mean of $y$} 
 &=
 \mean{y}
-= \frac{\displaystyle \sum_{i=1}^{n} y_i}{n}
+= \frac{\displaystyle \sum_{i = 1}^{n} y_i}{n}
 = \frac{\mbox{sum of values}}{\mbox{number of values}}  
 \\[3mm]
 \mbox{median of $y$}
@@ -198,7 +198,7 @@ by a few very large or very small values.
 \mbox{variance of $y$} 
 = s^2_y 
 &= 
-\frac{\displaystyle \sum_{i=1}^{n} (y_i - \mean y)^2 }{n-1}
+\frac{\displaystyle \sum_{i = 1}^{n} (y_i - \mean y)^2 }{n-1}
 \\[4mm]
 \mbox{standard deviaiton of $y$} = s_y 
 &= \sqrt{s^2_y} 
@@ -234,26 +234,26 @@ To get a numerical summary of a variable (a statistic), we need to tell
 There several ways we can do this in \R.  
 Here are several ways to get the mean, for example:
 \Rindex{mean()}%
-<<mean,tidy=FALSE>>=
+<<mean,tidy = FALSE>>=
 mean(HELPrct$age)          # this is the most traditional way; should always work
-mean(~age, data=HELPrct)   # similar to our plotting methods; only works for some functions
+mean(~age, data = HELPrct)   # similar to our plotting methods; only works for some functions
 with(HELPrct, mean(age))   # one more way this can be done
 @
 Using the formula style, we can now compute several different statistics.
 \Rindex{sd()}%
 \Rindex{var()}%
 <<stats1>>=
-mean(~ age, data=HELPrct)
-sd(~ age, data=HELPrct)
-var(~ age, data=HELPrct)
+mean(~ age, data = HELPrct)
+sd(~ age, data = HELPrct)
+var(~ age, data = HELPrct)
 @
 \Rindex{median()}%
 \Rindex{IQR()}%
 \Rindex{favstats()}%
 <<stats2>>=
-median(~ age, data=HELPrct)
-IQR(~ age, data=HELPrct)       
-favstats(~ age, data=HELPrct)  # this computes several statistics at once
+median(~ age, data = HELPrct)
+IQR(~ age, data = HELPrct)       
+favstats(~ age, data = HELPrct)  # this computes several statistics at once
 @
 
 It is also possible to compute these statistics separately for each of several groups.
@@ -261,9 +261,9 @@ The syntax is much like the the syntax we used when plotting.  In fact, we have 
 choices for the formula:  \verb!y ~ x! or \verb! ~ x | z!.
 
 <<>>=
-mean(age ~ sex, data=HELPrct)
-sd(age ~ sex, data=HELPrct)
-favstats( ~ age | sex, data=HELPrct )
+mean(age ~ sex, data = HELPrct)
+sd(age ~ sex, data = HELPrct)
+favstats( ~ age | sex, data = HELPrct )
 @
 
 \subsection{A word of caution}
@@ -271,10 +271,10 @@ None of these measures (especially the mean and median)
 is a particularly good summary if the distribution is not unimodal.  
 The histogram below shows the lengths of eruptions of the Old Faithful geyser
 at Yellowstone National Park.
-<<faithful,fig.width=6,fig.height=2.0,tidy=FALSE>>=
-favstats(~ Duration, data=oldfaith)
-histogram( ~ Duration, data=oldfaith,  n=20, 
-	main="Old Faithful Eruption Times", xlab="duration (sec)") 
+<<faithful,fig.width = 6,fig.height = 2.0,tidy = FALSE>>=
+favstats(~ Duration, data = oldfaith)
+histogram( ~ Duration, data = oldfaith,  n = 20, 
+	main = "Old Faithful Eruption Times", xlab = "duration (sec)") 
 @
 Notice that the mean and median do not represent typical eruption times very well.  
 Nearly all eruptions are either quite a bit shorter or quite a bit longer.  
@@ -294,24 +294,24 @@ the five \term{quantiles}:
 	\item $Q_4$, the maximum
 \end{itemize}
 <<bwplot>>=
-bwplot(~age, data=HELPrct)
+bwplot(~age, data = HELPrct)
 @
 
 Boxplots really shine when comparing multiple groups.  Here is one way to do so that 
 should look familiar from what we know about histogram:
 <<bwplot1>>=
-bwplot(~age | substance, data=HELPrct, layout=c(1,3))
+bwplot(~age | substance, data = HELPrct, layout = c(1,3))
 @
 But \function{bwplot()} has a better way.  Put the quantitative variable on one side of the
 wiggle and the categorical on the other.  The placement determines which goes along the 
 vertical axis and which along the horizontal axis -- just like it did for \function{xyplot()}.
 <<bwplot2>>=
-bwplot(substance ~ age, data=HELPrct)
-bwplot(age ~ substance, data=HELPrct)
+bwplot(substance ~ age, data = HELPrct)
+bwplot(age ~ substance, data = HELPrct)
 @
 And we can combine this idea with conditioning:
 <<bwplot3>>=
-bwplot(substance ~ age | sex, data=HELPrct)
+bwplot(substance ~ age | sex, data = HELPrct)
 @
 
 \subsection{Small data sets}
@@ -320,17 +320,17 @@ display all the data.  \function{xyplot()} allows you to put a categorical varia
 quantitative variable along the other.  
 For some data sets, either option can produce a plot that gives a good picture
 of the data.
-<<xyplot-quant-by-cat,fig.height=1.5>>=
-xyplot( sex ~ weight, data=Mosquitoes, cex=.5, alpha=.6)
-bwplot( sex ~ weight, data=Mosquitoes)
+<<xyplot-quant-by-cat,fig.height = 1.5>>=
+xyplot( sex ~ weight, data = Mosquitoes, cex = .5, alpha = .6)
+bwplot( sex ~ weight, data = Mosquitoes)
 @
 
 \R\ actually provides a separate function for this type of scatter plot (where one 
 variable is categorical). 
 \Rindex{stripplot()}%
-<<stripplot,fig.height=2.0>>=
-stripplot( substance ~ age, data=HELPrct) 
-stripplot( substance ~ age, data=HELPrct, jitter=TRUE, alpha=.6)
+<<stripplot,fig.height = 2.0>>=
+stripplot( substance ~ age, data = HELPrct) 
+stripplot( substance ~ age, data = HELPrct, jitter = TRUE, alpha = .6)
 @
 
 
@@ -371,7 +371,7 @@ The most common summary of a categorical variable is the \term{proportion}:
 \end{align*}
 Proportions can be expressed as fractions, decimals or percents.  
 For example, if there are 
-10 observations in one category and $n=50$ observations in all, then 
+10 observations in one category and $n = 50$ observations in all, then 
 \[
 \hat p = \frac{10}{25} = \frac{2}{5} =  0.40 = 40\%
 \]
@@ -395,7 +395,7 @@ which we will learn about later.
 \section*{Exercises}
 
 \begin{problem}
-	Create a data set with $n=6$ values, each an integer between 0 and 10 (inclusive) 
+	Create a data set with $n = 6$ values, each an integer between 0 and 10 (inclusive) 
 	that has the smallest possible variance.  
 	Compute the mean and variance of this data set ``by hand''
 	(that is, without using \function{mean()} or \function{sd()} or \function{var()} 
@@ -417,7 +417,7 @@ sd(~x)
 \end{solution}
 
 \begin{problem}
-	Create a data set with $n=6$ values, each an integer between 0 and 10 (inclusive) 
+	Create a data set with $n = 6$ values, each an integer between 0 and 10 (inclusive) 
 	that has the largest possible variance.  
 	Compute the variance of this data set ``by hand''
 	(that is, without using \function{mean()} or \function{sd()} or 
@@ -451,7 +451,7 @@ sd(~x)
 
 \begin{solution}
 <<>>=
-bwplot(substance ~ i1, data=HELPrct)
+bwplot(substance ~ i1, data = HELPrct)
 @
 	The means are larger because the distributions have longer tails in the 
 	higher direction.  
@@ -465,8 +465,8 @@ bwplot(substance ~ i1, data=HELPrct)
 
 \begin{solution}
 <<>>=
-mean(i1 ~ substance, data=HELPrct)
-median(i1 ~ substance, data=HELPrct)
+mean(i1 ~ substance, data = HELPrct)
+median(i1 ~ substance, data = HELPrct)
 @
 \end{solution}
 

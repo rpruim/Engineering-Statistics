@@ -49,7 +49,7 @@ Sample 1000 people and count how many approve of the job the president is doing.
 
 Note: Statisticians usually use capital letters (often from the end of the alphabet)
 for random variables, like this:  
-Let $X$ be the number of heads in 10 flips of a fair coin.  What is $\Prob(X=5)$?
+Let $X$ be the number of heads in 10 flips of a fair coin.  What is $\Prob(X = 5)$?
 
 
 \item[probability distribution]
@@ -88,7 +88,7 @@ repeat the process many times very quickly.
 \question
 What is the probability of getting exactly 5 heads 
 if you flip a fair coin 10 times.  Using our random variable notation, let $X$ 
-be the number of heads in 10 flips of a fair coin.  We want to know $\Prob(X=5)$.
+be the number of heads in 10 flips of a fair coin.  We want to know $\Prob(X = 5)$.
 
 \answer 
 The \function{rflip()} function simulates flipping a coin as many times as we like.
@@ -98,18 +98,18 @@ rflip(10)
 The \function{do()} function allows us to do this over and over.  First we'll do it
 three times and show the results.  Then we'll do 10,000 and store the results so we 
 can create a table and a plot showing the empirical distribution.
-<<coin-tosses,cache=TRUE>>=
+<<coin-tosses,cache = TRUE>>=
 do(3) * rflip(10)
 do(10000) * rflip(10) -> tosses
-tally(~ heads, data=tosses, format="prop")
-histogram( ~ heads, data=tosses, width=1 )
+tally(~ heads, data = tosses, format = "prop")
+histogram( ~ heads, data = tosses, width = 1 )
 @
 
-<<include=FALSE>>=
-ans <- prop( ~(heads == 5), data=tosses)
+<<include = FALSE>>=
+ans <- prop( ~(heads == 5), data = tosses)
 @
 Based on this sample, we would estimate that 
-$\Prob(X=5) \approx \Sexpr{ans}$.
+$\Prob(X = 5) \approx \Sexpr{ans}$.
 \end{example}
 
 \begin{example}
@@ -155,15 +155,15 @@ prop( ~ (s == 8) )
 We can estimate the probability of any sum the same way.
 <<>>=
 tally( ~ s )
-tally( ~ s, format="percent" )   # if we are too lazy to divide by 10000 ourselves
+tally( ~ s, format = "percent" )   # if we are too lazy to divide by 10000 ourselves
 @
 
 Here's a slightly fancier version that puts all the information into a data frame:
 <<>>=
 rolls <- data.frame( first = die1, second = die2, sum = die1 + die2 )
 head(rolls)
-tally( ~sum, data=rolls, format="proportion")
-histogram( ~sum, data=rolls, width=1 )    # setting width is important for integer data
+tally( ~sum, data = rolls, format = "proportion")
+histogram( ~sum, data = rolls, width = 1 )    # setting width is important for integer data
 @
 \end{example}
 
@@ -271,8 +271,8 @@ There are 36 equally likely combinations of two dice:
 
 Let $X$ be the sum of two dice.
 \begin{itemize}
-\item $\Prob(X=3) = \frac{2}{36} = \frac{1}{18}$
-\item $\Prob(X=7) = \frac{6}{36} = \frac{1}{6}$
+\item $\Prob(X = 3) = \frac{2}{36} = \frac{1}{18}$
+\item $\Prob(X = 7) = \frac{6}{36} = \frac{1}{6}$
 \item $\Prob(\mbox{doubles}) = \frac{6}{36} = \frac{1}{6}$
 \end{itemize}
 
@@ -296,7 +296,7 @@ phenotype is $\frac{1}{4}$ because each of the four possible crossings
 is equally likely.
 
 \begin{center}
-	\includegraphics[width=.5\textwidth]{images/date-punnet.png}
+	\includegraphics[width = .5\textwidth]{images/date-punnet.png}
 \end{center}
 
 \end{enumerate}
@@ -332,7 +332,7 @@ is equally likely.
 \begin{figure}[h]
 	\begin{center}
 	  GG \qquad \fbox{\textbf{GB} \qquad \textbf{BG} \qquad {BB}}  
-	\qquad \qquad $\mbox{probability}=2/3$
+	\qquad \qquad $\mbox{probability} = 2/3$
   \end{center}
 \caption{Illustrating the sample space for Example~\ref{example:condKids}.}
 \label{fig:condKids}%
@@ -360,8 +360,8 @@ is equally likely.
   \draw(0,0) rectangle (6,4);
   \draw(1,3.6) node{$A$};
   \draw(5,3.4) node{$B$};
-  \draw[thick,fill=black!80,opacity=0.3](4,2) circle(1.3cm);
-  \draw[thick,pattern=horizontal lines](2.2,2) circle(1.6cm);
+  \draw[thick,fill = black!80,opacity = 0.3](4,2) circle(1.3cm);
+  \draw[thick,pattern = horizontal lines](2.2,2) circle(1.6cm);
   \draw[thick](2.2,2) circle(1.6cm);
   \draw[thick](4,2) circle(1.3cm);
 \end{tikzpicture}
@@ -562,26 +562,26 @@ probability of an intersection.
 	\end{center}
 
 	\answer
-$\Prob(X=2) 
+$\Prob(X = 2) 
 	= \Prob(\mbox{first is blue} \tand \mbox{second is blue})
 	= \Prob(\mbox{first is blue}) \cdot \Prob( \mbox{second is blue} \mid \mbox{first is blue})
 	= \frac26 \cdot \frac15 = \frac{2}{30}
 $.
-Similarly $\Prob(X=0) 
+Similarly $\Prob(X = 0) 
 	= \Prob(\mbox{first is red} \tand \mbox{second is red})
 	= \Prob(\mbox{first is red}) \cdot \Prob( \mbox{second is red} \mid \mbox{first is red})
 	= \frac46 \cdot \frac35 = \frac{12}{30}
 $
-Finally, $\Prob(X=1) = 1 - \Prob(X=0) - \Prob(X=2) = 1 - \frac{14}{30} = \frac{16}{30}$
+Finally, $\Prob(X = 1) = 1 - \Prob(X = 0) - \Prob(X = 2) = 1 - \frac{14}{30} = \frac{16}{30}$
 
 We can represent this using a \term{tree diagram} as well.
 
 \begin{center}
 	\begin{tikzpicture}
-		[level 1/.style={sibling distance=25mm},
-		 level 2/.style={sibling distance=11mm},
-		 level distance=25mm] 
-			\node {} [grow'=right]
+		[level 1/.style = {sibling distance = 25mm},
+		 level 2/.style = {sibling distance = 11mm},
+		 level distance = 25mm] 
+			\node {} [grow' = right]
 			child {node {\blueheart} 
 				child {node (bb) {\blueheart} edge from parent node[above]{$\frac15$}} 
 				child {node (br) {\redheart}  edge from parent  node[below]{$\frac45$}} 
@@ -592,10 +592,10 @@ We can represent this using a \term{tree diagram} as well.
 				child {node (rr) {\redheart}  edge from parent  node[below]{$\frac35$}} 
 				edge from parent node[below]{$\frac46$} 
 			} ; 
-			\node [right of=bb] {$\frac26 \cdot \frac15 = \frac{2}{30}$};
-			\node [right of=br] {$\frac26 \cdot \frac45 = \frac{8}{30}$};
-			\node [right of=rb] {$\frac46 \cdot \frac25 = \frac{8}{30}$};
-			\node [right of=rr] {$\frac46 \cdot \frac35 = \frac{12}{30}$};
+			\node [right of = bb] {$\frac26 \cdot \frac15 = \frac{2}{30}$};
+			\node [right of = br] {$\frac26 \cdot \frac45 = \frac{8}{30}$};
+			\node [right of = rb] {$\frac46 \cdot \frac25 = \frac{8}{30}$};
+			\node [right of = rr] {$\frac46 \cdot \frac35 = \frac{12}{30}$};
 	\end{tikzpicture}
 \end{center}
 The edges in the tree represent conditional probabilities which we can multiply together
@@ -645,13 +645,13 @@ second selection.
 	  \item $\!\!\!\!\!$
 	  \begin{tabular}[t]{rcl}
 	  $\ds \Prob(D \mid +) $
-		&$\!=\!$& $\displaystyle \frac{\Prob(D \intersect +)}{\Prob(+)}$
+		&$\! = \!$& $\displaystyle \frac{\Prob(D \intersect +)}{\Prob(+)}$
 		\\[5mm]
 		&$\; = \;$& 
 		$\displaystyle \frac{\Prob(D) \cdot \Prob(+ \mid D)}{\Prob(D \intersect +) 
 			+ \Prob(H \intersect +)  }$
 			\\[5mm]
-			& $\!=\!$ & $\displaystyle 
+			& $\! = \!$ & $\displaystyle 
 				\frac{0.001 \cdot 0.99}{0.001 \cdot 0.99 + 0.999 \cdot 0.02}
 		            \; = \;  \Sexpr{ signif(0.001 * 0.99 / (0.001 * 0.99 + 0.999 * 0.02), 3) }$. 
 		\end{tabular}
@@ -659,10 +659,10 @@ second selection.
 	  A tree diagram is a useful way to visualize these calculations.
 \begin{center}
 	\begin{tikzpicture}
-		[level 1/.style={sibling distance=25mm},
-		 level 2/.style={sibling distance=11mm},
-		 level distance=25mm] 
-			\node {} [grow'=right]
+		[level 1/.style = {sibling distance = 25mm},
+		 level 2/.style = {sibling distance = 11mm},
+		 level distance = 25mm] 
+			\node {} [grow' = right]
 			child {node {H} 
 				child {node (bb) {$+$} edge from parent node[above]{$0.02$}} 
 				child {node (br) {$-$}  edge from parent  node[below]{$0.98$}} 
@@ -673,10 +673,10 @@ second selection.
 				child {node (rr) {$-$}  edge from parent  node[below]{$0.01$}} 
 				edge from parent node[below]{$0.001$} 
 			} ; 
-			\node [right of=bb] {\Sexpr{format(0.999 * 0.02,sci=FALSE)} };
-			\node [right of=br] {\Sexpr{format(0.999 * 0.98,sci=FALSE)} };
-			\node [right of=rb] {\Sexpr{format(0.001 * 0.99,sci=FALSE)} };
-			\node [right of=rr] {\Sexpr{format(0.001 * 0.01,sci=FALSE)} };
+			\node [right of = bb] {\Sexpr{format(0.999 * 0.02,sci = FALSE)} };
+			\node [right of = br] {\Sexpr{format(0.999 * 0.98,sci = FALSE)} };
+			\node [right of = rb] {\Sexpr{format(0.001 * 0.99,sci = FALSE)} };
+			\node [right of = rr] {\Sexpr{format(0.001 * 0.01,sci = FALSE)} };
 	\end{tikzpicture}
 \end{center}
 
@@ -784,11 +784,11 @@ for independent events.
 \begin{solution}
 <<>>=
 set.seed(123)    # so we get the same simulated results each time we compile.
-sims <- do(1000) * rflip(100, prob=0.92)
-tally( ~ heads > 95, data=sims)
+sims <- do(1000) * rflip(100, prob = 0.92)
+tally( ~ heads > 95, data = sims)
 @
 So the probability that Amy makes more than 95 shots in 100 attempts is approximately
-\Sexpr{ tally( ~ heads > 95, data=sims, format="proportion")[1]}
+\Sexpr{ tally( ~ heads > 95, data = sims, format = "proportion")[1]}
 \end{solution}
 
 \begin{problem}
@@ -807,7 +807,7 @@ So the probability that Amy makes more than 95 shots in 100 attempts is approxim
 d <- die1 - die2
 tally( ~ d )
 prop( ~ (d == 8) )
-histogram( ~d, width=1 )    # setting width is important for integer data
+histogram( ~d, width = 1 )    # setting width is important for integer data
 @
 \end{solution}
 
@@ -874,9 +874,9 @@ What percentage of parts pass both inspections?
 
 \begin{solution}
 	$\Prob(\mbox{$X$ is even and $X < 5$}) 
-	= \Prob(X = 2 \tor X=4) = 1/36 + 3/36 = 4/36 = \Sexpr{3/36}$
+	= \Prob(X = 2 \tor X = 4) = 1/36 + 3/36 = 4/36 = \Sexpr{3/36}$
 
-$\Prob(\mbox{$X$ is even or $X < 5$}) = \Prob(\mbox{$X$ is even}) + \Prob(X=3)
+$\Prob(\mbox{$X$ is even or $X < 5$}) = \Prob(\mbox{$X$ is even}) + \Prob(X = 3)
 = 18/36 + 2/36 = 20/36 = \Sexpr{20/36}$.
 \end{solution}
 
@@ -885,7 +885,7 @@ Let $Y$ be the difference between the larger and smaller number when two fair di
 are rolled.  (So if you roll a 2 and a 4, then the value of $Y$ is 2.)  
 \begin{enumerate}
 	\item 
-		What is $\Prob(Y=2)$?
+		What is $\Prob(Y = 2)$?
 	\item
 		What are the other possible values of $Y$?
 	\item 
@@ -1076,7 +1076,7 @@ Express your answers to 3 significant digits and avoid internal rounding.
 
 \begin{solution}
 You may find a tree diagram useful here to visualize these probabilities.
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 # part a
 .20 + .27
 
@@ -1218,7 +1218,7 @@ A tree diagram could be used to depict these probabilities as well.
 \vfill
 
 \begin{center}
-	\includegraphics[width=.4\textwidth]{images/cigarettes-cartoon}
+	\includegraphics[width = .4\textwidth]{images/cigarettes-cartoon}
 \end{center}
 
 \ifsolutions

@@ -225,17 +225,17 @@ do the flipping for us using a tool in the \pkg{mosaic} package.
 %This package is already installed in our \RStudio\ server.  If you are running
 %your own installation of \R\ you can install \pkg{mosaic} using the following 
 %command:
-%<<install-mosaic,eval=FALSE>>=
+%<<install-mosaic,eval = FALSE>>=
 %install.packages("mosaic")
 %@
 The \function{rflip()} function can flip one coin
 
-<<flip1coin,cache=TRUE>>=
-require(mosaic)
+<<flip1coin,cache = TRUE>>=
+library(mosaic)
 rflip()
 @
 or a number of coins
-<<flip10coins,cache=TRUE>>=
+<<flip10coins,cache = TRUE>>=
 rflip(10)
 @
 and show us the results.
@@ -243,15 +243,15 @@ and show us the results.
 Typing \code{rflip(10)} a bunch of times is almost as tedious as 
 flipping all those coins.   But it is not too hard to 
 tell \R\ to \function{do()} this a bunch of times.
-<<flip2,cache=TRUE>>=
+<<flip2,cache = TRUE>>=
 do(2) * rflip(10)
 @
 Let's get \R\ to \function{do()} it for us 10,000 times and make 
 a table and a histogram of the results.
-<<seed123,echo=FALSE>>=
+<<seed123,echo = FALSE>>=
 set.seed(123)
 @
-<<flip4,cache=TRUE>>=
+<<flip4,cache = TRUE>>=
 RandomLadies <- do(10000) * rflip(10)
 histogram( ~ heads, data = RandomLadies, width = 1)  
 @
@@ -308,7 +308,7 @@ more involved than preparing tea and presenting cups to the Lady).
 		\item
 			$\mu = 0$.  (The population mean is 0.)
 		\item
-			$\beta_1=0$.  (The ``true'' slope is 0 -- assuming a model like $\E(Y) = \beta_0 + \beta_1 x$.)
+			$\beta_1 = 0$.  (The ``true'' slope is 0 -- assuming a model like $\E(Y) = \beta_0 + \beta_1 x$.)
 		\item
 			$\beta_1 = \beta_2$ (Two parameters in the model are equal.)
 		\item
@@ -366,7 +366,7 @@ For the lady tasting tea, this process looks like
 		$H_a$ The probability of being correct is larger than $0.5$ (she can do
 		better than someone who just guesses).
 	\item
-		Test statistic: $x=9$ (of $n=10$) were correct.
+		Test statistic: $x = 9$ (of $n = 10$) were correct.
 	\item
 		P-value
 
@@ -387,7 +387,7 @@ prop( ~(heads >= 9), data = RandomLadies)
 		\function{qbinom()}, and 
 		\function{rbinom()}. 
 <<>>=
-plotDist("binom", size = 10, prob = 0.5)    # size = # of flips; prob=probability of heads
+plotDist("binom", size = 10, prob = 0.5)    # size = # of flips; prob = probability of heads
 dbinom(9, 10, .5) + dbinom(10, 10, .5)
 1 - pbinom(8, 10, .5)        # Note: P(X >=9) = 1 - P(X <=8)
 @
@@ -457,18 +457,18 @@ The standard error when doing inference for a mean is
 \[
 SE = \frac{s}{\sqrt{n}} = 
 \frac{ 
-	\Sexpr{sd(~WeightLoss, data=Controls)}
+	\Sexpr{sd(~WeightLoss, data = Controls)}
 }{
 	\sqrt{ \Sexpr{nrow(Controls)} } 
 }
 =
-\Sexpr{sd(~WeightLoss, data=Controls)/sqrt(nrow(Controls))} 
+\Sexpr{sd(~WeightLoss, data = Controls)/sqrt(nrow(Controls))} 
 \]
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 SE <- 9.108 / sqrt(19); SE
 @
 If we want to test our null hypothesis, then we compute a t-statistic:
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 t <- (3.92 - 0) / SE; t
 @
 and from this a p-value, which is the tails probability for a t-distribution with 18 degrees of freedom.
@@ -549,11 +549,11 @@ We'll fit a power law model
 \[
 \variable{force.drag} = A \cdot \variable{velocity}^p
 \]
-and test the hypothesis that $p=2$.  We can fit this model using a log-log transformation:
+and test the hypothesis that $p = 2$.  We can fit this model using a log-log transformation:
 \[
 \log(\variable{force.drag}) = \log(A)  +  p \log( \variable{velocity} )
 \]
-So $p=\beta_1$ in our usual linear model notation.
+So $p = \beta_1$ in our usual linear model notation.
 
 <<drag-again>>=
 drag.model <- lm(log(force.drag) ~ log(velocity), data = drag)
@@ -575,17 +575,17 @@ qqmath(~ resid(drag.model))
 summary(drag.model)
 @
 None of the p-values produced in this output is what we want.  
-They are testing the hypotheses that $\beta_0=$ and that $\beta_1 = 0$.
+They are testing the hypotheses that $\beta_0 = $ and that $\beta_1 = 0$.
 $\beta_1 = 0$.  
 But we can easily calculate the p-value we want since we have the standard error
 and degrees of freedom.
-<<drag-pvalue, tidy=FALSE>>=
+<<drag-pvalue, tidy = FALSE>>=
 beta1.hat <- 2.051; SE <- 0.05366
 t <-  (beta1.hat - 2) / SE; t
 2 * pt( - abs(t), df = 40)
 @
-With this large a p-value, we cannot reject the null hypothesis that $p=2$.
-\textbf{A large p-value does not prove that $p=2$, 
+With this large a p-value, we cannot reject the null hypothesis that $p = 2$.
+\textbf{A large p-value does not prove that $p = 2$, 
 but it does say that our data are consistent with that value.}  
 Of course, our data may be consistent with many other values of $p$ as well.
 \end{example}
@@ -593,17 +593,17 @@ Of course, our data may be consistent with many other values of $p$ as well.
 \begin{example}
 	We could also do the previous example using a nonlinear model
 <<>>=
-drag.model2 <- nls(force.drag ~ A * velocity^p, data=drag, start=list(A=1,p=2))
+drag.model2 <- nls(force.drag ~ A * velocity^p, data = drag, start = list(A = 1,p = 2))
 summary(drag.model2)
 @
 Again, the p-values listed are not of interest (they are testing the hypotheses that 
 each coefficient is 0).  But we can compute the p-value of interest as follows:
 <<tidy = FALSE>>=
 t <- (2 - 1.92989) / 0.0944; t
-2 * pt( - abs(t), df=40) 
+2 * pt( - abs(t), df = 40) 
 @
 Although the two p-values are different, the conclusion is the same using either model:  
-Our data are consistent with the hypothesis that $p=2$.
+Our data are consistent with the hypothesis that $p = 2$.
 \end{example}
 
 \begin{example}
@@ -612,7 +612,7 @@ data(PorschePrice, package = "Stat2Data")
 head(PorschePrice)
 porsche.model <- lm(Price ~ Mileage, data = PorschePrice)
 summary(porsche.model)
-xyplot( resid(porsche.model) ~ fitted(porsche.model), type=c('p','smooth'))
+xyplot( resid(porsche.model) ~ fitted(porsche.model), type = c('p','smooth'))
 qqmath( ~ resid(porsche.model) )
 @
 The model looks reasonable.  What are the two hypotheses being tested?
@@ -641,7 +641,7 @@ confint(porsche.model)
 		There is strong evidence against this hypothesis as well.  This is also not surprising.
 		If $\beta_1 = 0$, this means that the price of the cars does not depend on the mileage.
 
-		A test of $\beta_1=0$ in a simple linear model is often called the \term{model utility test}
+		A test of $\beta_1 = 0$ in a simple linear model is often called the \term{model utility test}
 		because it is testing whether the predictor is of any use to us or not.
 
 	\item
@@ -654,9 +654,9 @@ confint(porsche.model)
 		For example, let's test $\beta_1 = -1$.  That the hypothesis that the value 
 		drops one dollar per mile driven.
 
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 t <- (-0.5894 - (-1) ) / 0.0566; t
-2 * pt( - abs(t), df=28 )
+2 * pt( - abs(t), df = 28 )
 @
 This p-value is small enough to cause us to reject this value for $\beta_1$.
 \end{enumerate}
@@ -674,7 +674,7 @@ be made for other confidence levels.)
 
 \begin{example}
 	In the preceding example we rejected the null hypothesis that $\beta_1 = -1$.
-In fact, we will reject (at the $\alpha=0.05$ level) any hypothesized value not contained 
+In fact, we will reject (at the $\alpha = 0.05$ level) any hypothesized value not contained 
 in the 95\% confidence interval.
 <<>>=
 t <- (-0.5894 - (- .71)) / 0.0566; t
@@ -683,7 +683,7 @@ t <- (-0.5894 - (- .71)) / 0.0566; t
 But we won't reject values inside the confidence interval.
 <<>>=
 t <- (-0.5894 - (- .70)) / 0.0566; t
-2 * pt( - abs(t), df=28 )
+2 * pt( - abs(t), df = 28 )
 @
 \end{example}
 
@@ -710,16 +710,16 @@ A 2-sided p-value larger than 0.05 says the same thing at the same level of conf
 	\mbox{clicks} =	A + \frac{k}{\mbox{distance}^{2}}
 	\]
 	Answer the questions below using the following output
-<<include=FALSE>>=
+<<include = FALSE>>=
 Geiger <-  data.frame(
   distance = c( .20, .25, .30, .35, .40, .45, .50, .60, .75, 1.0),
   clicks = c(901, 652, 443, 339, 283, 281, 240, 220, 180, 154)
 )
 @
-<<fig.height=3.5>>=
-model <- lm( clicks ~ I(1/(distance^2)), data=Geiger)
+<<fig.height = 3.5>>=
+model <- lm( clicks ~ I(1/(distance^2)), data = Geiger)
 summary(model)
-plot(model, w=1:2)
+plot(model, w = 1:2)
 @
 \begin{enumerate}
 	\item
@@ -732,7 +732,7 @@ plot(model, w=1:2)
 	What is the estimate for $A$?  Express this as an estimate $\pm$ uncertainty
 	using our rules for numbers of digits.
 \item
-	What is the p-value for the test of the null hypothesis that $A=0$?
+	What is the p-value for the test of the null hypothesis that $A = 0$?
 	What conclusion do we draw from this?
 \item
 	What does $k$ tell us about this situation?  In what situations would $k$
@@ -741,10 +741,10 @@ plot(model, w=1:2)
 	\item
 		Express the estimate for $k$ as an estimate $\pm$ uncertainty.
 \item
-	What is the p-value for the test of the null hypothesis that $k=0$?
+	What is the p-value for the test of the null hypothesis that $k = 0$?
 	What conclusion do we draw from this?
 \item
-A standard radioactive substance has a value of $k=29.812$.  Might that be the
+A standard radioactive substance has a value of $k = 29.812$.  Might that be the
 substance we are using here?  Conduct an appropriate hypothesis test to answer
 this question.  Carefully show all four steps.
 \end{enumerate}
@@ -779,7 +779,7 @@ this question.  Carefully show all four steps.
 				contributing to the Geiger counter clicks.
 			\item
 				$H_0: k = 29.812$;  $H_a: k \neq 29.812$
-<<ticy=FALSE>>=
+<<ticy = FALSE>>=
 t <- (31.5 - 29.812) / 1.0; t     # test statistic
 2 * (1 - pt(t, df = 8))           # p -value
 @
@@ -790,7 +790,7 @@ t <- (31.5 - 29.812) / 1.0; t     # test statistic
 \end{solution}
 
 
-\begin{problem} %[title=Gentleman Tasting Wine]
+\begin{problem} %[title = Gentleman Tasting Wine]
 \myindex{wine!gentleman tasting|probidx}%
   A gentleman claims he can distinguish between four vintages of 
   a particular wine.  His friends, assuming he has probably just 
@@ -826,7 +826,7 @@ t <- (31.5 - 29.812) / 1.0; t     # test statistic
 	If you can describe the rows you want to remove logically, the \function{subset()} command
 	works well for this.  You can also remove rows by row number.  For example, the following
 	removes rows 1, 3, 5 and 7:
-<<results='hide'>>=
+<<results = 'hide'>>=
 drag[ - c(1, 3, 5, 7), ] 
 @
 \end{problem}
@@ -836,14 +836,14 @@ Let's remove the fastest values at each height setting.  Although they are the f
 that terminal velocity has not yet been reached.  At least, these points would fit the 
 overall pattern better if the velocity were larger.
 <<>>=
-xyplot( force.drag ~ velocity, data=drag, 
+xyplot( force.drag ~ velocity, data = drag, 
   groups = (velocity < 3.9) & !(velocity > 1 & velocity < 1.5) )
 drag2 <- subset(drag, (velocity < 3.9) & !(velocity > 1 & velocity < 1.5) )
 @
-<<fig.height=3.2>>=
+<<fig.height = 3.2>>=
 drag2.model <- lm(log(force.drag) ~ log(velocity), data = drag2)
 summary(drag2.model)
-plot(drag2.model, w=1:2)
+plot(drag2.model, w = 1:2)
 @
 The model is still not as good as we might like, and it seams like the fit is different for the 
 heavier objects than for the lighter ones.  This could be due to some flaw in the design of the 
@@ -871,7 +871,7 @@ with the hypothesis that this exponent should be 2.
 \end{problem}
 
 \begin{solution}
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 SE <- 1.2 / sqrt(16); SE
 t <- (94.32 - 95) / SE; t
 p_val <- 2 * pt(t, df = 15); p_val    # p-value
@@ -882,7 +882,7 @@ p_val <- 2 * pt(t, df = 15); p_val    # p-value
 	\Sexpr{ if( p_val < 0.05 ) "less than" else "greater than"} 0.05. 
 	As a double check, here is the 95\% confidence interval.
 <<>>=
-t_star <- qt(.975, df=11); t_star
+t_star <- qt(.975, df = 11); t_star
 94.32 + c(-1,1) * t_star * SE
 @
 \end{solution}
@@ -914,10 +914,10 @@ t_star <- qt(.975, df=11); t_star
 		\item
 			In this situation it makes sense to do a one-sided test since we will reject
 			the alloy only if the amount of expansion is to high, not if it is too low.
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 SE <- 5.9/sqrt(42); SE
 t <- (73.1 - 75) / SE; t
-pt(t, df=41)
+pt(t, df = 41)
 @
 		\item
 			Corresponding to a 1-sided test with a significance level of $\alpha = 0.01$,
@@ -947,25 +947,25 @@ t_star <- qt(0.99, df = 41)
 % 			Compute a 90\% confidence interval for the slope of the linear relationship.
 % 	\end{enumerate}
 % <<>>=
-% require(Devore7)
+% library(Devore7)
 % summary(lm( LichenN ~ deposition, data = ex12.20))
 % @
 % \end{problem}
 % \begin{solution}
-% <<tidy=FALSE>>=
+% <<tidy = FALSE>>=
 % t <- (0.967 - 1) / 0.183
-% 2 * pt( -abs(t), df=11 )           # p-value
+% 2 * pt( -abs(t), df = 11 )           # p-value
 % @
 % With such a large p-value, we do not reject the null hypothesis.  Our data are consistent 
 % with the hypothesis that the slope is 1.
 % <<>>=
-% t_star <- qt(.95, df=11); t_star
+% t_star <- qt(.95, df = 11); t_star
 % .967 + c(-1,1) * t_star * 0.183    # 90% CI
 % @
 % Notice that this interval includes 1.  We knew it would because 1 would not be rejected at the 
 % $\alpha = 0.10$ level.
 % <<>>=
-% t_star <- qt(.975, df=11)
+% t_star <- qt(.975, df = 11)
 % 95 + c(-1,1) * t_star * SE
 % @
 % \end{solution}

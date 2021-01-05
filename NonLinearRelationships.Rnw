@@ -78,14 +78,14 @@ which chooses the line that has the
 \begin{example}
 Consider the following small data set.
 \begin{multicols}{2}
-<<include=FALSE>>=
-someData <- data.frame(x=1:5, y=c(1,3,2,4,4))
+<<include = FALSE>>=
+someData <- data.frame(x = 1:5, y = c(1,3,2,4,4))
 @
-<<tidy=FALSE,fig.height=3.0>>=
+<<tidy = FALSE,fig.height = 3.0>>=
 someData
 xyplot( y ~ x, 
-  data=someData, type=c('p','g'), 
-  ylim=c(0,5), xlim=c(0,6))
+  data = someData, type = c('p','g'), 
+  ylim = c(0,5), xlim = c(0,6))
 @
 \end{multicols}
 
@@ -105,12 +105,12 @@ xyplot( y ~ x,
 For example, suppose we we select a line that passes through $(0,1)$ and $(5,4)$. 
 the equation for this line is $y = 1 + .6 x$, and it looks like a pretty good fit:
 <<>>=
-xyplot( y ~ x, data=someData, xlim=c(0,6), ylim=c(0,5) )
+xyplot( y ~ x, data = someData, xlim = c(0,6), ylim = c(0,5) )
 f <- makeFun( 1 + .6 * x ~ x)
-plotFun( f(x) ~ x, add=TRUE, col="gray50" )
+plotFun( f(x) ~ x, add = TRUE, col = "gray50" )
 @
 The residuals for this function are 
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 resids <- with(someData, y - f(x)) ; resids 
 @
 and $SSE$ is 
@@ -120,8 +120,8 @@ sum(resids^2)
 If your line is a good fit, then $SSE$ will be small.  
 The best fitting line will have the smallest possible $SSE$.   
 The \function{lm()} function will find this best fitting line for us.
-<<tidy=FALSE>>=
-model1 <- lm( y ~ x, data=someData ); model1
+<<tidy = FALSE>>=
+model1 <- lm( y ~ x, data = someData ); model1
 @
 This says that the equation of the best fit line is 
 \[
@@ -129,10 +129,10 @@ This says that the equation of the best fit line is
 \]
 
 <<>>=
-xyplot( y ~ x, data=someData, type=c('p','r') )
+xyplot( y ~ x, data = someData, type = c('p','r') )
 @
 We can compute $SSE$ using the \function{resid()} function.
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 SSE <- sum ( resid(model1)^2 ); SSE
 @
 As we see, this is a better fit than our first attempt -- 
@@ -177,17 +177,17 @@ to be able to estimate ocular surface area (OSA) from palprebal fissure (the
 horizontal width of the eye opening in cm) because palprebal fissue is easier
 to measure than OSA.
 <<>>=
-require(Devore7)
+library(Devore7)
 head(xmp12.01)
-x.bar <- mean( ~palprebal, data=xmp12.01)
-y.bar <- mean( ~OSA, data=xmp12.01)
-s_x <- sd( ~palprebal, data=xmp12.01)
-s_y <- sd( ~OSA, data=xmp12.01)
+x.bar <- mean( ~palprebal, data = xmp12.01)
+y.bar <- mean( ~OSA, data = xmp12.01)
+s_x <- sd( ~palprebal, data = xmp12.01)
+s_y <- sd( ~OSA, data = xmp12.01)
 r <- cor( xmp12.01$palprebal, xmp12.01$OSA)
-c( x.bar = x.bar, y.bar=y.bar, s_x=s_x, s_y=s_y, r=r )
+c( x.bar = x.bar, y.bar = y.bar, s_x = s_x, s_y = s_y, r = r )
 slope <- r * s_y/s_x
 intercept <- y.bar - slope * x.bar
-c(intercept=intercept, slope=slope)
+c(intercept = intercept, slope = slope)
 @
 \end{example}
 
@@ -199,7 +199,7 @@ In a study of eye strain caused by visual display terminals, researchers wanted 
 estimate ocular surface area (OSA) from palprebal fissure (the horizontal width of the eye
 opening in cm) because palprebal fissue is easier to measure than OSA.
 <<>>=
-osa.model <- lm( OSA ~ palprebal, data=xmp12.01) 
+osa.model <- lm( OSA ~ palprebal, data = xmp12.01) 
 osa.model
 @
 \function{lm()} stands for linear model.  The default output includes the estimates
@@ -220,7 +220,7 @@ but an estimated value (based on the linear equation given).
 \R\ can add a regression line to our scatter plot if we ask it to.
 \begin{center}
 <<osa-scatter>>=
-xyplot( OSA ~ palprebal, data=xmp12.01, type=c('p','r') )
+xyplot( OSA ~ palprebal, data = xmp12.01, type = c('p','r') )
 @
 \end{center}
 
@@ -358,8 +358,8 @@ of the residuals, discrepancies are easier to see.
 Returning to our OSA data, we can make plots of all the residuals using the 
 \function{resid()} function.
 <<>>=
-xyplot( resid(osa.model) ~ palprebal, data=xmp12.01 )
-qqmath( ~ resid(osa.model),  data=xmp12.01 )
+xyplot( resid(osa.model) ~ palprebal, data = xmp12.01 )
+qqmath( ~ resid(osa.model),  data = xmp12.01 )
 @
 \end{example}
 If the assumptions of the model are correct, there should be no distinct patterns to this scatter
@@ -449,8 +449,8 @@ coef(summary(osa.model))
 			we don't know $\sigma$, so we have to estimate it using $RMSE = \sqrt{MSE}$.
 	\end{itemize}
 
-<<tidy=FALSE>>=
-t.star <- qt(.975, df=28); t.star    # n-2 degrees of freedom for simple linear regression
+<<tidy = FALSE>>=
+t.star <- qt(.975, df = 28); t.star    # n-2 degrees of freedom for simple linear regression
 t.star * 0.151
 @
 	So a 95\% confidence interval for $\beta_1$ is 
@@ -470,8 +470,8 @@ confint(osa.model)
 A 68\% confidence interval should have a margin of error of approximately 1 standard
 uncertainty:
 <<>>=
-confint(osa.model, level=0.68)
-apply(confint(osa.model, level=0.68) , 1, diff) / 2  # half width of CIs
+confint(osa.model, level = 0.68)
+apply(confint(osa.model, level = 0.68) , 1, diff) / 2  # half width of CIs
 @
 
 \end{example}
@@ -481,8 +481,8 @@ We can also create interval estimates for the response.    \R\ will compute
 this if we simply ask:
 <<>>=
 estimated.osa <- makeFun(osa.model)
-estimated.osa( 1.2, interval="confidence")
-estimated.osa( 0.8, interval="confidence")
+estimated.osa( 1.2, interval = "confidence")
+estimated.osa( 0.8, interval = "confidence")
 @
 These intervals are confidence intervals for the \emph{mean} response.  Sometimes it
 is desirable to create an interval that will have a 95\% chance of containing a new 
@@ -490,8 +490,8 @@ observation.  These intervals are called \term{prediction intervals} to distingu
 them from the usual confidence interval.
 <<>>=
 estimated.osa <- makeFun(osa.model)
-estimated.osa( 1.2, interval="prediction")
-estimated.osa( 0.8, interval="prediction")
+estimated.osa( 1.2, interval = "prediction")
+estimated.osa( 0.8, interval = "prediction")
 @
 Prediction intervals are typically much wider than confidence intervals.  (It is more challenging
 to create an interval that contains a new observation (which might be quite a bit above 
@@ -508,8 +508,8 @@ The plot below illustrates both confidence (dotted) and prediction (dashed)
 intervals.
 Notice how most of the dots are within the prediction bands, but not within the 
 confidence bands.
-<<fig.width=".7\\textwidth">>=
-xyplot( OSA ~ palprebal, data=xmp12.01, panel=panel.lmbands )
+<<fig.width = ".7\\textwidth">>=
+xyplot( OSA ~ palprebal, data = xmp12.01, panel = panel.lmbands )
 @
 
 \subsubsection{A Caution Regarding Prediction Intervals}
@@ -521,10 +521,10 @@ size 1).
 \begin{problem}
 	Use the output below to answer some questions about rainfall volume  and 
 	runoff volume (both in $m^3$) for a particular stretch of a Texas highway.
-<<echo=FALSE>>=
+<<echo = FALSE>>=
 TexasHighway <- ex12.16
 names(TexasHighway) <- c('rainfall','runoff')
-rain.model <- lm(runoff ~ rainfall, data=TexasHighway)
+rain.model <- lm(runoff ~ rainfall, data = TexasHighway)
 summary(rain.model)
 @
 	\begin{enumerate}
@@ -553,8 +553,8 @@ summary(rain.model)
 confint( rain.model, "rainfall" )
 @
 	We can compute this from the information displayed:
-<<tidy=FALSE>>=
-t.star <- qt( .975, df=13 ) # 13 df listed for residual standard error
+<<tidy = FALSE>>=
+t.star <- qt( .975, df = 13 ) # 13 df listed for residual standard error
 t.star
 SE <- 0.0365
 ME <- t.star * SE; SE
@@ -609,18 +609,18 @@ a simple linear model was fit to see how the wet deposition of $\mathrm{NO}_{3}^
 \end{problem}
 
 \begin{solution}
-<<fig.height=3.5>>=
-foot.model <- lm( width ~ length, data=KidsFeet)
-plot(foot.model, w=1)
-plot(foot.model, w=2)
+<<fig.height = 3.5>>=
+foot.model <- lm( width ~ length, data = KidsFeet)
+plot(foot.model, w = 1)
+plot(foot.model, w = 2)
 @
 Our diagnostics look pretty good.  The residuals look randomly distributed with similar amounts of 
 variability throughout the plot.  The normal-quantile plot is nearly linear.
 
 <<>>=
 f <- makeFun(foot.model)
-f(24, interval="prediction")
-f(24, interval="confidence")
+f(24, interval = "prediction")
+f(24, interval = "confidence")
 @
 We can't estimate Billy's foot width very accurately (between 8.0 and 9.6 cm), but we can
 estimate the average foot width for all kids with a foot length of 24 cm more accurately (between
@@ -653,15 +653,15 @@ estimate the average foot width for all kids with a foot length of 24 cm more ac
 
 \begin{solution}
 <<>>=
-bike.model <- lm( distance ~ space, data=ex12.21 )
+bike.model <- lm( distance ~ space, data = ex12.21 )
 coef(summary(bike.model))
 f <- makeFun(bike.model)
-f( 15, interval="prediction" )
+f( 15, interval = "prediction" )
 @
 We would use a confidence interval to estimate the average separation distance 
 for all streets with 15 feet of available space.
 <<>>=
-f( 15, interval="confidence" )
+f( 15, interval = "confidence" )
 @
 \end{solution}
 
@@ -673,7 +673,7 @@ head(men,3)
 @
 This data set contains some phenotype information for subjects in
 a large genetics study.  You can find out more about the data set with
-<<tidy=FALSE,eval=FALSE>>=
+<<tidy = FALSE,eval = FALSE>>=
 ?pheno
 @
 \begin{enumerate}
@@ -701,7 +701,7 @@ a large genetics study.  You can find out more about the data set with
 	\begin{enumerate}
 		\item
 <<>>=
-model <- lm( weight ~ height, data=men )
+model <- lm( weight ~ height, data = men )
 coef(summary(model))
 @
 			So the equation is 
@@ -713,7 +713,7 @@ coef(summary(model))
 		\item
 <<>>=
 # we can ask for just the parameter we want, if we like
-confint(model, parm="height")
+confint(model, parm = "height")
 @
 The slope tells us how much the average weight (in kg) increases per 
 cm of height.
@@ -721,9 +721,9 @@ cm of height.
 <<>>=
 f <- makeFun(model)
 # in kg
-f( 6 * 12 * 2.54, interval="confidence" ) 
+f( 6 * 12 * 2.54, interval = "confidence" ) 
 # in pounds
-f( 6 * 12 * 2.54, interval="confidence" ) * 2.2
+f( 6 * 12 * 2.54, interval = "confidence" ) * 2.2
 @
 		\item
 <<>>=
@@ -731,9 +731,9 @@ xyplot( resid(model) ~ fitted(model) )
 qqmath( ~ resid(model) )
 @
 We could also have used
-<<fig.height=3.5>>=
-plot(model, which=1)
-plot(model, which=2)
+<<fig.height = 3.5>>=
+plot(model, which = 1)
+plot(model, which = 2)
 @
 The residual plot looks fine.  There is bit of a bend to the normal-quantile plot, indicating
 that the distribution of residuals is a bit skewed (to the right -- the heaviest men are farther above
@@ -743,7 +743,7 @@ In this particular case, a log transformation of the weights improves the
 residual distribution.  There is still one man whose weight is quite high for
 his height, but otherwise things look quite good.
 <<>>=
-model2 <- lm( log(weight) ~ height, data=men )
+model2 <- lm( log(weight) ~ height, data = men )
 coef(summary(model2))
 xyplot( resid(model2) ~ fitted(model2) )
 qqmath( ~resid(model2) )
@@ -773,8 +773,8 @@ So
 		\item 
 			For each of the four pairs, us \R\ to fit a linear model and 
 			compare the results.  Use, for example,
-<<eval=FALSE>>=
-model1 <- lm( y1 ~ x1, data=anscombe ); summary(model1)
+<<eval = FALSE>>=
+model1 <- lm( y1 ~ x1, data = anscombe ); summary(model1)
 @
 			Briefly describe what you notice looking at this output.  (You do not have
 			to submit the output itself -- let's save some paper.)
@@ -963,12 +963,12 @@ are often called power laws.  The two parameters are the exponent $p$ and a cons
 Power laws can be linearized by taking logarithms:
 \[ \log(y) = \log(A x^p) = \log(A) + p \log(x) \]
 So if we fit a model of the form
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 lm( log(y) ~ x )
 @
 Then $\beta_0 = \log(A)$ and $\beta_1 = p$.  
 If a power law is a good fit for the data then
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 xyplot( log(y) ~ log(x) )
 @
 will produce a roughly linear plot.
@@ -993,12 +993,12 @@ The two parameters are the base $B = e^C$ and a constant of proportionality $A$.
 Exponential laws can also be linearized by taking logarithms:
 \[ \log(y) = \log(A B^x) = \log(A) + x \log(B) \]
 So if we fit a model of the form
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 lm( log(y) ~ x )
 @
 Then $\beta_0 = \log(A)$ and $\beta_1 = \log(B) = C$.  
 If an exponential law is a good fit for the data then
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 xyplot( log(y) ~ x )
 @
 will produce a roughly linear plot.
@@ -1049,7 +1049,7 @@ for $x$ or $y$ (or both), while a curve like the one in the second quadrant,
 might be straightened by moving up the ladder for $y$ or down the ladder for $x$.
 \begin{figure}
 \begin{center}
-\begin{tikzpicture}[scale=1.6]
+\begin{tikzpicture}[scale = 1.6]
 \draw(175:1cm) arc (175:95:1cm);
 \draw(85:1cm) arc (85:5:1cm);
 \draw(-5:1cm) arc (-5:-85:1cm);
@@ -1068,10 +1068,10 @@ might be straightened by moving up the ladder for $y$ or down the ladder for $x$
 \draw[->](275:1cm) -- ++ (270:0.3cm);
 
 \draw(0,2.2) node {\ };
-\draw(0,0) + (0:1.3) node[anchor=west]   { move $x$ up };
-\draw(0,0) + (270:1.3) node[anchor=north]{ move $y$ down };
-\draw(0,0) + (180:1.3) node[anchor=east] { move $x$ down };
-\draw(0,0) + (90:1.3) node[anchor=south] { move $y$ up };
+\draw(0,0) + (0:1.3) node[anchor = west]   { move $x$ up };
+\draw(0,0) + (270:1.3) node[anchor = north]{ move $y$ down };
+\draw(0,0) + (180:1.3) node[anchor = east] { move $x$ down };
+\draw(0,0) + (90:1.3) node[anchor = south] { move $y$ up };
 \end{tikzpicture}
 \hfill
 \begin{minipage}{0.35\textwidth}
@@ -1120,7 +1120,7 @@ shows a curved relationship between
 $x$ and $y$.
 What transformations of $x$ and $y$ improve the linear fit?
 \begin{figure}
-<<tukey-bulge1,echo=FALSE>>=
+<<tukey-bulge1,echo = FALSE>>=
 n <- 20  
 x <- runif(n,2,10)
 y <- exp(0.3*x)
@@ -1138,14 +1138,14 @@ power <- function(x,a) {
     return  (apply(M, 1, foo))
 }
 powers <- c(0,0.5,1,2,3); np <- length(powers)
-a <- rep(rep(powers, each=n),each=np)
-b <- rep(rep(powers, each=n), times=np)
-x <- rep(x,times=n *np)
-y <- rep(y,times=n *np)
+a <- rep(rep(powers, each = n),each = np)
+b <- rep(rep(powers, each = n), times = np)
+x <- rep(x,times = n *np)
+y <- rep(y,times = n *np)
 X <- power(x,a)
 Y <- power(y,b)
 original <- (a==1 & b==1)
-ddd <- data.frame(X=X,Y=Y,a=a,b=b,original=original)
+ddd <- data.frame(X = X,Y = Y,a = a,b = b,original = original)
 xyplot(y~x)
 @
 \caption{A scatterplot illustrating a non-linear relationship between $x$ and $y$.}
@@ -1159,17 +1159,17 @@ up the ladder for $x$ or down the ladder for $y$.
 As we see in Figure~\ref{fig:TukeyBulgeMany}, 
 the fit generally improves as we move down and to the right -- but not too
 far, lest we over-correct.
-A $\log$-transformation of the response ($a=1$, $b=0$) seems 
+A $\log$-transformation of the response ($a = 1$, $b = 0$) seems 
 to be especially good in this case. Not only is the resulting relationship
 quite linear, but the residuals appear to have a better distribution as well.
 \end{example}
 
 \begin{figure}
-<<tuky-bulge-many,echo=FALSE,fig.width=6,fig.height=7>>=
-xyplot(Y~X|paste('a=',a,sep="") + paste("b=",b,sep=""),
-            ddd, groups=original, cex=.7,
-			xlab='x', ylab='y',
-            scales=list(relation='free', draw=FALSE))
+<<tuky-bulge-many,echo = FALSE,fig.width = 6,fig.height = 7>>=
+xyplot(Y~X|paste('a = ',a,sep = "") + paste("b = ",b,sep = ""),
+            ddd, groups = original, cex = .7,
+			xlab = 'x', ylab = 'y',
+            scales = list(relation = 'free', draw = FALSE))
 @
 \caption{Using the ladder of re-expression to find a better fit.}
 \label{fig:TukeyBulgeMany}%
@@ -1185,8 +1185,8 @@ floor.   We begin by fitting a linear model to this data.
 <<balldrop>>=
 ball.model <- lm(time~height,balldrop)
 summary(ball.model)
-xyplot(time~height,balldrop,type=c('p','r'))
-xplot(ball.model,w=1)
+xyplot(time~height,balldrop,type = c('p','r'))
+xplot(ball.model,w = 1)
 @
 
 
@@ -1204,8 +1204,8 @@ moving down the ladder for \variable{height} or up the ladder for \variable{time
 <<balldrop-transT>>=
 ball.modelT <- lm(time ~ sqrt(height),balldrop)
 summary(ball.modelT)
-xyplot(time~height,balldrop, panel=panel.lm, model=ball.modelT)
-xplot(ball.modelT, w=1)
+xyplot(time~height,balldrop, panel = panel.lm, model = ball.modelT)
+xplot(ball.modelT, w = 1)
 @
 This model does indeed fit better, but the residual plot indicates that
 there may be some inaccuracy in the measurement of the height.  
@@ -1244,11 +1244,11 @@ not systematic).
 
 %\pagebreak
 <<balldrop-avg>>=
-balldropavg <- aggregate(balldrop$time, by=list(balldrop$height), mean)
+balldropavg <- aggregate(balldrop$time, by = list(balldrop$height), mean)
 names(balldropavg) <- c('height','time')
 ball.modelA <- lm(time ~ sqrt(height),balldropavg)
 summary(ball.modelA)
-xyplot(time~height,balldropavg, panel=panel.lm,model=ball.modelA)
+xyplot(time~height,balldropavg, panel = panel.lm,model = ball.modelA)
 xyplot(resid(ball.modelA) ~ fitted(ball.modelA))
 @
 Using a square root transformation on averaged \texttt{height}
@@ -1337,17 +1337,17 @@ soap.model2 <- lm(I(Weight^(1/3))~Day,soap)
 summary(soap.model2)
 @
 \begin{figure}
-<<echo=FALSE>>=
-daysToFit <- seq(1,22,by=0.5)
-linfits <- predict(soap.model1,newdata=data.frame(Day=daysToFit))
-transfits <- predict(soap.model2,newdata=data.frame(Day=daysToFit))^3
-soap.plot <- xyplot(Weight~Day,data=soap, 
+<<echo = FALSE>>=
+daysToFit <- seq(1,22,by = 0.5)
+linfits <- predict(soap.model1,newdata = data.frame(Day = daysToFit))
+transfits <- predict(soap.model2,newdata = data.frame(Day = daysToFit))^3
+soap.plot <- xyplot(Weight~Day,data = soap, 
     panel = function(x,y,...) {
-        panel.xyplot(daysToFit,linfits, lwd=2, type="l", 
-            col=trellis.par.get('superpose.line')$col[1])
-        panel.xyplot(daysToFit,transfits, lwd=2, type="l",
-            col=trellis.par.get('superpose.line')$col[2])
-        panel.xyplot(x,y,cex=1.0,...)
+        panel.xyplot(daysToFit,linfits, lwd = 2, type = "l", 
+            col = trellis.par.get('superpose.line')$col[1])
+        panel.xyplot(daysToFit,transfits, lwd = 2, type = "l",
+            col = trellis.par.get('superpose.line')$col[2])
+        panel.xyplot(x,y,cex = 1.0,...)
     }
     )
 @
@@ -1444,26 +1444,26 @@ is there still some cause for concern?
 	$\log(y) = \log(a) + x \log(b)$, 
 	so $g(y) = \log(y)$,
 	$f(x) = x$, 
-	$\beta_0=\log(a)$,
-	and $\beta_1=\log(b)$.
+	$\beta_0 = \log(a)$,
+	and $\beta_1 = \log(b)$.
   \item
 	$\log(y) = \log(a) + b \log(x)$, 
 	so $g(y) = \log(y)$,
 	$f(x) = \log(x)$, 
-	$\beta_0=\log(a)$,
-	and $\beta_1=b$.
+	$\beta_0 = \log(a)$,
+	and $\beta_1 = b$.
   \item
 	$\frac{1}{y} = a + b x$, 
 	so $g(y) = \frac{1}{y}$,
 	$f(x) = x$, 
-	$\beta_0=a$,
-	and $\beta_1=b$.
+	$\beta_0 = a$,
+	and $\beta_1 = b$.
   \item
 	$\frac{1}{y} = \frac{a}{x} + b$, 
 	so $g(y) = \frac{1}{y}$,
 	$f(x) = \frac{1}{x}$, 
-	$\beta_0=b$,
-	and $\beta_1=a$.
+	$\beta_0 = b$,
+	and $\beta_1 = a$.
    \item
 	not possible
   \item
@@ -1471,15 +1471,15 @@ is there still some cause for concern?
 	$\log(\frac{1}{y} - 1) = \log( \frac{1-y}{y} ) = {a + bx}$, 
 	so $g(y) = \log(\frac{1-y}{y})$,
 	$f(x) = {x}$, 
-	$\beta_0=a$,
-	and $\beta_1=b$.
+	$\beta_0 = a$,
+	and $\beta_1 = b$.
   \item
 	$\frac{100}{y} = 1 + e^{a + bx}$, so
 	$\log(\frac{100}{y} - 1) = \log( \frac{100-y}{y} ) = {a + bx}$, 
 	so $g(y) = \log(\frac{100-y}{y})$,
 	$f(x) = {x}$, 
-	$\beta_0=a$,
-	and $\beta_1=b$.
+	$\beta_0 = a$,
+	and $\beta_1 = b$.
   \end{enumerate}
 \end{solution}
 
@@ -1538,7 +1538,7 @@ of the pendulum.
 The students constructed pendulums of lengths varying from
 $10$ cm to $16$ m and recorded the period length (averaged over several
 swings of the pendulum).  The resulting data are in
-the \dataframe{pendulum} data set.
+the \dataframe{Pendulum} data set.
 
 \begin{enumerate}
 	\item
@@ -1562,23 +1562,23 @@ What is the estimated power in the power law based on this model?
 	power is a bit below 2 and the fits look good on top of the raw data.  (Note: the 
 	function produced by \function{makeFun()} does not know how to invert the log
 	transformation on the response variable, so we have to do that ourselves.)
-<<warning=FALSE>>=
-model <- lm( log(period) ~ log(length), data=pendulum )
-model2 <- nls( period ~ A * length^power, data=pendulum, start=list(A=1, power=2) )
+<<warning = FALSE>>=
+model <- lm( log(period) ~ log(length), data = Pendulum )
+model2 <- nls( period ~ A * length^power, data = Pendulum, start = list(A = 1, power = 2) )
 f <- makeFun(model)
 g <- makeFun(model2)
-xyplot(period ~ length, data=pendulum)
-plotFun(exp(f(x)) ~ x, col='gray50',add=TRUE)
-xyplot(period ~ length, data=pendulum)
-plotFun(g(x) ~ x, col='red', lty=2, add=TRUE)
+xyplot(period ~ length, data = Pendulum)
+plotFun(exp(f(x)) ~ x, col = 'gray50',add = TRUE)
+xyplot(period ~ length, data = Pendulum)
+plotFun(g(x) ~ x, col = 'red', lty = 2, add = TRUE)
 coef(summary(model))
 coef(summary(model2))
 @
 	But if we look at the residuals, we see that the linear model is clearly 
 	better in this case.  The non-linear model suffers from heteroskedasticity.
 <<>>=
-xyplot(resid(model) ~ fitted(model), type=c('p','smooth'))
-xyplot(resid(model2) ~ fitted(model2), type=c('p','smooth'))
+xyplot(resid(model) ~ fitted(model), type = c('p','smooth'))
+xyplot(resid(model2) ~ fitted(model2), type = c('p','smooth'))
 @
 	Both residual distributions are reasonably close to normal, but not perfect.
 	In the ordinary least squares model, the largets few residuals are not as large
@@ -1656,19 +1656,19 @@ at a Midwest liberal arts college.
 		\item
 			We can build a confidence interval for the mean by fitting 
 			a model with only an intercept term.
-<<act-gpa, tidy=FALSE>>=
+<<act-gpa, tidy = FALSE>>=
 grades <- actgpa
-confint(lm(ACT ~ 1, data=grades))
+confint(lm(ACT ~ 1, data = grades))
 @
 But this isn't the only way to do it.  Here are some other ways.
 <<>>=
 # here's another way to do it; but you don't need to know about it
 t.test(grades$ACT)
 # or you can do it by hand
-x.bar <- mean(~ACT, data=grades); x.bar
+x.bar <- mean(~ACT, data = grades); x.bar
 n <- nrow(grades); n
-t.star <- qt(.975, df=n-1); t.star
-SE <- sd(~ACT, data=grades) / sqrt(n); SE
+t.star <- qt(.975, df = n-1); t.star
+SE <- sd(~ACT, data = grades) / sqrt(n); SE
 ME <- t.star * SE; ME
 @
 			So the CI is $\Sexpr{x.bar} \pm \Sexpr{ME}$.  Of course, that is too many digits, we 
@@ -1676,24 +1676,24 @@ ME <- t.star * SE; ME
 			$\Sexpr{round(x.bar,1)} \pm \Sexpr{round(ME,1)}$.  
 		\item
 <<>>=
-confint(lm(GPA ~ 1, data=grades))
+confint(lm(GPA ~ 1, data = grades))
 # this could also be done the other ways shown above.
 @
 		\item
 <<>>=
 grades.model <- lm(GPA~ACT,grades)
 f <- makeFun(grades.model)
-f(ACT=25, interval="confidence")
+f(ACT = 25, interval = "confidence")
 @
 		
 		\item
 <<>>=
-f(ACT=30, interval="prediction")
+f(ACT = 30, interval = "prediction")
 @
 		\item
 <<>>=
-xyplot(GPA~ACT,data=grades,panel=panel.lmbands)
-xyplot(resid(grades.model) ~ fitted(grades.model),type=c('p','smooth'))
+xyplot(GPA~ACT,data = grades,panel = panel.lmbands)
+xyplot(resid(grades.model) ~ fitted(grades.model),type = c('p','smooth'))
 @
 			There are no major concerns with the regression model. The
 			residuals look pretty good.  (There is perhaps a bit more variability
@@ -1769,14 +1769,14 @@ coef(summary(model3))
 @
 Note that \verb!model1!, \verb!model2!, and \verb!model3! are not equivalent, 
 but they all tell roughly the same story.
-<<warning=FALSE>>=
-xyplot( velocity ~ force.drag, data=drag)
+<<warning = FALSE>>=
+xyplot( velocity ~ force.drag, data = drag)
 f1 <- makeFun(model1)
 f2 <- makeFun(model2)
 f3 <- makeFun(model3)
-plotFun( sqrt(f1(x)) ~ x, add=TRUE, alpha=.4 )
-plotFun( f2(x) ~ x, add=TRUE, alpha=.4, col='red', lty=2 )
-plotFun( exp(f3(x)) ~ x, add=TRUE, alpha=.4, col='brown', lty=3 )
+plotFun( sqrt(f1(x)) ~ x, add = TRUE, alpha = .4 )
+plotFun( f2(x) ~ x, add = TRUE, alpha = .4, col = 'red', lty = 2 )
+plotFun( exp(f3(x)) ~ x, add = TRUE, alpha = .4, col = 'brown', lty = 3 )
 @
 
 The fit for these models reveals some 
@@ -1787,10 +1787,10 @@ In both groups, the velocities for the greatest drag forces are
 not as fast as the pattern of the remaining data would lead us to expect.
 
 <<drag-plots>>=
-xyplot(velocity^2 ~ force.drag, drag, groups=height)
-xplot(model1,w=1)
-xyplot(velocity ~ force.drag, drag, scales=list(log=T),groups=height)
-xplot(model3,w=1)
+xyplot(velocity^2 ~ force.drag, drag, groups = height)
+xplot(model1,w = 1)
+xyplot(velocity ~ force.drag, drag, scales = list(log = T),groups = height)
+xplot(model3,w = 1)
 @
 \end{solution}
 
@@ -1894,11 +1894,11 @@ Let's illustrate with an example.
 	\end{align}
 	using nonlinear least squares.  
 <<>>=
-nls.model <- nls( time ~ alpha0 + alpha1 * sqrt(height), data=balldrop, start=list(alpha0=0, alpha1=1) )
+nls.model <- nls( time ~ alpha0 + alpha1 * sqrt(height), data = balldrop, start = list(alpha0 = 0, alpha1 = 1) )
 @
 	Notice how the model formula compares with the formula in (\ref{eq:balldrop}).
 	The starting point for the algorithm is specified with 
-	\code{start=list(alpha0=0, alpha1=1)}, which also declares that 
+	\code{start = list(alpha0 = 0, alpha1 = 1)}, which also declares that 
 	the parameters to be fit.
 
 	We can obtain the coefficients of the fitted model with
@@ -1920,18 +1920,18 @@ coef(summary(nls.model))
 
 <<>>=
 f <- makeFun(nls.model)
-xyplot( time ~ height, data=balldrop )
-plotFun( f(height) ~ height, add=TRUE, col='gray40' )
+xyplot( time ~ height, data = balldrop )
+plotFun( f(height) ~ height, add = TRUE, col = 'gray40' )
 xyplot( resid(nls.model) ~ fitted(nls.model) )
 @
 
 We can compare this to the ordinary least squares model by plotting both together on the same plot.
 <<>>=
-lm.model <- lm( time ~ sqrt(height), data=balldrop)
+lm.model <- lm( time ~ sqrt(height), data = balldrop)
 g <- makeFun(lm.model)
-xyplot( time ~ height, data=balldrop )
-plotFun( f(height) ~ height, add=TRUE, col='gray40', lwd=3 )
-plotFun(g(height) ~ height, add=TRUE, col='red', lwd=1, lty=2)
+xyplot( time ~ height, data = balldrop )
+plotFun( f(height) ~ height, add = TRUE, col = 'gray40', lwd = 3 )
+plotFun(g(height) ~ height, add = TRUE, col = 'red', lwd = 1, lty = 2)
 @
 In this particular case, there is very little difference between the two models, but this is not always the case.
 <<>>=
@@ -1945,9 +1945,9 @@ coef(lm.model)
 	\[
 	\variable{time} = \alpha * \variable{height}^p
 	\]
-<<tidy=FALSE>>=
-power.model <- nls( time ~ alpha * height^power, data=balldrop, 
-                    start=c(alpha=1, power=.5) )
+<<tidy = FALSE>>=
+power.model <- nls( time ~ alpha * height^power, data = balldrop, 
+                    start = c(alpha = 1, power = .5) )
 coef(summary(power.model))
 @
 \end{example}
@@ -1957,17 +1957,17 @@ coef(summary(power.model))
 	A professor at Macalester College put hot water in a mug and recorded the temperature as it cooled. 
 	Let's see if we can fit a reasonable model to this data
 <<>>=
-xyplot( temp ~ time, data=CoolingWater, ylab="temp (C)", xlab="time (sec)")
+xyplot( temp ~ time, data = CoolingWater, ylab = "temp (C)", xlab = "time (sec)")
 @
 
 Our first guess might be some sort of exponential decay
-<<tidy=FALSE>>=
-cooling.model1 <- nls( temp ~ A * exp( -k * time), data=CoolingWater, 
-                       start=list(A=100, k=0.1) )
+<<tidy = FALSE>>=
+cooling.model1 <- nls( temp ~ A * exp( -k * time), data = CoolingWater, 
+                       start = list(A = 100, k = 0.1) )
 f1 <- makeFun(cooling.model1)
-xyplot( temp ~ time, data=CoolingWater, xlim=c(-50,300), ylim=c(0,110), 
-        ylab="temp (C)", xlab="time (sec)")
-plotFun( f1(time) ~ time, add=TRUE)
+xyplot( temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110), 
+        ylab = "temp (C)", xlab = "time (sec)")
+plotFun( f1(time) ~ time, add = TRUE)
 @
 
 That doesn't fit very well, and there is a good reason.  The model says that eventually the water will freeze because
@@ -1976,14 +1976,14 @@ That doesn't fit very well, and there is a good reason.  The model says that eve
 \]
 when $k >0$.  But clearly our water isn't going to freeze sitting on a lab table.  We can fix this by 
 adding in an offset to account for the ambient temperature:
-<<tidy=FALSE>>=
-cooling.model2 <- nls( temp ~ ambient + A * exp( k * (1+time) ), data=CoolingWater,
-                      start=list(ambient=20, A=80, k=-.1) )
+<<tidy = FALSE>>=
+cooling.model2 <- nls( temp ~ ambient + A * exp( k * (1+time) ), data = CoolingWater,
+                      start = list(ambient = 20, A = 80, k = -.1) )
 f2 <- makeFun(cooling.model2)
-xyplot( temp ~ time, data=CoolingWater, xlim=c(-50,300), ylim=c(0,110),
-        ylab="temp (C)", xlab="time (sec)")
-plotFun( f1(time) ~ time, add=TRUE, lty=2, col="gray80")
-plotFun( f2(time) ~ time, add=TRUE, col = "steelblue")
+xyplot( temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110),
+        ylab = "temp (C)", xlab = "time (sec)")
+plotFun( f1(time) ~ time, add = TRUE, lty = 2, col = "gray80")
+plotFun( f2(time) ~ time, add = TRUE, col = "steelblue")
 @
 This fits much better.  Furthermore, this model can be derived from a differential equation
 \[
@@ -1995,8 +1995,8 @@ known as Newton's Law of Cooling.
 
 Let's take a look at the residual plot
 <<>>=
-xyplot( resid(cooling.model2) ~ time, data=CoolingWater ) 
-plot(cooling.model2, which=1)
+xyplot( resid(cooling.model2) ~ time, data = CoolingWater ) 
+plot(cooling.model2, which = 1)
 @
 Hmm.  These plots show a clear pattern and very little noise.
 The fit doesn't look as good when viewed this way.  
@@ -2042,7 +2042,7 @@ coef(summary(cooling.model2))
 	\]
 	Alternatively, we could construct a 95\% confidence interval:
 <<>>=
-confint(cooling.model2, level=0.95)
+confint(cooling.model2, level = 0.95)
 @
 
 We could use the same procedure to estimate the other parameters in the model as well.
@@ -2060,14 +2060,14 @@ We could use the same procedure to estimate the other parameters in the model as
 \end{problem}
 
 \begin{solution}
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 coef(summary(cooling.model2))
 k <- coef(summary(cooling.model2))["k","Estimate"]; k
 SE <- coef(summary(cooling.model2))["k","Std. Error"]; SE
 t <- coef(summary(cooling.model2))["k","t value"];t 
 t.star <- qt(.975, df= 222-3); t  # 222 observations - 3 parameters
 t.star * SE
-2 * pt ( t, df=222-3)             # degrees of freedom check (should match p-value above)
+2 * pt ( t, df = 222-3)             # degrees of freedom check (should match p-value above)
 @
 	\begin{enumerate}
 		\item
@@ -2126,7 +2126,7 @@ relationship.
 		\item
 			$\mu = 0$.  (The population mean is 0.)
 		\item
-			$\beta_1=0$.  (The ``true'' slope is 0 -- assuming a model like $\E(Y) = \beta_0 + \beta_1 x$.)
+			$\beta_1 = 0$.  (The ``true'' slope is 0 -- assuming a model like $\E(Y) = \beta_0 + \beta_1 x$.)
 		\item
 			$\beta_1 = \beta_2$ (Two parameters in the model are equal.)
 		\item
@@ -2198,33 +2198,33 @@ Let's look at some data on weight loss programs.  In this data set, there were t
 received a monetary incentive if they lost weight.  The controls
 did not receive a monetary incentive.  Let's see whether on average the controls lost weight
 <<>>=
-require(Stat2Data)
+library(Stat2Data)
 data(WeightLossIncentive)
 Controls <- subset(WeightLossIncentive, Group=="Control")
-favstats( ~ WeightLoss, data=Controls )
+favstats( ~ WeightLoss, data = Controls )
 @
 The standard error when doing inference for a mean is 
 \[
 SE = \frac{s}{\sqrt{n}} = 
 \frac{ 
-	\Sexpr{sd(~WeightLoss, data=Controls)}
+	\Sexpr{sd(~WeightLoss, data = Controls)}
 }{
 	\sqrt{ \Sexpr{nrow(Controls)} } 
 }
 =
-\Sexpr{sd(~WeightLoss, data=Controls)/sqrt(nrow(Controls))} 
+\Sexpr{sd(~WeightLoss, data = Controls)/sqrt(nrow(Controls))} 
 \]
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 SE <- 9.108 / sqrt(19); SE
 @
 If we want to test our null hypothesis, then we compute a t-statistic:
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 t <- (3.92 - 0) / SE; t
 @
 and from this a p-value, which is the tails probability for a t-distribution with 18 degrees of freedom.
 <<>>=
-1 - pt( t, df=19-1 )
-2 * ( 1 - pt( t, df=19-1 ) )
+1 - pt( t, df = 19-1 )
+2 * ( 1 - pt( t, df = 19-1 ) )
 @
 This p-value can also be generated from a linear model.
 <<>>=
@@ -2249,7 +2249,7 @@ large could occur just by chance in nearly 8\% of samples.
 	Now let's compare the controls to the incentive group.  That is the question 
 	the study was primarily interested in.
 <<>>=
-model2 <- lm ( WeightLoss ~ Group, data=WeightLossIncentive )
+model2 <- lm ( WeightLoss ~ Group, data = WeightLossIncentive )
 @
 	What is this model?
 	\[
@@ -2284,28 +2284,28 @@ critical velocity.  It would be good to refit this data with those observations 
 \[
 \variable{force.drag} = A \cdot \variable{velocity}^p
 \]
-and test the hypothesis that $p=2$.  We can fit this model using a log-log transformation:
+and test the hypothesis that $p = 2$.  We can fit this model using a log-log transformation:
 \[
 \log(\variable{force.drag}) = \log(A)  +  p \log( \variable{velocity} )
 \]
-So $p=\beta_1$ in our usual linear model notation.
+So $p = \beta_1$ in our usual linear model notation.
 
 <<drag-again>>=
-drag.model <- lm(log(force.drag) ~ log(velocity), data=drag)
+drag.model <- lm(log(force.drag) ~ log(velocity), data = drag)
 summary(drag.model)
-xyplot(log(force.drag) ~ log(velocity), data=drag)
+xyplot(log(force.drag) ~ log(velocity), data = drag)
 @
 None of the p-values produced in this output is not the one we want.  That is testing the null hypothesis
 $\beta_1 = 0$.  But we can easily calculate the p-value we want since we have the standard error
 and degrees of freedom.
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 beta1.hat <- 2.051
 SE <- 0.05366
 t <-  ( beta1.hat - 2 ) / SE; t
 2 * pt( - abs(t), df= 40 )
 @
-With this large a p-value, we cannot reject the null hypothesis that $p=2$.  This does not prove
-that $p=2$, but it does say that our data are consistent with that value.
+With this large a p-value, we cannot reject the null hypothesis that $p = 2$.  This does not prove
+that $p = 2$, but it does say that our data are consistent with that value.
 \end{example}
 
 \iffalse
@@ -2314,9 +2314,9 @@ This time let's consider a model with a quantitative predictor.
 <<>>=
 data(PorschePrice)
 head(PorschePrice)
-porsche.model <- lm( Price ~ Mileage, data=PorschePrice )
+porsche.model <- lm( Price ~ Mileage, data = PorschePrice )
 summary(porsche.model)
-xyplot( resid(porsche.model) ~ fitted(porsche.model), type=c('p','smooth'))
+xyplot( resid(porsche.model) ~ fitted(porsche.model), type = c('p','smooth'))
 qqmath( ~ resid(porsche.model) )
 @
 The model looks reasonable.  What are the two hypotheses being tested?
@@ -2338,7 +2338,7 @@ The model looks reasonable.  What are the two hypotheses being tested?
 		There is strong evidence against this hypothesis as well.  This is also not surprising.
 		If $\beta_1 = 0$, this means that the price of the cars does not depend on the mileage.
 
-		A test of $\beta_1=0$ in a simple linear model is often called the \term{model utility test}
+		A test of $\beta_1 = 0$ in a simple linear model is often called the \term{model utility test}
 		because it is testing whether the predictor is of any use to us or not.
 \end{enumerate}
 \end{example}
@@ -2359,7 +2359,7 @@ So a confidence interval generally conveys more information than a p-value in th
 drag.model
 confint(drag.model)
 @
-Since the confidence interval for $\beta_1=p$ include 2, 2 is a plausible value for the power (i.e.,
+Since the confidence interval for $\beta_1 = p$ include 2, 2 is a plausible value for the power (i.e.,
 consistent with our data).
 A p-value larger than 0.05 says the same thing at the same level of confidence.  
 \end{example}
@@ -2411,16 +2411,16 @@ Let's take a look at an example.
 	generates for a linear model with \variable{Color} as the predictor.
 
 <<>>=
-require(fastR)
-bugs.model <- lm( NumTrap ~ Color, data=bugs )
+library(fastR2)
+bugs.model <- lm( NumTrap ~ Color, data = bugs )
 summary(bugs.model)
 @
 <<>>=
-xyplot( NumTrap ~ Color, data=bugs )
+xyplot( NumTrap ~ Color, data = bugs )
 xyplot( resid(bugs.model) ~ fitted(bugs.model))
 @
 <<>>=
-xyplot( resid(bugs.model) ~ Color, data=bugs)
+xyplot( resid(bugs.model) ~ Color, data = bugs)
 qqmath( ~resid(bugs.model))
 @
 
@@ -2484,7 +2484,7 @@ error rate", or ``Multiple Comparisons".
 
 None of the individual hypothesis tests in the previous example answer the simple question
 \emph{Are all the group means the same?}.  
-This would be equivalent to $\beta_1 = \beta_2 = \beta_3=0$.
+This would be equivalent to $\beta_1 = \beta_2 = \beta_3 = 0$.
 There is a test for this, however.  This test fits into a general scheme of
 tests that have a similar structure and are based on a new family of
 distributions called the F-distributions.  The test statistic comes from
@@ -2496,7 +2496,7 @@ SST = SSM + SSE
 \begin{itemize}
 	\item
 		$SSE$ is the sum of squares of the residuals:
-		\[ SSE = \sum_{i=1}^{n} (y_i - \hat y_i)^2 \]
+		\[ SSE = \sum_{i = 1}^{n} (y_i - \hat y_i)^2 \]
 	\item 
 		$MSE$ is $SSE$ divided by the appropriate degrees of freedom ($n$ minus the number
 		of parameters in the model.)
@@ -2504,14 +2504,14 @@ SST = SSM + SSE
 		$SSM$ is the portion of the variability explained by the model.  That is,
 		$SSM$ measures how different the fitted values ($\hat y$) are from the mean value ($\mean y$):
 		\[
-		SSM = \sum_{i=1}^n (\hat y_i - \mean y)^2
+		SSM = \sum_{i = 1}^n (\hat y_i - \mean y)^2
 		\]
 	\item
 		$MSM = SSM / DFM$, where $DFM$ is the number of parameters in the model.
 	\item
 		$SST = SSM + SSE$ is another familiar sum:
 		\[
-		SST = \sum_{i=1}^n (y_i - \mean y)^2
+		SST = \sum_{i = 1}^n (y_i - \mean y)^2
 		\]
 	\item
 		$MST = SST/(n-1)$ is the variance of the response variable.
@@ -2544,10 +2544,10 @@ all four colors attract the same number of bugs on average.
 
 
 If we had to we could do all the calculations ``by hand'':
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 SSE <- sum( resid(bugs.model)^2 ); SSE
 MSE <- SSE / (24 - 4); MSE
-y.bar <- mean( ~ NumTrap, data=bugs); y.bar
+y.bar <- mean( ~ NumTrap, data = bugs); y.bar
 SSM <- sum( (fitted(bugs.model) - y.bar)^2 ); SSM
 MSM <- SSM / 3 ; MSM
 SST <- sum( (bugs$NumTrap - y.bar)^2); SST

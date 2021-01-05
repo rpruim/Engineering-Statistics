@@ -13,7 +13,7 @@ Most of these numbers come from some process that generated data and led to a ca
 that produced the number.  Like this one \dots
  
 \begin{center}
-	\includegraphics[width=.8\textwidth]{images/CalvinBridgeLoad2.png}
+	\includegraphics[width = .8\textwidth]{images/CalvinBridgeLoad2.png}
 \end{center}
 
 \noindent Or maybe not quite like that one.

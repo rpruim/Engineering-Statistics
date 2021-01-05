@@ -54,7 +54,7 @@ The mean response for a given predictor value $x$ is given by a linear formula
 \]
 This can also be written as 
 \[
-\E(Y \mid X=x) = \beta_0 + \beta_1 x
+\E(Y \mid X = x) = \beta_0 + \beta_1 x
 \]
 \item
 The distribution of all responses for a given predictor value $x$ is normal.
@@ -87,17 +87,17 @@ which chooses the line that has the
 \begin{example}
 Consider the following small data set.
 \begin{multicols}{2}
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 someData <- data.frame(
-  x=c(1,2,4,5,6),
-  y=c(1,4,3,6,5)
+  x = c(1,2,4,5,6),
+  y = c(1,4,3,6,5)
 )
 someData
 @
-<<tidy=FALSE,fig.height=3.2>>=
+<<tidy = FALSE,fig.height = 3.2>>=
 xyplot( y ~ x, 
-  data=someData, type=c('p','g'), 
-  ylim=c(0,7), xlim=c(0,7))
+  data = someData, type = c('p','g'), 
+  ylim = c(0,7), xlim = c(0,7))
 @
 \end{multicols}
 
@@ -159,12 +159,12 @@ fitLine <- function(intercept = 0, slope = 1,
 For example, suppose we we select a line that passes through $(1,2)$ and $(6,6)$. 
 the equation for this line is $y = 1.2 + 0.8 x$, and it looks like a pretty good fit:
 <<fig.keep = "last", fig.height = 3>>=
-xyplot( y ~ x, data=someData, xlim=c(0,7), ylim=c(0,7), type = c("p", "g") )
+xyplot( y ~ x, data = someData, xlim = c(0,7), ylim = c(0,7), type = c("p", "g") )
 f <- makeFun( 1.2 + 0.8 * x ~ x)
-plotFun( f(x) ~ x, add=TRUE, col="gray50" )
+plotFun( f(x) ~ x, add = TRUE, col = "gray50" )
 @
 The residuals for this function are 
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 resids <- with(someData, y - f(x)) ; resids 
 @
 and $SSE$ is 
@@ -179,8 +179,8 @@ fitLine(1.2, 0.8, squares = TRUE)
 If your line is a good fit, then $SSE$ will be small.  
 The best fitting line will have the smallest possible $SSE$.   
 The \function{lm()} function will find this best fitting line for us.
-<<tidy=FALSE>>=
-model1 <- lm( y ~ x, data=someData ); model1
+<<tidy = FALSE>>=
+model1 <- lm( y ~ x, data = someData ); model1
 @
 This says that the equation of the best fit line is 
 \[
@@ -188,10 +188,10 @@ This says that the equation of the best fit line is
 \]
 
 <<fig.height = 2.8>>=
-xyplot( y ~ x, data=someData, type=c('p','r','g') )
+xyplot( y ~ x, data = someData, type = c('p','r','g') )
 @
 We can compute $SSE$ using the \function{resid()} function.
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 SSE <- sum ( resid(model1)^2 ); SSE
 @
 <<echo = FALSE, results = "hide", fig.height = 2.8>>=
@@ -242,15 +242,15 @@ to measure than OSA.
 <<>>=
 Eyes <- read.file("http://www.calvin.edu/~rpruim/data/PalpebralFissure.txt")
 head(Eyes, 3)
-x.bar <- mean( ~palpebral, data=Eyes)  
-y.bar <- mean( ~OSA, data=Eyes)
-s_x <- sd( ~palpebral, data=Eyes)
-s_y <- sd( ~OSA, data=Eyes)
+x.bar <- mean( ~palpebral, data = Eyes)  
+y.bar <- mean( ~OSA, data = Eyes)
+s_x <- sd( ~palpebral, data = Eyes)
+s_y <- sd( ~OSA, data = Eyes)
 r <- cor( palpebral ~ OSA, data = Eyes)
-c( x.bar = x.bar, y.bar=y.bar, s_x=s_x, s_y=s_y, r=r )
+c( x.bar = x.bar, y.bar = y.bar, s_x = s_x, s_y = s_y, r = r )
 slope <- r * s_y/s_x
 intercept <- y.bar - slope * x.bar
-c(intercept=intercept, slope=slope)
+c(intercept = intercept, slope = slope)
 @
 \end{example}
 
@@ -263,7 +263,7 @@ to be able to estimate ocular surface area (OSA) from palpebral fissure (the
 horizontal width of the eye opening in cm) because palpebral fissue is easier
 to measure than OSA.
 <<>>=
-osa.model <- lm( OSA ~ palpebral, data=Eyes) 
+osa.model <- lm( OSA ~ palpebral, data = Eyes) 
 osa.model
 @
 \function{lm()} stands for linear model.  The default output includes the estimates
@@ -284,7 +284,7 @@ but an estimated value (based on the linear equation given).
 \R\ can add a regression line to our scatter plot if we ask it to.
 \begin{center}
 <<osa-scatter>>=
-xyplot( OSA ~ palpebral, data=Eyes, type=c('p','r') )
+xyplot( OSA ~ palpebral, data = Eyes, type = c('p','r') )
 @
 \end{center}
 
@@ -429,8 +429,8 @@ of the residuals, discrepancies are easier to see.
 Returning to our OSA data, we can make plots of all the residuals using the 
 \function{resid()} function.
 <<>>=
-xyplot( resid(osa.model) ~ palpebral, data=Eyes )
-qqmath( ~ resid(osa.model),  data=Eyes )
+xyplot( resid(osa.model) ~ palpebral, data = Eyes )
+qqmath( ~ resid(osa.model),  data = Eyes )
 @
 \end{example}
 If the assumptions of the model are correct, there should be no distinct patterns to this scatter
@@ -443,7 +443,7 @@ In this case things look pretty good.
 We can save ourselves a little typing if we create these plots using 
 \function{plot()} or \function{mplot()}.
 <<fig.height = 3>>=
-plot(osa.model, w=1:2)
+plot(osa.model, w = 1:2)
 @
 \noindent
 The ``standardized" residuals are the residuals that have been adjusted to
@@ -538,8 +538,8 @@ coef(summary(osa.model))
 			we don't know $\sigma$, so we have to estimate it using $RMSE = \sqrt{MSE}$.
 	\end{itemize}
 
-<<tidy=FALSE>>=
-t.star <- qt(.975, df=28); t.star    # n-2 degrees of freedom for simple linear regression
+<<tidy = FALSE>>=
+t.star <- qt(.975, df = 28); t.star    # n-2 degrees of freedom for simple linear regression
 t.star * 0.151
 @
 	So a 95\% confidence interval for $\beta_1$ is 
@@ -559,7 +559,7 @@ confint(osa.model)
 A 68\% confidence interval should have a margin of error of approximately 1 standard
 uncertainty:
 <<>>=
-confint(osa.model, level=0.68, "palpebral")
+confint(osa.model, level = 0.68, "palpebral")
 (3.2325 - 2.9275) / 2   # margin of error
 coef(summary(osa.model))
 @
@@ -571,8 +571,8 @@ We can also create interval estimates for the response.    \R\ will compute
 this if we simply ask:
 <<>>=
 estimated.osa <- makeFun(osa.model)
-estimated.osa( 1.2, interval="confidence")
-estimated.osa( 0.8, interval="confidence")
+estimated.osa( 1.2, interval = "confidence")
+estimated.osa( 0.8, interval = "confidence")
 @
 These intervals are confidence intervals for the \emph{mean} response.  Sometimes it
 is desirable to create an interval that will have a 95\% chance of containing a new 
@@ -580,8 +580,8 @@ observation.  These intervals are called \term{prediction intervals} to distingu
 them from the usual confidence interval.
 <<>>=
 estimated.osa <- makeFun(osa.model)
-estimated.osa( 1.2, interval="prediction")
-estimated.osa( 0.8, interval="prediction")
+estimated.osa( 1.2, interval = "prediction")
+estimated.osa( 0.8, interval = "prediction")
 @
 Prediction intervals are typically much wider than confidence intervals.  (It is more challenging
 to create an interval that contains a new observation (which might be quite a bit above 
@@ -598,8 +598,8 @@ The plot below illustrates both confidence (dotted) and prediction (dashed)
 intervals.
 Notice how most of the dots are within the prediction bands, but not within the 
 confidence bands.
-<<fig.width=6, out.width=".9\\textwidth", fig.height=3>>=
-xyplot( OSA ~ palpebral, data=Eyes, panel=panel.lmbands )
+<<fig.width = 6, out.width = ".9\\textwidth", fig.height = 3>>=
+xyplot( OSA ~ palpebral, data = Eyes, panel = panel.lmbands )
 @
 
 \subsubsection{A Caution Regarding Prediction Intervals}
@@ -611,10 +611,10 @@ size 1).
 \begin{problem}
 	Use the output below to answer some questions about rainfall volume  and 
 	runoff volume (both in $m^3$) for a particular stretch of a Texas highway.
-<<echo=FALSE>>=
+<<echo = FALSE>>=
 TexasHighway <- ex12.16
 names(TexasHighway) <- c('rainfall','runoff')
-rain.model <- lm(runoff ~ rainfall, data=TexasHighway)
+rain.model <- lm(runoff ~ rainfall, data = TexasHighway)
 summary(rain.model)
 @
 	\begin{enumerate}
@@ -648,8 +648,8 @@ summary(rain.model)
 confint( rain.model, "rainfall" )
 @
 	We can compute this from the information displayed:
-<<tidy=FALSE>>=
-t.star <- qt( .975, df=13 ) # 13 df listed for residual standard error
+<<tidy = FALSE>>=
+t.star <- qt( .975, df = 13 ) # 13 df listed for residual standard error
 t.star
 SE <- 0.0365
 ME <- t.star * SE; SE
@@ -685,10 +685,10 @@ like an uncertainty).
 \end{problem}
 
 \begin{solution}
-<<fig.height=3.5>>=
-foot.model <- lm( width ~ length, data=KidsFeet)
-plot(foot.model, w=1)
-plot(foot.model, w=2)
+<<fig.height = 3.5>>=
+foot.model <- lm( width ~ length, data = KidsFeet)
+plot(foot.model, w = 1)
+plot(foot.model, w = 2)
 @
 Our diagnostics look pretty good.  The residuals look randomly distributed with
 similar amounts of variability throughout the plot.  The normal-quantile plot
@@ -696,8 +696,8 @@ is nearly linear.
 
 <<>>=
 f <- makeFun(foot.model)
-f(24, interval="prediction")
-f(24, interval="confidence")
+f(24, interval = "prediction")
+f(24, interval = "confidence")
 @
 We can't estimate Billy's foot width very accurately (between 8.0 and 9.6 cm),
 but we can estimate the average foot width for all kids with a foot length of
@@ -731,28 +731,28 @@ but we can estimate the average foot width for all kids with a foot length of
 
 \begin{solution}
 <<>>=
-bike.model <- lm( distance ~ space, data=ex12.21 )
+bike.model <- lm( distance ~ space, data = ex12.21 )
 coef(summary(bike.model))
 f <- makeFun(bike.model)
-f( 15, interval="prediction" )
+f( 15, interval = "prediction" )
 @
 We would use a confidence interval to estimate the average separation distance 
 for all streets with 15 feet of available space.
 <<>>=
-f( 15, interval="confidence" )
+f( 15, interval = "confidence" )
 @
 \end{solution}
 
 \begin{problem}
 	Select only the non-diabetic men from the \dataframe{pheno} data set using
 <<>>=
-data(pheno, package = "fastR")
+data(pheno, package = "fastR2")
 Men <- subset(pheno, sex=="M" & t2d=="control")  # note the double == and quotes here
 head(Men,3)
 @
 This data set contains some phenotype information for subjects in
 a large genetics study.  You can find out more about the data set with
-<<tidy=FALSE,eval=FALSE>>=
+<<tidy = FALSE,eval = FALSE>>=
 ?pheno
 @
 \begin{enumerate}
@@ -792,7 +792,7 @@ coef(summary(model))
 		\item
 <<>>=
 # we can ask for just the parameter we want, if we like
-confint(model, parm="height")
+confint(model, parm = "height")
 @
 The slope tells us how much the average weight (in kg) increases per 
 cm of height.
@@ -800,9 +800,9 @@ cm of height.
 <<>>=
 f <- makeFun(model)
 # in kg
-f( 6 * 12 * 2.54, interval="confidence" ) 
+f( 6 * 12 * 2.54, interval = "confidence" ) 
 # in pounds
-f( 6 * 12 * 2.54, interval="confidence" ) * 2.2
+f( 6 * 12 * 2.54, interval = "confidence" ) * 2.2
 @
 		\item
 <<>>=
@@ -810,9 +810,9 @@ xyplot( resid(model) ~ fitted(model) )
 qqmath( ~ resid(model) )
 @
 We could also have used
-<<fig.height=3.5>>=
-plot(model, which=1)
-plot(model, which=2)
+<<fig.height = 3.5>>=
+plot(model, which = 1)
+plot(model, which = 2)
 @
 The residual plot looks fine.  There is bit of a bend to the normal-quantile plot, indicating
 that the distribution of residuals is a bit skewed (to the right -- the heaviest men are farther above
@@ -852,7 +852,7 @@ So
 		\item 
 			For each of the four pairs, us \R\ to fit a linear model and 
 			compare the results.  Use, for example,
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 model1 <- lm( y1 ~ x1, data = anscombe ); summary(model1)
 @
 			Briefly describe what you notice looking at this output.  (You do not have
@@ -959,7 +959,7 @@ Compute the residual for this observation.
 \begin{solution}
 <<>>=
 data(xmp12.06, package = "Devore7")
-sewage.model <- lm( moistcon ~ filtrate, data=xmp12.06)
+sewage.model <- lm( moistcon ~ filtrate, data = xmp12.06)
 # a)
 coef(summary(sewage.model))  # this includes standard errors; could also use summary() 
 # b)

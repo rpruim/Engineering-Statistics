@@ -53,13 +53,12 @@ You may wonder how we can know the distribution of errors when we cannot know th
 That is a good question, which we will begin to address via an example.
 
 \section{An Example: Estimating the number of dimes in a sack of dimes}
-<<dimes,include=FALSE,tidy=FALSE>>=
-require(Stob)
+<<dimes,include = FALSE,tidy = FALSE>>=
 B <- 10200; B
-D <- mean( ~Mass, data=dimes); D
+D <- mean( ~ mass, data = Dimes); D
 uB <- 100/sqrt(12); uB
-sD <- sd(~Mass, data=dimes); sD 
-uD <- sd(~Mass, data=dimes) / sqrt( nrow(dimes) ); uD
+sD <- sd( ~ mass, data = Dimes); sD 
+uD <- sd( ~ mass, data = Dimes) / sqrt( nrow(Dimes) ); uD
 u <- sqrt( 1/D^2 * uB^2 + B^2/D^4 * uD^2  )
 @
 
@@ -79,9 +78,9 @@ you could use:
 \end{enumerate}
 
 Suppose that our dimes weight 10.2 kg and the mean weight of our 30 measured dimes is
-\Sexpr{mean(~Mass, data=dimes)}.  Then we would estimate the number of dimes to be 
+\Sexpr{mean( ~ mass, data = Dimes)}.  Then we would estimate the number of dimes to be 
 \[
-10200 / \Sexpr{mean(~Mass, data=dimes)} = \Sexpr{ 10200 / mean(~Mass, data=dimes) } \;.
+10200 / \Sexpr{mean( ~ mass, data = Dimes)} = \Sexpr{ 10200 / mean( ~ mass, data = Dimes) } \;.
 \]
 But how good is this estimate?  Do we expect to be within a small handful of dimes?  Might we be 
 off by 100 or 500?  Standard uncertainty provides a way to quantify this.  But first, 
@@ -125,8 +124,7 @@ not in how accurately we can estimate the weight of any particular dime.
 So the distribution we are interested in is the sampling distribution for the 
 sample mean, and its standard deviation is just the standard error of the mean:
 <<>>=
-require(Stob)
-favstats(~Mass, data=dimes)
+df_stats( ~ mass, data = Dimes)
 @
 
 \[
@@ -142,9 +140,9 @@ So we would report our estimate for the mean weight of a dime as
 This notation looks like a confidence interval, 
 and indeed it is a confidence interval.
 Since we are using $t_* = 1$, this is approximately a 68\% confidence interval:
-% \Sexpr{ round(100 * (pt(1,df=29) - pt(-1,df=29)),1)} \% confidence interval.
+% \Sexpr{ round(100 * (pt(1,df = 29) - pt(-1,df = 29)),1)} \% confidence interval.
 <<>>=
-pt(1,df=29) - pt(-1,df=29)
+pt(1,df = 29) - pt(-1,df = 29)
 @
 
 \subsection{Propagating Error by the Delta Method}
@@ -291,9 +289,9 @@ dropped the hats.
 
 We can also estimate the uncertainty in the estimated number of dimes using simulations.
 
-<<dimes-sim,cache=TRUE>>=
+<<dimes-sim,cache = TRUE>>=
 B <- runif(10000, 10150, 10250)
-SampleMeans <- do(10000) * mean( ~Mass, data=resample(dimes) )
+SampleMeans <- do(10000) * mean( ~ mass, data = resample(Dimes) )
 head(SampleMeans ,3)
 D <- SampleMeans$mean
 N <- B/D
@@ -662,7 +660,7 @@ distance (velocity $\times$ time), etc.
 		\\
 		&= \left( \frac{ 20}{20 + 50}\right)^2 = \Sexpr{( 20 / 70 )^2}
 	\end{align*}
-<<resistors,include=FALSE>>=
+<<resistors,include = FALSE>>=
 R <- 20*50/(20 + 50)
 u1 <- 0.7; u2 <- 1.2
 p1 <- (50/70)^2; p2 <- (20/70)^2
@@ -870,12 +868,12 @@ visual representations that shows both what is ``typical'' or ``average'' and ho
 variability there is in the data.  
 
 \begin{figure}[h]
-<<echo=FALSE,out.width=".3\\textwidth",caption="Representations of the same 25 measurements">>=
+<<echo = FALSE,out.width = ".3\\textwidth",caption = "Representations of the same 25 measurements">>=
 set.seed(1234)
 x <- rnorm(25, 10, 2)
-histogram(~x, xlab="",n=10)
-densityplot(~x, xlab="")
-bwplot(~x, xlab="")
+histogram(~x, xlab = "",n = 10)
+densityplot(~x, xlab = "")
+bwplot(~x, xlab = "")
 @
 \caption{Three graphical representations of the same 25 measurents.}
 \end{figure}
@@ -1174,7 +1172,7 @@ $\Sexpr{round(pi * 12.5^2, -1)} \pm \Sexpr{round(2 * pi * 12.5 * 0.3, -1)}$.
 
 \begin{solution}
 	In a product the relative uncertainties add, so
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 L <- 2.65; W <- 3.10; H <- 4.61
 uL <- 0.02; uW <- 0.02; uH <- 0.05
 V <- L * W * H; V
@@ -1344,7 +1342,7 @@ we have nice formulas for the relative uncertainty in products and quotients.
 which gives a Pythagorean identity for the relative uncertainties just as it 
 did for a product.
 
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 V <- 1.637 / 0.43; V
 uV <- sqrt( (0.02/.43)^2 + (0.006/1.637)^2 ) * V; uV
 @

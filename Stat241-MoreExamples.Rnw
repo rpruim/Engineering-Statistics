@@ -21,7 +21,7 @@ so we expect little or no heat to be exchanged with the surroundings.
 
 \begin{figure}
     \centering
-    \includegraphics[width=3.5in]{images/HXerFig.pdf}
+    \includegraphics[width = 3.5in]{images/HXerFig.pdf}
     \caption{Heat exchanger with statepoints.}
     \label{fig:HXer_Figure}
 \end{figure}
@@ -42,7 +42,7 @@ Each observation consists of four~(4) temperature measurements
 and two~(2) mass flow rate measurements. 
 Here is an example data set with one set of measurements at each of 6
 experimental conditions:
-%<<include=FALSE>>=
+%<<include = FALSE>>=
 %HeatX <- data.frame(
 %  trial = 1:6,
 %  T.cold.in = c(14.3, 14.1, 14.1, 14.2, 14.1, 14.1),
@@ -55,7 +55,7 @@ experimental conditions:
 %)  
 %@
 
-<<fig.height=2.25>>=
+<<fig.height = 2.25>>=
 HeatX <- read.csv("http://www.calvin.edu/~rpruim/data/HeatX.csv")
 HeatX   # This also lives in the mosaicData package, so read.csv() isn't required
 xyplot(m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations", cex = 2)
@@ -147,7 +147,7 @@ from the temperature change and the mass flow rate as follows:
 \end{equation}
 
 We can estimate the values of $\dot{Q}$ from our data by direct caclulation:
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 C_p <- 4.18
 HeatX2 <- HeatX %>%
   mutate(
@@ -176,19 +176,19 @@ in heat change.
 The information above is enough to do this ``by hand'' using the standard error 
 formula $SE = \frac{s}{\sqrt{n}}$ and a t-distribution with $n-1 = 5$ degrees of freedom.
 
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 SE = 0.08274 /sqrt(6); SE
-0.09003 + c(-1,1) * qt(0.975, df=5) * SE       # 95% CI
+0.09003 + c(-1,1) * qt(0.975, df = 5) * SE       # 95% CI
 t <- (0.08999 - 0) / SE; t
-2 * pt( -abs(t), df=5 )                        # p-value
+2 * pt( -abs(t), df = 5 )                        # p-value
 @
 
 Or we can let \R\ do all the computations for us:
 
-%qplot( Q.env, " ", data=HeatX2, 
-%       geom="point", size=I(6), alpha=I(.5), 
-%       position=position_jitter(width=0, height=.1))
-<<fig.height=2>>=
+%qplot( Q.env, " ", data = HeatX2, 
+%       geom = "point", size = I(6), alpha = I(.5), 
+%       position = position_jitter(width = 0, height = .1))
+<<fig.height = 2>>=
 t.test( ~ Q.env, data = HeatX2)
 @
 In our example data, there is modest evidence for exchange with the environment, but
@@ -206,8 +206,8 @@ outer pipe and hot water in the inner pipe.
 the different set-ups.  From this small data set, there is not clear evidence 
 of some other relationship between heat exchanged with the environment
 and the experimental set up:
-<<fig.height=2.5>>=
-xyplot( Q.env ~ m.cold, data = HeatX2, groups = paste("m.hot =", round(m.hot,2)), auto.key=TRUE)
+<<fig.height = 2.5>>=
+xyplot( Q.env ~ m.cold, data = HeatX2, groups = paste("m.hot =", round(m.hot,2)), auto.key = TRUE)
 @
 \item
 The t-test and interval are based on the assumption that the distribution
@@ -263,7 +263,7 @@ If we estimate the uncertainty in measured temperatures
 to be $1$ degree C and the uncertainty in flow rate to be $0.5$ liters per
 minute (i.e., \Sexpr{0.5/60} L/sec), then we can compute the uncertainties in 
 the $\dot{Q}$ values as follows
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 HeatX2<- HeatX2 %>%
   mutate(
     u.Q.cold = C_p *sqrt( (T.cold.out - T.cold.in)^2 * (0.5/60)^2  + m.cold^2 * 2),  
@@ -306,9 +306,9 @@ deltaMethod(estimates, exprforQ, vc)
 The \pkg{deltaMethod} package adds additional interfaces for \function{deltaMethod()} to 
 make this even easier.
 <<>>=
-require(deltaMethod)
+library(deltaMethod)
 deltaMethod(HeatX, exprforQ, 
-  uncertainties=c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5 / 60))
+  uncertainties = c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5 / 60))
 @
 
 \subsubsection{Dealing with uncertainties that are not constant}
@@ -339,7 +339,7 @@ Do our results change if we include this uncertainty in our calculations?
 
 <<tidy = FALSE>>=
 deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
-  uncertainties=c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/60, C_p = 0.1))
+  uncertainties = c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/60, C_p = 0.1))
 @
 
 Comparing these results to the results above we see that the uncertainty
@@ -389,7 +389,7 @@ dramatically.
 
 <<>>=
 deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
-  uncertainties=c(T.cold.in = 0.1, T.cold.out = 0.1, m.cold = 0.5/60, C_p = 0.1))
+  uncertainties = c(T.cold.in = 0.1, T.cold.out = 0.1, m.cold = 0.5/60, C_p = 0.1))
 @
 
 But if we improve the uncertainty in the mass flow rate by a factor of 10, it has only a 
@@ -397,7 +397,7 @@ modest impact on our uncertainty for $\dot{Q}$.
 
 <<>>=
 deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
-  uncertainties=c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/600, C_p = 0.1))
+  uncertainties = c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/600, C_p = 0.1))
 @
 
 \subsection{Estimating the heat transfer coefficient, $U$}
@@ -420,7 +420,7 @@ of variables involved and the form of the expression to be differentiated.
 Fortunately, \R\ is happy to take care of those details if we just specify the
 information needed.
 
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 exprforU <- paste("C_p * m.cold * (T.cold.out - T.cold.in) /",
                   "( pi * D *  L  * ((T.cold.out - T.hot.in) - (T.cold.in - T.hot.out)) /",
                   " log ( (T.cold.out - T.hot.in) / (T.cold.in - T.hot.out) ) )")
@@ -507,7 +507,7 @@ We had not yet learned about uncertainty and standard errors when we learned abo
 \function{fitdistr()}, but the output from the function includes an estimated standard
 error.
 <<>>=
-require(fastR)
+library(fastR2)
 fitdistr(Jordan8687$points, "normal")
 @
 The parenthesized numbers are the estimated standard errors associated with each
@@ -529,12 +529,12 @@ sd( ~ points, data = Jordan8687) / sqrt(82)
 Recall that linear models are fit by minimizing the sum of the squares of the residuals:%
 \footnote{$RSS$ stands for Residual Sum of Squares; $SSE$ stands for Error Sum of Squares.}
 \[
-RSS = SSE = \sum_{i=1}^{n} ( y_i - \hat y)^2
+RSS = SSE = \sum_{i = 1}^{n} ( y_i - \hat y)^2
 \]
 This expression reminds us of%
 \footnote{$SST$ stands for Total Sum of Squares.}
 \[
-SST = \sum_{i=1}^{n} ( y_i - \mean y)^2 \;,
+SST = \sum_{i = 1}^{n} ( y_i - \mean y)^2 \;,
 \]
 the numerator of the variance of $y$.  $SST$ is a measure
 of the total variation in the response variable.
@@ -542,7 +542,7 @@ of the total variation in the response variable.
 A little algebra shows that\footnote{SSM stands for Model Sum of Squares.}
 \[
 SSM = SST - SSE = 
-\sum_{i=1}^{n} ( \hat y - \mean y)^2 \;,
+\sum_{i = 1}^{n} ( \hat y - \mean y)^2 \;,
 \]
 We can now define $R^2$ by
 \[

@@ -1,12 +1,12 @@
 \Sexpr{set_parent('Stat241-Notes.Rnw')}
 
-<<include=FALSE>>=
-require(gdata)
-require(fastR2)
-require(mosaic)
+<<include = FALSE>>=
+library(gdata)
+library(fastR22)
+library(mosaic)
 # haveInternet <- tryCatch( {
 # 	read.xls("http://www.calvin.edu/~rpruim/data/m241/MilledSteel.xls", 1); FALSE },
-# 	error=function(e) TRUE)
+# 	error = function(e) TRUE)
 @
 
 \setcounter{chapter}{7}
@@ -133,12 +133,12 @@ are often called power laws.  The two parameters are the exponent $p$ and a cons
 Power laws can be linearized by taking logarithms:
 \[ \log(y) = \log(A x^p) = \log(A) + p \log(x) \]
 So if we fit a model of the form
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 lm(log(y) ~ log(x))
 @
 Then $\beta_0 = \log(A)$ and $\beta_1 = p$.  
 If a power law is a good fit for the data then
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 xyplot(log(y) ~ log(x))
 @
 will produce a roughly linear plot.
@@ -162,12 +162,12 @@ The two parameters are the base $B = e^C$ and a constant of proportionality $A$.
 Exponential laws can also be linearized by taking logarithms:
 \[ \log(y) = \log(A B^x) = \log(A) + x \log(B) \]
 So if we fit a model of the form
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 lm(log(y) ~ x)
 @
 Then $\beta_0 = \log(A)$ and $\beta_1 = \log(B) = C$.  
 If an exponential law is a good fit for the data then
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 xyplot(log(y) ~ x)
 @
 will produce a roughly linear plot.
@@ -203,8 +203,8 @@ xyplot(y ~ x)
 <<>>=
 xyplot(log(y) ~ log(x))
 xyplot(log(y) ~ x)
-xyplot(y ~ x, scales=list(x=list(log=TRUE), y=list(log=TRUE)))
-xyplot(y ~ x, scales=list(y=list(log=TRUE)))
+xyplot(y ~ x, scales = list(x = list(log = TRUE), y = list(log = TRUE)))
+xyplot(y ~ x, scales = list(y = list(log = TRUE)))
 @
 \noindent
 As expected, the log-log transformation makes things linear.  Of course, with real data, the 
@@ -237,13 +237,13 @@ C^{-\beta} & = \beta k t + \beta d
 
 If we know $\beta = \alpha - 1$ (i.e., if we know $\alpha$), 
 then we can fit a linear model using
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 lm(C^(-1/beta) ~ t)
 @
 The intercept of such a model will be $\beta d$ and the slope will be $\beta k$,
 from which we can easily recover $d$ and $k$.
 
-Alternatively, if we know $d=0$ (i.e., if we know that $C = 0$ when $t=0$), 
+Alternatively, if we know $d = 0$ (i.e., if we know that $C = 0$ when $t = 0$), 
 then we can use
 \begin{align*}
 	\log( C^{-\beta} )  = -\beta \log(C) &= \log(\beta k t ) = \log(\beta k) + \log t
@@ -251,7 +251,7 @@ then we can use
  \log(C) &= - \frac{\log(\beta k)}{\beta} - \frac{1}{\beta} \log t
 \end{align*}
 Now if we fit a model of the form 
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 lm(C ~ log(t))
 @
 the intercept will be $\frac{-\log(\beta k)}{\beta}$ and the slope will be 
@@ -260,15 +260,15 @@ $\frac{-1}{\beta}$.  From this we can solve for $k$ and $\beta$.
 
 \begin{example}
 Continuing the previous example, we will fit the following data 
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 Concentration <- data.frame(
-  time=c(0, 50, 100, 150, 200, 250, 300),               # minutes
-  concentration=c(50, 38, 30.6, 25.6, 22.2, 19.5, 17.4) # mol/dm^3 * 10^3
+  time = c(0, 50, 100, 150, 200, 250, 300),               # minutes
+  concentration = c(50, 38, 30.6, 25.6, 22.2, 19.5, 17.4) # mol/dm^3 * 10^3
 )
-xyplot(concentration ~ time, data=Concentration)
+xyplot(concentration ~ time, data = Concentration)
 @
 under the assumption that 
-$\alpha=2$, so $\beta = 1$.  In this case, our relationship becomes
+$\alpha = 2$, so $\beta = 1$.  In this case, our relationship becomes
 \[
 \frac{1}{C}  = - k t - d \;.
  \]
@@ -300,15 +300,15 @@ measured to that degree of accuracy.
 If we want to show the fit on top of the original data, we must remember to
 untransform the response, since the model is a model for $1/C$.  There are two ways
 to do that.
-<<fig.keep='last'>>=
+<<fig.keep = 'last'>>=
 oneOverC <- makeFun(conc.model)
 xyplot(concentration ~ time, data = Concentration)
-plotFun(1/oneOverC(t) ~ t, add=TRUE)
+plotFun(1/oneOverC(t) ~ t, add = TRUE)
 @
-<<fig.keep='last'>>=
+<<fig.keep = 'last'>>=
 C <- makeFun(conc.model, transformation = function(x) 1/x)
 xyplot(concentration ~ time, data = Concentration)
-plotFun(C(t) ~ t, add=TRUE)
+plotFun(C(t) ~ t, add = TRUE)
 @
 \end{example}
 
@@ -356,7 +356,7 @@ for $x$ or $y$ (or both), while a curve like the one in the second quadrant,
 might be straightened by moving up the ladder for $y$ or down the ladder for $x$.
 \begin{figure}
 \begin{center}
-\begin{tikzpicture}[scale=1.6]
+\begin{tikzpicture}[scale = 1.6]
 \draw(175:1cm) arc (175:95:1cm);
 \draw(85:1cm) arc (85:5:1cm);
 \draw(-5:1cm) arc (-5:-85:1cm);
@@ -375,10 +375,10 @@ might be straightened by moving up the ladder for $y$ or down the ladder for $x$
 \draw[->](275:1cm) -- ++ (270:0.3cm);
 
 \draw(0,2.2) node {\ };
-\draw(0,0) + (0:1.3) node[anchor=west]   { move $x$ up };
-\draw(0,0) + (270:1.3) node[anchor=north]{ move $y$ down };
-\draw(0,0) + (180:1.3) node[anchor=east] { move $x$ down };
-\draw(0,0) + (90:1.3) node[anchor=south] { move $y$ up };
+\draw(0,0) + (0:1.3) node[anchor = west]   { move $x$ up };
+\draw(0,0) + (270:1.3) node[anchor = north]{ move $y$ down };
+\draw(0,0) + (180:1.3) node[anchor = east] { move $x$ down };
+\draw(0,0) + (90:1.3) node[anchor = south] { move $y$ up };
 \end{tikzpicture}
 \hfill
 \begin{minipage}{0.35\textwidth}
@@ -427,7 +427,7 @@ shows a curved relationship between
 $x$ and $y$.
 What transformations of $x$ and $y$ improve the linear fit?
 \begin{figure}
-<<tukey-bulge1,echo=FALSE>>=
+<<tukey-bulge1,echo = FALSE>>=
 n <- 20  
 x <- runif(n,2,10)
 y <- exp(0.3*x)
@@ -445,14 +445,14 @@ power <- function(x,a) {
     return  (apply(M, 1, foo))
 }
 powers <- c(0,0.5,1,2,3); np <- length(powers)
-a <- rep(rep(powers, each=n),each=np)
-b <- rep(rep(powers, each=n), times=np)
-x <- rep(x,times=n *np)
-y <- rep(y,times=n *np)
+a <- rep(rep(powers, each = n),each = np)
+b <- rep(rep(powers, each = n), times = np)
+x <- rep(x,times = n *np)
+y <- rep(y,times = n *np)
 X <- power(x,a)
 Y <- power(y,b)
 original <- (a==1 & b==1)
-ddd <- data.frame(X=X,Y=Y,a=a,b=b,original=original)
+ddd <- data.frame(X = X,Y = Y,a = a,b = b,original = original)
 xyplot(y~x)
 @
 \caption{A scatterplot illustrating a non-linear relationship between $x$ and $y$.}
@@ -466,17 +466,17 @@ up the ladder for $x$ or down the ladder for $y$.
 As we see in Figure~\ref{fig:TukeyBulgeMany}, 
 the fit generally improves as we move down and to the right -- but not too
 far, lest we over-correct.
-A $\log$-transformation of the response ($a=1$, $b=0$) seems 
+A $\log$-transformation of the response ($a = 1$, $b = 0$) seems 
 to be especially good in this case. Not only is the resulting relationship
 quite linear, but the residuals appear to have a better distribution as well.
 \end{example}
 
 \begin{figure}
-<<tuky-bulge-many,echo=FALSE,fig.width=6,fig.height=7>>=
-xyplot(Y~X|paste('a=',a,sep="") + paste("b=",b,sep=""),
-            ddd, groups=original, cex=.7,
-			xlab='x', ylab='y',
-            scales=list(relation='free', draw=FALSE))
+<<tuky-bulge-many,echo = FALSE,fig.width = 6,fig.height = 7>>=
+xyplot(Y~X|paste('a = ',a,sep = "") + paste("b = ",b,sep = ""),
+            ddd, groups = original, cex = .7,
+			xlab = 'x', ylab = 'y',
+            scales = list(relation = 'free', draw = FALSE))
 @
 \caption{Using the ladder of re-expression to find a better fit.}
 \label{fig:TukeyBulgeMany}%
@@ -492,8 +492,8 @@ floor.   We begin by fitting a linear model to this data.
 <<balldrop>>=
 ball.model <- lm(time ~ height, data = BallDrop)
 summary(ball.model)
-xyplot(time~height, data = BallDrop, type=c('p','r'))
-mplot(ball.model, w=1)
+xyplot(time~height, data = BallDrop, type = c('p','r'))
+mplot(ball.model, w = 1)
 @
 
 
@@ -512,7 +512,7 @@ moving down the ladder for \variable{height} or up the ladder for \variable{time
 ball.modelT <- lm(time ~ sqrt(height), data = BallDrop)
 summary(ball.modelT)
 plotModel(ball.modelT)
-mplot(ball.modelT, w=1)
+mplot(ball.modelT, w = 1)
 @
 This model does indeed fit better, but the residual plot indicates that
 there may be some inaccuracy in the measurement of the height.  
@@ -550,7 +550,7 @@ justify that the errors in average times at each height are independent
 not systematic).
 
 %\pagebreak
-% # balldropavg <- aggregate(balldrop$time, by=list(balldrop$height), mean)
+% # balldropavg <- aggregate(balldrop$time, by = list(balldrop$height), mean)
 % # names(balldropavg) <- c('height','time')
 <<balldrop-avg, tidy = FALSE>>=
 BallDropAvg <- 
@@ -655,17 +655,17 @@ soap.model2 <- lm(I(weight^(1/3)) ~ day, data = Soap)
 summary(soap.model2)
 @
 \begin{figure}
-<<echo=FALSE>>=
-daysToFit <- seq(1,22,by=0.5)
-linfits <- predict(soap.model1, newdata=data.frame(day = daysToFit))
-transfits <- predict(soap.model2, newdata=data.frame(day = daysToFit))^3
+<<echo = FALSE>>=
+daysToFit <- seq(1,22,by = 0.5)
+linfits <- predict(soap.model1, newdata = data.frame(day = daysToFit))
+transfits <- predict(soap.model2, newdata = data.frame(day = daysToFit))^3
 soap.plot <- xyplot(weight ~ day, data = Soap, 
     panel = function(x,y,...) {
-        panel.xyplot(daysToFit,linfits, lwd=2, type="l", 
-            col=trellis.par.get('superpose.line')$col[1])
-        panel.xyplot(daysToFit,transfits, lwd=2, type="l",
-            col=trellis.par.get('superpose.line')$col[2])
-        panel.xyplot(x,y,cex=1.0,...)
+        panel.xyplot(daysToFit,linfits, lwd = 2, type = "l", 
+            col = trellis.par.get('superpose.line')$col[1])
+        panel.xyplot(daysToFit,transfits, lwd = 2, type = "l",
+            col = trellis.par.get('superpose.line')$col[2])
+        panel.xyplot(x,y,cex = 1.0,...)
     }
     )
 soap.plot
@@ -763,26 +763,26 @@ is there still some cause for concern?
 	$\log(y) = \log(a) + x \log(b)$, 
 	so $g(y) = \log(y)$,
 	$f(x) = x$, 
-	$\beta_0=\log(a)$,
-	and $\beta_1=\log(b)$.
+	$\beta_0 = \log(a)$,
+	and $\beta_1 = \log(b)$.
   \item
 	$\log(y) = \log(a) + b \log(x)$, 
 	so $g(y) = \log(y)$,
 	$f(x) = \log(x)$, 
-	$\beta_0=\log(a)$,
-	and $\beta_1=b$.
+	$\beta_0 = \log(a)$,
+	and $\beta_1 = b$.
   \item
 	$\frac{1}{y} = a + b x$, 
 	so $g(y) = \frac{1}{y}$,
 	$f(x) = x$, 
-	$\beta_0=a$,
-	and $\beta_1=b$.
+	$\beta_0 = a$,
+	and $\beta_1 = b$.
   \item
 	$\frac{1}{y} = \frac{a}{x} + b$, 
 	so $g(y) = \frac{1}{y}$,
 	$f(x) = \frac{1}{x}$, 
-	$\beta_0=b$,
-	and $\beta_1=a$.
+	$\beta_0 = b$,
+	and $\beta_1 = a$.
    \item
 	not possible
   \item
@@ -790,15 +790,15 @@ is there still some cause for concern?
 	$\log(\frac{1}{y} - 1) = \log( \frac{1-y}{y} ) = {a + bx}$, 
 	so $g(y) = \log(\frac{1-y}{y})$,
 	$f(x) = {x}$, 
-	$\beta_0=a$,
-	and $\beta_1=b$.
+	$\beta_0 = a$,
+	and $\beta_1 = b$.
   \item
 	$\frac{100}{y} = 1 + e^{a + bx}$, so
 	$\log(\frac{100}{y} - 1) = \log( \frac{100-y}{y} ) = {a + bx}$, 
 	so $g(y) = \log(\frac{100-y}{y})$,
 	$f(x) = {x}$, 
-	$\beta_0=a$,
-	and $\beta_1=b$.
+	$\beta_0 = a$,
+	and $\beta_1 = b$.
   \end{enumerate}
 \end{solution}
 
@@ -857,7 +857,7 @@ of the pendulum.
 The students constructed pendulums of lengths varying from
 $10$ cm to $16$ m and recorded the period length (averaged over several
 swings of the pendulum).  The resulting data are in
-the \dataframe{pendulum} data set in the \pkg{fastR2} package.
+the \dataframe{Pendulum} data set in the \pkg{fastR22} package.
 
 \begin{enumerate}
 	\item
@@ -882,9 +882,9 @@ What is the estimated power in the power law based on this model?
 	% (Note: the 
 	% function produced by \function{makeFun()} does not know how to invert the log
 	% transformation on the response variable, so we have to do that ourselves.)
-<<warning=FALSE>>=
+<<warning = FALSE>>=
 model <- lm(log(period) ~ log(length), data = Pendulum)
-model2 <- nls(period ~ A * length^power, data = Pendulum, start = list(A=1, power=2))
+model2 <- nls(period ~ A * length^power, data = Pendulum, start = list(A = 1, power = 2))
 f <- makeFun(model)
 g <- makeFun(model2)
 xyplot(period ~ length, data = Pendulum)
@@ -897,8 +897,8 @@ coef(summary(model2))
 	But if we look at the residuals, we see that the linear model is clearly 
 	better in this case.  The non-linear model suffers from heteroskedasticity.
 <<>>=
-xyplot(resid(model) ~ fitted(model), type=c('p','smooth'))
-xyplot(resid(model2) ~ fitted(model2), type=c('p','smooth'))
+xyplot(resid(model) ~ fitted(model), type = c('p','smooth'))
+xyplot(resid(model2) ~ fitted(model2), type = c('p','smooth'))
 @
 	Both residual distributions are reasonably close to normal, but not perfect.
 	In the ordinary least squares model, the largets few residuals are not as large
@@ -978,7 +978,7 @@ how you chose your best model.
 \Rindex{ACTgpa}%
 \myindex{ACT}%
 \myindex{grade point average}%
-The data set \dataframe{ACTgpa} (in the \pkg{fastR2} package)
+The data set \dataframe{ACTgpa} (in the \pkg{fastR22} package)
 %  \url{http://www.calvin.edu/~stob/courses/m344/S07/data/actgpanona.csv}
 contains the ACT composite scores and GPAs of some randomly selected seniors 
 at a Midwest liberal arts college.
@@ -1007,7 +1007,7 @@ at a Midwest liberal arts college.
 		\item
 			We can build a confidence interval for the mean by fitting 
 			a model with only an intercept term.
-<<act-gpa, tidy=FALSE>>=
+<<act-gpa, tidy = FALSE>>=
 grades <- ACTgpa
 confint(lm(ACT ~ 1, data = grades))
 @
@@ -1016,10 +1016,10 @@ But this isn't the only way to do it.  Here are some other ways.
 # here's another way to do it; but you don't need to know about it
 t.test(grades$ACT)
 # or you can do it by hand
-x.bar <- mean(~ACT, data=grades); x.bar
+x.bar <- mean(~ACT, data = grades); x.bar
 n <- nrow(grades); n
-t.star <- qt(.975, df=n-1); t.star
-SE <- sd(~ACT, data=grades) / sqrt(n); SE
+t.star <- qt(.975, df = n-1); t.star
+SE <- sd(~ACT, data = grades) / sqrt(n); SE
 ME <- t.star * SE; ME
 @
 			So the CI is $\Sexpr{x.bar} \pm \Sexpr{ME}$.  Of course, that is too many digits, we 
@@ -1034,12 +1034,12 @@ confint(lm(GPA ~ 1, data = grades))
 <<>>=
 grades.model <- lm(GPA ~ ACT, data = grades)
 f <- makeFun(grades.model)
-f(ACT=25, interval="confidence")
+f(ACT = 25, interval = "confidence")
 @
 		
 		\item
 <<>>=
-f(ACT=30, interval="prediction")
+f(ACT = 30, interval = "prediction")
 @
 		\item
 <<>>=
@@ -1079,7 +1079,7 @@ just the right ballast to make it neutrally buoyant.  Mass is then added
 and the terminal velocity is calculated by measuring the time it takes to
 fall between two sensors once terminal velocity has been reached.
 
-The \dataframe{Drag} data set (in the \pkg{fastR2} package) contains the results 
+The \dataframe{Drag} data set (in the \pkg{fastR22} package) contains the results 
 of such an experiment
 conducted by some undergraduate physics students.  Mass is measured 
 in grams and velocity in meters per second.  
@@ -1121,14 +1121,14 @@ coef(summary(model3))
 @
 Note that \variable{model1}, \variable{model2}, and \variable{model3} are not 
 equivalent, but they all tell roughly the same story.
-<<warning=FALSE>>=
-xyplot(velocity ~ force.drag, data=Drag)
+<<warning = FALSE>>=
+xyplot(velocity ~ force.drag, data = Drag)
 f1 <- makeFun(model1)
 f2 <- makeFun(model2)
 f3 <- makeFun(model3)
-plotFun(sqrt(f1(x)) ~ x, add=TRUE, alpha=.4)
-plotFun(f2(x) ~ x, add=TRUE, alpha=.4, col='red')
-plotFun(exp(f3(x)) ~ x, add=TRUE, alpha=.4, col='brown')
+plotFun(sqrt(f1(x)) ~ x, add = TRUE, alpha = .4)
+plotFun(f2(x) ~ x, add = TRUE, alpha = .4, col = 'red')
+plotFun(exp(f3(x)) ~ x, add = TRUE, alpha = .4, col = 'brown')
 @
 
 The fit for these models reveals some 
@@ -1144,7 +1144,7 @@ plot(model1, w = 1)
 xyplot(log(velocity) ~ log(force.drag), data = Drag, groups = height)
 xyplot(velocity ~ force.drag, data = Drag, groups = height, 
        scales = list(log = TRUE))
-plot(model3, w=1)
+plot(model3, w = 1)
 @
 \end{solution}
 
@@ -1172,7 +1172,7 @@ Redo Exercise~\ref{prob:drag1} after removing this data.
 \begin{problem}
 \Rindex{Spheres}%
 \myindex{physics|probidx}%
-The \dataframe{Spheres} data set (in the \pkg{fastR2} package)
+The \dataframe{Spheres} data set (in the \pkg{fastR22} package)
 contains measurements of the diameter (in meters)
 and mass (in kilograms) of a set of steel ball bearings.  We would expect
 the mass to be proportional to the cube of the diameter.  Fit a model 
@@ -1183,7 +1183,7 @@ and see if the data reflect this.
 \begin{problem}
 \Rindex{Spheres}%
 \myindex{physics|probidx}%
-The \dataframe{Spheres} data set (in the \pkg{fastR2} package)
+The \dataframe{Spheres} data set (in the \pkg{fastR22} package)
 contains measurements of the diameter (in meters)
 and mass (in kilograms) of a set of steel ball bearings.  We would expect
 the mass to be proportional to the cube of the diameter.  
@@ -1254,14 +1254,14 @@ Let's illustrate with an example.
 	\label{eq:balldrop}
 	\end{align}
 	using nonlinear least squares.  
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 nls.model <- nls(time ~ alpha0 + alpha1 * sqrt(height), 
                   data = BallDrop, 
                   start = list(alpha0 = 0, alpha1 = 1))
 @
 	Notice how the model formula compares with the formula in (\ref{eq:balldrop}).
 	The starting point for the algorithm is specified with 
-	\code{start=list(alpha0 = 0, alpha1 = 1)}, which also declares 
+	\code{start = list(alpha0 = 0, alpha1 = 1)}, which also declares 
 	the parameters to be fit.
 
 	We can obtain the coefficients of the fitted model with
@@ -1284,17 +1284,17 @@ coef(summary(nls.model))
 <<>>=
 f <- makeFun(nls.model)
 xyplot(time ~ height, data = BallDrop)
-plotFun(f(height) ~ height, add=TRUE, col='gray40')
+plotFun(f(height) ~ height, add = TRUE, col = 'gray40')
 xyplot(resid(nls.model) ~ fitted(nls.model))
 @
 
 We can compare this to the ordinary least squares model by plotting both together on the same plot.
-<<fig.keep='last'>>=
+<<fig.keep = 'last'>>=
 lm.model <- lm(time ~ sqrt(height), data = BallDrop)
 g <- makeFun(lm.model)
 xyplot(time ~ height, data = BallDrop)
-plotFun(f(height) ~ height, add=TRUE, col='gray40', lwd=3)
-plotFun(g(height) ~ height, add=TRUE, col='red', lwd=1, lty=2)
+plotFun(f(height) ~ height, add = TRUE, col = 'gray40', lwd = 3)
+plotFun(g(height) ~ height, add = TRUE, col = 'red', lwd = 1, lty = 2)
 @
 In this particular case, there is very little difference between the two models, but this is not always the case.
 <<>>=
@@ -1308,7 +1308,7 @@ coef(lm.model)
 	\[
 	\variable{time} = \alpha * \variable{height}^p
 	\]
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 power.model <- nls(time ~ alpha * height^power, data = BallDrop, 
                    start = c(alpha = 1, power = .5))
 coef(summary(power.model))
@@ -1366,18 +1366,18 @@ of the nonlinear least squares approach.
 	A professor at Macalester College put hot water in a mug and recorded the temperature as it cooled. 
 	Let's see if we can fit a reasonable model to this data
 <<>>=
-xyplot(temp ~ time, data=CoolingWater, ylab="temp (C)", xlab="time (sec)")
+xyplot(temp ~ time, data = CoolingWater, ylab = "temp (C)", xlab = "time (sec)")
 @
 
 Our first guess might be some sort of exponential decay
-<<tidy=FALSE, fig.keep='last'>>=
+<<tidy = FALSE, fig.keep = 'last'>>=
 cooling.model1 <- 
-  nls(temp ~ A * exp( -k * time), data=CoolingWater, 
-      start=list(A=100, k=0.1))
+  nls(temp ~ A * exp( -k * time), data = CoolingWater, 
+      start = list(A = 100, k = 0.1))
 f1 <- makeFun(cooling.model1)
-xyplot(temp ~ time, data=CoolingWater, xlim=c(-50,300), ylim=c(0,110), 
-        ylab="temp (C)", xlab="time (sec)")
-plotFun(f1(time) ~ time, add=TRUE)
+xyplot(temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110), 
+        ylab = "temp (C)", xlab = "time (sec)")
+plotFun(f1(time) ~ time, add = TRUE)
 @
 
 That doesn't fit very well, and there is a good reason.  The model says that eventually the water will freeze because
@@ -1386,14 +1386,14 @@ That doesn't fit very well, and there is a good reason.  The model says that eve
 \]
 when $k >0$.  But clearly our water isn't going to freeze sitting on a lab table.  We can fix this by 
 adding in an offset to account for the ambient temperature:
-<<tidy=FALSE, fig.keep="last">>=
-cooling.model2 <- nls(temp ~ ambient + A * exp(k * (1+time)), data=CoolingWater,
-                      start=list(ambient=20, A=80, k=-.1) )
+<<tidy = FALSE, fig.keep = "last">>=
+cooling.model2 <- nls(temp ~ ambient + A * exp(k * (1+time)), data = CoolingWater,
+                      start = list(ambient = 20, A = 80, k = -.1) )
 f2 <- makeFun(cooling.model2)
-xyplot(temp ~ time, data=CoolingWater, xlim=c(-50,300), ylim=c(0,110),
-        ylab="temp (C)", xlab="time (sec)")
-plotFun(f1(time) ~ time, add=TRUE, lty=2, col="gray80")
-plotFun(f2(time) ~ time, add=TRUE, col = "steelblue")
+xyplot(temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110),
+        ylab = "temp (C)", xlab = "time (sec)")
+plotFun(f1(time) ~ time, add = TRUE, lty = 2, col = "gray80")
+plotFun(f2(time) ~ time, add = TRUE, col = "steelblue")
 @
 This fits much better.  Furthermore, this model can be derived from a differential equation
 \[
@@ -1405,8 +1405,8 @@ known as Newton's Law of Cooling.
 
 Let's take a look at the residual plot
 <<>>=
-xyplot(resid(cooling.model2) ~ time, data=CoolingWater) 
-plot(cooling.model2, which=1)
+xyplot(resid(cooling.model2) ~ time, data = CoolingWater) 
+plot(cooling.model2, which = 1)
 @
 Hmm.  These plots show a clear pattern and very little noise.
 The fit doesn't look as good when viewed this way.  

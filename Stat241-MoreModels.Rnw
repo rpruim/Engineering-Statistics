@@ -31,7 +31,7 @@ coef(summary(cooling.model2))
 	\]
 	Alternatively, we could construct a 95\% confidence interval:
 <<>>=
-confint(cooling.model2, level=0.95)
+confint(cooling.model2, level = 0.95)
 @
 
 We could use the same procedure to estimate the other parameters in the model as well.
@@ -49,14 +49,14 @@ We could use the same procedure to estimate the other parameters in the model as
 \end{problem}
 
 \begin{solution}
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 coef(summary(cooling.model2))
 k <- coef(summary(cooling.model2))["k","Estimate"]; k
 SE <- coef(summary(cooling.model2))["k","Std. Error"]; SE
 t <- coef(summary(cooling.model2))["k","t value"];t 
 t.star <- qt(.975, df= 222-3); t  # 222 observations - 3 parameters
 t.star * SE
-2 * pt ( t, df=222-3)             # degrees of freedom check (should match p-value above)
+2 * pt ( t, df = 222-3)             # degrees of freedom check (should match p-value above)
 @
 	\begin{enumerate}
 		\item
@@ -151,16 +151,16 @@ Let's take a look at an example.
 	generates for a linear model with \variable{Color} as the predictor.
 
 <<>>=
-require(fastR)
-bugs.model <- lm( NumTrap ~ Color, data=bugs )
+library(fastR2)
+bugs.model <- lm( NumTrap ~ Color, data = bugs )
 summary(bugs.model)
 @
 <<>>=
-xyplot( NumTrap ~ Color, data=bugs )
+xyplot( NumTrap ~ Color, data = bugs )
 xyplot( resid(bugs.model) ~ fitted(bugs.model))
 @
 <<>>=
-xyplot( resid(bugs.model) ~ Color, data=bugs)
+xyplot( resid(bugs.model) ~ Color, data = bugs)
 qqmath( ~resid(bugs.model))
 @
 
@@ -225,7 +225,7 @@ error rate", or ``Multiple Comparisons".
 
 None of the individual hypothesis tests in the previous example answer the simple question
 \emph{Are all the group means the same?}.  
-This would be equivalent to $\beta_1 = \beta_2 = \beta_3=0$.
+This would be equivalent to $\beta_1 = \beta_2 = \beta_3 = 0$.
 There is a test for this, however.  This test fits into a general scheme of
 tests that have a similar structure and are based on a new family of
 distributions called the F-distributions.  The test statistic comes from
@@ -237,7 +237,7 @@ SST = SSM + SSE
 \begin{itemize}
 	\item
 		$SSE$ is the sum of squares of the residuals:
-		\[ SSE = \sum_{i=1}^{n} (y_i - \hat y_i)^2 \]
+		\[ SSE = \sum_{i = 1}^{n} (y_i - \hat y_i)^2 \]
 	\item 
 		$MSE$ is $SSE$ divided by the appropriate degrees of freedom ($n$ minus the number
 		of parameters in the model.)
@@ -245,14 +245,14 @@ SST = SSM + SSE
 		$SSM$ is the portion of the variability explained by the model.  That is,
 		$SSM$ measures how different the fitted values ($\hat y$) are from the mean value ($\mean y$):
 		\[
-		SSM = \sum_{i=1}^n (\hat y_i - \mean y)^2
+		SSM = \sum_{i = 1}^n (\hat y_i - \mean y)^2
 		\]
 	\item
 		$MSM = SSM / DFM$, where $DFM$ is the number of parameters in the model.
 	\item
 		$SST = SSM + SSE$ is another familiar sum:
 		\[
-		SST = \sum_{i=1}^n (y_i - \mean y)^2
+		SST = \sum_{i = 1}^n (y_i - \mean y)^2
 		\]
 	\item
 		$MST = SST/(n-1)$ is the variance of the response variable.
@@ -285,10 +285,10 @@ all four colors attract the same number of bugs on average.
 
 
 If we had to we could do all the calculations ``by hand'':
-<<tidy=FALSE>>=
+<<tidy = FALSE>>=
 SSE <- sum( resid(bugs.model)^2 ); SSE
 MSE <- SSE / (24 - 4); MSE
-y.bar <- mean( ~ NumTrap, data=bugs); y.bar
+y.bar <- mean( ~ NumTrap, data = bugs); y.bar
 SSM <- sum( (fitted(bugs.model) - y.bar)^2 ); SSM
 MSM <- SSM / 3 ; MSM
 SST <- sum( (bugs$NumTrap - y.bar)^2); SST

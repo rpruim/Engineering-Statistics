@@ -1,6 +1,6 @@
 
 \documentclass[twoside]{book}
-\usepackage[margin=.9in]{geometry}
+\usepackage[margin = .9in]{geometry}
 %\usepackage{kpfonts}   % for \varhearsuit
 %\usepackage{txfonts}    % for \varhearsuit
 \usepackage{amsmath}
@@ -11,6 +11,7 @@
 \def\SD{\operatorname{SD}}
 \usepackage{xstring}
 \usepackage{makeidx}
+\usepackage{underscore}
 
 %\def\Prob{\operatorname{Pr}}
 \def\tnot{\operatorname{not}}
@@ -73,8 +74,8 @@
 \lhead[\sf \thepage]{\sf \thechapter. \leftmark}
 \rhead[\sf \thechapter. \leftmark]{\sf \thepage}
 \cfoot{}
-\lfoot[\sf Last Modified: \today]{\sf Math 241 : Spring 2017 : Pruim}
-\rfoot[\sf Stat 241 : Spring 2017 : Pruim]{\sf Last Modified: \today}
+\lfoot[\sf Last Modified: \today]{\sf Math 241 : Pruim}
+\rfoot[\sf Stat 241 : Pruim]{\sf Last Modified: \today}
 
 \pagestyle{fancy}
 
@@ -165,47 +166,47 @@
 \solutionslocaltrue
 \solutionslocalfalse
 
-\parindent=0pt
-\parskip=3mm
+\parindent = 0pt
+\parskip = 3mm
 
 
 
-<<setup,echo=FALSE,message=FALSE>>=
-require(DAAG)
-require(Devore7)
-require(MASS)
-require(grDevices)
-require(datasets)
-require(stats)
-require(lattice)
-require(grid)
-require(Stob)
-require(vcd)
-#require(fastR)
-require(abd)
-require(knitr)
-require(alr3)
-require(mosaic)
-require(mosaicData)
-require(mosaicCalc)
-require(fastR)
-require(ggplot2)
-trellis.par.set(theme=col.mosaic())
-trellis.par.set(fontsize=list(text=9))
-#options(keep.blank.line=FALSE)
+<<setup,echo = FALSE,message = FALSE>>=
+library(DAAG)
+library(Devore7)
+library(MASS)
+library(grDevices)
+library(datasets)
+library(stats)
+library(lattice)
+library(grid)
+# library(Stob)
+library(vcd)
+#library(fastR2)
+library(abd)
+library(knitr)
+library(alr4)
+library(mosaic)
+library(mosaicData)
+library(mosaicCalc)
+library(fastR2)
+library(ggplot2)
+trellis.par.set(theme = col.mosaic())
+trellis.par.set(fontsize = list(text = 9))
+#options(keep.blank.line = FALSE)
 options(formatR.blank = FALSE)
-options(show.signif.stars=FALSE)
-options(width=90)
-options(digits=3)
-opts_chunk$set(tidy=TRUE,
+options(show.signif.stars = FALSE)
+options(width = 90)
+options(digits = 3)
+opts_chunk$set(tidy = TRUE,
                digits = 4,
-			   dev='pdf',
-			   fig.path='figures/fig-',  
-			   fig.width=3, fig.height=2,
-			   fig.align='center',
-			   fig.show='hold'
+			   dev = 'pdf',
+			   fig.path = 'figures/fig-',  
+			   fig.width = 3, fig.height = 2,
+			   fig.align = 'center',
+			   fig.show = 'hold'
 			   )
-onLine=TRUE
+onLine = TRUE
 
 knit_hooks$set(document = function(x) { 
 			   sub('\\usepackage[]{color}', '\\usepackage[]{xcolor}', 
@@ -245,37 +246,37 @@ knit_hooks$set(digits = function(before, options, envir) {
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% main content starts here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<child="Stat241-Chap0.Rnw">>=
+<<child = "Stat241-Chap0.Rnw">>=
 @
 
-<<child="Stat241-Graphical.Rnw">>=
+<<child = "Stat241-Graphical.Rnw">>=
 @
 
-<<child="Stat241-Numerical.Rnw">>=
+<<child = "Stat241-Numerical.Rnw">>=
 @
 
-<<child="Stat241-Probability.Rnw", eval = TRUE>>=
+<<child = "Stat241-Probability.Rnw", eval = TRUE>>=
 @
 
-<<child="Stat241-RandomVariables.Rnw", eval = TRUE>>=
+<<child = "Stat241-RandomVariables.Rnw", eval = FALSE>>=
 @
 
-<<child="Stat241-Transformations.Rnw", eval = TRUE>>=
+<<child = "Stat241-Transformations.Rnw", eval = FALSE>>=
 @
 
-<<child="Stat241-Propagation.Rnw", eval=TRUE>>=
+<<child = "Stat241-Propagation.Rnw", eval = FALSE>>=
 @
 
-<<child="Stat241-SimpleLinear.Rnw", eval=TRUE>>=
+<<child = "Stat241-SimpleLinear.Rnw", eval = FALSE>>=
 @
 
-<<child="Stat241-NonLinear.Rnw", eval=TRUE>>=
+<<child = "Stat241-NonLinear.Rnw", eval = FALSE>>=
 @
 
-<<child="Stat241-HypothesisTesting.Rnw", eval=TRUE>>=
+<<child = "Stat241-HypothesisTesting.Rnw", eval = FALSE>>=
 @
 
-<<child="Stat241-MoreExamples.Rnw", eval=TRUE>>=
+<<child = "Stat241-MoreExamples.Rnw", eval = FALSE>>=
 @
 
 \backmatter

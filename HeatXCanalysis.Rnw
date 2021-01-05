@@ -1,20 +1,20 @@
-<<setup, include=FALSE>>=
-require(knitr)
-require(car)
-require(mosaic)
-trellis.par.set(theme=col.mosaic())
-require(ggplot2)
-require(plyr)
-opts_chunk$set(size="small", 
-               tidy=FALSE, 
-               fig.show="hold",
-               fig.align='center',
-               fig.width=5, fig.height=4, 
-               out.width=".47\\textwidth")
+<<setup, include = FALSE>>=
+library(knitr)
+library(car)
+library(mosaic)
+trellis.par.set(theme = col.mosaic())
+library(ggplot2)
+library(plyr)
+opts_chunk$set(size = "small", 
+               tidy = FALSE, 
+               fig.show = "hold",
+               fig.align = 'center',
+               fig.width = 5, fig.height = 4, 
+               out.width = ".47\\textwidth")
 @
 
 \documentclass{article}
-\usepackage[margin=1in, right=1.5in]{geometry}
+\usepackage[margin = 1in, right = 1.5in]{geometry}
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{booktabs}
@@ -54,7 +54,7 @@ so we expect no heat to be exchanged with the surroundings.
 
 \begin{figure}
     \centering
-    \includegraphics[width=3.5in]{images/HXerFig.pdf}
+    \includegraphics[width = 3.5in]{images/HXerFig.pdf}
     \caption{Heat exchanger with statepoints.}
     \label{fig:HXer_Figure}
 \end{figure}
@@ -78,7 +78,7 @@ and two~(2) mass flow rate measurements.
 
 Here is an example data set with one set of measurements at each of 6
 experimental conditions:
-<<include=FALSE>>=
+<<include = FALSE>>=
 HeatX <- data.frame(
   trial = 1:6,
   T.cold.in = c(14.3, 14.1, 14.1, 14.2, 14.1, 14.1),
@@ -90,9 +90,9 @@ HeatX <- data.frame(
 )  
 @
 
-<<fig.height=2.25>>=
+<<fig.height = 2.25>>=
 HeatX
-xyplot( m.hot ~ m.cold, data=HeatX, main="Experimental Configurations")
+xyplot( m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations")
 @
 
 
@@ -140,12 +140,12 @@ other.)
 
 Assuming any loss to (or gain from) the environment is essentially constant for the apparatus over the experimental conditions analysed, we can use our 6 observations to estimate the amount of heat exchanged with the environment:
 
-<<fig.height=2>>=
-confint(t.test( ~ Q.env, data=HeatX2))
-qplot( Q.env, " ", data=HeatX2, 
-       geom="point", size=I(6), alpha=I(.5), 
-       position=position_jitter(width=0, height=.1))
-stripplot( ~ Q.env, data=HeatX2, alpha=.6, cex=3)
+<<fig.height = 2>>=
+confint(t.test( ~ Q.env, data = HeatX2))
+qplot( Q.env, " ", data = HeatX2, 
+       geom = "point", size = I(6), alpha = I(.5), 
+       position = position_jitter(width = 0, height = .1))
+stripplot( ~ Q.env, data = HeatX2, alpha = .6, cex = 3)
 @
 In our example data, there is modest evidence for exchange with the enironment, but
 the estimated amount of heat gained from the environment is not very precisely 
@@ -159,8 +159,8 @@ Notes:
 the different set-ups.  From this small dat set, there is not clear evidence 
 of some other relationship between heat exchanged with the environment
 and the experimental set up:
-<<fig.height=2.5>>=
-xyplot( Q.env ~ m.cold, data=HeatX2, groups=m.hot)
+<<fig.height = 2.5>>=
+xyplot( Q.env ~ m.cold, data = HeatX2, groups = m.hot)
 @
 \item
 The t test and interval are based on the assumption that the distribution
@@ -170,7 +170,7 @@ upon which to judge whether this is a reasonable assumption.  The largest value 
 quite a bit larger than the rest, but even if we remove that observation, our 
 conclusions don't change dramatically:
 <<>>=
-confint(t.test( ~ Q.env, data=subset(HeatX2, Q.env < max(Q.env)) ) )
+confint(t.test( ~ Q.env, data = subset(HeatX2, Q.env < max(Q.env)) ) )
 @
 \end{enumerate}
 
@@ -242,14 +242,14 @@ With a little programming, we can add to the interface for \function{deltaMethod
 <<>>=
 # Ignore the code behind the curtain. This could be put into the mosaic package.  
 #
-deltaMethod.data.frame <- function(object, g, vcov., func=g, constants=c(), ...) {
+deltaMethod.data.frame <- function(object, g, vcov., func = g, constants = c(), ...) {
   if (is.data.frame(vcov.)) {
     if (ncol(object) != ncol(vcov.) ) stop( "Data frames are not of equal width")
     combined <- cbind( object, vcov.)
     w <- ncol(object)
     return( ddply( combined, names(combined), 
-         function(d) { deltaMethod( unlist(d[1,1:w]), g=g, vcov.=diag(unlist(d[1, (w+1):(2*w)])^2), 
-                                    func=func, constants=constants, ...) }
+         function(d) { deltaMethod( unlist(d[1,1:w]), g = g, vcov. = diag(unlist(d[1, (w+1):(2*w)])^2), 
+                                    func = func, constants = constants, ...) }
   ) )
   } 
 
@@ -261,7 +261,7 @@ deltaMethod.data.frame <- function(object, g, vcov., func=g, constants=c(), ...)
   }
   
   ddply( object, names(object), 
-         function(x) { deltaMethod( unlist(x[1,]), g=g, vcov.=vcov., func=func, constants=constants, ...) }
+         function(x) { deltaMethod( unlist(x[1,]), g = g, vcov. = vcov., func = func, constants = constants, ...) }
   )
 }
 @
@@ -272,7 +272,7 @@ Now we can do things like:
 deltaMethod( HeatX[, c("T.cold.in","T.cold.out","m.cold")], exprforQ, c(.1,.1,.2) )
 # This is just wordier in this example, but would allow the uncertainties to vary from row to row
 HeatX3 <- transform(HeatX, 
-  u.cold.in=.1, u.cold.out=.1, u.hot.in=.1, u.hot.out=.1, u.m.cold=.2, u.m.hot=.2
+  u.cold.in = .1, u.cold.out = .1, u.hot.in = .1, u.hot.out = .1, u.m.cold = .2, u.m.hot = .2
 )
 deltaMethod( HeatX3[, c("T.cold.in","T.cold.out","m.cold")], exprforQ, 
              HeatX3[, c("u.cold.in", "u.cold.out", "u.m.cold")])
@@ -302,7 +302,7 @@ HeatX3
 exprforU <- "C_p * m.cold * (T.cold.out - T.cold.in) / 
   ( A  * ((T.cold.out - T.hot.in) - (T.cold.in - T.hot.out)) / 
   log ( (T.cold.out - T.hot.in) / (T.cold.in - T.hot.out) ) )"
-deltaMethod( HeatX3[,2:7], exprforU, HeatX3[, 8:13], constants=list(A=1.2) )
+deltaMethod( HeatX3[,2:7], exprforU, HeatX3[, 8:13], constants = list(A = 1.2) )
 @
 
 Note the use of the \option{constants} argument here to specify the value of \variable{A}.  

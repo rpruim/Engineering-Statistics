@@ -2,11 +2,15 @@
 
 \Chapter{Graphical Summaries of Data}
 
+<<setup-graphical, include = FALSE>>=
+theme_set(theme_bw())
+@
+
 \section{Getting Started With \RStudio}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=.85\textwidth]{images/RStudio-Welcome}
+\includegraphics[width = .85\textwidth]{images/RStudio-Welcome.png}
 \end{center}
 \caption{Welcome to \Rstudio.}
 \label{fig:Rstudio-welcome}%
@@ -62,7 +66,7 @@ The console panel is where we type commands that \R\ will execute.
 sqrt(16)
 @
 You can save values to named variables for later reuse
-<<variables2,tidy=FALSE>>=
+<<variables2,tidy = FALSE>>=
 product = 15.3 * 23.4       # save result
 product                     # show the result
 product <- 15.3 * 23.4      # <- is assignment operator, same as =
@@ -72,12 +76,12 @@ newproduct
 .5 * product                # half of the product
 log(product)                # (natural) log of the product
 log10(product)              # base 10 log of the product
-log(product,base=2)         # base 2 log of the product
+log(product, base = 2)        # base 2 log of the product
 @
 
 The semi-colon can be used to place multiple commands on one line.  
 One frequent use of this is to save and print a value all in one go:
-<<variables-semi2,tidy=FALSE>>=
+<<variables-semi2,tidy = FALSE>>=
 15.3 * 23.4 -> product; product    # save result and show it
 @
 
@@ -95,7 +99,7 @@ load them:
 \end{itemize}
 You an also load packages by typing, for example
 <<load-package>>=
-require(DAAG)       # loads the DAAG package if it is not already loaded
+library(DAAG)       # loads the DAAG package if it is not already loaded
 @
 
 \subsection{Four Things to Know About \R}
@@ -106,7 +110,7 @@ If you mis-capitalize something in \R, it won't do what you want.
 
 \item 
 Functions in \R\ use the following syntax:
-<<function-syntax,eval=FALSE>>=
+<<function-syntax,eval = FALSE>>=
 functionname( argument1, argument2, ... )
 @
 \vspace{-5mm}
@@ -157,13 +161,14 @@ There are a number of data sets built into \R\
 and many more that come in various add on packages.  
 
 You can see a list of data sets in a particular package like this:
-<<datasets,eval=FALSE>>=
-data(package = "mosaicData")
+<<datasets,eval = FALSE>>=
+library(mosaicData)            # load the package
+data(package = "mosaicData")   # see what data sets are in it
 @
 
 You can find a longer list of all data sets available in any loaded package
 using 
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 data()
 @
 
@@ -173,7 +178,7 @@ The \dataframe{HELPrct} data frame from the \pkg{mosaic} package
 contains data from the Health Evaluation and Linkage to Primary Care
 randomized clinical trial.  You can find out more about the study and
 the data in this data frame by typing
-<<HELPrcthelp,eval=FALSE,tidy=FALSE>>=
+<<HELPrcthelp,eval = FALSE,tidy = FALSE>>=
 ?HELPrct
 @
 
@@ -196,8 +201,16 @@ It is often handy to look at the first few rows of a data frame.  It will
 show you the names of the variables and the kind of data in them:
 <<headHELP>>=
 head(HELPrct)
-dim(HELPrct)
 @
+
+When there are a lot of variable, this format is hard to read.  The \function{glimps()} or \function{inspect()}
+functions proved some other options.
+
+<<glimpseHELP>>=
+glimpse(HELPrct)
+inspect(HELPrct)
+@
+
 From this we see that there are \Sexpr{nrow(HELPrct)} observational
 units in this data set and \Sexpr{ncol(HELPrct)} variables.
 That's plenty of variables to get us started with exploration of data.
@@ -209,11 +222,11 @@ head(KidsFeet)
 @
 
 \subsection{The oldfaith data set}
-A final example data set comes from the \pkg{alr3} package.  This package is probably not 
+A final example data set comes from the \pkg{alr4} package.  This package is probably not 
 loaded (unless you already loaded it).  You can load it from the \tab{Packages} tab or
 by typing the command
 <<>>=
-require(alr3)
+library(alr4)      # require(alr4) will also work
 @
 Once you have done that, you will have access to the data set containing information about
 Old Faithful eruptions.
@@ -242,6 +255,9 @@ from a CSV file, Excel spreadsheet, or a few other formats.  When you
 do this, the R code will be displayed, so you can see how it is done in 
 \R{} code.
 
+If you are using the RStudio server, you will first need to upload your file to the server (unless you can
+access the file via URL).  To do this, choose ``Upload" from the Files tab.
+
 \section{Graphing the Distribution of One Variable}
 
 A \textbf{distribution} is described by telling what values occur 
@@ -257,15 +273,16 @@ distributions visually.
 
 The general syntax for making a graph or numerical summary
 of one variable in a data frame is
-<<eval=FALSE>>=
-plotname( ~ variable, data=dataName )
+<<eval = FALSE>>=
+plotname( ~ variable, data = dataName )
 @
 In other words, there are three pieces of information we must provide to 
 \R\ in order to get the plot we want:
 \begin{itemize}
 	\item
-		The kind of plot (\function{histogram()}, \function{bargraph()}, 
-		\function{densityplot()}, \function{bwplot()}, etc.) 
+		The kind of plot. 
+		  (\function{gf_histogram()}, \function{gf_bar()}, 
+		 \function{gf_density()}, \function{gf_boxplot()}, etc.) 
 	\item
 		The name of the variable
 	\item
@@ -287,42 +304,34 @@ variable.
 
 Here are a couple examples:
 <<histogram>>=
-histogram( ~ Duration, data=oldfaith )
-histogram( ~ age, data=HELPrct )
+gf_histogram( ~ Duration, data = oldfaith )
+gf_histogram( ~ age, data = HELPrct )
 @
 
-We can control the (approximate) number of bins using the \option{nint} 
-argument, which may be abbreviated as \option{n}.
+We can control the (approximate) number of bins using the \option{bins}.
 The number of bins (and to a lesser extent the positions of the bins)
 can make a histogram look quite different.
-<<histogram2, fig.width=3,out.width='.3\\textwidth'>>=
-histogram( ~ Duration, data=oldfaith, n=8 )
-histogram( ~ Duration, data=oldfaith, n=15 )
-histogram( ~ Duration, data=oldfaith, n=30 )
+<<histogram2, fig.width = 3,out.width = '.3\\textwidth'>>=
+gf_histogram( ~ Duration, data = oldfaith, bins = 8 )
+gf_histogram( ~ Duration, data = oldfaith, bins = 15 )
+gf_histogram( ~ Duration, data = oldfaith, bins = 30 )
 @
 
-The \function{histogram()}%
-\footnote{The \pkg{mosaic} version of the \function{histogram()} function has some 
-extra features (like the \option{width} argument) but is otherwise is very similar to 
-regular \function{histogram()} function in \pkg{lattice}.}
-function in the \pkg{mosaic} package lets you describe
-the bins in terms of center and width instead of in terms of the number
-of bins.  This is especially nice for count data
 
-<<xhistogram,fig.width=3,out.width=".3\\textwidth">>=
-histogram( ~ Duration, data=oldfaith, width=60 )
-histogram( ~ Duration, data=oldfaith, width=20 )
-histogram( ~ Duration, data=oldfaith, width=5 )
+We can use \option{binwidth} to set the width of the bins.
+
+<<xhistogram,fig.width = 3,out.width = ".3\\textwidth">>=
+gf_histogram( ~ Duration, data = oldfaith, binwidth = 60 )
+gf_histogram( ~ Duration, data = oldfaith, binwidth = 20 )
+gf_histogram( ~ Duration, data = oldfaith, binwidth = 5 )
 @
 
 \R\ also provides a ``smooth'' version called a density plot and a triangular version
-called a frequency polygon; just change 
-the function name from \function{histogram()} to 
-\function{densityplot()} or 
-\function{freqpolygon()}.
+called a frequency polygon:; 
 <<densityplot>>=
-densityplot( ~ Duration, data=oldfaith )
-freqpolygon( ~ Duration, data=oldfaith )
+gf_density( ~ Duration, data = oldfaith )
+gf_dens( ~ Duration, data = oldfaith )
+gf_freqpoly( ~ Duration, data = oldfaith )
 @
 
 
@@ -348,19 +357,20 @@ the data.
 
 
 
-We'll learn about another graph used for quantitative variables 
-(a boxplot, \function{bwplot()} in \R) soon.
+We'll learn about another graph used for quantitative variables (boxplots)
+soon.
 
 \subsection{Bar graphs for categorical variables}
 
 Bar graphs are a way of displaying the distribution of a categorical variable.
 
 <<bargraph>>=
-bargraph( ~ substance, data=HELPrct) 
-bargraph( ~ substance, data=HELPrct, horizontal=TRUE )
+gf_bar( ~ substance, data = HELPrct)   # vertical bars
+gf_bar(substance ~ ., data = HELPrct)  # horizontal bars
 @
 
-Statisticians rarely use pie charts because they are harder to read.
+Statisticians rarely use pie charts because they are harder to read except in a few special cases (like comparing
+a proportion to 50\%).
 
 \section{Looking at Multiple Variables at Once}
 
@@ -368,8 +378,8 @@ Statisticians rarely use pie charts because they are harder to read.
 The formula for a \pkg{lattice} plot can be extended to create multiple
 panels based on a ``condition'', often given by another variable.  The 
 general syntax for this becomes
-<<eval=FALSE>>=
-plotname( ~ variable | condition, data=dataName )
+<<eval = FALSE>>=
+plotname( ~ variable | condition, data = dataName )
 @
 
 For example, we might like to see how the ages of men and women compare 
@@ -377,41 +387,34 @@ in the HELP study, or whether the distribution of weights of male mosquitoes
 is different from the distribution for females.
 
 <<compare-ages>>=
-histogram( ~ age | sex, HELPrct, width=5)
-densityplot( ~ length | sex, KidsFeet )
+gf_histogram( ~ age | sex, data = HELPrct, binwidth = 5)
+gf_dens( ~ length | sex, data = KidsFeet )
 @
 
 
 We can do the same thing for bar graphs.
 
 <<substance-by-sex>>=
-bargraph( ~ substance | sex, data=HELPrct)
+gf_bar( ~ substance | sex, data = HELPrct)
 @
 
 \subsection{Grouping}
-Another way to look at multiple groups simultaneously is by using 
-the \argument{groups} argument.  What groups does depends a bit on the type of 
-graph, but it will put the information in one panel rather than multiple panels.
-Using \argument{groups} with \function{histogram()} doesn't work so well because
-it is difficult to overlay histograms.%
-\footnote{The \pkg{mosaic} function
-\function{histogram()} does do something meaningful with \argument{groups}
-in some situations.}
-Density plots work better for this.
+Another way to look at multiple groups simultaneously is placing them "on top of each other"
+but distinguishable by color.  Density plots or frequency poloygons work much better than
+histograms for overlaying groups.
 
-Here are some examples.  We use \argument{auto.key=TRUE} to build 
-a simple legend so we can tell which groups are which.
 <<groups>>=
-bargraph(~substance, groups=sex, data=HELPrct, auto.key=TRUE)
-densityplot(~age, groups=sex, data=HELPrct, auto.key=TRUE)
+gf_bar(~substance, fill = ~sex, data = HELPrct)
+gf_bar(~substance, fill = ~sex, data = HELPrct, position = "dodge")
+gf_dens(~age, color = ~ sex, data = HELPrct)
 @
 
 We can even combine grouping and conditioning in the same plot.
-<<groups-conditions,fig.width=6,fig.height=2.5>>=
-densityplot(~age|sex, groups=substance, data=HELPrct, auto.key=TRUE)
+<<groups-conditions,fig.width = 6,fig.height = 2.5>>=
+gf_dens( ~ age | substance ~ ., color = ~ sex, data = HELPrct)
 @
-<<groups-conditions2,fig.width=6,fig.height=2.5>>=
-densityplot(~age|substance, groups=sex, data=HELPrct, auto.key=TRUE, layout=c(3,1))
+<<groups-conditions2,fig.width = 6,fig.height = 2.5>>=
+gf_dens( ~ age | substance ~ ., color = ~ sex, data = HELPrct)
 @
 This plot shows that for each substance, the age distributions of men and 
 women are quite similar, but that the distributions differ from 
@@ -423,16 +426,16 @@ The most common way to look at two quantitative variables is with a
 scatter plot.  The \pkg{lattice} function for this is \function{xyplot()}, 
 and the basic syntax is
 
-<<xyplot-syntax, eval=FALSE>>=
-xyplot( yvar ~ xvar, data=dataName)
+<<xyplot-syntax, eval = FALSE>>=
+gf_point( yvar ~ xvar, data = dataName)
 @
 
 Notice that now we have something on both sides of the \~{} since we need to tell
 \R\ about two variables.  
 
-<<xyplot1, tidy=FALSE>>=
+<<xyplot1, tidy = FALSE>>=
 head(iris) # data on iris plants
-xyplot( Sepal.Length ~ Sepal.Width, data=iris )
+gf_point(Sepal.Length ~ Sepal.Width, data = iris)
 @
 
 Grouping and conditioning work just as before and can be used to see the relationship
@@ -440,10 +443,9 @@ between sepal length and sepal width broken down by species.
 With large data set, it can be helpful to make the dots semi-transparent so it is
 easier to see where there are overlaps.  This is done with \argument{alpha}.
 We can also make the dots smaller (or larger) using \argument{cex}.
-<<xyplot2,fig.width=6,fig.height=3,tidy=FALSE>>=
-xyplot( Sepal.Length ~ Sepal.Width | Species, data=iris, alpha=.6, cex=.5 )
-xyplot( Sepal.Length ~ Sepal.Width, groups = Species, data=iris, alpha=.6, cex=.5, 
-	   auto.key=TRUE )
+<<xyplot2,fig.width = 6,fig.height = 3,tidy = FALSE>>=
+gf_point( Sepal.Length ~ Sepal.Width | Species, data = iris, alpha = .6, size = .5 )
+gf_point( Sepal.Length ~ Sepal.Width, color = ~Species, data = iris, alpha = .6, size = .5)
 @
 
 \section{Exporting Plots}
@@ -489,14 +491,14 @@ will focus on the basics.}
 \subsubsection{Creating a new document}
 To create a new R Markdown document, go to ``File", ``New File", then ``R Markdown":
 \begin{center}
-	\includegraphics[width=3in]{images/NewRMarkdown}
+	\includegraphics[width = 3in]{images/NewRMarkdown.png}
 \end{center}
 
 From there, choose either ``document" or ``from template".  The \pkg{mosaic} plain 
 template is a good starting point.
 
 \begin{center}
-	\includegraphics[width=3in]{images/FromTemplate}
+	\includegraphics[width = 3in]{images/FromTemplate.png}
 \end{center}
 
 
@@ -514,14 +516,14 @@ mark up options by selecting the ``Markdown Quick Reference" in the help
 menu.
 
 \begin{center}
-	\includegraphics[width=3.5in]{images/MarkdownQuickReference}
+	\includegraphics[width = 3.5in]{images/MarkdownQuickReference.png}
 \end{center}
 
 The second type of section is an \R\ code chunk.  These are colored differently to make them
 easier to see.  You can insert a new code chunk by selecting by selecting
 the appropriate chunk type (R in our case) from the menu below.
 \begin{center}
-	\includegraphics[width=1.2in]{images/InsertChunk}
+	\includegraphics[width = 1.2in]{images/InsertChunk.png}
 \end{center}
 \noindent
 (You can also type \verb!```{r}! to begin and \verb!```! to end the code chunk if you would 
@@ -541,13 +543,11 @@ this means that most of your R Markdown files will have a chunk near the beginni
 includes
 
 <<eval = FALSE>>=
-require(mosaic)
+library(mosaic)
 @
 
 \noindent
 If you use the \pkg{mosaic} templates, this will be included in the template.
-
-
 
 \iffalse
 \subsubsection{Creating an R Markdown document}
@@ -594,9 +594,9 @@ chunks.  See the R Markdown help for more information about chunk options.
 
 The default plots are often bigger than required.  The following chunk options are a place to 
 start.  They can be adjusted as necessary.
-<<eval=FALSE>>=
-require(knitr)
-opts_chunk$set(fig.width=5, fig.height=2, fig.align="center", fig.show="hold")
+<<eval = FALSE>>=
+library(knitr)
+opts_chunk$set(fig.width = 5, fig.height = 2, fig.align = "center", fig.show = "hold")
 @
 
 Some of these document settings can also be set in the YAML header 
@@ -623,127 +623,69 @@ document.  The resulting document in this case is a high quality PDF
 There are lots of arguments that control how these plots look.  Here are just a
 few examples, some of which we have already seen.
 
-\subsection{auto.key}
-\option{auto.key=TRUE} turns on a simple legend for the grouping variable.  
-(There are ways to have more control, if you need it.)
-<<iris-xyplot-key,cache=TRUE,fig.width=2.6,fig.height=2.4>>=
-xyplot(Sepal.Length ~ Sepal.Width, groups=Species, data=iris, 
-	auto.key=TRUE)   
-@
+% \subsection{auto.key}
+% \option{auto.key = TRUE} turns on a simple legend for the grouping variable.  
+% (There are ways to have more control, if you need it.)
+% <<iris-xyplot-key,cache = TRUE,fig.width = 2.6,fig.height = 2.4>>=
+% xyplot(Sepal.Length ~ Sepal.Width, groups = Species, data = iris, 
+% 	auto.key = TRUE)   
+% @
 
-\subsection{alpha, cex}
+\subsection{alpha, size}
 Sometimes it is nice to have elements of a plot be partly transparent.  When
 such elements overlap, they get darker, showing us where data are ``piling up."
 Setting the \argument{alpha} argument to a value between 0 and 1 controls the
 degree of transparency: 1 is completely opaque, 0 is invisible.  The
-\argument{cex} argument controls ``character expansion" and can be used to make
-the plotting ``characters" larger or smaller by specifying the scaling ratio.
+\argument{size} argument controls the size of lines and points.
 
 Here is another example using data on 150 iris plants of three species.
-<<iris-xyplot-alpha,cache=TRUE,fig.width=2.7,fig.height=2.2>>=
-xyplot(Sepal.Length ~ Sepal.Width, groups=Species, data=iris, 
-	auto.key=list(columns=3),
-	alpha=.5,
-	cex=1.3)   
+<<iris-xyplot-alpha,cache = TRUE,fig.width = 2.7,fig.height = 2.2>>=
+gf_point(Sepal.Length ~ Sepal.Width, color = ~ Species, data = iris, 
+	alpha = .5,
+	size = 1.3)   
 @
 
 \subsection*{main, sub, xlab, ylab}
 
 You can add a title or subtitle, or change the default labels of the axes.
-<<iris-xyplot-text,cache=TRUE,fig.width=3,fig.height=2.5>>=
-xyplot(Sepal.Length ~ Sepal.Width, groups=Species, data=iris, 
-	main="Some Iris Data",
-	sub="(R. A. Fisher analysized this data in 1936)",
-	xlab="sepal width (cm)",
-	ylab="sepal length (cm)",
-	alpha=.5,        
-	auto.key=list(columns=3))   
+<<iris-xyplot-text,cache = TRUE,fig.width = 3,fig.height = 2.5>>=
+gf_point(Sepal.Length ~ Sepal.Width, color = ~Species, data = iris, 
+	main = "Some Iris Data",
+	sub = "(R. A. Fisher analysized this data in 1936)",
+	xlab = "sepal width (cm)",
+	ylab = "sepal length (cm)",
+	alpha = .5        
+)
 @
 
-\subsection*{layout}
 
-\option{layout} can be used to control the arrangement of panels in a multi-panel
-plot.  The format is
-<<eval=FALSE>>=
-layout=c(cols,rows)
-@
-where \code{cols} is the number of columns and \code{rows} is the number of 
-rows.  (Columns first because that is the $x$-coordinate of the plot.)
-
-\subsubsection*{lty, lwd, pch, col}
+\subsubsection*{linetype, shape}
 These can be used to change the line type, line width, plot character, and
 color.  To specify multiples (one for each group), use the \function{c()} function 
 (see below).
 
-<<pch-lwd-lty,cache=TRUE,fig.width=3,fig.height=2.2>>=
-densityplot( ~age, data=HELPrct, groups=sex, lty=1, lwd=c(2,4) )
-histogram( ~ age, data=HELPrct, col='green')
+<<pch-lwd-lty,cache = TRUE,fig.width = 3,fig.height = 2.2>>=
+gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = ~ sex)
+gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dotted")
+gf_histogram( ~ age, data = HELPrct, fill = 'steelblue')
 @
-<<col,fig.width=6,fig.height=2.6,tidy=FALSE>>=
-# There are 25 numbered plot symbols
-xyplot( Sepal.Length ~ Sepal.Width, data=iris, groups=Species, 
-	    pch=c(1,2,3), col=c('brown', 'darkgreen', 'purple'), cex=.75 )  
-@
-
-Note: If you change this this way, they will \emph{not} match what is 
-generated in the legend using \argument{auto.key=TRUE}.  So it can be better
-to set these things in a different way if you are using \option{groups}.  
-See below.
 
 You can see a list of the hundreds of available color names using
 \Rindex{colors()}%
-<<colors,eval=FALSE>>=
+<<colors,eval = FALSE>>=
 colors()
 @
 
 \subsection{trellis.par.set()}
-Default settings for lattice graphics are set using 
-\function{trellis.par.set()}.
-Don't like the default font sizes?  You can change to a 7 point (base) font using
+Default settings for graphics properties can be set as follows:
 
-<<fontsize,eval=TRUE>>=
-trellis.par.set(fontsize=list(text=7))    # base size for text is 7 point 
-@
-
-Nearly every feature of a lattice plot can be controlled: fonts, colors,
-symbols, line thicknesses, colors, etc.  Rather than describe them all here,
-we'll mention only that groups of these settings 
-can be collected into a theme.  
-\function{show.settings()} will show you what the theme looks like.
-
-<<themes-whitbg,cache=TRUE,fig.height=5,fig.width=6>>=
-trellis.par.set(theme=col.whitebg())      # a theme in the lattice package
-show.settings()
-@
-\newpage
-
-<<themes-abd,cache=TRUE,fig.height=4.0,fig.width=6,out.height=".4\\textheight">>=
-trellis.par.set(theme=col.abd())          # a theme in the abd package
-show.settings()
-@
-<<themes-mosaic,cache=TRUE,fig.height=4,fig.width=6,out.height=".4\\textheight">>=
-trellis.par.set(theme=col.mosaic)         # a theme in the mosaic package
-show.settings()
-@
-<<themes-mosaicbw,cache=TRUE,fig.height=4,fig.width=6,out.height=".4\\textheight">>=
-trellis.par.set(theme=col.mosaic(bw=TRUE)) # a b/w theme in the mosaic package
-show.settings()
+<<fontsize,eval = TRUE>>=
+theme_set(theme_classic(base_size = 6))    # base size for text is 6 point; classic theme.
+gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dashed")
+theme_set(theme_bw(base_size = 8))    
+gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dashed")
 @
 
-<<themes-abd-redo>>=
-trellis.par.set(theme=col.mosaic())       # back to the mosaic theme
-trellis.par.set(fontsize=list(text=9))    # and back to a 10 point font
-@
-
-Want to save your settings?
-<<save-settings>>=
-# save current settings
-mySettings <- trellis.par.get()
-# switch to abd defaults
-trellis.par.set(theme=col.abd())
-# switch back to my saved settings
-trellis.par.set(mySettings)
-@
 
 \section{Getting Help in RStudio}
 
@@ -751,13 +693,13 @@ trellis.par.set(mySettings)
 There are several ways to get \RStudio\ to help you when you forget something.
 Most objects in packages have help files that you can access by typing something 
 like:
-<<help-questionmark,eval=FALSE,tidy=FALSE>>=
+<<help-questionmark,eval = FALSE,tidy = FALSE>>=
 ?bargraph
 ?histogram
 ?HELPrct
 @
 You can search the help system using
-<<help-GR,eval=FALSE>>=
+<<help-GR,eval = FALSE>>=
 help.search('Grand Rapids')    # Does R know anything about Grand Rapids?
 @
 This can be useful if you don't know the name of the function or data set you 
@@ -808,7 +750,7 @@ modeling as well, so it is is important to master it.
 	\item
 		\texttt{formula}: For plotting, the formula describes which variables are 
 		used on the x-axis, the y-axis and for conditioning.  The general scheme is
-<<eval=FALSE>>=
+<<eval = FALSE>>=
 y ~ x | z
 @
 		where \texttt{z} is the conditioning variable.  Sometimes \texttt{y} or \texttt{z} 
@@ -854,50 +796,49 @@ that use area (e.g., histograms, mosaic plots, bar charts, pie charts) should al
 this principle
 \begin{center}
 \large
-Area $=$ (relative) frequency
+Area $ = $ (relative) frequency
 \end{center}
 Plots that violate this principle can be deceptive and distort the true nature
 of the data.  
 
-\subsubsection*{An Example: Histogram with unequal bin widths}
+% \subsubsection*{An Example: Histogram with unequal bin widths}
+% 
+% It is possible to make histograms with bins that have different widths.
+% But in this case it is important that the height of the bars is chosen so 
+% that area (\emph{NOT height}) is proportional to frequency.  
+% Using height instead of area would distort the picture.
+% 
+% When unequal bin sizes are specified, \function{histogram()} by default chooses
+% the density scale:
+% 
+% <<hist-unequal-bins,fig.width = 3,fig.height = 2>>=
+% gf_histogram( ~ Sepal.Length, data = iris, breaks = c(4,5,5.5,5.75,6,6.5,7,8,9))
+% @
+% The density scale is important.
+% It tells \R\ to use a scale such that 
+% the area (height $\times$ width) of the rectangles is equal to the relative frequency.
+% For example, the bar from 5.0 to 5.5 has width $\frac12$ and height about $0.36$, so 
+% the area is $0.18$, which means approximately 18\% of the sepal lengths are 
+% between 5.0 and 5.5.
+% 
+% 
+% It would be incorrect to choose \option{type = "count"} or \option{type = "proportion"} since
+% this distorts the picture of the data.  Fortunately, \R\ will warn you if you try:
+% <<hist-unequal-bins-bad-echo,fig.width = 3,fig.height = 2,eval = FALSE>>=
+% histogram( ~ Sepal.Length, data = iris, breaks = c(4,5,5.5,5.75,6,6.5,7,8,9), type = 'count')
+% @
+% <<hist-unequal-bins-bad,fig.width = 3,fig.height = 2,echo = FALSE>>=
+% trellis.par.set(theme = col.fastR2(bw = T))
+% histogram( ~ Sepal.Length, data = iris, breaks = c(4,5,5.5,5.75,6,6.5,7,8,9),type = "count")
+% trellis.focus('panel',1,1)
+% grid.text(y = .7,'Never do this!', gp = gpar(col = 'red',cex = 2,alpha = .6))
+% trellis.unfocus()
+% trellis.par.set(theme = col.mosaic())
+% @
+% 
+% Notice how different this looks.  Now the heights are equal to the relative
+% frequency, but this makes the wider bars have too much area.
 
-It is possible to make histograms with bins that have different widths.
-But in this case it is important that the height of the bars is chosen so 
-that area (\emph{NOT height}) is proportional to frequency.  
-Using height instead of area would distort the picture.
-
-When unequal bin sizes are specified, \function{histogram()} by default chooses
-the density scale:
-
-<<hist-unequal-bins,fig.width=3,fig.height=2>>=
-histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9))
-@
-The density scale is important.
-It tells \R\ to use a scale such that 
-the area (height $\times$ width) of the rectangles is equal to the relative frequency.
-For example, the bar from 5.0 to 5.5 has width $\frac12$ and height about $0.36$, so 
-the area is $0.18$, which means approximately 18\% of the sepal lengths are 
-between 5.0 and 5.5.
-
-
-It would be incorrect to choose \option{type="count"} or \option{type="proportion"} since
-this distorts the picture of the data.  Fortunately, \R\ will warn you if you try:
-<<hist-unequal-bins-bad-echo,fig.width=3,fig.height=2,eval=FALSE>>=
-histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9), type='count')
-@
-<<hist-unequal-bins-bad,fig.width=3,fig.height=2,echo=FALSE>>=
-trellis.par.set(theme=col.fastR(bw=T))
-histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9),type="count")
-trellis.focus('panel',1,1)
-grid.text(y=.7,'Never do this!', gp=gpar(col='red',cex=2,alpha=.6))
-trellis.unfocus()
-trellis.par.set(theme=col.mosaic())
-@
-
-Notice how different this looks.  Now the heights are equal to the relative
-frequency, but this makes the wider bars have too much area.
-
-\newpage
 
 \section*{Exercises}
 
@@ -909,7 +850,7 @@ use some of the bells and whistles to make the plots even better.
 
 \begin{problem}
 	Create a scatterplot using the two variables in the \dataframe{oldfaith}
-	data frame (available in the \pkg{alr3} package).  
+	data frame (available in the \pkg{alr4} package).  
 	What do we learn about Old Faithful eruptions from this plot?
 \end{problem}
 
@@ -1009,8 +950,8 @@ Fires2 <- subset(Fires, Year > 1966)
 \end{problem}
 \begin{solution}
 <<>>=
-densityplot( ~i1, groups=sex, data=HELPrct )
-densityplot( ~i2, groups=sex, data=HELPrct )
+gf_dens( ~max_drinks, color = ~ sex, data = HELPrct )
+gf_dens( ~avg_drinks, color = ~ sex, data = HELPrct )
 @
 \end{solution}
 
@@ -1020,15 +961,15 @@ densityplot( ~i2, groups=sex, data=HELPrct )
 \end{problem}
 \begin{solution}
 <<>>=
-densityplot( ~i1, groups=substance, data=HELPrct )
-densityplot( ~i2, groups=substance, data=HELPrct )
+gf_dens( ~i1, color = ~ substance, data = HELPrct )
+gf_dens( ~i2, color = ~ substance, data = HELPrct )
 @
 <<>>=
-densityplot( ~i1|sex, groups=substance, data=HELPrct )
-densityplot( ~i2|sex, groups=substance, data=HELPrct )
+gf_dens( ~i1 | sex, color = ~ substance, data = HELPrct )
+gf_dens( ~i2 | sex, color = ~ substance, data = HELPrct )
 @
 <<>>=
-xyplot( i2 ~ i1, groups=sex, data= HELPrct, alpha=.6, cex=.6 )
+gf_point( i2 ~ i1, color = ~ sex, data =  HELPrct, alpha = .6, size = .6 )
 @
 \end{solution}
 
@@ -1048,12 +989,12 @@ xyplot( i2 ~ i1, groups=sex, data= HELPrct, alpha=.6, cex=.6 )
 
 \begin{solution}
 <<>>=
-histogram(~Jan, data=SnowGR)
+gf_histogram( ~ Jan, data = SnowGR)
 @
 36.6 inches is pretty high, but not the highest ever for a January.  Certainly well above average.
 
 <<>>=
-xyplot(Feb ~ Jan, data=SnowGR)
+gf_point(Feb ~ Jan, data = SnowGR)
 @
 There is no clear trend.  Somtime the snow keeps on coming, but a heavy snow
 January could be followed by either a heavy or light snow February.

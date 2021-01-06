@@ -794,9 +794,9 @@ f( 15, interval = "confidence" )
 \begin{problem}
 	Select only the non-diabetic men from the \dataframe{pheno} data set using
 <<>>=
-data(pheno, package = "fastR2")
-Men <- subset(pheno, sex=="M" & t2d=="control")  # note the double == and quotes here
-head(Men,3)
+library(fastR2)
+Men <- Pheno %>% filter(sex=="M" & t2d=="control")  # note the double == and quotes here
+head(Men, 3)
 @
 This data set contains some phenotype information for subjects in
 a large genetics study.  You can find out more about the data set with

@@ -1157,7 +1157,7 @@ of mean hourly wind speeds (mph) in Twin Falls, ID.  This kind of data is often 
 to estimate how much power could be generated from a windmill placed in a given location.
 
 <<include=onLine,eval=onLine>>=
-read.csv('http://www.calvin.edu/~rpruim/data/stob/TwinfallsWind.csv') -> Wind
+Wind <- read.file("https://rpruim.github.io/Engineering-Statistics/data/stob/TwinfallsWind.csv")
 head(Wind, 2)
 tail(Wind, 2)
 gf_histogram( ~ speed, data=Wind, binwidth=1 )

@@ -1406,10 +1406,10 @@ more and more skewed as $p$ gets closer to 0 or 1.  For a fixed probability
 $p$, the distributions become more and more symmetric as $n$ gets larger.
 
 <<>>=
-gf_dist("binom", size = 10, prob = 0.5, main = "Binom(10, 0.5)")
-gf_dist("binom", size = 10, prob = 0.05, main = "Binom(10, 0.05)")
-gf_dist("binom", size = 100, prob = 0.5, main = "Binom(100, 0.5)")
-gf_dist("binom", size = 100, prob = 0.05, main = "Binom(100, 0.05)")
+gf_dist("binom", size = 10, prob = 0.5, title = "Binom(10, 0.5)")
+gf_dist("binom", size = 10, prob = 0.05, title = "Binom(10, 0.05)")
+gf_dist("binom", size = 100, prob = 0.5, title = "Binom(100, 0.5)")
+gf_dist("binom", size = 100, prob = 0.05, title = "Binom(100, 0.05)")
 @
 
 The pmf for a binomial distribution is given by
@@ -1472,10 +1472,10 @@ that is just as a Poisson model predicts.
 The Poisson distributions are skewed right, but become less and less skewed as 
 the rate parameter increases.  Here are a few example plots.
 <<>>=
-gf_dist("pois", lambda = 1, main = "Pois(1)")
-gf_dist("pois", lambda = 5, main = "Pois(5)")
-gf_dist("pois", lambda = 15, main = "Pois(15)")
-gf_dist("pois", lambda = 50, main = "Pois(50)")
+gf_dist("pois", lambda = 1, title = "Pois(1)")
+gf_dist("pois", lambda = 5, title = "Pois(5)")
+gf_dist("pois", lambda = 15, title = "Pois(15)")
+gf_dist("pois", lambda = 50, title = "Pois(50)")
 @
 
 The pmf for a $\Pois(\lambda)$ random variable is 
@@ -1966,7 +1966,7 @@ If the observed data matched the theoretical quantiles perfectly, a scatter plot
 would place all the points on the line with slope 1 passing through the origin.
 
 <<hand-qqplot>>=
-gf_point( observed ~ theoretical, data = QQData, main = "Hand made QQ-plot" ) %>%
+gf_point( observed ~ theoretical, data = QQData, title = "Hand made QQ-plot" ) %>%
   gf_fun( x ~ x, alpha = 0.6, color = "blue", linetype = "dashed", alpha = 0.6)
 @
 
@@ -1979,7 +1979,7 @@ a plot of $X$ vs. $Z$ will have slope $\sigma$ and intercept $\mu$.
 <<>>=
 theoretical2 <- qnorm( probs, mean = 0, sd = 1 ) # theoretical quantiles from Norm(0,1)
 QQData2 <- data.frame(observed = observed, theoretical = theoretical2)
-gf_point(observed ~ theoretical, data = QQData2, main = "Hand made QQ-plot", xlab = "theoretical (z)" ) %>%
+gf_point(observed ~ theoretical, data = QQData2, title = "Hand made QQ-plot", xlab = "theoretical (z)" ) %>%
   gf_abline(intercept = ~ mean(SmallJordan$points), slope = ~ sd(SmallJordan$points), 
             alpha = 0.5, color = "navy", data = NA) %>%
   gf_hline(yintercept = ~ mean(SmallJordan$points), alpha = 0.5) %>%
@@ -2189,7 +2189,7 @@ For the Rayliegh distribution we solve
 %	The data from this study are in the \dataframe{Baby} data frame.  
 	You can load this data using
 <<Baby>>=
-Baby <- read.file("http://www.calvin.edu/~rpruim/data/BabyCryIQ.csv")
+Baby <- read.csv("https://rpruim.github.io/Engineering-Statistics/data/BabyCryIQ.csv")
 head(Baby)
 @
 
@@ -2205,8 +2205,10 @@ head(Baby)
 <<>>=
 fitdistr(Baby$cry.count, "gamma")
 fitdistr(Baby$cry.count, "Weibull")
-histogram(~cry.count, data = Baby, fit = "gamma", main = "Gamma")
-histogram(~cry.count, data = Baby, fit = "Weibull", main = "Weibull")
+gf_dhistogram( ~ cry.count, data = Baby, binwidth = 1) %>%
+  gf_fitdistr( ~ cry.count, data = Baby, "gamma", title = "Gamma")
+gf_dhistogram(~cry.count, data = Baby, title = "Weibull") %>%
+  gf_fitdistr(~ cry.count, data = Baby, "dweibull")
 @
 \end{solution}
 

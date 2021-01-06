@@ -92,7 +92,7 @@ HeatX <- data.frame(
 
 <<fig.height = 2.25>>=
 HeatX
-xyplot( m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations")
+gf_point( m.hot ~ m.cold, data = HeatX, title = "Experimental Configurations")
 @
 
 
@@ -160,7 +160,7 @@ the different set-ups.  From this small dat set, there is not clear evidence
 of some other relationship between heat exchanged with the environment
 and the experimental set up:
 <<fig.height = 2.5>>=
-xyplot( Q.env ~ m.cold, data = HeatX2, groups = m.hot)
+gf_point(Q.env ~ m.cold, data = HeatX2, groups = m.hot)
 @
 \item
 The t test and interval are based on the assumption that the distribution

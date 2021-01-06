@@ -255,7 +255,7 @@ c(intercept = intercept, slope = slope)
 @
 <<include = onLine, eval = onLine>>=
 Eyes <- 
-  read.file("https://rpruim.github.io/Engineering-Statistics/data/PalpebralFissure.txt",  header = TRUE)
+  read.table("https://rpruim.github.io/Engineering-Statistics/data/PalpebralFissure.txt",  header = TRUE)
 head(Eyes, 3)
 x.bar <- mean( ~ palpebral, data = Eyes)  
 y.bar <- mean( ~ OSA, data = Eyes)

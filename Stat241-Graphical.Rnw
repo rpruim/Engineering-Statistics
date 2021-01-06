@@ -3,7 +3,7 @@
 \Chapter{Graphical Summaries of Data}
 
 <<setup-graphical, include = FALSE>>=
-theme_set(theme_bw())
+theme_set(theme_bw(base_size = 8))
 @
 
 \section{Getting Started With \RStudio}
@@ -258,6 +258,133 @@ do this, the R code will be displayed, so you can see how it is done in
 If you are using the RStudio server, you will first need to upload your file to the server (unless you can
 access the file via URL).  To do this, choose ``Upload" from the Files tab.
 
+
+\section{Graphical and Numerical Summaries of Data}
+
+\subsection{The Most Important Template}
+
+Using the \pkg{mosiac} and \pkg{ggformula} packages, 
+we can compute a wide variety of graphical and numerical summaries 
+using the following general template:
+
+\begin{center}
+	\Large 
+	\texttt{ \fbox{\texttt{ goal \strut{}}} ( \fbox{\texttt{ y\strut{} }} $\sim$ \fbox{\texttt{ x\strut{} }}, data = \fbox{\texttt{ mydata\strut{} }} ) }
+\end{center}
+We will see this same template used again for linear and non-linear 
+modeling as well, so it is is important to master it.\footnote{This is textbook speak for "you should really 
+take note of this -- probably memorize it."}
+
+\begin{itemize}
+	\item \texttt{goal}: The name of the function generally describes your goal, 
+		the thing you want the computer to produce for you.  In the case of plotting,
+		it is the name of the plot.  When we do numerical summaries it will be the 
+		name of the numerical summary (mean, median, etc.).
+	\item \texttt{y}: For plots, this is the variable that goes on the y-axis. 
+	\item \texttt{x}: For plots, this is the variable that goes on the x-axis. 
+	\item
+		\texttt{formula}: Together, \texttt{y ~ x} is called a \term{formula}.
+		Very often we can think of \texttt{y ~ x} as ``y depends on x''.
+		We will see that sometimes we can omit \texttt{y} ore replace \texttt{x} with \texttt{.} (there must
+		always be something on the right-hand side).  We will even see things like 
+		\texttt{y ~ x | z}.  But the most important formula to learn is \texttt{y ~ x}.
+	\item
+		\texttt{mydata:} A data frame must be given in which the variables mentioned in
+		the formula can be found.  Variables not found there will be looked for in the 
+		enclosing environment.  Sometimes we will take advantage of this to avoid creating
+		a temporary data frame just to make a quick plot, but generally it is best to have
+		all the information inside a data frame.
+\end{itemize}
+
+
+\section{Scatterplots}
+
+The most common way to look at two quantitative variables is with a 
+scatter plot.  The \pkg{ggformula} function for this is \function{gf_point()}, 
+and the basic syntax is
+
+<<xyplot-syntax, eval = FALSE>>=
+gf_point( yvar ~ xvar, data = dataName)
+@
+
+Let's look at an example. Let's see how bill length is realted to body mass in some penguins.
+
+<<xyplot1, tidy = FALSE>>=
+library(palmerpenguins)
+head(penguins) 
+gf_point(bill_length_mm ~ body_mass_g, data = penguins)
+@
+
+That's all there is to it.  We can replace \code{bill_length_mm}, \code{body_mass_g}, and 
+\code{penguins} with any variables and data set we like to get the scatter plot we want.
+
+\subsection{Adding Color}
+
+Let's add some color. Consider the next two examples.
+
+<<setting-color>>=
+gf_point(bill_length_mm ~ body_mass_g, color = "navy", data = penguins)
+@
+
+<<mapping-color>>=
+gf_point(bill_length_mm ~ body_mass_g, color = ~ species, data = penguins)
+@
+
+\begin{itemize}
+\item
+In the first we are \term{setting} the color of the dots to be navy.
+\item
+In the second, we are \term{mapping} color based on \code{species}.
+Think of \code{color = ~ species} as ``color depends on  species".
+\end{itemize}
+
+\subsection{Transparency and dot size}
+
+With so much data in so little space, overplotting (dots on top of each other) can make 
+it hard to see what is going on. We can improve this plot by making the dots smaller
+and semi-transparent.
+
+<<transparency-and-dot-size, fig.width = 5>>=
+gf_point(bill_length_mm ~ body_mass_g, color = ~ species, data = penguins,
+         size = 0.8, alpha = 0.5)
+@
+
+There are many other options we can use to refine our plots.  We'll learn about some of them as we 
+go along. You can use \R{}'s built-in help to find out more.  Our you can type
+
+<<quick-help>>=
+gf_point()
+@
+
+\subsection{Conditional plots (aka Faceting)}
+
+The formula for a \pkg{ggformula} plot can be extended to create multiple
+panels, called facets, based on a ``condition'', often given by another variable. 
+The  general syntax for this becomes
+<<eval = FALSE>>=
+plotname( y ~ x | condition, data = dataName )
+@
+
+You can read the formula \code{y ~ x | condition} as saying that we want to know how y depends on x separately
+for each condition.
+In our penguins example, we might divide up the data according to the islands on which the penguins were spotted.
+
+<<facets, fig.width = 5>>=
+gf_point(bill_length_mm ~ body_mass_g | island, color = ~ species, data = penguins,
+         size = 0.8, alpha = 0.5)
+@
+
+\subsection{Other types of plots}
+
+A scatter plot will be our most common plot for two quantitative variables, but we can use the same
+template for any otehr type of plot.  Here are two examples.
+
+<<penguins-more, fig.width = 5>>=
+gf_density2d(bill_length_mm ~ body_mass_g, color = ~ species, data = penguins, alpha = 0.5)
+gf_hex(bill_length_mm ~ body_mass_g, data = penguins, binwidth = c(250, 2))
+@
+
+
 \section{Graphing the Distribution of One Variable}
 
 A \textbf{distribution} is described by telling what values occur 
@@ -269,9 +396,10 @@ questions:
 \end{itemize}
 
 Statisticians have devised a number of graphs to help us see 
-distributions visually.  
-
-The general syntax for making a graph or numerical summary
+distributions of a variable visually.  
+In these graphs, \R{} can compute the y-variable for us.  In this case, we simply
+omit the \code{y} part of the formula, so the
+general syntax for making a graph or numerical summary
 of one variable in a data frame is
 <<eval = FALSE>>=
 plotname( ~ variable, data = dataName )
@@ -298,14 +426,28 @@ package we can apply the same syntax for
 
 \subsection{Histograms (and density plots) for quantitative variables}
 
-Histograms are a way of displaying the distribution of a quantitative 
-variable.
+Histograms (and density plots) are the two most common ways of displaying the distribution 
+of a quantitative variable.
 
 
 Here are a couple examples:
+
 <<histogram>>=
-gf_histogram( ~ Duration, data = oldfaith )
-gf_histogram( ~ age, data = HELPrct )
+gf_histogram( ~ Duration, data = oldfaith)  
+gf_histogram( ~ age, data = HELPrct)
+@
+
+In each of these plots the height of the bar indicates how many observations
+fall within the range indicated by the bottom of the bar. So in the histogram below,
+the red bar indicates that there are almost 60 eruptions of duration between 100 and 125 seconds
+in this data set.
+
+<<histogram-explained>>=
+gf_histogram( ~ Duration, data = oldfaith, binwidth = 25, boundary = 100) %>%
+  gf_histogram( ~ Duration, data = oldfaith %>% filter(Duration >100, Duration <= 125), 
+                fill = "red", color = "black", 
+                binwidth = 25, boundary = 100) 
+  
 @
 
 We can control the (approximate) number of bins using the \option{bins}.
@@ -320,7 +462,7 @@ gf_histogram( ~ Duration, data = oldfaith, bins = 30 )
 
 We can use \option{binwidth} to set the width of the bins.
 
-<<xhistogram,fig.width = 3,out.width = ".3\\textwidth">>=
+<<binwidth,fig.width = 3,out.width = ".3\\textwidth">>=
 gf_histogram( ~ Duration, data = oldfaith, binwidth = 60 )
 gf_histogram( ~ Duration, data = oldfaith, binwidth = 20 )
 gf_histogram( ~ Duration, data = oldfaith, binwidth = 5 )
@@ -328,14 +470,15 @@ gf_histogram( ~ Duration, data = oldfaith, binwidth = 5 )
 
 \R\ also provides a ``smooth'' version called a density plot and a triangular version
 called a frequency polygon:; 
-<<densityplot>>=
+
+<<density,fig.width = 3,out.width = ".3\\textwidth">>=
 gf_density( ~ Duration, data = oldfaith )
 gf_dens( ~ Duration, data = oldfaith )
 gf_freqpoly( ~ Duration, data = oldfaith )
 @
 
 
-\subsection{The shape of a distribution}
+\subsection{Describing the shape of a distribution}
 
 If we make a histogram of our data, we can describe the overall shape of the distribution.
 Keep in mind that the shape of a particular histogram may depend on the choice of bins.
@@ -355,8 +498,6 @@ Here are some words we use to describe shapes of distributions.
 the data.
 \end{description}
 
-
-
 We'll learn about another graph used for quantitative variables (boxplots)
 soon.
 
@@ -365,21 +506,21 @@ soon.
 Bar graphs are a way of displaying the distribution of a categorical variable.
 
 <<bargraph>>=
-gf_bar( ~ substance, data = HELPrct)   # vertical bars
-gf_bar(substance ~ ., data = HELPrct)  # horizontal bars
+gf_bar( ~ species, data = penguins)   # vertical bars
+gf_bar(species ~ ., data = penguins)  # horizontal bars
 @
 
 Statisticians rarely use pie charts because they are harder to read except in a few special cases (like comparing
 a proportion to 50\%).
 
-\section{Looking at Multiple Variables at Once}
+\subsection{Overlaying and faceting data}
 
-\subsection{Conditional plots}
-The formula for a \pkg{lattice} plot can be extended to create multiple
-panels based on a ``condition'', often given by another variable.  The 
-general syntax for this becomes
-<<eval = FALSE>>=
-plotname( ~ variable | condition, data = dataName )
+Overlaying and faceting work the same for these one variables plots as they did for the scatterplots above.
+
+<<fig.width = 3, out.width = "0.3\\textwidth">>=
+gf_bar( ~ species | island, data = penguins)
+gf_histogram( ~ body_mass_g | species, data = penguins)
+gf_dens( ~ body_mass_g, color = ~ species, data = penguins)
 @
 
 For example, we might like to see how the ages of men and women compare 
@@ -398,55 +539,43 @@ We can do the same thing for bar graphs.
 gf_bar( ~ substance | sex, data = HELPrct)
 @
 
-\subsection{Grouping}
-Another way to look at multiple groups simultaneously is placing them "on top of each other"
-but distinguishable by color.  Density plots or frequency poloygons work much better than
-histograms for overlaying groups.
+\subsection{Grouping and bar charts}
+
+When dividing bar charts into multiple colors, we can present the segmented bars "stacked" (the default)
+or "dodged":
 
 <<groups>>=
 gf_bar(~substance, fill = ~sex, data = HELPrct)
 gf_bar(~substance, fill = ~sex, data = HELPrct, position = "dodge")
-gf_dens(~age, color = ~ sex, data = HELPrct)
 @
 
-We can even combine grouping and conditioning in the same plot.
-<<groups-conditions,fig.width = 6,fig.height = 2.5>>=
-gf_dens( ~ age | substance ~ ., color = ~ sex, data = HELPrct)
-@
-<<groups-conditions2,fig.width = 6,fig.height = 2.5>>=
-gf_dens( ~ age | substance ~ ., color = ~ sex, data = HELPrct)
-@
-This plot shows that for each substance, the age distributions of men and 
-women are quite similar, but that the distributions differ from 
-substance to substance.
+\subsection{Proportions and bar charts}
 
-\subsection{Scatterplots}
+Sometimes it is better to display bars with proportions rather than counts. But then we must decide
+what to use for the denominator.
+In the first example below, the total of all teh bars adds to 1. In the second plot, the total
+adds to one for each x variable, which makes it easier to see how the proportions of male and female
+.
 
-The most common way to look at two quantitative variables is with a 
-scatter plot.  The \pkg{lattice} function for this is \function{xyplot()}, 
-and the basic syntax is
-
-<<xyplot-syntax, eval = FALSE>>=
-gf_point( yvar ~ xvar, data = dataName)
+<<gf-props>>=
+gf_props(~substance, fill = ~sex, data = HELPrct)
+gf_props(~substance, fill = ~sex, data = HELPrct, denom = ~ x)
 @
 
-Notice that now we have something on both sides of the \~{} since we need to tell
-\R\ about two variables.  
+\section{Labeling plots}
 
-<<xyplot1, tidy = FALSE>>=
-head(iris) # data on iris plants
-gf_point(Sepal.Length ~ Sepal.Width, data = iris)
+Often the defaults labels are not ideal for publication purposes. You can add titles and captions
+and change the labeling of variables using \function{gf_labs()}.
+
+<<gf-labs>>=
+gf_point(bill_length_mm ~ body_mass_g | island, color = ~ species, data = penguins,
+         size = 0.8, alpha = 0.5) %>%
+  gf_labs(x = "body mass (g)", y = "bill length (mm)", 
+          title = "Some penguin measurments", caption = "Data Source: palmerpenguins")
 @
 
-Grouping and conditioning work just as before and can be used to see the relationship
-between sepal length and sepal width broken down by species.
-With large data set, it can be helpful to make the dots semi-transparent so it is
-easier to see where there are overlaps.  This is done with \argument{alpha}.
-We can also make the dots smaller (or larger) using \argument{cex}.
-<<xyplot2,fig.width = 6,fig.height = 3,tidy = FALSE>>=
-gf_point( Sepal.Length ~ Sepal.Width | Species, data = iris, alpha = .6, size = .5 )
-gf_point( Sepal.Length ~ Sepal.Width, color = ~Species, data = iris, alpha = .6, size = .5)
-@
+Notice the \verb!%>%! in the example above.  This important and connects the labeling
+below to the plot above.
 
 \section{Exporting Plots}
 
@@ -454,8 +583,8 @@ You can save plots to files or copy them to the clipboard using the
 \tab{Export} menu in the \tab{Plots} tab.  It is quite simple to copy the 
 plots to the clipboard and then paste them into a Word document, for example.
 You can even adjust the height and width of the plot first to get it the 
-shape you want.  But there are much better ways to produce documents 
-with \R{} graphics in them.
+shape you want.  \emph{But there are much better ways to produce documents 
+with \R{} graphics in them!}  See the next section.
 
 \section{Reproducible Research}
 
@@ -470,7 +599,7 @@ Copy-and-paste is a bad workflow for lots of reasons, including:
 		You have no record of what you did (unless you are an unusual person who
 		takes detailed notes about all the copying and pasting).
 \end{itemize}
-So while copy and paste seems easy and convenient, it is not \emph{reproducible}.
+So while copy-and-paste seems easy and convenient, it is not \emph{reproducible}.
 Reproducibility is important when projects are large, when it is important to have record of 
 exactly what was done, or when the same analysis is applied to multiple data sets (or a data set
 that is growing over time).
@@ -525,9 +654,14 @@ the appropriate chunk type (R in our case) from the menu below.
 \begin{center}
 	\includegraphics[width = 1.2in]{images/InsertChunk.png}
 \end{center}
+
 \noindent
-(You can also type \verb!```{r}! to begin and \verb!```! to end the code chunk if you would 
-rather type.)
+You can also type 
+<<eval = FALSE>>=
+```{r}
+```
+@
+to begin and end the code chunk if you would rather type.
 You can put any \R\ code in these code chunks and the results (text output or graphics) as well
 as the \R\ code will be displayed in your HTML file.
 
@@ -538,7 +672,7 @@ as the \R\ code will be displayed in your HTML file.
 \subsection*{R Markdown files must be self-contained}
 R Markdown files do not have access to things you have done in your console.  (This is good, else 
 your document would change based on things not in the file.)  This means that you must explicitly
-load data, and require packages \emph{in the R Markdown file} in order to use them.  In this class,
+load any data packages that you use \emph{in the R Markdown file}. In this class,
 this means that most of your R Markdown files will have a chunk near the beginning that 
 includes
 
@@ -547,7 +681,8 @@ library(mosaic)
 @
 
 \noindent
-If you use the \pkg{mosaic} templates, this will be included in the template.
+If you use one of the RMarkdown templates provided, 
+this (and some otehr things) will be included in the template and save you some time.
 
 \iffalse
 \subsubsection{Creating an R Markdown document}
@@ -619,6 +754,7 @@ will be an HTML file with embedded plots.  You can gain more control over the ou
 by using \pkg{knitr} which provides a way to combine \LaTeX\ and \R in a single
 document.  The resulting document in this case is a high quality PDF
 
+\iffalse
 \section{A Few Bells and Whistles}
 There are lots of arguments that control how these plots look.  Here are just a
 few examples, some of which we have already seen.
@@ -685,7 +821,7 @@ gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dashed")
 theme_set(theme_bw(base_size = 8))    
 gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dashed")
 @
-
+\fi
 
 \section{Getting Help in RStudio}
 
@@ -733,11 +869,11 @@ typing and check to make sure that the necessary packages have been loaded.
 
 \subsection{The Most Important Template}
 
-The plots we have created have all following a single template
+The plots we have created have all followed a single template
 
 \begin{center}
 	\Large 
-	\texttt{ \fbox{\texttt{ goal }} ( \fbox{\texttt{ formula }}, data = \fbox{\texttt{ mydata }} ) }
+	\texttt{ \fbox{\texttt{ goal }} ( \fbox{\texttt{ formula }}, data = \fbox{\texttt{ mydata }}, ... ) }
 \end{center}
 We will see this same template used again for numerical summaries and linear and non-linear 
 modeling as well, so it is is important to master it.
@@ -756,12 +892,18 @@ y ~ x | z
 		where \texttt{z} is the conditioning variable.  Sometimes \texttt{y} or \texttt{z} 
 		are missing (but the right-hand side \texttt{x} must always be included in a formula).
 	\item
-		\texttt{data:} A data frame must be given in which the variables mentioned in
+		\texttt{mydata:} A data frame must be given in which the variables mentioned in
 		the formula can be found.  Variables not found there will be looked for in the 
 		enclosing environment.  Sometimes we will take advantage of this to avoid creating
 		a temporary data frame just to make a quick plot, but generally it is best to have
 		all the information inside a data frame.
+	\item
+	\texttt{...} There are many optional arguments to control sizes, colors, etc.
+	We will introduce these as they are needed. Consult the help files for assistance.
+		
 \end{itemize}
+
+Just fill in the boxes and get your plot.
 
 \subsection{Patterns and Deviations from Patterns}
 The goal of a statistical plot is to help us see 
@@ -783,7 +925,7 @@ Later, when we do statistical analysis, we will see that the analysis we use wil
 also depend on the kinds of variables involved, so this is an important idea.
 
 \subsection{Side-by-side Plots and Overlays Can Reveal Importance of Additional Factors}
-The \pkg{lattice} graphics plots make it particularly easy to generate plats that 
+The \pkg{ggformula} graphics plots make it particularly easy to generate plats that 
 divide the data into groups and either produce a panel for each group (using \verb!|!)
 or display each group in a different way (different colors or symbols, using 
 the \argument{groups} argument).  These plots can reveal the 
@@ -910,8 +1052,14 @@ You can load this data one of two ways.
 		and follow the instructions.
 	\item
 		Use the following command in \R:
+		
 <<>>=
-Fires <- read.csv("http://www.calvin.edu/~rpruim/data/Fires.csv")
+# equivalent to "From Text (base)" in RStudio
+Fires <- read.csv("https://rpruim.github.io/Engineering-Statistics/data/Fires.csv")
+
+# alternative method -- equivalent to "From Text (readr)" in RStudio
+library(readr)
+Fires <- read_csv("https://rpruim.github.io/Engineering-Statistics/data/Fires.csv")
 @
 \end{itemize}
 You can also use either of these methods to read from a file rather than from a

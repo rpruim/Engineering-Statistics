@@ -9,28 +9,156 @@ library(mosaic)
 # 	error = function(e) TRUE)
 @
 
+<<include=FALSE>>=
+haveInternet <- tryCatch( {
+	read.xls("http://www.calvin.edu/data/m241/MilledSteel.xls", 1); FALSE },
+	error=function(e) TRUE)
+@
+
 \setcounter{chapter}{7}
-\chapter{Non-Linear Relationships}
+% \chapter{Non-Linear Relationships}
+\chapter{Beyond Linear Regression}
 
-%\section{Two approaches to Non-linear Relationships}
+\section{How big is your $R^2$?}
+One part of regression model diagnostics is to check the fitted model's $R^2$ value, which gives an 
+indication of the proportion of the variance in the response that has been "explained" by the model.  
+A low value (closer to 0) means that data points are spread far around the best fit line; a high one 
+(close to 1) means that data points are clustered very tightly around the line.  
+A model with a low $R^2$ value is not necessarily "bad" -- it may still provide helpful information 
+about a real relationship between your response and predictor. 
+However, that relationship is very "noisy," which means that your model will have poor predictive power -- 
+it will be unable to make predictions with the accuracy and precision you might hope for.
 
-Not all relationships are linear.  There are two common ways to deal with
+Often, the predictive power of a model, and the $R^2$ value, can be improved by adding additional 
+explanatory variables -- that is, fitting a model with more than one explanatory variable. 
+It could have two predictors, three, or as many as you can (sensibly) come up with. 
+This kind of model is called multiple regression. Mathematically, it means fitting a model of the form:
+
+$$ y ~ \beta_0 + \beta_1*x_1 + \beta_2*x_2 + \beta_3*x_3 ...$$
+
+Multiple regression often makes sense when you are studying a complex process where there is most likely "more than one thing going on."  For example, you might consider modelling population growth rates worldwide using a data set including a set of social, economic, health, and political indicators compiled using data from the World Health Organization and partner organizations. The dataset description is available online: \url{http://www.exploredata.net/Downloads/WHO-Data-Set}.  One idea might be to look for a linear relationship between per-capita income and population growth rate:
+<<who-slm, fig.show="hold", tidy=FALSE>>=
+whodat <- read.csv("http://www.exploredata.net/ftp/WHO.csv", 
+                   header=TRUE, strip.white=TRUE, sep=",")
+#simplify some variable names
+names(whodat)[10] <- "PopGrowthRate"
+names(whodat)[6] <- "IncomePerCapita"
+names(whodat)[7] <- "FemaleSchoolEnrollment"
+gf_point(PopGrowthRate~IncomePerCapita, data=whodat)
+who.m1 <- lm(PopGrowthRate~IncomePerCapita , data=whodat)
+summary(who.m1)
+@ 
+
+The $R^2$ value of this model is very low. But that could be because, unsurprisingly, there are \emph{many} factors contributing to population growth rate, not \emph{just} income.  For example, what about education? Perhaps more-educated women have fewer children, lowering the population growth rate.  So we might want to model population growth rate as a function of \emph{both} income and education.
+
+In R, a multiple regression model can be fitted with a call to \texttt{lm()}.  We just add additional predictors to the right hand side of the model formula, separated by $+$ signs. For the WHO example discussed above, for example, we could try:
+<<who-slm2, fig.show="hold">>=
+gf_point(PopGrowthRate~FemaleSchoolEnrollment, data=whodat)
+who.m2 <- lm(PopGrowthRate~IncomePerCapita + FemaleSchoolEnrollment, data=whodat)
+summary(who.m2)
+@ 
+
+We would need to follow up with our diagnostics to fully assess these two models, but comparison of the $R^2$ values immediately shows that $R^2$ is much higher for the second model. In other words, the multiple regression has succeeded in explaining more of the variance in population growth rates than the simple linear regression with only one predictor.  
+
+
+\section{Violations of Linear Regression Assumptions}
+In the previous chapter, we learned how to carry out regression diagnostics -- to check whether or not the assumptions of linear regression analysis were valid for a particular analysis.  If the assumptions are violated, then the conclusions (parameter estimates, but especially standard errors) will be incorrect, and the model results can not be trusted.  
+
+For each type of violation, there are some fixes or modifications we can try in order to fit a valid, trustworthy model to our data and still draw reliable conclusions.  In this course, we will focus mainly on type of "fix":  applying transformations to linearize non-linear relationships, and allow us to apply linear regression to the transformed data.  This approach is covered in detail in the rest of this chapter.
+
+Before beginning our detailed discussion of transformation, we will briefly discuss several other types of "fixes".  The mathematical foundations of these more complex models are essentially beyond the scope of this class, but you should understand when they might be useful (for example, if you see a certain type of pattern in residual diagnostic plots, which technique might help solve the problem?) and be able to implement them in R.
+
+The table below provides an overview of various problems you might uncover as you do regression diagnostics, along with possible solutions.  Each entry in the table is covered in a bit more detail in the subsequent sections of this chapter.
+
+\begin{center}
+  	\begin{tabular}{p{1.5in}|p{2in}|p{2.5in}}
+			\hline
+			Assumption & Description of Problem & Options \\
+			 \hline
+			Linearity & Scatterplot (or residual plots) indicate nonlinear relationship & Transform explanatory and or response variables. Alternative: fit a non-linear model using the R function \texttt{nls()} \\
+			Normality of errors & Residual QQ plots indicates departure from normality & First check if other assumptions may also be violated, and try options listed there. If that fails, you may need to add additional predictor variables to your model; or to fit a generalized linear model, a more sophisticated type of regression that we will not cover in this course. \\
+			Independence of errors & ACF plot indicates strong dependence of errors over time (or space) & Fit a "autoregressive" model, where this relationship between subsequent or nearby measurements is expected and accounted for.  To do this in R, replace \texttt{lm(y$\sim$x)} with something like \texttt{gls(y$\sim$x, correlation = corAR1(form=$\sim$1))}.  \\
+      Homoscedasticity & Variance of errors is not constant over the full range of response values, or over time & First, make sure that the linearity assumption is not violated. Next, if you have the option of including additional predictors in your model, it may be helpful.  Next, transforming the response variable may help. Finally, if none of those options provide a solution, you can fit a model with non-constant error variance. For example, if variance increases with fitted response values, you can replace \texttt{lm(y$\sim$x)} with something like \texttt{nls(y$\sim$x, weights=varPower())}\\ 
+			\hline
+	\end{tabular}
+	\end{center}
+\section{Non-Normal Errors}
+Sometimes, during diagnostics for a linear regression model, you will find that residual quantile-quantile plots indicate that linear regression residuals are far from normally distributed.  In this case, before trying to modify your model in any way, it is useful to check whether any \emph{other} assumptions of the linear regression have \emph{also} been violated.  If they have, it is worthwhile to try to deal with those problems first, and see if solving them makes the residuals more normal.
+
+If non-normal residuals are the only apparent problem with a linear regression model, adding additional explanatory variables \emph{might} help in some cases.  Most of the time, you would have to turn to a more sophisticated regression model called a generalized linear model (GLM).  Fitting GLMs is beyond the scope of this class, and you will not be asked to do it.
+
+\section{Non-Independence of Errors}
+Sometimes, regression diagnostics (particularly a plot of residuals as a function of time, or an ACF plot) will show that the residuals are not independent.  This happens most often when the predictor variable is a temporal or spatial one; data points collected at similar times, or similar locations, are often similar to each other rather than independent.
+
+We will consider a simple example using the price of chicken over time (in constant dollars, adjusted for inflation over time).  It seems to make sense to try to predict the price of chicken as a function of time (it's been getting progressively cheaper for the last century or so):
+<<chickn, fig.show='hold'>>=
+chickn <- read.csv("http://www.calvin.edu/~sld33/data/chickn.csv", header=TRUE)
+gf_point(Price~Year, data=chickn ) %>% gf_lm()
+chick.mod <- lm(Price~Year, data=chickn)
+summary(chick.mod)
+@ 
+
+However, there seems to be a problem with non-independence of the residuals.  Price is not independent from year to year; if you know the price was a bit high one year, it's likely to remain so for the next several years:
+<<chick-acf, fig.show='hold', fig.height=5>>=
+acf(resid(chick.mod))
+@
+
+This is a big problem, because it tends to result in standard error estimates that are artificially small. In other words: we think we have estimated our slope and intercept parameters \emph{much} more precisely than we really have, and would report falsely narrow confidence intervals.
+To fix the problem, we can consider replacing our simple linear regression:
+$$ y ~ \beta_0 + \beta_1x + \epsilon$$
+(where $\epsilon \sim N(0, \sigma)$) with a model that expects that subsequent residuals to depend on previous ones, so that the residual for the data point collected at time $t$ is:
+$$ e_t = \rho e_{t-1} + \epsilon$$
+(where, still, $\epsilon \sim N(0, \sigma)$; and $\rho$ is a new parameter indicating how strong the dependence over time is.)  This is called an AR(1) process, or an auto-regressive process of order 1.  It can be fit easily in R using the function \texttt{gls()} instead of \text{lm()}. \texttt{gls()} does "generalized least-squares" fitting, and is found in the package \texttt{nlme}.  The function call syntax illustrated in this example will work any time the explanatory variable is the time (or space) one that is causing the non-independence.
+
+<<ar1_fit, tidy=FALSE>>=
+require(nlme)
+chick.mod2 <- gls(Price~Year, data=chickn, 
+                  correlation=corAR1(form=~1))
+summary(chick.mod2)
+@
+
+If you plot the residuals of this new model, and plot the ACF, you will see that the correlation coefficients \emph{still have high vaules}.  However, in the new \texttt{gls()} fit, this correlation has now been taken into account in the standard errors (which are larger -- compare the coefficient tables to verify it), so it is OK now to trust the model parameter estimates and predictions.
+
+\section{Heteroscedasticity (Non-constant Error Variance)}
+Sometimes, model diagnostics for a linear regression indicate that variance of errors is not constant over the full range of response values.  Often, it is the case that the error variance grows larger as the predicted response value grows larger, resulting in a "trumpet-like" shape in the plot of residuals versus fitted values.
+
+If you spot this problem, first, make sure that the linearity assumption is not violated. Next, if you have the option of including additional predictors in your model, it may be helpful.  Next, transforming the response variable may help.  Specifically, a log or square-root transformation of the response variable may be useful.  (See more details and examples later in this chapter, when transformations are discussed in detail.) 
+
+Finally, if none of the previous options provide a solution, you can fit a model that actually \emph{expects} and accounts for non-constant error variance. We will not cover this topic in any detail, but this brief example is included for your future reference (outside this class).  Example: if variance increases with fitted response values, you can fit an appropriate model with the \texttt{gls} function from the \texttt{nlme} package.  To do so, replace \texttt{lm(y~x)} with something like \texttt{nls(y~x, weights=varPower())}.
+
+Here is a brief example, using the \texttt{Ornstein} dataset from the \texttt{car} package.  It gives data on 248 Canadian companies, collected in the mid-1970s.  The variable \texttt{assets} gives each company's assets in millions of dollars, and \texttt{interconnects} gives the number of director and executive positions that are shared with other firms.  A scatter plot shows that the richest companies have many of these "interlocks", so we might model assets as a function of interlocks...however, the residuals have non-constant variance:
+<<Ornstein>>=
+require(car)
+gf_point(assets ~interlocks, data=Ornstein)
+om <- lm(assets ~interlocks, data=Ornstein)
+gf_point(resid(om) ~ fitted(om))
+@
+
+We can try to correct for this problem by fitting a model that "expects" this non-constant variance, by using the function \texttt{gls} with the input \texttt{weights=varPower()}.  (There are many other ways to model non-constant error variance; this small example gives you just a taste, and for this course, you would not be expected to deal with any cases other than ones like this, where error variance increases with fitted values.)
+<<Ornstein_gls>>=
+om2 <- gls(assets ~interlocks, data=Ornstein, weights=varPower())
+@ 
+
+As with the non-independence case, if you plot the residuals for this model, you will see that they DO still have non-constant variance...but again, now it is OK because our model has taken it into account, and computed parameter estimates and standard errors appropriately.
+
+\section{Non-linear Relationships}
+The rest of this chapter will provide detailed information on how to deal with some non-linear relationships in regression.
+
+Linear regression assumes a linear relationship between predictor and response variables, but not all relationships between pairs of quantitative variables are linear.  There are two common ways to deal with
 nonlinear relationships:
 \begin{enumerate}
 	\item
-		Transform the data so that there is a linear relationship 
-		between the transformed variables.
+		Transform the data before beginning linear regression analysis, so that there \emph{is} a linear relationship between the (transformed) variables.
 	\item
-		Apply the method of least squares (or maximum likelihood)
-		with a non-linear function.
+		Fit a model that explicitly expects, and accounts for, the nonlinear relationship between the two variables. 
 \end{enumerate}
 
 
 \section{Transformations in Linear Regression}
 \myindex{transformation!of data}%
 
-The utility of linear models is greatly enhanced through the use of 
-various transformations of the data.
+The applicability of linear models can be extended through the use of 
+various transformations of the data.  
 There are several reasons why one might consider a transformation of
 the predictor or response (or both).
 
@@ -54,6 +182,9 @@ the predictor or response (or both).
 	and $\lambda$ for a number of different colors.
 	
 	A little algebra gives us
+	% This might lead us to fit a model with no intercept 
+	% (e.g., in R, lm(y ~ 0 + x)) after applying an inverse transformation
+	% to the predictor $m$:
 	\[
 	V_a = \frac{\hbar c }{e} \cdot \frac{1}{\lambda} + k
 	\]
@@ -77,20 +208,21 @@ We need to wrap \code{1/lambda} in \code{I()} because the arithmetic symbols
 \code{/},
 and 
 \verb!^!
-have special meanings inside a formula.  \code{I()} stands for \emph{inhibit} special interpretation.
+have special meanings inside the formula for a model. 
+\code{I()} stands for \emph{inhibit} special interpretation.
 
 Notice that the intercpet is not directly involved in estimating $\hbar$, but that we can't fit
 the line and obtain our slope without it.
 	
 	Many non-linear relationships can be transformed to linearity.  
-	Exercise~\ref{prob:transformations} presents several examples
+	Exercise~\ref{prob:transformations} presents several more examples
 	and asks you to determine a suitable transformation.
 
   \item To obtain a better fit.
 
 	If a scatterplot or residual plot shows a clearly non-linear pattern 
-	to the data, then there is no reason to use the linear fit.  
-	In the absence of a clear theoretical model, we may select 
+	to the data, then it would be inappropriate to fit a linear regression (and conclusions drawn from that model would be incorrect and misleading).  
+	In the absence of theoretical reasons to expect a particular mathematical relationship between the variables being studied, we may select 
 	transformations based on the shape of the relationship as 
 	revealed in a scatterplot.  Section~\ref{sec:ladderOfReexpression}
 	provides some guidance for selecting transformations in
@@ -103,6 +235,11 @@ the line and obtain our slope without it.
 	if the variance in the response appears to increases as the predictor 
 	increases, a logarithmic or square root transformation of the response may 
 	decrease the disparity in variance.  
+	Some transformations are used to improve the agreement between the
+	data and the assumptions about the error terms in the model. 
+	For example, if data are heteroscedastic -- for example, 
+	if the variance in the response appears to increase as the predictor increases -- 
+	a logarithmic or square root transformation of the response may help.  
 \end{itemize}
 
 In practice, all three of these issues are intertwined.  A transformation that
@@ -114,7 +251,7 @@ Similarly, a transformation performed to achieve \term{homoskedasticity}
 (equal variance; the opposite is called \term{heteroskedasticity}) 
 may result in a fit that does not match the overall shape of the data very well.
 Despite these potential problems, there are many situations where a relatively
-simple transformation is all that is needed to greatly improve the model.
+simple transformation is all that is needed to greatly improve the model.  Here, when we say "improve" the model, we mean that the assumptions of the model are satisfied, and the model fits the data acceptably well.
 
 \subsection{Three Important ``Laws"}
 In the sciences, relationships between variables based on some scientific theory
@@ -138,17 +275,19 @@ lm(log(y) ~ log(x))
 @
 Then $\beta_0 = \log(A)$ and $\beta_1 = p$.  
 If a power law is a good fit for the data then
-<<eval = FALSE>>=
-xyplot(log(y) ~ log(x))
+
+<<eval=FALSE>>=
+gf_point( log(y) ~ log(x) )
 @
 will produce a roughly linear plot.
 
 Fitting a power law results in estimates for the parameters $\beta_0 = \log(A)$ and $\beta_1 = p$.
 Note that we can use logarithms with any base for this transformation.  Typically natural logarithms are used
 (that's what \function{log()} does in \R).  
-In some specific applications base 10 logarithms (\function{log10()} in \R) 
-or base 2 logarithms (\function{log2()} in \R) 
-yield the commonly used scale for $\beta_0 = \log(A)$, the constant of proportionality.
+In some specific applications we might use base 10 logarithms (\function{log10()} in \R) 
+or base 2 logarithms (\function{log2()} in \R); 
+this yields the commonly used scale for 
+$\beta_0 = \log(A)$, the constant of proportionality.
 
 Some common situations that are modeled with power laws include drag force vs speed, 
 velocity vs. force, and frequency vs. force.
@@ -167,13 +306,13 @@ lm(log(y) ~ x)
 @
 Then $\beta_0 = \log(A)$ and $\beta_1 = \log(B) = C$.  
 If an exponential law is a good fit for the data then
-<<eval = FALSE>>=
-xyplot(log(y) ~ x)
+<<eval=FALSE>>=
+gf_point( log(y) ~ x )
 @
 will produce a roughly linear plot.
 
 Fitting an exponential law results in estimates for the parameters $\beta_0 = \log(A)$ and $\beta_1 = \log(B) = C$.
-Again, we are assuming natural logarithms.
+Again, we will generally use natural logarithms. In this course, if you see a \texttt{log()} without an indication of the base of the logartihm, you can assume it is base "e", a natural logarithm.  Similarly, remember that for R, the function \texttt{log()} takes the natural logarithm.
 
 Some common situations that are modeled with exponential laws include
 population growth and radioactive decay.  Note that exponential growth models
@@ -189,22 +328,29 @@ Graphs of $\log(y)$ vs. $\log(x)$ (log-log) or $\log(y)$ vs $x$ (semi-log)
 can be used to assess whether the power law or exponential law appears to apply
 in a given situation.  If the law were a perfect description of the situation,
 all the points on the log-log or semi-log plot would fall along a straight line.
-In practice, the fit won't be perfect, but the plot is a useful diagnostic.
+In practice, the fit won't be perfect, but the plot is a useful diagnostic. 
+For example, you can compare a plot of $y$ as a function of $x$ with a log-log or semi-log plot, 
+and see which one shows the most linear relationship between the two variables.
 
 In the old days, before computers could readily transform the data, special
 graph paper was produced with semi-log or log-log scales to facilitate this
-sort of plot.  \R\ can also create plots with transformed scales.  Here are some
-examples using artifical data satisfying a power law (with exponent 1.5).
+sort of plot.  
+% \R\ can also create plots with transformed scales.  
+% Here are some
+% examples using artifical data satisfying a power law (with exponent 1.5).
+\R\ can easily create plots with transformed scales.  
+Use \function{gf_refine()} with input \texttt{scales_*_log10()} to your call 
+to \texttt{gf_point()}, as detailed in the example below:
 <<>>=
 x <- 1:10
 y <- 3 * x^1.5
-xyplot(y ~ x)
-@
-<<>>=
-xyplot(log(y) ~ log(x))
-xyplot(log(y) ~ x)
-xyplot(y ~ x, scales = list(x = list(log = TRUE), y = list(log = TRUE)))
-xyplot(y ~ x, scales = list(y = list(log = TRUE)))
+gf_point(log(y) ~ log(x))
+gf_point(log(y) ~ x)
+gf_point(y ~ x) %>%
+  gf_refine(scale_x_log10(), scale_y_log10())
+
+gf_point(y ~ x) %>%
+  gf_refine(scale_y_log10())
 @
 \noindent
 As expected, the log-log transformation makes things linear.  Of course, with real data, the 
@@ -265,7 +411,7 @@ Concentration <- data.frame(
   time = c(0, 50, 100, 150, 200, 250, 300),               # minutes
   concentration = c(50, 38, 30.6, 25.6, 22.2, 19.5, 17.4) # mol/dm^3 * 10^3
 )
-xyplot(concentration ~ time, data = Concentration)
+gf_point(concentration ~ time, data=Concentration)
 @
 under the assumption that 
 $\alpha = 2$, so $\beta = 1$.  In this case, our relationship becomes
@@ -285,8 +431,10 @@ of our model.
 We can divide by $-\beta$ to obtain estimates for $d$ and $k$.
 
 Of course, we should always look to see whether the fit is a good fit.
+% mplot(conc.model, w = 1:2)  # residual plot and qq-plot of residuals
 <<>>=
-mplot(conc.model, w = 1:2)  # residual plot and qq-plot of residuals
+gf_point(resid(conc.model) ~ fitted(conc.model))
+gf_qq(~resid(conc.model)) %>% gf_qqline()
 @
 Notice that these residuals are very small relative to the values for
 concentration.  (We can see this from the vertical scale of the plot and 
@@ -298,17 +446,10 @@ magnitude smaller than our concentration measurements, which likely can't be
 measured to that degree of accuracy.
 
 If we want to show the fit on top of the original data, we must remember to
-untransform the response, since the model is a model for $1/C$.  There are two ways
-to do that.
-<<fig.keep = 'last'>>=
-oneOverC <- makeFun(conc.model)
-xyplot(concentration ~ time, data = Concentration)
-plotFun(1/oneOverC(t) ~ t, add = TRUE)
-@
-<<fig.keep = 'last'>>=
-C <- makeFun(conc.model, transformation = function(x) 1/x)
-xyplot(concentration ~ time, data = Concentration)
-plotFun(C(t) ~ t, add = TRUE)
+untransform the response, since the model we fitted is a model for $1/C$, but we want to show a model for $C$:
+<<fig.keep='last'>>=
+gf_point( concentration ~ time, data = Concentration ) %>%
+gf_line( 1/fitted(conc.model) ~ time, data = Concentration)
 @
 \end{example}
 
@@ -335,7 +476,7 @@ is monotonic and has a single bend.
 Their idea was to apply a power transformation to 
 $x$ or $y$ or both -- that is, to work with $x^a$ and $y^b$ for
 an appropriate choice of $a$ and $b$.  Tukey called 
-this ordered list of transformations the ladder of re-expression.
+this ordered list of transformations the \emph{ladder of re-expression}.
 The identity transformation has power~$1$.
 The logarithmic transformation is a special case and is included in the 
 list associated with a power of $0$.  
@@ -411,11 +552,11 @@ $\vdots$ & $\vdots$ \\
 
 This method focuses primarily on transformations designed to improve
 the overall fit.  The resulting models may or may not have 
-a natural interpretation.  These transformations also affect the 
+a natural, or obvious, interpretation.  These transformations also affect the 
 shape of the distributions of the explanatory and response variables
 and, more importantly, of the residuals from the linear model  
 (see Exercise~\ref{prob:TukeyBulgeSkew}).
-When several transformations lead to reasonable linear fits, these other
+When several different transformations lead to reasonable linear fits, these other
 factors may lead us to prefer one over another.
 
 
@@ -453,7 +594,7 @@ X <- power(x,a)
 Y <- power(y,b)
 original <- (a==1 & b==1)
 ddd <- data.frame(X = X,Y = Y,a = a,b = b,original = original)
-xyplot(y~x)
+gf_point(y ~ x)
 @
 \caption{A scatterplot illustrating a non-linear relationship between $x$ and $y$.}
 \label{fig:tukey-bulge-example}%
@@ -492,8 +633,8 @@ floor.   We begin by fitting a linear model to this data.
 <<balldrop>>=
 ball.model <- lm(time ~ height, data = BallDrop)
 summary(ball.model)
-xyplot(time~height, data = BallDrop, type = c('p','r'))
-mplot(ball.model, w = 1)
+gf_point(time~height,data=balldrop) %>% gf_lm()
+gf_point(resid(ball.model) ~ fitted(ball.model))
 @
 
 
@@ -509,10 +650,18 @@ This transformation agrees with Tukey's ladder of re-expression, which suggests
 moving down the ladder for \variable{height} or up the ladder for \variable{time}.
 
 <<balldrop-transT>>=
+<<<<<<< HEAD:Stat241-NonLinear.Rnw
 ball.modelT <- lm(time ~ sqrt(height), data = BallDrop)
 summary(ball.modelT)
 plotModel(ball.modelT)
 mplot(ball.modelT, w = 1)
+=======
+ball.modelT <- lm(time ~ sqrt(height), data=balldrop)
+summary(ball.modelT)
+gf_point(time ~ sqrt(height), data=balldrop) %>%
+  gf_lm(time~sqrt(height), data=balldrop) 
+gf_point(resid(ball.modelT) ~ fitted(ball.modelT))
+>>>>>>> c25168dd6c03b5958e6d874fffc45a873a27e0d5:Math241-NonLinear.Rnw
 @
 This model does indeed fit better, but the residual plot indicates that
 there may be some inaccuracy in the measurement of the height.  
@@ -535,7 +684,7 @@ to the height.  Is there another transformation that yields an even
 better fit?
 \end{problem}
 
-\medskip   % to move one line of R output onto next page
+%\medskip   % to move one line of R output onto next page
 \begin{example}
 \myindex{physics|exampleidx}%
 \label{example:balldropRM}%
@@ -549,21 +698,16 @@ justify that the errors in average times at each height are independent
 (if we believe that the errors in the height set-up are independent and 
 not systematic).
 
-%\pagebreak
-% # balldropavg <- aggregate(balldrop$time, by = list(balldrop$height), mean)
-% # names(balldropavg) <- c('height','time')
-<<balldrop-avg, tidy = FALSE>>=
-BallDropAvg <- 
-  BallDrop %>%
+
+<<balldrop-avg, message=FALSE>>=
+balldropavg <- balldrop %>%
   group_by(height) %>%
-  summarise(time = mean(time))
-BallDropAvg 
-@
-<<warning = FALSE>>=
-ball.modelA <- lm(time ~ sqrt(height), data = BallDropAvg)
+  dplyr::summarize(time = mean(time))
+
+ball.modelA <- lm(time ~ sqrt(height),balldropavg)
 summary(ball.modelA)
-plotModel(ball.modelA)
-mplot(ball.modelA, w = 1)
+gf_point(time~height, data=balldropavg) %>% gf_lm()
+gf_point(resid(ball.modelA) ~ fitted(ball.modelA))
 @
 Using a square root transformation on averaged \texttt{height}
 measurements in the \texttt{BallDrop} data gives a similar fit but
@@ -643,13 +787,14 @@ We can fit untransformed and transformed models
 soap.model1 <- lm(weight ~ day, data = Soap)
 summary(soap.model1)
 @
-The high value of $r^2$ and the scatterplot in Figure~\ref{fig:soap} 
-(darker line) indicate that the untransformed model is already a good fit.%
-\footnote{
-For now, it suffices
-to know that larger values of $r^2$ generally indicate a better fit.
-We will discuss $r^2$ and what it measures in Section~\ref{sec:Rsquared}.
-}
+The scatterplot in Figure~\ref{fig:soap} 
+(darker line) indicate that the untransformed model is already a good fit.
+%
+% \footnote{
+% For now, it suffices
+% to know that larger values of $r^2$ generally indicate a better fit.
+% We will discuss $r^2$ and what it measures in Section~\ref{sec:Rsquared}.
+%}
 <<lm-soap-trans>>=
 soap.model2 <- lm(I(weight^(1/3)) ~ day, data = Soap)
 summary(soap.model2)
@@ -659,16 +804,18 @@ summary(soap.model2)
 daysToFit <- seq(1,22,by = 0.5)
 linfits <- predict(soap.model1, newdata = data.frame(day = daysToFit))
 transfits <- predict(soap.model2, newdata = data.frame(day = daysToFit))^3
-soap.plot <- xyplot(weight ~ day, data = Soap, 
-    panel = function(x,y,...) {
-        panel.xyplot(daysToFit,linfits, lwd = 2, type = "l", 
-            col = trellis.par.get('superpose.line')$col[1])
-        panel.xyplot(daysToFit,transfits, lwd = 2, type = "l",
-            col = trellis.par.get('superpose.line')$col[2])
-        panel.xyplot(x,y,cex = 1.0,...)
-    }
-    )
-soap.plot
+# soap.plot <- xyplot(weight ~ day, data = Soap, 
+#     panel = function(x,y,...) {
+#         panel.xyplot(daysToFit,linfits, lwd = 2, type = "l", 
+#             col = trellis.par.get('superpose.line')$col[1])
+#         panel.xyplot(daysToFit,transfits, lwd = 2, type = "l",
+#             col = trellis.par.get('superpose.line')$col[2])
+#         panel.xyplot(x,y,cex = 1.0,...)
+#     }
+#     )
+gf_line(linfits ~ daysToFit, color = ~"linear fit") %>%
+  gf_line(transfits ~ daysToFit, color = ~ "transformed fit") %>%
+  gf_point(weight ~ day, data = Soap, color = "black")
 @
 
 \caption{Comparing untransformed (darker) and transformed 
@@ -678,19 +825,19 @@ soap.plot
 %
 The transformed model in this case actually fits worse.
 The higher value of $r^2$ for the untransformed model is an indication 
-that it performs better.  
+that the untransformed model explains a larger proportion of the variance in soap weights.  It is left as an exercise for you to examine diagnostic plots of the model residuals in both cases; you should see that neither one looks markedly better than the other. (There is perhaps an issue with a small amount of non-independence, or correlation over time, of the residuals; we might expect that with data collected over time.  However, the dataset is so small that it is hard to tell for sure if the problem is real and worth worrying about.)  
 Figure~\ref{fig:soap} shows a scatterplot
 with both fits.  
 The data do not support Rex's assumption that a transformation
 is necessary.  
-We can also fit a quadratic model of the form \verb!weight~I(day^2)!,
-but this model is worse still.  Fitting a full quadratic model requires 
-two predictors (\variable{day} and \verb!day^2!) and so will have to wait
-until our discussion of multiple linear regression.  
-The scatterplot and especially the residual plot both show that the 
+% We can also fit a quadratic model of the form \verb!Weight~I(Day^2)!,
+% but this model is worse still.  Fitting a full quadratic model requires 
+% two predictors (\verb!Day! and \verb!Day^2!) and so will have to wait
+% until our discussion of multiple linear regression.  
+The scatterplot and especially the residual plots both show that the 
 residuals are mostly positive near the ends of the data and negative
 near the center.  Part of this is driven by a flattening of the pattern
-of dots near the end of the measurement period.  Perhaps as the soap
+of data points near the end of the measurement period.  Perhaps as the soap
 became very small, Rex used slightly less soap than when the soap was
 larger.
 Exercise~\ref{prob:soap} asks you to remove the last few observations
@@ -1229,7 +1376,7 @@ y = f(x) + \varepsilon
 where $f$ may be any parameterized function.
 
 The \R\ function for fitting these
-models is \function{nls()}.  This functions works much like \function{lm()},
+models is \function{nls()}.  This function works much like \function{lm()},
 but there are some important differences:
 	\begin{enumerate}
 		\item

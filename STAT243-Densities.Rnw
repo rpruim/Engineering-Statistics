@@ -1,167 +1,34 @@
-\Sexpr{set_parent('Stat241-Notes.Rnw')}
+\Sexpr{set_parent('STAT241-S19.Rnw')}
 
-\chapter{Random Variables}
+\chapter{Densities}
 
-\begin{description}
-\item[random variable]a random process that results in a number
-\end{description}
-
-We have already seen notation for and a few examples of random variables.
-In this chapter we will learn a bit more about random variables.  We will
-focus our attention on two types of random variables: discrete random variables
-and continuous random variables.\footnote{There are important examples 
-of random variables that are neither discrete nor continuous.}
-
-\section{Discrete Random Variables}
-
-A discrete random variable takes on values from a discrete set of possibilities,
-typically either a finite set or a subset of the integers.  Here are some examples.
-\begin{enumerate}
-\item If we roll a die and record the number, there are six possible values,
-so the random variable is discrete.
-\item
-If we keep flipping a coin until we get a head and record the number of coin
-tosses, then the possible values of the random variable are $1, 2, 3, \dots$
-This is also a discrete random variable.
-\end{enumerate}
-
-
-For each of the possible values of a discrete random variable, there is some
-probability of that value occuring.  So to specify a discrete random variable,
-we need to specify those probabilities.  When there are only a small number 
-of possible value, we can do this with a table.
-
-\begin{center}
-\begin{tabular}{lccc}
-\hline
-value of $X$ & 0 & 1 & 2 \\
-probability & 0.2 & 0.5 & 0.3 \\
-\hline
-\end{tabular}
-\end{center}
-
-This is really just one way of describing a function, called the 
-\textbf{probability mass function} (or pmf).  The pmf satisfies
-\[
-f(x) = \Prob(X = x)
-\]
-Sometimes instead of providing a table, we will be able to specify
-the pmf using a formula.  For example, we could define a pmf $g$ by
-
-\[ g(y) = (2 - |1-y|) / 4 \mbox{ for $y \in \{0, 1, 2\}$} \]
-which is the same as specifying $g$ with the following table.
-
-\begin{center}
-\begin{tabular}{lccc}
-\hline
-value of $Y$ & 0 & 1 & 2 \\
-probability & 0.25 & 0.5 & 0.25 \\
-\hline
-\end{tabular}
-\end{center}
-
-Here's one more example.  Let $W$ be a random varaible that can take on any integer
-value and has pmf given by
-\[
-h(w) = \left(\frac{1}{2}\right)^{w+1} \mbox {for $w = 0, 1, 2, 3, \dots$}
-\]
-So, for example, $\Prob(W = 2) = h(2) = \left(\frac12 \right)^3 = \frac18$.
-
-Probabilities can be obtained from the pmf by adding:
-
-
-\begin{itemize}
-\item
-$\Prob( X > 0 ) = 0.5 + 0.3 - 0.8$
-\item
-$\Prob( Y > 0) = 0.5 + 0.25$
-\item
-$\Prob(W > 0) = \frac14 + \frac18 + \frac1{16} + \cdots = \frac12$
-\item
-$\Prob(W > 0) = 1 - \Prob(W = 0) = 1 - \frac{1}{2} = \frac{1}{2}$
-\end{itemize}
-
-The only restrictions on a pmf are that 
-\begin{enumerate}
-\item
-the values must all be non-negative, and 
-\item
-the sum (over all possible values of the random variable) must be 1.
-\end{enumerate}
-That way the probabilities will behave the way probabilities should.
-
-
-\begin{example}
-\question
-Amy is a 92\% free throw shooter.  We watch her take shots until she misses and let 
-$X$ be the number of shots.  What is the pmf for $X$?
-
-\answer
-This time our table would be infinite (since there is no limit to how many consecutive
-free throws Amy might make), so we won't be able to write the whole table down.
-But we can work out the first few probabilities:
-
-\begin{itemize}
-\item
-$f(0) = \Prob(X = 0) = 0.08$.  (She has to miss the first shot.)
-\item
-$f(1) = \Prob(X = 1) = (0.92)(0.08)$.  (She has to make the first and miss the second.)
-\item
-$f(2) = \Prob(X = 2) = (0.92)^2(0.08)$.  (She has to make the first two, then miss the third.)
-\end{itemize}
-At this point, we see there is a general pattern that allows us to write down an 
-algebraic form for the pmf:
-\[
-f(x) = \Prob(X = x) = (0.92)^{x-1}(0.08)
-\]
-where $x$ is a positive integer.  (If $x$ is not an integer, or $x < 1$, then $f(x) = 0$, since
-those values are not possible.)
-\end{example}
-
-
-\section{Continuous Random Variables}
-
-\subsection{Density histograms, density plots, density functions}
+\section{Density histograms, density plots, density functions}
 \myindex{density|defidx}%
 A histogram is a simple picture describing the ``density" of data. 
 Histogram bars are tall in regions where there is more data -- i.e., where the data are 
 more ``dense''.  
 <<histograms-count-density>>=
-library(alr4)
-histogram( ~ Duration, data = oldfaith )
-histogram( ~ Duration, data = oldfaith, type = "count" )
+require(alr3)
+gf_dhistogram( ~ Duration, data=oldfaith )
+gf_histogram( ~ Duration, data=oldfaith, type="count" )
 @
 
-The density scale is the same scale that is used by \function{densityplot()}, and it
-is the default scale for histograms created using \function{histogram()} when
+The density scale is the same scale that is used by \function{gf_density()}, and it
+is the default scale for histograms created using \function{gf_dhistogram()} when
 the \pkg{mosaic} package is loaded.
 <<histogram-density>>=
-library(alr4)
-histogram( ~ Duration, data = oldfaith, width = 20, center = 110 )
-densityplot( ~ Duration, data = oldfaith)
+require(alr3)
+gf_dhistogram( ~ Duration, data=oldfaith, binwidth=25 )
+gf_density( ~ Duration, data=oldfaith)
 @
 
 The density scale is chosen so that the area of each rectangular bar (width times height)
 is equal to the proportion of the data set represented by the rectangle. 
 
-\begin{example}
-	\question Use the histogram of Old Faithful eruption times to estimate
-	the proportion of eruptions that last between 100 and 120 seconds.
-
-	\answer
-In our histogram of Old Faithful eruption durations, the bar corresponding to the 
-bin from 100--120 appears to have a height of about 0.09.  That gives an area of 
-0.18 and indicates that approximately 18\% of the eruptions last between 100 and 120
-seconds.
-<<>>=
-tally( ~ ( 100 < Duration & Duration <= 120), data = oldfaith, format = "prop" )
-@
-\end{example}
-
 The key idea behind the density scale can be expressed as 
 
 \begin{center}
-	Probability $ = $ area
+	Probability $=$ area
 \end{center}
 This association of area with probability means that
 the total area of all the bars will always be equal to 1 if we use the density
@@ -218,7 +85,7 @@ expressions.  The definition of \code{f()} makes use of this conversion to simpl
 the cases.}
 <<>>=
 f <- makeFun( (1 - abs(x)) * (abs(x) <= 1) ~ x )
-plotFun( f(x) ~ x, x.lim = c(-1.5, 1.5) )
+plotFun( f(x) ~ x, x.lim=c(-1.5, 1.5) )
 @
 
 The entire area under the curve can be found as the area of a triangle with base 2 and height 1.
@@ -265,13 +132,11 @@ integrate( f, -Inf, 1 )
 integrate( f, -1, 1)
 integrate( f, -.5, .5 )
 # if you just want the value without the text saying how accurate the approximation is
-# here are two equivalent ways to get it
-value(integrate( f, -.5, .5 ))        # extract the value using val()
-integrate( f, -.5, .5 ) %>% value()   # %>% is the "then" operator
+integrate( f, -.5, .5 )$value
 @
 
 An alternative approach uses \function{antiD()} from the \pkg{mosaic} package.
-<<tidy = FALSE>>=
+<<tidy=FALSE>>=
 F <- antiD( f(x) ~ x)
 F(1) - F(-1)        # total probability -- better be 1
 F(.5) - F(-1)       # P( -1 <= X <= 0.5 )
@@ -279,11 +144,54 @@ F(.5) - F(-.5)      # P( -.5 <= X <= .5 )
 @
 \end{example}
 
+\myindex{cumulative distribution function|defidx}%
+\myindex{cdf|see{cumulative distribution function}}%
+If we help \R\ choose the anti-derivative, we get a useful function called 
+the \term{cumulative distribution function}, abbreviated cdf.
+
+
+\begin{boxedText}
+	If $X$ is a random variable, then the \term{cumulative distribution function} (cdf) for 
+	$X$, often denoted $F_X$, is the function defined by
+	\[
+	F_X(x)  = \Prob(X \le x)
+	\]
+	That is, the output of the cdf reports the probability of being below a particular value.
+	The derivative of the cdf is the pdf.
+\end{boxedText}
+
+\begin{example}
+Continuing with our previous example, if we choose -1 as our lower endpoint,
+then the anti-derivative will be the cdf.
+<<tidy=FALSE>>=
+F <- antiD( f(x) ~ x, lower.bound = -1)   # We can use -1 instead of -Inf here.
+F(-1)               # this should be 0 since we chose -1 as the lower bound.
+F(1)                # P(X <= 1); should be 1
+F(.5)               # P(X <= 0.5)
+F(.5) - F(-.5)      # P( -0.5 <= X <= 0.5 )
+@
+\end{example}
+
+\section{Working with Probability Density Funcitons}
+
+We have already seen that we can use a pdf $f$ to calculate probabilities via integration, 
+and that there is a special anti-derivative of $f$ called the cdf such that the cdf $F$
+satisfies
+\[
+F(x) = \Prob(X \le x)
+\]
+This function can also be used to compute probabilities, since
+\[
+\Prob(a \le X \le b) = \int_a^b f(x) \; dx = F(b) - F(a)
+\]
+Indeed, once we learn how to get the cdf function in \R\ this will 
+be our primary way to calculate probabilities in applications.
+
 \subsection{Kernels}
 \myindex{kernel|defidx}%
-The \term{kernel} of a continuous random variable is a function that is a 
+The \term{kernel} of a random variable is a function that is a 
 constant multiple of the pdf.  The reason that these are interesting
-is that any kernel can be converted into a pdf by dividing by this constant.
+is that any kernel can be converted into a pdf by dividing by the appropriate constant.
 In particular, if 
 \[ 
 \int_{-\infty}^{\infty} k(x) \; dx = A \;, 
@@ -308,76 +216,18 @@ f(x) = \frac{k(x)}{A} \;.
 \]
 <<>>=
 k <- makeFun( x^2 * ( 0 <= x & x <= 2) ~ x )
-plotFun(k(x) ~ x, xlim = c(-1,3))
+plotFun(k(x) ~ x, xlim=c(-1,3))
 integrate( k, 0, 2)
-K <- antiD(k(x) ~ x, lower.bound = 0)
+K <- antiD(k(x) ~ x, lower.bound=0)
 K(2)
 @
 Since the total area is $8/3$, if $\frac{k(x)}{8/3}$ is the pdf.
 \end{example}
 
-\subsection{Cumulative distribution functions}
+\subsection{The mean of a continuous random variable}
 
-\myindex{cumulative distribution function|defidx}%
-\myindex{cdf|see{cumulative distribution function}}%
-
-% The \textbf{cumulative distribution function} (cdf) returns the probability of being
-% less than or equal to some value.  We generally use a capital letter ($F$, $G$, etc.)
-% to denote a cdf.
-% \[
-% F_X(x) = \Prob( X \le x)  \; .
-% \]
-
-% If we help \R\ choose the anti-derivative, we get a useful function called 
-% the \term{cumulative distribution function}, abbreviated cdf.
-
-
-\begin{boxedText}
-	If $X$ is a random variable, then the \term{cumulative distribution function} (cdf) for 
-	$X$, often denoted $F_X$, is the function defined by
-	\[
-	F_X(x)  = \Prob(X \le x)
-	\]
-	That is, the output of the cdf reports the probability of being below a particular value.
-\end{boxedText}
-
-For a continuous random variable, the cdf is a particular anti-derivative
-of the pdf.  The derivative of the cdf is the pdf.
-
-\begin{example}
-Continuing with our previous example, if we choose -1 as our lower endpoint,
-then the anti-derivative will be the cdf.
-<<tidy = FALSE>>=
-f <- makeFun((1 - abs(x)) * (abs(x) <= 1) ~ x)
-F <- antiD( f(x) ~ x, lower.bound = -1)   # We can use -1 instead of -Inf here.
-F(-1)               # this should be 0 since we chose -1 as the lower bound.
-F(1)                # P(X <= 1); should be 1
-F(.5)               # P(X <= 0.5)
-F(.5) - F(-.5)      # P( -0.5 <= X <= 0.5 )
-@
-\end{example}
-
-%\section{Working with Probability Density Funcitons}
-
-We have already seen that we can use a pdf $f$ to calculate probabilities via integration, 
-and that there is a special anti-derivative of $f$ called the cdf such that the cdf $F$
-satisfies
-\[
-F(x) = \Prob(X \le x)
-\]
-This function can also be used to compute probabilities, since
-\[
-\Prob(a \le X \le b) = \int_a^b f(x) \; dx = F(b) - F(a)
-\]
-Indeed, once we learn how to get the cdf function in \R\ this will 
-be our primary way to calculate probabilities in applications.
-
-\section{Mean and Variance}
-\subsection{The mean of a random variable}
-
-The definition for the mean of a random variable will be motivated 
+The definition for the mean of a continuous random variable will be motivated 
 by the calculation of a mean of some data.
-
 \begin{example}
 	\question
   Suppose a student has taken $10$ courses
@@ -405,73 +255,6 @@ The key idea here is that the mean is a \textbf{sum of values times probabilitie
 \[
 \mbox{mean} = \sum \mbox{value} \cdot \mbox{probability}
 \]
-For a discrete random variable this translates to
-\[
-\E(X) = \sum x f(x)
-\]
-where the sum is taken over all possible values of $X$.
-
-The mean of a random variable also goes by another name: \textbf{expected value}.  We 
-can denote the mean of $X$ by either $\mu_X$ or $\E(X)$.
-
-\begin{example}
-Let $X$ be discrete random variable with probablilities given in the table 
-below.
-
-\begin{center}
-\begin{tabular}{lccc}
-\hline
-value of $X$ & 0 & 1 & 2 \\
-probability & 0.2 & 0.5 & 0.3 \\
-\hline
-\end{tabular}
-\end{center}
-
-\question What is the mean (expected value) of $X$?
-
-\answer
-$E(X) = 0 \cdot 0.2 + 1 \cdot 0.5 + 2 \cdot 0.3 = 0.5 + 0.6 = 1.1$
-This value reflects the fact that the random variable is larger than
-1 a bit more often than it is less than 1.
-\end{example}
-
-
-
-\begin{example}
-\label{ex:raffle}%
-\label{ex:raffle2}%
-  A local charity is holding a raffle.  They are selling $1000$ raffle tickets 
-  for \$$5$ each.  The owners of five of the raffle tickets will win a prize.  The 
-  five prizes are valued at \$$25$, \$$50$, \$$100$, \$$1000$, and \$$2000$.  Let $X$ 
-  be the value of the prize associated with a random raffle ticket ($0$ for 
-  non-winning tickets). 
-  Then:
-  \begin{itemize}
-	\item $\evProb{the ticket wins a prize} = \Prob(X > 0) = 5/1000$.
-	\item $\evProb{the ticket wins the grand prize} = \Prob(X = 2000) = 1/1000$.
-	\item $\evProb{the ticket wins a prize worth more than \$$75$} 
-	  	= \Prob(X > 75) = 3/1000$.
-  \end{itemize}
-  
-  The expected value of a ticket is
-  
-\[
-  0 \cdot \frac{995}{1000} 
-  + 25 \cdot \frac{1}{1000}
-  + 50 \cdot \frac{1}{1000}
-  + 100 \cdot \frac{1}{1000}
-  + 1000 \cdot \frac{1}{1000}
-  + 2000 \cdot \frac{1}{1000}
-\]
-<<>>=
-25 * .001 + 50 * 0.001 + 100 * 0.001 + 1000 * 0.001 + 2000 * 0.001
-# R can help us set up this sum:
-sum(c(25, 50, 100, 1000, 2000) * 0.001)
-@
-%%% \qedskip
-\end{example}
-
-
 When working with a continuous random variable, 
 we replace the sum with an integral and replace the 
 probabilities with our density function to get the following definition:
@@ -514,30 +297,18 @@ If this integral fails to converge, we will also say that the distribution has n
 f <- makeFun( (1 - abs(x)) * (abs(x) <= 1) ~ x)
 xf <- makeFun( x * f(x) ~ x )
 integrate(xf, -1, 1)
-F <- antiD( x * f(x) ~ x, lower.bound = -1)
+F <- antiD( x * f(x) ~ x, lower.bound=-1)
 F(-1)  # should be 0
 F(1)
 @
 \end{example}
 
-\subsection{Variance}
+\subsection{The variance of a continuous random variable}
 
-Arguing similarly, we can compute the variance of a discrete or continuous random
-variable using 
-\begin{itemize}
-\item discrete:
-\(
-\Var(X) = \sigma^2_X = \sum_x (x-\mu_X)^2 f(x) \; dx  
-\)
-\item
-continuous:
-\(
-\Var(X) = \sigma^2_X = \int_{-\infty}^{\infty} (x-\mu_X)^2 f(x) \; dx
-\)
-\end{itemize}
-These can be combined into a single definition by writing
+Arguing similarly, we can compute the variance of a continuous random
+variable using
 \[
-\Var(X) = \E((X - \mu_X)^2) \;.
+\Var(X) = \sigma^2_X = \int_{-\infty}^{\infty} (x-\mu_X)^2 f(x) \; dx
 \]
 
 Note: It is possible that the integral used to define the variance will fail to converge.
@@ -560,7 +331,7 @@ G(1) - G(-1)
 @
 \end{example}
 
-Some simple algebraic manipulations of the sum or integral above shows that
+Some simple algebraic manipulations of the integral above shows that
 \begin{align}
 \Var(X) &= \E(X^2) - \E(X)^2
 \label{eqn:varshortcut}
@@ -585,7 +356,7 @@ Let $f(x) = 5/4 - x^3$  on $[0,1]$.
 \begin{solution}
 <<>>=
 f <- makeFun( (5/4 - x^3) * ( abs(x-.5) <= .5 ) ~ x )
-plotFun(f(x) ~ x, x.lim = c(-1,2))  # quick plot to make sure things look correct.
+plotFun(f(x) ~ x, x.lim=c(-1,2))  # quick plot to make sure things look correct.
 F <- antiD(f(x) ~x)  
 # part a:  f(x) >=0, so we just need to check that the total area is 1
 F(1) - F(0) == 1  
@@ -606,12 +377,12 @@ F(1/2) - F(1/2)   # part d
 \answer
 <<>>=
 g <- makeFun( (3 * x^2/8 ) * (0 <= x & x <= 2) ~ x )
-m <- antiD( x * g(x) ~ x, lower.bound = 0)(2)  # all in one step instead of defining F or G
+m <- antiD( x * g(x) ~ x, lower.bound=0)(2)  # all in one step instead of defining F or G
 m
-v <- antiD( (x - m)^2 * g(x) ~ x, m = m, lower.bound = 0)(2)
+v <- antiD( (x - m)^2 * g(x) ~ x, m=m, lower.bound=0)(2)
 v
 # here's the alternate computation
-antiD( x^2 * g(x) ~ x, lower.bound = 0)(2) - m^2
+antiD( x^2 * g(x) ~ x, lower.bound=0)(2) - m^2
 @
 \end{example}
 
@@ -731,21 +502,20 @@ of the triangle distributions, these functions are
 		\item What is the median of $X$?
 		\item What is the mean of $X$?
 	\end{enumerate}
-	
+
 \answer
-The \function{gf_dist} function in the \pkg{ggformula} package allows us to 
+The \function{gf_dist()} function in the \pkg{mosaic} package allows us to 
 graph the pdf for any function \R\ knows how to work with in the standard way.
 For example, here is a plot of the pdf of a $\Tri(0, 4, 1)$-distribution.
 <<>>=
-library(triangle)      # a package that knows about triangle distributions
-gf_dist("triangle", a = 0, b = 4, c = 1)
+gf_dist("triangle", params=list(a=0, b=4, c=1))
 @
 Here is the \R\ code to answer the remaining questions.
 <<>>=
 ptriangle(1, 0, 4, 1)   # P(X <= 4); notice that his is NOT 1/2
 ptriangle(2, 0, 4, 1)   # P(X <= 4); also NOT 1/2
 qtriangle(0.5, 0, 4, 1) # median is the 0.5-quantile
-T <- antiD( x * dtriangle(x, 0,4,1) ~ x, lower.bound = 0)
+T <- antiD( x * dtriangle(x, 0,4,1) ~ x, lower.bound=0)
 T(4)                    # mean of X
 integrate( makeFun( x * dtriangle(x, 0,4,1) ~ x) , 0, 4)
 @
@@ -790,11 +560,11 @@ integrate( makeFun( x * dtriangle(x, 0,4,1) ~ x) , 0, 4)
 \begin{solution}
 	The integrals are easy enough to do by hand, but here is the \R\ code 
 	to compute them.
-<<tidy = FALSE>>=
+<<tidy=FALSE>>=
 k <- makeFun( 1 - x^2 ~ x )
 K <- antiD( k(x) ~ x )
 area <- K(1) - K(-1); area 
-f <- makeFun( (1 - x^2)/A ~ x, A = area )
+f <- makeFun( (1 - x^2)/A ~ x, A=area )
 F <- antiD(f(x) ~ x)
 F(1) - F(-1)    # this should be 1 if we have done things right
 G <- antiD( x * f(x) ~ x )
@@ -811,10 +581,10 @@ H(1) - H(-1) - m^2                 # Var(X)
 \begin{solution}
 <<>>=
 # mean:
-m <- antiD( x * dtriangle(x,0,10,4) ~ x, lower.bound = 0)(10)
+m <- antiD( x * dtriangle(x,0,10,4) ~ x, lower.bound=0)(10)
 m
 # variance:
-antiD( x^2 * dtriangle(x,0,10,4) ~ x, lower.bound = 0)(10) - m^2
+antiD( x^2 * dtriangle(x,0,10,4) ~ x, lower.bound=0)(10) - m^2
 # median
 qtriangle( 0.5, 0, 10, 4 )
 @
@@ -834,7 +604,7 @@ In \R\, the parameters $a$ and $b$ are given more meaningful names: \code{min} a
 We can use the following code to graph the $\Unif(1,4)$ distribution.
 
 <<>>=
-gf_dist("unif", min = 1, max = 4, xlim = c(-1, 6)) 
+gf_dist(dist="unif", params=list(min=1, max=4), xlim=c(0,5))  # using parameter names
 @
 Notice that the width of the non-zero portion of the pdf is 3, so the height must be $1/3$.
 
@@ -892,10 +662,10 @@ From this we get $\frac{x}{3} = 0.8 + 1/3$, so $x = 3 ( 0.8 + 1/3) = 2.4 + 1 = 3
 \begin{solution}
 <<>>=
 # mean:
-m <- antiD( x * dunif(x,0,10) ~ x, lower.bound = 0)(10)
+m <- antiD( x * dunif(x,0,10) ~ x, lower.bound=0)(10)
 m
 # variance:
-antiD( x^2 * dunif(x,0,10) ~ x, lower.bound = 0)(10) - m^2
+antiD( x^2 * dunif(x,0,10) ~ x, lower.bound=0)(10) - m^2
 @
 \end{solution}
 
@@ -995,8 +765,8 @@ functions to make things even easier.
 \fi
 
 
-<<gf-dist-eponential>>=
-gf_dist("exp", rate = 4)
+<<gfdist-exponential>>=
+gf_dist("exp", params=list(rate=4))
 @
 
 \begin{problem}
@@ -1012,9 +782,9 @@ gf_dist("exp", rate = 4)
 
 \begin{solution}
 <<>>=
-antiD( x * dexp(x, 4) ~ x, lower.bound = 0)(Inf)
-antiD( x * dexp(x, 10) ~ x, lower.bound = 0)(Inf)
-antiD( x * dexp(x, 1/5) ~ x, lower.bound = 0)(Inf)
+antiD( x * dexp(x, 4) ~ x, lower.bound=0)(Inf)
+antiD( x * dexp(x, 10) ~ x, lower.bound=0)(Inf)
+antiD( x * dexp(x, 1/5) ~ x, lower.bound=0)(Inf)
 @
 	It appears that the mean of an $\Exp(\lambda)$-distribution is $1/\lambda$.  This
 	makes sense.  If events have at a rate of $30$ per hour, we would expect to wait
@@ -1054,7 +824,7 @@ preferring to let \R\ do the work for us. However, notice that each
 of these distributions has a pdf that allows for relatively simple integration.  For the 
 Gamma distributions, we need to use integration by parts ($\alpha - 1$ times).  For 
 the Weibull distributions we can use a substitution: $u = x^{\alpha}$.
-In each case, when $\alpha = 1$ we get an exponential distribution.
+In each case, when $\alpha=1$ we get an exponential distribution.
 
 The now familiar functions are available for each of these distributions.
 \begin{center}
@@ -1062,21 +832,21 @@ The now familiar functions are available for each of these distributions.
 	\hline
 	Function & What it does \\
 	\hline
-	\texttt{dgamma(x, shape, rate, scale = 1/rate)} & Computes value of the pdf at \texttt{x}
+	\texttt{dgamma(x, shape, rate, scale=1/rate)} & Computes value of the pdf at \texttt{x}
 	\\
-	\texttt{pgamma(q, shape, rate, scale = 1/rate)} 
+	\texttt{pgamma(q, shape, rate, scale=1/rate)} 
 		& Computes value of the cdf at \texttt{x}, i.e., 
 	$\Prob(X \le \texttt{q})$
 	\\
-	\texttt{qgamma(p, shape, rate, scale = 1/rate)} 
+	\texttt{qgamma(p, shape, rate, scale=1/rate)} 
 		& Computes quantiles, that is a value $q$ so that 
 	$\Prob(X \le \texttt{q}) = \texttt{p}$
     \\
-	\texttt{rgamma(n, shape, rate, scale = 1/rate)} & Randomly samples \texttt{n} values from a
+	\texttt{rgamma(n, shape, rate, scale=1/rate)} & Randomly samples \texttt{n} values from a
 	Gamma distribution.
 	\\
 	\hline
-	\texttt{dweibull(x, shape, scale = 1/rate)} & Computes value of the pdf at \texttt{x}
+	\texttt{dweibull(x, shape, scale=1/rate)} & Computes value of the pdf at \texttt{x}
 	\\
 	\texttt{pweibull(q, shape, scale)} 
 		& Computes value of the cdf at \texttt{x}, i.e., 
@@ -1100,17 +870,17 @@ for lifetime.  As the pictures below indicate, the shape and scale parameters
 are aptly named.
 
 <<>>=
-gf_dist("gamma", params = list(shape = 2, rate = 1), title = "Gamma(2,1)")
-gf_dist("gamma", params = list(shape = 5, rate = 1), title = "Gamma(5,1)")
-gf_dist("gamma", params = list(shape = 2, scale = 10), title = "Gamma(5,10)")
-gf_dist("gamma", params = list(shape = 5, scale = 10), title = "Gamma(5,10)")
+gf_dist("gamma", params=list(shape=2, rate=1), main="Gamma(2,1)")
+gf_dist("gamma", params=list(shape=5, rate=1), main="Gamma(5,1)")
+gf_dist("gamma", params=list(shape=2, scale=10), main="Gamma(5,10)")
+gf_dist("gamma", params=list(shape=5, scale=10), main="Gamma(5,10)")
 @
 
 <<>>=
-gf_dist("weibull", params = list(shape = 2, scale = 1),title = "Weibull(2,1)")
-gf_dist("weibull", params = list(shape = 5, scale = 1),title = "Weibull(5,1)")
-gf_dist("weibull", params = list(shape = 2, scale = 10),title = "Weibull(2,10)")
-gf_dist("weibull", params = list(shape = 5, scale = 10),title = "Weibull(5,10)")
+gf_dist("weibull", params=list(shape=2, scale=1),main="Weibull(2,1)")
+gf_dist("weibull", params=list(shape=5, scale=1),main="Weibull(5,1)")
+gf_dist("weibull", params=list(shape=2, scale=10),main="Weibull(2,10)")
+gf_dist("weibull", params=list(shape=5, scale=10),main="Weibull(5,10)")
 @
 
 \subsection{Normal Distributions}
@@ -1136,24 +906,20 @@ distribution is
 \end{center}
 
 
-<<echo = FALSE, fig.width = 7>>=
-gf_dist("norm") %>%
-  gf_theme(axis.text.y = element_blank()) %>%
-  gf_labs(y = "") %>%
-  gf_refine(
-    scale_x_continuous(
-      breaks = -3:3, 
-      labels = c( 
-        expression(mu - 3 * sigma),
-        expression(mu - 2 * sigma),
-        expression(mu - 1 * sigma),
-        expression(mu),
-        expression(mu + 1 * sigma),
-        expression(mu + 2 * sigma),
-        expression(mu + 3 * sigma) 
-      )  
-    )
-  )
+<<echo=FALSE, fig.width=7>>=
+gf_dist("norm", xlab='', ylab='Density') %>%
+  gf_refine(scale_x_continuous(breaks = c(-3:3),
+                               labels = (c( 
+                              expression(mu - 3 * sigma),
+                              expression(mu - 2 * sigma),
+                              expression(mu - 1 * sigma),
+                              expression(mu),
+                              expression(mu + 1 * sigma),
+                              expression(mu + 2 * sigma),
+                              expression(mu + 3 * sigma) 
+                              ))))  
+
+ 
 @
 The inflection points 
 of the normal distributions are always at $\mu-\sigma$ and $\mu+\sigma$.
@@ -1274,10 +1040,10 @@ $\alpha = \beta =1$, we have the $\Unif(0,1)$-distribution.
 The two shape parameters provide a wide variety of shapes.
 
 <<>>=
-gf_dist("beta", params = list(shape1 = 2, shape2 = 2), title = "Beta(2,2)")
-gf_dist("beta", params = list(shape1 = 2, shape2 = 0.9), title = "Beta(2,0.9)")
-gf_dist("beta", params = list(shape1 = 4, shape2 = 2), title = "Beta(4,2)")
-gf_dist("beta", params = list(shape1 = 0.9, shape2 = 0.85), title = "Beta(0.9,0.85)")
+gf_dist("beta", params=list(shape1=2, shape2=2), main="Beta(2,2)")
+gf_dist("beta", params=list(shape1=2, shape2=0.9), main="Beta(2,0.9)")
+gf_dist("beta", params=list(shape1=4, shape2=2), main="Beta(4,2)")
+gf_dist("beta", params=list(shape1=0.9, shape2=0.85), main="Beta(0.9,0.85)")
 @
 
 \begin{center}
@@ -1311,9 +1077,9 @@ gf_dist("beta", params = list(shape1 = 0.9, shape2 = 0.85), title = "Beta(0.9,0.
 		\item
 			$\Beta(20,30)$
 		\item
-			$\Gamm(\texttt{shape} = 2,\texttt{scale} = 3)$
+			$\Gamm(\texttt{shape}=2,\texttt{scale}=3)$
 		\item
-			$\Weibull(\texttt{shape} = 2,\texttt{scale} = 3)$
+			$\Weibull(\texttt{shape}=2,\texttt{scale}=3)$
 	\end{enumerate}
 \end{problem}
 
@@ -1321,27 +1087,27 @@ gf_dist("beta", params = list(shape1 = 0.9, shape2 = 0.85), title = "Beta(0.9,0.
 \begin{solution}
 <<>>=
 # Beta(2,3)
-m <- antiD( x * dbeta(x,2,3) ~ x, lower.bound = 0)(1)
+m <- antiD( x * dbeta(x,2,3) ~ x, lower.bound=0)(1)
 m
-antiD( x^2 * dbeta(x,2,3) ~ x, lower.bound = 0 )(1) - m^2
+antiD( x^2 * dbeta(x,2,3) ~ x, lower.bound=0 )(1) - m^2
 @
 <<>>=
 # Beta(20,30)
-m <- antiD( x * dbeta(x,20,30) ~ x, lower.bound = 0)(1)
+m <- antiD( x * dbeta(x,20,30) ~ x, lower.bound=0)(1)
 m
-antiD( x^2 * dbeta(x,20,30) ~ x, lower.bound = 0 )(1) - m^2
+antiD( x^2 * dbeta(x,20,30) ~ x, lower.bound=0 )(1) - m^2
 @
 <<>>=
-# Gamma(2,scale = 3)
-m <- antiD( x * dgamma(x,2,scale = 3) ~ x, lower.bound = 0)(Inf)
+# Gamma(2,scale=3)
+m <- antiD( x * dgamma(x,2,scale=3) ~ x, lower.bound=0)(Inf)
 m
-antiD( x^2 * dgamma(x,2,scale = 3) ~ x, lower.bound = 0 )(Inf) - m^2
+antiD( x^2 * dgamma(x,2,scale=3) ~ x, lower.bound=0 )(Inf) - m^2
 @
 <<>>=
-# Weibull(2,scale = 3)
-m <- antiD( x * dweibull(x,2,scale = 3) ~ x, lower.bound = 0)(Inf)
+# Weibull(2,scale=3)
+m <- antiD( x * dweibull(x,2,scale=3) ~ x, lower.bound=0)(Inf)
 m
-antiD( x^2 * dweibull(x,2,scale = 3) ~ x, lower.bound = 0 )(Inf) - m^2
+antiD( x^2 * dweibull(x,2,scale=3) ~ x, lower.bound=0 )(Inf) - m^2
 @
 \end{solution}
 
@@ -1353,13 +1119,13 @@ antiD( x^2 * dweibull(x,2,scale = 3) ~ x, lower.bound = 0 )(Inf) - m^2
 		\item
 			$\Exp(\texttt{rate} = 2)$
 		\item
-			$\Beta(\texttt{shape1} = 3, \texttt{shape2} = 2)$
+			$\Beta(\texttt{shape1} = 3, \texttt{shape2}=2)$
 		\item
-			$\Norm(\texttt{mean} = 1, \texttt{sd = 2})$
+			$\Norm(\texttt{mean} = 1, \texttt{sd=2})$
 		\item
-			$\Weibull(\texttt{shape} = 2, \texttt{scale = 1/2})$
+			$\Weibull(\texttt{shape} = 2, \texttt{scale=1/2})$
 		\item
-			$\Gamm(\texttt{shape} = 2, \texttt{scale = 1/2})$
+			$\Gamm(\texttt{shape} = 2, \texttt{scale=1/2})$
 	\end{enumerate}
 \end{problem}
 
@@ -1368,144 +1134,10 @@ antiD( x^2 * dweibull(x,2,scale = 3) ~ x, lower.bound = 0 )(Inf) - m^2
 pexp(1, 2) - pexp(0.5, 2)
 pbeta(1, 3, 2) - pbeta(0.5, 3, 2)
 pnorm(1, 1, 2) - pnorm(0.5, 1, 2)
-pweibull(1, 2, scale = 1/2) - pweibull(0.5, 2, scale = 1/2)
-pgamma(1, 2, scale = 1/2)   - pgamma(0.5, 2, scale = 1/2)
+pweibull(1, 2, scale=1/2) - pweibull(0.5, 2, scale=1/2)
+pgamma(1, 2, scale=1/2)   - pgamma(0.5, 2, scale=1/2)
 @
 \end{solution}
-
-\subsection{Binomial Distributions}
-
-A binomial distribution is a discrete distribution with two parameters ($n$ and $p$,
-or as R calls them \verb!size! and \verb!prob!) describing a situation in which
-\begin{enumerate}
-\item Our random process consists of $n$ identical sub-processes (called trials).
-\item Each trial has one of two outcomes (traditionally called success and failure).
-\item The probability of success is $p$ for each trial.
-\item The outcome of each trial is independent of the others.
-\end{enumerate}
-The binomial random varialbe counts the number of successes.
-
-\begin{example}
-\begin{enumerate}
-\item
-If we flip a coin 100 times and let $X$ be the number of heads, then
-$X \sim \Binom( 100, 0.5)$.
-\item
-Amy is a 92\% free throw shooter.  If she attempts 50 free throws and we let 
-$Y$ be the number that she makes, then $Y \sim \Binom(50, 0.92)$ (assuming that 
-each shot is independent of the others.\footnote{Whether an individual shooter's 
-shots are independent or exhibit longer runs of ``hot" and ``cold"
-streaks that we would expect under indpendence has been investigated by 
-many people.  The general conclusion seems to be that the independence 
-assumption matches reality pretty closely.})
-\end{enumerate}
-
-Here are some example binomial distributions. The distributions are symmetric
-when $p = 0.5$.  For a fixed size $n$, the distributions become
-more and more skewed as $p$ gets closer to 0 or 1.  For a fixed probability
-$p$, the distributions become more and more symmetric as $n$ gets larger.
-
-<<>>=
-gf_dist("binom", size = 10, prob = 0.5, main = "Binom(10, 0.5)")
-gf_dist("binom", size = 10, prob = 0.05, main = "Binom(10, 0.05)")
-gf_dist("binom", size = 100, prob = 0.5, main = "Binom(100, 0.5)")
-gf_dist("binom", size = 100, prob = 0.05, main = "Binom(100, 0.05)")
-@
-
-The pmf for a binomial distribution is given by
-\[
-f(x) = \binom{n}{x} p^x (1-p)^{n-x}
-\]
-where $\binom{n}{x} = \frac{n!}{x!(n-x)!}$ is the binomial coefficient.
-As with the continuous distributions, we have our usual functions available.
-
-\begin{center}
-\begin{tabular}{ll}
-	\hline
-	Function & What it does \\
-	\hline
-	\texttt{dbinom(x, size, prob)} & Computes value of the pmf at \texttt{x}
-	\\
-	\texttt{pbinom(q, size, prob)} 
-		& Computes value of the cdf at \texttt{x}, i.e., 
-	$\Prob(X \le \texttt{q})$
-	\\
-	\texttt{qbinom(p, size, prob)} 
-		& Computes quantiles, that is the smallest value of $x$ so that 
-	$\Prob(X \le \texttt{x}) \ge \texttt{p}$
-    \\
-	\texttt{rbinom(n, size, prob)} & Randomly samples \texttt{n} values from a
-	Binomial distribution.
-	\\
-	\hline
-\end{tabular}
-\end{center}
-
-\end{example}
-
-
-\subsection{Poisson Distributions}
-
-The Poisson distributions are generally used as models for counting ``events" that
-happen in a specified amount of time or space.  If the probability of an 
-event happening at any moment is the same and independent of events happening
-at other moments, then the count of events in a fixed amount of time will be 
-a Poisson random variable.  The Poisson family has one parameter -- often denoted
-$\lambda$ and called the \emph{rate parameter} -- which is the average number
-of events that happen over the fixed amount of time or space we are observing.
-
-\begin{example}
-\begin{enumerate}
-\item Let $X$ be the number of clicks of a Gieger counter in a 1 second interval.
-Since each click corresponds to a radioactive decay event which we generally assume
-occur ``at random'' but according to some average rate, a Poisson random variable
-would be a good model for this.  The rate parameter would be the average number 
-of decay events per second.
-\item
-If you stand on along a busy highway and count the number of red cars that go 
-by in 30 minutes, a Poisson random variable might be a good model.  Sometimes 
-you will get bunches of red cars or periods of time with few or no red cars,
-that is just as a Poisson model predicts.
-\end{enumerate}
-\end{example}
-
-The Poisson distributions are skewed right, but become less and less skewed as 
-the rate parameter increases.  Here are a few example plots.
-<<>>=
-gf_dist("pois", lambda = 1, main = "Pois(1)")
-gf_dist("pois", lambda = 5, main = "Pois(5)")
-gf_dist("pois", lambda = 15, main = "Pois(15)")
-gf_dist("pois", lambda = 50, main = "Pois(50)")
-@
-
-The pmf for a $\Pois(\lambda)$ random variable is 
-\[
-f(x) = \frac{ e^{-\lambda} \lambda^x}{x!}
-\]
-and the functions in R for working with Poisson distributions are 
-the following:
-
-\begin{center}
-\begin{tabular}{ll}
-	\hline
-	Function & What it does \\
-	\hline
-	\texttt{dpois(x, lambda)} & Computes value of the pmf at \texttt{x}
-	\\
-	\texttt{ppois(q, lambda)} 
-		& Computes value of the cdf at \texttt{x}, i.e., 
-	$\Prob(X \le \texttt{q})$
-	\\
-	\texttt{qpois(p, lambda)} 
-		& Computes quantiles, that is the smallest value of $x$ so that 
-	$\Prob(X \le \texttt{x}) \ge \texttt{p}$
-    \\
-	\texttt{rpois(n, lambda)} & Randomly samples \texttt{n} values from a
-	Poisson distribution.
-	\\
-	\hline
-\end{tabular}
-\end{center}
 
 
 
@@ -1524,17 +1156,11 @@ We can use the following code to load a data set that contains three year's wort
 of mean hourly wind speeds (mph) in Twin Falls, ID.  This kind of data is often used
 to estimate how much power could be generated from a windmill placed in a given location.
 
-<<include = !onLine,eval = !onLine>>=
-Wind <- read.file("data/stob/TwinfallsWind.csv")
+<<include=onLine,eval=onLine>>=
+read.csv('http://www.calvin.edu/~rpruim/data/stob/TwinfallsWind.csv') -> Wind
 head(Wind, 2)
 tail(Wind, 2)
-histogram( ~ speed, data = Wind, width = 1 )
-@
-<<include = onLine,eval = onLine>>=
-Wind <- read.file("https://rpruim.github.io/Engineering-Statistics/data/stob/TwinfallsWind.csv")
-head(Wind, 2)
-tail(Wind, 2)
-histogram( ~ speed, data = Wind, width = 1 )
+gf_histogram( ~ speed, data=Wind, binwidth=1 )
 @
 As we can see, the distribution is skewed, but it doesn't look like an 
 exponential distribution would be a good fit.  Of the distributions we have seen,
@@ -1553,12 +1179,12 @@ fitdistr( Wind$speed, "weibull" )
 For \function{fitdistr()} to fit a Weibull distribution, all of the data must be positive,
 but our data includes some 0's.  
 <<zeros>>=
-tally(~speed==0, data = Wind)
+tally(~speed==0, data=Wind)
 @
 Let's see how small the smallest non-zero measurements 
 are.
 <<>>=
-min( ~ speed, data = subset(Wind, speed >0) )
+min( ~ speed, data=subset(Wind, speed >0) )
 @
 This may well be a simple rounding issue, since the wind speeds are recorded to the 
 nearest 0.01 and 0.01 is the smallest positive value.
@@ -1567,28 +1193,30 @@ Why 0.0025?  If we think that 0.01 represents anything in the range 0.005 to 0.0
 would round to 0.01, then 0 represents anything in the range 0 to 0.005.  
 0.0025 is the middle of that range.
 
-<<fitdistr-windspeed2,warning = FALSE>>=
-Wind <- transform(Wind, speed2 = ifelse( speed > 0, speed, 0.0025) )
+<<fitdistr-windspeed2,warning=FALSE>>=
+Wind <- Wind %>%
+  mutate(speed2 = ifelse( speed > 0, speed, 0.0025) )
 fitdistr( Wind$speed2, "weibull" )
 @
-<<include = FALSE>>=
+<<include=FALSE>>=
 mle <- fitdistr( Wind$speed2, "weibull" )
 @
 This says that the best fitting (in the sense of maximum likelihood) Weibull
-distribution is the $\Weibull(\Sexpr{paste(round(mle$est,2),sep = ",")})$-distribution.
+distribution is the $\Weibull(\Sexpr{paste(round(mle$est,2),sep=",")})$-distribution.
 
-The \function{histogram()} function has an option to overlay the distribution
-fit by \function{fitdistr()} so we can see how good the fit is graphically.
-<<xhistogram-Wind,warning = FALSE>>=
-histogram( ~ speed2, data = Wind, fit = "weibull" )
+We can combine the \function{gf_dhistogram()} function with \function{gf_fitdistr()} so we can see how good the fit is graphically.
+<<xhistogram-Wind,warning=FALSE>>=
+gf_dhistogram( ~ speed2, data=Wind) %>%
+  gf_fitdistr(dist="weibull")
 @
 \end{example}
 
 \begin{example}
 As an alternative, we could fit a Gamma distribution to the wind speed data.
-<<warning = FALSE>>=
+<<warning=FALSE>>=
 fitdistr(Wind$speed2, "gamma")
-histogram( ~ speed2, data = Wind, fit = "gamma" )
+gf_dhistogram( ~ speed2, data=Wind, fit="gamma" ) %>% 
+  gf_fitdistr(dist='gamma')
 @
 By eye, it appears that the Gamma distribution fits this data set slightly better, but
 there may other reasons to prefer the Weibull distribution.  In fact,
@@ -1611,18 +1239,20 @@ the built in feature that scores cannot be negative and would allow for a
 skewed distribution.
 The \function{fitdistr()} function in the \pkg{MASS} package can fit each of these.
 <<jordan1, warning=FALSE>>=
-library(fastR2)     # the Jordan8687 data set is in this package
-fitdistr(Jordan8687$Points, "normal")
-fitdistr(Jordan8687$Points, "weibull")
-fitdistr(Jordan8687$Points, "gamma")
+require(fastR)     # the Jordan8687 data set is in this package
+fitdistr(Jordan8687$points, "normal")
+fitdistr(Jordan8687$points, "weibull")
+fitdistr(Jordan8687$points, "gamma")
 @
 We can use a histogram with overlaid density curve to see how well these fits compare 
 to the data.
 <<jordan2, warning=FALSE>>=
-gf_dhistogram(~ points, data = Jordan8687, binwidth = 5) %>%
-  gf_fitdistr(dist = "dnorm", color = ~"normal") %>%
-  gf_fitdistr(dist = "dweibull", color = ~ "Weibull") %>%
-  gf_fitdistr(dist = "dgamma", color = ~ "Gamma")
+gf_dhistogram(~ points, data=Jordan8687, binwidth=5, title="Normal Fit") %>%
+  gf_fitdistr(dist='norm')
+gf_dhistogram(~ points, data=Jordan8687, binwidth=5, title="Weibull Fit") %>%
+  gf_fitdistr(dist='weibull')
+gf_dhistogram(~ points, data=Jordan8687, binwidth=5, title="Gamma Fit") %>%
+  gf_fitdistr(dist='gamma')
 @
 The three fits are similar, but not identical.  
 
@@ -1638,10 +1268,11 @@ and (2) the resulting estimators have some some desirable properties.  Maximum l
 First, let's think about the ``likelihood" of an individual observed data-point.  The likelihood of the data-point is just the probability density function (or probability mass function) for the distribution of interest, evaluated at the value observed in the data. The likelihood gives some indication of how frequently we'd expect to observe this value, but it is \emph{not} a probability (for one thing, likelihoods can exceed 1).  The figure below illustrates that the likelihood of observing a person 80 inches (6 feet, 8 inches) tall, if the person comes from a population whose heights are Normally distributed with a mean of 68 inches and a standard deviation of 6 inches is about \Sexpr{round(dnorm(80,mean=68, sd=6), digits=3)}: 
 <<likelihood, echo=FALSE, fig.keep="last">>=
 h <- 80; mu <- 68; sdev <- 6
-gf_dist("norm", params=list(mean = mu, sd = sdev), title = "", 
-         xlab = "Height (inches)", ylab = "Density or Likelihood") %>%
-  gf_segment(0 + dnorm(h, mean = mu, sd = sdev) ~ h + h) %>%
-  gf_point(dnorm(h, mean = mu, sd = sdev) ~  h, shape = "triangle")
+k <- lpoints(h, dnorm(h,mean=mu, sd=sdev), pch=17)
+gf_dist("norm", params=list(mean=mu, sd=sdev), main="", 
+         xlab="Height (inches)", ylab="Density or Likelihood") %>%
+gf_segment(0 + dnorm(h,mean=mu, sd=sdev) ~ h+h) %>%
+  gf_point(dnorm(h,mean=mu, sd=sdev) ~ h)
 @
 
 
@@ -1730,12 +1361,12 @@ To employ this method, we need to know the means and variances of our favorite f
 	simplify things.
 
 	Theoretical properties and observations of wind speeds at other locations 
-	suggest that using a shape parameter of $\alpha = 2$ is often a good choice (but 
+	suggest that using a shape parameter of $\alpha=2$ is often a good choice (but 
 	shape does differ from location to location depending on how consistent or 
 	variable the wind speeds are).
-	The Weibull distributions with $\alpha = 2$ have a special name, they are 
+	The Weibull distributions with $\alpha=2$ have a special name, they are 
 	called the \term{Rayleigh} distributions.  
-	So $\Rayleigh(\beta) = \Weibull(\alpha = 2, \beta)$.
+	So $\Rayleigh(\beta) = \Weibull(\alpha=2, \beta)$.
 	In this case, from Table~\ref{table:contDist}, we see that to calculate 
 	the mean we need the value of $\Gamma(1 + \frac{1}{2}) = \Gamma(1.5) = \sqrt{\pi}/2$.
 <<>>=
@@ -1757,7 +1388,7 @@ sqrt(pi)/2
 	\hat\beta = \frac{2 \mean x }{\sqrt{\pi}}
 	\]
 <<>>=
-x.bar <- mean(~speed, data = Wind) 
+x.bar <- mean(~speed, data=Wind) 
 x.bar
 beta.hat <- x.bar * 2 / sqrt(pi)
 beta.hat 
@@ -1784,9 +1415,9 @@ and standard deviation, so we get
 	\hat\mu &= \mean x\\
 	\hat\sigma^2 &= s_x^2\\
 \end{align*}
-<<tidy = FALSE>>=
-x.bar <- mean(~speed, data = Wind); x.bar
-v <- var(~speed, data = Wind); v
+<<tidy=FALSE>>=
+x.bar <- mean(~speed, data=Wind); x.bar
+v <- var(~speed, data=Wind); v
 sqrt(v)
 @
 So the method of moments suggests a $\Norm(\Sexpr{round(x.bar,2)}, \Sexpr{round(sqrt(v),2)})$
@@ -1803,7 +1434,8 @@ never negative.  So choosing one of those seems like a better idea.
 The following plot shows, as we expected, that the normal distribution is not a particularly
 good fit.
 <<>>=
-histogram(~speed, data = Wind, fit = "normal")
+gf_dhistogram(~speed, data=Wind) %>%
+  gf_fitdistr(dist="norm")
 @
 It is important to remember that the best fit using a poor choice for the family
 of distriubtions might not be a useful fit.  
@@ -1821,7 +1453,7 @@ the fit for the data set at hand.
 \multicolumn{2}{|l}{\textbf{\sf distribution} }
 &&
 \\
-  & \textbf{\sf pdf or pmf} 
+  & \textbf{\sf pdf} 
   & \textbf{\sf mean} 
   & \textbf{\sf variance} 
 \\[.5mm] \hline
@@ -1870,7 +1502,7 @@ the fit for the data set at hand.
   	& $\alpha/\lambda = \alpha \beta$ 
 	& $\alpha/\lambda^2 = \alpha \beta^2$
 \\[4.2mm]
-\multicolumn{2}{|l}{Weibull: $\Weibull(\alpha,\beta = \frac{1}{\lambda})$} && \\
+\multicolumn{2}{|l}{Weibull: $\Weibull(\alpha,\beta=\frac{1}{\lambda})$} && \\
 &
 	  $\displaystyle \frac{\alpha}{\beta^\alpha} x^{\alpha-1} e^{-(x/\beta)^\alpha}$
 	& 
@@ -1888,23 +1520,6 @@ the fit for the data set at hand.
 	  $\displaystyle \frac{\alpha}{\alpha + \beta}$
 	  &
 	  $\displaystyle \frac{\alpha \beta }{(\alpha + \beta)^2(\alpha + \beta + 1)}$
-\\[4mm]
-\hline
-\multicolumn{2}{|l}{  Binomial: $\Binom(n, p)$ } && \\
-	& 
-	$\displaystyle \binom{n}{x} p^x (1-p)^{n-x}$
-	&
-	$np$
-	&
-	$np(1-p)$
-\\[4mm]
-\multicolumn{2}{|l}{  Poisson: $\Pois(\lambda)$ } && \\
-	& 
-	$\displaystyle \frac{e^{-\lambda} \lambda^x} {x!}$
-	&
-	$\lambda$
-	&
-	$\lambda$
 \\[4mm]
 \hline
 \end{tabular}
@@ -1935,7 +1550,7 @@ Quantile-quantile plots offer an alternative approach.  As the name suggests, th
 to compare the quantiles of our data to the quantiles of a theoretical distribution.  These
 are then plotted as a scatter plot.  Let's go through those steps with a small data
 set so we can see all the moving parts, then we'll learn how to automate the whole
-process using \function{qqmath()}.
+process using \function{gf_qq()}.
 
 \subsection{Normal-Quantile Plots}
 The normal distributions are especially important for statistics, so normal-quantile
@@ -1953,23 +1568,21 @@ SmallJordan <- sample(Jordan8687, 10)
 SmallJordan
 @
 
-<<tidy = FALSE>>=
-probs <- seq(0.05, 0.95, by = 0.10)
+<<tidy=FALSE>>=
+probs <- seq(0.05, 0.95, by=0.10)
 probs
-observed <- sort(SmallJordan$points)                                    # sorted observations
-theoretical <- qnorm( probs, mean = mean(observed), sd = sd(observed) ) # theoretical quantiles
-
-QQData <- data.frame(observed = observed, theoretical = theoretical)
+observed <- sort(SmallJordan$points)                                # sorted observations
+theoretical <- qnorm( probs, mean=mean(observed), sd=sd(observed) ) # theoretical quantiles
+QQData <- data.frame(observed=observed, theoretical=theoretical)
 QQData
 @
 If the observed data matched the theoretical quantiles perfectly, a scatter plot
 would place all the points on the line with slope 1 passing through the origin.
 
 <<hand-qqplot>>=
-gf_point( observed ~ theoretical, data = QQData, main = "Hand made QQ-plot" ) %>%
-  gf_fun( x ~ x, alpha = 0.6, color = "blue", linetype = "dashed", alpha = 0.6)
+gf_point( observed ~ theoretical, data=QQData, title="Hand made QQ-plot" ) %>%
+  gf_abline(intercept = 0, slope=1)
 @
-
 Even better, we don't need to know the mean and standard deviation in advance, because
 all normal distributions are linear transformations of the $\Norm(0,1)$-distribution.
 So our standard practice will be to compare our data to the $\Norm(0,1)$-distribution.
@@ -1977,19 +1590,18 @@ If $X \sim \Norm(\mu,\sigma)$, then $X = \mu + \sigma Z$ where $Z \sim \Norm(0,1
 a plot of $X$ vs. $Z$ will have slope $\sigma$ and intercept $\mu$.
 
 <<>>=
-theoretical2 <- qnorm( probs, mean = 0, sd = 1 ) # theoretical quantiles from Norm(0,1)
-QQData2 <- data.frame(observed = observed, theoretical = theoretical2)
-gf_point(observed ~ theoretical, data = QQData2, main = "Hand made QQ-plot", xlab = "theoretical (z)" ) %>%
-  gf_abline(intercept = ~ mean(SmallJordan$points), slope = ~ sd(SmallJordan$points), 
-            alpha = 0.5, color = "navy", data = NA) %>%
-  gf_hline(yintercept = ~ mean(SmallJordan$points), alpha = 0.5) %>%
-  gf_vline(xintercept = ~ 0, alpha = 0.5)
+theoretical2 <- qnorm( probs, mean=0, sd=1 ) # theoretical quantiles from Norm(0,1)
+QQData2 <- data.frame(observed=observed, theoretical=theoretical2)
+gf_point( observed ~ theoretical, data=QQData2, title="Hand made QQ-plot", xlab="theoretical (z)" ) %>%
+  gf_abline(slope = sd(SmallJordan$points), intercept = mean(SmallJordan$points), color='navy') %>%
+  gf_hline(yintercept = mean(SmallJordan$points)) %>%
+  gf_vline(xintercept = 0)
 @
 
 This whole process is automated by the \function{gf_qq()} function.
 <<>>=
-gf_qq( ~ points, data = SmallJordan, title = "Sub-sample" )
-gf_qq( ~ points, data = Jordan8687, title = "Full data set" )
+gf_qq( ~ points, data=SmallJordan, title="Sub-sample" )
+gf_qq( ~ points, data=Jordan8687, title="Full data set" )
 @
 \end{example}
 
@@ -2008,7 +1620,7 @@ of the prototype.  The exponential family is one such family.}
 \iffalse
 	As in the previous section, we'll begin by creating it manually using 
 	a small subset of the data and then show how to automate the process 
-	using \function{qqmath()}.
+	using \function{gf_qq()}.
 <<>>=
 SmallWind <- sample(Wind, 10)
 SmallWind
@@ -2017,38 +1629,38 @@ Now we need to compute the quantiles of our data and the quantiles of our
 theoretical distribution.  We start by selecting 10 evenly spaces 
 proportions.
 <<>>=
-probs <- seq(0.05, 0.95, by = 0.10)
+probs <- seq(0.05, 0.95, by=0.10)
 probs
 @
 Now we compute the quantiles for these probabilities using the parameters
 we fit previously.
-<<tidy = FALSE>>=
-y <- qdata( probs, SmallWind$speed2)                     # quantiles from data
-x.gamma <- qgamma( probs, shape = 2.496, rate = 0.421 )      # quantiles from Gamma dist
-x.weibull <- qweibull( probs, shape = 1.694, scale = 6.651 ) # quantiles from Weibull dist
-x.normal <- qnorm( probs, mean = 5.925 , sd = 3.653  )       # quantiles from Normal dist
+<<tidy=FALSE>>=
+y <- qdata(~speed2, p=probs, data=SmallWind)                     # quantiles from data
+x.gamma <- qgamma( probs, shape=2.496, rate=0.421 )      # quantiles from Gamma dist
+x.weibull <- qweibull( probs, shape=1.694, scale=6.651 ) # quantiles from Weibull dist
+x.normal <- qnorm( probs, mean=5.925 , sd=3.653  )       # quantiles from Normal dist
 @
 Finally, we create the scatter plot
 <<>>=
-xyplot( y ~ x.gamma )
-xyplot( y ~ x.weibull )
-xyplot( y ~ x.normal )
+gf_point( y$p ~ x.gamma )
+gf_point( y$p ~ x.weibull )
+gf_point( y$p ~ x.normal )
 @
 \fi
-We can automate this, but we need to tell \function{qqmath()} how to calculate
+We can automate this, but we need to tell \function{gf_qq()} how to calculate
 the quantiles.
 <<>>=
-qqmath( ~ speed2, data = Wind )  # normal-quantile plot; normal is not a good model
+gf_qq( ~ speed2, data=Wind )  # normal-quantile plot; normal is not a good model
 @
 
 The normal model does not fit well, but both Gamma and Weibull are reasonable models:
-<<tidy = FALSE, warning = FALSE>>=
+<<tidy=FALSE, warning=FALSE>>=
 fitdistr(Wind$speed2, "gamma")
 fitdistr(Wind$speed2, "Weibull")
-fittedqgamma <- makeFun( qgamma(p, shape = 2.496, rate = 0.421 ) ~ p )
-fittedqweibull <- makeFun( qweibull(p, shape = 1.694, scale = 6.651) ~ p ) 
-qqmath( ~speed2, data = Wind, distribution = fittedqgamma )
-qqmath( ~speed2, data = Wind, distribution = fittedqweibull )
+fittedqgamma <- makeFun( qgamma(p, shape=2.496, rate=0.421 ) ~ p )
+fittedqweibull <- makeFun( qweibull(p, shape=1.694, scale=6.651) ~ p ) 
+gf_qq( ~speed2, data=Wind, distribution=fittedqgamma )
+gf_qq( ~speed2, data=Wind, distribution=fittedqweibull )
 @
 \end{example}
 
@@ -2079,7 +1691,7 @@ What is the estimated value of the rate parameter?
 			$\frac{1}{\lambda} = \mean x$ for $\lambda$, so 
 			$\hat \lambda = \frac{1}{\mean x}$
 <<>>=
-lambda.hat <- 1/ mean(~speed, data = Wind)
+lambda.hat <- 1/ mean(~speed, data=Wind)
 lambda.hat
 @
 		\item
@@ -2091,8 +1703,9 @@ fitdistr(Wind$speed, "exponential")
 		\item
 			This fit is not that great.
 <<>>=
-histogram(~speed, data = Wind, fit = "exponential")
-qqmath(~speed, data = Wind, distribution = qexp)
+gf_dhistogram(~speed, data=Wind) %>%
+  gf_fitdistr(dist="exp")
+gf_qq(~speed, data=Wind, distribution=qexp)
 @
 	\end{enumerate}
 \end{solution}
@@ -2114,20 +1727,20 @@ What are the estimated values of the shape and rate parameters?
 
 
 \begin{solution}
-<<tidy = FALSE,warning = FALSE>>=
-m <- mean(~speed2, data = Wind); m
-v <- var(~speed2, data = Wind); v
+<<tidy=FALSE,warning=FALSE>>=
+m <- mean(~speed2, data=Wind); m
+v <- var(~speed2, data=Wind); v
 fitdistr(Wind$speed2, "gamma")
 @
 Now we solve
 	\begin{align*}
-		\alpha \beta & = \mean x  = \Sexpr{mean(~speed2, data = Wind)}
+		\alpha \beta & = \mean x  = \Sexpr{mean(~speed2, data=Wind)}
 		\\
-		\alpha \beta^2 & = s^2 = \Sexpr{var(~speed2, data = Wind)}
+		\alpha \beta^2 & = s^2 = \Sexpr{var(~speed2, data=Wind)}
 	\end{align*}
 Dividing the second by the first gives $\hat \beta = \sfrac{s^2}{\mean x}$.
 From this we obtain $\hat \alpha = \mean{x} / \hat \beta = \sfrac{ \mean x^2}{s^2}$.
-<<tidy = FALSE>>=
+<<tidy=FALSE>>=
 beta.hat <- v/m; beta.hat
 alpha.hat <- m / beta.hat ; alpha.hat
 lambda.hat <- 1/ beta.hat ; lambda.hat
@@ -2161,7 +1774,7 @@ The fitted values are similar to but not identical to the maximum likelihood est
 \begin{solution}
 We can recycle some work from the previous problem to quickly obtain
 the method of moments fit for the Gamma distribution:
-<<tidy = FALSE>>=
+<<tidy=FALSE>>=
 m <- 10.2
 v <- 5.1^2 
 beta.hat <- v/m; beta.hat
@@ -2205,8 +1818,8 @@ head(Baby)
 <<>>=
 fitdistr(Baby$cry.count, "gamma")
 fitdistr(Baby$cry.count, "Weibull")
-histogram(~cry.count, data = Baby, fit = "gamma", main = "Gamma")
-histogram(~cry.count, data = Baby, fit = "Weibull", main = "Weibull")
+histogram(~cry.count, data=Baby, fit="gamma", main="Gamma")
+histogram(~cry.count, data=Baby, fit="Weibull", main="Weibull")
 @
 \end{solution}
 
@@ -2226,7 +1839,7 @@ histogram(~cry.count, data = Baby, fit = "Weibull", main = "Weibull")
 \begin{problem}
 	Create normal quantile plots for the ages of patients in the \dataframe{HELPrct}
 	data set separated by \variable{substance}. (Getting separate or overlaid plots
-	using \function{gf_qq()} works just like it does for other \pkg{ggformula} plots).
+	using \function{qqmath()} works just like it does for other lattice plots).
 
 	Comment on the plots.
 \newpage
@@ -2235,20 +1848,20 @@ histogram(~cry.count, data = Baby, fit = "Weibull", main = "Weibull")
 
 \begin{solution}
 <<>>=
-qqmath( ~ age | substance, data = HELPrct )
+qqmath( ~ age | substance, data=HELPrct )
 @
 The qq-plot for the alchol group looks good.  The other two (especially cocaine) show
 signs of skew -- indicated by the curve to the qq plot.
 <<>>=
-densityplot( ~ age | substance, data = HELPrct )
+densityplot( ~ age | substance, data=HELPrct )
 @
 \end{solution}
 
 
 \begin{problem}
 	Match the normal-quantile plots to the histograms.
-<<echo = FALSE>>=
-rescale <- function(x,lim = c(0,10)) {
+<<echo=FALSE>>=
+rescale <- function(x,lim=c(0,10)) {
 	return ( min(lim) + (x - min(x))/ (diff(range(x))) * (diff(range(lim))) );
 }
 
@@ -2264,7 +1877,7 @@ c <- qexp(ppoints(n),2);
 c <- qbeta(ppoints(n),3,15);
 c <- rescale(c);
 
-d <- c(runif(n = n/2, min = 0,max = 10), qunif(ppoints(n/2),0,10) );
+d <- c(runif(n=n/2, min=0,max=10), qunif(ppoints(n/2),0,10) );
 d <- rescale(d);
 
 # bowl shaped
@@ -2277,26 +1890,24 @@ e <- rescale(e);
 f <- qexp(ppoints(n),2);
 f <- rescale(f)
 
-D1 <- data.frame(A = c,B = a,C = b,D = d,E = e,F = f);
+D1 <- data.frame(A=c,B=a,C=b,D=d,E=e,F=f);
 
 sD1 <- stack(D1);
 
-D2 <- data.frame(V = a,Z = b,Y = c,W = d,X = e,U = f);
+D2 <- data.frame(V=a,Z=b,Y=c,W=d,X=e,U=f);
 
 sD2 <- stack(D2);
 @
 
-<<compareplots1,echo = FALSE,fig.height = 5>>=
+<<compareplots1,echo=FALSE,fig.height=5>>=
 histogram(~ values | ind, 
-	data = sD1, as.table = TRUE,
-	breaks = seq(-0.5,10.5,by = .5),
-	scales = list(draw = FALSE, alternating = FALSE)
+	data=sD1, as.table=TRUE,
+	breaks=seq(-0.5,10.5,by=.5),
+	scales=list(draw=FALSE, alternating=FALSE)
 	)
-qqmath(~values | ind, data = sD2, as.table = TRUE, scales = list(draw = FALSE))
+qqmath(~values | ind, data=sD2, as.table=TRUE, scales=list(draw=FALSE))
 @
-
 \end{problem}
-
 \begin{solution}
 a) Y  b) V c) Z d) W  e) X f) U
 \end{solution}
@@ -2361,36 +1972,8 @@ a) Y  b) V c) Z d) W  e) X f) U
 	\end{enumerate}
 \end{problem}
 
-\begin{solution}
-\begin{enumerate}
-\item
-<<>>=
-(68 - 64.3)/2.6
-@
-
-\item
-<<>>=
-(74 - 70) / 2.8
-@
-
-\item
-It's pretty close, but the z-score for the man is slightly
-larger, so it is slightly more unusual for a man to be that tall.
-
-\item
-<<>>=
-64.3 + 2 * 2.6
-@
-
-\item
-<<>>=
-70 + 2 * 2.8
-@
-\end{enumerate}
-\end{solution}
-
 \begin{problem}
-	Use the information from the previous problem to answer the following questions.
+	Use the infromation from the previous problem to answer the following questions.
 	\begin{enumerate}
 		\item
 			What proportion of women are 5'10" or taller?
@@ -2402,31 +1985,6 @@ larger, so it is slightly more unusual for a man to be that tall.
 			If a woman is in the 30th percentile for height, how tall is she?
 	\end{enumerate}
 \end{problem}
-
-\begin{solution}
-\begin{enumerate}
-\item
-<<>>=
-1 - pnorm(70, mean = 64.3, sd = 2.6)
-@
-
-\item
-<<>>=
-1 - pnorm(76, mean = 70, sd = 2.8)
-@
-
-\item
-<<>>=
-qnorm(.75, mean = 70, sd = 2.8)
-@
-
-\item
-<<>>=
-qnorm(.30, mean = 64.3, sd = 2.6)
-@
-
-\end{enumerate}
-\end{solution}
 
 \shipoutProblems
 

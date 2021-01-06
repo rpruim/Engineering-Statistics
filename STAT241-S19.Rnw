@@ -1,6 +1,6 @@
 
 \documentclass[twoside]{book}
-\usepackage[margin = .9in]{geometry}
+\usepackage[margin=.9in]{geometry}
 %\usepackage{kpfonts}   % for \varhearsuit
 %\usepackage{txfonts}    % for \varhearsuit
 \usepackage{amsmath}
@@ -11,14 +11,12 @@
 \def\SD{\operatorname{SD}}
 \usepackage{xstring}
 \usepackage{makeidx}
-\usepackage[T1, T2A]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{underscore}
 
 %\def\Prob{\operatorname{Pr}}
 \def\tnot{\operatorname{not}}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{underscore}
 \usepackage{tikz}
 \usetikzlibrary{patterns}
 \usepackage[hidenotes]{authNote}
@@ -76,8 +74,8 @@
 \lhead[\sf \thepage]{\sf \thechapter. \leftmark}
 \rhead[\sf \thechapter. \leftmark]{\sf \thepage}
 \cfoot{}
-\lfoot[\sf Last Modified: \today]{\sf Math 241 : Pruim}
-\rfoot[\sf Stat 241 : Pruim]{\sf Last Modified: \today}
+\lfoot[\sf Last Modified: \today]{\sf STAT 241 : Spring 2019 : DeRuiter}
+\rfoot[\sf STAT 241 : Spring 2019 : DeRuiter]{\sf Last Modified: \today}
 
 \pagestyle{fancy}
 
@@ -161,78 +159,73 @@
 
 
 \newif\ifsolutions
-\solutionsfalse
 \solutionstrue
+\solutionsfalse
 
 \newif\ifsolutionslocal
 \solutionslocaltrue
 \solutionslocalfalse
 
-\parindent = 0pt
-\parskip = 3mm
+\parindent=0pt
+\parskip=3mm
 
 
 
-<<setup,echo = FALSE,message = FALSE>>=
-library(DAAG)
-library(Devore7)
-library(MASS)
-library(grDevices)
-library(datasets)
-library(stats)
-library(lattice)
-library(grid)
-# library(Stob)
-library(vcd)
-#library(fastR2)
-library(abd)
-library(knitr)
-library(alr4)
-library(mosaic)
-library(mosaicData)
-library(mosaicCalc)
-library(fastR2)
-library(ggplot2)
-trellis.par.set(theme = col.mosaic())
-trellis.par.set(fontsize = list(text = 9))
-theme_set(theme_bw(base_size = 8))
-#options(keep.blank.line = FALSE)
-options(formatR.blank = FALSE)
-options(show.signif.stars = FALSE)
-options(width = 90)
-options(digits = 3)
-opts_chunk$set(tidy = TRUE,
-               digits = 4,
-			   dev = 'pdf',
-			   fig.path = 'figures/fig-',  
-			   fig.width = 3, fig.height = 2,
-			   fig.align = 'center',
-			   fig.show = 'hold',
-			   tidy = FALSE
+<<setup,echo=FALSE,message=FALSE>>=
+require(DAAG)
+require(Devore6)
+require(MASS)
+require(grDevices)
+require(datasets)
+require(stats)
+require(lattice)
+require(grid)
+require(Stob)
+require(vcd)
+#require(fastR)
+require(abd)
+require(knitr)
+require(alr3)
+require(plyr)
+require(triangle)
+require(mosaic)
+require(mosaicData)
+require(fastR)
+require(fastR2)
+require(ggformula)
+require(car)
+require(tidyverse)
+trellis.par.set(theme=col.mosaic())
+trellis.par.set(fontsize=list(text=9))
+options(formatR.blank=FALSE)
+options(show.signif.stars=FALSE)
+options(width=90)
+opts_chunk$set(tidy=TRUE,
+			   dev='pdf',
+			   fig.path='figures/fig-',  
+			   fig.width=3, fig.height=2,
+			   fig.align='center',
+			   fig.show='hold'
 			   )
-onLine = TRUE
+onLine=TRUE
+
+opts_knit$set(concordance=TRUE)
 
 knit_hooks$set(document = function(x) { 
 			   sub('\\usepackage[]{color}', '\\usepackage[]{xcolor}', 
 			   x, fixed = TRUE) 
 }) 
-
-knit_hooks$set(digits = function(before, options, envir) {
-    if (before) {
-      options(digits = options$digits)
-    } else {
-      options(digits = 3)
-    }
-})
+# to knit this file:
+# knit("Math241-S15.Rnw")
 @ 
 
 %%%%%%%%%%%%%%%%%%%%%% title page info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Stat 241: Statistics for the Physical Sciences and Engineering}
+\title{STAT 241: Engineering Statistics}
 
-\author{R Pruim}
+\author{S DeRuiter \& R Pruim (based on an original by R Pruim)}
 
-\date{Spring 2017}
+\date{Spring 2019}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeindex
@@ -242,51 +235,66 @@ knit_hooks$set(digits = function(before, options, envir) {
 \rhead[\sf \thechapter. \leftmark]{\sf \thepage}
 
 \begin{document}
+%\SweaveOpts{concordance=TRUE}
 
 \maketitle
+
+\let\savecleardoublepage\cleardoublepage
+\let\cleardoublepage\clearpage 
+
 \setcounter{tocdepth}{1}
 \tableofcontents
 
+\let\cleardoublepage\savecleardoublepage
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%% main content starts here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%  main content starts here 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<child = "Stat241-Chap0.Rnw">>=
+<<ch0, child="Math241-Chap0.Rnw">>=
 @
 
-<<child = "Stat241-Graphical.Rnw">>=
+<<child="STAT243-Graphical.Rnw">>=
+@
+ 
+<<child="Math241-Numerical.Rnw">>=
 @
 
-<<child = "Stat241-Numerical.Rnw">>=
+<<child="STAT243-Probability.Rnw">>=
+@
+ 
+<<child="STAT243-Densities.Rnw">>=
 @
 
-<<child = "Stat241-Probability.Rnw", eval = TRUE>>=
+
+% <<child="Math241-Transformations.Rnw">>=
+% @
+
+
+
+<<child="Math241-Propagation.Rnw", eval=TRUE>>=
 @
 
-<<child = "Stat241-RandomVariables.Rnw", eval = TRUE>>=
+<<child="Math241-Uncertainty-CLT.Rnw">>=
 @
 
-<<child = "Stat241-Transformations.Rnw", eval = TRUE>>=
+ 
+<<child="STAT243-SimpleLinear.Rnw", eval=TRUE>>=
 @
-
-<<child = "Stat241-Propagation.Rnw", eval = TRUE>>=
+ 
+<<child="Math241-NonLinear.Rnw", eval=TRUE>>=
 @
-
-<<child = "Stat241-SimpleLinear.Rnw", eval = TRUE>>=
-@
-
-<<child = "Stat241-NonLinear.Rnw", eval = TRUE>>=
-@
-
-<<child = "Stat241-HypothesisTesting.Rnw", eval = FALSE>>=
-@
-
-<<child = "Stat241-MoreExamples.Rnw", eval = FALSE>>=
-@
+ 
+%' <<child="Math241-HypothesisTesting.Rnw", eval=TRUE>>=
+%' @
+ 
+% <<child="Math241-MoreExamples.Rnw", eval=TRUE>>=
+% @
 
 \backmatter
 
 \bibliographystyle{amsalpha}
-\bibliography{bibtex/StatsBook,bibtex/DataSets,bibtex/R} % jamstatassoc,RS,R,kaplan}
+\bibliography{StatsBook,DataSets,jamstatassoc,RS,R,kaplan}
 
 \printindex
 
@@ -298,6 +306,7 @@ knit_hooks$set(digits = function(before, options, envir) {
 \shipoutSolutions
 \fi
 \fi
+
 
 \end{document}
 

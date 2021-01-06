@@ -1,6 +1,6 @@
-\Sexpr{set_parent('Stat241-Notes.Rnw')}
+\Sexpr{set_parent('STAT243-S19.Rnw')}
 
-\Chapter{Probability}
+\Chapter{Random Variables and Probability}
 
 \section{Key Definitions and Ideas}
 
@@ -45,11 +45,12 @@ Roll two dice and record the sum.
 Flip 100 coins and count the number of heads.
 \item
 Sample 1000 people and count how many approve of the job the president is doing.
+\item Sample 100 people and measure how long their right toenail is in mm. (Is this a good example or not?  It's a topic for discussion...)
 \end{itemize}
 
 Note: Statisticians usually use capital letters (often from the end of the alphabet)
 for random variables, like this:  
-Let $X$ be the number of heads in 10 flips of a fair coin.  What is $\Prob(X = 5)$?
+Let $X$ be the number of heads in 10 flips of a fair coin.  What is $\Prob(X=5)$?
 
 
 \item[probability distribution]
@@ -58,15 +59,19 @@ The distribution of a random variable.
 \emph{with what freqency?})
 \end{description}
 
-As an example of a probability distribution, we can first consider a \emph{discrete} random variable.  Most of the examples of random variables given above are discrete. In other words, the values they can take on come from a set containing a finite number of possible values.  For example, if you roll a 6-sided die and record the number that comes up, there are only size possible outcomes, which are equally likely: the integers 1, 2, 3, 4, 5 and 6.  For discrete random variables, the probability distribution shows all the possible values on the x-axis, and the likelihood of observing each of those values on the y-axis.  Since there are a finite number of possible values that can be observed, these likelihoods are actually the \emph{probabilities} of observing each outcome, and the sum of all the probabilities must be 1 (see section 3.3 for details).  For our example, where we rolled a die and recorded the value:
+As an example of a probability distribution, we can first consider a \emph{discrete} random variable.  Most of the examples of random variables given above are discrete. In other words, the values they can take on come from a set containing a finite number of possible values.  For example, if you roll a 6-sided die and record the number that comes up, there are only size possible outcomes, which are equally likely: the integers 1, 2, 3, 4, 5 and 6.  For discrete random variables, the probability distribution shows all the possible values on the x-axis, and the likelihood of observing each of those values on the y-axis.  Since there are a finite number of possible values that can be observed, these likelihoods are actually the \emph{probabilities} of observing each outcome, and the sum of all the probabilities must be 1.  For our example, where we rolled a die and recorded the value:
 
-<<discrete-pmf, echo=FALSE, fig.width=6.5, fig.height=3>>=
+<<discrete-pmf, echo=FALSE, results='markup'>>=
 gf_point(rep(1/6,6) ~ c(1:6), ylab="Probability", xlab="Outcome of Rolling Die") %>%
   gf_lims(y=c(0,1)) %>%
   gf_segment(rep(1/6,6) + rep(0,6) ~ c(1:6) + c(1:6))
 @
 
-Things are a bit more complicated for \emph{continuous} random variables (the ones that can take on any numerical value).  Here, there sample space (the set of possible distinct values the random variable can take on) is infinite.  One consequence of this fact is that the interpretation of the y-axis values of the probability distribution changes.  The y-axis will still indicate the relative likelihood of observing any given value of the random variable.  However, here the random variable can take on an infinite number of possible values.  In this case, we can't interpret the y-axis values as probabilities.  They y axis units are called ``Likelihood" or "Density", and they indicate the relative frequency of each outcome. For a densityplot, Density is scaled such that the integral over all possible x-values (the area under the curve) is 1. (For a histogram, Density is scaled so that the total area of all the boxes added together is 1.)  We can think of the histograms and density plots we have been creating using continuous variables from R datasets as attempts to use data to approximate the distributions of random variables.  For example, we might consider the growth of flower petals of the iris \textit{Iris setosa} as a random process, and let \texttt{X} be a random variable that is the length of each iris petal.  We could plot a histogram to approximate the distribution of \texttt{X} using the variable \texttt{Petal.Length} from the \dataframe{iris} data (from the \pkg{datasets} package in base R).
+Things are a bit more complicated for \emph{continuous} random variables (the ones that can take on any numerical value).  Here, there sample space (the set of possible distinct values the random variable can take on) is infinite.  One consequence of this fact is that the interpretation of the y-axis values of the probability distribution changes.  The y-axis will still indicate the relative likelihood of observing any given value of the random variable.  However, here the random variable can take on an infinite number of possible values.  In this case, we can't interpret the y-axis values as probabilities.  They y axis units are called ``Likelihood" or "Density", and they indicate the relative frequency of each outcome. 
+
+For a densityplot, which shows a smoothed version of the silhouette of a histogram (take STAT 343 and/or read about Kernel Density Estimation if you want a better explanation), Density is scaled such that the integral over all possible x-values (the area under the curve) is 1. For a histogram, Density is relative frequency, scaled so that the total area of all the boxes added together is 1.  We can think of the histograms and density plots we have been creating using continuous variables from R datasets as attempts to use data to approximate the distributions of random variables.  
+
+For example, we might consider the growth of flower petals of the iris \textit{Iris setosa} as a random process, and let \texttt{X} be a random variable that is the length of each iris petal.  We could plot a histogram to approximate the distribution of \texttt{X} using the variable \texttt{Petal.Length} from the \dataframe{iris} data (from the \pkg{datasets} package in base R).
 
 <<cont-pdf, echo=FALSE>>=
 Is <- iris[iris$Species=="setosa",]
@@ -110,20 +115,21 @@ The \function{rflip()} function simulates flipping a coin as many times as we li
 rflip(10)
 @
 The \function{do()} function allows us to execute an R command ("do" somthing in R) over and over, as many times as we choose.  Here, our \function{rflip()} command simulates 10 coin-flips.  First we'll "do" our command three times and show the results.  
+
 Then we'll do it 10,000 times and store the results in a variable called \texttt{tosses}, so we 
 can create a table and a plot showing the empirical distribution.
-<<coin-tosses,cache = TRUE>>=
+<<coin-tosses,cache=TRUE>>=
 do(3) * rflip(10)
 do(10000) * rflip(10) -> tosses
-tally(~ heads, data = tosses, format = "prop")
-gf_histogram( ~ heads, data = tosses, binwidth = 1)
+tally(~ heads, data=tosses, format="prop")
+gf_histogram( ~ heads, data=tosses, binwidth=1 )
 @
 
-<<include = FALSE>>=
-ans <- prop( ~(heads == 5), data = tosses)
+<<include=FALSE>>=
+ans <- prop( ~(heads == 5), data=tosses)
 @
 Based on this sample, we would estimate that 
-$\Prob(X = 5) \approx \Sexpr{ans}$.
+$\Prob(X=5) \approx \Sexpr{ans}$.
 \end{example}
 
 \begin{example}
@@ -173,15 +179,16 @@ prop( ~ (s == 8) )
 We can estimate the probability of any sum the same way.
 <<>>=
 tally( ~ s )
-tally( ~ s, format = "percent" )   # if we are too lazy to divide by 10000 ourselves
+# if we are too lazy to divide by 10000 ourselves:
+tally( ~ s, format="percent" )   
 @
 
 Here's a slightly fancier version that puts all the information into a data frame.  Note the use of the function \function{data.frame()} to create the data table:
 <<>>=
 rolls <- data.frame( first = die1, second = die2, sum = die1 + die2 )
 head(rolls)
-tally( ~sum, data = rolls, format = "proportion")
-gf_histogram( ~ sum, data = rolls, binwidth = 1)    # setting width is important for integer data
+tally( ~sum, data=rolls, format="proportion")
+gf_histogram( ~sum, data=rolls, binwidth=1 )     # setting width is important for integer data
 @
 \end{example}
 
@@ -286,8 +293,8 @@ There are 36 equally likely combinations of two dice:
 
 Let $X$ be the sum of two dice.
 \begin{itemize}
-\item $\Prob(X = 3) = \frac{2}{36} = \frac{1}{18}$
-\item $\Prob(X = 7) = \frac{6}{36} = \frac{1}{6}$
+\item $\Prob(X=3) = \frac{2}{36} = \frac{1}{18}$
+\item $\Prob(X=7) = \frac{6}{36} = \frac{1}{6}$
 \item $\Prob(\mbox{doubles}) = \frac{6}{36} = \frac{1}{6}$
 \end{itemize}
 
@@ -310,7 +317,7 @@ phenotype is $\frac{3}{4}$, and the probability of the recessive
 phenotype is $\frac{1}{4}$ because each of the four possible crossings is equally likely.
 
 \begin{center}
-	\includegraphics[width = .5\textwidth]{images/date-punnet.png}
+	\includegraphics[width=.5\textwidth]{images/date-punnet.png}
   
   Cartoon credit: \url{http://xkcd.com/634/}
 \end{center}
@@ -348,7 +355,7 @@ phenotype is $\frac{1}{4}$ because each of the four possible crossings is equall
 \begin{figure}[h]
 	\begin{center}
 	  GG \qquad \fbox{\textbf{GB} \qquad \textbf{BG} \qquad {BB}}  
-	\qquad \qquad $\mbox{probability} = 2/3$
+	\qquad \qquad $\mbox{probability}=2/3$
   \end{center}
 \caption{Illustrating the sample space for Example~\ref{example:condKids}.}
 \label{fig:condKids}%
@@ -376,8 +383,8 @@ phenotype is $\frac{1}{4}$ because each of the four possible crossings is equall
   \draw(0,0) rectangle (6,4);
   \draw(1,3.6) node{$A$};
   \draw(5,3.4) node{$B$};
-  \draw[thick,fill = black!80,opacity = 0.3](4,2) circle(1.3cm);
-  \draw[thick,pattern = horizontal lines](2.2,2) circle(1.6cm);
+  \draw[thick,fill=black!80,opacity=0.3](4,2) circle(1.3cm);
+  \draw[thick,pattern=horizontal lines](2.2,2) circle(1.6cm);
   \draw[thick](2.2,2) circle(1.6cm);
   \draw[thick](4,2) circle(1.3cm);
 \end{tikzpicture}
@@ -578,26 +585,26 @@ probability of an intersection.
 	\end{center}
 
 	\answer
-$\Prob(X = 2) 
+$\Prob(X=2) 
 	= \Prob(\mbox{first is blue} \tand \mbox{second is blue})
 	= \Prob(\mbox{first is blue}) \cdot \Prob( \mbox{second is blue} \mid \mbox{first is blue})
 	= \frac26 \cdot \frac15 = \frac{2}{30}
 $.
-Similarly $\Prob(X = 0) 
+Similarly $\Prob(X=0) 
 	= \Prob(\mbox{first is red} \tand \mbox{second is red})
 	= \Prob(\mbox{first is red}) \cdot \Prob( \mbox{second is red} \mid \mbox{first is red})
 	= \frac46 \cdot \frac35 = \frac{12}{30}
 $
-Finally, $\Prob(X = 1) = 1 - \Prob(X = 0) - \Prob(X = 2) = 1 - \frac{14}{30} = \frac{16}{30}$
+Finally, $\Prob(X=1) = 1 - \Prob(X=0) - \Prob(X=2) = 1 - \frac{14}{30} = \frac{16}{30}$
 
 We can represent this using a \term{tree diagram} as well.
 
 \begin{center}
 	\begin{tikzpicture}
-		[level 1/.style = {sibling distance = 25mm},
-		 level 2/.style = {sibling distance = 11mm},
-		 level distance = 25mm] 
-			\node {} [grow' = right]
+		[level 1/.style={sibling distance=25mm},
+		 level 2/.style={sibling distance=11mm},
+		 level distance=25mm] 
+			\node {} [grow'=right]
 			child {node {\blueheart} 
 				child {node (bb) {\blueheart} edge from parent node[above]{$\frac15$}} 
 				child {node (br) {\redheart}  edge from parent  node[below]{$\frac45$}} 
@@ -608,10 +615,10 @@ We can represent this using a \term{tree diagram} as well.
 				child {node (rr) {\redheart}  edge from parent  node[below]{$\frac35$}} 
 				edge from parent node[below]{$\frac46$} 
 			} ; 
-			\node [right of = bb] {$\frac26 \cdot \frac15 = \frac{2}{30}$};
-			\node [right of = br] {$\frac26 \cdot \frac45 = \frac{8}{30}$};
-			\node [right of = rb] {$\frac46 \cdot \frac25 = \frac{8}{30}$};
-			\node [right of = rr] {$\frac46 \cdot \frac35 = \frac{12}{30}$};
+			\node [right of=bb] {$\frac26 \cdot \frac15 = \frac{2}{30}$};
+			\node [right of=br] {$\frac26 \cdot \frac45 = \frac{8}{30}$};
+			\node [right of=rb] {$\frac46 \cdot \frac25 = \frac{8}{30}$};
+			\node [right of=rr] {$\frac46 \cdot \frac35 = \frac{12}{30}$};
 	\end{tikzpicture}
 \end{center}
 The edges in the tree represent conditional probabilities which we can multiply together
@@ -661,13 +668,13 @@ second selection.
 	  \item $\!\!\!\!\!$
 	  \begin{tabular}[t]{rcl}
 	  $\ds \Prob(D \mid +) $
-		&$\! = \!$& $\displaystyle \frac{\Prob(D \intersect +)}{\Prob(+)}$
+		&$\!=\!$& $\displaystyle \frac{\Prob(D \intersect +)}{\Prob(+)}$
 		\\[5mm]
 		&$\; = \;$& 
 		$\displaystyle \frac{\Prob(D) \cdot \Prob(+ \mid D)}{\Prob(D \intersect +) 
 			+ \Prob(H \intersect +)  }$
 			\\[5mm]
-			& $\! = \!$ & $\displaystyle 
+			& $\!=\!$ & $\displaystyle 
 				\frac{0.001 \cdot 0.99}{0.001 \cdot 0.99 + 0.999 \cdot 0.02}
 		            \; = \;  \Sexpr{ signif(0.001 * 0.99 / (0.001 * 0.99 + 0.999 * 0.02), 3) }$. 
 		\end{tabular}
@@ -675,10 +682,10 @@ second selection.
 	  A tree diagram is a useful way to visualize these calculations.
 \begin{center}
 	\begin{tikzpicture}
-		[level 1/.style = {sibling distance = 25mm},
-		 level 2/.style = {sibling distance = 11mm},
-		 level distance = 25mm] 
-			\node {} [grow' = right]
+		[level 1/.style={sibling distance=25mm},
+		 level 2/.style={sibling distance=11mm},
+		 level distance=25mm] 
+			\node {} [grow'=right]
 			child {node {H} 
 				child {node (bb) {$+$} edge from parent node[above]{$0.02$}} 
 				child {node (br) {$-$}  edge from parent  node[below]{$0.98$}} 
@@ -689,10 +696,10 @@ second selection.
 				child {node (rr) {$-$}  edge from parent  node[below]{$0.01$}} 
 				edge from parent node[below]{$0.001$} 
 			} ; 
-			\node [right of = bb] {\Sexpr{format(0.999 * 0.02,sci = FALSE)} };
-			\node [right of = br] {\Sexpr{format(0.999 * 0.98,sci = FALSE)} };
-			\node [right of = rb] {\Sexpr{format(0.001 * 0.99,sci = FALSE)} };
-			\node [right of = rr] {\Sexpr{format(0.001 * 0.01,sci = FALSE)} };
+			\node [right of=bb] {\Sexpr{format(0.999 * 0.02,sci=FALSE)} };
+			\node [right of=br] {\Sexpr{format(0.999 * 0.98,sci=FALSE)} };
+			\node [right of=rb] {\Sexpr{format(0.001 * 0.99,sci=FALSE)} };
+			\node [right of=rr] {\Sexpr{format(0.001 * 0.01,sci=FALSE)} };
 	\end{tikzpicture}
 \end{center}
 
@@ -800,11 +807,11 @@ for independent events.
 \begin{solution}
 <<>>=
 set.seed(123)    # so we get the same simulated results each time we compile.
-sims <- do(1000) * rflip(100, prob = 0.92)
-tally( ~ heads > 95, data = sims)
+sims <- do(1000) * rflip(100, prob=0.92)
+tally( ~ heads > 95, data=sims)
 @
 So the probability that Amy makes more than 95 shots in 100 attempts is approximately
-\Sexpr{ tally( ~ heads > 95, data = sims, format = "proportion")[1]}
+\Sexpr{ tally( ~ heads > 95, data=sims, format="proportion")[1]}
 \end{solution}
 
 \begin{problem}
@@ -823,7 +830,7 @@ So the probability that Amy makes more than 95 shots in 100 attempts is approxim
 d <- die1 - die2
 tally( ~ d )
 prop( ~ (d == 8) )
-gf_histogram( ~ d, binwidth = 1)    # setting width is important for integer data
+gf_histogram( ~d, binwidth=1 )    # setting width is important for integer data
 @
 \end{solution}
 
@@ -858,7 +865,7 @@ do(3) * sum( sample( 1:52, 5 ) < 14 )
 
 \begin{solution}
 <<>>=
-tally( ~ sum, do(10000) * sum(sample(1:52, 5) < 14) )
+tally( ~ result, do(10000) * sum(sample(1:52, 5) < 14) )
 @
 \end{solution}
 
@@ -890,9 +897,9 @@ What percentage of parts pass both inspections?
 
 \begin{solution}
 	$\Prob(\mbox{$X$ is even and $X < 5$}) 
-	= \Prob(X = 2 \tor X = 4) = 1/36 + 3/36 = 4/36 = \Sexpr{3/36}$
+	= \Prob(X = 2 \tor X=4) = 1/36 + 3/36 = 4/36 = \Sexpr{3/36}$
 
-$\Prob(\mbox{$X$ is even or $X < 5$}) = \Prob(\mbox{$X$ is even}) + \Prob(X = 3)
+$\Prob(\mbox{$X$ is even or $X < 5$}) = \Prob(\mbox{$X$ is even}) + \Prob(X=3)
 = 18/36 + 2/36 = 20/36 = \Sexpr{20/36}$.
 \end{solution}
 
@@ -901,7 +908,7 @@ Let $Y$ be the difference between the larger and smaller number when two fair di
 are rolled.  (So if you roll a 2 and a 4, then the value of $Y$ is 2.)  
 \begin{enumerate}
 	\item 
-		What is $\Prob(Y = 2)$?
+		What is $\Prob(Y=2)$?
 	\item
 		What are the other possible values of $Y$?
 	\item 
@@ -929,24 +936,6 @@ c(6,10,8,6,4,2) / 36
 \end{solution}
 
 \begin{problem}
-For the probabilities below, you may assume the that for each birth,
-the probability of having a boy or a girl is $1/2$ and that each birth is
-independent of other births.
-\begin{enumerate}
-\item
-Suppose a family has three kids. 
-What is the probability that at least one of the kids is a boy?
-\item
-Suppose a family has three kids, at least one of which is a girl.
-Now what is the probability that at least one of the kids is a boy?
-\item
-Suppose a family has three kids, at least two of which are girls.
-Now what is the probability that at least one of the kids is a boy?
-\end{enumerate}
-\end{problem}
-
-
-\begin{problem}
 	A device is assembled from two primary parts.  2\% of the first type of part
 	are defective and 3\% of the other type of part are defective.  The device
 	only functions properly if both parts are functioning properly.
@@ -965,34 +954,6 @@ Now what is the probability that at least one of the kids is a boy?
 	Assuming failure of each part is independent of failure of the other,
 	the probability that both function properly is 
 	$0.98 \cdot 0.97 = \Sexpr{0.98 * 0.97}$.
-	
-	Alternatively, if we assume that failures are mutually exclusive, then the probability of 
-	failure would be $0.02 + 0.03 = 0.05$ and the probability of proper functioning would be 
-	$0.95$.
-	
-	The independence assumption is reasonable if, for example, the two parts are made 
-	by separate manufacturing processes and the device is assembled by randomly selecting a 
-	part of each type, which may or may not be a good part right from the start.  
-	
-	The mutually exclusive failure is probably harder to justify, since likely there will
-	be some situations in which both parts fail.
-\end{solution}
-
-\begin{problem}
-In the situation of Example \ref{example:sensitivitySpecificity},
-how does the answer change if the baseline probability of having 
-the disease is $1/10$ instead of $1/1000$? (This might be the case 
-if a person is exhibiting symptoms, for example.)
-\end{problem}
-
-
-\begin{solution}
-<<>>=
-# P(D) = 0.001
-0.001 * 0.99 / (0.001 * 0.99 + 0.999 * 0.02)
-# P(D) = 0.10
-0.1 * 0.9 / (0.10 * 0.99 + 0.9 * 0.02)
-@
 \end{solution}
 
 \begin{problem}
@@ -1092,7 +1053,7 @@ Express your answers to 3 significant digits and avoid internal rounding.
 
 \begin{solution}
 You may find a tree diagram useful here to visualize these probabilities.
-<<tidy = FALSE>>=
+<<tidy=FALSE>>=
 # part a
 .20 + .27
 
@@ -1112,129 +1073,13 @@ c / (c + d)
 @
 \end{solution}
 
-% \begin{problem}
-% %% modified from
-% %% http://allendowney.blogspot.com/2011/10/my-favorite-bayess-theorem-problems.html
-% %% Note: not a Bayes Theorem probelm
-% John had a twin brother who died at birth.  
-% What is the probability that John was an identical twin?
-% 
-% To answer this one, you need some background information. 
-% According to a Wikipedia article on twins:  
-% ``Twins are estimated to be approximately 1.9\% of the world population, 
-% with monozygotic [identical] twins making up 0.15\% of the total popultion---and 8\% 
-% of all twins.''
-% \end{problem}
-
-\begin{problem}
-An engineers orders a shipment of 100 indentical parts.  
-Before accepting the shipment, he tests three  of them.  
-If the they all test good, he accepts the entire shipment.  
-If any of them tests bad, he rejects the shipment.
-
-Given the good price he has gotten on these parts, the engineer
-would be satisfied if at least 95\% of the parts are good.
-\begin{enumerate}
-\item
-Suppose that there are 5 bad parts in the shipment.  What is the probability
-that the shipment is rejected (even though the engineer would actually have
-been satisfied with the shipment)?
-\item
-Suppose that there are 10 bad parts in the shipment.  What is the probability
-that the shipment is accepted (even though the engineer would not be satisfied 
-with this shipment)?
-\end{enumerate}
-\end{problem}
-
-\begin{solution}
-
-\begin{enumerate}
-\item The engineer will accept if all three are among the 95 good parts.
-The probability of accepting is
-<<>>=
-95/100 * 94/99 * 93/98
-@
-The probability of rejecting is 
-<<>>=
-1 - 95/100 * 94/99 * 93/98
-@
-
-\item
-Now we accept if all three are among the 90 good parts. 
-The probability of accepting is
-<<>>=
-90/100 * 89/99 * 88/98
-@
-\end{enumerate}
-We see that this is not the most effective test.  It could be improved by taking 
-a larger sample, and similar arithmetic could be used to determine how well a 
-new protocol works (perhaps one that takes a larger sample).
-\end{solution}
-
-\begin{problem}
-%% http://allendowney.blogspot.com/2011/10/my-favorite-bayess-theorem-problems.html
-The blue M\&M was introduced in 1995.  
-Before then, the color mix in a bag of plain M\&Ms was 
-30\% Brown, 20\% Yellow, 20\% Red, 10\% Green, 10\% Orange, 10\% Tan.  
-Afterward it was 24\% Blue , 20\% Green, 16\% Orange, 14\% Yellow, 13\% Red, 
-13\% Brown. 
-
-A friend of mine has two bags of M\&Ms, and he tells me that one is from 
-1994 and one from 1996.  He won't tell me which is which, but he gives me one 
-M\&M from each bag.  One is yellow and one is green.  
-What is the probability that the yellow M\&M came from the 1994 bag?
-\end{problem}
-
-\begin{solution}
-Let's use the following notation for events related to this problem:
-  \begin{itemize}
-  \item $G_4 = $ green from 1994 bag
-  \item $G_6 = $ green from 1996 bag
-  \item $Y_4 = $ yellow from 1994 bag
-  \item $Y_6 = $ yellow from 1996 bag
-  \end{itemize}
-
-Then our question becomes 
-\begin{align*}
-\Prob( Y_4 \tand G_6 \mid 
-       (Y_4 \tand G_6) \tor (Y_6 \tand G_4) )
-       & =
-\frac{\Prob( Y_4 \tand G_6 ) }
-     {\Prob( (Y_4 \tand G_6) \tor (Y_6 \tand G_4) )}
-\\
-& = \frac{\Prob( Y_4 \tand G_6 ) }
-     {\Prob(Y_4 \tand G_6) + \Prob(Y_6 \tand G_4)}
-\end{align*}
-The individual probabilities can be worked out as
-\[
-\Prob(Y_4 \tand G_6) = \Prob(Y_4) \cdot \Prob(G_6 \mid Y_4)
-=
-.20 \cdot .20 = 0.04
-\]
-
-\[
-\Prob(Y_6 \tand G_4) = \Prob(Y_6) \cdot \Prob(G_4 \mid Y_6)
-=
-.14 \cdot .10 = 0.014
-\]
-
-Putting this all together we get
-
-% O: .20 Y, .10 G
-% N: .14 Y, .20 G
-<<>>=
-.20 * .20 / (.20 * .20 + .14 * .10)   
-@
-
-A tree diagram could be used to depict these probabilities as well.
-\end{solution}
 
 \shipoutProblems
 
 \vfill
 
 \begin{center}
-	\includegraphics[width = .4\textwidth]{images/cigarettes-cartoon}
+	\includegraphics[width=.4\textwidth]{images/cigarettes-cartoon}
 \end{center}
 
 \ifsolutions

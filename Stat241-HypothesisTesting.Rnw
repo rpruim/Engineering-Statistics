@@ -341,8 +341,10 @@ How small is ``small", and how small does a p-value have to be before we reject 
 % >>>>>>> c25168dd6c03b5958e6d874fffc45a873a27e0d5:Math241-HypothesisTesting.Rnw
 
 It is also common for researchers to simply report the p-values they obtain from their analysis, allowing readers to draw conclusions on their own.
+\end{enumerate}
+\end{example}
 
-If talking about the results of a statistical hypothesis test in a report, the following language may be useful.  It relates statements about the strength of the evidence found in the data with p-values (approximately -- there are no universal standards and rules here, just guidelines).
+% If talking about the results of a statistical hypothesis test in a report, the following language may be useful.  It relates statements about the strength of the evidence found in the data with p-values (approximately -- there are no universal standards and rules here, just guidelines).
 
 % <<<<<<< HEAD:Stat241-HypothesisTesting.Rnw
 \begin{example}
@@ -372,6 +374,8 @@ $<0.001$ & Very strong evidence against the null hypothesis\\
 \end{tabular}
 \end{center}
 % >>>>>>> c25168dd6c03b5958e6d874fffc45a873a27e0d5:Math241-HypothesisTesting.Rnw
+
+\end{example}
 
 \section{Statistical Significance}
 The word ``significant" has a special meaning in statistics.  If we say that a difference or relationship between variables is significant, that means that we have applied a hypothesis test, and have \emph{failed} to reject the null hypothesis -- in other words, we have data that provides some evidence against the null hypothesis, and supporting the alternative.
@@ -646,7 +650,7 @@ So $a = \beta_1$ in our usual linear model notation.
 
 <<drag-again>>=
 drag.model <- lm(log(force.drag) ~ log(velocity), data = drag)
-xyplot(log(force.drag) ~ log(velocity), data = drag)
+gf_point(log(force.drag) ~ log(velocity), data = drag)
 @
 The fit is not perfect, and in fact suggests a systematic problem with the way
 these data were collected:%
@@ -656,8 +660,8 @@ It would be good to refit this data with those observations removed from the dat
 See Exercise~\ref{prob:drag-refit}.
 }
 <<>>=
-xyplot(resid(drag.model) ~ fitted(drag.model))
-qqmath(~ resid(drag.model))
+gf_point(resid(drag.model) ~ fitted(drag.model))
+gf_qq( ~ resid(drag.model))
 @
 
 <<>>=
@@ -704,8 +708,8 @@ data(PorschePrice, package = "Stat2Data")
 head(PorschePrice)
 porsche.model <- lm(Price ~ Mileage, data = PorschePrice)
 summary(porsche.model)
-xyplot( resid(porsche.model) ~ fitted(porsche.model), type = c('p','smooth'))
-qqmath( ~ resid(porsche.model) )
+gf_point( resid(porsche.model) ~ fitted(porsche.model)) %>% gf_smooth()
+gf_qq( ~ resid(porsche.model) )
 @
 The model looks reasonable.  What are the two hypotheses being tested?
 \begin{enumerate}
@@ -933,14 +937,14 @@ Let's remove the fastest values at each height setting.  Although they are the f
 that terminal velocity has not yet been reached.  At least, these points would fit the 
 overall pattern better if the velocity were larger.
 <<>>=
-xyplot( force.drag ~ velocity, data = drag, 
-  groups = (velocity < 3.9) & !(velocity > 1 & velocity < 1.5) )
-drag2 <- subset(drag, (velocity < 3.9) & !(velocity > 1 & velocity < 1.5) )
+gf_point( force.drag ~ velocity, data = drag, 
+  color = ~ (velocity < 3.9) & !(velocity > 1 & velocity < 1.5) )
+drag2 <- drag %>% filter((velocity < 3.9) & !(velocity > 1 & velocity < 1.5))
 @
 <<fig.height = 3.2>>=
 drag2.model <- lm(log(force.drag) ~ log(velocity), data = drag2)
 summary(drag2.model)
-plot(drag2.model, w = 1:2)
+mplot(drag2.model, w = 1:2)
 @
 The model is still not as good as we might like, and it seams like the fit is different for the 
 heavier objects than for the lighter ones.  This could be due to some flaw in the design of the 

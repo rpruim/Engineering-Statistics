@@ -46,7 +46,7 @@ laboratory experiment that all students perform in Engr209.
 
 \subsection{Apparatus}
 
-Figure~\ref{fig:HXer_Figure} shows the heat exchanger.
+Figure~\ref{fig:HXerFigure} shows the heat exchanger.
 Hot fluid flows in the annulus ($\dot{m}_{3}$)
 and cold fluid flows in the inner tube ($\dot{m}_{1}$).
 The entire apparatus is insulated, 
@@ -56,7 +56,7 @@ so we expect no heat to be exchanged with the surroundings.
     \centering
     \includegraphics[width = 3.5in]{images/HXerFig.pdf}
     \caption{Heat exchanger with statepoints.}
-    \label{fig:HXer_Figure}
+    \label{fig:HXerFigure}
 \end{figure}
 
 \subsection{Measurements and Data}

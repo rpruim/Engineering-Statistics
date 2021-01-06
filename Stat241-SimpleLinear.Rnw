@@ -240,8 +240,22 @@ In a study of eye strain caused by visual display terminals, researchers wanted
 to be able to estimate ocular surface area (OSA) from palpebral fissure (the
 horizontal width of the eye opening in cm) because palpebral fissue is easier
 to measure than OSA.
-<<>>=
-Eyes <- read.file("https://rpruim.github.io/Engineering-Statistics/data/PalpebralFissure.txt")
+<<include = !onLine, eval = !onLine>>=
+Eyes <- read.file("docs/data/PalpebralFissure.txt", header = TRUE)
+head(Eyes, 3)
+x.bar <- mean( ~ palpebral, data = Eyes)  
+y.bar <- mean( ~ OSA, data = Eyes)
+s_x <- sd( ~ palpebral, data = Eyes)
+s_y <- sd( ~ OSA, data = Eyes)
+r <- cor( palpebral ~ OSA, data = Eyes)
+c( x.bar = x.bar, y.bar = y.bar, s_x = s_x, s_y = s_y, r = r )
+slope <- r * s_y / s_x
+intercept <- y.bar - slope * x.bar
+c(intercept = intercept, slope = slope)
+@
+<<include = onLine, eval = onLine>>=
+Eyes <- 
+  read.file("https://rpruim.github.io/Engineering-Statistics/data/PalpebralFissure.txt",  header = TRUE)
 head(Eyes, 3)
 x.bar <- mean( ~ palpebral, data = Eyes)  
 y.bar <- mean( ~ OSA, data = Eyes)
@@ -264,7 +278,7 @@ to be able to estimate ocular surface area (OSA) from palpebral fissure (the
 horizontal width of the eye opening in cm) because palpebral fissue is easier
 to measure than OSA.
 <<>>=
-osa.model <- lm( OSA ~ palpebral, data = Eyes) 
+osa.model <- lm(OSA ~ palpebral, data = Eyes) 
 osa.model
 @
 \function{lm()} stands for linear model.  The default output includes the estimates

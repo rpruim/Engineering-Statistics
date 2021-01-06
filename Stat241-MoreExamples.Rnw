@@ -13,7 +13,7 @@ analysis of a laboratory experiment involving a heat exchanger.
 
 \subsection{Apparatus and Measurements}
 
-Figure~\ref{fig:HXer_Figure} shows a diagram illustrating the 
+Figure~\ref{fig:HXerFigure} shows a diagram illustrating the 
 heat exchanger.  Fluids of different temperatures flow in the annulus 
 ($\dot{m}_{3}$) and in the inner tube ($\dot{m}_{1}$).
 The entire apparatus is insulated, 
@@ -23,7 +23,7 @@ so we expect little or no heat to be exchanged with the surroundings.
     \centering
     \includegraphics[width = 3.5in]{images/HXerFig.pdf}
     \caption{Heat exchanger with statepoints.}
-    \label{fig:HXer_Figure}
+    \label{fig:HXerFigure}
 \end{figure}
 
 
@@ -57,7 +57,7 @@ experimental conditions:
 
 <<fig.height = 2.25>>=
 HeatX   
-xyplot(m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations", cex = 2)
+gf_point(m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations", size = 3)
 @
 
 Note: \function{read.csv()} can read data from a file as well.  If you are using the server
@@ -166,8 +166,8 @@ Assuming any loss to (or gain from) the environment is essentially constant for
 the apparatus over the experimental conditions analysed, we can use our 6
 observations to estimate the amount of heat exchanged with the environment:
 <<>>=
-favstats( ~ Q.env, data = HeatX2)
-stripplot( ~ Q.env, data = HeatX2, alpha = .6, cex = 3, jitter.data = TRUE)
+df_stats( ~ Q.env, data = HeatX2)
+gf_point( "" ~ Q.env, data = HeatX2, alpha = .6, cex = 3, jitter.data = TRUE)
 @
 From this we can compute either a p-value for the hypothesis test that the mean 
 difference in heat change is 0 or create a confidence interval for the mean difference
@@ -206,7 +206,7 @@ the different set-ups.  From this small data set, there is not clear evidence
 of some other relationship between heat exchanged with the environment
 and the experimental set up:
 <<fig.height = 2.5>>=
-xyplot( Q.env ~ m.cold, data = HeatX2, groups = paste("m.hot =", round(m.hot,2)), auto.key = TRUE)
+gf_point(Q.env ~ m.cold, data = HeatX2, color = ~ paste("m.hot =", round(m.hot,2)))
 @
 \item
 The t-test and interval are based on the assumption that the distribution

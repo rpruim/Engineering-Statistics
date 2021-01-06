@@ -2,7 +2,7 @@
 
 <<include = FALSE>>=
 library(gdata)
-library(fastR22)
+library(fastR2)
 library(mosaic)
 # haveInternet <- tryCatch( {
 # 	read.xls("http://www.calvin.edu/~rpruim/data/m241/MilledSteel.xls", 1); FALSE },
@@ -617,10 +617,14 @@ quite linear, but the residuals appear to have a better distribution as well.
 
 \begin{figure}
 <<tuky-bulge-many,echo = FALSE,fig.width = 6,fig.height = 7>>=
-xyplot(Y~X|paste('a = ',a,sep = "") + paste("b = ",b,sep = ""),
-            ddd, groups = original, cex = .7,
-			xlab = 'x', ylab = 'y',
-            scales = list(relation = 'free', draw = FALSE))
+# xyplot(Y~X|paste('a = ',a,sep = "") + paste("b = ",b,sep = ""),
+#             ddd, groups = original, cex = .7,
+# 			xlab = 'x', ylab = 'y',
+#             scales = list(relation = 'free', draw = FALSE))
+gf_point(Y ~ X , 
+         data = ddd, color = ~original, size = .7,
+         xlab = 'x', ylab = 'y') %>%
+  gf_facet_wrap( paste('a = ',a,sep = "") ~ paste("b = ",b,sep = ""), scales = "free")
 @
 \caption{Using the ladder of re-expression to find a better fit.}
 \label{fig:TukeyBulgeMany}%
@@ -1007,7 +1011,7 @@ of the pendulum.
 The students constructed pendulums of lengths varying from
 $10$ cm to $16$ m and recorded the period length (averaged over several
 swings of the pendulum).  The resulting data are in
-the \dataframe{Pendulum} data set in the \pkg{fastR22} package.
+the \dataframe{Pendulum} data set in the \pkg{fastR2} package.
 
 \begin{enumerate}
 	\item
@@ -1037,25 +1041,25 @@ model <- lm(log(period) ~ log(length), data = Pendulum)
 model2 <- nls(period ~ A * length^power, data = Pendulum, start = list(A = 1, power = 2))
 f <- makeFun(model)
 g <- makeFun(model2)
-xyplot(period ~ length, data = Pendulum)
-plotFun(f(x) ~ x, col = 'gray50',add = TRUE)
-xyplot(period ~ length, data = Pendulum)
-plotFun(g(x) ~ x, col = 'red', lty = 2, add = TRUE)
+gf_point(period ~ length, data = Pendulum) %>%
+gf_fun(f(x) ~ x, col = 'gray50')
+gf_point(period ~ length, data = Pendulum) %>%
+  gf_fun(g(x) ~ x, col = 'red', lty = 2)
 coef(summary(model))
 coef(summary(model2))
 @
 	But if we look at the residuals, we see that the linear model is clearly 
 	better in this case.  The non-linear model suffers from heteroskedasticity.
 <<>>=
-xyplot(resid(model) ~ fitted(model), type = c('p','smooth'))
-xyplot(resid(model2) ~ fitted(model2), type = c('p','smooth'))
+gf_point(resid(model) ~ fitted(model)) %>% gf_smooth()
+gf_point(resid(model2) ~ fitted(model2) %>% gf_smooth()
 @
 	Both residual distributions are reasonably close to normal, but not perfect.
 	In the ordinary least squares model, the largets few residuals are not as large
 	as we would expect.
 <<>>=
-qqmath(~resid(model))
-qqmath(~resid(model2))
+gf_qq(~resid(model))
+gf_qq(~resid(model2))
 @
 	
 	The residuals in the non-linear model show a clear change 
@@ -1083,16 +1087,16 @@ pressure and temperature?
 Using Tukey's buldge rules it is pretty easy to land at something like one of the following
 
 <<>>=
-xyplot(log(pressure) ~ temperature, data = Pressure)
-xyplot(log(pressure) ~ log(temperature), data = Pressure)
+gf_point(log(pressure) ~ temperature, data = Pressure)
+gf_point(log(pressure) ~ log(temperature), data = Pressure)
 @
 
 Neither of these is pefect (although both are much more linear than the original untransformed relationship).
 But if you think in degrees Kelvin instead, you might find a much better transformation.
 <<>>=
-xyplot(log(pressure) ~ (273.15 + temperature), data = Pressure)
-xyplot(log(pressure) ~ log(273.15 + temperature), data = Pressure)
-xyplot(log(pressure) ~ 1/(273.15 + temperature), data = Pressure)
+gf_point(log(pressure) ~ (273.15 + temperature), data = Pressure)
+gf_point(log(pressure) ~ log(273.15 + temperature), data = Pressure)
+gf_point(log(pressure) ~ 1/(273.15 + temperature), data = Pressure)
 @
 
 Ah, that last one looks quite good.  Let's try that one.
@@ -1193,8 +1197,8 @@ f(ACT = 30, interval = "prediction")
 @
 		\item
 <<>>=
-xyplot(GPA ~ ACT, data = grades, panel = panel.lmbands)
-xyplot(resid(grades.model) ~ fitted(grades.model), type = c('p','smooth'))
+gf_point(GPA ~ ACT, data = grades, panel = panel.lmbands)
+gf_point(resid(grades.model) ~ fitted(grades.model) %>% gf_smooth()
 @
 			There are no major concerns with the regression model. The
 			residuals look pretty good.  (There is perhaps a bit more variability
@@ -1229,7 +1233,7 @@ just the right ballast to make it neutrally buoyant.  Mass is then added
 and the terminal velocity is calculated by measuring the time it takes to
 fall between two sensors once terminal velocity has been reached.
 
-The \dataframe{Drag} data set (in the \pkg{fastR22} package) contains the results 
+The \dataframe{Drag} data set (in the \pkg{fastR2} package) contains the results 
 of such an experiment
 conducted by some undergraduate physics students.  Mass is measured 
 in grams and velocity in meters per second.  
@@ -1272,13 +1276,13 @@ coef(summary(model3))
 Note that \variable{model1}, \variable{model2}, and \variable{model3} are not 
 equivalent, but they all tell roughly the same story.
 <<warning = FALSE>>=
-xyplot(velocity ~ force.drag, data = Drag)
 f1 <- makeFun(model1)
 f2 <- makeFun(model2)
 f3 <- makeFun(model3)
-plotFun(sqrt(f1(x)) ~ x, add = TRUE, alpha = .4)
-plotFun(f2(x) ~ x, add = TRUE, alpha = .4, col = 'red')
-plotFun(exp(f3(x)) ~ x, add = TRUE, alpha = .4, col = 'brown')
+gf_point(velocity ~ force.drag, data = Drag) %>%
+  gf_fun(sqrt(f1(x)) ~ x, alpha = .4) %>%
+  gf_fun(f2(x) ~ x, alpha = .4, color = 'red') %>%
+  gf_fun(f3(x) ~ x, alpha = .4, color = 'brown')
 @
 
 The fit for these models reveals some 
@@ -1289,12 +1293,12 @@ In both groups, the velocities for the greatest drag forces are
 not as fast as the pattern of the remaining data would lead us to expect.
 
 <<drag-plots>>=
-xyplot(velocity^2 ~ force.drag, data = Drag, groups = height)
-plot(model1, w = 1)
-xyplot(log(velocity) ~ log(force.drag), data = Drag, groups = height)
-xyplot(velocity ~ force.drag, data = Drag, groups = height, 
-       scales = list(log = TRUE))
-plot(model3, w = 1)
+gf_point(velocity^2 ~ force.drag, data = Drag, color = ~ height)
+mplot(model1, w = 1)
+gf_point(log(velocity) ~ log(force.drag), data = Drag, color = ~ height)
+gf_point(velocity ~ force.drag, data = Drag, groups = ~ height) %>%
+  gf_refine(scale_x_log10(), scale_y_log10())
+mplot(model3, w = 1)
 @
 \end{solution}
 
@@ -1322,7 +1326,7 @@ Redo Exercise~\ref{prob:drag1} after removing this data.
 \begin{problem}
 \Rindex{Spheres}%
 \myindex{physics|probidx}%
-The \dataframe{Spheres} data set (in the \pkg{fastR22} package)
+The \dataframe{Spheres} data set (in the \pkg{fastR2} package)
 contains measurements of the diameter (in meters)
 and mass (in kilograms) of a set of steel ball bearings.  We would expect
 the mass to be proportional to the cube of the diameter.  Fit a model 
@@ -1333,7 +1337,7 @@ and see if the data reflect this.
 \begin{problem}
 \Rindex{Spheres}%
 \myindex{physics|probidx}%
-The \dataframe{Spheres} data set (in the \pkg{fastR22} package)
+The \dataframe{Spheres} data set (in the \pkg{fastR2} package)
 contains measurements of the diameter (in meters)
 and mass (in kilograms) of a set of steel ball bearings.  We would expect
 the mass to be proportional to the cube of the diameter.  
@@ -1433,18 +1437,18 @@ coef(summary(nls.model))
 
 <<>>=
 f <- makeFun(nls.model)
-xyplot(time ~ height, data = BallDrop)
-plotFun(f(height) ~ height, add = TRUE, col = 'gray40')
-xyplot(resid(nls.model) ~ fitted(nls.model))
+gf_point(time ~ height, data = BallDrop) %>%
+gf_fun(f(height) ~ height, color = 'gray40')
+gf_point(resid(nls.model) ~ fitted(nls.model))
 @
 
 We can compare this to the ordinary least squares model by plotting both together on the same plot.
 <<fig.keep = 'last'>>=
 lm.model <- lm(time ~ sqrt(height), data = BallDrop)
 g <- makeFun(lm.model)
-xyplot(time ~ height, data = BallDrop)
-plotFun(f(height) ~ height, add = TRUE, col = 'gray40', lwd = 3)
-plotFun(g(height) ~ height, add = TRUE, col = 'red', lwd = 1, lty = 2)
+gf_point(time ~ height, data = BallDrop)
+gf_fun(f(height) ~ height, color = 'gray40', size = 3)
+gf_fun(g(height) ~ height, color = 'red', size = 1, linetype = 2)
 @
 In this particular case, there is very little difference between the two models, but this is not always the case.
 <<>>=
@@ -1501,10 +1505,10 @@ $\frac{d}{dx} e^x = e^x$ the uncertainty is approximately
 			this flaw in the design of the experiment.
 		\end{enumerate}
 <<>>=
-qqmath(resid(power.model), main = "model 1")
-qqmath(resid(power.model2))
-xyplot(resid(power.model) ~ fitted(power.model))
-xyplot(resid(power.model2) ~ fitted(power.model2))
+gf_qq(resid(power.model), main = "model 1")
+gf_qq(resid(power.model2))
+gf_point(resid(power.model) ~ fitted(power.model))
+gf_point(resid(power.model2) ~ fitted(power.model2))
 @
 
 \end{example}
@@ -1516,7 +1520,7 @@ of the nonlinear least squares approach.
 	A professor at Macalester College put hot water in a mug and recorded the temperature as it cooled. 
 	Let's see if we can fit a reasonable model to this data
 <<>>=
-xyplot(temp ~ time, data = CoolingWater, ylab = "temp (C)", xlab = "time (sec)")
+gf_point(temp ~ time, data = CoolingWater, ylab = "temp (C)", xlab = "time (sec)")
 @
 
 Our first guess might be some sort of exponential decay
@@ -1525,9 +1529,9 @@ cooling.model1 <-
   nls(temp ~ A * exp( -k * time), data = CoolingWater, 
       start = list(A = 100, k = 0.1))
 f1 <- makeFun(cooling.model1)
-xyplot(temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110), 
-        ylab = "temp (C)", xlab = "time (sec)")
-plotFun(f1(time) ~ time, add = TRUE)
+gf_point(temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110), 
+        ylab = "temp (C)", xlab = "time (sec)") %>%
+gf_fun(f1(time) ~ time)
 @
 
 That doesn't fit very well, and there is a good reason.  The model says that eventually the water will freeze because
@@ -1540,10 +1544,10 @@ adding in an offset to account for the ambient temperature:
 cooling.model2 <- nls(temp ~ ambient + A * exp(k * (1+time)), data = CoolingWater,
                       start = list(ambient = 20, A = 80, k = -.1) )
 f2 <- makeFun(cooling.model2)
-xyplot(temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110),
-        ylab = "temp (C)", xlab = "time (sec)")
-plotFun(f1(time) ~ time, add = TRUE, lty = 2, col = "gray80")
-plotFun(f2(time) ~ time, add = TRUE, col = "steelblue")
+gf_point(temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110),
+        ylab = "temp (C)", xlab = "time (sec)") %>%
+gf_fun(f1(time) ~ time, linetype = 2, color = "gray80") %>%
+gf_fun(f2(time) ~ time, color = "steelblue")
 @
 This fits much better.  Furthermore, this model can be derived from a differential equation
 \[
@@ -1555,7 +1559,7 @@ known as Newton's Law of Cooling.
 
 Let's take a look at the residual plot
 <<>>=
-xyplot(resid(cooling.model2) ~ time, data = CoolingWater) 
+gf_point(resid(cooling.model2) ~ time, data = CoolingWater) 
 plot(cooling.model2, which = 1)
 @
 Hmm.  These plots show a clear pattern and very little noise.

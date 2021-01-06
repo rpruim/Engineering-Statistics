@@ -872,12 +872,12 @@ visual representations that shows both what is ``typical'' or ``average'' and ho
 variability there is in the data.  
 
 \begin{figure}[h]
-<<echo = FALSE,out.width = ".3\\textwidth",caption = "Representations of the same 25 measurements">>=
+<<variability, echo = FALSE,out.width = ".3\\textwidth",caption = "Representations of the same 25 measurements">>=
 set.seed(1234)
 x <- rnorm(25, 10, 2)
-histogram(~x, xlab = "",n = 10)
-densityplot(~x, xlab = "")
-bwplot(~x, xlab = "")
+gf_histogram( ~ x, bins = 10) %>% gf_labs(x = "")
+gf_dens( ~ x) %>% gf_labs(x = "")
+gf_boxplot( ~ x) %>% gf_labs(x = "")
 @
 \caption{Three graphical representations of the same 25 measurents.}
 \end{figure}
@@ -1027,7 +1027,7 @@ Calculate the standard uncertainty for the mean volume of distribution.
 \end{problem}
 
 \begin{solution}
-<<>>=
+<<some-solution>>=
 # 95 % CI
 t.star <- qt(.975, df = 29); t.star
 ME <- t.star *  1.9 / sqrt(30); ME
@@ -1044,9 +1044,9 @@ ME <- t.star *  1.9 / sqrt(30); ME
 \begin{problem}
 A handbook gives the value of the coefficient of linear thermal expansion of 
 pure copper at 20 degrees C, $\alpha_{20}$(Cu), as 
-$16.52 \times 10^{−6} \ {}^\circ C^{-1}$
+$16.52 \times 10^{-6} \ {}^\circ C^{-1}$
 and simply states that ``the error in this value should not exceed 
-$0.40 \times 10^{−6} \ {}^{\circ} C^{-1}$.''
+$0.40 \times 10^{-6} \ {}^{\circ} C^{-1}$.''
 \begin{enumerate}
 \item
 Based on this limited information, and assuming a rectangular distribution,

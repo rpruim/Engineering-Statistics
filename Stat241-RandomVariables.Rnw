@@ -2030,9 +2030,9 @@ x.normal <- qnorm( probs, mean = 5.925 , sd = 3.653  )       # quantiles from No
 @
 Finally, we create the scatter plot
 <<>>=
-xyplot( y ~ x.gamma )
-xyplot( y ~ x.weibull )
-xyplot( y ~ x.normal )
+gf_point( y ~ x.gamma )
+gf_point( y ~ x.weibull )
+gf_point( y ~ x.normal )
 @
 \fi
 We can automate this, but we need to tell \function{qqmath()} how to calculate

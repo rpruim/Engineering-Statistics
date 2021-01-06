@@ -173,20 +173,21 @@ if we know $\mean x$, $s_x$, $\mean y$, $s_y$, and $r$.
 
 \begin{example}
 In a study of eye strain caused by visual display terminals, researchers wanted
-to be able to estimate ocular surface area (OSA) from palprebal fissure (the
-horizontal width of the eye opening in cm) because palprebal fissue is easier
+to be able to estimate ocular surface area (OSA) from palpebral fissure (the
+horizontal width of the eye opening in cm) because palpebral fissue is easier
 to measure than OSA.
 <<>>=
-library(Devore7)
-head(xmp12.01)
-x.bar <- mean( ~palprebal, data = xmp12.01)
-y.bar <- mean( ~OSA, data = xmp12.01)
-s_x <- sd( ~palprebal, data = xmp12.01)
-s_y <- sd( ~OSA, data = xmp12.01)
-r <- cor( xmp12.01$palprebal, xmp12.01$OSA)
-c( x.bar = x.bar, y.bar = y.bar, s_x = s_x, s_y = s_y, r = r )
+Eyes <- 
+  read.table("https://rpruim.github.io/Engineering-Statistics/data/PalpebralFissure.txt", header = TRUE)
+head(Eyes)
+x_bar <- mean( ~ palpebral, data = Eyes)
+y_bar <- mean( ~ OSA, data = Eyes)
+s_x <- sd( ~ palpebral, data = Eyes)
+s_y <- sd( ~ OSA, data = Eyes)
+r <- cor( palpebral ~ OSA, data = Eyes)
+c( x_bar = x_bar, y_bar = y_bar, s_x = s_x, s_y = s_y, r = r )
 slope <- r * s_y/s_x
-intercept <- y.bar - slope * x.bar
+intercept <- y_bar - slope * x_bar
 c(intercept = intercept, slope = slope)
 @
 \end{example}
@@ -196,10 +197,10 @@ of the preceding example don't need to be done in practice.
 
 \begin{example}
 In a study of eye strain caused by visual display terminals, researchers wanted to be able to
-estimate ocular surface area (OSA) from palprebal fissure (the horizontal width of the eye
-opening in cm) because palprebal fissue is easier to measure than OSA.
+estimate ocular surface area (OSA) from palpebral fissure (the horizontal width of the eye
+opening in cm) because palpebral fissue is easier to measure than OSA.
 <<>>=
-osa.model <- lm( OSA ~ palprebal, data = xmp12.01) 
+osa.model <- lm(OSA ~ palpebral, data = Eyes) 
 osa.model
 @
 \function{lm()} stands for linear model.  The default output includes the estimates
@@ -220,7 +221,8 @@ but an estimated value (based on the linear equation given).
 \R\ can add a regression line to our scatter plot if we ask it to.
 \begin{center}
 <<osa-scatter>>=
-xyplot( OSA ~ palprebal, data = xmp12.01, type = c('p','r') )
+gf_point( OSA ~ palpebral, data = Eyes) %>%
+  gf_lm()
 @
 \end{center}
 
@@ -232,7 +234,7 @@ there is some variability above and below the line.
 It is important that 
 the explanatory variable be the ``\variable{x}'' variable
 and the response variable be the ``\variable{y}'' variable
-when doing regression.  If we reverse the roles of \variable{OSA} and \variable{palprebal}
+when doing regression.  If we reverse the roles of \variable{OSA} and \variable{palpebral}
 we do not get the same model.  This is because the residuals are measured vertically 
 (in the $y$ direction).  
 
@@ -243,7 +245,7 @@ We can use our least squares regression line to estimate the value of the respon
 variable from the value of the explanatory variable.
 
 \begin{example}
-If the palprebal width is 1.2 cm, then we would estimate OSA to be 
+If the palpebral width is 1.2 cm, then we would estimate OSA to be 
 
 \[
 \hat{\texttt{osa}} = 
@@ -259,10 +261,10 @@ estimated.osa <- makeFun(osa.model)
 estimated.osa(1.2)
 @
 
-As it turns out, the 17th measurement in our data set had a \variable{palprebal} measurement
+As it turns out, the 17th measurement in our data set had a \variable{palpebral} measurement
 of 1.2 cm.
 <<>>=
-xmp12.01[17,]
+Eyes[17, ]
 @
 The corresponding OSA of 3.76 means that the residual for this observation is 
 \[
@@ -358,8 +360,8 @@ of the residuals, discrepancies are easier to see.
 Returning to our OSA data, we can make plots of all the residuals using the 
 \function{resid()} function.
 <<>>=
-xyplot( resid(osa.model) ~ palprebal, data = xmp12.01 )
-qqmath( ~ resid(osa.model),  data = xmp12.01 )
+gf_point(resid(osa.model) ~ palpebral, data = Eyes)
+qqmath( ~ resid(osa.model), data = Eyes)
 @
 \end{example}
 If the assumptions of the model are correct, there should be no distinct patterns to this scatter
@@ -509,7 +511,7 @@ intervals.
 Notice how most of the dots are within the prediction bands, but not within the 
 confidence bands.
 <<fig.width = ".7\\textwidth">>=
-xyplot( OSA ~ palprebal, data = xmp12.01, panel = panel.lmbands )
+xyplot(OSA ~ palpebral, data = Eyes, panel = panel.lmbands)
 @
 
 \subsubsection{A Caution Regarding Prediction Intervals}

@@ -91,8 +91,11 @@ If non-normal residuals are the only apparent problem with a linear regression m
 Sometimes, regression diagnostics (particularly a plot of residuals as a function of time, or an ACF plot) will show that the residuals are not independent.  This happens most often when the predictor variable is a temporal or spatial one; data points collected at similar times, or similar locations, are often similar to each other rather than independent.
 
 We will consider a simple example using the price of chicken over time (in constant dollars, adjusted for inflation over time).  It seems to make sense to try to predict the price of chicken as a function of time (it's been getting progressively cheaper for the last century or so):
+% # chickn <- read.csv("http://www.calvin.edu/~sld33/data/chickn.csv", header=TRUE)
+% # chickn <- read.csv("https://github.com/selva86/datasets/blob/master/chicken.csv") %>%
+
 <<chickn, fig.show='hold'>>=
-chickn <- read.csv("http://www.calvin.edu/~sld33/data/chickn.csv", header=TRUE)
+chickn <- read.csv("https://sldr.netlify.app/data/chickn.csv")
 gf_point(Price~Year, data=chickn ) %>% gf_lm()
 chick.mod <- lm(Price~Year, data=chickn)
 summary(chick.mod)
@@ -112,8 +115,8 @@ $$ e_t = \rho e_{t-1} + \epsilon$$
 
 <<ar1_fit, tidy=FALSE>>=
 require(nlme)
-chick.mod2 <- gls(Price~Year, data=chickn, 
-                  correlation=corAR1(form=~1))
+chick.mod2 <- 
+  gls(Price~Year, data=chickn, correlation = corAR1(form = ~1))
 summary(chick.mod2)
 @
 
@@ -1125,7 +1128,7 @@ how you chose your best model.
 \Rindex{ACTgpa}%
 \myindex{ACT}%
 \myindex{grade point average}%
-The data set \dataframe{ACTgpa} (in the \pkg{fastR22} package)
+The data set \dataframe{ACTgpa} (in the \pkg{fastR2} package)
 %  \url{http://www.calvin.edu/~stob/courses/m344/S07/data/actgpanona.csv}
 contains the ACT composite scores and GPAs of some randomly selected seniors 
 at a Midwest liberal arts college.

@@ -56,8 +56,7 @@ experimental conditions:
 %@
 
 <<fig.height = 2.25>>=
-HeatX <- read.csv("http://www.calvin.edu/~rpruim/data/HeatX.csv")
-HeatX   # This also lives in the mosaicData package, so read.csv() isn't required
+HeatX   
 xyplot(m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations", cex = 2)
 @
 

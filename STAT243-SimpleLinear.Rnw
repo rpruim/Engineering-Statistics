@@ -842,13 +842,13 @@ f( 6 * 12 * 2.54, interval="confidence" ) * 2.2
 @
 		\item
 <<>>=
-xyplot( resid(model) ~ fitted(model) )
-qqmath( ~ resid(model) )
+gf_point( resid(model) ~ fitted(model) )
+gf_qq( ~ resid(model) )
 @
 We could also have used
 <<fig.height=3.5>>=
-plot(model, which=1)
-plot(model, which=2)
+mplot(model, which=1)
+mplot(model, which=2)
 @
 The residual plot looks fine.  There is bit of a bend to the normal-quantile plot, indicating
 that the distribution of residuals is a bit skewed (to the right -- the heaviest men are farther above
@@ -860,8 +860,8 @@ his height, but otherwise things look quite good.
 <<>>=
 model2 <- lm( log(weight) ~ height, data=men )
 coef(summary(model2))
-xyplot( resid(model2) ~ fitted(model2) )
-qqmath( ~resid(model2) )
+gf_point( resid(model2) ~ fitted(model2) )
+gf_qq( ~ resid(model2))
 @
 This model says that
 \[

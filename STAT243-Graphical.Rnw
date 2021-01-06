@@ -799,7 +799,7 @@ You can load this data one of two ways.
 	\item
 		Use the following command in \R:
 <<>>=
-Fires <- read.csv("http://www.calvin.edu/~rpruim/data/Fires.csv")
+Fires <- read.csv("https://rpruim.github.io/Engineering-Statistics/data/Fires.csv")
 @
 \end{itemize}
 You can also use either of these methods to read from a file rather than from a
@@ -830,7 +830,7 @@ Fires2 <- Fires %>%
 
 <<>>=
 #read in the data
-Fires <- read.csv("http://www.calvin.edu/~rpruim/data/Fires.csv")
+Fires <- read.csv("https://rpruim.github.io/Engineering-Statistics/data/Fires.csv")
 #get information about the dataset
 head(Fires)
 #plot number of fires over time

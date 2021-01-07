@@ -232,7 +232,7 @@ knit_hooks$set(digits = function(before, options, envir) {
 
 \author{R Pruim}
 
-\date{Spring 2017}
+\date{January 2021}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeindex

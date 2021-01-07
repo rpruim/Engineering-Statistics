@@ -1,0 +1,17 @@
+---
+pagetitle: "Eng Stats book"
+title: "Statistics for the Physical Sciences and Engineering"
+author: "Randall Pruim"
+output: 
+  html_document:
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+These are notes prepared by Randall Pruim for Stat 241 at Calvin University with thanks to 
+Stacy DeRuiter and Tom Jager for suggestions and improvements.
+
+* [Full book PDF](Stat241-Notes.pdf)

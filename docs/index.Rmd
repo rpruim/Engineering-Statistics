@@ -12,3 +12,5 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This website has resources for an introductory statistics course taken by engineering students
 at Calvin University.
+
+* [Notes/Text book](book)

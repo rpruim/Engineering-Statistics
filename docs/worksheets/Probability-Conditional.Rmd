@@ -6,7 +6,7 @@ output:
     theme: yeti
     css: ../styles/ds303-notes.css
   df_document: default
-  
+  pdf_document: default
 ---
 
 \def\tor{\operatorname{or}}
@@ -125,10 +125,8 @@ Intuitively, A and B are independent when the probability that one of them occur
 not depend on whether the other one occurred. 
 
 ## More Practice
-
-1. Show that if $\Prob(B \mid A) = \Prob(B)$, then $\Prob(A \mid B) = \Prob(A)$.
  
-2. The product rule is even simpler when $A$ and $B$ are independent.  What is it?
+1. The product rule is even simpler when $A$ and $B$ are independent.  What is it?
  
 3. Show that 
 $\Prob(A \tand B \tand C) = \Prob(A) \cdot \Prob(B \mid A) \cdot \Prob(C \mid A \tand B)$.
@@ -208,6 +206,7 @@ positive, what’s the probability that you have the disease?
 after 3 years.  I buy 5 of the company’s product.  What is the probability that
 all 5 of these items will still be functioning after 5 years?
 
+1. Show that if $\Prob(B \mid A) = \Prob(B)$, then $\Prob(A \mid B) = \Prob(A)$.
 
 <!-- ## Exercises  -->
 

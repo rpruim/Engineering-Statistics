@@ -1,0 +1,95 @@
+---
+title: "Probability Terminology"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+  df_document: default
+  pdf_document: default
+---
+
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+theme_set(theme_bw())
+set.seed(20210108)
+```
+
+
+
+**Random Process**
+
+\vfill
+
+**Outcome**
+
+\vfill
+
+**Sample Space**
+
+\vfill
+
+**Event**
+
+\vfill
+
+**Trial**
+
+\vfill
+
+**Mutually exclusive events**
+
+\vfill
+
+**Probability**
+
+\vfill
+
+**Random Variable**
+
+\vfill
+
+\vfill
+
+**Distribution**
+
+\vfill
+\vfill
+
+\newpage
+
+
+## Calculating Probabilities
+
+### Two methods
+
+1. 
+
+\vspace*{1in}
+
+2.
+
+\vspace*{1in}
+
+

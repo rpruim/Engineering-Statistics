@@ -1,0 +1,291 @@
+---
+title: "Conditional Probability"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+  df_document: default
+  
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+theme_set(theme_bw())
+set.seed(20210108)
+```
+
+
+
+
+$\Prob(A \mid B)$ answers the question: Of the times that $B$ happens, how often does $A$ also happen?
+Common ways this is expressed include
+
+* The probability of $A$ given $B$
+* The probability of $A$ conditional on $B$
+* The probability of $A$ if $B$ 
+* The probability that $A$ happens when $B$ happens
+
+When $\Prob(B) \neq 0$, then
+$$
+\Prob(A \mid B) = \frac{\Prob(A \tand B)}{\Prob(B)} = \frac{\Prob(\mbox{both})}{\Prob(\mbox{condition})}
+$$
+
+**Note:** Usually, $\Prob(A \mid B)$, $\Prob(B \mid A)$ and $\Prob(A \tand B)$ are all 
+different.  It is critical to know which of these three applies in a given situation and to use
+the notation correctly.
+
+
+## Practice with Conditional Probability
+
+A group of 10 men and 15 women were polled as to whether they preferred eating
+an orange or eating an apple.  The results of the poll are given below
+
+```{r, echo = FALSE}
+tibble(sex = rep(c('male', 'female'), times = c(10, 15)),
+       fruit = c(
+         rep(c('apple', 'orange'), c(4, 6)),
+         rep(c('apple', 'orange'), c(10, 5))
+         )
+       )  %>% 
+  tally( ~ sex + fruit, data = .) %>%
+  pander::pander()
+```
+
+
+
+Suppose we put the names of all the people into a hat and select one randomly.
+Consider the following events.
+
+ * $M$: The selected person is Male.
+ * $A$: The selected person's prefers apples to oranges.
+ 
+For each of the following, (a) express the probability in words, (b) determine the probability.
+For conditional probabilities, compute the probabilities two different ways.
+
+1. $\Prob(A)$
+\vfill
+2. $\Prob(\tnot {A})$
+\vfill
+3. $\Prob(M)$
+\vfill
+4. $\Prob(\tnot {M})$
+\vfill
+5. $\Prob(A \tand M)$
+\vfill
+6. $\Prob(A \mid M)$
+\vfill
+7. $\Prob(M \mid A)$
+\vfill
+8. $\Prob(M \mid \tnot{A})$
+\vfill
+9. $\Prob(\tnot{M} \mid A)$
+
+\newpage
+
+## Product Rule 
+
+Applying a little algebra, we get the following product rule:
+
+$$
+\Prob(A \tand B) = \Prob(A) \cdot \Prob(B \mid A)
+$$
+
+## Independence
+
+If $\Prob(A) \neq 0$ and $\Prob(B) \neq 0$ and $\Prob(B \mid A) = \Prob(B)$, then
+we say that $A$ and $B$ are **independent events**.
+
+Intuitively, A and B are independent when the probability that one of them occurs does
+not depend on whether the other one occurred. 
+
+## More Practice
+
+1. Show that if $\Prob(B \mid A) = \Prob(B)$, then $\Prob(A \mid B) = \Prob(A)$.
+ 
+2. The product rule is even simpler when $A$ and $B$ are independent.  What is it?
+ 
+3. Show that 
+$\Prob(A \tand B \tand C) = \Prob(A) \cdot \Prob(B \mid A) \cdot \Prob(C \mid A \tand B)$.
+ 
+ 
+4. Analogous rules hold for intersections of more events as well.  Write down the rule for 
+the intersection of 4 events.
+ 
+
+5. What is the probability of rolling doubles (two numbers that match) with standard dice?
+Do this two ways: (a) using the Equally Likely Rule and (b) using the Product Rule.
+ 
+
+
+6. What is the probability of a five-card flush (all cards the same suit)?
+Do this two ways: (a) using the Equally Likely Rule and (b) using the Product Rule.
+ 
+
+<!-- 7. There are 18 students in our class. -->
+<!-- What is the probability that two people in this class have the same  -->
+<!-- birthday (month and day)? (Hint: Use the Complement Rule.) -->
+
+<!--     What assumption must we make to do this calculation? Is that  -->
+<!--     a reasonable assumption? -->
+
+<!-- \vfill -->
+
+7. If two 6-sided dice are rolled and the first one is a 5, what is the probability
+ that the sum is 10?
+ 
+ 
+8. If two 6-sided dice are rolled and at least one of them is a 5, what is the probability
+ that the sum is 10?
+ 
+ 
+10. If two 6-sided dice are rolled and the sum is 10, what is the probability that at least 
+ one of them is a 5? 
+ 
+11. A pair of fair dice is tossed.  Given that the sum of the dice is 7, what is
+the probability that one of the dice came up 3?
+
+12. A jar contains 5 red and 4 green chips.   Two chips are drawn without
+replacement .  What is the probability that both are red?  What is the
+probability that one is red and one is green?
+
+13. If in the previous example, the drawing is with replacement, 
+what are the probabilities of the events?
+
+14.	Four cards are dealt from an ordinary deck of playing cards.  What is the
+probability that they are all aces?
+
+15.	You have two jars of chips.  Jar 1 contains 4 red and 4 blue chips.  Jar 2
+contains 5 red and 3 blue chips.  You toss a fair coin.  If the coin toss is
+heads, you draw a chip from Jar 1.  If it is tails, you draw from Jar 2.  
+What is the probability the you draw a red chip?  What is the probability that if the
+drawn chip is red, it came from Jar1 (the coin was heads)?
+
+
+13. A new test has been developed  for a serious disease.  Like all such tests
+it’s not perfect.  It has a false positive rate of 2%; i.e., if a person doesn’t
+have the disease, there is a 2% chance that the test will be positive.  It also
+has a false negative rate of 3%; i.e., if a person has the disease, there is a
+3% chance that the test is negative.  It is a relatively uncommon disease,
+affecting only 0.1% of the population.  How good is the test?  If you test
+positive, what’s the probability that you have the disease?
+
+	<!-- Basic Events:			D = has the disease	+ = tests positive -->
+
+	<!-- Probability asked for:		P(D | +) -->
+
+	<!-- Given information:		P(D) = 0.001	P(+ | not D) = 0.02	P(- | D) = 0.03) -->
+
+
+14.	A fair die is tossed 3 times.  What is the probability that a 1 occurs on each toss?
+
+15. A manufacturer claims that 99% of its product will still be functioning
+after 3 years.  I buy 5 of the company’s product.  What is the probability that
+all 5 of these items will still be functioning after 5 years?
+
+
+<!-- ## Exercises  -->
+
+<!-- 1.	Suppose the disease in the  example were not so rare.  Suppose it were -->
+<!-- present in 1% of the population.  If you tested positive, what would be the -->
+<!-- probability that you had the disease? -->
+
+<!-- 2.	Suppose the disease in the  example were common.  Suppose it were present in -->
+<!-- 25% of the population.  If you tested positive, what would be the probability -->
+<!-- that you had the disease? -->
+
+<!-- 3.	Suppose a coin is biased and has a 25% chance of coming up heads.  The coin is tossed twice. -->
+
+<!--     a.	What is the sample space? -->
+
+<!--     b.	Are the outcomes equally likely? -->
+
+<!--     c.	Use a tree diagram to compute the probabilities of the outcomes. -->
+
+<!--     d.	What is the probability of getting at least one head. -->
+
+<!-- e.	What is the probability of getting two heads given that at least one head occurs? -->
+
+<!-- 4.	Quality control samples were taken for parts being produced by two assembly lines.  A sample of 100 parts produced by assembly line 1 contained 2 defective parts. A sample of 200 parts produced by assembly line 2 contained 6 defective parts.  The table below summarizes the results. -->
+
+<!--  	LINE 1	LINE 2 -->
+<!-- Defective	2	6 -->
+<!-- Non-defective	98	194 -->
+
+
+
+
+
+
+
+<!-- a.	Given that a part was found to be defective, what is the probability it came from Line 1? -->
+
+<!-- b.	Given that a part was found to be non-defective, what is the probability it came from Line 1? -->
+
+<!-- 5.	A fair coin it tossed 5 times. -->
+
+<!-- a.	How many different outcomes are there? -->
+
+<!-- b.	Are these outcomes equally likely? -->
+
+<!-- c.	What is the probability that all the tosses produced heads? -->
+
+<!-- d.	What is the probability that at least one tall is produced? -->
+
+<!-- e.	What is the probability that exactly one head is produced? -->
+
+
+
+
+
+
+
+<!-- 6.	Three cards are dealt from an ordinary deck of playing cards. -->
+
+<!-- a.	What is the probability that exactly one of the cards is a spade? -->
+<!-- b.	Let X = number of spades dealt.  Find that probability function, p(x), for the random variable X. -->
+
+<!-- x	0	1	2	3 -->
+<!-- p(x)	 	 	 	  -->
+
+
+
+
+
+
+<!-- 7.	A device is assembled from two primary parts.  The first type of part is defective 3% of the time and the second type is defective 4% of the time.  The device functions properly if and only if both of the parts are non-defective.   What is the probability that a device made from these two parts will function properly?  What are you assuming in making your calculation?  Is your assumption reasonable? -->
+
+<!-- 8.	A biased die is tossed two times.  The probability for each face is given below. -->
+
+<!-- Outcome	1	2	3	4	5	6 -->
+<!-- Probability	.1	.3	.2	.2.	.1.	.1 -->
+
+<!-- a.	What is the probability of getting two  1’s? -->
+<!-- b.	What is the probability of getting the same result on both tosses? -->
+
+

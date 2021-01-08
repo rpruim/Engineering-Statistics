@@ -1,0 +1,330 @@
+---
+title: "2. Summarizing Data with Numbers"
+author: "Stat 241"
+output:
+  pdf_document: default
+  html_document:
+    theme: yeti
+---
+
+
+```{r, setup, include = FALSE}
+spaces <- function(n) {
+  paste(rep(" ", n), collapse = "")
+}
+library(mosaic)
+library(palmerpenguins)
+theme_set(theme_bw())
+knitr::opts_chunk$set(
+  fig.align = "center"
+)
+library(patchwork)
+```
+
+## Summarizing quantitative data
+
+Generally we are interested in measures of **center** (what is a "typical" value?) and 
+**spread** (are the values clustered close together or more spread out?).
+
+###	Five Number Summary and Boxplots
+
+For a set of numerical data:
+
+*	Median (Q2):
+
+\vfill
+
+*	First Quartile (Q1):
+
+\vfill
+
+*	Third Quartile (Q3):
+
+\vfill
+
+*	Min (Q0):
+
+\vfill
+
+*	Max (Q4):
+
+\vfill
+
+*	Interquartile Range (IQR):
+
+\vfill
+
+* Five Number Summary:  
+<!-- min, Q1, median, Q3, max (ie, Q0, Q1, Q2, Q3, Q4) -->
+
+\vfill
+
+### By Hand Example 
+
+1. Compute the numerical and graphical summaries listed for the following data values:  
+$3, 5, 2, 3, 7, 5, 8, 6, 7$
+
+    a. Five Number Summary: \vfill \vfill
+
+    b. IQR:   \vfill
+
+    c. Boxplot: \vfill
+
+\newpage
+
+### Five Number Summary Using R  
+
+**Example:** Find the Five Number Summary for the heights of the adult children in the data frame Galton.
+
+```{r, fig.width = 4, fig.height = 1.0}
+quantile( ~ height, data = Galton)
+gf_boxplot( ~ height, data = Galton)
+```
+
+### Boxplots and skew
+
+2. Sketch a boxplot for each of the following situatoins.
+
+    a.  Boxplot of a data set skewed to right. \vfill
+    b.  Boxplot of a data set skewed to left. \vfill
+
+## Mean and Standard Deviation
+
+### Some notation 
+
+* $n$ = number of data values
+*	$x$ = variable
+*	$x_1, x_2, \dots x_n$ = individual values of the variable $x$.
+
+###	Mean
+		 
+* mean of $x$ = $\displaystyle \overline{x} = \frac{\sum_{i=1}^n x_i}{n}$
+
+  * "add them all up and divide by how many there are"
+
+#### Example Computation
+
+3. Compute the mean for $x: 1,1,3,4,6,7,7,9$.
+
+\vfill
+\vfill
+
+\newpage
+
+#### Things to note about the mean and median
+
+* If the distribution is symmetric...  \vfill
+
+* If the distribution is skewed to the right...  \vfill
+
+* If the distribution is skewed to the left...  \vfill
+
+* If there are outliers in the data...  \vfill
+
+* If the distribution is not unimodal...  \vfill
+
+## Variance and Standard Deviation
+
+* sample variance of x = $\displaystyle s_x^2 = \frac{ \sum_{i=1}^{n} (x_i - \overline{x})^2 }{n-1}$
+    * "add up squared differences from the mean and divide by 1 less than how many there are"
+    * "sample" indicates that we only have data for a sample, not for all individuals; since that
+    is the usual situation, we will drop the word sample.
+* sample standard deviation of x = $\displaystyle s_x = \sqrt{\sum_{i=1}^{n} \frac{ (x_i - \overline{x})^2}{n-1}}$
+
+* Why do we square the differences?
+
+  * If we do nothing...  \vfill
+  
+  * If we use absolute value... \vfill
+
+\newpage
+
+### Small Example:  
+
+4. Compute the variance and standard deviation for $x$: $1,2,3,4,5$
+
+\vfill
+\vfill
+
+## Computing summary statistics with R
+
+We won't usually compute these statistics by hand.  The hand computations above are just
+to make sure we understand what these numbers are. But R can quickly and easily compute
+any of these statistics (and more) with the following template.
+
+```{r eval = FALSE}
+stat( ~ x, data = mydata)
+```
+
+We can compute statistics within groups using either of these forms:
+
+```{r eval = FALSE}
+stat( ~ x | z, data = mydata)
+stat( y ~ x, data = mydata)
+```
+
+### Example: Penguin body mass
+
+```{r}
+library(palmerpenguins)
+df_stats( ~ body_mass_g, data = penguins)
+```
+
+Notice that there are some missing values (penguins for which no body mass was recorded).
+This causes problems for some of our statistics. We can't really compute the mean of all of the 
+penguins if we don't know all of the values.  `df_stats()` lets us know that there are some missing
+values and that our statistics are computed only on the non-missing values. But the individual
+statistic functions report `NA` (not available, missing).
+
+```{r}
+mean( ~ body_mass_g, data = penguins)
+```
+
+\newpage
+
+We can fix this two ways:
+
+```{r}
+mean( ~ body_mass_g, data = penguins, na.rm = TRUE)
+df_stats( ~ body_mass_g, data = penguins, mean)
+```
+
+Let's end this example by comparing the body mass of the different penguin species.
+Notice the different output formats below.
+
+```{r}
+mean( ~ body_mass_g | species, data = penguins, na.rm = TRUE)
+df_stats( ~ body_mass_g | species, data = penguins, mean)
+```
+
+###  Example: HELPrct
+
+The data frame HELPrct contains data on an experiment testing a treatment of
+substance abusers. It is too large to conveniently display the entire data set, but 
+we dan see the top few rows of the data using `head()`.
+
+```{r}
+head(HELPrct)
+```
+
+That's a bit ugly because there are so many variables.  Let's try `glimpse()` instead
+
+
+```{r}
+glimpse(HELPrct)
+```
+
+
+`inspect()` computes some summary statistics for each variable instead of
+showing the raw data (for a few rows).  Give it a try:
+
+```{r, eval = FALSE}
+inspect(HELPrct)
+```
+
+We can get summary statistics about age for each of the three abuse groups.
+
+```{r}
+df_stats(age ~ substance, data = HELPrct)
+df_stats( ~ age | substance, data = HELPrct)
+```
+
+## Histograms and boxplots by groups
+
+```{r fig.width = 5, fig.height = 4}
+gf_histogram( ~ age | substance ~ ., data = HELPrct)
+```
+
+```{r fig.width = 3, fig.height = 2.5}
+gf_boxplot( age ~ substance, data = HELPrct)
+```
+  
+## Quantitative vs Categorical Variables
+
+A quantitative variable is a variable that takes on numerical values in such a
+way that it makes sense to perform arithmetic operations on its values.  A
+categorical variable is a variable whose values are categories. 
+Body mass (in grams) is a quantitative variable;  
+`species` is a categorical variable.  
+
+Sometimes numbers are used to represent categories.
+Using numbers to represent categories does not turn a
+categorical variable into a quantitative variable, but it can confuse R,
+which will treat the variable as quantitative if we use numbers.
+We can explicitly tell R we have a categorical variable using `factor(x)`.
+(Factor is R's lingo for a categorial variable, it has nothing to do with
+factoring numbers.)
+
+### Example: Kids feet
+
+The data frame `KidsFeet` contains data on thirty-nine 4th grade children
+
+```{r}
+head(KidsFeet)
+```
+
+5. Which variables are quantitative and which are categorical?
+
+2. What sorts of plots are appropriate to look at the distribution of a quantitative variable?
+Make a few of these for some of the quantitative variables.
+
+3. What sorts of plots are appropriate to look at the distribution of a categorical variable?
+Make a few of these for some of the categorical variables.
+
+4. Are birth month and birth year categorical or quantitative?
+
+5. These plots probably surprise you. 
+Can you figure out what R is doing? How can you fix them?
+
+```{r, indent = spaces(4), fig.width = 4, fig.height = 2, warning = FALSE}
+gf_boxplot(length ~ birthyear, data = KidsFeet) |
+gf_boxplot(birthyear ~ length, data = KidsFeet)
+```
+
+6. Compute the mean foot length separately for boys and girls.
+
+7. Create several different plots showing the distribution of foot lengths
+separately for boys and girls. Whic one do you prefer? Why?
+ 
+## EXERCISES 
+
+**2.1**	In the data frame `HELPrct`, the variable `avg_drinks` (also called `i1`) gives the average number 
+of drinks per day, `substance` gives the kind of substance abuse, and `sex` gives the gender of the
+subject.
+
+a. Create histograms comparing the average number of drinks per day by gender.
+b. Repeat (a) with boxplots.
+c. Compute the means and standard deviations for the daily number of drinks for male and for females.  
+d. Based on the information in (c), would you conclude that, on average, the males in the study 
+consume more alcohol than the females?  
+e. For which gender is there more variability in alcohol consumption?
+f. Create frequency histograms comparing the alcohol consumption by type of substance abuse.  
+g. Is the distribution of alcohol consumption symmetric for those whose are alcohol abusers?  
+   If it is skewed, in which direction is it skewed? 
+h. Compute the median alcohol consumption for each of the three types of abuse.
+
+**2.2**	Compute the mean, variance and standard deviation for the data set $x: 1,5,3,7,9$  by HAND.
+
+**2.3**	Create a set of 6 numbers in the range 0 -– 10 (inclusive) that will have the largest possible 
+standard deviation. 
+
+**2.4**	Below is the boxplot of a data set.
+
+```{r indent = spaces(0), echo - FALSE, fig.height = 1, fig.width = 5}
+set.seed(1234)
+gf_boxplot( "" ~ rgamma(50, shape = 1.5, scale = 10)) %>%
+  gf_labs(y = "", x = "")
+```
+
+a. What is the median of the distribution?
+b. What is the IQR for the distribution?
+c. Is the mean larger or smaller than the median?  How do you know?
+
+**2.5**	From the data frame HELPrct, create a bargraph that shows how 
+homelessness (`homeless`) is distributed with respect to (`sex`). 
+Produce the version where the bars are adjacent (dodged).
+Should you use counts or proportions? Why? If proportions, what 
+should the denominator be?
+
+Based on the picture, should you conclude that males and females in the study are 
+homeless at roughly the same rate or at different rates?

@@ -1,0 +1,332 @@
+---
+title: "3. Simulating for Probability"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+  df_document: default
+  
+---
+
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+theme_set(theme_bw())
+set.seed(20210108)
+```
+
+
+Goal: Learn how to use R to simulate flipping coins, rolling dice, and dealing cards -- three common
+examples used in probability examples.
+
+## Flipping coins
+
+To simulate flipping coins, we will use two important R functions:
+
+* `rflip(n)` simulates simulates `n` tosses of a fair coin.
+
+* `do(n) * soemthing` repeats something `n` times. (Read it as "do n times"...)
+
+<br />
+
+### Example 1 
+
+Toss a fair coin 20 times.  Let $X$ be the number of heads.
+
+```{r}
+rflip(20)
+```
+
+Let's do that several times
+
+```{r}
+do(5) * rflip(20)
+```
+
+Notice that `do()` records the information in a nice summarized format.
+
+If we want to estimate probability, we need to repeat this many times. Let's do it 10,000 times.
+
+```{r}
+Flips20 <- do(10000) * rflip(20)
+```
+
+Let's look at the first few rows to make sure we know what we have.[^pander]
+
+[^pander]: The `pander()` function is in the `pander` package. It creates prettier output for 
+things like tables and data frames.
+
+```{r}
+head(Flips20) %>% pander()
+```
+
+We can let R count the number of times each value from 0 to 20 is produced by our 10000 simulations
+and present the information to us in a table or as a histogram
+
+```{r} 
+tally( ~ heads, data = Flips20) %>% pander()
+gf_histogram( ~ heads, data = Flips20, binwidth = 1)
+```
+
+Perhaps we would rather have proportions rather than counts.
+
+```{r}
+tally( ~ heads, data = Flips20, format = "prop") %>% pander()
+gf_histogram( ~ heads, data = Flips20, binwidth = 1)
+```
+
+The table above allows to to calculate probabilities about the number of heads in 20 tosses of a fair coin.
+
+<br />
+
+### Example 2
+
+Toss a biased coin 10 times and let $X$ = number of heads.  
+Assume the biased coin has a probability of 0.25 of producing a head.
+
+We simulate 10 tosses of the biased coin.
+
+```{r}
+rflip(10, prob = 0.25)
+```
+
+Now let's repeat that 10,000 times, find the estimated probability distribution for $X$, and make a histogram.
+
+```{r}
+Flips10 <- do(10000) * rflip(10, prob=.25)
+tally( ~ heads, data = Flips10, format ="prop") %>% pander()
+gf_dhistogram( ~ heads, data = Flips10, binwidth = 1)
+```
+
+**Q.** What is (approximately) the probability of getting at least 5 heads?
+
+We could answer this by doing the arithmetic ourselves from the table above, but we should let 
+R do that for us.  Here's how.
+
+```{r}
+tally( ~(heads >= 5), data = Flips10)
+```
+
+#### Your Turn
+
+What is the probability of getting 3 or fewer heads?
+
+\vfill
+
+```{r, include = FALSE}
+tally( ~(heads <= 3), data = Flips10)
+```
+
+
+<br />
+
+### Example 3	
+
+We can use coin tosses to simulate anything that has two possible outcomes. 
+Here's an example about shooting free throws.
+
+Jo has a free throw shooting average of 85%.  She has been fouled in the act of
+shooting a 3-point shot as time runs out. Jo has 3 free throws coming. Her
+team is behind by 2 points.  Estimate the probability that her team does not
+lose in regulation time. Use 10000 simulations.
+
+```{r, fold = "so"}
+FreeThrows <- do(10000) * rflip(3, prob = 0.85)
+tally( ~(heads >= 2), data = FreeThrows, format = "prop") 
+```
+
+
+## Rolling dice
+
+### Example 4  
+
+Roll of a pair of fair dice. Let $S$ = sum of the results.
+
+```{r}
+1:6
+```
+
+We can generate the result of tossing a fair die 10 times
+
+```{r}
+resample(1:6, 10)
+```
+
+We now simulate 10000 tosses of a fair die twice.[^tibble]
+
+[^tibble]: The `tibble()` function creates data frames. You simply specify the values
+for each of the variables in the data frame. In this case, we are creating `die1` and `die2` 
+randomly, and then creating `S` by adding those two values together.
+
+```{r}
+TwoDice <-
+  tibble(
+    die1 = resample(1:6, 10000),
+    die2 = resample(1:6, 10000),
+    Sum = die1 + die2)                # add them together, componentwise
+head(TwoDice) %>% pander()
+```
+
+We create the estimated probability distribution for $S$ and the histogram.
+
+```{r}
+tally( ~ Sum, data = TwoDice, format = "prop") %>% pander()
+gf_dhistogram( ~ Sum, data = TwoDice, binwidth = 1)
+```
+
+
+### Your turn
+
+**1.** A pair of fair dice are tossed. 
+Use 10000 simulations to estimate the probability that the dice turn up with the same value.
+
+<div class="explain" label = "Show solution">
+```{r}
+tally( ~(die1 == die2), data = TwoDice, format = "prop") %>% pander()
+```
+</div>
+
+
+**2.** Estimate the probability that the sum of two dice is more than 9.
+
+<div class="explain" label = "Show solution">
+```{r}
+tally( ~(Sum > 9), data = TwoDice, format = "prop")
+```
+</div>
+
+
+## Dealing cards
+
+An ordinary deck of playing cards contains 52 cards with 4 suits (clubs,
+diamonds, hearts, spades) of 13 cards each (2 -- 10, Jack, Queen, King, and Ace).
+The clubs and spades are black suits; hearts and diamonds are red.
+
+We can simulate a deck of cards using the numbers 1:52. (The `mosaic` package
+includes a slightly fancier thing called `Cards`, but it is harder to do 
+arithmetic with that.)
+
+For example, here are two 5-card hands.
+
+```{r}
+set.seed(1234)          # so we get the same random draw each time we run this
+sample(1:52, 5)
+sample(Cards, 5)        # 9S = 9 of spades; etc.
+```
+
+Note that we are using `sample()` here rather than `resample()`.  
+`resample()` allows for  a value to be repeated ("sampling with replacement). 
+But with cards, you can only get each card once.  
+`sample()` does not allow for repetition ("samping without replacement").
+This ensures that we get 5 different cards each time.
+
+<br />
+
+### Example 5
+
+If we deal 3 cards from a standard deck, what is the probability that all three are spades? 
+
+Let's represent spades as the cards 1--13. So the questions becomes what is the probability
+of getting three numbers in that range. R will create TRUE and FALSE values if we do a comparison,
+and `sum()` will treat TRUE like 1 and FALSE like 0.  Putting that all together, it is pretty
+easy to count how many spades are in a hand of three cards.
+
+```{r fold = "o"}
+hand1 <- sample(1:52, 3) 
+hand1
+hand1 <= 13
+sum(hand1 <= 13)
+```
+
+We can put this altogether in one line.  That will make easier to repeat things.[^repeating-blocks]
+
+[^repeating-blocks]: If you want to repeat multiple lines of code, you just need to surround them
+in curly braces `{ }`. So it isn't really that hard.
+```{r, indent = "    ", fold = "so"}
+do(3) * {
+  hand1 <- sample(1:52, 3) 
+  hand1
+  hand1 <= 13
+  sum(hand1 <= 13)
+}
+```
+
+```{r}
+sum(sample(1:52, 3) <= 13)
+sum(sample(1:52, 3) <= 13)
+sum(sample(1:52, 3) <= 13)
+```
+
+We just need to do that lots of times.
+
+```{r}
+set.seed(123456)
+HandsOfThree <- do(10000) * sum(resample(1:52, 3) <= 13)
+head(HandsOfThree) %>% pander()
+```
+
+Finally, we can use `tally()` to find the proportions we are looking for. 
+
+```{r}
+tally( ~ sum, data = HandsOfThree, format = "prop")
+gf_dhistogram( ~ sum, data = HandsOfThree, binwidth = 1)
+```
+
+## A Statistical Question
+
+The simulation method only provides an *estimate* of the probability.
+If you recreate the examples abovce with a different random draw (either don't use `set.seed()` or 
+use a different number in `set.seed()`), you will get somewhat different results.
+We would like to know things like
+
+* how much the estimates vary from simulation to simulation
+* how many replications we should do in our simulations to get an estiamte with a desired
+level of precision. (It seems pretty clear that more is better, but *how many more* do we need?)
+
+These sorts of quetsion arise whenever we try to estimate something and form one of the big
+ideas in statistics. Stay tuned for answers.
+
+## Exercises
+
+**1. Coins**  
+a.	A fair coin is tossed 8 times. Use 10,000 simulations to estimate the probability distribution for the random variable X = number of heads.  
+b.  	Using your result in (a), estimate the probability that at least 5 heads are produced.
+c. 	Repeat (a) and (b) for a biased coin where the probability of a head is .66.
+
+**2. Dice** 
+Three fair dice are tossed.  Let X be the sum of the values produced.
+
+a. Use 10,000 simulations to estimate the probability distribution of X.
+b. Use your result in (a) to estimate the probability that the sum is less than 10.
+
+**3. Softball** 
+Carol has a batting average in softball of .440. (This means she gets a hit 44% of the time.)
+If she has 5 at bats in a game, what is the probability that she gets exactly 2 hits?  What is the
+probability that she gets at least 2 hits?  Simulate her performance in 10000
+games to estimate these probabilities.
+
+**4. Cards**
+Use 10000 simulations to estimate the probability that in a five card hand, at least four of the cards 
+are red (either a heart or a diamond).  Include the R-commands you used and the outputs.
+

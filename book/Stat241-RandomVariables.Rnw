@@ -540,11 +540,14 @@ These can be combined into a single definition by writing
 \Var(X) = \E((X - \mu_X)^2) \;.
 \]
 
-Note: It is possible that the integral used to define the variance will fail to converge.
-In that case, we say that the random variable has no variance or that the variance 
-fails to exist.%
-\footnote{Actually, we will require that $\int_{\infty}^{\infty} |x|^2 f(x) \; dx$ converges.  
-If this integral fails to converge, we will say that the distribution has no variance.}
+Note: It is possible that the sum or integral used to define the mean (or the variance) will fail 
+to converge. In that case, we say that the random variable has no mean (or variance) or that the 
+mean (or variance)  fails to exist.%
+\footnote{Actually, we will require that 
+$\int_{\infty}^{\infty} |x| f(x) \; dx$ converges and   
+$\int_{\infty}^{\infty} |x|^2 f(x) \; dx$ converges.  
+If these integrals (or the corresponding sums for discrete random variables) fail to converge, 
+we will say that the distribution has no mean (or variance).}
 
 \begin{example}
 	\question Compute the variance of the triangle random variable

@@ -14,11 +14,15 @@ spaces <- function(n) {
 }
 library(mosaic)
 library(palmerpenguins)
-theme_set(theme_bw())
+theme_set(theme_bw(base_size = 7))
 knitr::opts_chunk$set(
-  fig.align = "center"
+  fig.align = "center",
+  fig.width = 4, 
+  fig.height = 2
 )
 library(patchwork)
+
+showSols <- FALSE
 ```
 
 ## Summarizing quantitative data
@@ -303,22 +307,52 @@ g. Is the distribution of alcohol consumption symmetric for those whose are alco
    If it is skewed, in which direction is it skewed? 
 h. Compute the median alcohol consumption for each of the three types of abuse.
 
+```{r include = showSols, R.options=(list(digits = 2))}
+gf_dhistogram( ~ avg_drinks | sex ~ ., data = HELPrct)
+gf_histogram( ~ avg_drinks | sex ~ ., data = HELPrct)
+gf_boxplot( avg_drinks ~ sex, data = HELPrct)
+df_stats( avg_drinks ~ sex, data = HELPrct, mean, sd)
+gf_histogram( ~ avg_drinks | substance ~ ., data = HELPrct)
+df_stats( avg_drinks ~ substance, data = HELPrct, median)
+```
+
 **2.2**	Compute the mean, variance and standard deviation for the data set $x: 1,5,3,7,9$  by HAND.
+
+```{r include = showSols}
+# these should be done by hand, but here are the answers
+x <- c(1,5,3,7,9)
+mean(x)
+var(x)
+sd(x)
+```
 
 **2.3**	Create a set of 6 numbers in the range 0 -– 10 (inclusive) that will have the largest possible 
 standard deviation. 
+
+```{r include = showSols}
+# largest possible
+df_stats( ~ c(0, 0, 0, 10, 10, 10), data = data.frame(), var, sd, mean)
+# not as large, but uses unique values (not required, but some students might assume this)
+df_stats( ~ c(0, 1, 2, 8, 9, 10), data = data.frame(), var, sd, mean)
+```
 
 **2.4**	Below is the boxplot of a data set.
 
 ```{r indent = spaces(0), echo - FALSE, fig.height = 1, fig.width = 5}
 set.seed(1234)
-gf_boxplot( "" ~ rgamma(50, shape = 1.5, scale = 10)) %>%
+DDD <- tibble(x = rgamma(50, shape = 1.5, scale = 10))
+gf_boxplot( "" ~ x, data = DDD) %>%
   gf_labs(y = "", x = "")
 ```
 
 a. What is the median of the distribution?
 b. What is the IQR for the distribution?
 c. Is the mean larger or smaller than the median?  How do you know?
+
+
+```{r include = showSols, R.options = list(digits = 2)}
+df_stats( ~ x, data = DDD, median, iqr, mean) 
+```
 
 **2.5**	From the data frame HELPrct, create a bargraph that shows how 
 homelessness (`homeless`) is distributed with respect to (`sex`). 
@@ -328,3 +362,8 @@ should the denominator be?
 
 Based on the picture, should you conclude that males and females in the study are 
 homeless at roughly the same rate or at different rates?
+
+```{r include = showSols}
+# we want bars to sum to 1 for male and for female
+gf_props( ~ sex, data = HELPrct, fill = ~ homeless, position = "dodge", denom = ~ x)
+```

@@ -114,7 +114,7 @@ unless you say otherwise.
 
 Here is an easy way to have things appear in a different order. The causes of death are reordered in order of increasing number of \variable{deaths} caused.
 <<teen-deaths-order>>=
-gf_col( deaths ~ fct_reorder(cause, deaths), data = TeenDeaths) %>%
+gf_col( deaths ~ reorder(cause, deaths), data = TeenDeaths) %>%
   gf_refine(coord_flip()) %>%
   gf_labs(x = 'Cause of Death', y = 'Number of Deaths')
 @

@@ -1,0 +1,361 @@
+---
+title: "Random Variables"
+author: "Stat 241"
+output:
+  pdf_document: default
+  df_document: default
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\Unif{{\sf Unif}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+theme_set(theme_bw())
+set.seed(20210108)
+```
+
+
+
+## Discrete Random Variable
+
+A random variable $X$ is a **discrete random variable** if the range of $X$ is
+finite or an infinite sequence of values. A discrete random variable can be
+characterized by a function called a **probability mass function (pmf)** which
+specifies the probability for each possible numerical value of the random
+variable.
+ 	
+$$
+ 	p(x) = \Prob(X = x)
+$$
+This function can be specified with a formula or in a table of probabilities.
+Given the pmf we can calculate
+the probability any event by adding the probabilities
+for all of the these values in the event.
+
+**Example 1.**
+Toss a fair coin 5 times.  Let $X$ = number of heads produced. 
+
+a. Create a probability table for $X$.
+b. What is $\Prob(X \mbox{ is even})$?
+c. What is $\Prob(X \ge 2)$?
+
+### Binomial Random Variables
+
+This example is an instance of an important kind of discrete random variabl called a 
+**binomial random variable**. Binomial random variables arise in situations which 
+have the following properties.
+
+1. The random process consists of a **predetermined number of trials** (usually denoted $n$).
+2. Each trial has **two outcomes** (generically called success and failure).
+3. The **probability** of success **is the same for each trial** (often denoted $p$).
+4. Each trial is **independent** of the others.
+5. The random variable counts the **number of successes** in the $n$ trials.
+
+Such a variable is dennoted by $X \sim \Binom(n, p)$.
+
+There is a handy formula for the pmf of a $\Binom(n, p)$ random variable:
+
+$$
+p(x) = \Prob(X = x) = \binom{n}{x} p^x (1-p)^{n-x}
+$$
+
+where $\binom{n}{x} = \frac{n!}{x! (n-x)!}$.  $\binom{n}{x}$ is read "n choose x" and counts the
+number of ways to pick a set of $x$ items from a collection of size $n$.
+This can be computed in R using the `choose()` function.
+
+```{r}
+choose(5, 2)
+factorial(5) / (factorial(2) * factorial(3))
+```
+
+**Example 2.** If we roll a fair die 10 times, what is the probability of getting 2 or more sixes?
+
+\vfill
+
+\newpage 
+
+**Example 3.** 
+Two cards are dealt from an ordinary deck of playing cards.  Let $X$ = number of aces dealt.
+
+a. Create a probability table for $X$.
+b. Is $X$ a binomial random variable?  If so, what are $n$ and $p$? If not, why not?
+c. What is $\Prob(X \ge 1)$? 
+
+\vfill
+\vfill
+
+**Example 4.**
+A fair coin is tossed until a head is produced.  Let $X$ = number of tosses.
+
+a. Create a probability table for $X$.
+b. Can you give a formula for the pmf for $X$?
+c. Can you show that the sum of all the probabilities is 1?
+d. What is $\Prob(X \ge 4)$?
+e. What is the probability it takes an even number of tosses to production first head? ($\Prob(X \mbox{ is even}$)
+
+\vfill
+\vfill
+
+\newpage
+
+
+## Continuous Random Variables
+
+A **continuous random variable** is a random variable whose range is an interval of real numbers. 
+
+**Examples**
+
+* Randomly select an adult male:  Let $X$ = (exact) height in inches
+
+* Randomly select a washer produced by a particular machine.  Let *X* = (exact) diameter in mm.
+	
+* Randomly select a battery and use it to power a device. 
+Let $X$ = (exact) time until battery can no longer power device.
+
+
+### Density histograms and density plots of data
+
+Let's consider the heights of the adult children in the `Galton` data set. Here is a **density histogram**.
+
+```{r}
+gf_dhistogram( ~ height, data = Galton)
+```
+
+The density scale is chosen so that ___________________________________________.
+
+Now let's look at a density plot.
+
+```{r}
+gf_dhistogram( ~ height, data = Galton) %>%
+gf_dens( ~ height, data = Galton, size = 1.2)
+```
+
+This provides a "smooth" version of the histogram and also has the property that 
+
+\vfill
+
+\newpage
+
+### Density Curves and Density Functions
+
+A continuous random variable is described by a **probability density function (pdf)**.
+The plot of a pdf will look just like curve in a density plot.
+
+<!-- For a continuous random variable $X$, if $x$ is in the range of $X$, $\Prob(X = x) = 0$,  -->
+<!-- so characterizing the probability of $X$ by the function $p(x) = \Prob(X = x )$ doesn’t work.  -->
+<!-- Instead, the probability characterization is its **probability density function**. -->
+<!-- , f(x).   -->
+
+Probability density functions always have two important properties:
+
+\bigskip
+
+1. <!-- non-negative -->
+
+\bigskip
+
+2. <!-- total area = 1 -->
+
+\bigskip
+
+We determine probabilities from a pdf but taking the area under
+the curve over the region corresponding to our event (ie, by integration).
+
+$$
+\Prob( a \le X \le b) = \int_a^b f(x) \; dx
+$$
+
+
+**Example 5.**
+Let $X$ be a number randomly chosen from the interval $[0, 2]$ in such a way that all numbers are equally likely.
+We call $[0, 2]$ the **support** of $X$ is [0,2].  
+Since no value of $X$ is more likely to be selected than any other value, the density function $f(x)$ 
+must be a constant on [0,2].  
+
+a. What is the constant value?
+
+b. What is $\Prob(X = 1)$?
+
+b. What is $\Prob(0 \le X \le 1)$?
+
+c. Waht is $\Prob(1 \le X \le 3/2)$?
+
+d. What is $\Prob(1 \le X \le 3)$?
+
+
+\vfill
+\vfill
+\vfill
+
+
+A random variable $X$ whose pdf is constant (where it is non-zero) is said to have a **uniform distribution**.
+We will denote this as  $X \sim \Unif(a, b)$, where $a$ and $b$ are the upper and lower limits of the support.
+
+\newpage
+
+
+**Example 6.** Let $f(x) = x/2$ for $x \in (0,2)$ (and 0 elsewhere).  We can write this as 
+$f(x) = x/2 \cdot [\![x \in (0,2) ]\!]$ or $f(x) = x/2$ on $(0,2)$.
+
+a. Verify that $f(x)$ is a probability density function.
+
+b. Compute $\Prob(1 \le X \le 3/2)$.
+
+b. Compute $\Prob(1 \le X \le 4)$.
+
+\vfill
+\vfill
+
+
+### The Cumulative Distribution Function (cdf) for a continuous random variable 
+
+The **cdf** for $X$ is defined by
+
+$$
+F(x) = \Prob(X \le x)
+$$
+
+**Example 7.**
+Let $X$ have a uniform distribution on $[0,4]$. 
+
+a. pdf: $f(x) =$
+
+\vfill
+
+
+b. cdf: $F(x) =$
+
+\vfill
+
+
+
+**Example 8.** 
+Let $X$ be the random variable whose pdf is $f(x) = x/2 \cdot [\![ x \in (0,2) ]\!]$. 
+Find the cdf for $X$.
+
+\vfill
+\vfill
+
+
+\newpage
+
+### Using the cdf to compute probabilities
+
+If $F(x)$ is the cdf for the random variable $X$, then $\Prob(a \le X \le b) =$  ________________________
+
+
+**Example 9.** Let $F(x)= x^2$ on $[0,1]$
+
+a. What is $F(x)$ when $x < 0$?
+
+a. What is $F(x)$ when $x > 0$?
+
+a. What is $P(X \le 1/2)$?
+
+a. What is $P(1/2 \le  X \le 3/4)$?
+
+a. What is $P(-2 \le X \le 1/2)$?
+
+a. What is the pdf for $X$?
+
+\vfill
+\vfill
+\vfill
+
+
+<!-- Using the cdf to compute the pdf -->
+
+<!-- 	If f(x) is the pdf and F(x) is the cdf, then f(x) = F’(x). -->
+
+
+
+**Example 10.** Let $f(x) = e^{-x}$ on $(0,\infty)$ (and 0 elsewhere).
+
+a. Show that $f$ is a pdf.
+b. Let $X$ be the corresponding random variable. What is $\Prob(X > 2)$?
+c. What is the cdf for $X$?
+d. Use the cdf to find $\Prob(X < 1)$.
+
+\vfill
+\vfill
+\vfill
+
+\newpage
+
+## More Practice 
+
+**1.**
+Parts coming off an assembly line have a 1% chance of being defective.  If 3
+parts are randomly chosen from this line and X is the number of defective parts.
+
+a. Compute the probability function p(x) for X.  
+
+b. What is the probability that at least one of the three is defective?
+
+**2.** Parts coming off an assembly line have a 1% chance of being defective.
+All of the parts coming off the line are inspected. 
+Let $X$ be the number parts inspected up to and including the first defective part.
+
+a. Is $X$ continuous or discrete?
+
+b. What is the support of $X$?
+
+a. Find the probability mass function $p(x)$ for $X$.  
+
+a. What is the probability that the first defective part is the 100th part?
+
+**3.**
+A biased coin has a 40% chance of producing a head.  If it is tossed 10 times,
+
+a. What is the probability of getting exactly 3 heads?
+
+a. What is the probability of getting 3 or more heads. 
+(This can be calculated in two different ways. The easier way uses the complement rule.)
+
+**4.** 
+a. Find the value of $C$ for which the function $f(x) C x^2 \cdot [\![ x \in (0,2) [\!]$ 
+is a pdf.
+
+b. Use the pdf to find $\Prob(0 \le X \le 1)$ and $\Prob(1 \le X \le 5)$.
+
+c. Use the pdf to compute the cumulative distribution function $F(x)$.
+
+**5.**
+a. Find the value of $C$ for which the function $f(x) = \frac{C}{x^2} \cdot [\![ x \ge 1 ]\!]$ is a pdf.
+
+b. What is $\Prob(X \le 2)$?
+
+c. What is $\Prob(X > 3)$?
+
+d. Find the cumulative distribution function $F(x)$.
+
+e. Use the cumulative distribution function to find $\Prob(2 \le X \le 5)$.

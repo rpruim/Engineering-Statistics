@@ -2,10 +2,10 @@
 title: "Conditional Probability"
 author: "Stat 241"
 output:
-  pdf_document: default
   html_document:
     theme: yeti
     css: ../styles/ds303-notes.css
+  pdf_document: default
 ---
 
 \def\tor{\operatorname{or}}
@@ -200,8 +200,12 @@ positive, what’s the probability that you have the disease?
 14.	A fair die is tossed 3 times.  What is the probability that a 1 occurs on each toss?
 
 15. A manufacturer claims that 99% of its product will still be functioning
-after 3 years.  I buy 5 of the company’s product.  What is the probability that
-all 5 of these items will still be functioning after 5 years?
+after 3 years.  I buy 5 of the company’s product.  
+
+    a. What is the probability that all 5 of these items will still be functioning after 5 years?
+    b. What is the probability that exactly 4 of these items will still be functioning after 5 years?
+    c. What assumption must we make about these products for these probability calculations to
+    be correct?
 
 1. Show that if $\Prob(B \mid A) = \Prob(B)$, then $\Prob(A \mid B) = \Prob(A)$.
 

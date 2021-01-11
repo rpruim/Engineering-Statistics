@@ -14,3 +14,27 @@ This website has resources for an introductory statistics course taken by engine
 at Calvin University.
 
 * [Notes/Text book](book)
+
+* Worksheets
+
+  * Numerical Summaries of data: 
+      [[HTML](worksheets/Numerical-Summaries.html)]
+      
+  * Probability Terminology: 
+      [[HTML](worksheets/Probability-Terminology.html)]
+      [[PDF](worksheets/Probability-Terminology.pdf)]
+      
+  * Probability Simulations: 
+      [[HTML](worksheets/Probability-Simulations.html)]
+      [[PDF](worksheets/Probability-Simulations.pdf)]
+      
+  * Calculating Probabilities (Theoretical Method): 
+      [[HTML](worksheets/Probability-Theoretical.html)]
+      [[PDF](worksheets/Probability-Theoretical.pdf)]
+      
+  * Conditional Probability: 
+      [[HTML](worksheets/Probability-Conditional.html)]
+      [[PDF](worksheets/Probability-Conditional.pdf)]
+  
+  * Random Variables:
+      [[HTML](worksheets/Random-Variables.html)]

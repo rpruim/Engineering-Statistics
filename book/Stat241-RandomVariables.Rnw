@@ -1625,9 +1625,9 @@ skewed distribution.
 The \function{fitdistr()} function in the \pkg{MASS} package can fit each of these.
 <<jordan1, warning=FALSE>>=
 library(fastR2)     # the Jordan8687 data set is in this package
-fitdistr(Jordan8687$Points, "normal")
-fitdistr(Jordan8687$Points, "weibull")
-fitdistr(Jordan8687$Points, "gamma")
+fitdistr(Jordan8687$points, "normal")
+fitdistr(Jordan8687$points, "weibull")
+fitdistr(Jordan8687$points, "gamma")
 @
 We can use a histogram with overlaid density curve to see how well these fits compare 
 to the data.

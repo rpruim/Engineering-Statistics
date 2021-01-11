@@ -128,17 +128,17 @@ Histogram bars are tall in regions where there is more data -- i.e., where the d
 more ``dense''.  
 <<histograms-count-density>>=
 library(alr4)
-histogram( ~ Duration, data = oldfaith )
-histogram( ~ Duration, data = oldfaith, type = "count" )
+gf_histogram(  ~ Duration, data = oldfaith)
+gf_dhistogram( ~ Duration, data = oldfaith)
 @
 
-The density scale is the same scale that is used by \function{densityplot()}, and it
-is the default scale for histograms created using \function{histogram()} when
-the \pkg{mosaic} package is loaded.
+The density scale is the same scale that is used by \function{gf_dens()} and \function{gf_density()}, 
+and it is the default scale for histograms created using \function{gf_dhistogram()}.
+
 <<histogram-density>>=
 library(alr4)
-histogram( ~ Duration, data = oldfaith, width = 20, center = 110 )
-densityplot( ~ Duration, data = oldfaith)
+gf_dhistogram( ~ Duration, data = oldfaith, binwidth = 20, center = 110) %>%
+gf_dens( ~ Duration, data = oldfaith)
 @
 
 The density scale is chosen so that the area of each rectangular bar (width times height)
@@ -218,7 +218,7 @@ expressions.  The definition of \code{f()} makes use of this conversion to simpl
 the cases.}
 <<>>=
 f <- makeFun( (1 - abs(x)) * (abs(x) <= 1) ~ x )
-plotFun( f(x) ~ x, x.lim = c(-1.5, 1.5) )
+gf_fun( f(x) ~ x, xlim = c(-1.5, 1.5) )
 @
 
 The entire area under the curve can be found as the area of a triangle with base 2 and height 1.
@@ -1528,13 +1528,13 @@ to estimate how much power could be generated from a windmill placed in a given 
 Wind <- read.file("data/stob/TwinfallsWind.csv")
 head(Wind, 2)
 tail(Wind, 2)
-histogram( ~ speed, data = Wind, width = 1 )
+histogram( ~ speed, data = Wind, binwidth = 1 )
 @
 <<include = onLine,eval = onLine>>=
 Wind <- read.file("https://rpruim.github.io/Engineering-Statistics/data/stob/TwinfallsWind.csv")
 head(Wind, 2)
 tail(Wind, 2)
-histogram( ~ speed, data = Wind, width = 1 )
+gf_histogram( ~ speed, data = Wind, binwidth = 1 )
 @
 As we can see, the distribution is skewed, but it doesn't look like an 
 exponential distribution would be a good fit.  Of the distributions we have seen,
@@ -1553,12 +1553,12 @@ fitdistr( Wind$speed, "weibull" )
 For \function{fitdistr()} to fit a Weibull distribution, all of the data must be positive,
 but our data includes some 0's.  
 <<zeros>>=
-tally(~speed==0, data = Wind)
+tally( ~ (speed == 0), data = Wind)
 @
 Let's see how small the smallest non-zero measurements 
 are.
 <<>>=
-min( ~ speed, data = subset(Wind, speed >0) )
+min( ~ speed, data = Wind %>% filter(speed > 0))
 @
 This may well be a simple rounding issue, since the wind speeds are recorded to the 
 nearest 0.01 and 0.01 is the smallest positive value.
@@ -1568,7 +1568,7 @@ would round to 0.01, then 0 represents anything in the range 0 to 0.005.
 0.0025 is the middle of that range.
 
 <<fitdistr-windspeed2,warning = FALSE>>=
-Wind <- transform(Wind, speed2 = ifelse( speed > 0, speed, 0.0025) )
+Wind <- Wind %>% mutate(speed2 = ifelse( speed > 0, speed, 0.0025))
 fitdistr( Wind$speed2, "weibull" )
 @
 <<include = FALSE>>=
@@ -1577,19 +1577,32 @@ mle <- fitdistr( Wind$speed2, "weibull" )
 This says that the best fitting (in the sense of maximum likelihood) Weibull
 distribution is the $\Weibull(\Sexpr{paste(round(mle$est,2),sep = ",")})$-distribution.
 
-The \function{histogram()} function has an option to overlay the distribution
+The \function{gf_histogram()} function has an option to overlay the distribution
 fit by \function{fitdistr()} so we can see how good the fit is graphically.
 <<xhistogram-Wind,warning = FALSE>>=
-histogram( ~ speed2, data = Wind, fit = "weibull" )
+gf_dhistogram( ~ speed2, data = Wind) %>%
+  gf_fitdistr( ~ speed2, data = Wind, dist = "weibull")
 @
+
+This can be abbreviated a bit:
+
+<<xhistogram-Wind-2,warning = FALSE>>=
+gf_dhistogram( ~ speed2, data = Wind) %>%
+  gf_fitdistr(dist = "weibull")
+@
+
+\function{gf_fitdistr()} is inheriting the formula and data from \function{gf_dhistogram()}.
 \end{example}
 
 \begin{example}
 As an alternative, we could fit a Gamma distribution to the wind speed data.
 <<warning = FALSE>>=
 fitdistr(Wind$speed2, "gamma")
-histogram( ~ speed2, data = Wind, fit = "gamma" )
+gf_dhistogram( ~ speed2, data = Wind) %>%
+  gf_fitdistr(dist = "gamma" , color = ~ "Gamma") %>%
+  gf_fitdistr(dist = "weibull" , color = ~ "Weibull")
 @
+
 By eye, it appears that the Gamma distribution fits this data set slightly better, but
 there may other reasons to prefer the Weibull distribution.  In fact,
 there has been a good deal of research done regarding which distributions to use 
@@ -1935,7 +1948,7 @@ Quantile-quantile plots offer an alternative approach.  As the name suggests, th
 to compare the quantiles of our data to the quantiles of a theoretical distribution.  These
 are then plotted as a scatter plot.  Let's go through those steps with a small data
 set so we can see all the moving parts, then we'll learn how to automate the whole
-process using \function{qqmath()}.
+process using \function{gf_qq()}.
 
 \subsection{Normal-Quantile Plots}
 The normal distributions are especially important for statistics, so normal-quantile
@@ -1967,7 +1980,7 @@ would place all the points on the line with slope 1 passing through the origin.
 
 <<hand-qqplot>>=
 gf_point( observed ~ theoretical, data = QQData, title = "Hand made QQ-plot" ) %>%
-  gf_fun( x ~ x, alpha = 0.6, color = "blue", linetype = "dashed", alpha = 0.6)
+  gf_fun( x ~ x, alpha = 0.6, color = "blue", linetype = "dashed")
 @
 
 Even better, we don't need to know the mean and standard deviation in advance, because
@@ -2008,7 +2021,7 @@ of the prototype.  The exponential family is one such family.}
 \iffalse
 	As in the previous section, we'll begin by creating it manually using 
 	a small subset of the data and then show how to automate the process 
-	using \function{qqmath()}.
+	using \function{gf_qq()}.
 <<>>=
 SmallWind <- sample(Wind, 10)
 SmallWind
@@ -2030,15 +2043,15 @@ x.normal <- qnorm( probs, mean = 5.925 , sd = 3.653  )       # quantiles from No
 @
 Finally, we create the scatter plot
 <<>>=
-gf_point( y ~ x.gamma )
-gf_point( y ~ x.weibull )
-gf_point( y ~ x.normal )
+gf_point(y ~ x.gamma)
+gf_point(y ~ x.weibull)
+gf_point(y ~ x.normal)
 @
 \fi
-We can automate this, but we need to tell \function{qqmath()} how to calculate
+We can automate this, but we need to tell \function{gf_qq()} how to calculate
 the quantiles.
 <<>>=
-qqmath( ~ speed2, data = Wind )  # normal-quantile plot; normal is not a good model
+gf_qq( ~ speed2, data = Wind)  # normal-quantile plot; normal is not a good model
 @
 
 The normal model does not fit well, but both Gamma and Weibull are reasonable models:
@@ -2047,8 +2060,8 @@ fitdistr(Wind$speed2, "gamma")
 fitdistr(Wind$speed2, "Weibull")
 fittedqgamma <- makeFun( qgamma(p, shape = 2.496, rate = 0.421 ) ~ p )
 fittedqweibull <- makeFun( qweibull(p, shape = 1.694, scale = 6.651) ~ p ) 
-qqmath( ~speed2, data = Wind, distribution = fittedqgamma )
-qqmath( ~speed2, data = Wind, distribution = fittedqweibull )
+gf_qq( ~speed2, data = Wind, distribution = fittedqgamma )
+gf_qq( ~speed2, data = Wind, distribution = fittedqweibull )
 @
 \end{example}
 
@@ -2091,8 +2104,8 @@ fitdistr(Wind$speed, "exponential")
 		\item
 			This fit is not that great.
 <<>>=
-histogram(~speed, data = Wind, fit = "exponential")
-qqmath(~speed, data = Wind, distribution = qexp)
+gf_dhistogram(~speed, data = Wind, fit = "exponential")
+gf_qq( ~ speed, data = Wind, distribution = qexp)
 @
 	\end{enumerate}
 \end{solution}
@@ -2237,12 +2250,12 @@ gf_dhistogram(~cry.count, data = Baby, title = "Weibull") %>%
 
 \begin{solution}
 <<>>=
-qqmath( ~ age | substance, data = HELPrct )
+gf_qq( ~ age | substance, data = HELPrct)
 @
 The qq-plot for the alchol group looks good.  The other two (especially cocaine) show
 signs of skew -- indicated by the curve to the qq plot.
 <<>>=
-densityplot( ~ age | substance, data = HELPrct )
+gf_dens( ~ age | substance, data = HELPrct)
 @
 \end{solution}
 
@@ -2289,12 +2302,11 @@ sD2 <- stack(D2);
 @
 
 <<compareplots1,echo = FALSE,fig.height = 5>>=
-histogram(~ values | ind, 
+gf_dhistogram(~ values | ind, 
 	data = sD1, as.table = TRUE,
 	breaks = seq(-0.5,10.5,by = .5),
-	scales = list(draw = FALSE, alternating = FALSE)
 	)
-qqmath(~values | ind, data = sD2, as.table = TRUE, scales = list(draw = FALSE))
+gf_qq(~values | ind, data = sD2, as.table = TRUE)
 @
 
 \end{problem}

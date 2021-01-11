@@ -2,11 +2,10 @@
 title: "Conditional Probability"
 author: "Stat 241"
 output:
+  pdf_document: default
   html_document:
     theme: yeti
     css: ../styles/ds303-notes.css
-  df_document: default
-  pdf_document: default
 ---
 
 \def\tor{\operatorname{or}}
@@ -142,17 +141,15 @@ Do this two ways: (a) using the Equally Likely Rule and (b) using the Product Ru
 
 
 6. What is the probability of a five-card flush (all cards the same suit)?
-Do this two ways: (a) using the Equally Likely Rule and (b) using the Product Rule.
+<!-- Do this two ways: (a) using the Equally Likely Rule and (b) using the Product Rule. -->
  
 
-<!-- 7. There are 18 students in our class. -->
-<!-- What is the probability that two people in this class have the same  -->
-<!-- birthday (month and day)? (Hint: Use the Complement Rule.) -->
+7. There are 18 students in our class.
+What is the probability that two people in this class have the same
+birthday (month and day)? (Hint: Use the Complement Rule.)
 
-<!--     What assumption must we make to do this calculation? Is that  -->
-<!--     a reasonable assumption? -->
-
-<!-- \vfill -->
+    What assumption must we make to do this calculation? Is that
+    a reasonable assumption?
 
 7. If two 6-sided dice are rolled and the first one is a 5, what is the probability
  that the sum is 10?

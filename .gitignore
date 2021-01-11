@@ -30,3 +30,4 @@
 *.ilg
 *.tex
 Stat241*.pdf
+cache/

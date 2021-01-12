@@ -80,7 +80,9 @@ Consider now a correct way to do this calculation:
 
 ### The big idea
 
-The key idea here is that the mean is a ________ of ___________ times _______________.
+
+<div class = "explain" label = "Show the Big Idea">
+The key idea here is that the mean is a __sum__ of __values__ times __probabilities__.
 <!-- \textbf{sum of values times probabilities}.   -->
 
 \bigskip
@@ -100,7 +102,9 @@ where the sum is taken over all possible values of $X$ and $f$ is the pmf for $X
 
 The mean of a random variable also goes by another name: \textbf{expected value}.  We 
 can denote this as $\mu_X$ or $\E(X)$.
-
+</div>
+<br>
+<br>
 **Example 2.**
 Let $X$ be discrete random variable with probablilities given in the table 
 below.
@@ -127,6 +131,8 @@ This value reflects the fact that the random variable is larger than
 
 \newpage
 
+<br>
+<br>
 **Example 3.**
 A local charity is holding a raffle.  They are selling $1000$ raffle tickets 
 for $5 each.  The owners of five of the raffle tickets will win a prize.  The 
@@ -181,6 +187,8 @@ probabilities with our density function to get the following definition:
 \E(X) = \mu_X = \int_{-\infty}^{\infty} x f(x) \; dx
 \]
 
+<br>
+<br>
 **Example 4.**
 Calculate	the mean of a symmetric triangle distribution on $[-1, 1]$.
 
@@ -259,6 +267,8 @@ $\int_{\infty}^{\infty} |x|^2 f(x) \; dx$ converges.
 If these integrals (or the corresponding sums for discrete random variables) fail to converge, 
 we will say that the distribution has no mean (or variance).
 
+<br>
+<br>
 **Example 5.**
 Compute the variance of symmetric triangle distribution on $[-1,1]$.
 
@@ -289,6 +299,8 @@ Some simple algebraic manipulations of the sum or integral above shows that
 \end{align}
 
 
+<br>
+<br>
 **Example 6.**
 Compute the mean and variance of the random variable with pdf given by
 	

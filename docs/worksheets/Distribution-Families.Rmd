@@ -1,0 +1,434 @@
+---
+title: "Working with Random Variables in R"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+theme_set(theme_bw())
+set.seed(20210108)
+```
+ 
+## Median, Quantiles, Percentiles
+
+We can summarize random variables with the median or other quantiles as well as with
+the mean and standard deviation.
+
+If $X$ is a random variable, the median of $X$ is the number $m$ such that
+
+$$
+\Prob(X \le m) = \frac{1}{2}
+$$
+
+This is also called the 50th **percentile** or the 0.5 **quantile** because we can
+write $\frac{1}{2} =$ 50 % $= 0.5$. More generally, for any probability $p \in [0, 1]$,
+we can define the $p$-quantile as the number $q$ such that
+
+$$
+\Prob(X \le q) = p
+$$
+
+Unfortunately, for a discrete distribution, there might
+not be a value that satisfies this equation exactly (and if there is, it
+won't be unique). 
+So technically, our definition is a little bit more complicated.
+**The $p$-quantile of $X$ is the smallest number $q$ that has at least as 
+much probability as specified by $p$:**
+
+$$
+\Prob(X \le q) \ge p
+$$
+
+**Example 1.**  Let $X$ have the pdf $f(x) = 2x$ on $[0, 1]$. 
+Find the median of $X$ and 20th percentile of $X$.
+Use integration in R to check your work.
+
+<div class = "explain" label = "Show solution">
+
+We want to find $q$ so that 
+
+$$
+\int_0^q 2x \; dx = p
+$$
+Let's integrate and solve for $q$:
+
+
+$$
+p = \int_0^q 2x \; dx = \left. x^2 \right|_0^q = q^2$
+$$
+
+So $q = \sqrt{p}$.  The median is $\sqrt{0.5} - `r sqrt(0.5) %>% round(3)`$ and 
+the 20th percentile is $\sqrt{0.2} = `r sqrt(0.2) %>% round(3)`$
+
+We can check by integrating in R to see that we get the correct probabilities.
+
+```{r}
+f <- function(x) 2 * x * (0 <= x & x <= 1)
+integrate(f, 0, sqrt(0.5))
+integrate(f, 0, sqrt(0.2))
+```
+
+</div>
+
+
+# Important Families of Distributions
+
+## Uniform Distributions (`unif`)
+
+A uniform distribution is characterized by the interval on which it is defined. 
+If the interval is $[a,b]$, then the pdf is $f(x) = \frac{1}{b-a}$ on $[a,b]$.
+
+R has uniform distributions "built in".
+
+* `dunif(x, min, max)` computes the pdf at x (think: d for density)
+* `punif(x, min, max)` computes the value of the cdf at x (think: p for probability)
+* `qunif(q, min, max)` computes the qth quantile/percentile (think: q for quantile)
+* `runif(n, min, max)` generates a random sample of n observations from the distribution. (think: r for random)
+
+And ggformula inculdes a function called `gf_dist()` for plotting distributions.
+`gf_fun()` gives us a littel more control but makes us do more work.
+
+```{r}
+gf_dist("unif", min = 0, max = 4)
+gf_fun(dunif(x, 0, 4) ~ x, xlim = c(-1, 5))
+```
+
+```{r}
+# P(1 ≤ X ≤ 3) = F(3) - F(1)
+punif(3, 0, 4) - punif(1, 0, 4)
+
+# 90th percentile = 0.9 - quantile
+qunif(0.9, 0, 4)
+
+# 10 random draws
+runif(10, 0, 4)
+
+# 10,000 random draws
+x <- runif(10000, 0, 4)
+gf_histogram(~ x)
+```
+
+For a uniform distribution, this is pretty boring -- uniform distributions 
+are easy to work with without the aid of R.  But these same sorts of functions
+exist for many different families of distributions.
+
+## Exponential Distributions (`exp`)
+
+**Paramter:** rate (\lambda)
+
+**pdf:**
+
+$$
+f(x; \lambda) = \lambda e^{-\lambda x}
+$$
+$\lambda$ is called the **rate parameter** for the distribution. For each $\lambda > 0$, we 
+get a different, but related, random variable.  We will denote this as 
+
+$$
+X \sim \Exp(\lambda) \mbox{ on } (0, \infty)
+$$
+
+### Examples
+
+```{r}
+gf_dist("exp", rate = 1, color = ~ "rate = 1") %>%
+gf_dist("exp", rate = 2, color = ~ "rate = 2") %>%
+gf_dist("exp", rate = 1/2, color = ~ "rate = 1/2")
+```
+
+### Applications
+
+Simple models for waiting times:  
+
+* $X$ = time until the next click on a Geiger counter (radioactive decay) or 
+* $X$ = time until a device stops functioning.
+
+Memoryless Property: For any $a, b \ge 0$, 
+
+$$
+\Prob(X \ge a+b \mid X > a) = P(X > b) \;.
+$$
+
+
+### Exponential distributions in R:  
+
+**Functions:** `dexp(x, rate)`, `pexp(x, rate)`, `qexp(q, rate)`, `rexp(n, rate)`
+
+**Example 2.**
+Calculate the mean, median, and variance of $X$ if $X \sim \Exp(\lambda = 5)$.
+
+<div class = "explain" label = "Show solution">
+```{r}
+gf_dist("exp", rate = 5)
+
+# median = 0.5 - quantile
+qexp(0.5, rate = 5)
+
+# mean via integration
+xf <- makeFun( x * dexp(x, 5) ~ x)
+integrate(xf, 0, Inf)
+
+# E(X^2)
+xxf <- makeFun( x^2 * dexp(x, 5) ~ x)
+integrate(xxf, 0, Inf)
+integrate(xxf, 0, Inf) %>% value()
+
+# Variance 
+0.08 - (0.02)^2 
+
+# Standard Deviation 
+sqrt(.04) 
+```
+</div>
+
+## Normal Distributions (`norm`)
+
+**Parameters:** mean ($\mu$) and standard deviation ($\sigma$)
+
+```{r}
+gf_dist("norm", mean = 10, sd = 2, color = ~"Norm(10, 2)") %>%
+gf_dist("norm", mean = 10, sd = 4, color = ~"Norm(10, 4)") %>%
+gf_dist("norm", mean = 13, sd = 2, color = ~"Norm(13, 2)")
+```
+
+If $\mu = 0$ and $\sigma = 1$, the distribution is called the **standard normal distribution**.
+This distribution is also called the **z-distribution**, and the letter $Z$ is almost always
+used to represent the standard normal distribution.
+
+**pdf:** The pdf for the normal distribution cannot be integrated algebraically, it
+can only be approximated numerically.
+
+$$
+f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{- \frac{(\mu - x)^2}{2\sigma^2}}
+$$
+
+These distributions are symmetric (centered at $\mu$) and bell-shaped.
+
+### Applications
+
+**Many!!** Because of a theorem called the **Central Limit Theorem** many distributions 
+are at least approximately normal. These distributions are also important for doing
+statistics.
+
+Examples: IQ scores; SAT scores; heights of adult men in a community; etc.
+
+ 
+**Example 3.**  
+The height of North American adult males has (approximately) a normal distribution with 
+mean = 70 inches and sd = 3 inches.  
+
+a. What proportion of North American adult males are 6 ft = 72 inches or less?
+
+b. What is the 99th percentile for height?
+
+<div class = "explain" label = "Show solution">
+```{r}
+# P(X <= 72)
+pnorm(72, mean = 70, sd = 3)
+# 99th percentile
+qnorm(0.99, mean = 70, sd = 3)
+```
+</div>
+
+### 68-95,99.7 Rule  
+
+For all normal distributions
+
+* $\Prob( \mu -\sigma \le X \le \mu + \sigma) \approx$ 68%
+
+```{r echo = FALSE, results = "hide", message = FALSE}
+xpnorm(c(-1, 1))
+```
+
+* $\Prob( \mu -2\sigma \le X \le \mu + 2\sigma) \approx$ 95%
+```{r echo = FALSE, results = "hide", message = FALSE}
+xpnorm(c(-2, 2))
+```
+
+* $\Prob( \mu -3\sigma \le X \le \mu + 3\sigma) \approx$ 99%
+```{r echo = FALSE, results = "hide", message = FALSE}
+xpnorm(c(-3, 3))
+```
+
+## Binomial Distribution (`binom`)
+
+**parameters:** `size` ($n$) and `prob` ($p$)
+
+**plots** for discrete distributions look a little different.
+
+```{r}
+gf_dist('binom', size = 20, prob = 0.5)
+gf_dist('binom', size = 20, prob = 0.25)
+```
+
+But otherwise things work basically the same. The pmf is `dbinom()`,
+and we have `pbinom()`, `qbinom()` and `rbinom()` just like for the otehr distributions 
+we have seen.
+
+**Example 4.** Compute the mean of a $\Binom(20, 0.25)$ distribution in R.
+
+<div class = "explain" label = "Show solution">
+Notice that we use `sum()` not `integrate()` because this is a discrete distribution.
+
+```{r}
+values <- 0:20
+probs <- dbinom(values, 20, 0.25) 
+sum(values * probs)
+```
+
+That's a reasonable answer: If our probability of success is 25% and 
+we try 20 times, we should average 5 success.
+</div>
+
+
+## More distributions
+
+There are many more families of distributions. 
+
+* Our text discusses a number of distributions, and we will see more distributions
+in examples as we go along.
+
+* Wikipedia is actually a good place to look up information about a particular family. 
+Here is a [list of distributions](https://en.wikipedia.org/wiki/List_of_probability_distributions) that Wikipedia has pages about.
+
+* The **Univariate Distribution Relationships** site shows relationships among
+and provides important information about many commonly used distributions.
+
+    * [interactive version](http://www.math.wm.edu/~leemis/chart/UDR/UDR.html)
+    * [PDF version](http://www.math.wm.edu/~leemis/2008amstat.pdf#page=3)
+
+* Note: Some times there is more than one way to parameterize a family of distributions.
+Always check to see that you know the paramterization being used.  (Example: some people 
+use mean and variance instead of mean and standard deviation for the normal distributions.)
+
+
+## More Practice
+
+**1.** IQ scores are (approximately) normally distributed with mean = 100 and sd = 15. 
+Answer the following with the 68-95-99.7 rule when you can, using R otherwise.
+
+a. What percent of people have IQ scores in the range 85 to 115?
+
+a. What perent of peple have IQ scores higher than 130?
+
+a. What percent of people have IQ scores in the range 90 to 110?
+
+a. Carol has an IQ score of 128. 
+What percent of people have IQ scores no higher than Carol’s IQ score?
+
+a. Born in 1982, Christopher Hirata had recorded an IQ of 225. 
+He is an outstanding example of child prodigy who had already completed his college 
+level courses by the time he was 12. 
+By the time he turned 16, he was working on a project with the NASA. 
+He was the first one to win a gold medal in international Science Olympiad at the age of 13. 
+He began attending classes for his PhD in astrophysics when he was just 18. 
+At what percentile is his IQ score?
+
+a. What is the 99th percentile for IQ scores?
+
+**2.**
+Scores on an aptitude test are normally distributed.
+16% of scores are below 20 and 2.5% of scores are above 110. 
+Use the 68-95-99.7% rule to find the mean and standard deviation.
+
+**3.**
+Another important family of distributions is the set of gamma distributions. 
+There are two parameters for the gammas: shape ($\alpha$) and rate ($\lambda$). 
+The kernel for a gamma distribution is
+$$
+k(x) =  x^{\alpha - 1} e^{-\lambda x} \mbox{ on } (0, \infty)
+$$
+If shape = 1, then gamma is an exponential distribution.
+
+a.	Plot the graphs of the following gamma pdfs
+
+    * shape = 2;	rate = 4
+    
+    * shape = 5;	rate = 10
+    
+    * shape = 10;	 rate = 5
+    
+    * shape = 4;	rate = 2
+		
+b.	Based on the plots above, how would you describe the general shape of a gamma distribution?
+
+c. Find the 90th percentile of a $\Gamm(2, 4)$ distribution.
+
+d.	Find the mean and variance of the gamma distribution when shape = 4 and rate = 3. 
+Use R to do the calculations.  Then use the Wikipedia page to check your answers.
+
+**4.** The Poisson distributions have one parameter, called $\lambda$ (lambda).
+
+a. Use `? dpois` or `args(dpois)` to find out what this parameter is called in R.
+
+b. Plot Poisson distributions with 
+$\lambda = 2$, 
+$\lambda = 4$, 
+$\lambda = 10$, and 
+$\lambda = 100$. 
+What do you notice about the shape of the distribution as $\lambda$ gets larger and larger?
+
+d. Calculate the mean of the following distributions 
+$\Pois(10)$, $\Pois(20)$, $\Pois(5)$ using R. (Note: you will need to use `sum()`, not
+`integrate()`.)
+What do you notice? Check the Wikipedia page to see if this always holds.
+
+e. Cacluate the median of a $\Pois(10)$ distribution using `ppois()`. What proportion of 
+the distribution is less than the median? equal to the median? greater than the median?
+
+**5.** Another important family of distributions is the family of beta distributions.
+There are two parameters for a beta distribution:  shape1 and shape2. 
+
+a.	Plot the graphs of the following beta pdf’s
+
+    * shape1 = 2;	shape2 = 2
+    * shape1= 2;	shape2 = .9
+    * shape1 =4;	shape2 = 2
+    * shape1 = .9;	shape2 = .85
+    
+b.  Based on the plots above, what would you say about the shapes of a beta distribution?
+	
+c. Find the median of a $\Beta(2, 0.9)$ distribution.

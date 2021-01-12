@@ -982,7 +982,7 @@ of the data.
 % frequency, but this makes the wider bars have too much area.
 
 
-\section*{Exercises}
+\section{Exercises}
 
 The solutions to these exercises should be done using an RMarkdown document
 and knitTHML in RStudio.

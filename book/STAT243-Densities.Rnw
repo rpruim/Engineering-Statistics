@@ -1666,7 +1666,7 @@ gf_qq( ~speed2, data=Wind, distribution=fittedqweibull )
 
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 
 \begin{problem}
 	\begin{enumerate}

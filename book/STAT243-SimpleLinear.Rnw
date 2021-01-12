@@ -962,7 +962,7 @@ model1 <- lm( y1 ~ x1, data=anscombe ); summary(model1)
 
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 \shipoutProblems
 
 

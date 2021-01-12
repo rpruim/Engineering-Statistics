@@ -791,7 +791,7 @@ for independent events.
 \end{example}
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 
 \begin{problem}
 	Amy is a 92\% free throw shooter.  If she shoots

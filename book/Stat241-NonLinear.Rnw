@@ -1638,7 +1638,7 @@ of the differences between them:
 
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 \shipoutProblems
 
 

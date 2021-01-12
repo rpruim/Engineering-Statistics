@@ -1353,7 +1353,7 @@ $\Sexpr{round(V,2)} \pm \Sexpr{round(uV,2)}$.
 \end{solution}
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 \shipoutProblems
 
 \ifsolutions

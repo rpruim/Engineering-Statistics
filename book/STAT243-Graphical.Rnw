@@ -654,7 +654,7 @@ of the data.
 
 \newpage
 
-\section*{Exercises}
+\section{Exercises}
 
 In your answers to these questions, include both the plots and the code you used 
 to make them as well as any required discussion.  Once you have obtained a basic

@@ -884,7 +884,7 @@ For assistance in particular applications, we offer the following rules of thumb
 
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 
 \begin{problem}
 	Let $X$ and $Y$ be independent $\Gamm( \texttt{shape}=2, \texttt{scale}=3)$ random 

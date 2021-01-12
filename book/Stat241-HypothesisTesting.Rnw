@@ -1072,7 +1072,7 @@ t_star <- qt(0.99, df = 41)
 % \end{solution}
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 \shipoutProblems
 
 

@@ -355,7 +355,7 @@ between two variables.  The most common one is the \term{correlation coefficient
 which we will learn about later.
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 
 \begin{problem}
 	Create a data set with $n = 6$ values, each an integer between 0 and 10 (inclusive) 

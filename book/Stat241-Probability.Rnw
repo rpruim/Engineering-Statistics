@@ -787,7 +787,7 @@ for independent events.
 \end{example}
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 
 \begin{problem}
 	Amy is a 92\% free throw shooter.  If she shoots
@@ -1130,7 +1130,7 @@ c / (c + d)
 % \end{problem}
 
 \begin{problem}
-An engineers orders a shipment of 100 indentical parts.  
+An engineer orders a shipment of 100 indentical parts.  
 Before accepting the shipment, he tests three  of them.  
 If the they all test good, he accepts the entire shipment.  
 If any of them tests bad, he rejects the shipment.

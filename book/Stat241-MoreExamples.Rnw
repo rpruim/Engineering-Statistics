@@ -578,7 +578,7 @@ the response.
 
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 
 \shipoutProblems
 

@@ -1023,7 +1023,7 @@ estimated.moisture(170, interval = "confidence")
 \end{solution}
 
 \newpage
-\section*{Exercises}
+\section{Exercises}
 \shipoutProblems
 
 

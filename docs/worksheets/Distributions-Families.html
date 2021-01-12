@@ -628,7 +628,7 @@ integrate(f, 0, sqrt(0.5))</code></pre>
 <ul>
 <li><code>dunif(x, min, max)</code> computes the pdf at x (think: d for density)</li>
 <li><code>punif(x, min, max)</code> computes the value of the cdf at x (think: p for probability)</li>
-<li><code>qunif(q, min, max)</code> computes the qth quantile/percentile (think: q for quantile)</li>
+<li><code>qunif(p, min, max)</code> computes the qth quantile/percentile (think: q for quantile)</li>
 <li><code>runif(n, min, max)</code> generates a random sample of n observations from the distribution. (think: r for random)</li>
 </ul>
 <p>And ggformula inculdes a function called <code>gf_dist()</code> for plotting distributions. <code>gf_fun()</code> gives us a littel more control but makes us do more work.</p>
@@ -683,7 +683,7 @@ gf_dist(&quot;exp&quot;, rate = 1/2, color = ~ &quot;rate = 1/2&quot;)</code></p
 </div>
 <div id="exponential-distributions-in-r" class="section level3">
 <h3>Exponential distributions in R:</h3>
-<p><strong>Functions:</strong> <code>dexp(x, rate)</code>, <code>pexp(x, rate)</code>, <code>qexp(q, rate)</code>, <code>rexp(n, rate)</code></p>
+<p><strong>Functions:</strong> <code>dexp(x, rate)</code>, <code>pexp(x, rate)</code>, <code>qexp(p, rate)</code>, <code>rexp(n, rate)</code></p>
 <p><strong>Example 2.</strong> Calculate the mean, median, and variance of <span class="math inline">\(X\)</span> if <span class="math inline">\(X \sim {\sf Exp}(\lambda = 5)\)</span>.</p>
 <div class="explain" label="Show solution">
 <pre class="r"><code>gf_dist(&quot;exp&quot;, rate = 5)</code></pre>
@@ -705,8 +705,8 @@ integrate(xxf, 0, Inf)</code></pre>
 0.08 - (0.02)^2 </code></pre>
 <pre><code>## [1] 0.0796</code></pre>
 <pre class="r"><code># Standard Deviation 
-sqrt(.04) </code></pre>
-<pre><code>## [1] 0.2</code></pre>
+sqrt(0.08 - (0.02)^2)</code></pre>
+<pre><code>## [1] 0.2821347</code></pre>
 </div>
 </div>
 </div>

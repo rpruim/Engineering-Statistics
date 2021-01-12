@@ -125,7 +125,7 @@ R has uniform distributions "built in".
 
 * `dunif(x, min, max)` computes the pdf at x (think: d for density)
 * `punif(x, min, max)` computes the value of the cdf at x (think: p for probability)
-* `qunif(q, min, max)` computes the qth quantile/percentile (think: q for quantile)
+* `qunif(p, min, max)` computes the qth quantile/percentile (think: q for quantile)
 * `runif(n, min, max)` generates a random sample of n observations from the distribution. (think: r for random)
 
 And ggformula inculdes a function called `gf_dist()` for plotting distributions.
@@ -195,7 +195,7 @@ $$
 
 ### Exponential distributions in R:  
 
-**Functions:** `dexp(x, rate)`, `pexp(x, rate)`, `qexp(q, rate)`, `rexp(n, rate)`
+**Functions:** `dexp(x, rate)`, `pexp(x, rate)`, `qexp(p, rate)`, `rexp(n, rate)`
 
 **Example 2.**
 Calculate the mean, median, and variance of $X$ if $X \sim \Exp(\lambda = 5)$.
@@ -220,7 +220,7 @@ integrate(xxf, 0, Inf) %>% value()
 0.08 - (0.02)^2 
 
 # Standard Deviation 
-sqrt(.04) 
+sqrt(0.08 - (0.02)^2)
 ```
 </div>
 

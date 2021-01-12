@@ -97,7 +97,7 @@ Let's integrate and solve for $q$:
 
 
 $$
-p = \int_0^q 2x \; dx = \left. x^2 \right|_0^q = q^2$
+p = \int_0^q 2x \; dx = \left. x^2 \right|_0^q = q^2
 $$
 
 So $q = \sqrt{p}$.  The median is $\sqrt{0.5} - `r sqrt(0.5) %>% round(3)`$ and 

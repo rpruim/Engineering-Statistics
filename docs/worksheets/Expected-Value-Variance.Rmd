@@ -345,8 +345,8 @@ times.
 
 <!-- E(X) = (0+3+6+3)/8 = 3/2 = 1.5. -->
 
-**3.**	Repeat (3) above under the assumption that the coin is biased and only has a 1/4 
-chance of producing a head.
+**3.**	Repeat the previos problem above under the assumption that the coin is biased and 
+only has a 1/4 chance of producing a head.
 
 <!-- x		0		1		2		  3 -->
 <!-- p(x)	27/64		27/64		9/64		1/64 -->

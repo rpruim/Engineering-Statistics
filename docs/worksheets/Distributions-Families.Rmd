@@ -162,13 +162,13 @@ exist for many different families of distributions.
 **pdf:**
 
 $$
-f(x; \lambda) = \lambda e^{-\lambda x}
+f(x; \lambda) = \lambda e^{-\lambda x} \mbox{ on } (0, \infty)
 $$
 $\lambda$ is called the **rate parameter** for the distribution. For each $\lambda > 0$, we 
 get a different, but related, random variable.  We will denote this as 
 
 $$
-X \sim \Exp(\lambda) \mbox{ on } (0, \infty)
+X \sim \Exp(\lambda) 
 $$
 
 ### Examples

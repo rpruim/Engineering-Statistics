@@ -273,7 +273,7 @@ qnorm(0.99, mean = 70, sd = 3)
 ```
 </div>
 
-### 68-95,99.7 Rule  
+### 68-95-99.7 Rule  
 
 For all normal distributions
 
@@ -288,7 +288,7 @@ xpnorm(c(-1, 1))
 xpnorm(c(-2, 2))
 ```
 
-* $\Prob( \mu -3\sigma \le X \le \mu + 3\sigma) \approx$ 99%
+* $\Prob( \mu -3\sigma \le X \le \mu + 3\sigma) \approx$ 99.7%
 ```{r echo = FALSE, results = "hide", message = FALSE}
 xpnorm(c(-3, 3))
 ```

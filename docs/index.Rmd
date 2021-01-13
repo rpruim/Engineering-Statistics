@@ -20,21 +20,37 @@ at Calvin University.
   * Numerical Summaries of data: 
       [[HTML](worksheets/Numerical-Summaries.html)]
       
-  * Probability Terminology: 
-      [[HTML](worksheets/Probability-Terminology.html)]
-      [[PDF](worksheets/Probability-Terminology.pdf)]
-      
-  * Probability Simulations: 
-      [[HTML](worksheets/Probability-Simulations.html)]
-      [[PDF](worksheets/Probability-Simulations.pdf)]
-      
-  * Calculating Probabilities (Theoretical Method): 
-      [[HTML](worksheets/Probability-Theoretical.html)]
-      [[PDF](worksheets/Probability-Theoretical.pdf)]
-      
-  * Conditional Probability: 
-      [[HTML](worksheets/Probability-Conditional.html)]
-      [[PDF](worksheets/Probability-Conditional.pdf)]
+  * Probability
   
-  * Random Variables:
-      [[HTML](worksheets/Random-Variables.html)]
+    * Probability Terminology: 
+        [[HTML](worksheets/Probability-Terminology.html)]
+        [[PDF](worksheets/Probability-Terminology.pdf)]
+        
+    * Probability Simulations: 
+        [[HTML](worksheets/Probability-Simulations.html)]
+        [[PDF](worksheets/Probability-Simulations.pdf)]
+        
+    * Calculating Probabilities (Theoretical Method): 
+        [[HTML](worksheets/Probability-Theoretical.html)]
+        [[PDF](worksheets/Probability-Theoretical.pdf)]
+        
+    * Conditional Probability: 
+        [[HTML](worksheets/Probability-Conditional.html)]
+        [[PDF](worksheets/Probability-Conditional.pdf)]
+   
+  * Random Variables
+  
+    * Random Variables:
+        [[HTML](worksheets/Random-Variables.html)]
+        
+    * Expected Value and Variance of Random Variables
+        [[HTML](worksheets/Expected-Value-Variance.html)]
+    
+    * Families of Distributions
+        [[HTML](worksheets/Distributions-Families.html)]
+    
+    * Transformations and Combinations
+        [[HTML](worksheets/Distributions-Transformations.html)]
+   
+    
+    

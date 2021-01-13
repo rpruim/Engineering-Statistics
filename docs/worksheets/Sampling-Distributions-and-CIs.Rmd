@@ -1,0 +1,290 @@
+---
+title: "Sampling Distributions and CIs"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+theme_set(theme_bw())
+set.seed(20210108)
+```
+ 
+<style>
+div.boxed {
+  border-style: solid;
+  border-color: navy;
+  border-width: 2px;
+  border-radius: 10px;
+  padding 20px;
+</style>
+
+
+## Some important words 
+
+* **Population** -- the people/animals/objects we want to know about.
+
+* **Sample** -- the people/animals/objects we have data about.
+
+* **Parameter** -- a number describing (a feature of) the population.
+
+* **Statisticd** -- a number describing (a feature of) the sample.
+
+* **Estimand** -- a parameter we number we want to know (at least approximately).
+
+* **Estimate** -- a numerical approximation to the estimand based on a particular data set.
+
+* **Estimator** -- a random variable showing the distribution of estimtes over all possible random samples.
+
+## Sampling Distributions
+
+A **sampling distribution** is the distribution of some number computed from a random sample.
+This is a bit more general than an estimator, because we might be using this number for something other 
+than making an estimate, but it is basically the same idea.
+
+[This online app](http://onlinestatbook.com/stat_sim/sampling_dist/index.html) illustrates these ideas nicely.
+
+
+## Sampling Distribution for the Sample Mean
+
+If we have an iid random sample from a population with mean $\mu$ and standard
+deviation $\sigma$, then
+
+$$
+\overline{X} \approx \Norm(\mu, \frac{\sigma}{\sqrt{n}})
+$$
+
+provided the sample size is large enough. The approximation
+
+* is exact if the population is exactly normal.
+* is better if the population distribution is more like a normal distirbution
+* is better if the sample size is larger.
+
+### Standard Error
+
+The standard deviation of a sampling distribution is called the **standard erorr** (SE).
+So the standard errror for the mean is 
+
+$$
+SE = \frac{\sigma}{\sqrt{n}}
+$$
+
+### Difference bewteen $\overline{X}$ and $\mu$.
+
+
+$$
+\overline{X} - \mu \approx \Norm(0, \frac{\sigma}{\sqrt{n}})
+$$
+
+This means we know something about how close our estimate (sample mean) is likely to be to
+the estimand (population mean).
+
+* $\approx 68$% of sample means are within 1 $SE$ of the population mean
+* $\approx 95$% of sample means are within 2 $SE$ of the population mean
+
+
+In other words
+
+$$
+\Prob( |\overline{X} - \mu| \le 2SE) \approx 0.95
+$$
+Since sample mean $\overline{X}$ is usually this close to the population mean $\mu$, 
+the population mean $\mu$ will usually be this close to the sample mean $\overline{X}$.
+This leads to the idea of a **confidence interval**.
+
+$$ 
+\Prob( \overline{X} - 2SE \le \mu \le \overline{X} + 2 SE) \approx 0.95
+$$
+
+so we will call the interval 
+$$
+(\overline{x} - 2 SE, \overline{x} + 2 SE)
+$$ 
+the 95% confidence interval for $\mu$.  Notice the change from $\overline{X}$ (estimator) to $\overline{x}$ (estimate).  We won't know for any particular confidence interval whether $\mu$ is in the interval, but we 
+know that the estimand is in 95% of the intervals we create this way.
+
+Because this interval is symmetric, it is often written another way:
+
+
+$$
+\overline{x} \pm (\mbox{critical value}) SE
+$$
+
+If we want a higher coverage rate, we can increase the number 2 to something larger. If we are satisfied 
+with a smaller coverage rate, we can decrease 2 to something smaller. 
+The number we use is called the **critical value**. So more generally our formula for a confidence 
+interval for $\mu$ (population mean) is 
+
+$$
+\overline{x} \pm (\mbox{critical value}) SE
+$$
+
+Because we get this critical value from a normal (z) distribution, we will write this as
+
+$$
+\overline{x} \pm z_* SE
+$$
+
+
+### Examples
+
+**1.** Determine the critical value to use for 90%, 95%, and 98% confidence intervals.
+
+**2.** If the sample of size $n = 25$ has a mean of $\overline{x} =  10.5$ and the population 
+has a standard deviation of  $\sigma = 2$, what are the 90%, 95%, and 98% confidence intervals for $\mu$?
+
+
+
+## A problem and a solution
+
+There is a problem with the calculations we have been doing: We almost never have the information we need 
+to do them. In particular, it is not reasonable to expect to know the standard deviation of a population
+if we dont' know the mean.  The solution?
+
+* Estimate the population standard deviation ($\sigma$) with the sample standard deviation ($s$).
+
+But this brings up another problem.  Now the sampling distribution won't be approximately normal,
+it will have a different shape.  That shape is also symmetric and bell-shaped, but it is a little "fatter",
+because their is additional variability due to our estimating $\sigma$.
+The right distribution to use is called a **t-distribution**.
+
+So our formula for the confidence interval for $\mu$ will be 
+
+$$
+\overline{x} \pm (\mbox{critical value}) SE
+=
+\overline{x} \pm t_* SE
+$$
+
+and we will use `qt()` rather than `qnorm()` to get the critical value.
+
+### T-distibutions
+
+T-distirbutions have a parameter called **degrees of freedom**.  The larger the degrees of freedom,
+the more the t-distribution is like a standard normal distribution.
+
+```{r, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 4}
+gf_dist("t", df = 2, color = ~ "df =  2") %>%
+gf_dist("t", df = 5, color = ~ "df =  5") %>%
+gf_dist("t", df = 10, color = ~ "df = 10") %>%
+gf_dist("t", df = 20, color = ~ "df = 20") %>%
+gf_dist("norm", color = ~ "normal") %>%
+  gf_lims(x = c(-4, 4))
+```
+
+When we compute a confidence interval for a mean, we use $df = n - 1$ for our degrees of freedom.
+
+### Examples
+
+**3.** Determine the critical value to use for 90%, 95%, and 98% confidence intervals -- this time using
+a t-distribution.
+
+**4.** If the sample of size $n = 25$ has a mean of $\overline{x} =  10.5$ and we don't know the 
+population standard deviation $\sigma$, what are the 90%, 95%, and 98% confidence intervals for $\mu$?
+
+### When does this work well?
+
+The t-based confidence intervals work better when
+
+* sample size is large
+* population is unimodal and symmetric
+
+The smaller the sample size or the more the population deviates from a normal
+distribution, the less reliable the confidence intervals will be.  Generally,
+things work pretty well for samples of size 30 or more as long as the
+distribution is unimodal. As sample sizes get smaller, we want to be more and
+more sure that the population is approximately normal. Of course, we will have
+less and less data to check with, so we may need to rely on information from
+other similar studies, or find a different method.
+
+**Outliers** can have a large impact on both the sample mean and sample standard deviation,
+so when outliers are present in a small sample, we likely need to find a different method (or
+figure out if something is unusual about that outlier).
+
+## More practice
+
+**1.**	A sample of size 100 has a mean of 4.2 and standard deviation of 1.3. 
+Find the 95% and the 99% confidence interval for the population mean.
+
+**2.** The contents of 50 12-ounce cans of Coke Zero were measured. 
+The average contents of those cans was 12.05 ounces with a standard deviation of 0.1 ounces.  
+
+a.	Based on this data, compute the 95% CI for the average of all 12 ounce cans of Coke Zero.
+
+b.	Based on this confidence interval, are you confident that, on average, 12 ounce cans of Coke Zero contain at least 12 ounces of soda?
+
+<!-- **3.** A sample of size 20 produced a sample mean of 3.2 and a sample sd of 1.1.   -->
+
+<!-- a.	If it appears that the population the sample came from is strongly skewed to the right.  Should you calculate a 95% CI using the t-distribution?   -->
+
+<!-- b.	If it appears that the population is unimodal and quite symmetric, should you calculate a 99% CI using a t-distribution? -->
+
+<!-- c.	If a t-distribution is appropriate in (a) and/or (b), find the required CI. -->
+
+
+<!-- **4.**	 -->
+<!-- Company B receives a large shipment of parts from Company A.  Company B accepts -->
+<!-- the fact that any large shipment of parts will contain some defective parts.  It -->
+<!-- is willing to accept a shipment that it is confident contains  ar most 10% -->
+<!-- defective parts.  It examines 200 randomly selected parts from the shipment and -->
+<!-- finds that 15 of them are defective.  Calculate the 95% CI for the proportion of -->
+<!-- all parts in the shipment that are defective.  Based on this CI, should Company -->
+<!-- B be confident that the defective rate for the entire shipment is at most 10%? -->
+
+**3.**
+The data-frame morley contains measurement of the speed of light in the column
+Speed.  We can consider this data to be a random sample of size 100 of all
+possible measures of the speed of light. 
+
+a. What are the units on the measurements?  Use `?morley` to find out. (It won't be 
+what you would guess without looking.)
+
+a. Use these data to find a 95% CI for the average of all possible measurements.
+And convert the answer into more natural units.
+
+<!-- **4.**	A recent Gallup poll of 3500 people produced a approval rating for -->
+<!-- President Obama of 50%. Assuming the confidence level is 95%, what is the margin -->
+<!-- of error? -->

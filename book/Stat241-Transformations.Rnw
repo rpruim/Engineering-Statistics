@@ -65,12 +65,12 @@ X <- runif(10000, 0,1)
 Y <- runif(10000, 0,1)
 S <- X + Y
 P <- X * Y
-histogram( ~ X , main = "Sample from Unif(0,1)", width = .05, center = 0.025)
-histogram( ~ Y , main = "Another sample from Unif(0,1)", width = .05, center = 0.025)
+gf_dhistogram( ~ X , main = "Sample from Unif(0,1)", binwidth = .05, center = 0.025)
+gf_dhistogram( ~ Y , main = "Another sample from Unif(0,1)", binwidth = .05, center = 0.025)
 @
 <<sum-product-uniform-iid>>=
-histogram( ~ S , main = "Sum of two iid Unif(0,1) rvs", width = 0.1, center = 0.05)
-histogram( ~ P , main = "Product of two iid Unif(0,1) rvs", width = 0.05, center = 0.025)
+gf_dhistogram( ~ S , main = "Sum of two iid Unif(0,1) rvs", binwidth = 0.1, center = 0.05)
+gf_dhistogram( ~ P , main = "Product of two iid Unif(0,1) rvs", binwidth = 0.05, center = 0.025)
 @
 
 \subsubsection*{Independence Matters}
@@ -83,8 +83,8 @@ use the values of \texttt{x} in both roles:
 <<sum-product-uniform-non-iid>>=
 S2 <- X + X
 P2 <- X * X 
-histogram( ~ S2 , main = "Sum of two non-iid Unif(0,1) rvs", width = 0.1, center = 0.05)
-histogram( ~ P2 , main = "Product of two non-iid Unif(0,1) rvs", width = 0.05, center = 0.025)
+gf_dhistogram( ~ S2 , main = "Sum of two non-iid Unif(0,1) rvs", binwidth = 0.1, center = 0.05)
+gf_dhistogram( ~ P2 , main = "Product of two non-iid Unif(0,1) rvs", binwidth = 0.05, center = 0.025)
 @
 Notice how different the resulting distributions are, especially for the sum.
 

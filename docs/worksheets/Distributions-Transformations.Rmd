@@ -2,11 +2,11 @@
 title: "Transforamtions and Combinations of Random Variables"
 author: "Stat 241"
 output:
-  pdf_document: default
-  df_document: default
   html_document:
     theme: yeti
     css: ../styles/ds303-notes.css
+  df_document: default
+  pdf_document: default
 ---
 
 \def\tor{\operatorname{or}}
@@ -451,7 +451,7 @@ a. What is the distribution of $2X – Y$?
 a. What is the distribution of $X+Y$?
 a. What is $\Prob(X \le 4)$?
 a. What is $\Prob(Y \ge 2)$?
-a. What is $\Prob(1 \le 2X - Y \ge 4)$?
+a. What is $\Prob(1 \le 2X - Y \le 4)$?
 a. What is $\Prob(X - Y \le 4)$?
 a. What is $\Prob(X \le Y$)?  (Hint:  $\Prob(X \le Y) = \Prob(X-Y \le 0)$.  Use the distribution of $X-Y$.)
 

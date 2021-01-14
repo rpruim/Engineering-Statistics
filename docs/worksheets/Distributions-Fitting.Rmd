@@ -1,0 +1,318 @@
+---
+title: "Fitting Distributions to Data"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+theme_set(theme_bw())
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+<style>
+div.boxed {
+  border-style: solid;
+  border-color: navy;
+  border-width: 2px;
+  border-radius: 10px;
+  padding 20px;
+</style>
+
+
+
+**Problem:** 
+Suppose we have data for a continuous random variable X.  Can we find (estimate) the distribution for X?
+
+* Part 1:  What type of distribution?  Exponential, normal, uniform, gamma, beta, \dots 
+* Part 2:  What are the values of the parameters for the distribution?
+
+**Three Methods**
+
+1. Method of moments 
+
+    * Only requires summaries of data, not complete data.
+    
+    * Can be done by hand in many important cases
+    
+    * But there are better ways to get estimates (better statistical properties)
+    
+
+2. Maximum likelihood 
+
+    * Harder to do by hand, but better estimates
+    
+    * Requires the full data set, lots of computation, and optimization
+
+    * This is what `fitdistr()` and `gf_fitdistr()` do)
+    
+3. Kernel density estimate 
+
+    * Let's us skip step 1 
+    
+    * This is what `gf_dens()` and `gf_density()`
+    
+    * Big idea: replace each data point with a little curve (a kernel) and add them together.
+    
+    * Get different results depending on the choice of curve.
+
+All of these methods work better with large data sets than with small data sets --
+it is hard to determine the overall shape of a distribution without a large data set.
+
+## Method of Moments
+
+Big idea: 
+
+1. Express the mean, variance, etc. of the distribution in terms of the parameters of 
+the distribution.  (You can look this information up in our book or on Wikipedia.)
+
+2. Set them equal to the mean, variance, etc. of your data set.
+
+3. Solve.
+
+
+**Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
+fit a uniform distribution.
+
+		 		 
+**Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
+fit a normal distribution.
+
+**Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
+fit an exponential distribution.
+
+**Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
+fit an gamma distribution.
+
+**General Example**: A sample has mean = ________ and standard deviation = _________, 
+use the method of moments to fit a ________ distribution.
+
+* Might be easy or hard depending on the algebra invovled.
+
+* **No guarantee that the fit is a good fit**.  You can fit any distribution using
+any method to any data. Other methods (plots, for example) need to be used to see whether
+the fit is any good.
+
+## Maximum Likelihood
+
+**Example:  Wind speed**
+
+We can use the following code to load a data set that contains three year's worth 
+of mean hourly wind speeds (mph) in Twin Falls, ID.  This kind of data is often used
+to estimate how much power could be generated from a windmill placed in a given location.
+
+```{r include = !onLine,eval = !onLine}
+Wind <- read.csv("data/stob/TwinfallsWind.csv")
+head(Wind, 2)
+tail(Wind, 2)
+histogram( ~ speed, data = Wind, binwidth = 1 )
+```
+
+```{r include = onLine,eval = onLine}
+Wind <- 
+  read.csv("https://rpruim.github.io/Engineering-Statistics/data/stob/TwinfallsWind.csv")
+head(Wind, 2)
+tail(Wind, 2)
+gf_histogram( ~ speed, data = Wind, binwidth = 1 )
+```
+
+As we can see, the distribution is skewed, but it doesn't look like an 
+exponential distribution would be a good fit.  Of the distributions we have seen,
+it seems like a Weibull or Gamma distribution would be a potentially good choice.
+A Weibull model has often been used as a model for mean hourly wind speed, and the 
+shape of our histogram indicates that this is a reasonable family of distributions.
+
+Which Weibull distribution is the best model for our data?
+
+```{r fitdistr-windspeed, error = TRUE}
+fitdistr( Wind$speed, "weibull" )
+```
+
+For `fitdistr()()` to fit a Weibull distribution, all of the data must be positive,
+but our data includes some 0's.  
+```{r zeros}
+tally( ~ (speed == 0), data = Wind)
+```
+
+Let's see how small the smallest non-zero measurements 
+are.
+
+```{r}
+min( ~ speed, data = Wind %>% filter(speed > 0))
+```
+
+This may well be a simple rounding issue, since the wind speeds are recorded to the 
+nearest 0.01 and 0.01 is the smallest positive value.
+Let's create a new variable that moves each value of 0 to 0.0025 and try again.
+Why 0.0025?  If we think that 0.01 represents anything in the range 0.005 to 0.015, which
+would round to 0.01, then 0 represents anything in the range 0 to 0.005.  
+0.0025 is the middle of that range.
+
+```{r fitdistr-windspeed2, warning = FALSE}
+Wind <- Wind %>% mutate(speed2 = ifelse( speed > 0, speed, 0.0025))
+fitdistr( Wind$speed2, "weibull" )
+```
+
+```{r include = FALSE}
+mle <- fitdistr( Wind$speed2, "weibull" )
+```
+
+This says that the best fitting (in the sense of maximum likelihood) Weibull
+distribution is the $\Weibull(`r paste(round(mle$est,2),sep = ",")`)$-distribution.
+
+Let's see how well it fits:
+
+```{r xhistogram-Wind,warning = FALSE}
+gf_dhistogram( ~ speed2, data = Wind) %>%
+  gf_fitdistr( ~ speed2, data = Wind, dist = "weibull")
+```
+
+This can be abbreviated a bit:
+
+```{r xhistogram-Wind-2,warning = FALSE}
+gf_dhistogram( ~ speed2, data = Wind) %>%
+  gf_fitdistr(dist = "weibull")
+```
+
+
+
+<!-- **Example:** -->
+<!-- The variable `avg_drinks` in the data frame HELPrct contains data for the -->
+<!-- average number of alcoholic drinks consumed per day for each participant.  -->
+<!-- What distribution fits these data well? -->
+
+<!-- <div class = "explain" label = "Show solution"> -->
+
+<!-- Note: the distribution is different for the different substance groups. -->
+
+<!-- ```{r} -->
+<!-- gf_dens( ~ avg_drinks, data = HELPrct, color = ~ substance) -->
+<!-- ``` -->
+
+<!-- So we should probably fit separately to each group.  Let's try the heroin group. -->
+
+<!-- ```{r} -->
+<!-- Heroin <- HELPrct %>% filter(substance == "heroin") -->
+<!-- gf_dhistogram(~ avg_drinks, data = Heroin) -->
+<!-- ``` -->
+
+<!-- That is a skewed distribution, so we should try something like exponential or gamma or Weibull. -->
+
+<!-- ```{r} -->
+<!-- fitdistr(Heroin$avg_drinks, "exponential") -->
+<!-- fitdistr(Heroin$avg_drinks, "gamma", start = list(shape = 2, rate = 5)) -->
+
+<!-- ``` -->
+
+## Some Practice
+
+**1.** Suppose a data set has a sample mean of 6 and a standard deviation of 2. 
+Use the method of moments to compute estimates of the shape and rate paramters
+for a gamma distribution.
+
+**2.** Fit a gamma distribution to the wind speed data. Use both the method of moments
+and `fitdistr()`. How do the gamma and Weibull fits compare?
+
+**3.** The `weight` variable in the `ChickWeight` data frame contains the weights (g) 
+of baby chicks  at different times under different feeds.
+
+a.	Plot a histogram of the weights.
+ 
+b.	Of the distributions:  uniform, exponential, normal, and gamma, which look like they might fit 
+the data well?  
+
+<!-- Either Exponential or gamma is a good answer -->
+
+c.	Use `fitdistr()` to fit the type of distribution in (b) to the data.  What is the estimate of the parameter(s) for the distribution?  
+
+<!-- Estimated value is rate = .0082 if exponential -->
+<!-- Estimated values are shape = 3.15, rate = .026 if gamma -->
+
+d.	Plot the histogram with the fitted density function.
+  
+e.	Use `fitdistr()` to fit one of the other types of distributions from (b) 
+and plot the histogram with the density curve for that type of distribution. 
+How does the fit look? 
+
+
+**4.**	This problem use the `Womenlf` data set from the `car` package.
+The `hincome` variable contains household income for 263 Canadian women.
+
+a. Plot a histogram of these incomes.
+
+b. Use the method of moments to fit a normal distribution to these data.
+
+c. Use `fitdistr()` to fit a normal distribution to these data. How does this compare to (b)?
+
+d. Plot the histogram with the fitted normal density function.
+
+e. Now fit a gamma distribution to this data. 
+What are the estimates for the shape and rate of the fitted gamma distribution?
+
+f. Plot the histogram with the fitted gamma density function.
+ 
+g. Compare the quality of the fits with normal vs gamma.  Does one clearly fit
+better than the other? 
+
+<!-- They both seem to fit reasonably well.  Given that the data is skewed a bit to -->
+<!-- the right, maybe the gamma fits better. -->
+
+**5.** The dataframe `morley` contains 100 measurements that Morley made of the speed
+of light.  These values are contained in the column `Speed`.
+
+a. Plot the histogram of this data.
+ 
+b. Which kind of distribution best fits the data? 
+
+c. Find the estimated parameters for this distribution.
+
+d. Plot the histogram with the fitted density curve.  
+
+
+

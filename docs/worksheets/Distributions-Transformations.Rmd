@@ -466,7 +466,7 @@ b. What are the mean and standard deviation of $3X+4Y$?
 Let $X$ and $Y$ be independent $\Gamm(shape = 3, rate = 4)$ random variables.  
 Let $S = X+Y$ and $D = X-Y$. 
 Is a gamma distribution a good fit for S?  Use a simulation with 10000 repetitions to test this.
-For each (sum and product):
+For each (sum and difference):
 
 * Use `gf_fitdistr()` to compare your histogram to the best fitting Gamma distribution.
 * If it fits well, use `fitdistr()` to get the shape and rate parameters for the best

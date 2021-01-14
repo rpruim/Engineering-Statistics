@@ -736,12 +736,15 @@ Here is an illustration of 100 confidence intervals computed by sampling from a
 normal population with mean $\mu = 100$.
 
 <<CIsim01, echo=FALSE, fig.width=8>>=
-results <- CIsim(25,100, args=list(mean=100, sd=10), estimand=100, verbose=FALSE)
-p <- xYplot(Cbind(estimate,lower,upper) ~ sample,
-   data=results,
-   par.settings=col.mosaic(), 
-   groups=cover)
-ladd(panel.abline(h=100), plot=p)
+results <- CIsim(25, 100, args =list(mean = 100, sd = 10), estimand = 100, verbose = FALSE)
+@
+
+<<include = FALSE>>=
+# p <- xYplot(Cbind(estimate,lower,upper) ~ sample,
+#    data=results,
+#    par.settings=col.mosaic(), 
+#    groups=cover)
+# ladd(panel.abline(h=100), plot=p)
 @
 
 Notice that some of the samples have larger means (the dots) and some smaller means.
@@ -1266,10 +1269,11 @@ me <- t_star * SE; me                # margin of error
 	of polymerization degree for some paper specimens.  The data have been 
 	sorted to assist in typing.  (If the data actually occurred in this order,
 	we would probably be worried about whether the data points were independent...and might be doing a different sort of analysis.)
-<<>>=
+<<tidy = FALSE>>=
 Paper <- 
-	data.frame( polymer = c( 418, 421, 421, 422, 425, 427, 431, 434, 
-							437, 439, 446, 447, 448, 453, 454, 463, 465) )
+  tibble(
+    polymer = c(418, 421, 421, 422, 425, 427, 431, 434,
+                437, 439, 446, 447, 448, 453, 454, 463, 465) )
 @
 	\begin{enumerate}
 		\item Create a normal-quantile plot to see if there are any reasons

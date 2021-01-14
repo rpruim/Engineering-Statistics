@@ -1267,8 +1267,10 @@ me <- t_star * SE; me                # margin of error
 	we would probably be doing a different sort of analysis.)
 <<>>=
 Paper <- 
-	data.frame(polymer = c(418, 421, 421, 422, 425, 427, 431, 434, 
-							37, 439, 446, 447, 448, 453, 454, 463, 465))
+	tibble(
+	  polymer = 
+	    c(418, 421, 421, 422, 425, 427, 431, 434, 
+        437, 439, 446, 447, 448, 453, 454, 463, 465))
 @
 	\begin{enumerate}
 		\item Create a normal-quantile plot to see if there are any reasons

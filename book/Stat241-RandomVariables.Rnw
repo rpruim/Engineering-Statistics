@@ -1528,13 +1528,14 @@ of mean hourly wind speeds (mph) in Twin Falls, ID.  This kind of data is often 
 to estimate how much power could be generated from a windmill placed in a given location.
 
 <<include = !onLine,eval = !onLine>>=
-Wind <- read.file("data/stob/TwinfallsWind.csv")
+Wind <- read.csv("data/stob/TwinfallsWind.csv")
 head(Wind, 2)
 tail(Wind, 2)
 histogram( ~ speed, data = Wind, binwidth = 1 )
 @
 <<include = onLine,eval = onLine>>=
-Wind <- read.file("https://rpruim.github.io/Engineering-Statistics/data/stob/TwinfallsWind.csv")
+Wind <- 
+  read.csv("https://rpruim.github.io/Engineering-Statistics/data/stob/TwinfallsWind.csv")
 head(Wind, 2)
 tail(Wind, 2)
 gf_histogram( ~ speed, data = Wind, binwidth = 1 )
@@ -1570,7 +1571,7 @@ Why 0.0025?  If we think that 0.01 represents anything in the range 0.005 to 0.0
 would round to 0.01, then 0 represents anything in the range 0 to 0.005.  
 0.0025 is the middle of that range.
 
-<<fitdistr-windspeed2,warning = FALSE>>=
+<<fitdistr-windspeed2, warning = FALSE>>=
 Wind <- Wind %>% mutate(speed2 = ifelse( speed > 0, speed, 0.0025))
 fitdistr( Wind$speed2, "weibull" )
 @
@@ -2077,6 +2078,12 @@ gf_qq( ~speed2, data = Wind, distribution = fittedqweibull )
 	\item
 Using Table~\ref{table:contDist} and the method of moments,
 fit an exponential distribution to the Twin Falls wind speed data.
+
+<<>>=
+Wind <- 
+  read.csv("https://rpruim.github.io/Engineering-Statistics/data/stob/TwinfallsWind.csv")
+@
+
 What is the estimated value of the rate parameter?
 \item
 	Now use \function{fitdistr()} to fit an exponential
@@ -2131,6 +2138,7 @@ What are the estimated values of the shape and rate parameters?
 
 \begin{solution}
 <<tidy = FALSE,warning = FALSE>>=
+Wind <- Wind %>% mutate(speed2 = ifelse( speed > 0, speed, 0.0025))
 m <- mean(~speed2, data = Wind); m
 v <- var(~speed2, data = Wind); v
 fitdistr(Wind$speed2, "gamma")
@@ -2304,10 +2312,11 @@ D2 <- data.frame(V = a,Z = b,Y = c,W = d,X = e,U = f);
 sD2 <- stack(D2);
 @
 
-<<compareplots1,echo = FALSE,fig.height = 5>>=
+<<compareplots1,echo = FALSE,fig.height = 3.0>>=
 gf_dhistogram(~ values | ind, 
 	data = sD1, as.table = TRUE,
 	breaks = seq(-0.5,10.5,by = .5),
+	size = 0.3
 	)
 gf_qq(~values | ind, data = sD2, as.table = TRUE)
 @

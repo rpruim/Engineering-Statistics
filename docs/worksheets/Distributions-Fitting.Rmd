@@ -120,28 +120,44 @@ the distribution.  (You can look this information up in our book or on Wikipedia
 **Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
 fit a uniform distribution.
 
+<br>
 		 		 
 **Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
 fit a normal distribution.
 
+<br>
+
 **Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
 fit an exponential distribution.
+
+<br>
 
 **Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
 fit an gamma distribution.
 
+<br>
+
 **General Example**: A sample has mean = ________ and standard deviation = _________, 
 use the method of moments to fit a ________ distribution.
 
-* Might be easy or hard depending on the algebra invovled.
+<br>
+
+
+* Might be easy or hard depending on the algebra involved.
+
+* If there is only one parameter, we only need to use the mean.
+
+* There are ways to use distributions with more than 2 parameters, but we won't cover that in this class.
 
 * **No guarantee that the fit is a good fit**.  You can fit any distribution using
 any method to any data. Other methods (plots, for example) need to be used to see whether
 the fit is any good.
 
-## Maximum Likelihood
+## Maximum Likelihood (`fitdistr()`)
 
 **Example:  Wind speed**
+
+<div class = "explain" label = "Show example">
 
 We can use the following code to load a data set that contains three year's worth 
 of mean hourly wind speeds (mph) in Twin Falls, ID.  This kind of data is often used
@@ -220,6 +236,7 @@ gf_dhistogram( ~ speed2, data = Wind) %>%
   gf_fitdistr(dist = "weibull")
 ```
 
+</div>
 
 
 <!-- **Example:** -->

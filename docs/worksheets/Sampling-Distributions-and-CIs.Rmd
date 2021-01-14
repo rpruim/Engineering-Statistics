@@ -413,7 +413,7 @@ So our confidence interval should be
 \begin{align*}
 \mbox{estimate} &\pm \mbox{critical value} \cdot SE
 \\
-\hat p & \pm z_*  \sqrt{\frac{p (1-p)}{n}}
+\hat p & \pm z_*  \sqrt{\frac{\hat p (1 - \hat p)}{n}}
 \end{align*}
 
 Things to note:
@@ -422,7 +422,8 @@ Things to note:
 is very different from a normal distribution. A commonly used rule of thumb is that we should have 
 at least 10 success and 10 failures in the sample in order to use this method.
 
-* We don't need to use a t-distribution here. 
+* We don't need to use a t-distribution here. But we do use $\hat p$ in our (estimated)
+standard error.
 
 * There are better ways to compute a confidence interval for a proportion.
 

@@ -840,12 +840,12 @@ confint(t.test( ~ mass, data = Dimes, conf.level = .99))</code></pre>
 <p><span class="math display">\[\begin{align*}
 \mbox{estimate} &amp;\pm \mbox{critical value} \cdot SE
 \\
-\hat p &amp; \pm z_*  \sqrt{\frac{p (1-p)}{n}}
+\hat p &amp; \pm z_*  \sqrt{\frac{\hat p (1 - \hat p)}{n}}
 \end{align*}\]</span></p>
 <p>Things to note:</p>
 <ul>
 <li><p>Our sample needs to be quite large for this approximation to work because the <span class="math inline">\({\sf Binom}(1, p)\)</span> distribution is very different from a normal distribution. A commonly used rule of thumb is that we should have at least 10 success and 10 failures in the sample in order to use this method.</p></li>
-<li><p>We don’t need to use a t-distribution here.</p></li>
+<li><p>We don’t need to use a t-distribution here. But we do use <span class="math inline">\(\hat p\)</span> in our (estimated) standard error.</p></li>
 <li><p>There are better ways to compute a confidence interval for a proportion.</p>
 <ul>
 <li><p>One of these uses a binomial distribution instead of a normal distribution. That’s harder to work with, but the distribution is exactly correct instead of only approximately correct. <code>binom.test()</code> will do this.</p></li>

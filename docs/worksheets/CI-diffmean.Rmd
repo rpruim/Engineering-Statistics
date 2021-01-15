@@ -18,6 +18,7 @@ output:
 \def\SD{\operatorname{SD}}
 \def\Binom{{\sf Binom}}
 \def\Norm{{\sf Norm}}
+\def\T{{\sf T}}
 \def\Chisq{{\sf Chisq}}
 \def\Unif{{\sf Unif}}
 \def\Exp{{\sf Exp}}
@@ -130,7 +131,7 @@ So what do we know about the sampling distribution for $\overline X_1 - \overlin
 
 <div class = "explain" label = "Show sampling distribution">
 * $\displaystyle \overline{X_1} \approx \Norm\left(\mu_1, \frac{\sigma_1}{\sqrt{n_1}}\right)$
-* $\displaystyle \overline{Y_2} \approx \Norm\left(\mu_2, \frac{\sigma_2}{\sqrt{n_2}}\right)$
+* $\displaystyle \overline{X_2} \approx \Norm\left(\mu_2, \frac{\sigma_2}{\sqrt{n_2}}\right)$
 * So $\overline{X_1} - \overline{X_2}$
 
   * will be approximatley normal (with the usual assumptions about sample size, etc.)
@@ -147,7 +148,7 @@ So what do we know about the sampling distribution for $\overline X_1 - \overlin
 
 \begin{align*}
   \overline{X_1} - \overline{X_2} & \approx 
-    \Norm\left(\mu_2 - \mu_1,  \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma_2^2}{n_2}}\right)
+    \Norm\left(\mu_1 - \mu_2,  \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma_2^2}{n_2}}\right)
     \\
   \frac{(\overline{X_1} - \overline{X_2}) - (\mu_1 - \mu_2)}{
     \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma_2^2}{n_2}}} \approx \Norm(0, 1)
@@ -161,14 +162,15 @@ $s_1$ and $s_2$.  It can be shown that
 
 $$
   \frac{(\overline{X_1} - \overline{X_2}) - (\mu_1 - \mu_2)}{
-    \sqrt{\frac{s_1^2}{n_1} _ \frac{s_2^2}{n_2}}} \approx \T(df = ?)
+    \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \approx \T(\mathrm{df} = ?)
 $$
 
 * $df$ is given by a complicated formula, but is always satisfies
 
 $$ 
-\min(df_1, df_2) \le df \le df_1 + df_2
+\min(\mathrm{df}_1, \mathrm{df}_2) \le \mathrm{df} \le \mathrm{df}_1 + \mathrm{df}_2
 $$
+
 * df will be closer to the high end when the sample sizes and standard deviations are very similar
 and closer to the low end when they are quite different.
 </div>
@@ -181,7 +183,7 @@ df_stats(height ~ sex, data = Galton)
 
 ```{r}
 estimate <- 69.2 - 64.1; estimate 
-SE <- sqrt( 2.37^2 / 433 + 2.63^2 / 465)
+SE <- sqrt( 2.37^2 / 433 + 2.63^2 / 465); SE
 t.star1 <- qt(0.975, df = 432); t.star1
 t.star2 <- qt(0.975, df = 432 + 464); t.star2
 ```
@@ -195,7 +197,7 @@ of our estimate.
 So our interval is
 
 ```{r}
-estimate + c(-1,1) * SE
+estimate + c(-1,1) * t.star1 * SE
 ```
 </div>
 <br>
@@ -228,7 +230,7 @@ t.test(height ~ sex, data = Galton)
 
    proportion               $p$                 $\hat p$                            $z_*$          $\displaystyle \sqrt{\frac{\hat p (1-\hat p)}{n}}$
    
-  difference in means    $\mu_1 - \mu_2$   $\overline{x_1} - \overline{x_2}$        $t_*$          $\displaystyle \sqrt{ \frac{\sigma_1^2}{n_1} + \frac{s_2^2}{n}}$
+  difference in means    $\mu_1 - \mu_2$   $\overline{x_1} - \overline{x_2}$        $t_*$          $\displaystyle \sqrt{ \frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}$
 --------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------
@@ -236,6 +238,8 @@ t.test(height ~ sex, data = Galton)
 ## Review Questions
 
 **1.**
+Add another row to the table for a difference between two proportions.  Follow the same approach
+we used for the difference between two means. 
 
 **2.**
 

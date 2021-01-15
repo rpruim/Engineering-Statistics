@@ -673,7 +673,7 @@ gf_violin(height ~ sex, data = Galton)</code></pre>
 <div class="explain" label="Show sampling distribution">
 <ul>
 <li><p><span class="math inline">\(\displaystyle \overline{X_1} \approx {\sf Norm}\left(\mu_1, \frac{\sigma_1}{\sqrt{n_1}}\right)\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \overline{Y_2} \approx {\sf Norm}\left(\mu_2, \frac{\sigma_2}{\sqrt{n_2}}\right)\)</span></p></li>
+<li><p><span class="math inline">\(\displaystyle \overline{X_2} \approx {\sf Norm}\left(\mu_2, \frac{\sigma_2}{\sqrt{n_2}}\right)\)</span></p></li>
 <li><p>So <span class="math inline">\(\overline{X_1} - \overline{X_2}\)</span></p>
 <ul>
 <li><p>will be approximatley normal (with the usual assumptions about sample size, etc.)</p></li>
@@ -688,7 +688,7 @@ gf_violin(height ~ sex, data = Galton)</code></pre>
 </ul>
 <p><span class="math display">\[\begin{align*}
   \overline{X_1} - \overline{X_2} &amp; \approx 
-    {\sf Norm}\left(\mu_2 - \mu_1,  \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma_2^2}{n_2}}\right)
+    {\sf Norm}\left(\mu_1 - \mu_2,  \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma_2^2}{n_2}}\right)
     \\
   \frac{(\overline{X_1} - \overline{X_2}) - (\mu_1 - \mu_2)}{
     \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma_2^2}{n_2}}} \approx {\sf Norm}(0, 1)
@@ -699,14 +699,17 @@ gf_violin(height ~ sex, data = Galton)</code></pre>
 <p>Unfortunately, we don’t know <span class="math inline">\(\sigma_1\)</span> and <span class="math inline">\(\sigma_2\)</span>, so we will approximate them with <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span>. It can be shown that</p>
 <p><span class="math display">\[
   \frac{(\overline{X_1} - \overline{X_2}) - (\mu_1 - \mu_2)}{
-    \sqrt{\frac{s_1^2}{n_1} _ \frac{s_2^2}{n_2}}} \approx \T(df = ?)
+    \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \approx {\sf T}(\mathrm{df} = ?)
 \]</span></p>
 <ul>
 <li><span class="math inline">\(df\)</span> is given by a complicated formula, but is always satisfies</li>
 </ul>
 <p><span class="math display">\[ 
-\min(df_1, df_2) \le df \le df_1 + df_2
-\]</span> * df will be closer to the high end when the sample sizes and standard deviations are very similar and closer to the low end when they are quite different.</p>
+\min(\mathrm{df}_1, \mathrm{df}_2) \le \mathrm{df} \le \mathrm{df}_1 + \mathrm{df}_2
+\]</span></p>
+<ul>
+<li>df will be closer to the high end when the sample sizes and standard deviations are very similar and closer to the low end when they are quite different.</li>
+</ul>
 </div>
 <p><br></p>
 <div class="explain" label="Show computing the CI by hand">
@@ -716,15 +719,16 @@ gf_violin(height ~ sex, data = Galton)</code></pre>
 ## 2   height   M  60 67.5   69.2 71.0 79.0 69.2 2.63 465       0</code></pre>
 <pre class="r"><code>estimate &lt;- 69.2 - 64.1; estimate </code></pre>
 <pre><code>## [1] 5.1</code></pre>
-<pre class="r"><code>SE &lt;- sqrt( 2.37^2 / 433 + 2.63^2 / 465)
-t.star1 &lt;- qt(0.975, df = 432); t.star1</code></pre>
+<pre class="r"><code>SE &lt;- sqrt( 2.37^2 / 433 + 2.63^2 / 465); SE</code></pre>
+<pre><code>## [1] 0.167</code></pre>
+<pre class="r"><code>t.star1 &lt;- qt(0.975, df = 432); t.star1</code></pre>
 <pre><code>## [1] 1.97</code></pre>
 <pre class="r"><code>t.star2 &lt;- qt(0.975, df = 432 + 464); t.star2</code></pre>
 <pre><code>## [1] 1.96</code></pre>
 <p>In this case, the value of <span class="math inline">\(t_*\)</span> is nearly the same at both ends of the range. When they are more different, when computing by hand, use the larger value of <span class="math inline">\(t_*\)</span> (the one that comes from the smaller degrees of freedom). That will give an interval that might be a bit wider than necessary, but that is better than giving an interval that is too narrow and exagerates the quality of our estimate.</p>
 <p>So our interval is</p>
-<pre class="r"><code>estimate + c(-1,1) * SE</code></pre>
-<pre><code>## [1] 4.93 5.27</code></pre>
+<pre class="r"><code>estimate + c(-1,1) * t.star1 * SE</code></pre>
+<pre><code>## [1] 4.77 5.43</code></pre>
 </div>
 <p><br></p>
 <div class="explain" label="Show letting R do all the work">
@@ -786,7 +790,7 @@ t.star1 &lt;- qt(0.975, df = 432); t.star1</code></pre>
 <td align="center"><span class="math inline">\(\mu_1 - \mu_2\)</span></td>
 <td align="center"><span class="math inline">\(\overline{x_1} - \overline{x_2}\)</span></td>
 <td align="center"><span class="math inline">\(t_*\)</span></td>
-<td align="center"><span class="math inline">\(\displaystyle \sqrt{ \frac{\sigma_1^2}{n_1} + \frac{s_2^2}{n}}\)</span></td>
+<td align="center"><span class="math inline">\(\displaystyle \sqrt{ \frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -795,7 +799,7 @@ t.star1 &lt;- qt(0.975, df = 432); t.star1</code></pre>
 </div>
 <div id="review-questions" class="section level2">
 <h2>Review Questions</h2>
-<p><strong>1.</strong></p>
+<p><strong>1.</strong> Add another row to the table for a difference between two proportions. Follow the same approach we used for the difference between two means.</p>
 <p><strong>2.</strong></p>
 <p><strong>3.</strong></p>
 </div>

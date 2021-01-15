@@ -235,13 +235,10 @@ t.test(height ~ sex, data = Galton)
 
 --------------------------------------------------------------------------------------------------
 
-## Review Questions
+## Questions
 
 **1.**
 Add another row to the table for a difference between two proportions.  Follow the same approach
 we used for the difference between two means. 
 
-**2.**
-
-**3.**
 

@@ -1130,7 +1130,7 @@ answers
 require(Devore6)
 names(ex07.37) <- "strideRate"
 gf_qq(~strideRate, data=ex07.37)
-favstats(~strideRate,data=ex07.37)
+df_stats(~strideRate,data=ex07.37)
 @
 	\begin{enumerate}
 		\item
@@ -1467,9 +1467,9 @@ Answers will vary.
 % 			For example, \variable{Length} in the \dataframe{KidsFeet} data
 % 			set.
 % 		\item
-% 			Use \function{favstats} to compute some summary statistics.
+% 			Use \function{df_stats} to compute some summary statistics.
 % <<>>=
-% favstats ( ~ length, data=KidsFeet )
+% df_stats ( ~ length, data=KidsFeet )
 % @
 % 		\item
 % 			Pick a confidence level.  Example: 90\% confidence.
@@ -1490,7 +1490,7 @@ Answers will vary.
 % 
 % \begin{solution}
 % <<tidy=FALSE>>=
-% favstats( ~ length, data=KidsFeet )
+% df_stats( ~ length, data=KidsFeet )
 % x_bar <- 24.72
 % n <- 39; n
 % s <- 1.32; s
@@ -1511,7 +1511,7 @@ Answers will vary.
 % we should create a confidence intervals separately for each group.  Now you have two
 % problems.  You can get started with
 % <<>>=
-% favstats( length ~ sex, data=KidsFeet )
+% df_stats( length ~ sex, data=KidsFeet )
 % @
 % 
 % \end{solution}

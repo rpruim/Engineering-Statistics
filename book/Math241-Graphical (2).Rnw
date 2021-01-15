@@ -269,8 +269,8 @@ In other words, there are three pieces of information we must provide to
 \R\ in order to get the plot we want:
 \begin{itemize}
 	\item
-		The kind of plot (\function{histogram()}, \function{bargraph()}, 
-		\function{densityplot()}, \function{bwplot()}, etc.) 
+		The kind of plot (\function{gf_histogram()}, \function{gf_bar()}, 
+		\function{gf_dens()}, \function{gf_boxplot()}, etc.) 
 	\item
 		The name of the variable
 	\item
@@ -306,23 +306,19 @@ histogram( ~ Duration, data=oldfaith, n=30 )
 histogram( ~ Duration, data=oldfaith, n=50 )
 @
 
-The \function{histogram()}%
-\footnote{The \pkg{mosaic} version of the \function{histogram()} function has some 
-extra features (like the \option{width} argument) but is otherwise is very similar to 
-regular \function{histogram()} function in \pkg{lattice}.}
-function in the \pkg{mosaic} package lets you describe
-the bins in terms of center and width instead of in terms of the number
+The \function{gf_histogram()}
+lets you describe the bins in terms of center and width instead of in terms of the number
 of bins.  This is especially nice for count data.
 
 <<xhistogram,fig.width=3,out.width=".3\\textwidth">>=
-histogram( ~ Duration, data=oldfaith, width=60 )
-histogram( ~ Duration, data=oldfaith, width=20 )
-histogram( ~ Duration, data=oldfaith, width=5 )
+gf_histogram( ~ Duration, data=oldfaith, binwidth=60 )
+gf_histogram( ~ Duration, data=oldfaith, binwidth=20 )
+gf_histogram( ~ Duration, data=oldfaith, binwidth=5 )
 @
 
 \R\ also provides a ``smooth'' version called a density plot and a triangular version
 called a frequency polygon; just change 
-the function name from \function{histogram()} to 
+the function name from \function{gf_histogram()} to 
 \function{densityplot()} or 
 \function{freqpolygon()}.
 <<densityplot>>=
@@ -388,7 +384,7 @@ in the HELP study, or whether the distribution of weights of male mosquitoes
 is different from the distribution for females.
 
 <<compare-ages>>=
-histogram( ~ age | sex, HELPrct, width=5)
+gf_histogram( ~ age | sex, HELPrct, binwidth=5)
 densityplot( ~ length | sex, KidsFeet )
 @
 
@@ -403,10 +399,10 @@ bargraph( ~ substance | sex, data=HELPrct)
 Another way to look at multiple groups simultaneously is by using 
 the \argument{groups} argument.  What \argument{groups} does depends a bit on the type of 
 graph, but it will put the information in one panel rather than multiple panels.
-Using \argument{groups} with \function{histogram()} doesn't work so well because
+Using \argument{groups} with \function{gf_histogram()} doesn't work so well because
 it is difficult to overlay histograms.%
 \footnote{The \pkg{mosaic} function
-\function{histogram()} does do something meaningful with \argument{groups}
+\function{gf_histogram()} does do something meaningful with \argument{groups}
 in some situations.}
 Density plots work better when you wish to look at the shapes of several distributions 
 in a single plot panel.
@@ -684,7 +680,7 @@ color, respectively.  To specify multiples (one for each group), use the \functi
 
 <<pch-lwd-lty,cache=TRUE,fig.width=3,fig.height=2.2>>=
 densityplot( ~age, data=HELPrct, groups=sex, lty=1, lwd=c(2,4) )
-histogram( ~ age, data=HELPrct, col='green')
+gf_histogram( ~ age, data=HELPrct, col='green')
 @
 <<col,fig.width=6,fig.height=2.6,tidy=FALSE>>=
 # There are 25 numbered plot symbols
@@ -877,11 +873,11 @@ But in this case it is important that the height of the bars is chosen so
 that area (\emph{NOT height}) is proportional to frequency.  
 Using height instead of area would distort the picture.
 
-When unequal bin sizes are specified, \function{histogram()} by default chooses
+When unequal bin sizes are specified, \function{gf_histogram()} by default chooses
 the density scale:
 
 <<hist-unequal-bins,fig.width=3,fig.height=2>>=
-histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9))
+gf_histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9))
 @
 The density scale is important.
 It tells \R\ to use a scale such that 
@@ -894,11 +890,11 @@ between 5.0 and 5.5.
 It would be incorrect to choose \option{type="count"} or \option{type="proportion"} since
 this distorts the picture of the data.  Fortunately, \R\ will warn you if you try:
 %<<hist-unequal-bins-bad-echo,fig.width=3,fig.height=2,eval=FALSE>>=
-% histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9), type='count')
+% gf_histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9), type='count')
 % @
 <<hist-unequal-bins-bad,fig.width=3,fig.height=2,echo=FALSE>>=
 trellis.par.set(theme=col.fastR(bw=T))
-histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9),type="count")
+gf_histogram( ~ Sepal.Length, data=iris, breaks=c(4,5,5.5,5.75,6,6.5,7,8,9),type="count")
 trellis.focus('panel',1,1)
 grid.text(y=.7,'Never do this!', gp=gpar(col='red',cex=2,alpha=.6))
 trellis.unfocus()
@@ -958,7 +954,7 @@ The CPS85 data comes from the Current Population Survey, which collects data on 
 \begin{solution}
 <<>>=
 #an example:
-histogram( ~ age , data=CPS85)
+gf_histogram( ~ age , data=CPS85)
 @
 The CPS85 respondents range in age from under 20 to nearly 70 years old.  The distribution of ages of respondents is unimodal, but not symmetric -- there is a wider spread of ages at the high end of the distribution (in the right tail) than at the left. 
 \end{solution}
@@ -1050,7 +1046,7 @@ SUV is the most common car type in the dataset, although pickups, compact cars, 
 \begin{solution}
 <<>>=
 #an example:
-histogram(~ hwy | class , data=mpg,
+gf_histogram(~ hwy | class , data=mpg,
           xlab="Miles per Gallon (highway)",
           main="Highway fuel economy by car type")
 @
@@ -1140,8 +1136,8 @@ require(mosaic) #only if you have not yet done it this session!
 i1 is the average number of drinks consumed per day over the past 30 days, in standard units.  i2 is the maxium number of drinks per day (measured in the same way).  
 
 <<>>=
-histogram(~ i1, data=HELPrct, type="count")
-histogram(~ i2, data=HELPrct, type="count")
+gf_histogram(~ i1, data=HELPrct, type="count")
+gf_histogram(~ i2, data=HELPrct, type="count")
 @
 The distributions of both i1 and i2 are heavily right-skewed. There are few observations of very heavy drinking (greater than about 75 for i1, or 100 for i2), but they are not necessarily obvious outliers (they fit the right-skewed pattern of the overall dataset).
 \end{solution}
@@ -1189,8 +1185,8 @@ Alcohol use is heavier among people whose primary substance of abuse is alcohol,
 
 \begin{solution}
 <<>>=
-histogram(~Nov, data=SnowGR)
-histogram(~Dec, data=SnowGR)
+gf_histogram(~Nov, data=SnowGR)
+gf_histogram(~Dec, data=SnowGR)
 @
 November and December 2014 were both very unusual in terms of snowfall. 31 inches was a record high snowfall
 total for November.  For December, tallies as low as or lower than 1 inch have been recorded before 2014, 

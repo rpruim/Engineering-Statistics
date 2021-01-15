@@ -1463,9 +1463,9 @@ The important feature to get right is the direction of the skew.
 			For example, \variable{Length} in the \dataframe{KidsFeet} data
 			set.
 		\item
-			Use \function{favstats} to compute some summary statistics.
+			Use \function{df_stats} to compute some summary statistics.
 <<>>=
-favstats ( ~ length, data = KidsFeet)
+df_stats ( ~ length, data = KidsFeet)
 @
 		\item
 			Pick a confidence level.  Example: 90\% confidence.
@@ -1486,7 +1486,7 @@ You won't run out of examples before you run out of energy for doing these.
 
 \begin{solution}
 <<tidy = FALSE>>=
-favstats( ~ length, data = KidsFeet)
+df_stats( ~ length, data = KidsFeet)
 x_bar <- 24.72
 n <- 39; n
 s <- 1.32; s

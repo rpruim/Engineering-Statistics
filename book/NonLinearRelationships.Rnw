@@ -2203,7 +2203,7 @@ did not receive a monetary incentive.  Let's see whether on average the controls
 library(Stat2Data)
 data(WeightLossIncentive)
 Controls <- subset(WeightLossIncentive, Group=="Control")
-favstats( ~ WeightLoss, data = Controls )
+df_stats( ~ WeightLoss, data = Controls )
 @
 The standard error when doing inference for a mean is 
 \[
@@ -2263,7 +2263,7 @@ A test of the null hypothesis $\beta_1 = 0$ tests whether the two groups had dif
 of weight loss (on average).   (Note that this model also assumes that the two groups have the same 
 standard deviation.  There are ways to test this hypothesis without that assumption.)
 <<>>=
-favstats( WeightLoss ~ Group, WeightLossIncentive )
+df_stats( WeightLoss ~ Group, WeightLossIncentive )
 coef(summary( model2 ) )
 @
 The small p-value provides evidence against the null hypothesis.  That is, we have evidence that

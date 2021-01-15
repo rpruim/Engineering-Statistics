@@ -240,11 +240,11 @@ var( ~ age, data = HELPrct)
 @
 \Rindex{median()}%
 \Rindex{IQR()}%
-\Rindex{favstats()}%
+\Rindex{df_stats()}%
 <<stats2>>=
 median( ~ age, data = HELPrct)
 IQR( ~ age, data = HELPrct)       
-favstats( ~ age, data = HELPrct)  # this computes several statistics at once
+df_stats( ~ age, data = HELPrct)  # this computes several statistics at once
 @
 
 It is also possible to compute these statistics separately for each of several groups.
@@ -254,7 +254,7 @@ choices for the formula:  \verb!y ~ x! or \verb! ~ x | z!.
 <<>>=
 mean(age ~ sex, data = HELPrct)
 sd(age ~ sex, data = HELPrct)
-favstats( ~ age | sex, data = HELPrct )
+df_stats( ~ age | sex, data = HELPrct )
 @
 
 \subsection{A word of caution}

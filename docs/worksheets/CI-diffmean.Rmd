@@ -1,0 +1,243 @@
+---
+title: "Confidence intervals for a difference"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+library(patchwork)
+theme_set(theme_bw())
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+<style>
+div.boxed {
+  border-style: solid;
+  border-color: navy;
+  border-width: 2px;
+  border-radius: 10px;
+  padding 20px;
+</style>
+
+
+## Confidence Intervals
+
+### General form
+
+$$
+\mbox{estimate} \pm \mbox{critical value} \cdot SE
+$$
+
+### Using the general form
+
+To use the general form, we just need to fill in the three slots.
+
+--------------------------------------------------------------------------------------------------
+ quantity of interest   estimand   estimate          critical value   standard error
+---------------------- ---------- ----------------- ---------------- ---------------------
+       mean              $\mu$     $\overline{x}$       $t_*$          $\displaystyle \frac{s}{\sqrt{n}}$
+
+   proportion             $p$       $\hat p$             $z_*$          $\displaystyle \sqrt{\frac{\hat p (1-\hat p)}{n}}$
+--------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+
+If you get in the habit of starting from the general form and then filling in the three slots, it will
+help you keep things straight (and prepare you for some things yet to come).
+
+* Identify the correct row
+
+* Stay in that row
+
+### Confidence interval for a difference in means.
+
+Suppse we want to estimate how different (on average) two groups are. For example, we want to
+estiamte the difference between the average male height and the average female height.
+Here are some (older) data from a study done by Galton.
+
+```{r}
+df_stats(height ~ sex, data = Galton)
+gf_boxplot(height ~ sex, data = Galton) |
+gf_violin(height ~ sex, data = Galton)
+```
+ 
+It's pretty clear that the men are taller on average.  The difference in means (in our sample) is 
+a bit over 5 inches.
+
+```{r}
+diffmean( height ~ sex, data = Galton)
+```
+
+But how accurate is that estimate? We would like a confidence interval for it.
+
+Using our general form 
+
+$$
+\mbox{estimate} \pm \mbox{critical value} \cdot SE
+$$
+
+* the estimate is easy, we already have that
+* the critical value and standard error will depend on the shape of the sampling distribution
+
+So what do we know about the sampling distribution for $\overline X_1 - \overline X_2$?
+
+<div class = "explain" label = "Show sampling distribution">
+* $\displaystyle \overline{X_1} \approx \Norm\left(\mu_1, \frac{\sigma_1}{\sqrt{n_1}}\right)$
+* $\displaystyle \overline{Y_2} \approx \Norm\left(\mu_2, \frac{\sigma_2}{\sqrt{n_2}}\right)$
+* So $\overline{X_1} - \overline{X_2}$
+
+  * will be approximatley normal (with the usual assumptions about sample size, etc.)
+
+  * will have a mean of $\mu_1 - \mu_2$ 
+
+  * will have a  variance $\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}$.
+
+  * will have a standard deviation of $SE = \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma_2^2}{n_2}}$.
+
+    * $SE$ because this is the standard deviation of a sampling distribution
+
+* Putting this all togther we have
+
+\begin{align*}
+  \overline{X_1} - \overline{X_2} & \approx 
+    \Norm\left(\mu_2 - \mu_1,  \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma_2^2}{n_2}}\right)
+    \\
+  \frac{(\overline{X_1} - \overline{X_2}) - (\mu_1 - \mu_2)}{
+    \sqrt{\frac{\sigma^2_1}{n_1} + \frac{\sigma_2^2}{n_2}}} \approx \Norm(0, 1)
+\end{align*}
+</div>
+<br>
+
+<div class = "explain" label = "Show 'What about the sigma's?'">
+Unfortunately, we don't know $\sigma_1$ and $\sigma_2$, so we will approximate them with 
+$s_1$ and $s_2$.  It can be shown that 
+
+$$
+  \frac{(\overline{X_1} - \overline{X_2}) - (\mu_1 - \mu_2)}{
+    \sqrt{\frac{s_1^2}{n_1} _ \frac{s_2^2}{n_2}}} \approx \T(df = ?)
+$$
+
+* $df$ is given by a complicated formula, but is always satisfies
+
+$$ 
+\min(df_1, df_2) \le df \le df_1 + df_2
+$$
+* df will be closer to the high end when the sample sizes and standard deviations are very similar
+and closer to the low end when they are quite different.
+</div>
+<br>
+
+<div class="explain" label = "Show computing the CI by hand">
+```{r}
+df_stats(height ~ sex, data = Galton)
+```
+
+```{r}
+estimate <- 69.2 - 64.1; estimate 
+SE <- sqrt( 2.37^2 / 433 + 2.63^2 / 465)
+t.star1 <- qt(0.975, df = 432); t.star1
+t.star2 <- qt(0.975, df = 432 + 464); t.star2
+```
+
+In this case, the value of $t_*$ is nearly the same at both ends of the range.
+When they are more different, when computing by hand, use the larger value of $t_*$ (the one that comes
+from the smaller degrees of freedom). That will give an interval that might be a bit wider than
+necessary, but that is better than giving an interval that is too narrow and exagerates the quality 
+of our estimate.
+
+So our interval is
+
+```{r}
+estimate + c(-1,1) * SE
+```
+</div>
+<br>
+
+<div class="explain" label = "Show letting R do all the work">
+Of course, R can do all the work for us. Here is the 95% confidence interval for 
+the difference between the mean height of men and the mean height of women (in Galton's era).
+
+```{r}
+t.test(height ~ sex, data = Galton) %>% confint()
+```
+
+Notice that the degrees of freedom is not an integer and is close to 
+$432 + 464 = 896$ because the sample sizes and standard deviations 
+are quite similar for men and for wemen:
+
+```{r}
+t.test(height ~ sex, data = Galton) 
+```
+</div>
+
+<br>
+
+<div class="explain" label = "Show updated table">
+
+--------------------------------------------------------------------------------------------------
+ quantity of interest      estimand             estimate                        critical value   standard error
+------------------------ ----------------- ----------------------------------- ---------------- ------------------------------------------------------------------
+   mean                    $\mu$               $\overline{x}$                       $t_*$          $\displaystyle \frac{\sigma}{\sqrt{n}}$
+
+   proportion               $p$                 $\hat p$                            $z_*$          $\displaystyle \sqrt{\frac{\hat p (1-\hat p)}{n}}$
+   
+  difference in means    $\mu_1 - \mu_2$   $\overline{x_1} - \overline{x_2}$        $t_*$          $\displaystyle \sqrt{ \frac{\sigma_1^2}{n_1} + \frac{s_2^2}{n}}$
+--------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+
+## Review Questions
+
+**1.**
+
+**2.**
+
+**3.**
+

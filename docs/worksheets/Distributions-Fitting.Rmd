@@ -120,16 +120,75 @@ the distribution.  (You can look this information up in our book or on Wikipedia
 **Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
 fit a uniform distribution.
 
+<div class="explain" label = "Show solution">
+-----------------------------------------
+ moment        data       distribution         
+------------ -------- -------------------
+  mean          15        $\frac{a+b}{2}$
+  
+ variance       3^2       $\frac{(b-a)^2}{12}$
+-----------------------------------------
+
+So we need to solve this system of equations:
+
+\begin{align*}
+15 &= \frac{a+b}{2} \\
+3^2  &= \frac{(b-a)^2}{12} \\
+\end{align*}
+
+If we let $m = \frac{a + b}{2}$ and let $d = b-a$, our equations become 
+  
+\begin{align*}
+15 &= m \\
+3^2  &= \frac{d^2}{12} \\
+\end{align*}
+
+This is much easier.  We see that $d = \sqrt{9 \cdot 12}$. Let let R do the arithmetic.
+
+```{r}
+m <- 15; m
+d <- sqrt(9*12); d 
+a <- m - d/2; a
+b <- m + d/2; b
+```
+
+So $\hat a = 9.8$, $\hat b = 20.2$.
+
+</div>
 <br>
 		 		 
 **Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
 fit a normal distribution.
 
+<div class="explain" label = "Show solution">
+This is a very easy case.
+
+--------------------------------------------------
+ moment                 data       distribution         
+--------------------- -------- -------------------
+  mean                   15        $\mu$
+  
+ standard deviation       3        $\sigma$
+--------------------------------------------------
+
+So we get $\hat \mu = 15$ and $\hat \sigma = 3$.
+</div>
 <br>
 
 **Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
 fit an exponential distribution.
 
+<div class="explain" label = "Show solution">
+
+In this case, we only need the mean.
+-----------------------------------
+ moment     data     distribution         
+--------- -------- ----------------
+  mean       15      $1/ \lambda$
+-----------------------------------
+
+So $\hat \lambda = 1/15$.
+</div>
 <br>
 
 **Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
@@ -157,7 +216,7 @@ the fit is any good.
 
 **Example:  Wind speed**
 
-<div class = "explain" label = "Show example">
+<div class="explain" label="Show example">
 
 We can use the following code to load a data set that contains three year's worth 
 of mean hourly wind speeds (mph) in Twin Falls, ID.  This kind of data is often used

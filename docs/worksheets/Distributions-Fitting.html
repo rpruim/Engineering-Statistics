@@ -631,10 +631,109 @@ div.boxed {
 <li><p>Solve.</p></li>
 </ol>
 <p><strong>Example:</strong> A sample has mean 15 and standard deviation 3. Use the method of moments to fit a uniform distribution.</p>
+<div class="explain" label="Show solution">
+<table style="width:58%;">
+<colgroup>
+<col width="18%"></col>
+<col width="12%"></col>
+<col width="27%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">moment</th>
+<th align="center">data</th>
+<th align="center">distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">mean</td>
+<td align="center">15</td>
+<td align="center"><span class="math inline">\(\frac{a+b}{2}\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">variance</td>
+<td align="center">3^2</td>
+<td align="center"><span class="math inline">\(\frac{(b-a)^2}{12}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>So we need to solve this system of equations:</p>
+<p><span class="math display">\[\begin{align*}
+15 &amp;= \frac{a+b}{2} \\
+3^2  &amp;= \frac{(b-a)^2}{12} \\
+\end{align*}\]</span></p>
+<p>If we let <span class="math inline">\(m = \frac{a + b}{2}\)</span> and let <span class="math inline">\(d = b-a\)</span>, our equations become</p>
+<p><span class="math display">\[\begin{align*}
+15 &amp;= m \\
+3^2  &amp;= \frac{d^2}{12} \\
+\end{align*}\]</span></p>
+<p>This is much easier. We see that <span class="math inline">\(d = \sqrt{9 \cdot 12}\)</span>. Let let R do the arithmetic.</p>
+<pre class="r"><code>m &lt;- 15; m</code></pre>
+<pre><code>## [1] 15</code></pre>
+<pre class="r"><code>d &lt;- sqrt(9*12); d </code></pre>
+<pre><code>## [1] 10.4</code></pre>
+<pre class="r"><code>a &lt;- m - d/2; a</code></pre>
+<pre><code>## [1] 9.8</code></pre>
+<pre class="r"><code>b &lt;- m + d/2; b</code></pre>
+<pre><code>## [1] 20.2</code></pre>
+<p>So <span class="math inline">\(\hat a = 9.8\)</span>, <span class="math inline">\(\hat b = 20.2\)</span>.</p>
+</div>
 <p><br></p>
 <p><strong>Example:</strong> A sample has mean 15 and standard deviation 3. Use the method of moments to fit a normal distribution.</p>
+<div class="explain" label="Show solution">
+<p>This is a very easy case.</p>
+<table style="width:71%;">
+<colgroup>
+<col width="30%"></col>
+<col width="12%"></col>
+<col width="27%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">moment</th>
+<th align="center">data</th>
+<th align="center">distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">mean</td>
+<td align="center">15</td>
+<td align="center"><span class="math inline">\(\mu\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">standard deviation</td>
+<td align="center">3</td>
+<td align="center"><span class="math inline">\(\sigma\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>So we get <span class="math inline">\(\hat \mu = 15\)</span> and <span class="math inline">\(\hat \sigma = 3\)</span>.</p>
+</div>
 <p><br></p>
 <p><strong>Example:</strong> A sample has mean 15 and standard deviation 3. Use the method of moments to fit an exponential distribution.</p>
+</div>
+<div id="in-this-case-we-only-need-the-mean." class="section level2 explain" label="Show solution">
+<h2>In this case, we only need the mean.</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="center">moment</th>
+<th align="center">data</th>
+<th align="center">distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">mean</td>
+<td align="center">15</td>
+<td align="center"><span class="math inline">\(1/ \lambda\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>So <span class="math inline">\(\hat \lambda = 1/15\)</span>.</p>
+</div>
 <p><br></p>
 <p><strong>Example:</strong> A sample has mean 15 and standard deviation 3. Use the method of moments to fit an gamma distribution.</p>
 <p><br></p>
@@ -646,7 +745,6 @@ div.boxed {
 <li><p>There are ways to use distributions with more than 2 parameters, but we won’t cover that in this class.</p></li>
 <li><p><strong>No guarantee that the fit is a good fit</strong>. You can fit any distribution using any method to any data. Other methods (plots, for example) need to be used to see whether the fit is any good.</p></li>
 </ul>
-</div>
 <div id="maximum-likelihood-fitdistr" class="section level2">
 <h2>Maximum Likelihood (<code>fitdistr()</code>)</h2>
 <p><strong>Example: Wind speed</strong></p>

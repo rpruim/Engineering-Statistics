@@ -736,6 +736,39 @@ div.boxed {
 </div>
 <p><br></p>
 <p><strong>Example:</strong> A sample has mean 15 and standard deviation 3. Use the method of moments to fit an gamma distribution.</p>
+<div class="explain" label="Show solution">
+<table style="width:56%;">
+<colgroup>
+<col width="19%"></col>
+<col width="12%"></col>
+<col width="23%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">moment</th>
+<th align="center">data</th>
+<th align="center">distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">mean</td>
+<td align="center">15</td>
+<td align="center"><span class="math inline">\(\alpha \beta\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">variance</td>
+<td align="center">9</td>
+<td align="center"><span class="math inline">\(\alpha \beta^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>So we need to solve <span class="math display">\[\begin{align*}
+15   &amp;= \alpha \beta \\
+9    &amp;= \alpha  \beta^2 \\
+\end{align*}\]</span></p>
+<p>Since <span class="math inline">\(9 =\alpha \beta \beta = 15 \beta\)</span>, we have <span class="math inline">\(\hat\beta = 9/15\)</span>, and <span class="math inline">\(\hat \alpha = \frac{15}{9/15} = \frac{15^2}{9} = 25\)</span>.</p>
+</div>
 <p><br></p>
 <p><strong>General Example</strong>: A sample has mean = ________ and standard deviation = _________, use the method of moments to fit a ________ distribution.</p>
 <p><br></p>

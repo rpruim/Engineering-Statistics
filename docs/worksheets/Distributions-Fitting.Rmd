@@ -194,6 +194,25 @@ So $\hat \lambda = 1/15$.
 **Example:** A sample has mean 15 and standard deviation 3. Use the method of moments to 
 fit an gamma distribution.
 
+<div class="explain" label = "Show solution">
+
+---------------------------------------
+ moment         data     distribution         
+------------- -------- ----------------
+  mean           15     $\alpha \beta$
+  
+  variance       9     $\alpha \beta^2$
+---------------------------------------
+
+So we need to solve 
+\begin{align*}
+15   &= \alpha \beta \\
+9    &= \alpha  \beta^2 \\
+\end{align*}
+
+Since $9 =\alpha \beta \beta = 15 \beta$, we have $\hat\beta = 9/15$, and 
+$\hat \alpha = \frac{15}{9/15} = \frac{15^2}{9} = `r (15^2 / 9) %>% round(2)`$.
+</div>
 <br>
 
 **General Example**: A sample has mean = ________ and standard deviation = _________, 

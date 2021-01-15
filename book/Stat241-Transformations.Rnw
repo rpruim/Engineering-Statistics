@@ -1558,6 +1558,7 @@ on the interval $[-2,2]$.
 	\item
 		Compute the mean and variance of the distribution.
 \end{enumerate}
+\newpage
 \end{problem}
 
 \begin{solution}
@@ -1618,6 +1619,7 @@ xxF(Inf) - xxF(0) - m^2 # variance
 @
 \end{solution}
 
+	
 \begin{problem}
 Suppose $X$ an $Y$ are independent random variables with means and 
 standard deviations as given in the following table.
@@ -1766,6 +1768,13 @@ to be lighter than green) appear to be able to detect higher flicker rates, but
 there is overlap among the groups.
 \newpage
 \end{solution}
+
+\begin{problem}
+Let $\mean X_1$ be the distibution of sample means from a population with mean $\mu_1$ and standard deviation $\sigma_1$.
+Let $\mean X_2$ be the distibution of sample means from a population with mean $\mu_2$ and standard deviation $\sigma_2$.
+What is the distribution of $\mean X_1 - \mean X_2$? (Hint: start by determining the distributions of 
+$\mean X_1$ and $\mean X_2$, then use what we know about differences.)
+\end{problem}
 
 \shipoutProblems
 

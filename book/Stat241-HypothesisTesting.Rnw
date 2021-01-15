@@ -316,7 +316,7 @@ For the lady tasting tea, this process looks like
 			\item
 				Based on our empirical method, we estimate a p-value of
 <<>>=
-prop( ~(heads >= 9), data = RandomLadies)
+prop( ~ (heads >= 9), data = RandomLadies)
 @
 
 	\item
@@ -329,9 +329,9 @@ prop( ~(heads >= 9), data = RandomLadies)
 		\function{qbinom()}, and 
 		\function{rbinom()}. 
 <<>>=
-plotDist("binom", size = 10, prob = 0.5)    # size = # of flips; prob = probability of heads
+gf_dist("binom", size = 10, prob = 0.5)    # size = # of flips; prob = probability of heads
 dbinom(9, 10, .5) + dbinom(10, 10, .5)
-1 - pbinom(8, 10, .5)        # Note: P(X >=9) = 1 - P(X <=8)
+1 - pbinom(8, 10, .5)                      # Note: P(X >=9) = 1 - P(X <=8)
 @
 \end{enumerate}
 \item Interpret the p-value.
@@ -387,6 +387,8 @@ in order to have a reasonable expectation of detecting differences if they are l
 be scientifically interesting.
 
 \section{T-tests}
+
+\authNote{Check the examples here.  Seems to be some mixing of two examples through each other.}
 
 Many hypothesis tests are conducted based on a $t$-distribution, and so they are called ``t-tests". This is because, according to the Central Limit Theorem, the sampling distributions of most of our statistics (parameter estimates calculated from data) follow Normal distributions.  But just as we did when computing confidence intervals, we'll always have to use the t-distribution rather than the normal distribution, since we don't know $\sigma$ (the true population standard deviation), and since our sample size is finite.   These t-tests all use a similar sort
 of test statistic:
@@ -471,6 +473,7 @@ p-values).  This is not compelling evidence that the weight loss program (withou
 
 \begin{example}
 In R, there is also a function to automate this t-test:
+
 <<>>=
 t.test( ~ WeightLoss, data = Controls)
 @
@@ -481,7 +484,7 @@ pval(t.test( ~ WeightLoss, data = Controls))
 @
 By default, \texttt{t.test()} uses a significance level $\alpha = 0.05$. If we want to specify a different $\alpha$, we can use the input \texttt{conf.level} as follows:
 <<>>=
-t.test( ~WeightLoss, data=Controls, conf.level=0.01)
+t.test( ~ WeightLoss, data = Controls, conf.level = 0.01)
 @
 \end{example}
 
@@ -505,10 +508,31 @@ Glaucoma & 488 & 478 & 480 & 426 & 440 & 410 & 458 & 460 \\
 \end{tabular}
 \end{center}
 
+<<include = FALSE, include = FALSE>>=
+glaucoma <- c(488 , 478 , 480 , 426 , 440 , 410 , 458 , 460)
+healthy <- c(484 , 478 , 492 , 444 , 436 , 398 , 464 , 476) 
+@
+
+
 The corneal thickness is likely to be similar in the two eyes of any
 single patient, so that the two observations on the same patient
 cannot be assumed to be independent. But maybe (after accounting for differences between people), there is some difference in corneal thickness that has to do with the presence or absence of glaucoma.  First, we can have a look at the data:
-<<echo=FALSE, fig.width=6, fig.height=4.5>>=
+
+<<include=TRUE, fig.width=6, fig.height=2.5>>=
+Glaucoma <- tibble(
+  subject = 1:8,
+  glaucoma = c(488, 478, 480, 426, 440, 410, 458, 460),
+  healthy = c(484, 478, 492, 444, 436, 398, 464, 476),
+  diff = glaucoma - healthy
+)
+
+gf_point(glaucoma ~ subject, data = Glaucoma, 
+         color = ~"glaucoma", shape = ~"glaucoma", size = 3, alpha = 0.9) %>% 
+gf_point(healthy ~ subject, data = Glaucoma, 
+         color = ~"healthy", shape = ~"healthy", size = 3, alpha = 0.6) 
+@
+
+<<include=FALSE, fig.width=6, fig.height=4.5>>=
 par(cex=1.2)
 plot(x=c(1:length(glaucoma)), y=glaucoma, pch=19,
      ylab="Corneal Thickness (um)", col="black",
@@ -519,6 +543,7 @@ points(c(1:length(healthy)), healthy, pch=17, col="grey",
 
 legend("bottomleft", legend=c("Glaucoma", "Healthy"),
        pch=c(19,17), col=c("black", "grey"), bty="n")
+
 @
 
 It looks like healthy corneas are often thicker.  To try to quantify this, we consider the difference
@@ -535,15 +560,13 @@ T = \frac{\bar{D}}{S/\sqrt{n}} \sim t_{n-1}.
 In R, we can compute $D$ (the average of $d_i$) and its standard error to obtain the test statistic $t$ and the corresponding p-value:
 
 \authNote{Check on this -- base plot? lm or t test?}
+
 <<>>=
-model2 <- lm(WeightLoss ~ Group, data = WeightLossIncentive)
-n <- 8
-healthy <- c(484 , 478 , 492 , 444 , 436 , 398 , 464 , 476)
-glaucoma <- c(488 , 478 , 480 , 426 , 440 , 410 , 458 , 460)
-diffs <- glaucoma-healthy
-D <- mean(diffs)
-SE <- sd(diffs)/sqrt(n)
-t <- (D - 0)/SE; t
+n <- nrow(Glaucoma); n
+df_stats(~ diff, data = Glaucoma, mean, sd)
+meanD <- mean( ~ diff, data = Glaucoma); meanD
+SE <- sd( ~ diff, data = Glaucoma) / sqrt(n); SE
+t <- (meanD - 0) / SE; t
 pval <- 2 * pt(t, df=n-1); pval
 @
 
@@ -570,17 +593,18 @@ We can also let R make all the computations for us. Notice that we use the \emph
 \authNote{lm or t test?}
 
 <<>>=
-favstats(WeightLoss ~ Group, data = WeightLossIncentive)
+df_stats(WeightLoss ~ Group, data = WeightLossIncentive)
+model2 <- lm(WeightLoss ~ Group, data = WeightLossIncentive)
 coef(summary(model2))
-t.test(~ diffs, df=7)
 @
 
 \end{example}
 
 \subsection{The (unpaired) 2-sample t-test}
 In some cases, our research sample may contain data from 2 different categories of observational units.  For example, in the weight loss data, there were the control participants we considered above; there were also a number of incentivized participants, who received money if they lost weight.  We might be interested in considering whether the incentive made a difference.  Before we begin, we can plot the data:
+
 <<>>=
-bwplot(WeightLoss~Group, data=WeightLossIncentive)
+gf_boxplot(WeightLoss ~ Group, data = WeightLossIncentive)
 @
 
 It looks like the incentive group lost more weight.  But how can we judge whether the difference between groups is really an effect of the incentive, and not just random variation?
@@ -603,22 +627,22 @@ T = \frac{\bar{X}-\bar{Y}}{S_p\sqrt{\frac{1}{m}+\frac{1}{n}}}
 As written in the equation above, this test statistic follows a t-distribution with $m+n-2$ degrees of freedom.  We could carry out a two-sample t-test by hand using the test statistic defined above, or we can use the function \texttt{t.test()} and R will do the computations for us. For the weight loss example:
 
 <<>>=
-head(WeightLossIncentive,4)
-t.test(~WeightLoss, groups=Group, data=WeightLossIncentive,
-       var.equal=TRUE)
+head(WeightLossIncentive, 4)
+t.test( ~ WeightLoss, groups = Group, data = WeightLossIncentive,
+       var.equal = TRUE)
 @
 
 Note the ``var.equal=TRUE" input argument.  With this input, R will carry out the t-test assuming equal variance between the two categories.  If we want to avoid making this assumption, there is a modified version of the two-sample t-test called the Welch two-sample t-test, which does not assume equal variances.  If we omit the ``var.equal" input, or set it to ``var.equal=FALSE", then R will do a Welch two-sample t-test for us. (We will not cover in this course how to do a Welch test by hand).
 
 We might be able to judge informally whether the equal-variance assumption is valid by looking at the distributions of our variable of interest grouped by category, and computing the sample standard deviations by groups:
 <<>>=
-densityplot(~WeightLoss, groups=Group, data=WeightLossIncentive)
-sd(~WeightLoss|Group, data=WeightLossIncentive, na.rm=TRUE)
+densityplot(~ WeightLoss, groups = Group, data = WeightLossIncentive)
+sd( ~ WeightLoss | Group, data = WeightLossIncentive, na.rm = TRUE)
 @
 
 We don't have an obvious indication of unequal variances. (This assumption can also be tested statistically, although we won't learn how in this class, and it's generally not recommended to do such a test prior to running a t-test).  If we wanted to do the t-test without the equal variance assumption, in R, we would use:
 <<>>=
-t.test(~WeightLoss, groups=Group, data=WeightLossIncentive)
+t.test( ~ WeightLoss, groups = Group, data = WeightLossIncentive)
 @
 
 \emph{In practice, there is no real disadvantage to simply using Welch's test all the time.}  So in general, if you are doing a 2-sample unpaired test, you should always use \texttt{var.equal=FALSE} (or omit the input \texttt{var.equal}, and it will default to FALSE).
@@ -649,8 +673,8 @@ and test the hypothesis that $a = 2$.  We can fit this model using a log-log tra
 So $a = \beta_1$ in our usual linear model notation.
 
 <<drag-again>>=
-drag.model <- lm(log(force.drag) ~ log(velocity), data = drag)
-gf_point(log(force.drag) ~ log(velocity), data = drag)
+drag.model <- lm(log(force.drag) ~ log(velocity), data = Drag)
+gf_point(log(force.drag) ~ log(velocity), data = Drag)
 @
 The fit is not perfect, and in fact suggests a systematic problem with the way
 these data were collected:%
@@ -673,7 +697,8 @@ $\beta_1 = 0$.
 But we can easily calculate the p-value we want since we have the standard error
 and degrees of freedom.
 
-<<<<<<< HEAD:Stat241-HypothesisTesting.Rnw
+%<<<<<<< HEAD:Stat241-HypothesisTesting.Rnw
+
 <<drag-pvalue, tidy = FALSE>>=
 beta1.hat <- 2.051
 SE <- 0.05366
@@ -689,7 +714,7 @@ Of course, our data may be consistent with many other values of $p$ as well.
 \begin{example}
 	We could also do the previous example using a nonlinear model
 <<>>=
-drag.model2 <- nls(force.drag ~ A * velocity^p, data = drag, start = list(A = 1,p = 2))
+drag.model2 <- nls(force.drag ~ A * velocity^p, data = Drag, start = list(A = 1,p = 2))
 summary(drag.model2)
 @
 Again, the p-values listed are not of interest (they are testing the hypotheses that 
@@ -792,7 +817,7 @@ t <- (-0.5894 - (- .70)) / 0.0566; t
 \begin{example}
 	The output below illustrates this duality.
 <<tidy = FALSE>>=
-drag.model <- lm(log(force.drag) ~ log(velocity), data = drag)
+drag.model <- lm(log(force.drag) ~ log(velocity), data = Drag)
 coef(summary(drag.model))
 <<drag-pvalue>>
 confint(drag.model)
@@ -880,7 +905,7 @@ this question.  Carefully show all four steps.
 				contributing to the Geiger counter clicks.
 			\item
 				$H_0: k = 29.812$;  $H_a: k \neq 29.812$
-<<ticy = FALSE>>=
+<<tidy = FALSE>>=
 t <- (31.5 - 29.812) / 1.0; t     # test statistic
 2 * (1 - pt(t, df = 8))           # p -value
 @
@@ -924,11 +949,11 @@ t <- (31.5 - 29.812) / 1.0; t     # test statistic
 	Redo the drag force analysis after removing observations that appear not to have reached
 	terminal velocity.
 
-	If you can describe the rows you want to remove logically, the \function{subset()} command
+	If you can describe the rows you want to remove logically, the \function{filter()} command
 	works well for this.  You can also remove rows by row number.  For example, the following
 	removes rows 1, 3, 5 and 7:
 <<results = 'hide'>>=
-drag[ - c(1, 3, 5, 7), ] 
+Drag[ - c(1, 3, 5, 7), ] 
 @
 \end{problem}
 
@@ -937,12 +962,12 @@ Let's remove the fastest values at each height setting.  Although they are the f
 that terminal velocity has not yet been reached.  At least, these points would fit the 
 overall pattern better if the velocity were larger.
 <<>>=
-gf_point( force.drag ~ velocity, data = drag, 
+gf_point( force.drag ~ velocity, data = Drag, 
   color = ~ (velocity < 3.9) & !(velocity > 1 & velocity < 1.5) )
-drag2 <- drag %>% filter((velocity < 3.9) & !(velocity > 1 & velocity < 1.5))
+Drag2 <- Drag %>% filter((velocity < 3.9) & !(velocity > 1 & velocity < 1.5))
 @
 <<fig.height = 3.2>>=
-drag2.model <- lm(log(force.drag) ~ log(velocity), data = drag2)
+drag2.model <- lm(log(force.drag) ~ log(velocity), data = Drag2)
 summary(drag2.model)
 mplot(drag2.model, w = 1:2)
 @

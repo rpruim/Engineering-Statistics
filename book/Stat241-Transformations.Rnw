@@ -1776,6 +1776,108 @@ What is the distribution of $\mean X_1 - \mean X_2$? (Hint: start by determining
 $\mean X_1$ and $\mean X_2$, then use what we know about differences.)
 \end{problem}
 
+\begin{problem}
+Similar to the previous problem, we can work out the (approximate) sampling distribution for the difference 
+between two proportions. Use the fact that the sampling distribution for a sample proportion is approximately
+$\Norm(p, \sqrt{\frac{p(1-p)}{\sqrt{n}}})$ to work out the (approximate) sampling distribution for the 
+difference between two sample proportions.
+\newpage
+\end{problem}
+
+\begin{problem}
+Below is the summary of some data from a study 
+comparing two types of concrete beams by measuring their ultimate load (in kN).
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+type & sample size & mean & standard deviation \\
+\hline
+fiberglass grid & 26 & 33.4 & 2.2 \\
+commercial carbon grid & 26 & 42.8 & 4.3 \\
+\hline
+\end{tabular}
+\end{center}
+
+Create a 95\% confidence interval for the difference in the mean ultimate load for 
+the two types of beam.
+\end{problem}
+
+\begin{solution}
+<<>>=
+SE <- sqrt( 2.2^2 / 26 + 4.3^2 / 26); SE
+tstar <- qt(0.975, df = 25); tstar   # conservative
+42.8 - 33.4 + c(-1,1) * tstar * SE
+@
+\end{solution}
+
+\begin{problem}
+The \code{Devore7::ex9.23} data set has data on the extensibility (\%) of two types of fabric, but it is 
+arranged awkwardly. Let's fix that:
+
+<<>>=
+library(tidyr)
+Fabric <- 
+  Devore7::ex09.23 %>% 
+  pivot_longer( everything(), names_to = "quality", values_to = "extensibility",
+                values_drop_na = TRUE) 
+head(Fabric) 
+df_stats(extensibility ~ quality, data = Fabric)
+@
+
+\begin{enumerate}
+\item
+Use the summary above to compute a 95\% confidence interval for the difference in mean extensitibility
+for the two types of fabric.
+
+\item
+Then use \function{t.test()} to compute the confidence interval.  How do the degrees of freedom
+from \function{t.test()} compare with the upper and lower bounds we have for degrees of freedom?
+Which end of the range is it closer to?  Why?
+
+\item Create normal-quantile plots for each group.  Does it seem plausible that that the populations 
+are normal? Is it important that this be plausible?
+\end{enumerate}
+
+Extensibility is related to the shape and drape when fabric is used to make clothing.
+\end{problem}
+
+\begin{solution}
+<<>>=
+library(tidyr)
+Fabric <- 
+  Devore7::ex09.23 %>% 
+  pivot_longer( everything(), names_to = "quality", values_to = "extensibility",
+                values_drop_na = TRUE) 
+head(Fabric) %>% pander()
+df_stats(extensibility ~ quality, data = Fabric)
+t.test(extensibility ~ quality, data = Fabric)
+@
+
+\end{solution}
+
+\begin{problem}
+A sample of parts from two factories was inspected. At factory A, 172 out of 213 were rated "highest quality".
+At factory B, 184 out of 207 were rated "highest quality".
+\begin{enumerate}
+\item
+Compute the proportion of highest quality parts produced in each sample.
+\item
+Compute a 95\% confidence interval for the difference in the proportions of parts that receive the 
+highest quality rating from the two factories.  Do this first without using \function{prop.test()}, then
+repeat with \function{prop.test()} and compare the results.
+\item
+Based on this data, can we be confident that one factory is better than the other? Explain.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+prop.test( c(172, 184), c(184, 207)) %>% confint()
+prop.test( c(172, 184), c(184, 207), correct = FALSE) %>% confint()
+@
+\end{solution}
+
 \shipoutProblems
 
 \ifsolutions

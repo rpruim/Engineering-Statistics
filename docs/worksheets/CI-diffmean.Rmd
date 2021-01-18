@@ -235,10 +235,179 @@ t.test(height ~ sex, data = Galton)
 
 --------------------------------------------------------------------------------------------------
 
-## Questions
+## Some Practice
 
 **1.**
 Add another row to the table for a difference between two proportions.  Follow the same approach
 we used for the difference between two means. 
 
+<div class = "explain" label = "Show solution">
 
+\begin{align*}
+SE(p_1) &= \sqrt{ \frac{p_1(1 - p_1)}{n_1} }
+\\
+SE(p_2) &= \sqrt{ \frac{p_2(1 - p_2)}{n_2} }
+\\
+SE(p_1 - p_2)^2 &=  \frac{p_2(1 - p_2)}{n_1}  + \frac{p_2(1 - p_2)}{n_2}
+\\
+SE(p_1 - p_2) &=  \sqrt{ \frac{p_1(1 - p_1)}{n_1}  + \frac{p_2(1 - p_2)}{n_2}}
+\end{align*}
+
+So the expanded table is
+
+--------------------------------------------------------------------------------------------------
+ quantity of interest      estimand             estimate                        critical value   standard error
+------------------------ ----------------- ----------------------------------- ---------------- ------------------------------------------------------------------
+   mean                    $\mu$               $\overline{x}$                       $t_*$          $\displaystyle \frac{\sigma}{\sqrt{n}}$
+
+   proportion               $p$                 $\hat p$                            $z_*$          $\displaystyle \sqrt{\frac{\hat p (1-\hat p)}{n}}$
+   
+  difference in means    $\mu_1 - \mu_2$   $\overline{x_1} - \overline{x_2}$        $t_*$          $\displaystyle \sqrt{ \frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}$
+  
+  difference in          $p_1 - p_2$         $\hat{p_1} - \hat{p_2}$                $z_*$          $\displaystyle \sqrt{ \frac{\hat p_1(1 - \hat p_1)}{n_1}  + \frac{\hat p_2(1 - \hat p_2)}{n_2}}$
+  proportions
+--------------------------------------------------
+</div>
+<br>
+
+**2.**
+One technology proposed to rehabiliate aging municipal pipeline networks involves threading a flexible liner through existing pipe.
+Two processes are considered for this (with and without fusion), and the tensile strength (psi) was measured for a sample 
+of pipes prepared both ways.  Here is a summary of the data.
+
+```{r, echo = FALSE}
+Liner <- Devore7::xmp09.07
+df_stats(strength ~ type, data = Liner) %>% pander()
+gf_boxplot(strength ~ type, data = Liner) |
+  gf_jitter(strength ~ type, data = Liner, height = 0, width = 0.3)
+```
+
+Compute a 95% confidence interval for the difference in mean tensile strength for the two methods.
+
+<div class = "explain" label = "Show more">
+You can access these data using
+
+```{r}
+Liner <- Devore7::xmp09.07
+```
+
+Check your work using `t.test()`. Note: The answers won't match exactly because your hand-calculation is uing a cruder approximation
+for the degrees of freedom.
+
+Note: these are pretty small samples, so we need to worry about the shapes of the population distributions. 
+It's hard to assess shape with so little data, but create normal-quantile plots for the two types.  Do you see any causes 
+for alarm or do things look OK?
+
+```{r, include = FALSE}
+gf_qq( ~ strength | type, data = Liner) %>% gf_qqline()
+```
+</div>
+<br>
+
+**3.**
+A study was conducted to assess the value of adding radiation therapy to chemotherapy for a particular kind of breast cancer.
+Here is a summary of the data.
+
+-------------------------
+ therapy                     number of women in study     number of women who survived 15 years 
+--------------------------- ---------------------------- -----------------------------------------
+ chemotherapy only               154                           76
+
+ chemotherapy + radiation        164                           98
+
+-------------------------
+
+Compute a 90% confidence interval and a 98% confidence interval for the difference in 15-year survival rates. 
+Is there evidence that one treatment method is better than the other? Explain.
+
+<div class = "explain" label = "Show more">
+Again, we can let R do all of the work for us.
+Here is a fancy way to put three intervals into a single table.
+
+```{r}
+bind_rows(
+  prop.test( c(76, 98), c(154, 164), conf.level = 0.90) %>% confint(),
+  prop.test( c(76, 98), c(154, 164), conf.level = 0.95) %>% confint(),
+  prop.test( c(76, 98), c(154, 164), conf.level = 0.98) %>% confint()
+) %>% pander()
+```
+</div>
+</br>
+
+**4.**
+Stress limits (in MPa) were measured for samples of red oak and douglas fur lumber. Here is a summary of the data.
+
+type     n       mean       sd
+------ ------ ---------- --------
+ oak     14      8.48      0.79
+ fir     10      6.65      1.28
+ 
+Compute a 95% confidence interval for the difference in average stress limit for
+the two types of lumber. (Since we don't have access to the raw data, we will
+have to assume that the populations are reasonably close to normal.)
+
+<br>
+
+**5.**
+The following data set contains data from an experiment to see whether medical
+professionals could access images from a digital medical data base (via a web
+front end) faster than from a library of slides. Thirteen subjects were given
+both kinds of retrieval tasks and their time in seconds was recorded.
+
+```{r}
+MedicalImages <- Devore7::xmp09.10
+head(MedicalImages) %>% pander()
+```
+
+In this situation, the samples of times are probably NOT independent since it is 
+likely that some people are faster at both tasks and others are slower. So we can't use 
+the method we have been using to compare two means. But there is another way.
+
+We can compute the difference *person by person* and then create a confidence interval for those differences.
+This is called a **paired design** becuase we have pairs of related measurements and we are interested in their
+difference.  Here's how to create the new variable.
+
+```{r}
+MedicalImages <-
+  MedicalImages %>%
+  mutate(diff = slide - digital) %>%
+  mutate(ratio = slide / digital)
+head(MedicalImages) %>% pander()
+```
+
+a. Use this new variable to compute a 95% confidence interval for the average difference. (Let R do the work.)
+
+b. Repeat this with ratios rather than differences.
+
+c. Which should we use, ratios or differences?  One way to judge would be to look to see which of the
+two has a more nearly normal distribution.  Create normal-quantile plots of each.  Does one of the two
+methods look like the better option in this case? (Note: you can add a guideline to your QQ plots with 
+`gf_qqline()`. The default for this connects the 25th and 75th percentiles, which can sometimes be a bit 
+misleading, so use with caution. You can change this default with, for example `line.p = c(0.1, 0.9)`.)
+
+d. What do you conclude?  Is one of these methods faster?
+
+<div class = "explain" label = "Show more">
+
+Here's a fancy version of the two normal-quantile plots, illustrating the use of `line.p` and 
+placing them side-by-side using the `patchwork` package.
+
+```{r }
+library(patchwork)
+# | between two plots puts them side by side
+gf_qq(~ratio, data = MedicalImages) %>% gf_qqline( line.p = c(0.15, 0.85)) | 
+  gf_qq(~diff, data = MedicalImages) %>% gf_qqline(line.p = c(0.15, 0.85))
+```
+</div>
+<br>
+
+**6.** Want more practice?  Go back and compute the confidence intervals in the previous problem by hand.
+(Use `df_stats()` to create a numerical summary, then do the rest of the computation yourself.)
+You should get the same results as you got using `t.test()`.
+
+<br>
+
+**7.** A group of middle school kids collected dimes as a fund raiser. Before bringing the dimes to the bank, they
+wanted to estimate the number of dimes they had collected.  Devise method to make this estimate. There is more than one
+way to do this, but stick to things that middle school kids could reasonably manage (perhaps with a little help from you,
+a friendly engineering student).

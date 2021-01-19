@@ -88,14 +88,14 @@ which chooses the line that has the
 Consider the following small data set.
 \begin{multicols}{2}
 <<tidy = FALSE>>=
-someData <- data.frame(
+SomeData <- tibble(
   x = c(1,2,4,5,6),
   y = c(1,4,3,6,5)
 )
-someData
+SomeData
 @
 <<tidy = FALSE,fig.height = 3.2>>=
-gf_point( y ~ x, data = someData) %>%
+gf_point( y ~ x, data = SomeData) %>%
   gf_lims(y = c(0, 7), x = c(0, 7))
 @
 \end{multicols}
@@ -159,13 +159,13 @@ For example, suppose we we select a line that passes through $(1,2)$ and $(6,6)$
 the equation for this line is $y = 1.2 + 0.8 x$, and it looks like a pretty good fit:
 <<fig.keep = "last", fig.height = 3>>=
 f <- makeFun( 1.2 + 0.8 * x ~ x)
-gf_point(y ~ x, data = someData) %>% 
+gf_point(y ~ x, data = SomeData) %>% 
   gf_lims(x = c(0, 7), y = c(0, 7)) %>%
   gf_fun( f(x) ~ x, col = "gray50" )
 @
 The residuals for this function are 
 <<tidy = FALSE>>=
-resids <- with(someData, y - f(x)) ; resids 
+resids <- with(SomeData, y - f(x)) ; resids 
 @
 and $SSE$ is 
 <<>>=
@@ -180,7 +180,7 @@ If your line is a good fit, then $SSE$ will be small.
 The best fitting line will have the smallest possible $SSE$.   
 The \function{lm()} function will find this best fitting line for us.
 <<tidy = FALSE>>=
-model1 <- lm( y ~ x, data = someData ); model1
+model1 <- lm( y ~ x, data = SomeData ); model1
 @
 This says that the equation of the best fit line is 
 \[
@@ -188,7 +188,7 @@ This says that the equation of the best fit line is
 \]
 
 <<fig.height = 2.8>>=
-gf_point(y ~ x, data = someData) %>%
+gf_point(y ~ x, data = SomeData) %>%
   gf_lm()
 @
 We can compute $SSE$ using the \function{resid()} function.
@@ -255,8 +255,10 @@ c(intercept = intercept, slope = slope)
 @
 <<include = onLine, eval = onLine>>=
 Eyes <- 
-  read.table("https://rpruim.github.io/Engineering-Statistics/data/PalpebralFissure.txt",  header = TRUE)
-head(Eyes, 3)
+  read.table(
+    "https://rpruim.github.io/Engineering-Statistics/data/PalpebralFissure.txt", 
+    header = TRUE)
+head(Eyes, 3) 
 x.bar <- mean( ~ palpebral, data = Eyes)  
 y.bar <- mean( ~ OSA, data = Eyes)
 s_x <- sd( ~ palpebral, data = Eyes)
@@ -270,7 +272,7 @@ c(intercept = intercept, slope = slope)
 \end{example}
 
 Fortunately, statistical software packages do all this work for us, so the
-caclulations of the preceding example don't need to be done in practice.
+calculations of the preceding example don't need to be done in practice.
 
 \begin{example}
 In a study of eye strain caused by visual display terminals, researchers wanted

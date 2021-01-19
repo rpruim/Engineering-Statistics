@@ -65,11 +65,17 @@ options(digits = 3)
 * **error** = estimate - estimand = actual - estimated
 
   * We won't know this number because we would not be estimating if we knew the estimand
-  
+ 
+<br>
+
 * **uncertainty** -- a description of the distribution of errors (over the random process of creating an estimate)
+
+<br>
 
 * **standard uncertainty** -- the standard deviation of the distribution of errors (over the random process of 
 creating an estimate)
+
+<br>
 
 ### Example: sample mean
 
@@ -486,8 +492,8 @@ $y ̂= 2.34 \pm .02$ is the estimate of its width.  How do we report the area?
 <!-- The final result:  Area = 7.98 ± 0.12 -->
 
 **10.** The length  of a rectangle is reported as 
-$x ̂= 3.05 \pm .02$ and the width of the rectangle is reported as 
-$y  = 5.45 \pm .11$.  How should perimeter of the rectangle be reported?
+$\hat x = 3.05 \pm .02$ and the width of the rectangle is reported as 
+$\hat y  = 5.45 \pm .11$.  How should perimeter of the rectangle be reported?
 
 <!-- Perimeter = f(x,y) = 2x + 2y,  fx (x,y) = 2, fy(x,y) = 2 -->
 

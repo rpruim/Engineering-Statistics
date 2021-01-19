@@ -1,0 +1,504 @@
+---
+title: "Propagation of Uncertainty"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ['../styles/ds303-notes.css', '../styles/worksheets.css']
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\T{{\sf T}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+library(patchwork)
+theme_set(theme_bw())
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+
+
+## Error and Uncertainty
+
+* **error** = estimate - estimand = actual - estimated
+
+  * We won't know this number because we would not be estimating if we knew the estimand
+  
+* **uncertainty** -- a description of the distribution of errors (over the random process of creating an estimate)
+
+* **standard uncertainty** -- the standard deviation of the distribution of errors (over the random process of 
+creating an estimate)
+
+### Example: sample mean
+
+$$
+\overline X \approx \Norm(\mu , \frac{\sigma}{\sqrt{n}})\; ,
+$$ 
+so the distribution of errors is 
+
+$$
+\overline X - \mu \approx \Norm(0, \frac{\sigma}{\sqrt{n}})\; ,
+$$ 
+and the standard uncertainty for this estimator is 
+
+$$
+\mbox{standard uncertainty} =  \frac{\sigma}{\sqrt{n}} \approx \frac{s}{\sqrt{n}}\; .
+$$
+
+We will denote the standard uncertainty of a quantity $X$ as $u_X$.
+
+### Example: Difference in means
+
+Similarly, for the difference in two population means (estiamted by taking the difference in two sample means), we have
+
+$$
+\mbox{standard uncertainty}
+= \sqrt{ \frac{\sigma_1^2}{{n_1}}  + \frac{\sigma_2^2}{{n_2}} }
+\approx \sqrt{ \frac{s_1^2}{{n_1}}  + \frac{s_2^2}{{n_2}} }
+$$
+
+### Goal: Estimate standard uncertainty for more situations.
+
+* The methods above worked because we have rules for propagation of means and variances for linear transformations
+and linear combinations.
+
+* We will learn an approximate method that works when things are approximately linear.
+
+* These methods will estimate standard uncertainty (ie, standard deviation of the estimator = SE), but they 
+do not tell us about the *shape* of the distribution of errors. In many situtations the distribution of errors
+will be at least approximately normal, but in other situations it may be quite different.
+
+## Transforamtions of one random variable
+
+An estimator is just a random variable, so we will derive our methods in terms of random variables
+and then apply them to estimators.
+
+We already know that 
+
+* $\E(aX+b) = a \E(X) + b$
+* $\Var(aX+b) = a^2 \Var(X)$
+
+This means that when $Y = f(X)$ and $f$ is a linear function ($f(x) = ax + b$), then we know
+how to compute the mean and variance for $Y$ if we know the mean and variance for $X$.
+
+From calculus, you may remember that we can approximate arbitrary functions using the tangent line
+at a point.
+
+<div class="explain" label = "Show linearization">
+$$
+f(x) \approx f(a) + f'(a) (x - a)
+$$
+
+This approximation will be better if
+
+* $x$ is close to $a$
+* $f(x)$ is not too curvy (ie, $|f''|$ is small)
+
+"Better" and "small" are relative -- be sure to keep units and the range of reasonable values in mind.
+</div>
+
+
+Let's apply this to our random variables. Suppose we know the mean and variance of $X$. We want to estimate
+the mean and variance of $Y = f(X)$.
+
+<div class="explain" label = "Show approximation">
+* let $a = \E(X) = \mu$ 
+
+  * Most of the values of $X$ will be near $\E(X)$, so that is a good place to estimate from.
+  * $\E(X - \mu) = \E(X) - \mu = 0$, so that's also handy.
+  
+<br>
+  
+* Expected Value
+
+\begin{align*}
+\E(Y) &= \E(f(X)) 
+\\ &\approx \E(f(\mu) + f'(\mu) (x - \mu)) 
+\\ &= f(\mu) + f'(\mu) \E(x - \mu) 
+\\ &= f(\mu)
+\end{align*}
+
+  * so $\E(f(X)) \approx f(\E(X))$.
+  
+<br>
+
+* Variance  
+
+\begin{align*}
+\Var(Y) & = \Var(f(\mu) + f'(\mu) (X - \mu)) 
+\\ 
+&= \Var(f'(\mu) (X - \mu))  
+\\
+&= f'(\mu)^2 \Var(X)
+\end{align*}
+
+* Standard deviation
+$$
+\SD(Y) = |f'(\mu)| \SD(X)
+$$
+</div>
+
+### Application to uncertainty estimation
+
+We can't quite use the approximation formula above because we don't know $\mu$. (It's an unknown paramter that we 
+are estimating.)  But we can use our estimate in place of $\mu$. 
+Since the standard uncertainty is just the standard deviation of an estimator, if $Y = f(X)$, then
+
+<div class = "boxed">
+$$
+u_X \approx | f'(\hat x) | u_X
+$$
+</div>
+
+where $\hat x$ is our estimate.
+
+We are simply replacing the mean $\mu$ with our estimate $\hat x$. (Typically, $\E(X) = \mu$, so this estimate will be 
+quite good if our sample size is large.)
+
+<div class = "example">
+**Example 1.**
+Let $A$ be a square with side length $L$.
+Suppose we estimate $L$ to be 3.7 with uncertainty $u_L = 0.2$ cm. (This is often written as $3.7 \pm 0.2$.  When you
+see $\pm$ notation, you must also check to see how it is being used.)
+
+What is our uncertainty in the computed area?
+
+$A = L^2$, so our function is $f(x) = x^2$.  $f'(x) = 2x$.  So we get
+
+\begin{align*}
+u_A & \approx |f'(\hat L)| u_L 
+\\ &= f'(3.7) \cdot 0.2 
+\\ &= 7.4 \cdot 0.2 = 1.48
+\end{align*}
+
+We could express this as $`r 3.7^2` \pm 1.48$. (But stay tuned for a note about how many 
+digits we should be reporting.)
+</div>
+
+<div class ="example">
+**Example 1 (revisited)**. There is another way to estimate uncertainty of a transformed
+measurement.  Let's just simulate. In this case, we simulate values of $L$ that are normally
+distributed near 3.7 with a standard deviation of 0.2. Then we can compute a bunch of simulated
+areas and see what the standard deviation is.
+
+<div class = "explain" label = "Show simulations">
+
+```{r}
+L <- rnorm(10000, mean = 3.7, sd = 0.2)
+A <- L^2
+sd(~ A)
+gf_histogram(~ A)
+gf_qq(~A) %>% gf_qqline()
+```
+
+The estimate in this case is very close to the simulated value.
+
+Compared to a normal distrubtion, this has somewhat "light tails" (the smallest values are not quite as small nor
+then largest quite as large as we would expect). 
+
+Seems to work pretty well in this case.
+</div>
+</div>
+
+
+## Sig Figs and Uncertainty
+
+The guidelines in this sections are based on commonly used practices in 
+physics and engineering.
+
+### What to record, What to report
+ 
+When you record the results of a measurement for which there is an \emph{a priori}
+estimate of uncertainty, the uncertainty should be recorded along with
+the measurement itself.  Similarly, reports of quantities estimated from data
+should also include estimated uncertainties.
+
+As a general guideline, a properly reported scientific estimated quantity includes 
+the following five elements: 
+
+
+1. A number (the estimate)
+2. Units (e.g., m  or kg or seconds) 
+3. A statement about how it was measured or calculated 
+4. A statement about most likely sources of (the largest components of) error
+5. An estimate of the uncertainty
+
+<div class = "example">
+**Example**
+If you measured the length of a pendulum using a meter stick, you
+might report the measurement this way: 
+
+* Length $= 0.834 \pm 0.002$ m 
+* Measured with a meter stick from pivot point to the center of the steel weight. 
+*	Uncertainty reflects the limited accuracy of measurement with a meter stick.
+
+</div>
+	
+In plots, the number is given by the scales of the plot, the units are typically included
+in the axes labels, uncertainties may be represented by ``error bars", and a statement 
+describing the method of measurement or calculation should appear in the plot legend.
+ 
+### How many decimal places?
+ 
+Numerical values and their uncertainties should be recorded to the proper number of
+decimal places.  Most software either reports too many significant digits or
+rounds numbers too much.  For 
+correct professional presentation of your data, follow these guidelines:
+
+* **Rule 1:** The experimental uncertainty should be rounded to one significant
+figure unless the leading digit is a 1, in which case, it is generally
+better to use two digits. [Note: some people prefer that two digits be used
+when the leading digit is a 2 as well.]
+
+* **Rule 2:** A measurement should be displayed to the same number of *decimal places* 
+as the uncertainty on that measurement.
+
+Note carefully the difference between significant figure and decimal place.  
+
+
+The following examples will help: 
+
+<div class="example">
+**Example**
+The timer reports a value of 0.3451 seconds.  The uncertainty on
+the measurement is 0.0038 seconds.    
+
+* By Rule 1, the uncertainty should be
+reported to one significant figure, so we round it to 0.004 seconds.   
+* By Rule 2, the measurement must also be rounded to the third decimal place.  
+
+Thus, the measurement should be reported as $0.345\pm0.004$ seconds. 
+</div>
+ 
+                                                 
+<div class="example">
+**Example**
+The measured value is $7.92538 \cdot 10^4$, 
+and its uncertainty is $2.3872 \cdot 10^2$.
+
+* By Rule 1, the uncertainty should be rounded to one significant figure, so 
+$2 \cdot 10^2$.  
+* By Rule 2, we report the 
+measurement to the same decimal place as the uncertainty, so $7.93 \cdot 10^4$.  
+
+Putting it together, the measurement should be reported as $(7.93 \pm0.02) 10^4$.   
+
+If we use the alternative method for Rule 2, we would report as
+$(7.925\pm 0.024) 10^4$.   
+</div>
+ 
+                                                 
+<div class="example">
+**Example**
+The estimated value is $89.231$, and its uncertainty is $0.1472$.    
+
+* By Rule 1, 
+the uncertainty should be rounded to two significant figures, so $0.15$.
+* By Rule 2, we report the 
+estimate to the same decimal place as the uncertainty, so $89.23  \pm  0.15$.  
+</div>
+ 
+                                                 
+
+### Reporting numbers in a table
+ 
+Multiple similar measurements should be reported in a table.  The column
+headings should clearly and concisely indicate the quantity in each column; the
+column heading must include the units.   Uncertainties should be listed in a
+separate column, located just to the right of the measurement column.
+(Sometimes, uncertainties are listed in parentheses after the estimate instead;
+just make sure the header and legend of the table makes it clear what values are
+being reported, and where.)
+
+<div class = "example">
+**Example**
+A lab group calculated these numbers for kinetic energy and its uncertainty: 
+
+------------------------------
+ Kinetic Energy   uncertainty 
+---------------- -------------
+  0.8682              0.059 
+
+  1.0661              0.071 
+
+  1.0536              0.070 
+
+  1.3881              0.058 
+  
+  0.8782              0.108 
+-----------------------------
+
+This should be reported with appropriate rounding (and units) as
+
+------------------------------
+ Kinetic Energy (J)   uncertainty 
+--------------------- -------------
+    0.87                 0.06 
+
+    1.07                 0.07 
+
+    1.05                 0.07 
+
+    1.39                 0.06 
+
+    0.88                 0.11 
+-----------------------------
+
+</div>
+
+ 
+
+
+## Some Practice
+
+**1.** Suppse you are estimating the area of a square. To do this, you measure the 
+side length 30 times.  Your 30 measurements have a mean of 
+and a standard deviation of 
+Use this to
+
+a. Compute the standard uncertainty of the measured side length.
+b. Estimate the standard uncertainy of the computed area.
+
+**2.** 
+10 measurements of the edge of a cube produce a sample mean $\overline{x} = 3.11$ in 
+and a sample standard deviation $s = .13$ in. 
+How should the volume of the cube be reported? 
+
+
+<!-- 	SE(x ̅) = s/sqrt(10) = .04 -->
+
+<!-- Volume(x ̅) = 3.113 ± SE(x ̅3) = 30.08 ± SE(x ̅3). -->
+
+<!-- Since volume(x) = f(x) = x3 and f ‘(x) = 3x2,   -->
+
+<!-- SE(x ̅3)   |3x ̅2|*SE(x ̅) = 29.02*.04 = 1.16.  So, the final report is -->
+
+<!-- 		Volume = 30.08 ± 1.16 in3 -->
+
+**3.** A temperature is reported as $357 \pm 2$ degrees Fahrentheit.
+How should it be reported in Celsius? Do this two ways.
+
+a. Use the approximation method we have just learned.
+b. Work it out exactly using our rules for expected value and variance.
+c. How do the two results compare? Why?
+
+**4.**
+An angle has size $\theta$, measured in radians.  The exact value of $\theta$ isn't known, 
+but a sample of size $n = 20$ produces a sample mean of 1.21. and a sd of 0.09. 
+How should the value of $\sin(\theta)$ be reported?
+
+
+<!-- In this case f(x) = sin(x) and f ‘(x) = cos(x), so SE(sin(θ ̅  ))  |cos(θ ̅)|*SE(θ ̅). -->
+
+<!-- SE(θ ̅) = 0.9 /sqrt(20) = 0.02,  cos(1.21) = .353, so SE(sin(θ ̅  ))  .01 -->
+
+<!-- Since sin(1.21 ) = .94, the report would be -->
+
+<!-- 	sin(θ) = 0.94 ± 0.01 -->
+
+**5.**
+An angle $\theta$ is reported as  $1.52 \pm .01$ (in radians),  
+How should $\tan(\theta)$ be reported?
+
+<!-- 	tan(θ) = tan(1.52) ± SE(tan(θ)) = 19.67 ± SE(tan(θ)).  -->
+
+<!-- Since the dervative of tan is sec2, -->
+
+<!--  SE(tan(θ))  |sec2(1.52)|*SE(θ) = 387.89*0.01 = 3.88.   -->
+
+<!-- So, tan(θ) = 19.67 ± 3.88 -->
+
+**6.**
+	An angle is reported as $0.32 \pm .02$ radians. How should we report the cosine of the angle?
+
+**7.**
+The radius of a circle is reported as $r = 3.45 \pm .06$ in.  
+How should we report the area of the circle?
+
+**8.**
+The radius of a sphere is reported as $r = 4.23 \pm .10$ in. 
+How should we report the volume?
+
+
+## Combinations of mutliple random variables
+
+Coming soon.
+
+## More Practice
+
+**9.** Suppose $x ̂= 3.41 \pm .04$ is the estimate of the length of a rectangle and 
+$y ̂= 2.34 \pm .02$ is the estimate of its width.  How do we report the area?
+
+<!-- Area = f(x,y) = xy.  fx(x,y) = y, fy(x,y) = x -->
+
+<!-- 	Area =  f(x ̂, y ̂) ± SE(f(x ̂, y ̂)) = 3.41*2.34 ± SE(f(x ̂, y ̂)) = 7.98 ± SE(f(x ̂, y ̂)) -->
+
+<!--      SE(f(x ̂, y ̂))   √(〖f_x (x ̂,y ̂)〗^2 〖SE((x)) ̂〗^2+〖f_y (x ̂,y ̂)〗^2 〖SE(y ̂)〗^2 ) -->
+
+<!-- 			= √(〖(y ̂)〗^2 〖SE(x ̂)〗^2+〖(x ̂)〗^2 〖SE(y ̂)〗^2 ) -->
+
+<!-- 			√(〖2.34〗^2 〖*.04〗^2+〖3.41〗^2 〖*.02〗^2 )	  -->
+
+<!-- 			= .12 -->
+
+<!-- The final result:  Area = 7.98 ± 0.12 -->
+
+**10.** The length  of a rectangle is reported as 
+$x ̂= 3.05 \pm .02$ and the width of the rectangle is reported as 
+$y  = 5.45 \pm .11$.  How should perimeter of the rectangle be reported?
+
+<!-- Perimeter = f(x,y) = 2x + 2y,  fx (x,y) = 2, fy(x,y) = 2 -->
+
+<!-- Perimeter = f(x ̂, y ̂) ± SE(f(x ̂, y ̂)) = 2*3.05+2*5.45 ± SE(f(x ̂, y ̂)) = 17.00 ± SE(f(x ̂, y ̂)) -->
+
+<!--      SE(f(x ̂, y ̂))   √(〖f_x (x ̂,y ̂)〗^2 〖SE((x)) ̂〗^2+〖f_y (x ̂,y ̂)〗^2 〖SE(y ̂)〗^2 ) -->
+
+<!-- 			= √(2^2 〖*.02〗^2+2^2*〖.11〗^2 ) -->
+
+<!-- 			= .22 -->
+
+<!-- The final result:  Perimeter = 17.00 ± .22. -->
+
+

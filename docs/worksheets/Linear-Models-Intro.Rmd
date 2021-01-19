@@ -1,0 +1,423 @@
+---
+title: "Simple Linear Models"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ['../styles/ds303-notes.css', '../styles/worksheets.css']
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\T{{\sf T}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+library(patchwork)
+theme_set(theme_bw())
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+
+## Fitting a Line to Data
+
+### The Least Squares Method
+
+We want to determine the best fitting line to the data.  The usual method is 
+the method of least squares\footnote{In this case, it turns out that the least 
+squares and maximum likelihood methods produce exactly the same results.},
+which chooses the line that has the 
+\emph{ smallest possible sum of squares of residuals}, where residuals are defined by
+
+\[
+\mbox{residual} = \mbox{observed} - \mbox{predicted}
+\]
+
+<div class = "example">
+Consider the following small data set.
+
+```{r}
+SomeData <- tibble(
+  x = c(1,2,4,5,6),
+  y = c(1,4,3,6,5)
+)
+SomeData
+```
+
+```{r}
+gf_point( y ~ x, data = SomeData) %>%
+  gf_lims(y = c(0, 7), x = c(0, 7))
+```
+
+```{r include = FALSE}
+fitLine <- function(intercept = 0, slope = 1, 
+                    data = NULL, squares = FALSE) {
+  
+  f <- function(x) { intercept + slope * x }
+ 
+  if (is.null(data))   
+    data <- data.frame(
+    x = c(1,2,4,5,6),
+    y = c(1,4,3,6,5)
+  )
+  
+  data$fx <- f(data$x)
+  data$resid <- data$y - data$fx
+  
+  data2 <- data.frame(
+    x = c(data$x, data$x, data$x -data$resid, data$x - data$resid, data$x),
+    y = c(data$y, data$fx, data$fx, data$y, data$y),
+    id = rep(1:nrow(data), times = 5)
+  ) %>% arrange(id)
+  
+  resids <- data$y - data$fx
+  sse <- sum(resids^2)
+  p <- 
+    ggplot(aes(x,y), data = data) 
+  p <-
+    if (squares)
+      p + geom_path(aes(x = x, y = y, group = id), data = data2, colour = "red")  
+    else 
+      p + geom_segment(aes(xend = x, yend = fx), colour = "red")
+  p <- p +
+    geom_abline(slope = slope, intercept = intercept) +
+    geom_point() +
+    labs(title = paste0("SSE = ", signif(sse, 4))) +
+    theme(plot.title = element_text(colour = "red", size = rel(1.4)))
+
+  print(p) 
+  c(slope = slope, intercept = intercept, sse = sum(resids^2))
+}
+```
+
+1. Add a line to the plot that ``fits the data well".  Don't do any calculations, just add the line.
+2. Now estimate the residuals for each point relative to your line
+3. Compute the sum of the squared residuals, $SSE$.
+4. Estimate the slope and intercept of your line.
+</div>
+
+<div class = "example">
+**Example**
+Suppose we we select a line that passes through $(1,2)$ and $(6,6)$. 
+the equation for this line is $y = 1.2 + 0.8 x$, and it looks like a pretty good fit:
+
+```{r, fig.keep = "last", fig.height = 3}
+f <- makeFun( 1.2 + 0.8 * x ~ x)
+gf_point(y ~ x, data = SomeData) %>% 
+  gf_lims(x = c(0, 7), y = c(0, 7)) %>%
+  gf_fun( f(x) ~ x, col = "gray50" )
+```
+
+The residuals for this function are 
+
+```{r}
+resids <- with(SomeData, y - f(x)) ; resids 
+```
+
+and $SSE$ is 
+
+```{r}
+sum(resids^2)
+```
+
+The following plot provides a way to visualize the sum of the squared residuals (SSE).
+
+```{r echo = FALSE, results = "hide", fig.height = 2.8}
+fitLine(1.2, 0.8, squares = TRUE)
+```
+
+* If your line is a good fit, then $SSE$ will be small.  
+
+* The best fitting line will have the smallest possible $SSE$.   
+
+* The `lm()` function will find this best fitting line for us.
+
+```{r}
+model1 <- lm( y ~ x, data = SomeData ); model1
+```
+
+This says that the equation of the best fit line is 
+\[
+\hat y = `r coef(model1)[1]` + `r coef(model1)[2]` x
+\]
+
+```{r, fig.height = 2.8}
+gf_point(y ~ x, data = SomeData) %>%
+  gf_lm()
+```
+
+We can compute $SSE$ using the \function{resid()} function.
+
+```{r}
+SSE <- sum (resid(model1)^2); SSE
+```
+
+```{r, echo = FALSE, results = "hide", fig.height = 2.8}
+fitLine(coef(model1)[1], coef(model1)[2], squares = TRUE)
+```
+
+As we see, this is a better fit than our first attempt -- 
+at least according to the least squares criterion.
+It will better than \emph{any} other attempt -- it is the least 
+squares regression line.
+</div>
+
+### Properties of the Least Squares Regression Line
+
+For a line with equation $y = \hat\beta_0 + \hat\beta_1 x$, the residuals are 
+\[
+e_i = y_i - (\hat\beta_0 + \hat\beta_1 x) 
+\]
+and the sum of the squares of the residuals is 
+\[
+SSE = \sum e_i^2  = \sum (y_i - (\hat\beta_0 + \hat\beta_1 x) )^2
+\]
+Simple calculus (which we won't do here) allows us to compute the 
+best $\hat\beta_0$ and $\hat\beta_1$ possible.  
+These best values define the least squares regression line.
+We always compute these values using software, but it is good to note that 
+the least squares line satisfies two very nice properties.
+
+1. The point $(\overline x, \overline y)$ is on the line. 
+
+2. This means that $\overline y = \hat\beta_0 + \hat\beta_1 \overline x$  (and $\hat\beta_0 = \overline y - \hat\beta_1 \overline x$)
+
+3. The slope of the line is $\displaystyle b = r \frac{s_y}{s_x}$ where $r$ is the 
+**correlation coefficient**:
+\[
+r = \frac{1}{n-1} \sum \frac{ x_i - \overline x }{s_x} \cdot \frac{ y_i - \overline y }{s_y}
+\]
+
+Since we have a point and the slope, it is easy to compute the equation for the line
+if we know $\overline x$, $s_x$, $\overline y$, $s_y$, and $r$.
+
+<div class="example">
+**Example**
+In a study of eye strain caused by visual display terminals, researchers wanted
+to be able to estimate ocular surface area (OSA) from palpebral fissure (the
+horizontal width of the eye opening in cm) because palpebral fissue is easier
+to measure than OSA.
+
+```{r include = !onLine, eval = !onLine}
+Eyes <- read.file("docs/data/PalpebralFissure.txt", header = TRUE)
+head(Eyes, 3)
+x.bar <- mean( ~ palpebral, data = Eyes)  
+y.bar <- mean( ~ OSA, data = Eyes)
+s_x <- sd( ~ palpebral, data = Eyes)
+s_y <- sd( ~ OSA, data = Eyes)
+r <- cor( palpebral ~ OSA, data = Eyes)
+c( x.bar = x.bar, y.bar = y.bar, s_x = s_x, s_y = s_y, r = r )
+slope <- r * s_y / s_x
+intercept <- y.bar - slope * x.bar
+c(intercept = intercept, slope = slope)
+```
+
+```{r include = onLine, eval = onLine}
+Eyes <- 
+  read.table(
+    "https://rpruim.github.io/Engineering-Statistics/data/PalpebralFissure.txt", 
+    header = TRUE)
+head(Eyes, 3) 
+x.bar <- mean( ~ palpebral, data = Eyes)  
+y.bar <- mean( ~ OSA, data = Eyes)
+s_x <- sd( ~ palpebral, data = Eyes)
+s_y <- sd( ~ OSA, data = Eyes)
+r <- cor( palpebral ~ OSA, data = Eyes)
+c( x.bar = x.bar, y.bar = y.bar, s_x = s_x, s_y = s_y, r = r )
+slope <- r * s_y / s_x
+intercept <- y.bar - slope * x.bar
+c(intercept = intercept, slope = slope)
+```
+</div>
+
+Fortunately, statistical software packages do all this work for us, so the
+calculations of the preceding example don't need to be done in practice.
+
+<div class="example">
+In a study of eye strain caused by visual display terminals, researchers wanted
+to be able to estimate ocular surface area (OSA) from palpebral fissure (the
+horizontal width of the eye opening in cm) because palpebral fissue is easier
+to measure than OSA.
+
+```{r }
+osa.model <- lm(OSA ~ palpebral, data = Eyes) 
+osa.model
+```
+
+
+`lm()` stands for linear model.  The default output includes the estimates
+of the coefficients ($\hat\beta_0$ and $\hat \beta_1$) based on the data.  If that is the 
+only information we want, then we can use 
+
+```{r }
+coef(osa.model)
+```
+
+
+This means that the equation of the least squares regression line is 
+\[
+\hat  y = `r round(coef(osa.model)[1],3)` + `r round(coef(osa.model)[2],3)` x
+\]
+
+We use $\hat y$ to indicate that this is not an observed value of the response variable
+but an estimated value (based on the linear equation given).
+
+R can add a regression line to our scatter plot if we ask it to.
+
+```{r}
+gf_point( OSA ~ palpebral, data = Eyes, type = c('p','r') )
+```
+
+We see that the line does run roughly ``through the middle'' of the data but that
+there is some variability above and below the line.
+</div>
+
+### Explanatory and Response Variables Matter
+
+It is important that 
+the explanatory variable be the `x variable
+and the response variable be the `y` variable
+when doing regression.  If we reverse the roles of `OSA` and 
+`palpebral`
+we do not get the same model.  This is because the residuals are measured vertically 
+(in the $y$ direction).  
+
+
+## A more general framework
+
+Linear models (aka linear regression) and their generalizations 
+explore how to use data to determine the relationship among
+two or more variables when this relationship is not known in advance. 
+The general framework we will use is 
+
+\[
+Y = f(x_1, x_2, \dots, x_k) + \varepsilon
+\]
+
+* $Y$ is the \term{response} variable that we are trying to estimate
+		from $k$ \term{explanatory} or \term{predictor} variables $x_1, x_2, \dots, x_k$.
+		
+* The relationship between the explanatory variables and the response 
+		variables is described by a function $f$.
+		
+* The relationship described by $f$ need not be a perfect fit.  The \term{error}
+		term in the model, $\varepsilon$, describes how individual responses
+		differ from the value give by $f$.  
+		
+    We will model $\varepsilon$ with a 
+		distribution -- typically a distribution with a mean of 0 -- 
+		so another way to think about this model is the for a given 
+		values of the predictors, the values of $Y$ have a distribution.  The mean
+		of this distribution is specified by $f$ and the shape by $\varepsilon$.
+
+
+## The Simple Linear Regression Model
+
+\[
+Y = \beta_0 + \beta_1 x + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Norm(0,\sigma)$.}
+\]
+
+In other words:
+* The mean response for a given predictor value $x$ is given by a linear formula
+\[
+\mbox{mean response} = \beta_0 + \beta_1 x
+\]
+This can also be written as 
+\[
+\E(Y \mid X = x) = \beta_0 + \beta_1 x
+\]
+
+* The distribution of all responses for a given predictor value $x$ is normal.
+* The standard deviation of the responses is the same for each predictor value,
+
+Furthermore, in this model the values of $\varepsilon$ are independent.
+
+* Estimate the coefficients $\beta_0$ and $\beta_1$.
+* Estimate the value $Y$ associated with a particular value of $x$.
+* Say something about how well a line fits the data.
+
+## Estimating the Response
+
+
+We can use our least squares regression line to estimate the value of the response
+variable from the value of the explanatory variable.
+
+<div class = "example">
+If the palpebral width is 1.2 cm, then we would estimate OSA to be
+
+\[
+\hat{\texttt{osa}} =
+\Sexpr{round(coef(osa.model)[1],3)} + \Sexpr{round(coef(osa.model)[2],3)} \cdot 1.2
+= \Sexpr{round(coef(osa.model)[1],3) + round(coef(osa.model)[2],3) * 1.2}
+\]
+
+\R\ can automate this for us too.  The \function{makeFun()} function will
+create a function from our model.
+If we input a palpebral measurement into this function, the function
+will return the estimated OSA.
+
+```{r }
+estimated.osa <- makeFun(osa.model)
+estimated.osa(1.2)
+```
+
+
+As it turns out, the 17th measurement in our data set had a
+`palpebral` measurement of 1.2 cm.
+
+```{r }
+Eyes[17,]
+```
+
+The corresponding OSA of 3.76 means that the residual for this observation is
+\[
+\mbox{observed} - \mbox{predicted} = 3.76 - \Sexpr{estimated.osa(1.2)} =
+\Sexpr{ 3.76 - estimated.osa(1.2)}
+\]
+</div>
+
+### Cautionary Note: Don't Extrapolate!
+
+While it often makes sense to generate model predictions corresponding to x-values _within_ the range of values measured in the dataset, it is dangerous to _extrapolate_ and make predictions for values _outside_ the range included in the dataset.  To assume that the linear relationship observed in the dataset holds for explanatory variable values outside the observed range, we would need a convincing, valid justification, which is usually not available.  If we extrapolate anyway, we risk generating erroneous or even nonsense predictions.  The problem generally gets worse as we stray further from the observed range of explanatory-variable values.
+
+## Some Pratice

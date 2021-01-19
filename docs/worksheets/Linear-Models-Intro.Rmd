@@ -316,7 +316,8 @@ but an estimated value (based on the linear equation given).
 R can add a regression line to our scatter plot if we ask it to.
 
 ```{r}
-gf_point( OSA ~ palpebral, data = Eyes, type = c('p','r') )
+gf_point( OSA ~ palpebral, data = Eyes) %>%
+  gf_lm()
 ```
 
 We see that the line does run roughly ``through the middle'' of the data but that

@@ -65,11 +65,17 @@ options(digits = 3)
 * **error** = estimate - estimand = actual - estimated
 
   * We won't know this number because we would not be estimating if we knew the estimand
-  
+ 
+<br>
+
 * **uncertainty** -- a description of the distribution of errors (over the random process of creating an estimate)
+
+<br>
 
 * **standard uncertainty** -- the standard deviation of the distribution of errors (over the random process of 
 creating an estimate)
+
+<br>
 
 ### Example: sample mean
 

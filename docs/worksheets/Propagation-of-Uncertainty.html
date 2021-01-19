@@ -711,10 +711,13 @@ f(x) \approx f(a) + f&#39;(a) (x - a)
 </div>
 <div id="application-to-uncertainty-estimation" class="section level3">
 <h3>Application to uncertainty estimation</h3>
-<p>We can’t quite use the approximation formula above because we don’t know <span class="math inline">\(\mu\)</span>. (It’s an unknown paramter that we are estimating.) But we can use our estimate in place of <span class="math inline">\(\mu\)</span>. Since the standard uncertainty is just the standard deviation of an estimator, if <span class="math inline">\(Y = f(X)\)</span>, then</p>
+<p>We can’t quite use the approximation formula above because we don’t know <span class="math inline">\(\mu\)</span>. (It’s an unknown paramter that we are estimating.) But we can use our estimate in place of <span class="math inline">\(\mu\)</span>. Since the standard uncertainty is just the standard deviation of an estimator,</p>
 <div class="boxed">
+<p>If</p>
+<p><span class="math display">\[Y = f(X) \;, \]</span></p>
+<p>then</p>
 <p><span class="math display">\[
-u_X \approx | f&#39;(\hat x) | u_X
+u_Y \approx | f&#39;(\hat x) | u_X
 \]</span></p>
 </div>
 <p>where <span class="math inline">\(\hat x\)</span> is our estimate.</p>

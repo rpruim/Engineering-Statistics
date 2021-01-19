@@ -190,11 +190,17 @@ $$
 
 We can't quite use the approximation formula above because we don't know $\mu$. (It's an unknown paramter that we 
 are estimating.)  But we can use our estimate in place of $\mu$. 
-Since the standard uncertainty is just the standard deviation of an estimator, if $Y = f(X)$, then
+Since the standard uncertainty is just the standard deviation of an estimator, 
 
 <div class = "boxed">
+If 
+
+$$Y = f(X) \;, $$ 
+
+then
+
 $$
-u_X \approx | f'(\hat x) | u_X
+u_Y \approx | f'(\hat x) | u_X
 $$
 </div>
 

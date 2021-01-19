@@ -301,7 +301,8 @@ but an estimated value (based on the linear equation given).
 \R\ can add a regression line to our scatter plot if we ask it to.
 \begin{center}
 <<osa-scatter>>=
-gf_point( OSA ~ palpebral, data = Eyes, type = c('p','r') )
+gf_point( OSA ~ palpebral, data = Eyes) %>% 
+  gf_lm()
 @
 \end{center}
 

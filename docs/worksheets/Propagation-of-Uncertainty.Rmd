@@ -406,8 +406,8 @@ This should be reported with appropriate rounding (and units) as
 ## Some Practice
 
 **1.** Suppse you are estimating the area of a square. To do this, you measure the 
-side length 30 times.  Your 30 measurements have a mean of 
-and a standard deviation of 
+side length 30 times.  Your 30 measurements have a mean of 10.5 cm
+and a standard deviation of 0.25 cm.
 Use this to
 
 a. Compute the standard uncertainty of the measured side length.

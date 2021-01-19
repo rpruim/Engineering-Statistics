@@ -61,17 +61,6 @@ options(digits = 3)
 
 ## Fitting a Line to Data
 
-### The Least Squares Method
-
-We want to determine the best fitting line to the data.  The usual method is 
-the method of least squares\footnote{In this case, it turns out that the least 
-squares and maximum likelihood methods produce exactly the same results.},
-which chooses the line that has the 
-\emph{ smallest possible sum of squares of residuals}, where residuals are defined by
-
-\[
-\mbox{residual} = \mbox{observed} - \mbox{predicted}
-\]
 
 <div class = "example">
 Consider the following small data set.
@@ -130,13 +119,31 @@ fitLine <- function(intercept = 0, slope = 1,
 }
 ```
 
+The points fall roughly along a line.  What line is the best line to describe the relationship
+between x and y?
+</div>
+
+### The Least Squares Method
+
+We want to determine the best fitting line to the data.  The usual method is 
+the method of least squares\footnote{In this case, it turns out that the least 
+squares and maximum likelihood methods produce exactly the same results.},
+which chooses the line that has the 
+*smallest possible sum of squares of residuals*, where residuals are defined by
+
+\[
+\mbox{residual} = \mbox{observed} - \mbox{predicted}
+\]
+
+So, returning to our previous example, we can get the least squares regression line as follows:
+
 1. Add a line to the plot that ``fits the data well".  Don't do any calculations, just add the line.
 2. Now estimate the residuals for each point relative to your line
 3. Compute the sum of the squared residuals, $SSE$.
 4. Estimate the slope and intercept of your line.
-</div>
 
 <div class = "example">
+<div class = "explain" label = "Show example">
 **Example**
 Suppose we we select a line that passes through $(1,2)$ and $(6,6)$. 
 the equation for this line is $y = 1.2 + 0.8 x$, and it looks like a pretty good fit:
@@ -186,7 +193,7 @@ gf_point(y ~ x, data = SomeData) %>%
   gf_lm()
 ```
 
-We can compute $SSE$ using the \function{resid()} function.
+We can compute $SSE$ using the `resid()` function.
 
 ```{r}
 SSE <- sum (resid(model1)^2); SSE
@@ -198,8 +205,9 @@ fitLine(coef(model1)[1], coef(model1)[2], squares = TRUE)
 
 As we see, this is a better fit than our first attempt -- 
 at least according to the least squares criterion.
-It will better than \emph{any} other attempt -- it is the least 
+It will better than *any* other attempt -- it is the least 
 squares regression line.
+</div>
 </div>
 
 ### Properties of the Least Squares Regression Line
@@ -232,6 +240,7 @@ Since we have a point and the slope, it is easy to compute the equation for the 
 if we know $\overline x$, $s_x$, $\overline y$, $s_y$, and $r$.
 
 <div class="example">
+<div class = "explain" label = "Show example">
 **Example**
 In a study of eye strain caused by visual display terminals, researchers wanted
 to be able to estimate ocular surface area (OSA) from palpebral fissure (the
@@ -269,11 +278,13 @@ intercept <- y.bar - slope * x.bar
 c(intercept = intercept, slope = slope)
 ```
 </div>
+</div>
 
 Fortunately, statistical software packages do all this work for us, so the
 calculations of the preceding example don't need to be done in practice.
 
 <div class="example">
+<div class = "explain" label = "Show example">
 In a study of eye strain caused by visual display terminals, researchers wanted
 to be able to estimate ocular surface area (OSA) from palpebral fissure (the
 horizontal width of the eye opening in cm) because palpebral fissue is easier
@@ -311,16 +322,20 @@ gf_point( OSA ~ palpebral, data = Eyes, type = c('p','r') )
 We see that the line does run roughly ``through the middle'' of the data but that
 there is some variability above and below the line.
 </div>
+</div>
 
 ### Explanatory and Response Variables Matter
 
-It is important that 
-the explanatory variable be the `x variable
+It is important that the explanatory variable be the `x` variable
 and the response variable be the `y` variable
 when doing regression.  If we reverse the roles of `OSA` and 
 `palpebral`
 we do not get the same model.  This is because the residuals are measured vertically 
-(in the $y$ direction).  
+(in the `y` direction).  
+
+Remember: **x** for e**x**planatory.
+
+<br>
 
 
 ## A more general framework
@@ -334,13 +349,13 @@ The general framework we will use is
 Y = f(x_1, x_2, \dots, x_k) + \varepsilon
 \]
 
-* $Y$ is the \term{response} variable that we are trying to estimate
-		from $k$ \term{explanatory} or \term{predictor} variables $x_1, x_2, \dots, x_k$.
+* $Y$ is the **response** variable that we are trying to estimate
+		from $k$ **explanatory** or **predictor** variables $x_1, x_2, \dots, x_k$.
 		
 * The relationship between the explanatory variables and the response 
 		variables is described by a function $f$.
 		
-* The relationship described by $f$ need not be a perfect fit.  The \term{error}
+* The relationship described by $f$ need not be a perfect fit.  The **error**
 		term in the model, $\varepsilon$, describes how individual responses
 		differ from the value give by $f$.  
 		
@@ -383,15 +398,17 @@ We can use our least squares regression line to estimate the value of the respon
 variable from the value of the explanatory variable.
 
 <div class = "example">
+<div class = "explain" labal = "Show example">
+**Example**
 If the palpebral width is 1.2 cm, then we would estimate OSA to be
 
 \[
 \hat{\texttt{osa}} =
-\Sexpr{round(coef(osa.model)[1],3)} + \Sexpr{round(coef(osa.model)[2],3)} \cdot 1.2
-= \Sexpr{round(coef(osa.model)[1],3) + round(coef(osa.model)[2],3) * 1.2}
+`r round(coef(osa.model)[1],3)` + `r round(coef(osa.model)[2],3)` \cdot  1.2
+= `r round(coef(osa.model)[1],3) + round(coef(osa.model)[2],3) * 1.2`
 \]
 
-\R\ can automate this for us too.  The \function{makeFun()} function will
+\R\ can automate this for us too.  The `makeFun()` function will
 create a function from our model.
 If we input a palpebral measurement into this function, the function
 will return the estimated OSA.
@@ -411,9 +428,10 @@ Eyes[17,]
 
 The corresponding OSA of 3.76 means that the residual for this observation is
 \[
-\mbox{observed} - \mbox{predicted} = 3.76 - \Sexpr{estimated.osa(1.2)} =
-\Sexpr{ 3.76 - estimated.osa(1.2)}
+\mbox{observed} - \mbox{predicted}  = 3.76 - `r estimated.osa(1.2)` =
+`r  3.76 - estimated.osa(1.2)`
 \]
+</div>
 </div>
 
 ### Cautionary Note: Don't Extrapolate!
@@ -421,3 +439,14 @@ The corresponding OSA of 3.76 means that the residual for this observation is
 While it often makes sense to generate model predictions corresponding to x-values _within_ the range of values measured in the dataset, it is dangerous to _extrapolate_ and make predictions for values _outside_ the range included in the dataset.  To assume that the linear relationship observed in the dataset holds for explanatory variable values outside the observed range, we would need a convincing, valid justification, which is usually not available.  If we extrapolate anyway, we risk generating erroneous or even nonsense predictions.  The problem generally gets worse as we stray further from the observed range of explanatory-variable values.
 
 ## Some Pratice
+
+**1.** A data set with 35 observations of two variables has a 
+
+* mean of x = 27
+* sd of x = 5
+* mean of y = 10
+* sd of y = 2
+* correlation coefficient = 0.72
+
+What is the equation of the regression line?
+

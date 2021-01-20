@@ -476,41 +476,396 @@ How should we report the volume?
 
 ## Combinations of mutliple random variables
 
-Coming soon.
+We can do a similar thing with functions of multiple variables. 
+
+<div class = "example">
+<div class = "explain">
+For a function of two independent random variables, the 
+linear approximation has the form
+
+$$
+f(x,y) 
+  \approx  f(a,b) 
+  + \left(\frac{\partial f}{\partial x}\right) (x - a) 
+  + \left(\frac{\partial f}{\partial y}\right) (y - b)
+$$
+where the partial derivatives are evaluated at $(a, b)$.[^notation]
+
+[^notation]: We could denote this as $\left. \frac{\partial f}{\partial x}\right|_{x=a, y=b}$, but 
+it makes the notation pretty messy.
+
+Applying this to random variables $X$ and $Y$ with means $\mu_X$ and $\mu_Y$, we get
+
+$$
+f(X,Y) 
+  \approx  f(\mu_X,\mu_Y) 
+  + \left(\frac{\partial f}{\partial X}\right) (X - \mu_X) 
+  + \left(\frac{\partial f}{\partial Y}\right) (Y - \mu_Y)
+$$
+
+where the partial derivatives are evaluated at $(\mu_X, \mu_Y)$.
+Now we just need to calculate the variance:
+
+\begin{align*}
+\Var(f(X,Y))
+  & \approx  \Var\left( f(\mu_X,\mu_Y) 
+  + \left(\frac{\partial f}{\partial X}\right) (X - \mu_X) 
+  + \left(\frac{\partial f}{\partial Y}\right) (Y - \mu_Y) \right)
+  \\
+  &=
+    \left(\frac{\partial f}{\partial X}\right)^2 \Var(X)  
+  + \left(\frac{\partial f}{\partial Y}\right)^2 \Var(Y) 
+\end{align*}
+
+As before, we don't know $\mu_X$ and $\mu_Y$. So we will plug our estimates into the partial derivatives.
+Taking a square root gives a formula for estimating the standard uncertainty.
+</div>
+</div>
+
+<br>
+
+This method of estimating uncertainties is usually called the **delta method** and is summarized in the box below.
+
+<div class = "boxed">
+	
+### The Delta Method for independent estimates
+
+
+Let $X$ and $Y$ be independent estimators with uncertainties $u_{X}$ and $u_{Y}$,
+and let $W = f(X,Y)$. Then the uncertainty in the estimator $W$ can be
+estimated as
+\[
+	u_{W} \approx
+	\sqrt{ 
+\left(\frac{\partial f}{\partial X}\right)^2 u_X^2
++
+\left(\frac{\partial f}{\partial Y}\right)^2 u_Y^2
+	}
+\]
+
+where the partial derivatives are evaluated using estimated values of $X$ and $Y$.
+	
+<br>
+
+
+The Delta Method can be extended to functions of more (or fewer) than two
+variables by adding (or removing) terms.  Slightly more complicated formulas
+exist to handle situations where the estimators are not independent (but we will
+not cover those in this course).
+	
+<br>
+
+Because this method is based on using a linear approximation to $f$, it works
+better when the linear approximation is better.  In particular, when
+$\frac{\partial^2 f}{\partial X^2}$ or $\frac{\partial^2 f}{\partial Y^2}$ are
+large near the estimated values of $X$ and $Y$, the approximations might not be
+very good.
+</div>
+
+
+<div class = "example">
+**Dimes**
+Suppose you want to estimate the number of dimes in a large sack of dimes.  Here is one method
+you could use:
+
+1. Measure the weight of all the dimes in the bag by placing them (without the bag)
+		on an appropriately sized scale.  (Call this $\hat B$, our estimate for $B$,
+		the actual weight of the dimes in the bag.)
+
+2. Measure the weight of 30 individual dimes and use those measurements to
+		estimate the mean weight of dimes. (Call this $\hat D$.)
+		
+3. Combine these two estimates to compute an estimated number of dimes in the bag.
+		($\hat N = \hat B / \hat D$.)
+
+Suppose that the dimes in our our bag together weigh 10.2 kg and the mean weight of our 30 
+measured dimes is `r mean( ~ mass, data = Dimes)`. 
+Then we would estimate the number of dimes to be 
+
+\[
+10200 / `r mean( ~ mass, data = Dimes)` = `r  10200 / mean( ~ mass, data = Dimes) ` \;.
+\]
+
+But how good is this estimate?  Do we expect to be within a small handful of dimes?  Might we be 
+off by 100 or 500?  Standard uncertainty provides a way to quantify this.  We will proceed in 
+three steps
+
+1. Determine the uncertainty in our estimate for $D$.
+
+<div class = "explain" label = "Show uncertainty for D">
+This is the part we already know how to do. We just need the standard error 
+for a mean: $\frac{s}{\sqrt{n}}$.
+
+```{r}
+df_stats(~ mass, data = Dimes, mean, sd, n = length)
+```
+
+So $u_D = 0.0221 / \sqrt{30} = `r round(0.0221 / sqrt(30), 3)`$.
+</div>
+<br>
+
+2. Determine the uncertainty in our estimate for $B$.
+
+<div class = "explain" label = "Show uncertainty for B">
+For the mass of all the dimes, we need a different approach, since this is not based on 
+the average of several measurments of different bags.  We only have on measurement.
+The scale reads 10.2 kg.  That's probably not the exact mass.  In fact, if the decimal
+readout only shows tenths of a kg, then any value between 10.15 and 10.25 would read as 10.2.
+So a good model for the distribution of errors would be $\Unif(-0.05, 0.05)$.  Looking in our table,
+we see that the variance for this distribution is $\frac{(b-a)^2}{12}$, so the uncertainty
+is 
+
+$$
+u_B = 
+\frac{0.1}{\sqrt{12}} = `r round(0.1 / sqrt(12), 4)` kg
+= 
+`r 1000 * round(0.1 / sqrt(12), 4)` g
+$$
+
+</div>
+<br>
+
+3. Combine these using the delta method to get the uncertainty for $N$.
+
+<div class = "explain" label = "Show uncertainty for N">
+So far we have 
+
+$$
+u_D = 0.004 \qquad u_B = 0.029 kg = 29g
+$$
+The delta method gives an approximate uncertainty for $N$. First, we compute our two partial derivatives for $f(D, B) = B/D$.
+
+\begin{align*}
+\frac{\partial f}{\partial D} &= - B/D^2
+\\
+\frac{\partial f}{\partial B} &= 1/D 
+\end{align*}
+
+Then we combine everything to get $u_N$.
+
+\begin{align*}
+u_N &= \sqrt{ \frac{\hat B^2 }{ \hat D^4} u_D^2 + \frac{1}{\hat D^2} u_B^2}
+\\
+   &= \sqrt{ \frac{10200^2 }{ 2.26^4} 0.004^2  + \frac{1}{2.26^2} 29^2 }
+   \\
+   &= `r sqrt(10200^2 / 2.26^4 * 0.004^2 + 1/2.26^2  * 29^2)`
+\\
+\end{align*}
+
+So we report the number of dimes as $4517 \pm 15$.
+
+</div>
+<br>
+
+</div>
+
+<div class = "example">
+**Dimes and simulation**
+We could also estimate the uncertainty in our estimate for the number of dimes using simulations.
+
+<div class ="explain" label = "Show simulation">
+
+```{r}
+B <- runif(10000, 10150, 10250)
+SampleMeans <- do(10000) * mean( ~ mass, data = resample(Dimes) ) 
+head(SampleMeans, 3)
+D <- SampleMeans$mean 
+N <- B / D
+gf_histogram( ~ N) 
+gf_qq( ~ N)
+sd(N)
+```
+
+Recall: `resample()` samples *with replacement*.  This is a way to use our data set to simulate 
+many possible data sets. Some observations from the original sample may appear more than once, others
+not at all. If we use `sample()`, we will get the same data set every time (just in a different order).
+</div>
+<br>
+
+</div>
+
+## Where do the original uncertainties come from?
+
+In order to use the delta method, we need to have uncertainties for the quantities involved in our function.
+Where do they come from?  There at least to possibilities.
+
+1. From our data
+
+    If our estimate comes from sample data, we should be able to use the uncertainty of our estimator.
+    That's how we determined $u_D$ in the dimes example.  Since $D$ was a sample mean, we used the 
+    standard error for the mean ($\frac{s}{\sqrt{n}}$). 
+    This is measuring **uncertainty due to sampling variability** (variability from sample to sample
+    because of the particular items selected for the sample).
+
+2. From a model
+
+    Our estimated uncertainy for $B$ came from a model for how the scale works. The accuracy of this estimate depends on
+    how well our model matches the behavior of the scale.
+    
+    Three commonly used models for this type of measurement are the uniform, triangle, and normal distributions.
+    Each has an uncertainty that is based on an interval $[a,b]$ in which the true value almost surely lies.
+    (It is actually only the width of this interval that matters.)
+    Here is a table of the uncertainties for these three families, described in terms of $b - a$.
+    
+-------------------------------
+ distribution     uncertainty
+--------------- --------------- 
+   uniform       $\displaystyle \frac{b-a}{2 \sqrt{3}}$
+    		
+	triangle       $\displaystyle \frac{b-a}{2 \sqrt{6}}$
+		   
+	 normal        $\displaystyle \frac{b-a}{2 \cdot 3}$
+		    
+-----------------------
+		
+  *	For the normal distribution, we let $[a, b]$ correspond to the middle 99.7% of the normal distribution (ie, 3 standard deviations
+		in either direction from the mean.  So the width of the interval is 6 standard deviations wide.
+		
+  * Comparing these we see that the uniform is most conservative (gives the largest uncertainty) and the normal distribution
+		is the least, with a triangle distribution somewhere between the two. 
+		
+	* If you have seen uncertainty formulas with 
+		$\sqrt{12}$ or $\sqrt{3}$ in them in your science classes, it is likely these are coming from using the 
+		uniform distribution to model the distribution of error.
 
 ## More Practice
 
-**9.** Suppose $x ̂= 3.41 \pm .04$ is the estimate of the length of a rectangle and 
-$y ̂= 2.34 \pm .02$ is the estimate of its width.  How do we report the area?
 
-<!-- Area = f(x,y) = xy.  fx(x,y) = y, fy(x,y) = x -->
+**9.**
+Choosing good names in R can help you stay organized.  For the dimes problem we might set things up like this:
 
-<!-- 	Area =  f(x ̂, y ̂) ± SE(f(x ̂, y ̂)) = 3.41*2.34 ± SE(f(x ̂, y ̂)) = 7.98 ± SE(f(x ̂, y ̂)) -->
+```{r, eval = FALSE, tidy = FALSE}
+B <-       # measured mass of dimes in bag
+D <-       # estimated average mass of a dime
+u_B <-     # uncertainty for B
+u_D <-     # uncertainty for D
+dB <-      # partial derivative with respect to B
+dD <-      # partial derivative with respect to D
+N <-       # expression to compute N from B and D
+u_N <- sqrt( dB^2 * u_B^2 + dD^2 * u_D^2 )
+```
 
-<!--      SE(f(x ̂, y ̂))   √(〖f_x (x ̂,y ̂)〗^2 〖SE((x)) ̂〗^2+〖f_y (x ̂,y ̂)〗^2 〖SE(y ̂)〗^2 ) -->
+Fill in the missing parts, run the code, and check that you get the same result as we had above.
 
-<!-- 			= √(〖(y ̂)〗^2 〖SE(x ̂)〗^2+〖(x ̂)〗^2 〖SE(y ̂)〗^2 ) -->
+**10.** Return to the dimes example.  Suppose you found out that the scale used
+only uses even digits for the tenths of kilogram.  This means the scale is not as accurate
+as we thought.  Given this new information, how should we report the uncertainty for the
+mass of the dimes in the bag? For the number of dimes?
 
-<!-- 			√(〖2.34〗^2 〖*.04〗^2+〖3.41〗^2 〖*.02〗^2 )	  -->
+<div class = "explain" label = "Show answer">
 
-<!-- 			= .12 -->
+```{r include = FALSE}
+B <- 10200
+D <- mean(~mass, data = Dimes) 
+dB <- 1/D 
+dD <- -B / D^2
+u_B <- 200 / sqrt(12)
+u_D <- sd(~mass, data = Dimes) / sqrt(nrow(Dimes))
+N <- B / D
+u_N <- sqrt( dB^2 * u_B^2 + dD^2 * u_D^2)
+```
 
-<!-- The final result:  Area = 7.98 ± 0.12 -->
+$u_B = `r u_B`; \quad u_N = `r u_N`$  (How many digits should you keep for each uncertainty?)
 
-**10.** The length  of a rectangle is reported as 
-$\hat x = 3.05 \pm .02$ and the width of the rectangle is reported as 
-$\hat y  = 5.45 \pm .11$.  How should perimeter of the rectangle be reported?
+</div>
+<br>
+```{r include = FALSE}
+x <- 3.41
+y <- 2.34
+dx <- y
+dy <- x
+u_x <- 0.04
+u_y <- 0.02
+A <- x * y
+u_A <- sqrt( dx^2 * u_x^2 + dy^2 * u_y^2)
+```
 
-<!-- Perimeter = f(x,y) = 2x + 2y,  fx (x,y) = 2, fy(x,y) = 2 -->
+**11.** Suppose $x ̂= `r x` \pm `r u_x`$ is the estimate of the length of a 
+rectangle and  $y ̂= `r y` \pm `r u_y`$ is the estimate of its width.  How do we report the area?
 
-<!-- Perimeter = f(x ̂, y ̂) ± SE(f(x ̂, y ̂)) = 2*3.05+2*5.45 ± SE(f(x ̂, y ̂)) = 17.00 ± SE(f(x ̂, y ̂)) -->
 
-<!--      SE(f(x ̂, y ̂))   √(〖f_x (x ̂,y ̂)〗^2 〖SE((x)) ̂〗^2+〖f_y (x ̂,y ̂)〗^2 〖SE(y ̂)〗^2 ) -->
+$`r A %>% sprintf(fmt = '%#.2f')` \pm `r u_A %>% sprintf(fmt = '%#.2f')`$
 
-<!-- 			= √(2^2 〖*.02〗^2+2^2*〖.11〗^2 ) -->
+</div>
+<br>
 
-<!-- 			= .22 -->
 
-<!-- The final result:  Perimeter = 17.00 ± .22. -->
+
+```{r include = FALSE}
+x <- 3.05
+y <- 5.45
+dx <- 2
+dy <- 2
+u_x <- 0.03
+u_y <- 0.11
+P <- 2*x + 2*y
+u_P <- sqrt( dx^2 * u_x^2 + dy^2 * u_y^2)
+```
+
+**12.** The length  of a rectangle is reported as 
+$\hat x = `r x` \pm `r u_x`$ and the width of the rectangle is reported as 
+$\hat y  = `r y` \pm `r u_y`$.  How should perimeter of the rectangle be reported?
+
+<div class = "explain" label = "Show answer">
+
+$`r P %>% sprintf(fmt = '%#.2f')` \pm `r u_P %>% sprintf(fmt = '%#.2f')`$
+(Or $`r P %>% sprintf(fmt = '%#.1f')` \pm `r u_P %>% sprintf(fmt = '%#.1f')`$)
+</div>
+<br>
+
+```{r include = FALSE}
+t <- 5.25
+s <- 3.21
+dt <- 1/s 
+ds <- -t / s^2
+u_t <- 0.03
+u_s <- 0.05
+V <- s / t
+u_V <- sqrt( dt^2 * u_t^2 + ds^2 * u_s^2)
+```
+
+**13.** To estimate the average speed of an object, a physics student measures
+the time and distance traveled as 
+$`r s` \pm `r u_s`$ meters in  $`r t` \pm `r u_t`$ seconds.
+
+How should the average velocity be reported?
+
+<div class = "explain" label = "Show answer">
+
+$`r V %>% sprintf(fmt = '%#.3f')` \pm `r u_V %>% sprintf(fmt = '%#.3f')`$ m/s
+(Or $`r V %>% sprintf(fmt = '%#.2f')` \pm `r u_V %>% sprintf(fmt = '%#.2f')`$ m/s)
+</div>
+<br>
+
+
+**14.**
+When two resistors with resistances $R_1$ and $R_2$ are connected in parallel, 
+the combined resistance satisfies
+\[
+R = \frac{R_1 R_2}{R_1 + R_2} 
+\]
+Suppose the resistances of the two resistors are reported as 
+$20 \pm 0.7$ ohms and $50 \pm 1.2$ ohms.  How should you report the combined resistance?
+
+<div class = "explain" label = "Show answer">
+$14.3 \pm 0.4$
+</div>
+<br>
+
+**15.**
+On an analog, we can usually tell which two marks surround our measured value. 
+In fact, we can usually tell which one is closer. So if our scale as numbers at each integer ($0, 1, 2, 3, \dots$),
+we might be able to tell that the measurement is, for example, "between 13 and 14, but closer to 13".
+What uncertainty should we use for a measurement from this device (assuming a uniform model)?
+
+<div class = "explain" label = "Show answer">
+Since we are sure the value is between 13 and 13.5, we get
+$\displaystyle \frac{0.5}{2 \sqrt{3}}$ = `r 0.5 / (2 * sqrt(3))`
+</div>
+
+<br>
+
+
+
 
 

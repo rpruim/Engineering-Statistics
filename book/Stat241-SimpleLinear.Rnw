@@ -650,7 +650,9 @@ intervals.
 Notice how most of the dots are within the prediction bands, but not within the 
 confidence bands.
 <<fig.width = 6, out.width = ".9\\textwidth", fig.height = 3>>=
-xyplot(OSA ~ palpebral, data = Eyes, panel = panel.lmbands)
+gf_point(OSA ~ palpebral, data = Eyes) %>%
+  gf_lm(interval = "confidence") %>%
+  gf_lm(interval = "prediction")
 @
 
 \subsubsection{A Caution Regarding Prediction Intervals}

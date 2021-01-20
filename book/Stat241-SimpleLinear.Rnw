@@ -29,7 +29,7 @@ Y = f(x_1, x_2, \dots, x_k) + \varepsilon
 	\item
 		The relationship described by $f$ need not be a perfect fit.  The \term{error}
 		term in the model, $\varepsilon$, describes how individual responses
-		differ from the value give by $f$.  
+		differ from the value given by $f$.  
 		
 		We will model $\varepsilon$ with a 
 		distribution -- typically a distribution with a mean of 0 -- 

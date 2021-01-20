@@ -374,7 +374,8 @@ border-style: solid;
 border-color: navy;
 border-width: 2px;
 border-radius: 10px;
-padding: 20px;
+padding: 10px 10px 10px 10px;
+margin: 0px 0px 5px 0px;
 } div.example {
 border-style: solid;
 border-color: skyblue;
@@ -382,6 +383,9 @@ border-width: 2px;
 border-radius: 8px;
 padding: 12px;
 margin: 0px 0px 10px 0px;
+}
+div.explain {
+margin: 0px 0px 5px 0px;
 }
 </style>
 
@@ -767,7 +771,7 @@ Y = f(x_1, x_2, \dots, x_k) + \varepsilon
 <ul>
 <li><p><span class="math inline">\(Y\)</span> is the <strong>response</strong> variable that we are trying to estimate from <span class="math inline">\(k\)</span> <strong>explanatory</strong> or <strong>predictor</strong> variables <span class="math inline">\(x_1, x_2, \dots, x_k\)</span>.</p></li>
 <li><p>The relationship between the explanatory variables and the response variables is described by a function <span class="math inline">\(f\)</span>.</p></li>
-<li><p>The relationship described by <span class="math inline">\(f\)</span> need not be a perfect fit. The <strong>error</strong> term in the model, <span class="math inline">\(\varepsilon\)</span>, describes how individual responses differ from the value give by <span class="math inline">\(f\)</span>.</p>
+<li><p>The relationship described by <span class="math inline">\(f\)</span> need not be a perfect fit. The <strong>error</strong> term in the model, <span class="math inline">\(\varepsilon\)</span>, describes how individual responses differ from the value given by <span class="math inline">\(f\)</span>.</p>
 <p>We will model <span class="math inline">\(\varepsilon\)</span> with a distribution – typically a distribution with a mean of 0 – so another way to think about this model is the for a given values of the predictors, the values of <span class="math inline">\(Y\)</span> have a distribution. The mean of this distribution is specified by <span class="math inline">\(f\)</span> and the shape by <span class="math inline">\(\varepsilon\)</span>.</p></li>
 </ul>
 </div>

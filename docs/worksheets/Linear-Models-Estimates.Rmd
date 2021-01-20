@@ -312,9 +312,8 @@ We can visualize these intervals using `gf_lm()`
 
 ```{r}
 gf_point(OSA ~ palpebral, data = Eyes) %>%
-  gf_lm(color = "gray50") %>%
-  gf_lm(interval = "confidence", fill = "navy") %>%
-  gf_lm(interval = "prediction", fill = "red")
+  gf_lm(interval = "confidence", fill = "red") %>%
+  gf_lm(interval = "prediction", fill = "skyblue")
 ```
 
 Notice that

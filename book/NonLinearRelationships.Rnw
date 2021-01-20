@@ -511,7 +511,9 @@ intervals.
 Notice how most of the dots are within the prediction bands, but not within the 
 confidence bands.
 <<fig.width = ".7\\textwidth">>=
-xyplot(OSA ~ palpebral, data = Eyes, panel = panel.lmbands)
+gf_point(OSA ~ palpebral, data = Eyes) %>%
+  gf_lm(interval = "confidence") %>%
+  gf_lm(interval = "prediction") 
 @
 
 \subsubsection{A Caution Regarding Prediction Intervals}
@@ -1694,8 +1696,11 @@ f(ACT = 30, interval = "prediction")
 @
 		\item
 <<>>=
-xyplot(GPA~ACT,data = grades,panel = panel.lmbands)
-xyplot(resid(grades.model) ~ fitted(grades.model),type = c('p','smooth'))
+gf_point(GPA ~ ACT, data = grades) %>%
+  gf_lm(interval = "confidence") %>%
+  gf_lm(interval = "prediction")
+gf_point(resid(grades.model) ~ fitted(grades.model)) %>%
+  gf_smooth()
 @
 			There are no major concerns with the regression model. The
 			residuals look pretty good.  (There is perhaps a bit more variability

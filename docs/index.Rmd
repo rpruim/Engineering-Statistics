@@ -51,6 +51,21 @@ at Calvin University.
     
     * Transformations and Combinations
         [[HTML](worksheets/Distributions-Transformations.html)]
-   
+  
+  * Confidence Intervals
+  
+    * Sampling Distributions and Confidence intervals 
+    [[HTML](worksheets/Sampling-Distributions-and-CIs.html)]
+  
+    * CIs for differences in means and proportions
+    [[HTML](worksheets/CI-diffmean.html)]
+  
+  * Propagation of Uncertainty [[HTML](worksheets/Propagation-of-Uncertainty.html)]
+        
     
+  * Linear Models 
+  
+    * Inro and Least Squares [[HTML](worksheets/Linear-Models-Intro.html)]
+    * How good are the estimates (standard errors and diagnostics)
+    [[HTML](worksheets/Linear-Models-Estimates.html)]
     

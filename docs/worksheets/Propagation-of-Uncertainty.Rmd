@@ -963,7 +963,7 @@ Now we solve
 ## More Practice
 
 **16.** Compute the relative uncertainties for 
-the length, width, and perimeter in problem 10.
+the length, width, and perimeter in problem 12.
 
 **17.** Compute the relative uncertainties for the three quantities 
 in the dimes example.

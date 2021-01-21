@@ -1,0 +1,580 @@
+---
+title: "Linear Models -- Transformations"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ['../styles/ds303-notes.css', '../styles/worksheets.css']
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\T{{\sf T}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+library(patchwork)
+library(reactable)
+theme_set(theme_bw(base_size = 7))
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+
+## Quick Review
+
+
+### Simple Linear Model
+
+\[
+Y = \beta_0 + \beta_1 x + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Norm(0,\sigma)$.}
+\]
+
+In other words 
+
+$$
+Y \sim \Norm(\beta_0 +\beta_1 x, \sigma)
+$$
+
+## Linear Models for Non-linear relationships
+
+Not all relationships are linear.  For non-linear relationships, there are several approaches we 
+can take.
+
+1. Use a model with more than one predictor.
+2. Use a model with a non-linear function.
+3. Transform the variables to see if there is a linear relationship between the transformed
+variables.
+
+Each of these is a useful approach for some problems. Here will talk about #3.
+
+### Choosing a transformation
+
+There are three reasons we might choose to use transformations:
+
+1. To correspond to a theoretical model
+
+2. To obtain a better fit
+
+3. To improve residual behavior
+
+We will look at some examples in a moment, but notice that all three of these
+are related. In particular, transformations affect both the fit and the 
+residuals, and a transformation that improves fit might be harder to interpret
+than one that fits less well but corresponds to a theoretical model.
+
+<div class = "example">
+**Example: Estimating Planck's Constant**
+
+<div class = "explain" label = "Show Example">
+Sometimes we have *a priori* information that tells us what 
+kind of non-linear relationship we should anticipate.  
+For example, an experiment to estimate Planck's constant ($\hbar$) using 
+LED lights and a voltage meter is based on the relationship
+	
+\[
+	V_a = \frac{\hbar c }{e \lambda} + k
+\]
+	
+* $V_a$ = activation voltage (the voltage at which the LED just begins to emit
+	light) 
+* $c$ = speed of light 
+* $e$ = is the energy of an electron 
+* $\lambda$ =  frequency of the light emitted 
+* $k$ = constant that relates to the energy 
+	    losses inside the semiconductor’s p-n junction.
+	
+<!-- If we take $c$ and $e$ as known for now (in a fancier version we would work -->
+<!-- their uncertainties into this, too), -->
+We can design an experiment that measures $V_a$ and $\lambda$ for a number of different colors.
+
+A little algebra gives us
+
+\[
+V_a = \frac{\hbar c }{e} \cdot \frac{1}{\lambda} + k
+\]
+	  
+So if we fit a model with 
+
+* $V_a$ as the response, and 
+
+* $\frac{1}{\lambda}$ as the predictor,
+
+then 
+
+* intercept = $k$
+
+* slope = $\frac{\hbar c}{e}$
+
+    * We can use this to solve for $\hbar$: 
+    
+    $$\hbar = \beta_1 \frac{e}{c}$$
+    
+    * If we have uncertainties for $c$ and $e$, we can use propagation of uncertainty
+    to get an uncertainty for $\hbar$. (The regression model will give us an
+    uncertainty for $\beta_1$.)
+
+
+Theory says that a scatter plot of $V_a$ and $1/\lambda$ should form a straight line,
+so the the model we would fit would look something like
+  
+```{r eval = FALSE}
+lm(voltage ~ I(1/wavelength), data = mydata)
+```
+
+Some things to notice
+    
+* We need to wrap `1/lambda` in `I()` because the arithmetic symbols 
+`+`, `-`, `*`, `/`, and  `^` have special meanings inside the formula for a model. 
+`I()` stands for *inhibit* special interpretation.
+
+* The intercpet is not directly involved in estimating $\hbar$, but that we can't fit 
+the line and obtain our slope without it.
+</div>
+</div>
+
+
+Many other relationships can be transformed to linear.  Common transformation functions
+are the reciprocal  and logarithm functions.
+
+## Three Important Laws
+
+Three types of relationships (often called "laws") occur so often in science that they
+are worth mentioning. Each is also easily transformed into a linear relationship.
+
+1. Linear Law: $y = mx + b = \beta_0 + \beta_` x$
+
+    * ideal for linear regression, of course
+
+2. Power Law: $y = Ax^p$
+
+    * $\log(y) = \log(A) + p \log(x)$
+    
+    * so a log-log transformation (log transformation of both variables)
+  transforms to linear
+    
+    * Note: An "inverse square law" is a power law where $p = 2$.
+
+3. Exponential Law: $y = A B^x = A e^{Cx}$.
+
+    * $\log y = \log(A) + x \log(B) = log(A) + Cx$
+    
+    * so a log transformation of the response transforms to linear
+
+
+### Log-log and semi-log plots
+
+We can check whether a power or exponential law appears to hold by 
+creating a plot of log(y) vs log(x) (log-log plot) or of log(y) vs x (semi-log plot).
+
+
+
+<div class = "example">
+**Synthetic Example: Power Law** 
+
+<div class = "explain" label = "Show Example">
+
+Let's simulate data that follows a power law.
+
+```{r}
+SynthData <- tibble(
+  x = 1:10,
+  y = 3 * x^1.8
+)
+```
+
+Now we can make some plots to investigate.  The log-log plot should be linear.
+
+```{r fig.width = 9}
+gf_point(y ~ x, data = SynthData) |
+gf_point(log(y) ~ x, data = SynthData) |
+gf_point(log(y) ~ log(x), data = SynthData)
+```
+
+If want to retian the natural units in our plots, we can transform the scales rather than
+transforming the data.
+
+```{r fig.width = 8}
+gf_point(y ~ x, data = SynthData) %>%
+  gf_refine(scale_y_log10()) |
+gf_point(y ~ x, data = SynthData) %>%
+  gf_refine(scale_y_log10(), scale_x_log10())
+
+```
+
+Real data won't fit perfectly like this synthetic data, of course.
+</div>
+</div>
+
+
+## Tukey's Ladder of Re-expression
+
+Section 8.7.3 in the 
+[Notes](https://rpruim.github.io/Engineering-Statistics/book/Stat241-Notes.pdf#page=187) 
+describes a method for narrowing down our search for a transformation just based
+on the shape of the relationship in our data.
+
+## More Examples
+
+<div class = "example">
+**Example: Dropping balls** 
+
+<div class = "explain" label = "Show Example">
+
+**Good fit?**
+
+```{r}
+library(fastR2)
+gf_point(time ~ height, data = BallDrop) %>% gf_lm(color = "gray50")
+ball.model <- lm(time ~ height, data = BallDrop)
+msummary(ball.model)
+```
+<br>
+
+**Notes on $R^2$**
+
+* Labeled "Multiple R-squared" in the summary output.
+
+* Square of correlation coefficient.
+
+* Commonly used metric of "fit", but it has some issues.
+
+    * Good: $R^2 = \frac{SSE}{SST}$ = proportion of variation in response explained by
+    the model.
+    
+    * Bad: Good fits can have small $R^2$, bad fits can have large $R^2$, so it isn't
+    useful in isolation.
+
+<div class = "explain" label = "Show better diagnostics">
+
+```{r}
+mplot(ball.model, w = 1:2) %>% cowplot::plot_grid(plotlist = ., nrow = 1)
+```
+
+```{r fig.height = 3.5}
+acf(resid(ball.model))
+```
+</div>
+<br>
+
+<div class = "explain" label = "Show better model">
+
+What sort of transformations should we try?
+
+* Second quadrant of Tukey's bulge
+
+* So down for `heigth` or up for `time`.
+
+* Let's try `sqrt(height)` since we don't need a particularly strong transformation.
+
+
+```{r}
+ball.model2 <- lm(time ~ sqrt(height), data = BallDrop)
+gf_point(time ~ sqrt(height), data = BallDrop)
+mplot(ball.model2, which = 1:2) %>% cowplot::plot_grid(plotlist = ., nrow = 1)
+```
+
+```{r fig.height = 3.5}
+acf(resid(ball.model2))
+```
+
+Everything looks better, but there is still one problem.  Can you spot it?
+(See the 
+[Notes](https://rpruim.github.io/Engineering-Statistics/book/Stat241-Notes.pdf#page=190) 
+for more discussion.)
+</div>
+<br>
+
+
+</div>
+</div>
+
+
+<div class = "example">
+**Example: Concentration ** 
+
+<div class = "explain" label = "Show Example">
+
+A chemical engineering text book suggest a law of the form
+\[
+\log\left( - \frac{dC}{dt} \right) =  \log(k) + \alpha \log(C)
+\]
+where $C$ is concentration and $t$ is time.
+
+<div class = "explain" label = "Show derivation of the model">
+This is equivalent to 
+\begin{align*}
+ - \frac{dC}{dt}  &=  k \cdot C^\alpha
+\\
+ - \int C^{-\alpha} \; dC  &=  \int k \;dt 
+ \\
+ - \frac{1}{1-\alpha} C^{1-\alpha} &=  k t + d 
+ \\
+ \frac{1}{\beta} C^{-\beta} & = k t + d
+ \\
+C^{-\beta} & = \beta k t + \beta d
+\end{align*}
+
+If we know $\beta = \alpha - 1$ (i.e., if we know $\alpha$), 
+then we can fit a linear model using
+
+```{r eval = FALSE}
+lm(C^(-1/beta) ~ t)
+```
+
+The intercept of such a model will be $\beta d$ and the slope will be $\beta k$,
+from which we can easily recover $d$ and $k$.
+
+Alternatively, if we know $d = 0$ (i.e., if we know that $C = 0$ when $t = 0$), 
+then we can use
+\begin{align*}
+	\log( C^{-\beta} )  = -\beta \log(C) &= \log(\beta k t ) = \log(\beta k) + \log t
+ \\
+ \log(C) &= - \frac{\log(\beta k)}{\beta} - \frac{1}{\beta} \log t
+\end{align*}
+
+Now if we fit a model of the form 
+
+```{r eval = FALSE}
+lm(C ~ log(t))
+```
+
+the intercept will be $\frac{-\log(\beta k)}{\beta}$ and the slope will be 
+$\frac{-1}{\beta}$.  From this we can solve for $k$ and $\beta$.
+</div>
+<br>
+
+<div class = "explain" label = "Show trying it with data">
+
+```{r tidy = FALSE}
+Concentration <- data.frame(
+  time = c(0, 50, 100, 150, 200, 250, 300),               # minutes
+  concentration = c(50, 38, 30.6, 25.6, 22.2, 19.5, 17.4) # mol/dm^3 * 10^3
+)
+gf_point(concentration ~ time, data = Concentration)
+```
+
+Under the assumption that $\alpha = 2$, so $\beta = 1$, our relationship becomes
+\[
+\frac{1}{C}  = - k t - d \;.
+ \]
+We can now fit a model and see how well it does.
+
+```{r }
+conc.model <- lm(1/concentration ~ time, data = Concentration)
+summary(conc.model)
+confint(conc.model)
+```
+
+This provides estimates for 
+the intercept $- \beta d$ 
+and the slope $- \beta k$ 
+of our model.
+We can divide by $-\beta$ to obtain estimates for $d$ and $k$.
+
+Of course, we should always look to see whether the fit is a good fit.
+
+```{r }
+gf_point(resid(conc.model) ~ fitted(conc.model))
+gf_qq(~resid(conc.model)) %>% gf_qqline()
+```
+
+Notice that these residuals are very small relative to the values for
+concentration.  (We can see this from the vertical scale of the plot and 
+also from the small value for residual standard error in the summary output.)
+The shape of the residual plot would be more disturbing if the
+magnitudes were larger and if there were more data.  
+As is, even if there is some systematic problem, it is roughly five orders of 
+magnitude smaller than our concentration measurements, which likely can't be 
+measured to that degree of accuracy.
+
+If we want to show the fit on top of the original data, we must remember to
+back-transform the response, since the model we fitted is a model for $1/C$, but we
+want to show a model for $C$.
+Here's how to do that with `gf_lm()`. Notice that we need to specify both
+`formula` and `backtrans`.
+
+```{r fig.keep='last'}
+gf_point( concentration ~ time, data = Concentration ) %>%
+  gf_lm(
+    formula = I(1/y) ~ x,
+    backtrans = makeFun(1/y ~ y)
+  )
+```
+</div>
+<br>
+</div>
+</div>
+<br>
+
+## Some Practice
+
+**1.** Redo the synthetic example with some noise in the data.
+
+```{r}
+sigma <- 10
+SynthData <- tibble(
+  x = 1:10,
+  y = 3 * x^1.8 + rnorm(10, 0, sigma)
+)
+```
+
+a. Plot the new syntethic data on the antural scale and also make log-log and semi-log plots.
+b. Try making `sigma` larger or smaller and repeating.  You should see that the smaller that number
+is, the easier it is to distinguish the form of the relationship.
+
+You can make up similar examples to see how things work with other relationship forms.
+
+**2.**
+For each of the following relationships between a response $y$ and an
+explanatory variable $x$, 
+if possible find a pair of transformations $f$ and $g$ so that
+$g(y)$ is a linear function of $f(x)$:
+\[
+g(y) = \beta_0 + \beta_1 f(x) \;.
+\]
+and indetify how $\beta_0$ and $\beta_1$ are related to the relationship.
+
+a. \( y = a b^x \).
+
+<div class = "explain" label = "Show solution">
+If $y = a e^{bx}$, 
+then $\log(y) = \log(a) + bx$, so 
+$g(y) = \log(y)$,
+$f(x) = x$, 
+$\beta_0= \log(a)$, and 
+$\beta_1 = b$.
+</div>
+<br>
+
+b. \( y = a x^b \).
+a. \( y = \frac{1}{a + bx} \).
+a. \( y = \frac{x}{a + bx} \).
+a. \(y = a x^2 + b x + c\).
+a. \( \displaystyle y = \frac{1}{1+e^{a+bx}} \).
+a. \( \displaystyle y = \frac{100}{1+e^{a+bx}} \).
+
+**3.**
+The `CoolingWater` data set in `fastR2` has temperature (in Celsius) data from 
+a mug of boiling water as it cools. Time is measured in seconds.
+This is clearly a non-linear relationship.
+
+```{r}
+gf_point(temp ~ time, data = CoolingWater)
+```
+
+Use Tukey's buldge to try some transformations. Can you find a good one?
+Make some scatter plots to see.
+
+If you find a good one, 
+
+* Write down the transformation
+* Write down the algebraic equation (with $\beta_0$ and $\beta_1$) for the model.
+Does it "back-transform" to anything nice?
+* Fit the model with `lm()` and check our diagnostic plots to see how well it works.
+
+If none of them are good, see if you can come up with a reason why.
+
+**4.**
+By attaching a heavy object to the end of a string, 
+it is easy to construct pendulums of different lengths. 
+Some physics students did this to see how the period 
+(time in seconds until a pendulum returns to the same location
+moving in the same direction) 
+depends on the length (in meters) of the pendulum.  
+The students constructed pendulums of lengths varying from
+$10$ cm to $16$ m and recorded the period length (averaged over several
+swings of the pendulum).  The resulting data are in
+the `Pendulum` data set in the `fastR2` package.
+
+Fit a power law to this data using a transformation and
+a linear model.  
+
+a. How well does the power law fit?  
+
+a. What is the estimated power in the power law based on this model?
+
+**5.**
+The `Pressure` data set in the `fastR2` package contains 
+data on the relation between temperature in degrees Celsius and 
+vapor pressure in millimeters (of mercury).
+With temperature as the predictor and pressure as the response,
+use transformations as needed to obtain a good fit.
+Make a list of all the models you considered and explain
+how you chose your best model.
+What does your model say about the relationship between 
+pressure and temperature?
+
+**6.**
+In the absence of air resistance, a dropped object will continue to accelerate
+as it falls.  But if there is air resistance, the situation is different.
+The drag force due to air resistance depends on the velocity of an object
+and operates in the opposite direction of motion.  Thus as the object's velocity
+increases, so does the drag force until it eventually equals the force
+due to gravity.  At this point the net force is $0$ and the object 
+ceases to accelerate, remaining at a constant velocity called the 
+terminal velocity.
+\myindex{terminal velocity|probidx}
+
+Now consider the following experiment to determine how terminal velocity
+depends on the mass (and therefore on the downward force of gravity) of 
+the falling object.  A helium balloon is rigged with a small basket and 
+just the right ballast to make it neutrally buoyant.  Mass is then added
+and the terminal velocity is calculated by measuring the time it takes to
+fall between two sensors once terminal velocity has been reached.
+
+The `Drag` data set (in the `fastR2` package) contains the results 
+of such an experiment conducted by some undergraduate physics students.  
+Mass is measured  in grams and velocity in meters per second.  
+(The distance between the two sensors used for determining
+terminal velocity is given in the `height` variable.)
+
+By fitting models to this data, determine which of the following "drag laws"
+matches the data best:
+
+a. Drag is proportional to velocity.
+
+a. Drag is proportional to the square of velocity.
+
+a. Drag is proportional to the square root of velocity.
+
+a. Drag is proportional to the logarithm of velocity.

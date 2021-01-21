@@ -482,9 +482,7 @@ g(y) = \beta_0 + \beta_1 f(x) \;.
 \]
 and identify how $\beta_0$ and $\beta_1$ are related to the relationship.
 
-a. \( y = a b^x \).
-
-<div class = "explain" label = "Show solution">
+<div class = "explain" label = "Show example">
 If $y = a e^{bx}$, 
 then $\log(y) = \log(a) + bx$, so 
 $g(y) = \log(y)$,
@@ -492,6 +490,9 @@ $f(x) = x$,
 $\beta_0= \log(a)$, and 
 $\beta_1 = b$.
 </div>
+
+a. \( y = a b^x \).
+
 <br>
 
 b. \( y = a x^b \).

@@ -904,12 +904,12 @@ SynthData &lt;- tibble(
 <p><strong>2.</strong> For each of the following relationships between a response <span class="math inline">\(y\)</span> and an explanatory variable <span class="math inline">\(x\)</span>, if possible find a pair of transformations <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> so that <span class="math inline">\(g(y)\)</span> is a linear function of <span class="math inline">\(f(x)\)</span>: <span class="math display">\[
 g(y) = \beta_0 + \beta_1 f(x) \;.
 \]</span> and identify how <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are related to the relationship.</p>
+<div class="explain" label="Show example">
+<p>If <span class="math inline">\(y = a e^{bx}\)</span>, then <span class="math inline">\(\log(y) = \log(a) + bx\)</span>, so <span class="math inline">\(g(y) = \log(y)\)</span>, <span class="math inline">\(f(x) = x\)</span>, <span class="math inline">\(\beta_0= \log(a)\)</span>, and <span class="math inline">\(\beta_1 = b\)</span>.</p>
+</div>
 <ol style="list-style-type: lower-alpha">
 <li><span class="math inline">\(y = a b^x\)</span>.</li>
 </ol>
-<div class="explain" label="Show solution">
-<p>If <span class="math inline">\(y = a e^{bx}\)</span>, then <span class="math inline">\(\log(y) = \log(a) + bx\)</span>, so <span class="math inline">\(g(y) = \log(y)\)</span>, <span class="math inline">\(f(x) = x\)</span>, <span class="math inline">\(\beta_0= \log(a)\)</span>, and <span class="math inline">\(\beta_1 = b\)</span>.</p>
-</div>
 <p><br></p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li><span class="math inline">\(y = a x^b\)</span>.</li>

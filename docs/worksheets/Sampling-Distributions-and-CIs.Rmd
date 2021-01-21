@@ -306,7 +306,7 @@ coverage rate might not be as high as is claimed. So for smaller samples,
 we need to do soem extra thinking about what the shape of the population might be.
 
 To see this illustrated, look at 
-[the illustrative figure in our book on page 120](https://rpruim.github.io/Engineering-Statistics/book/Stat241-Notes.pdf?Page=120).
+[the illustrative figure in our book on page 120](https://rpruim.github.io/Engineering-Statistics/book/Stat241-Notes.pdf#page=120).
 
 
 ## Automating t-based confidence intervals using R

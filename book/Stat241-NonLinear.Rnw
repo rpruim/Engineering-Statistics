@@ -12,7 +12,7 @@ library(mosaic)
 <<include=FALSE>>=
 haveInternet <- tryCatch( {
 	read.xls("http://www.calvin.edu/data/m241/MilledSteel.xls", 1); FALSE },
-	error=function(e) TRUE)
+	error = function(e) TRUE)
 @
 
 \setcounter{chapter}{7}
@@ -39,13 +39,13 @@ $$ y ~ \beta_0 + \beta_1*x_1 + \beta_2*x_2 + \beta_3*x_3 ...$$
 Multiple regression often makes sense when you are studying a complex process where there is most likely "more than one thing going on."  For example, you might consider modelling population growth rates worldwide using a data set including a set of social, economic, health, and political indicators compiled using data from the World Health Organization and partner organizations. The dataset description is available online: \url{http://www.exploredata.net/Downloads/WHO-Data-Set}.  One idea might be to look for a linear relationship between per-capita income and population growth rate:
 <<who-slm, fig.show="hold", tidy=FALSE>>=
 whodat <- read.csv("http://www.exploredata.net/ftp/WHO.csv", 
-                   header=TRUE, strip.white=TRUE, sep=",")
+                   header = TRUE, strip.white = TRUE, sep = ",")
 #simplify some variable names
 names(whodat)[10] <- "PopGrowthRate"
 names(whodat)[6] <- "IncomePerCapita"
 names(whodat)[7] <- "FemaleSchoolEnrollment"
-gf_point(PopGrowthRate~IncomePerCapita, data=whodat)
-who.m1 <- lm(PopGrowthRate~IncomePerCapita , data=whodat)
+gf_point(PopGrowthRate~IncomePerCapita, data = whodat)
+who.m1 <- lm(PopGrowthRate~IncomePerCapita, data = whodat)
 summary(who.m1)
 @ 
 
@@ -53,8 +53,8 @@ The $R^2$ value of this model is very low. But that could be because, unsurprisi
 
 In R, a multiple regression model can be fitted with a call to \texttt{lm()}.  We just add additional predictors to the right hand side of the model formula, separated by $+$ signs. For the WHO example discussed above, for example, we could try:
 <<who-slm2, fig.show="hold">>=
-gf_point(PopGrowthRate~FemaleSchoolEnrollment, data=whodat)
-who.m2 <- lm(PopGrowthRate~IncomePerCapita + FemaleSchoolEnrollment, data=whodat)
+gf_point(PopGrowthRate~FemaleSchoolEnrollment, data = whodat)
+who.m2 <- lm(PopGrowthRate~IncomePerCapita + FemaleSchoolEnrollment, data = whodat)
 summary(who.m2)
 @ 
 
@@ -76,9 +76,11 @@ The table below provides an overview of various problems you might uncover as yo
 			Assumption & Description of Problem & Options \\
 			 \hline
 			Linearity & Scatterplot (or residual plots) indicate nonlinear relationship & Transform explanatory and or response variables. Alternative: fit a non-linear model using the R function \texttt{nls()} \\
+			Independence of errors & ACF plot indicates strong dependence of errors over time (or space) & Fit an ``autoregressive" model, where this relationship between subsequent or nearby measurements is expected and accounted for.  To do this in R, replace \texttt{lm(y$\sim$x)} with something like \texttt{gls(y$\sim$x, correlation = corAR1(form = $\sim$1))}.  \\
 			Normality of errors & Residual QQ plots indicates departure from normality & First check if other assumptions may also be violated, and try options listed there. If that fails, you may need to add additional predictor variables to your model; or to fit a generalized linear model, a more sophisticated type of regression that we will not cover in this course. \\
-			Independence of errors & ACF plot indicates strong dependence of errors over time (or space) & Fit a "autoregressive" model, where this relationship between subsequent or nearby measurements is expected and accounted for.  To do this in R, replace \texttt{lm(y$\sim$x)} with something like \texttt{gls(y$\sim$x, correlation = corAR1(form=$\sim$1))}.  \\
-      Homoscedasticity & Variance of errors is not constant over the full range of response values, or over time & First, make sure that the linearity assumption is not violated. Next, if you have the option of including additional predictors in your model, it may be helpful.  Next, transforming the response variable may help. Finally, if none of those options provide a solution, you can fit a model with non-constant error variance. For example, if variance increases with fitted response values, you can replace \texttt{lm(y$\sim$x)} with something like \texttt{nls(y$\sim$x, weights=varPower())}\\ 
+      Equal Variance 
+      
+      (homeoskedasticity) & Variance of errors is not constant over the full range of response values, or over time & First, make sure that the linearity assumption is not violated. Next, if you have the option of including additional predictors in your model, it may be helpful.  Next, transforming the response variable may help. Finally, if none of those options provide a solution, you can fit a model with non-constant error variance. For example, if variance increases with fitted response values, you can replace \texttt{lm(y$\sim$x)} with something like \texttt{nls(y$\sim$x, weights = varPower())}\\ 
 			\hline
 	\end{tabular}
 	\end{center}
@@ -91,13 +93,13 @@ If non-normal residuals are the only apparent problem with a linear regression m
 Sometimes, regression diagnostics (particularly a plot of residuals as a function of time, or an ACF plot) will show that the residuals are not independent.  This happens most often when the predictor variable is a temporal or spatial one; data points collected at similar times, or similar locations, are often similar to each other rather than independent.
 
 We will consider a simple example using the price of chicken over time (in constant dollars, adjusted for inflation over time).  It seems to make sense to try to predict the price of chicken as a function of time (it's been getting progressively cheaper for the last century or so):
-% # chickn <- read.csv("http://www.calvin.edu/~sld33/data/chickn.csv", header=TRUE)
+% # chickn <- read.csv("http://www.calvin.edu/~sld33/data/chickn.csv", header = TRUE)
 % # chickn <- read.csv("https://github.com/selva86/datasets/blob/master/chicken.csv") %>%
 
 <<chickn, fig.show='hold'>>=
 chickn <- read.csv("https://sldr.netlify.app/data/chickn.csv")
-gf_point(Price~Year, data=chickn ) %>% gf_lm()
-chick.mod <- lm(Price~Year, data=chickn)
+gf_point(Price~Year, data = chickn ) %>% gf_lm()
+chick.mod <- lm(Price~Year, data = chickn)
 summary(chick.mod)
 @ 
 
@@ -116,7 +118,7 @@ $$ e_t = \rho e_{t-1} + \epsilon$$
 <<ar1_fit, tidy=FALSE>>=
 require(nlme)
 chick.mod2 <- 
-  gls(Price~Year, data=chickn, correlation = corAR1(form = ~1))
+  gls(Price~Year, data = chickn, correlation = corAR1(form = ~1))
 summary(chick.mod2)
 @
 
@@ -127,19 +129,19 @@ Sometimes, model diagnostics for a linear regression indicate that variance of e
 
 If you spot this problem, first, make sure that the linearity assumption is not violated. Next, if you have the option of including additional predictors in your model, it may be helpful.  Next, transforming the response variable may help.  Specifically, a log or square-root transformation of the response variable may be useful.  (See more details and examples later in this chapter, when transformations are discussed in detail.) 
 
-Finally, if none of the previous options provide a solution, you can fit a model that actually \emph{expects} and accounts for non-constant error variance. We will not cover this topic in any detail, but this brief example is included for your future reference (outside this class).  Example: if variance increases with fitted response values, you can fit an appropriate model with the \texttt{gls} function from the \texttt{nlme} package.  To do so, replace \texttt{lm(y~x)} with something like \texttt{nls(y~x, weights=varPower())}.
+Finally, if none of the previous options provide a solution, you can fit a model that actually \emph{expects} and accounts for non-constant error variance. We will not cover this topic in any detail, but this brief example is included for your future reference (outside this class).  Example: if variance increases with fitted response values, you can fit an appropriate model with the \texttt{gls} function from the \texttt{nlme} package.  To do so, replace \texttt{lm(y~x)} with something like \texttt{nls(y~x, weights = varPower())}.
 
 Here is a brief example, using the \texttt{Ornstein} dataset from the \texttt{car} package.  It gives data on 248 Canadian companies, collected in the mid-1970s.  The variable \texttt{assets} gives each company's assets in millions of dollars, and \texttt{interconnects} gives the number of director and executive positions that are shared with other firms.  A scatter plot shows that the richest companies have many of these "interlocks", so we might model assets as a function of interlocks...however, the residuals have non-constant variance:
 <<Ornstein>>=
 require(car)
-gf_point(assets ~interlocks, data=Ornstein)
-om <- lm(assets ~interlocks, data=Ornstein)
+gf_point(assets ~interlocks, data = Ornstein)
+om <- lm(assets ~interlocks, data = Ornstein)
 gf_point(resid(om) ~ fitted(om))
 @
 
-We can try to correct for this problem by fitting a model that "expects" this non-constant variance, by using the function \texttt{gls} with the input \texttt{weights=varPower()}.  (There are many other ways to model non-constant error variance; this small example gives you just a taste, and for this course, you would not be expected to deal with any cases other than ones like this, where error variance increases with fitted values.)
+We can try to correct for this problem by fitting a model that "expects" this non-constant variance, by using the function \texttt{gls} with the input \texttt{weights = varPower()}.  (There are many other ways to model non-constant error variance; this small example gives you just a taste, and for this course, you would not be expected to deal with any cases other than ones like this, where error variance increases with fitted values.)
 <<Ornstein_gls>>=
-om2 <- gls(assets ~interlocks, data=Ornstein, weights=varPower())
+om2 <- gls(assets ~interlocks, data = Ornstein, weights = varPower())
 @ 
 
 As with the non-independence case, if you plot the residuals for this model, you will see that they DO still have non-constant variance...but again, now it is OK because our model has taken it into account, and computed parameter estimates and standard errors appropriately.
@@ -256,9 +258,9 @@ may result in a fit that does not match the overall shape of the data very well.
 Despite these potential problems, there are many situations where a relatively
 simple transformation is all that is needed to greatly improve the model.  Here, when we say "improve" the model, we mean that the assumptions of the model are satisfied, and the model fits the data acceptably well.
 
-\subsection{Three Important ``Laws"}
+\subsection{Three Important Laws}
 In the sciences, relationships between variables based on some scientific theory
-are often referred to as laws.  Many of these fall into one of three categories that
+are often referred to as ``laws".  Many of these fall into one of three categories that
 are easily handled by transforming the data and fitting a linear regression model.
 
 \subsubsection{Linear Laws}
@@ -414,7 +416,7 @@ Concentration <- data.frame(
   time = c(0, 50, 100, 150, 200, 250, 300),               # minutes
   concentration = c(50, 38, 30.6, 25.6, 22.2, 19.5, 17.4) # mol/dm^3 * 10^3
 )
-gf_point(concentration ~ time, data=Concentration)
+gf_point(concentration ~ time, data = Concentration)
 @
 under the assumption that 
 $\alpha = 2$, so $\beta = 1$.  In this case, our relationship becomes
@@ -573,9 +575,9 @@ What transformations of $x$ and $y$ improve the linear fit?
 \begin{figure}
 <<tukey-bulge1,echo = FALSE>>=
 n <- 20  
-x <- runif(n,2,10)
+x <- runif(n, 2, 10)
 y <- exp(0.3*x)
-e <- exp(rnorm(n,0,0.1))
+e <- exp(rnorm(n, 0, 0.1))
 y <- y * e
 foo <- function(x) {
     a <- x[2]
@@ -584,19 +586,24 @@ foo <- function(x) {
     return (x^a)
 }
 
-power <- function(x,a) {
-    M <- cbind(x,a)
+power <- function(x, a) {
+    M <- cbind(x, a)
     return  (apply(M, 1, foo))
 }
-powers <- c(0,0.5,1,2,3); np <- length(powers)
-a <- rep(rep(powers, each = n),each = np)
+powers <- c(0, 0.5, 1, 2, 3); np <- length(powers)
+a <- rep(rep(powers, each = n), each = np)
 b <- rep(rep(powers, each = n), times = np)
-x <- rep(x,times = n *np)
-y <- rep(y,times = n *np)
-X <- power(x,a)
-Y <- power(y,b)
-original <- (a==1 & b==1)
-ddd <- data.frame(X = X,Y = Y,a = a,b = b,original = original)
+x <- rep(x, times = n *np)
+y <- rep(y, times = n *np)
+X <- power(x, a)
+Y <- power(y, b)
+original <- (a == 1 & b == 1)
+ddd <- 
+  data.frame(X = X, Y = Y, a = a, b = b, original = original) %>%
+  mutate(
+    alab = reorder(paste("a =", a), a),
+    blab = reorder(paste("b =", b), -b)
+  ) 
 gf_point(y ~ x)
 @
 \caption{A scatterplot illustrating a non-linear relationship between $x$ and $y$.}
@@ -616,15 +623,18 @@ quite linear, but the residuals appear to have a better distribution as well.
 \end{example}
 
 \begin{figure}
-<<tuky-bulge-many,echo = FALSE,fig.width = 6,fig.height = 7>>=
-# xyplot(Y~X|paste('a = ',a,sep = "") + paste("b = ",b,sep = ""),
-#             ddd, groups = original, cex = .7,
-# 			xlab = 'x', ylab = 'y',
-#             scales = list(relation = 'free', draw = FALSE))
-gf_point(Y ~ X , 
-         data = ddd, color = ~original, size = .7,
+<<tuky-bulge-many, echo = FALSE, fig.width = 6, fig.height = 7>>=
+# xyplot(Y ~ X | paste('a = ', a, sep = "") + paste("b = ", b, sep = ""),
+#        ddd, groups = original, cex = .7,
+#        xlab = 'x', ylab = 'y',
+#        scales = list(relation = 'free', draw = FALSE))
+
+gf_point(Y ~ X, data = ddd, 
+         show.legend = FALSE,
+         color = ~ original, size = .7,
          xlab = 'x', ylab = 'y') %>%
-  gf_facet_wrap( paste('a = ',a,sep = "") ~ paste("b = ",b,sep = ""), scales = "free")
+  gf_facet_wrap( ~ blab + alab, scales = "free") %>%
+  gf_theme(axis.text = element_blank(), axis.ticks = element_blank())
 @
 \caption{Using the ladder of re-expression to find a better fit.}
 \label{fig:TukeyBulgeMany}%
@@ -640,7 +650,7 @@ floor.   We begin by fitting a linear model to this data.
 <<balldrop>>=
 ball.model <- lm(time ~ height, data = BallDrop)
 summary(ball.model)
-gf_point(time ~ height, data = balldrop) %>% gf_lm()
+gf_point(time ~ height, data = BallDrop) %>% gf_lm()
 gf_point(resid(ball.model) ~ fitted(ball.model))
 @
 
@@ -700,7 +710,7 @@ not systematic).
 
 
 <<balldrop-avg, message=FALSE>>=
-BallDropAvg <- balldrop %>%
+BallDropAvg <- BallDrop %>%
   group_by(height) %>%
   dplyr::summarize(time = mean(time))
 
@@ -801,16 +811,16 @@ summary(soap.model2)
 @
 \begin{figure}
 <<echo = FALSE>>=
-daysToFit <- seq(1,22,by = 0.5)
+daysToFit <- seq(1, 22, by = 0.5)
 linfits <- predict(soap.model1, newdata = data.frame(day = daysToFit))
 transfits <- predict(soap.model2, newdata = data.frame(day = daysToFit))^3
 # soap.plot <- xyplot(weight ~ day, data = Soap, 
-#     panel = function(x,y,...) {
-#         panel.xyplot(daysToFit,linfits, lwd = 2, type = "l", 
+#     panel = function(x, y, ...) {
+#         panel.xyplot(daysToFit, linfits, lwd = 2, type = "l", 
 #             col = trellis.par.get('superpose.line')$col[1])
-#         panel.xyplot(daysToFit,transfits, lwd = 2, type = "l",
+#         panel.xyplot(daysToFit, transfits, lwd = 2, type = "l",
 #             col = trellis.par.get('superpose.line')$col[2])
-#         panel.xyplot(x,y,cex = 1.0,...)
+#         panel.xyplot(x, y, cex = 1.0, ...)
 #     }
 #     )
 gf_line(linfits ~ daysToFit, color = ~"linear fit") %>%
@@ -1171,7 +1181,7 @@ ME <- t.star * SE; ME
 @
 			So the CI is $\Sexpr{x.bar} \pm \Sexpr{ME}$.  Of course, that is too many digits, we 
 			should do some rounding to
-			$\Sexpr{round(x.bar,1)} \pm \Sexpr{round(ME,1)}$.  
+			$\Sexpr{round(x.bar, 1)} \pm \Sexpr{round(ME, 1)}$.  
 		\item
 <<>>=
 confint(lm(GPA ~ 1, data = grades))
@@ -1451,7 +1461,7 @@ coef(lm.model)
 \end{example}
 
 \begin{example}
-	Here is example where we fit a different model to the \dataframe{balldrop} data, namely
+	Here is example where we fit a different model to the \dataframe{BallDrop} data, namely
 	\[
 	\variable{time} = \alpha * \variable{height}^p
 	\]
@@ -1475,9 +1485,9 @@ exp(coef(power.model2)[1])
 We can use the delta method to estimate the uncertainty.  Since 
 $\frac{d}{dx} e^x = e^x$ the uncertainty is approximately
 \[ 
-\Sexpr{exp(coef(power.model2)[1])} \cdot \Sexpr{coef(summary(power.model2))[1,2]}
+\Sexpr{exp(coef(power.model2)[1])} \cdot \Sexpr{coef(summary(power.model2))[1, 2]}
 =
-\Sexpr{exp(coef(power.model2)[1]) * coef(summary(power.model2))[1,2]}
+\Sexpr{exp(coef(power.model2)[1]) * coef(summary(power.model2))[1, 2]}
 \]
 
 \end{example}
@@ -1522,7 +1532,7 @@ cooling.model1 <-
   nls(temp ~ A * exp( -k * time), data = CoolingWater, 
       start = list(A = 100, k = 0.1))
 f1 <- makeFun(cooling.model1)
-gf_point(temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110), 
+gf_point(temp ~ time, data = CoolingWater, xlim = c(-50, 300), ylim = c(0, 110), 
         ylab = "temp (C)", xlab = "time (sec)") %>%
 gf_fun(f1(time) ~ time)
 @
@@ -1537,7 +1547,7 @@ adding in an offset to account for the ambient temperature:
 cooling.model2 <- nls(temp ~ ambient + A * exp(k * (1+time)), data = CoolingWater,
                       start = list(ambient = 20, A = 80, k = -.1) )
 f2 <- makeFun(cooling.model2)
-gf_point(temp ~ time, data = CoolingWater, xlim = c(-50,300), ylim = c(0,110),
+gf_point(temp ~ time, data = CoolingWater, xlim = c(-50, 300), ylim = c(0, 110),
         ylab = "temp (C)", xlab = "time (sec)") %>%
 gf_fun(f1(time) ~ time, linetype = 2, color = "gray80") %>%
 gf_fun(f2(time) ~ time, color = "steelblue")

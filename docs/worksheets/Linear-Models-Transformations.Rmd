@@ -74,6 +74,14 @@ In other words
 $$
 Y \sim \Norm(\beta_0 +\beta_1 x, \sigma)
 $$
+### Diagnostics
+
+We need to check the following things before relying on our model.
+
+* **L**inear relationship 
+* **I**ndependent errors
+* **N**ormal errors
+* **E**qual standard deviation
 
 ## Linear Models for Non-linear relationships
 

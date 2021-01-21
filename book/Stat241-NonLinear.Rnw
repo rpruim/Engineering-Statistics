@@ -44,8 +44,8 @@ whodat <- read.csv("http://www.exploredata.net/ftp/WHO.csv",
 names(whodat)[10] <- "PopGrowthRate"
 names(whodat)[6] <- "IncomePerCapita"
 names(whodat)[7] <- "FemaleSchoolEnrollment"
-gf_point(PopGrowthRate~IncomePerCapita, data = whodat)
-who.m1 <- lm(PopGrowthRate~IncomePerCapita, data = whodat)
+gf_point(PopGrowthRate ~ IncomePerCapita, data = whodat)
+who.m1 <- lm(PopGrowthRate ~ IncomePerCapita, data = whodat)
 summary(who.m1)
 @ 
 
@@ -53,8 +53,8 @@ The $R^2$ value of this model is very low. But that could be because, unsurprisi
 
 In R, a multiple regression model can be fitted with a call to \texttt{lm()}.  We just add additional predictors to the right hand side of the model formula, separated by $+$ signs. For the WHO example discussed above, for example, we could try:
 <<who-slm2, fig.show="hold">>=
-gf_point(PopGrowthRate~FemaleSchoolEnrollment, data = whodat)
-who.m2 <- lm(PopGrowthRate~IncomePerCapita + FemaleSchoolEnrollment, data = whodat)
+gf_point(PopGrowthRate ~ FemaleSchoolEnrollment, data = whodat)
+who.m2 <- lm(PopGrowthRate ~ IncomePerCapita + FemaleSchoolEnrollment, data = whodat)
 summary(who.m2)
 @ 
 
@@ -98,8 +98,8 @@ We will consider a simple example using the price of chicken over time (in const
 
 <<chickn, fig.show='hold'>>=
 chickn <- read.csv("https://sldr.netlify.app/data/chickn.csv")
-gf_point(Price~Year, data = chickn ) %>% gf_lm()
-chick.mod <- lm(Price~Year, data = chickn)
+gf_point(Price ~ Year, data = chickn ) %>% gf_lm()
+chick.mod <- lm(Price ~ Year, data = chickn)
 summary(chick.mod)
 @ 
 
@@ -118,7 +118,7 @@ $$ e_t = \rho e_{t-1} + \epsilon$$
 <<ar1_fit, tidy=FALSE>>=
 require(nlme)
 chick.mod2 <- 
-  gls(Price~Year, data = chickn, correlation = corAR1(form = ~1))
+  gls(Price ~ Year, data = chickn, correlation = corAR1(form = ~ 1))
 summary(chick.mod2)
 @
 
@@ -129,19 +129,19 @@ Sometimes, model diagnostics for a linear regression indicate that variance of e
 
 If you spot this problem, first, make sure that the linearity assumption is not violated. Next, if you have the option of including additional predictors in your model, it may be helpful.  Next, transforming the response variable may help.  Specifically, a log or square-root transformation of the response variable may be useful.  (See more details and examples later in this chapter, when transformations are discussed in detail.) 
 
-Finally, if none of the previous options provide a solution, you can fit a model that actually \emph{expects} and accounts for non-constant error variance. We will not cover this topic in any detail, but this brief example is included for your future reference (outside this class).  Example: if variance increases with fitted response values, you can fit an appropriate model with the \texttt{gls} function from the \texttt{nlme} package.  To do so, replace \texttt{lm(y~x)} with something like \texttt{nls(y~x, weights = varPower())}.
+Finally, if none of the previous options provide a solution, you can fit a model that actually \emph{expects} and accounts for non-constant error variance. We will not cover this topic in any detail, but this brief example is included for your future reference (outside this class).  Example: if variance increases with fitted response values, you can fit an appropriate model with the \texttt{gls} function from the \texttt{nlme} package.  To do so, replace \texttt{lm(y ~ x)} with something like \texttt{nls(y ~ x, weights = varPower())}.
 
 Here is a brief example, using the \texttt{Ornstein} dataset from the \texttt{car} package.  It gives data on 248 Canadian companies, collected in the mid-1970s.  The variable \texttt{assets} gives each company's assets in millions of dollars, and \texttt{interconnects} gives the number of director and executive positions that are shared with other firms.  A scatter plot shows that the richest companies have many of these "interlocks", so we might model assets as a function of interlocks...however, the residuals have non-constant variance:
 <<Ornstein>>=
 require(car)
-gf_point(assets ~interlocks, data = Ornstein)
-om <- lm(assets ~interlocks, data = Ornstein)
+gf_point(assets ~ interlocks, data = Ornstein)
+om <- lm(assets ~ interlocks, data = Ornstein)
 gf_point(resid(om) ~ fitted(om))
 @
 
 We can try to correct for this problem by fitting a model that "expects" this non-constant variance, by using the function \texttt{gls} with the input \texttt{weights = varPower()}.  (There are many other ways to model non-constant error variance; this small example gives you just a taste, and for this course, you would not be expected to deal with any cases other than ones like this, where error variance increases with fitted values.)
 <<Ornstein_gls>>=
-om2 <- gls(assets ~interlocks, data = Ornstein, weights = varPower())
+om2 <- gls(assets ~ interlocks, data = Ornstein, weights = varPower())
 @ 
 
 As with the non-independence case, if you plot the residuals for this model, you will see that they DO still have non-constant variance...but again, now it is OK because our model has taken it into account, and computed parameter estimates and standard errors appropriately.
@@ -439,7 +439,7 @@ Of course, we should always look to see whether the fit is a good fit.
 % mplot(conc.model, w = 1:2)  # residual plot and qq-plot of residuals
 <<>>=
 gf_point(resid(conc.model) ~ fitted(conc.model))
-gf_qq(~resid(conc.model)) %>% gf_qqline()
+gf_qq( ~ resid(conc.model)) %>% gf_qqline()
 @
 Notice that these residuals are very small relative to the values for
 concentration.  (We can see this from the vertical scale of the plot and 
@@ -716,7 +716,7 @@ BallDropAvg <- BallDrop %>%
 
 ball.modelA <- lm(time ~ sqrt(height), data = BallDropAvg)
 summary(ball.modelA)
-gf_point(time~height, data = BallDropAvg) %>% gf_lm()
+gf_point(time~ height, data = BallDropAvg) %>% gf_lm()
 gf_point(resid(ball.modelA) ~ fitted(ball.modelA))
 @
 Using a square root transformation on averaged \texttt{height}
@@ -823,7 +823,7 @@ transfits <- predict(soap.model2, newdata = data.frame(day = daysToFit))^3
 #         panel.xyplot(x, y, cex = 1.0, ...)
 #     }
 #     )
-gf_line(linfits ~ daysToFit, color = ~"linear fit") %>%
+gf_line(linfits ~ daysToFit, color = ~ "linear fit") %>%
   gf_line(transfits ~ daysToFit, color = ~ "transformed fit") %>%
   gf_point(weight ~ day, data = Soap, color = "black")
 @
@@ -840,7 +840,7 @@ Figure~\ref{fig:soap} shows a scatterplot
 with both fits.  
 The data do not support Rex's assumption that a transformation
 is necessary.  
-% We can also fit a quadratic model of the form \verb!Weight~I(Day^2)!,
+% We can also fit a quadratic model of the form \verb!Weight ~ I(Day^2)!,
 % but this model is worse still.  Fitting a full quadratic model requires 
 % two predictors (\verb!Day! and \verb!Day^2!) and so will have to wait
 % until our discussion of multiple linear regression.  
@@ -1045,7 +1045,7 @@ model2 <- nls(period ~ A * length^power, data = Pendulum, start = list(A = 1, po
 f <- makeFun(model)
 g <- makeFun(model2)
 gf_point(period ~ length, data = Pendulum) %>%
-gf_fun(f(x) ~ x, col = 'gray50')
+  gf_fun(f(x) ~ x, col = 'gray50')
 gf_point(period ~ length, data = Pendulum) %>%
   gf_fun(g(x) ~ x, col = 'red', lty = 2)
 coef(summary(model))
@@ -1061,8 +1061,8 @@ gf_point(resid(model2) ~ fitted(model2) %>% gf_smooth()
 	In the ordinary least squares model, the largets few residuals are not as large
 	as we would expect.
 <<>>=
-gf_qq(~resid(model))
-gf_qq(~resid(model2))
+gf_qq( ~ resid(model))
+gf_qq( ~ resid(model2))
 @
 	
 	The residuals in the non-linear model show a clear change 
@@ -1173,10 +1173,10 @@ But this isn't the only way to do it.  Here are some other ways.
 # here's another way to do it; but you don't need to know about it
 t.test(grades$ACT)
 # or you can do it by hand
-x.bar <- mean(~ACT, data = grades); x.bar
+x.bar <- mean( ~ ACT, data = grades); x.bar
 n <- nrow(grades); n
 t.star <- qt(.975, df = n-1); t.star
-SE <- sd(~ACT, data = grades) / sqrt(n); SE
+SE <- sd( ~ ACT, data = grades) / sqrt(n); SE
 ME <- t.star * SE; ME
 @
 			So the CI is $\Sexpr{x.bar} \pm \Sexpr{ME}$.  Of course, that is too many digits, we 
@@ -1441,7 +1441,7 @@ coef(summary(nls.model))
 <<>>=
 f <- makeFun(nls.model)
 gf_point(time ~ height, data = BallDrop) %>%
-gf_fun(f(height) ~ height, color = 'gray40')
+  gf_fun(f(height) ~ height, color = 'gray40')
 gf_point(resid(nls.model) ~ fitted(nls.model))
 @
 
@@ -1449,9 +1449,9 @@ We can compare this to the ordinary least squares model by plotting both togethe
 <<fig.keep = 'last'>>=
 lm.model <- lm(time ~ sqrt(height), data = BallDrop)
 g <- makeFun(lm.model)
-gf_point(time ~ height, data = BallDrop)
-gf_fun(f(height) ~ height, color = 'gray40', size = 3)
-gf_fun(g(height) ~ height, color = 'red', size = 1, linetype = 2)
+gf_point(time ~ height, data = BallDrop) %>%
+  gf_fun(f(height) ~ height, color = 'gray80', size = 1.5) %>%
+  gf_fun(g(height) ~ height, color = 'red', size = 0.5, linetype = 2)
 @
 In this particular case, there is very little difference between the two models, but this is not always the case.
 <<>>=
@@ -1508,8 +1508,8 @@ $\frac{d}{dx} e^x = e^x$ the uncertainty is approximately
 			this flaw in the design of the experiment.
 		\end{enumerate}
 <<>>=
-gf_qq(resid(power.model), main = "model 1")
-gf_qq(resid(power.model2))
+gf_qq( ~ resid(power.model), main = "model 1")
+gf_qq( ~ resid(power.model2))
 gf_point(resid(power.model) ~ fitted(power.model))
 gf_point(resid(power.model2) ~ fitted(power.model2))
 @

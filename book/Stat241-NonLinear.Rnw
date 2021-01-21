@@ -640,7 +640,7 @@ floor.   We begin by fitting a linear model to this data.
 <<balldrop>>=
 ball.model <- lm(time ~ height, data = BallDrop)
 summary(ball.model)
-gf_point(time~height,data=balldrop) %>% gf_lm()
+gf_point(time ~ height, data = balldrop) %>% gf_lm()
 gf_point(resid(ball.model) ~ fitted(ball.model))
 @
 
@@ -657,18 +657,11 @@ This transformation agrees with Tukey's ladder of re-expression, which suggests
 moving down the ladder for \variable{height} or up the ladder for \variable{time}.
 
 <<balldrop-transT>>=
-<<<<<<< HEAD:Stat241-NonLinear.Rnw
 ball.modelT <- lm(time ~ sqrt(height), data = BallDrop)
 summary(ball.modelT)
-plotModel(ball.modelT)
-mplot(ball.modelT, w = 1)
-=======
-ball.modelT <- lm(time ~ sqrt(height), data=balldrop)
-summary(ball.modelT)
-gf_point(time ~ sqrt(height), data=balldrop) %>%
-  gf_lm(time~sqrt(height), data=balldrop) 
+gf_point(time ~ sqrt(height), data = BallDrop) %>%
+  gf_lm(time ~ sqrt(height), data = BallDrop) 
 gf_point(resid(ball.modelT) ~ fitted(ball.modelT))
->>>>>>> c25168dd6c03b5958e6d874fffc45a873a27e0d5:Math241-NonLinear.Rnw
 @
 This model does indeed fit better, but the residual plot indicates that
 there may be some inaccuracy in the measurement of the height.  
@@ -707,13 +700,13 @@ not systematic).
 
 
 <<balldrop-avg, message=FALSE>>=
-balldropavg <- balldrop %>%
+BallDropAvg <- balldrop %>%
   group_by(height) %>%
   dplyr::summarize(time = mean(time))
 
-ball.modelA <- lm(time ~ sqrt(height),balldropavg)
+ball.modelA <- lm(time ~ sqrt(height), data = BallDropAvg)
 summary(ball.modelA)
-gf_point(time~height, data=balldropavg) %>% gf_lm()
+gf_point(time~height, data = BallDropAvg) %>% gf_lm()
 gf_point(resid(ball.modelA) ~ fitted(ball.modelA))
 @
 Using a square root transformation on averaged \texttt{height}

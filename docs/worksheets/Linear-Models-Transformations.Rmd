@@ -175,7 +175,7 @@ Some things to notice
 `+`, `-`, `*`, `/`, and  `^` have special meanings inside the formula for a model. 
 `I()` stands for *inhibit* special interpretation.
 
-* The intercpet is not directly involved in estimating $\hbar$, but that we can't fit 
+* The intercept is not directly involved in estimating $\hbar$, but that we can't fit 
 the line and obtain our slope without it.
 </div>
 </div>
@@ -238,7 +238,7 @@ gf_point(log(y) ~ x, data = SynthData) |
 gf_point(log(y) ~ log(x), data = SynthData)
 ```
 
-If want to retian the natural units in our plots, we can transform the scales rather than
+If want to retain the natural units in our plots, we can transform the scales rather than
 transforming the data.
 
 ```{r fig.width = 8}
@@ -466,7 +466,7 @@ SynthData <- tibble(
 )
 ```
 
-a. Plot the new syntethic data on the antural scale and also make log-log and semi-log plots.
+a. Plot the new synthetic data on the natural scale and also make log-log and semi-log plots.
 b. Try making `sigma` larger or smaller and repeating.  You should see that the smaller that number
 is, the easier it is to distinguish the form of the relationship.
 
@@ -480,7 +480,7 @@ $g(y)$ is a linear function of $f(x)$:
 \[
 g(y) = \beta_0 + \beta_1 f(x) \;.
 \]
-and indetify how $\beta_0$ and $\beta_1$ are related to the relationship.
+and identify how $\beta_0$ and $\beta_1$ are related to the relationship.
 
 a. \( y = a b^x \).
 
@@ -510,7 +510,7 @@ This is clearly a non-linear relationship.
 gf_point(temp ~ time, data = CoolingWater)
 ```
 
-Use Tukey's buldge to try some transformations. Can you find a good one?
+Use Tukey's bulge to try some transformations. Can you find a good one?
 Make some scatter plots to see.
 
 If you find a good one, 

@@ -1126,7 +1126,9 @@ u_N &lt;- sqrt( dB^2 * u_B^2 + dD^2 * u_D^2 )</code></pre>
 </div>
 <p><br></p>
 <p><strong>11.</strong> Suppose <span class="math inline">\(x ̂= 3.41 \pm 0.04\)</span> is the estimate of the length of a rectangle and <span class="math inline">\(y ̂= 2.34 \pm 0.02\)</span> is the estimate of its width. How do we report the area?</p>
+<div class="explain" label="Show answer">
 <p><span class="math inline">\(7.98 \pm 0.12\)</span></p>
+</div>
 </div>
 <p><br></p>
 <p><strong>12.</strong> The length of a rectangle is reported as <span class="math inline">\(\hat x = 3.05 \pm 0.03\)</span> and the width of the rectangle is reported as <span class="math inline">\(\hat y = 5.45 \pm 0.11\)</span>. How should perimeter of the rectangle be reported?</p>
@@ -1152,6 +1154,69 @@ R = \frac{R_1 R_2}{R_1 + R_2}
 <p>Since we are sure the value is between 13 and 13.5, we get <span class="math inline">\(\displaystyle \frac{0.5}{2 \sqrt{3}}\)</span> = 0.144</p>
 </div>
 <p><br></p>
+</div>
+<div id="relative-uncertainty" class="section level2">
+<h2>Relative Uncertainty</h2>
+<p>Is an uncertainty of 2.5 large or small? Well, that depends on the scale of numbers involved. If our estimate is in the thousands or millions, then 2.5 seems small. If our esimate is 4.3, then 2.5 seems large.</p>
+<p>One way to take this into account is to report <strong>relative uncertainty</strong>:</p>
+<p><span class="math display">\[
+\mbox{ralative uncertainty} = \frac{\mbox{uncertainty}}{\mbox{estimate}} = \frac{u_X}{\hat x}
+= \frac{u_X}{X}
+\]</span></p>
+<p>Again, we have shown the formula both in a statistician’s notation (with a hat and lower case to indicate the estimate) and in notation that scientists often use (which is less precise regarding estimates vs estimators).</p>
+<div class="example">
+<p>Let’s compute the relative uncertainty for a product <span class="math inline">\(P = XY\)</span>. <br></p>
+<div class="explain" label="Show example">
+<p><strong>Example</strong> Let <span class="math inline">\(P = XY\)</span> where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have uncertainties <span class="math inline">\(u_X\)</span> and <span class="math inline">\(u_Y\)</span>. Then <span class="math inline">\(\frac{\partial}{\partial X} P = Y\)</span> and <span class="math inline">\(\frac{\partial}{\partial Y} P = X\)</span>, so</p>
+<p><span class="math display">\[\begin{align*}
+\frac{u_P}{P} 
+&amp; = \frac{ \sqrt{Y^2 u_X^2 + X^2 u_Y^2}}{P} 
+\\
+&amp; = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{P^2} }
+\\
+&amp; = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{X^2Y^2} }
+\\
+&amp; = \sqrt{ \frac{ u_X^2}{X^2} + \frac{u_Y^2}{Y^2} }
+\\
+&amp; = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
+\end{align*}\]</span> which gives a Pythagorean identity for the relative uncertainties.</p>
+</div>
+</div>
+<div class="example">
+<p>We can use the rule for relative uncertainty to compute the standard uncertainty for a product</p>
+<div class="explain" label="Show example">
+<p><strong>Example</strong> Use relative uncertainty to compute the standard uncertainty in the area of a rectangle computed by multiplying length and width if length and width are reported as <span class="math inline">\(x = 3.41 \pm 0.04\)</span> is the estimate of the length of a rectangle and <span class="math inline">\(y = 2.34 \pm 0.02\)</span> is the estimate of its width.</p>
+<p>The relative uncertainties in the length and width are <span class="math display">\[ 
+    \frac{0.04}{3.41} = 0.012 \ \operatorname{and}\ 
+    \frac{0.02}{2.34} = 0.009 
+    \;.
+    \]</span></p>
+<p>So the relative uncertainty in the area estimation is <span class="math display">\[
+    \sqrt{ (0.012)^2 +  (0.009)^2 }
+    =
+    0.015
+    \;.
+    \]</span></p>
+<p>Now we solve <span class="math display">\[
+    \frac{u_A}{7.979} = 0.015
+    \]</span> to get <span class="math display">\[
+    u_A = (7.979) (0.015) =
+     0.116
+    \;.
+    \]</span></p>
+</div>
+</div>
+</div>
+<div id="more-practice-1" class="section level2">
+<h2>More Practice</h2>
+<p><strong>16.</strong> Compute the relative uncertainties for the length, width, and perimeter in problem 10.</p>
+<p><strong>17.</strong> Compute the relative uncertainties for the three quantities in the dimes example.</p>
+<p><strong>18.</strong> A measurement is reported as 152 with a relative uncertainty of 3%. What is the standard uncertainty for this measurement?</p>
+<p><strong>19.</strong> If <span class="math inline">\(X\)</span> has a relative uncertainty of 3% and <span class="math inline">\(Y\)</span> has a relative uncertainty of 4%, what is the relative uncertainty of the product <span class="math inline">\(XY\)</span>?</p>
+<p><strong>20.</strong> Compute the relative uncertainties for time, distance, and average velocity in problem 13.</p>
+<p><strong>21.</strong> Let <span class="math inline">\(Q = X / Y\)</span>. Work out a formula for the relative uncertainty of <span class="math inline">\(Q\)</span> in terms of the relative uncertainties of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p><strong>22.</strong> Check that your formula in 20 is correct for problem 19.</p>
+<p><strong>23.</strong> Check that your formula in 20 is correct for the dimes example.</p>
 </div>
 <div class="footnotes">
 <hr />

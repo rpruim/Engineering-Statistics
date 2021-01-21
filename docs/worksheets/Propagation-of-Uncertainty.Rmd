@@ -26,6 +26,8 @@ output:
 \def\Gamm{{\sf Gamma}}
 \def\Weibull{{\sf Weibull}}
 \def\Pois{{\sf Pois}}
+\def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+\def\Partial#1#2{\frac{\partial}{\partial #2} #1}
 
 <script src="../styles/folding.js"></script>
 
@@ -783,9 +785,9 @@ u_A <- sqrt( dx^2 * u_x^2 + dy^2 * u_y^2)
 **11.** Suppose $x ̂= `r x` \pm `r u_x`$ is the estimate of the length of a 
 rectangle and  $y ̂= `r y` \pm `r u_y`$ is the estimate of its width.  How do we report the area?
 
-
+<div class ="explain" label = "Show answer">
 $`r A %>% sprintf(fmt = '%#.2f')` \pm `r u_A %>% sprintf(fmt = '%#.2f')`$
-
+</div>
 </div>
 <br>
 
@@ -865,7 +867,123 @@ $\displaystyle \frac{0.5}{2 \sqrt{3}}$ = `r 0.5 / (2 * sqrt(3))`
 
 <br>
 
+## Relative Uncertainty
 
+Is an uncertainty of 2.5 large or small?  Well, that depends on the scale of numbers involved.
+If our estimate is in the thousands or millions, then 2.5 seems small. If our esimate is 4.3, then 2.5 seems large.
 
+One way to take this into account is to report **relative uncertainty**:
+
+$$
+\mbox{ralative uncertainty} = \frac{\mbox{uncertainty}}{\mbox{estimate}} = \frac{u_X}{\hat x}
+= \frac{u_X}{X}
+$$
+
+Again, we have shown the formula both in a statistician's notation (with a hat and lower case
+to indicate the estimate) and in notation that scientists often use (which is less precise
+regarding estimates vs estimators).
+
+<div class="example">
+Let's compute the relative uncertainty for a product $P = XY$.
+<br>
+
+<div class = "explain" label = "Show example">
+**Example** 
+Let $P = XY$ where $X$ and $Y$ have
+uncertainties $u_X$ and $u_Y$.
+Then $\Partial{P}{X} = Y$ and  $\Partial{P}{Y} =
+X$, so
+
+\begin{align*}
+\frac{u_P}{P} 
+& = \frac{ \sqrt{Y^2 u_X^2 + X^2 u_Y^2}}{P} 
+\\
+& = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{P^2} }
+\\
+& = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{X^2Y^2} }
+\\
+& = \sqrt{ \frac{ u_X^2}{X^2} + \frac{u_Y^2}{Y^2} }
+\\
+& = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
+\end{align*}
+which gives a Pythagorean identity for the relative uncertainties.
+
+```{r include = FALSE}
+x <- 3.41
+y <- 2.34
+dx <- y
+dy <- x
+u_x <- 0.04
+u_y <- 0.02
+A <- x * y
+u_A <- sqrt( dx^2 * u_x^2 + dy^2 * u_y^2)
+```
+</div>
+</div>
+
+<div class="example">
+We can use the rule for relative uncertainty to compute the standard uncertainty for 
+a product
+
+<div class="explain" label = "Show example">
+**Example** Use relative uncertainty to compute the standard uncertainty
+in the area of a rectangle computed by multiplying length and width 
+if length and width are reported as 
+$x = `r x` \pm `r u_x`$ is the estimate of the length of a 
+rectangle and  $y = `r y` \pm `r u_y`$ is the estimate of its width.  
+
+The relative uncertainties in the length and width are 
+	\[ 
+	\frac{`r u_x`}{`r x`} = `r u_x / x` \ \tand  \ 
+	\frac{`r u_y`}{`r y`} = `r u_y / y` 
+	\;.
+	\]
+	
+So the relative uncertainty in the area estimation is
+	\[
+	\sqrt{ (`r u_x / x`)^2 +  (`r u_y / y`)^2 }
+	=
+	`r sqrt((u_x / x )^2 +  ( u_y / y )^2)`
+	\;.
+	\]
+	
+Now we solve
+	\[
+	\frac{u_A}{`r A`} = `r sqrt(( u_x / x)^2 +  ( u_y / y )^2)`
+	\]
+	to get
+	\[
+	u_A = (`r A`) (`r sqrt((u_x / x)^2 + (u_y / y)^2)`) =
+	 `r A * sqrt((u_x / x)^2 +  (u_y / y)^2)`
+	\;.
+	\]
+</div>
+</div>
+
+## More Practice
+
+**16.** Compute the relative uncertainties for 
+the length, width, and perimeter in problem 10.
+
+**17.** Compute the relative uncertainties for the three quantities 
+in the dimes example.
+
+**18.** A measurement is reported as 152 with a relative uncertainty of 3%.
+What is the standard uncertainty for this measurement?
+
+**19.**
+If $X$ has a relative uncertainty of 3% and $Y$ has a relative uncertainty of 4%,
+what is the relative uncertainty of the product $XY$?
+
+**20.** Compute the relative uncertainties for time, distance, and average 
+velocity in problem 13.
+
+**21.**
+Let $Q = X / Y$.  Work out a formula for the relative uncertainty of $Q$ in terms 
+of the relative uncertainties of $X$ and $Y$.
+
+**22.** Check that your formula in 20 is correct for problem 19.
+
+**23.** Check that your formula in 20 is correct for the dimes example.
 
 

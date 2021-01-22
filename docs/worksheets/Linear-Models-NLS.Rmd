@@ -1,0 +1,543 @@
+---
+title: "Nonlinear Least Squares"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ['../styles/ds303-notes.css', '../styles/worksheets.css']
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\T{{\sf T}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+library(patchwork)
+library(reactable)
+theme_set(theme_bw(base_size = 8))
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+
+## Nonlinear Models
+
+### Simple Linear Model
+
+\[
+Y = \beta_0 + \beta_1 x + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Norm(0,\sigma)$.}
+\]
+
+In other words 
+
+$$
+Y \sim \Norm(\beta_0 +\beta_1 x, \sigma)
+$$
+### Nonlinear Model
+
+\[
+Y = f(x) + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Norm(0,\sigma)$.}
+\]
+
+In other words 
+
+$$
+Y \sim \Norm(f(x), \sigma)
+$$
+Basically, replace the linear function with some other function.
+
+Advantages:
+
+* flexible -- we can contruct $f()$ any way we like 
+
+* natural -- we don't have to come up with transformations to make things linear
+
+Disadvantages:
+
+* The mathematics isn't as nice -- no nice formulas for slope and intercept
+
+* Fitting (minimizing SSE) has to be done numerically (and the algorithm can 
+  sometimes fail)
+
+Inconvenience
+
+* Since non-linear models are more flexible, we will need to work harder to describe them
+to R.
+    * The `lm()` notation only requires you to specify the two variables -- it knows the model wil lbe linear.
+    * The `nls()` function will require us to
+      * describe the function we are using,
+      * specify which parts of the formula are paramters to be fit, and 
+      * provide initial values for each parameter as a starting point for 
+      the numerical optimization.
+
+## Examples using nls()
+
+<div class = "example">
+**Example: Dropping balls** 
+
+<div class = "explain" label = "Show Example">
+
+Let's start with a redo of a model we fit using `lm()`:
+
+$$
+\mbox{time} = \beta_0 + \beta_1 \sqrt{\mbox{height}} + \varepsilon
+$$
+
+Here's our fit using `lm()`.
+
+```{r}
+library(fastR2)
+ball.lm <- lm(time ~ sqrt(height), data = BallDrop)
+```
+
+And with `nls()`:
+
+```{r}
+ball.nls <- nls(time ~ beta1 * sqrt(height) + beta0, data = BallDrop, 
+    start = list(beta0 = 0, beta1 = 1))
+```
+
+* `time ~ beta1 * sqrt(height) + beta0`
+
+    * explicit description of the model function (including paramters)
+
+* `start = list(beta0 = 0, beta1 = 1)`
+
+    * tells R what the paramters are, and
+    * where to start the numerical search for the parameter values that
+      produce the smallest sum of squared residuals.
+
+Since we are fitting the same model two different ways, it isn't surprising that
+they give the same parameter estimates.
+
+```{r}
+coef(ball.lm)
+coef(ball.nls)
+```
+
+Summary information for the two models is similar, but not identical
+
+
+```{r }
+msummary(ball.lm)
+msummary(ball.nls)
+```
+
+In particular, we are getting the same standard error estimates as well.
+</div>
+</div>
+
+<div class = "example">
+**Example: Dropping balls -- new model** 
+
+<div class = "explain" label = "Show Example">
+
+Now let's fit a different model, namely
+
+\[
+\mbox{time} = \alpha \cdot \mbox{height}^p
+\]
+
+In this model
+
+* there is no intercept
+* the power is not specified -- we estimate it from the data.
+
+```{r tidy = FALSE}
+power.model1 <- 
+  nls(time ~ alpha * height^power, data = BallDrop, 
+      start = c(alpha = 1, power = .5))
+coef(summary(power.model1))
+```
+
+
+A power law can also be fit using `lm()` by using a log-log transformation.
+
+\begin{align*}
+\log(\mbox{time}) 
+  &= \log(\alpha \cdot \mbox{height}^p)
+  \\
+  &= \log(\alpha) + p \log(\mbox{height})
+\end{align*}
+
+In this model
+
+* The slope ($\beta_1$) is $p$.
+* The intercept ($\beta_0$) is $\log(\alpha)$, so $\alpha = e^{\beta_0}$.
+
+```{r }
+power.model2 <- lm(log(time) ~ log(height), data = BallDrop)
+coef(summary(power.model2))
+```
+
+Since $\alpha = e^{\beta_0}$, we can use the delta method to 
+get the estimate and uncertainty for $\alpha$.
+
+```{r }
+exp(coef(power.model2)[1])
+```
+
+Since $\frac{d}{dx} e^x = e^x$ the uncertainty is approximately
+\[ 
+e^{`r coef(power.model2)[1]`} \cdot  `r coef(summary(power.model2))[1, 2]`
+=
+`r exp(coef(power.model2)[1])` \cdot  `r coef(summary(power.model2))[1, 2]`
+=
+`r exp(coef(power.model2)[1]) * coef(summary(power.model2))[1, 2]`
+\]
+<br>
+
+<div class = "explain" label = "Show comparison of models">
+In this case, our results are similar, but not identical. In fact the two models are not 
+equivalent. 
+
+* When we use `lm()`, the residuals are computed *after* we transform $y$ to the 
+log scale -- so the residuals are on the log scale
+
+* When we use `nls()`, the residuals are computed on the natural scale.
+
+Both models want their error term to be normally distributed with a mean of 0, but they 
+think about the error differently. In particular, for `lm()`, if we include
+the error term in our algebra, we see that 
+
+$$
+\log(y) = \beta_0 + \beta_1 \log(x) + \varepsilon
+$$
+So 
+
+$$
+y = e^\beta_0 \cdot x^{\beta}) \cdot e^{\varepsilon}
+$$
+This means that for this model on the natural scale,
+
+* in `nls()` the errors are *additive* [absolute difference]
+* in `lm()`, the errors (residuals) are *multiplicative*  [percentage difference]
+
+When the range of $x$ spans multiple orders of magnitude, this can make a big difference.
+One models says the points should be roughly the same distance from the curve,
+the other says they should be roughly the same percentage away from the curve.
+
+We can use our diagnostic plots to see whether one of these models matches the data better.
+Unfortunately, `mplot()` doesn't (yet) handle nls models, and `plot()` doesn't do
+nearly as much.  So we'll just make the plots using ggformula.
+
+```{r fig.width = 8, fig.height = 6}
+gf_point(resid(power.model1) ~ height, data = BallDrop, title = "Model 1") %>%
+  gf_smooth(color = "steelblue") /
+gf_point(resid(power.model1) ~ fitted(power.model1), title = "Model 1") %>%
+  gf_smooth(color = "red") /
+gf_qq( ~ resid(power.model1), title = "Model 1") %>%
+  gf_qqline() |
+gf_point(resid(power.model2) ~ height, data = BallDrop, title = "Model 2") %>%
+  gf_smooth(color = "steelblue") /
+gf_point(resid(power.model2) ~ fitted(power.model2), title = "Model 2") %>% 
+  gf_smooth(color = "red") /
+gf_qq( ~ resid(power.model2), title = "Model 2") %>%
+  gf_qqline() 
+```
+
+In this case, a slight edge goes to model 1 (the nls model) because the standard deviation 
+of the residuals looks more nearly constant.  In model 2, the residuals seem to be 
+more variable on the left side of the plot and less variable on the right.
+
+</div>
+
+</div>
+</div>
+
+<div class = "example">
+**Example: Ball Drop -- A model `lm()` can't handle** 
+
+<div class = "explain" label = "Show Example">
+
+Here is a small modification of our previous model that adds in an intercept ($k$):
+
+$$
+\mbox{time} = \alpha \cdot \mbox{height}^p + k
+$$
+
+```{r}
+power.model3 <- 
+  nls(time ~ alpha * height^power + k, data = BallDrop, 
+      start = c(alpha = 1, power = .5, k = 0))
+coef(summary(power.model3))
+```
+
+Note that given the estimate and uncertainty for $k$, we see that 0 might not be the 
+best choice for $k$. Note
+
+* In terms of physics, $k = 0$ is clearly right.
+
+* In terms of the experiment, there may be a reason why the times are off by a constant $k$, perhaps do to the way height is measured or the specifics of the timing device used.
+
+```{r fig.width = 8, fig.height = 6}
+gf_point(resid(power.model3) ~ height, data = BallDrop, title = "Model 3") /
+gf_qq(~ resid(power.model3), data = BallDrop, title = "Model 3") %>% 
+  gf_qqline() |
+gf_point(resid(power.model1) ~ height, data = BallDrop, title = "Model 1") /
+gf_qq(~ resid(power.model1), data = BallDrop, title = "Model 1")  %>%
+  gf_qqline()
+```
+
+Plotting the original data and the three model fits on the natural scale we see that they are 
+similar, but not identical.
+
+```{r}
+gf_point(time ~ height, data = BallDrop) %>%
+  gf_lims(x = c(0, 1.7)) %>%
+  gf_fun(makeFun(power.model1), color = ~ "Model 1") %>%
+  gf_fun(makeFun(power.model2), color = ~ "Model 2") %>%
+  gf_fun(makeFun(power.model3), color = ~ "Model 3")
+```
+
+Widening the window, we can see how models 1 and 2 force the predicted time
+to be 0 when height is 0 and model 3 does not.
+
+</div>
+</div>
+
+<div class = "example">
+**Example: Cooling Water**
+
+<div class = "explain" label = "Show Example">
+
+A professor at Macalester College put hot water in a mug and recorded the temperature as it cooled. 
+Let's see if we can fit a reasonable model to this data
+
+```{r }
+gf_point(temp ~ time, data = CoolingWater, ylab = "temp (C)", xlab = "time (sec)")
+```
+
+
+Our first guess might be some sort of exponential decay
+```{r tidy = FALSE, fig.keep = 'last'}
+cooling.model1 <- 
+  nls(temp ~ A * exp( -k * time), data = CoolingWater, 
+      start = list(A = 100, k = 0.1))
+gf_point(temp ~ time, data = CoolingWater, 
+         ylab = "temp (C)", xlab = "time (sec)") %>%
+  gf_fun(makeFun(cooling.model1)) %>%
+  gf_lims(x = c(0, 300), y = c(0, 110))
+```
+
+That doesn't fit very well, and there is a good reason. 
+The model says that eventually the water will freeze because
+\[
+\lim_{t \to \infty} A e^{-k t} = 0
+\]
+when $k >0$.  But clearly our water isn't going to freeze sitting on a lab table.  We can fix this by 
+adding in an offset to account for the ambient temperature:
+
+```{r tidy = FALSE, fig.keep = "last"}
+cooling.model2 <- nls(temp ~ ambient + A * exp(k * (1+time)), data = CoolingWater,
+                      start = list(ambient = 20, A = 80, k = -.1) )
+gf_point(temp ~ time, data = CoolingWater, 
+         ylab = "temp (C)", xlab = "time (sec)") %>%
+  gf_fun(makeFun(cooling.model2), linetype = 2, color = "red") %>%
+  gf_fun(makeFun(cooling.model1), color = "steelblue") %>%
+  gf_lims(x = c(0, 300), y = c(0, 110))
+```
+
+This fits much better.  Furthermore, this model can be derived from a differential equation
+\[
+\frac{dT}{dt} = -k (T_0 - T_{\mathrm{ambient}})
+\;,
+\]
+known as Newton's Law of Cooling.
+
+Let's take a look at the residual plot
+```{r }
+gf_point(resid(cooling.model2) ~ time, data = CoolingWater) 
+plot(cooling.model2, which = 1)
+```
+
+Hmm.  These plots show a clear pattern and very little noise.
+The fit doesn't look as good when viewed this way.  
+It suggests that Newton's Law of Cooling does not take into account all that is going on here.
+In particular, there is a considerable amount of evaporation (at least at the beginning when the 
+water is warmer).  More complicated models that take this into account can fit even better.
+For a discussion of a model that includes evaporation, 
+see <http://stanwagon.com/public/EvaporationPortmannWagonMiER.pdf>.[^wagon]
+
+<!-- Here's one thing we can try.  Let's fit a model only to the data after the water has -->
+<!-- cooled to 50 degrees. At that point the effect of evaporation will be less pronounced. -->
+
+```{r tidy = FALSE, fig.keep = "last", eval = FALSE, include  = FALSE}
+# tricky to get this to conerge for some reason
+CoolingWater50 <- CoolingWater %>% filter(temp <= 70)
+cooling.model3 <- nls(temp ~ ambient + A * exp(k * (1 + time)), 
+                      data = CoolingWater50,
+                      start = list(ambient = 20, A = 80, k = -0.1),
+                      control = nls.control(maxiter = 150, minFactor = 1/30000)
+                      )
+
+gf_point(temp ~ time, data = CoolingWater, ylab = "temp (C)", xlab = "time (sec)") %>%
+  gf_fun(makeFun(cooling.model3), linetype = 1, color = "green") %>%
+  gf_fun(makeFun(cooling.model2), linetype = 2, color = "red") %>%
+  gf_fun(makeFun(cooling.model1), color = "steelblue") %>%
+  gf_lims(x = c(0, 300), y = c(0, 110))
+```
+</div>
+</div>
+<br>
+
+[^wagon]:The model with evaporation adds another complication in that the resulting
+differential equation cannot be solved algebraically, so there is no algebraic
+formula to fit with `nls()`.  
+But the method of least squares can still be used by creating a parameterized
+numerical function that computes the sum of squares and using a numerical
+minimizer to find the optimal parameter values.  Since the use of numerical
+differential equation solvers is a bit beyond the scope of this course, we'll
+leave that discussion for another day.
+
+### Things to remember about `nls()`
+
+1. You need to specify the model explicitly, including the parameters.
+
+2. You need to provide starting values for the numerical optimization search.
+
+3. The numerical optimization can fail.
+
+    * Choosing a better starting point can help. It is good to choose
+    starting values that are at least the correct sign and order of magnitude.
+    
+    * There are also some controls that can be used to tweak the algorithm used
+    for minimized the sum of squares, so if the first attempt fails, there may
+    be ways to rescue the situation. [Knowing how to do this is not part of this
+    course, but see the help for `nls()` if you want to know more.
+
+### `lm()` or `nls()`?
+
+1. Some models cannot be expressed as linear models, even after transformations.
+
+    In this case we only have one option, the non-linear model. So `nls()` is
+    more flexible.
+
+2. Linear models are easier to fit.
+
+    Linear models can be fit quickly and accurately without numerical
+	 optimization algorithms because they satisfy nice linear algebra
+	 properties.
+
+    The use of numerical optimizers in non-linear least squares models
+		makes them subject to potential problems with the optimizers.  They may
+		not converge, may converge to the wrong thing, or convergence may depend
+		on choosing an appropriate starting point for the search.
+
+3. Two models might make different assumptions about the error terms.
+
+    Inspection of the residuals will often indicate if one model
+    does better than the other in this regard.
+
+4.	Linear models fit with `lm()` provide an easy way to produce confidence
+intervals for a mean response or an individual response. The models fit using
+`nls()` do not have this capability.
+
+## Some Practice
+
+**1. More ball dropping**
+You might remmeber this equation from calculus or physics:
+
+
+$$ s = \frac{g}{2} t^2 $$
+where $s$ is the distance an object has fallen, $t$ is the time it has fallen,
+and $g$ is the force due to gravity.
+
+a. Fit this model using the `BallDrop` data and `nls()`. 
+Report the estimate and uncertainty for $g$.
+
+a. Solve the equation for $t^2$. Use this to fit a model using `nls()` 
+with $t^2$ as the response.
+Report the estimate and uncertainty for $g$.
+
+a. Solve the equation for $t$. Use this to fit a model using `nls()` 
+with $t$ as the response.
+Report the estimate and uncertainty for $g$.
+
+d. Why are these models not all the same?
+
+e. Are the estimtes for $g$ consistent among the models? (What does that mean? Hint:
+think about uncertainty.)
+
+f. Is there any reason to prefer one of these models over the others?
+
+g. How might you use `lm()` to estimate $g$? Do it.
+
+```{r, include = FALSE}
+nls(height ~ g / 2 * time^2, data = BallDrop, start = list(g = 5)) %>%
+  summary() %>% coef()
+nls(time^2 ~  2 / g * height, data = BallDrop, start = list( g = 5)) %>%
+  summary() %>% coef() 
+nls(time ~  sqrt(2 / g * height), data = BallDrop, start = list( g = 5)) %>%
+  summary() %>% coef()
+```
+
+**2.** Use the `Spheres` data in `fastR2` to estimate the density of the material
+the spherese are made of. [Hint: how is density related to radius and mass?]
+
+**3.**
+By attaching a heavy object to the end of a string, 
+it is easy to construct pendulums of different lengths. 
+Some physics students did this to see how the period 
+(time in seconds until a pendulum returns to the same location
+moving in the same direction) 
+depends on the length (in meters) of the pendulum.  
+The students constructed pendulums of lengths varying from
+$10$ cm to $16$ m and recorded the period length (averaged over several
+swings of the pendulum).  The resulting data are in
+the `Pendulum` data set in the `fastR2` package.
+
+Fit a power law to this data using `nls()` and using `lm()`.
+How do the two compare?
+
+```{r include = FALSE}
+nls( force.drag ~ A * velocity, data = Drag,
+     start = list(A = 1))
+nls( force.drag ~ A * velocity^2, data = Drag,
+     start = list(A = 1))
+nls( force.drag ~ A * sqrt(velocity), data = Drag,
+     start = list(A = 1))
+nls( force.drag ~ A * log(velocity), data = Drag,
+     start = list(A = 1))
+```
+

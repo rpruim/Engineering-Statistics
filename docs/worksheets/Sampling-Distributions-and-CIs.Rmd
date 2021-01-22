@@ -189,7 +189,7 @@ if we dont' know the mean.  The solution?
 
 But this brings up another problem.  Now the sampling distribution won't be approximately normal,
 it will have a different shape.  That shape is also symmetric and bell-shaped, but it is a little "fatter",
-because their is additional variability due to our estimating $\sigma$.
+because there is additional variability due to our estimating $\sigma$.
 The right distribution to use is called a **t-distribution**.
 
 So our formula for the confidence interval for $\mu$ will be 

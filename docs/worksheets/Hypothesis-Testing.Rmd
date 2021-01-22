@@ -128,7 +128,7 @@ The example above illustrates the reasoning that goes into something called a **
 
 * **statistical hypothesis** -- a hypothesis about a parameter or paramters ($\mu$, $\beta_1$, $p$, etc.)
 
-    * Examples: $\mu > 25$; $\beta_1 = 1$; $p = 1/6$; $\mu_1 = \mu_2 = 0$  
+    * Examples: $\mu > 25$; $\beta_1 = 1$; $p = 1/6$; $\mu_1 - \mu_2 = 0$  
     <br>
     
 
@@ -215,9 +215,9 @@ provides *evidence against* a particular statistical hypothesis.
     
     * Three possible alternatives
       
-        * $H_a$: $\mu \neq \mu$
-        * $H_a$: $\mu \ge \mu$
-        * $H_a$: $\mu \le \mu$  
+        * $H_a$: $\mu \neq \mu_0$
+        * $H_a$: $\mu < \mu_0$
+        * $H_a$: $\mu > \mu_0$  
         <br>
         
 

@@ -1,0 +1,540 @@
+\documentclass[10pt]{article}
+\usepackage{probstat}
+\usepackage[answerdelayed,exercisedelayed,lastexercise]{problems}
+\usepackage[margin = 0.8in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+
+\def\blank#1{%
+\ifanswers
+\underline{{\large \sc #1}}
+\else
+\underline{\phantom{\Large \ \ \ \sc #1 \ \ \ }}
+\fi
+}
+
+\newcommand{\myunderline}[1]{\uline{\phantom{Ay}#1\phantom{Ay}}}
+
+\def\Tri{\distribution{Triangle}}
+
+
+\begin{document}
+\pagestyle{fancy}
+\chead{\Large \sf Stat 241 Review Problems}
+
+<<setup, include = FALSE>>=
+library(mosaic)
+library(ggformula)
+library(pander)
+theme_set(theme_bw())
+trellis.par.set(theme = col.mosaic())
+knitr::opts_chunk$set(
+  fig.width = 5,
+  fig.height = 3,
+  fig.show = "hold",
+  out.width = ".45\\textwidth",
+  size = "small"
+)
+options(width = 90)
+@
+
+
+
+\def\points#1{\relax}
+\newenvironment{qalltt}%
+{\begin{quote}\begin{alltt}}%
+{\end{alltt}\end{quote}}%
+
+
+<<include = FALSE>>=
+library(bitops)
+version <- 4
+@
+
+
+<<include = FALSE>>=
+if (bitAnd(version,1)) {
+  name1 <- "Alice"
+  name2 <- "Bob"
+  cl1 <- "90"
+  cl2 <- "95"
+} else {
+  name1 <- "Claire"
+  name2 <- "Donald"
+  cl1 <- "98"
+  cl2 <- "95"
+}
+@
+
+\begin{problem}
+	\Sexpr{name1} and \Sexpr{name2} conduct an experiment to measure the 
+	strength of paper plates. Using the same data,
+	\Sexpr{name1} creates a \Sexpr{cl1}\% confidence interval for the mean 
+	paper plate strength and  \Sexpr{name2} creates a \Sexpr{cl2}\% 
+	confidence interval for the mean paper plate strength.
+	Whose interval will be wider?
+	Explain your reasoning.
+\end{problem}
+
+\begin{solution}
+	\Sexpr{if(cl1 > cl2) name1 else name2}'s interval will be wider.  
+	A larger confidence level requires a wider interval because 
+	we must cover the true parameter value for a higher proportion of samples.
+	In the formula, this can be seen because $t_*$ will be larger.
+\end{solution}
+
+% \begin{problem}
+% 	In a paper entitled ``Mechanical Strength and Stiffness of
+% 	Biodegradable and Titanium Osteoﬁxation Systems'',%
+% 	\footnote{
+% 	\emph{J Oral Maxillofac Surg} 65:2148-2158, 2007.} 
+% 	researchers
+% 	reported on their tests of different
+% 	screw-and-plate systems used in oral surgeries.  
+% 	The paper included the following table of values for 
+% 	tensile stiffness (in N/mm) for various systems studied. 
+% \begin{center}
+% %	\includegraphics[width = .9\textwidth]{tensile-strength}
+% 	\begin{tabular}{lrrrr}
+% 		\hline
+% 		& & & \multicolumn{2}{c}{95\% confidence interval}
+% 		\\
+% 		System & Mean & SD & Lower Bound & Upper Bound 
+% 		\\
+% 		\hline
+% %BioSorb FX 2.0 mm&248.00&24.28&235.57&260.43
+% %\\
+% %Inion 2.0 mm & 87.56&11.66&75.12&99.99
+% %\\
+% %Inion 2.5 mm & 79.52&3.74&67.09&91.95
+% %\\
+% %LactoSorb 2.0 mm & 203.78&4.82&191.34&216.21
+% \\
+% MacroPore 2.0 mm & 52.87&16.57&40.44&65.31
+% \\
+% Polymax 2.0 mm & 80.08&5.74&67.65&92.51
+% \\
+% Resorb X 2.1 mm & 42.86&5.82&30.44&55.30
+% \\
+% Titanium 1.5 mm & 448.56&24.68&436.12&460.99
+% \\
+% Titanium 2.0 mm & 521.27&18.56&508.84&533.70
+% \\
+% \hline
+% 	\end{tabular}
+% \end{center}
+% 
+% <<include = FALSE>>=
+% fillin <-
+%   switch(
+%     as.character(bitAnd(version, 3)),
+%     "1" = c("MacroPore 2.0 mm", mean = 52.87, sd = 16.57, lower = 40.44, upper = 65.31),
+%     "2" = c("Polymax 2.0 mm", mean = 80.08, sd = 5.74, lower = 67.65, upper = 92.51),
+%     "3" = c("Titanium 1.5 mm", mean = 448.56, sd = 24.68, lower = 436.12, upper = 460.99),
+%     "0" = c("Titanium 2.0 mm", mean = 521.27, sd = 18.56, lower = 508.84, upper = 533.70)
+%   )
+% @
+% 
+% 	True or False.  This means that the researches believe that 95\% of 
+% 	\Sexpr{fillin[1]} systems will have tensile stiffness between
+% 	\Sexpr{fillin["lower"]} and \Sexpr{fillin["upper"]} N/mm.
+% 	\begin{center}
+% 		True  \hspace{1in} False
+% 	\end{center}
+% 	Explain your reasoning.
+% 	\bigskip
+% 	\bigskip
+% 	\vfill
+% \end{problem}
+% 
+% \begin{solution}
+% 	False.  Confidence intervals are about estimating an unknown parameter (in
+% 	this case the mean elasticity), not about containing a large fraction of
+% 	the population.
+% \end{solution}
+
+\begin{problem}
+Here are some terms we have used in class:
+statistic, parameter, sample, population, 
+estimate, estimand, estimator,
+confidence interval,
+standard uncertainty, relative uncertainty, standard error,
+margin of error, critical value.
+
+\begin{enumerate}
+\item
+Explain each of the terms in your own words.
+Where this makes sense, give (or make up) a specific example.
+\item
+Find pairs or groups of terms that are related somehow and 
+explain how they are related.  (Have fun with this, see how many
+relationships you can find.)
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+The key here is not to memorize certain phrases but to make sure you have a 
+solid understanding of the concepts.
+\end{solution}
+
+\begin{problem}
+	Beth and Sarah are bowlers.  Bowling scores are discrete (whole numbers), 
+	but we can model them with a continuous distribution. As a first approximation,
+	let's model their bowling scores as with normal distributions.  Use
+	the summary information below (based on their last 25 games) 
+	to answer some questions about their bowling performance, assuming that
+	their performances are independent (a pretty good model for bowling, since
+	players do not directly affect each other).
+
+<<echo = FALSE, R.options = list(digits = 3)>>=
+set.seed(12345) 
+if (version <= 2) {
+  sarah <- qnorm(ppoints(25), 175, 20.1)
+  beth <-  qnorm(ppoints(25), 170, 30.1)
+} else {
+  sarah <- qnorm(ppoints(25), 180, 21.0)
+  beth <-  qnorm(ppoints(25), 175, 32.0)
+}
+dd <- data.frame( score = c(sarah, beth), bowler = rep(c("Sarah", "Beth"), each = 25) )
+df_stats(score ~ bowler, data = dd) 
+@
+	\begin{enumerate}
+		\item
+			Who is the more consistent bowler?  How do you know?
+
+		\item
+			What is the probability that \Sexpr{if(version <=2) "Beth" else "Sarah"} scores 
+			200 or more?
+
+		\item
+			What is the probability that \Sexpr{if(version <=2) "Sarah" else "Beth"} 
+			scores 200 or more?
+		\item
+			If they bowl together as a team, what is the probability that
+			their total score is 400 or more?
+		\item
+			If they bowl against each other, what is the probability that
+			Beth will win (i.e., have a higher score than Sarah)?
+	\end{enumerate}
+\end{problem}
+
+
+\begin{solution}
+<<>>=
+data_frame(
+   m1 = 175,
+   m2 = 180,
+   s1 = 30,
+   s2 = 20,
+   over200A = 1 - pnorm( 200, m1, s1),
+   over200B = 1 - pnorm( 200, m2, s2),
+   over400 = 1 - pnorm( 400, m1+m2, sqrt(s1^2 + s2^2)),
+   win     = 1 - pnorm( 0, m1-m2, sqrt(s1^2 + s2^2))
+) %>% as.data.frame()
+@
+\end{solution}
+
+
+<<include = FALSE>>=
+x_bar <- round(1.61 * (8 + version) / 8, 2)
+s <- round(0.17 * (8 + version) / 8, 2)
+n <- 25
+@
+\begin{problem}
+	A sample of \Sexpr{n} pieces of laminate used in the manufacture of
+	circuit boards was tested for warpage (measured in mm) 
+	under specified conditions.
+	The mean warpage for the sample was \Sexpr{x_bar} mm and the sample
+	standard deviation was \Sexpr{s} mm.
+	\begin{enumerate}
+		\item
+			Compute the standard error of the mean for this sample.
+		\item
+	Compute a 95\% confidence interval for the mean warpage of 
+	all circuit boards under these conditions.
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<warpage, tidy = FALSE, echo = FALSE>>=
+data_frame(
+  v = 1:4,
+  n = 25,
+  x_bar = round(1.61 * (8+v) / 8, 2),
+  s = round(0.17 * (8+v) / 8, 2),
+  t_star = qt(.975, df = n-1 ),
+  SE = s / sqrt(n),
+  me = t_star * SE,
+  lo =  x_bar - me,
+  hi =  x_bar + me
+) %>% filter(v == version) %>% 
+  select(-v) %>%
+  as.data.frame()
+@
+\end{solution}
+
+
+
+\begin{problem}
+	A 1996 study of Scotch pine specimens reported a 95\% confidence interval
+	for the mean elasticity of $14,500 \pm 1100$ MPa for the mean modulus of
+	elasticity obtained 1 minute after applying a certain load.
+
+	True or False.  This means that the researchers believe that 95\% of 
+	Scotch pine specimens will have an elasticity between
+	13,400 and 15,600 MPa.  %\textbf{Explain.}
+	
+	Explain your reasoning.
+\end{problem}
+
+\begin{solution}
+	False.  Confidence intervals are about estimating an unknown parameter 
+	(in this case the mean elasticity in the population of all Scotch pine trees), 
+	not about containing a large fraction of the population.
+	
+	Note: It is also important to understand what the confidence level measures.
+	A 95\% confidence interval makes a claim not about all possible samples
+	in the situation at hand.  95\% of samples should produce intervals that 
+	cover the estimand (and 5\% should fail to do so).  We won't know for any
+	particular interval whether it contains the estimand or not.
+\end{solution}
+
+
+% \begin{problem}
+% 	\textsc{True or False.}
+% 	An article reports a 95\% confidence interval for 
+% 	mean weight (in pounds) of adult males in a certain 
+% 	geographical region to be $180\pm 15$.  This means
+% 	that approximately 95\% of the adult males in that area weigh
+% 	between 165 and 195 pounds.
+% 	\vfill
+% \end{problem}
+% \begin{solution}
+% 			False.  Key things to note:
+% 			\begin{itemize}
+% 			\item the 95\% refers to 95\% of \emph{samples}, not 95\% of the population
+% 			and not 95\% of the sample.
+% 			\item
+% 			A ``good" confidence interval contains the estimand.  (When an interval
+% 			is good, we say it \emph{covers} the estimand.)
+% 			\item
+% 			For 95\% of samples, the resulting confidence interval should be ``good".
+% 			That is, the method has a 95\% coverage rate.
+% 			\item
+% 			Of course, we can't know for any given data set whether the resulting
+% 			interval covers the estimand or not.
+% 			\end{itemize}
+% \end{solution}
+
+
+% \begin{problem}
+% \textsc{True or False.}
+% When fitting a least squares regression line, it doesn't matter
+% which variable is the response and which is the explanatory -- we get the 
+% same results either way.
+% 
+% \end{problem}
+% \begin{solution}
+% False.  Graphically, the residuals are veritical differences between observed
+% response values and the line, so switching the roles of the variables 
+% results in a different best fitting line.  (If you fit one way and then simply
+% solve the equation for the ``wrong" variable you do NOT get the same line
+% as when you fit with the variables in their proper roles.)  Also, all of the 
+% machinery (confidence intervals and prediction intervals for the response, for example) in statistical packages is set up to predict the response from the 
+% explanatory variables.
+% \end{solution}
+
+\begin{problem}
+Below is the summary output for a simple linear model for predicting 
+the length of a child's foot from the width (both in cm).
+
+<<include = FALSE>>=
+model <- lm(length ~ width, data = mosaicData::KidsFeet)
+@
+<<>>=
+msummary(model)
+@
+
+\begin{enumerate}
+\item
+  Give a 95\% confidence interval for the slope in this model.
+\item
+  What is the predicted response if the predictor variable has a value of 
+  of 8.4 cm?  
+\item
+  Here is the data for David.
+<<echo = FALSE, comment = NA>>=
+KidsFeet %>% head(1) 
+@
+  
+  What is David's residual?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+t.star <- qt(0.975, df = 37); t.star
+1.6576 - t.star * 0.3262   # lower end of CI
+1.6576 + t.star * 0.3262   # upper end of CI
+@
+\end{solution}
+
+\begin{problem}
+In linear modeling, what is the difference between a confidence interval
+and a prediction interval for the response?  How do you get R to calculate
+them for you?
+\end{problem}
+
+\begin{solution}
+For a confidence interval, the estimand is the mean response (for a given value
+of the predictor variable).  For a prediction interval, the estimand is the response
+value for a single new observation (for a given value of the predictor variable).
+\end{solution}
+
+% \begin{problem}
+% \textsc{True or False.}
+% When the correlation coefficient is large ($r > .9$), there is no need to look
+% at a scatter plot because there must be a strong linear relationship between
+% the two variables.
+% \vfill
+% \end{problem}
+
+
+\begin{problem}
+An experimenter measures the distance an object moves and how long it takes to move that far
+and records the measurements in the table below.
+Use this information to estimate the average speed of the object.  Report your answer with the
+appropriate uncertainty to complete the table.
+<<include = FALSE>>=
+s <- c(18.25, 15.65, 22.15, 28.15)
+u_s <- rep(0.03, 4)
+t <- c(4.92, 4.31, 5.42, 6.51)
+u_t <- rep(0.02, 4)
+test_version <- 4
+@
+
+\begin{center}
+\Large
+\begin{tabular}{rrr}
+\hline
+quantity & estimate & uncertainty
+\\
+\hline
+distance (m) & \Sexpr{s[test_version]} & \Sexpr{u_s[test_version]}
+\\
+time (sec) & \Sexpr{t[test_version]} & \Sexpr{u_t[test_version]}
+\\
+average speed (m/sec) & & 
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{problem}
+
+\def\Partial#1#2{\frac{\partial #1}{\partial #2}}
+
+\begin{solution}
+
+% There were four versions of this problem.  You can use the table below to
+% find the solution for you version.  All of them use the Delta Method formala
+
+\[
+u_v = 
+\sqrt{ \left(\Partial{v}{s}\right)^2 u_s^2
+     + \left(\Partial{v}{t}\right)^2 u_t^2 }
+\]
+where $v = \frac{s}{t}$,
+$\Partial{v}{s} = \frac{1}{t}$, and
+$\Partial{v}{t} = \frac{-s}{t^2}$.
+
+(It is also possible to do this problem using relative uncertainty, but make
+sure you convert back to absolute uncertainty at the end.)
+
+<<echo = FALSE>>=
+data_frame(
+  version = 1:4,
+  s = s,
+  u_s = u_s,
+  t = t,
+  u_t = u_t,
+  v = s/t,
+  u_v = sqrt(s^2 / t^4 * u_t^2 + 1/t^2 * u_s^2)
+) %>% as.data.frame() %>%
+  filter(version == test_version) %>%
+  select(-version)
+@
+\end{solution}
+
+\begin{problem}
+The plot below shows some data that indicate a nonlinear relationship between \code{y} and \code{x}.
+<<include = FALSE, fig.height = 2.6>>=
+set.seed(12345)
+D <- data_frame(
+  x = rep(1:10, each = 3),
+  y2 = 5 * x^(1/3) + rnorm(length(x), 0, 0.1),
+  y4 = .1 * x^2 + rnorm(length(x), 0, 0.2),
+  y1 = y4,
+  y3 = y2
+)
+D$y <- D[[paste0("y", test_version)]]
+gf_point(y1 ~ x, data = D) %>%
+  gf_lm()
+gf_point(y2 ~ x, data = D) %>%
+  gf_lm()
+gf_point(y3 ~ x, data = D) %>%
+  gf_lm()
+gf_point(y4 ~ x, data = D) %>%
+  gf_lm()
+model <- lm(y ~ x, data = D)
+@
+<<fig.height = 2.6, echo = FALSE>>=
+gf_point(y ~ x, data = D) %>%
+  gf_lm()
+@
+
+
+Sketch what the residual plot for this data will look like.  
+Be sure to label the axes.
+\end{problem}
+
+\begin{solution}
+Two versions:
+
+<<echo = FALSE>>=
+mplot(model, which = 1)
+gf_point(resid(model) ~ x, data = D)
+@
+\end{solution}
+
+
+
+
+% \begin{problem}
+% 	A 1996 study of Scotch pine specimens reported a 95\% confidence interval
+% 	for the mean elasticity of $14,500 \pm 1100$ MPa for the mean modulus of
+% 	elasticity obtained 1 minute after applying a certain load.
+% 
+% 	True or False.  This means that the researchers believe that 95\% of 
+% 	Scotch pine specimens will have an elasticity between
+% 	13,400 and 15,600 MPa.  %\textbf{Explain.}
+% 	
+% 	Explain your reasoning.
+% 	\bigskip
+% 	\bigskip
+% 	\vfill
+% \end{problem}
+% 
+% \begin{solution}
+% 	False.  Confidence intervals are about estimating an unknown parameter (in this case the mean
+% 	elasticity), not about containing a large fraction of the population.
+% \end{solution}
+
+\shipoutProblems
+
+\newpage
+\section*{Solutions}
+\shipoutSolutions
+
+
+
+\end{document}

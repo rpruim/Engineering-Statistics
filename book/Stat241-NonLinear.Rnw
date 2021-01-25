@@ -1200,7 +1200,9 @@ f(ACT = 30, interval = "prediction")
 @
 		\item
 <<>>=
-gf_point(GPA ~ ACT, data = grades, panel = panel.lmbands)
+gf_point(GPA ~ ACT, data = grades) %>%
+  gf_lm(interval = "confidence") %>%
+  gf_lm(interval = "prediction")
 gf_point(resid(grades.model) ~ fitted(grades.model) %>% gf_smooth()
 @
 			There are no major concerns with the regression model. The
@@ -1299,7 +1301,7 @@ not as fast as the pattern of the remaining data would lead us to expect.
 gf_point(velocity^2 ~ force.drag, data = Drag, color = ~ height)
 mplot(model1, w = 1)
 gf_point(log(velocity) ~ log(force.drag), data = Drag, color = ~ height)
-gf_point(velocity ~ force.drag, data = Drag, groups = ~ height) %>%
+gf_point(velocity ~ force.drag, data = Drag, color = ~ height) %>%
   gf_refine(scale_x_log10(), scale_y_log10())
 mplot(model3, w = 1)
 @

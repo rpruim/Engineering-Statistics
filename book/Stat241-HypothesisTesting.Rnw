@@ -962,7 +962,8 @@ Let's remove the fastest values at each height setting.  Although they are the f
 that terminal velocity has not yet been reached.  At least, these points would fit the 
 overall pattern better if the velocity were larger.
 <<>>=
-gf_point( force.drag ~ velocity, data = Drag, 
+gf_point( force.drag ~ velocity, data = Drag,
+          show.legend = FALSE,
   color = ~ (velocity < 3.9) & !(velocity > 1 & velocity < 1.5)) %>%
   gf_theme(legend.position = "top") 
 Drag2 <- Drag %>% filter((velocity < 3.9) & !(velocity > 1 & velocity < 1.5))

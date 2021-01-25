@@ -1055,7 +1055,7 @@ coef(summary(model2))
 	better in this case.  The non-linear model suffers from heteroskedasticity.
 <<>>=
 gf_point(resid(model) ~ fitted(model)) %>% gf_smooth()
-gf_point(resid(model2) ~ fitted(model2) %>% gf_smooth()
+gf_point(resid(model2) ~ fitted(model2)) %>% gf_smooth()
 @
 	Both residual distributions are reasonably close to normal, but not perfect.
 	In the ordinary least squares model, the largets few residuals are not as large
@@ -1075,7 +1075,7 @@ The estimated power based on the linear model is $0.478 \pm 0.004$.
 
 
 \begin{problem}
-The \dataframe{Pressure} data set contains 
+The \dataframe{pressure} data set contains 
 data on the relation between temperature in degrees Celsius and 
 vapor pressure in millimeters (of mercury).
 With temperature as the predictor and pressure as the response,
@@ -1090,28 +1090,28 @@ pressure and temperature?
 Using Tukey's buldge rules it is pretty easy to land at something like one of the following
 
 <<>>=
-gf_point(log(pressure) ~ temperature, data = Pressure)
-gf_point(log(pressure) ~ log(temperature), data = Pressure)
+gf_point(log(pressure) ~ temperature, data = pressure)
+gf_point(log(pressure) ~ log(temperature), data = pressure)
 @
 
 Neither of these is pefect (although both are much more linear than the original untransformed relationship).
 But if you think in degrees Kelvin instead, you might find a much better transformation.
 <<>>=
-gf_point(log(pressure) ~ (273.15 + temperature), data = Pressure)
-gf_point(log(pressure) ~ log(273.15 + temperature), data = Pressure)
-gf_point(log(pressure) ~ 1/(273.15 + temperature), data = Pressure)
+gf_point(log(pressure) ~ (273.15 + temperature), data = pressure)
+gf_point(log(pressure) ~ log(273.15 + temperature), data = pressure)
+gf_point(log(pressure) ~ 1/(273.15 + temperature), data = pressure)
 @
 
 Ah, that last one looks quite good.  Let's try that one.
 <<>>=
-model <- lm(log(pressure) ~ I(1/(273.15 + temperature)), data = Pressure)
-plot(model, 1:2)
+model <- lm(log(pressure) ~ I(1/(273.15 + temperature)), data = pressure)
+mplot(model, 1:2)
 @
 Things still aren't perfect. There's a bit of a bow in the residual plot, but the size of the residuals is
 quite small relative to the scale of the log-of-pressure values:
 <<>>=
 range( ~ resid(model))
-range( ~ log(pressure), data = Pressure)
+range( ~ log(pressure), data = pressure)
 @
 Also the residual for the fourth observation is quite a bit larger than the rest.
 \end{solution}
@@ -1203,7 +1203,7 @@ f(ACT = 30, interval = "prediction")
 gf_point(GPA ~ ACT, data = grades) %>%
   gf_lm(interval = "confidence") %>%
   gf_lm(interval = "prediction")
-gf_point(resid(grades.model) ~ fitted(grades.model) %>% gf_smooth()
+gf_point(resid(grades.model) ~ fitted(grades.model)) %>% gf_smooth()
 @
 			There are no major concerns with the regression model. The
 			residuals look pretty good.  (There is perhaps a bit more variability

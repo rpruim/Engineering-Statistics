@@ -963,7 +963,8 @@ that terminal velocity has not yet been reached.  At least, these points would f
 overall pattern better if the velocity were larger.
 <<>>=
 gf_point( force.drag ~ velocity, data = Drag, 
-  color = ~ (velocity < 3.9) & !(velocity > 1 & velocity < 1.5) )
+  color = ~ (velocity < 3.9) & !(velocity > 1 & velocity < 1.5)) %>%
+  gf_theme(legend.position = "top") 
 Drag2 <- Drag %>% filter((velocity < 3.9) & !(velocity > 1 & velocity < 1.5))
 @
 <<fig.height = 3.2>>=

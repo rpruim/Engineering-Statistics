@@ -161,8 +161,8 @@
 
 
 \newif\ifsolutions
-\solutionstrue
 \solutionsfalse
+\solutionstrue
 
 \newif\ifsolutionslocal
 \solutionslocaltrue

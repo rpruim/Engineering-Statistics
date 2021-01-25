@@ -1,0 +1,479 @@
+---
+title: "Testing Statistical Hypotheses"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ['../styles/ds303-notes.css', '../styles/worksheets.css']
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\T{{\sf T}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+showSols <- TRUE
+knitr::opts_chunk$set(
+  results = "hold",
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+library(patchwork)
+library(reactable)
+theme_set(theme_bw(base_size = 8))
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+
+## What's on the FE Exam?
+
+Depends a bit on your specialty.  Here's what it says for Mechanical Engineering:
+
+* Numerical methods (e.g., approximations, precision limits, 
+**error propagation**, Taylor's series, Newton's method)
+
+* Probability distributions (e.g., normal, binomial, empirical, discrete, continuous)
+
+*  Measures of central tendencies and dispersions (e.g., mean, mode, standard deviation, 
+confidence intervals)
+
+* Expected value (weighted average) in decision making
+
+* Regression (linear, multiple), curve fitting, and goodness of fit
+(e.g., correlation coefficient, least squares)
+
+## Some Sample Problems
+
+Sources:
+
+* G.K. Michaelson, Marshall Univ., youtube
+* Fundamentals of Engineering, D.G. Newnan (FE Exam Preparation)
+* F. Haan (ME321, CE356)
+* Notes, solutions, comments, and some adjustements by R Pruim
+
+<br>
+
+<div class = "example">
+**1.**
+What is most nearly the sample
+standard deviation of the following data set? {4, 6, 9, 9}
+
+&nbsp;
+   a) 2.1 &nbsp;   b) 2.4 &nbsp;   c) 4.5 &nbsp;  d) 6.0 &nbsp;
+
+<br>
+
+**Notes**
+
+* What can you rule out without doing an detailed computations?
+* What error are they checking for with the remaining options?
+* What error are they checking for with the options you ruled out?
+
+<div class = "explain" label = "Show solution">
+```{r}
+x <- c(4, 6, 9, 9)
+sd(x)
+var(x) 
+sum( (x - mean(x))^2 / 3)
+sum( (x - mean(x))^2 / 4)
+sum( (x - mean(x))^2 / 4) %>% sqrt()
+```
+</div>
+</div>
+
+<br>
+<div class = "example">
+**2.**
+Four fair dice are thrown.  What is the probability
+of rolling at least one six?
+
+<div class = "explain" label = "Show solution">
+```{r include = showSols}
+# 1 minus no sixes
+1 - (5/6)^4
+1 - dbinom(0, 4, 1/6)
+```
+</div>
+
+</div>
+
+<br>
+<div class = "example">
+**3.**
+A bag contains 100 chips numbered 1 to 100.
+One chip is drawn from the bag.
+What is the probability that the number on the chip selected
+will be odd or greater than 80?
+
+&nbsp;
+   a) 0.1 &nbsp;
+   b) 0.5 &nbsp;
+   c) 0.6 &nbsp;
+   d) 0.7 &nbsp;
+
+<br>
+
+**Notes**
+
+* What error or problem modification could lead to each of the wrong
+answers?
+
+<div class = "explain" label = "Show solution">
+
+Key thing: $\Prob(A \tor B) = \Prob(A) + \Prob(B) - \Prob(A \tand B)$
+
+P(odd) = 0.5; 
+
+P(greater than 80) = 0.2; 
+
+0.5 + 0.2 = 0.7
+
+P(both) = 0.1; 
+
+P(one or the other) = 0.5 + 0.2 - 0.1 = 0.6
+
+You could also do this by counting how many of the 100 numbers are either odd or
+greater than 80.
+
+</div>
+</div>
+
+<br>
+<div class = "example">
+**4.**
+The final scores on a test are normally distributed
+with a mean of 72 and a standard deviation of 10.
+What is most nearly the probability that a
+student's score will be between 65 and 78?
+
+&nbsp;
+   a) 0.4196 &nbsp; 
+   b) 0.4837 &nbsp; 
+   c) 0.5161 &nbsp; 
+   d) 0.6455 &nbsp; 
+
+<br>
+
+**Notes**
+
+* For the FE exam you will have access to a normal probability table
+like [this one](https://d2vlcm61l7u1fs.cloudfront.net/media%2F4aa%2F4aa0d140-7822-422e-a489-54983576873f%2FphpLwzeqs.png). Do this problem using that 
+table. (Then check your work in R.)
+
+* Each column of the table could be computed in R, how would you do it?
+(Below is a fancy version that formats everything into a pageable table. Don't worry
+about that part, just see if you know how to calculate any particular value in the 
+table using R.)
+
+```{r, results = "hold", fold = "so", R.options = list(digits = 4)}
+tibble(
+  x = seq(0, 3, by = 0.1),  # make a sequence from 0 to 3 by tenths
+  `f(x)` = dnorm(x),
+  `F(x)` = pnorm(x),
+  `R(x)` =  1 - pnorm(x),
+  `W(x)` = pnorm(x) - pnorm(-x)
+) %>% 
+  round(4) %>%
+  reactable::reactable()   # fancy table
+```
+
+<div class = "explain" label = "Show solution">
+```{r}
+pnorm(78, mean = 72, sd = 10) - pnorm(65, mean = 72, sd = 10) 
+# if we assume integer scores that are approximatley normal, 
+# we might use a "continuity correcttion"
+pnorm(78.5, mean = 72, sd = 10) - pnorm(64.5, mean = 72, sd = 10) 
+```
+
+</div>
+</div>
+
+<br>
+<div class = "example">
+**5.**
+Four fair coins are tossed once.  What is the probability of 
+obtaining three heads and one tails?
+
+&nbsp;
+  a) 1/4 &nbsp;
+  b) 3/8 &nbsp;
+  c) 1/2 &nbsp;
+  d) 3/4 &nbsp;
+ 
+
+<div class = "explain" label = "Show solution">
+
+There are only 16 possible outcomes, so you could list them all and count.
+But using what we know of binomial distributions is less tedious (and scales
+to problems of larger size.
+
+```{r fold = 'so'}
+dbinom(1, 4, 0.5)
+4 * 0.5^1 * 0.5^3
+choose(4, 1) * 0.5^1 * 0.5^3
+```
+
+</div>
+</div>
+
+<br>
+<div class = "example">
+**6.**
+How many teams of 4 can be formed from 35 people?
+
+&nbsp;
+  a) about 25,000 &nbsp;
+  b) about 2,000,000 &nbsp;
+  c) about 50,000 &nbsp;
+  d) about 200,000 &nbsp;
+
+
+<br>
+
+**Notes**
+
+* We haven't done problems exactly like this, 
+but we did learn the key thing you need: 
+binomial  coefficients. With that hint, can you solve this?
+
+
+<div class = "explain" label = "Show solution">
+```{r}
+choose(35, 4)
+factorial(35) / (factorial(4) * factorial(35 -4))
+```
+</div>
+</div>
+
+<div class = "example">
+**7.**  
+How many three-letter codes can be formed from the English alphabet if no repetitions are allowed?
+
+&nbsp;
+  a) $26^3$ &nbsp;
+  b) $26/3$ &nbsp;
+  c) $(26)(25)(24)$ &nbsp;
+  d) $26^3/3$ &nbsp;
+
+<br>
+
+**Notes**
+
+* This is related to the following probability problem: If a random 
+three-letter code is selected (not repetitions allowed), what is 
+the probability of selecting ABC?
+
+* The State of Michigan runs a lottery game that is similar to this, but uses
+digits rather than letters and allows for repetition. (It's called Pick 3.)
+If you select 123, what is the probability that your lottery ticket is the 
+winner?
+
+<div class = "explain" label = "Show solution">
+```{r}
+# probability problem
+prob <- 1/26 * 1/25 * 1/24; prob
+# 1/prob is the number of possible codes 
+1/prob
+# alternative solution
+26 * 25  * 24
+```
+</div>
+</div>
+
+<br>
+<div class = "example">
+**8.**
+There are 10 defectives per 1000 products. What is the probability that there is
+one and only one defective in a random lot of 100?
+
+&nbsp;
+  a) $99 \cdot 0.01^{99}$ &nbsp;
+  b) $0.01$ &nbsp;
+  c) $0.5$ &nbsp;
+  d) $0.99^{99}$ &nbsp;
+
+<br>
+
+**Notes**
+
+* Given the options here, one is **_approximately_** but not **_exactly_** correct.
+  Why isn't it exactly correct? Why is it a pretty good approximation.
+  
+* What would the the exact probability be for this? (It's a bit of a 
+pain to compute unless you are clever in your use of R, so you don't have
+to actually compute it.)
+
+<div class = "explain" label = "Show solution">
+```{r results = 'hold', fold = 'so'}
+# Binomial approximation
+100 * 0.01 * .99^99
+dbinom(1, 100, 0.01)
+```
+
+```{r results = 'hold', fold = 'so'}
+# Exact method
+100 * 10/1000 * prod((990:892)/(999:901))
+# this situation is is modeled by the Hypergeometric distribution
+# R has a function for that distribution as well
+dhyper(1, 10, 990, 100)
+```
+</div>
+
+</div>
+
+<br>
+<div class = "example">
+**9.**
+A set of six power measurements was made. The mean $\dot{𝑄}$̇ was 22450 W. 
+The standard deviation from the six measurements was 846 W. 
+Estimate the 95% confidence interval about the mean.
+
+&nbsp;
+  a) $22450 \pm 691$ W &nbsp;
+  b) $22450 \pm 888$ W &nbsp;
+  c) $22450 \pm 1036$ W &nbsp;
+  d) $22450 \pm 1210$ W &nbsp;
+
+
+<div class = "explain" label = "Show solution">
+
+**Note:** The FE exam has a t-distribution table too. It is a bit different.
+It is designed for computing critical values primarily.  So you can look up
+the degrees of freedom and desired tail probability to get the value of $t_*$.
+[Here's the table](FE-reference.pdf#page=49)
+
+```{r}
+# correct solution with t distribution
+SE <- 846 / sqrt(6)
+t.star <- qt(0.975, df = 5); t.star
+SE * t.star
+
+# if you incorrectly use the normal distribution (this explain choice a)
+SE * 1.96
+SE * 2
+```
+
+</div>
+</div>
+
+<br>
+<div class = "example">
+**10.**
+An auto manufacturer has three plants (A, B, and C). Four out of 500 cars from
+Plant A must be recalled, 10 out of 800 from Plant B and 10 out of 1000 from
+Plant C. Now a customer purchases a car from a dealer who gets 30% of his stock
+from Plant A, 40% from Plant B, and 30% from Plant C, and the car is recalled.
+What is the probability it was manufactured in Plant A?
+
+&nbsp;
+  a) 0.0008 &nbsp;
+  b) 0.010 &nbsp;
+  c) 0.0125 &nbsp;
+  d) 0.231 &nbsp;
+  
+<div class = "explain" label = "Show solution">
+```{r}
+0.3 * 4/500 / (
+  0.3 * 4/500 + 
+  0.4 * 10/800 +
+  0.3 * 10/1000
+)
+```
+</div>
+
+</div>
+
+<br>
+<div class = "example">
+**11.**
+Linear rgression is ued to plot a straight line through the following
+data points.
+
+```{r echo = FALSE}
+DDD <-
+  tibble(
+  x=c(1, 2, 3, 5),
+  y = c(6, 7, 11, 13)
+) 
+DDD %>% pander()
+```
+
+What is most nearly the slope of the regression line?
+
+<br>
+
+**Notes**
+
+* I hope you don't get a problem like this one. But given enough time, you could compute the answer.
+
+  * What fact about the regression line could you use?
+  * Do you know how to do all the computations involved? (There is one 
+  part of this we never did by hand, but on such a small data set it is
+  possible, although tedious.)
+  * Can you estimate any of the components of this calculation well
+  enough to eliminate any of the options.
+  
+* Make a (hand-drawn) sketch. How many answers can you rule out just from
+your sketch?
+
+* For the actual FE test, you get a [reference book](FE-reference.pdf#page36).
+
+  * Take a look at it. How much do you recognize?
+  
+  * Notice that all the "nasty formulas" for the standard errors that R computes 
+  for you are there.  Those are really tedious to use by hand.
+  
+  * The formulas presented don't really promote good statistical thinking. 
+  Several of them are chosen to reduce the amount of button pushing on a calculator
+  and take advantage of some algebraic identities. Compare the formula for 
+  the correlation coefficient given in these materials vs the one we saw in class.
+  Which one is easier to remember? Which one tells you more about what the 
+  correlation coefficient is doing?
+  
+      * Note: There is a really nice connection between $R$ and the angle between two
+  vectors; so there is some really nice linear algebra involved.  Take Stat 344
+  or Math 355 if you want to know more about this.
+  
+
+<div class = "explain" label = "Show solution">
+```{r echo = FALSE}
+lm( y ~ x, data = DDD) %>% broom::tidy() %>% pander()
+```
+</div>

@@ -61,11 +61,16 @@ at Calvin University.
     [[HTML](worksheets/CI-diffmean.html)]
   
   * Propagation of Uncertainty [[HTML](worksheets/Propagation-of-Uncertainty.html)]
-        
     
   * Linear Models 
   
-    * Inro and Least Squares [[HTML](worksheets/Linear-Models-Intro.html)]
+    * Intro and Least Squares [[HTML](worksheets/Linear-Models-Intro.html)]
     * How good are the estimates (standard errors and diagnostics)
     [[HTML](worksheets/Linear-Models-Estimates.html)]
-    
+    * Linear models and transformations [[HTML](worksheets/Linear-Models-Transformations.html)
+    * Non-linear models [[HTML](worksheets/Linear-Models-NLS.html)]
+   
+  * Hypothesis Testing [[HTML](worksheets/Hypotheis-Testing.html)]
+  
+  * Review
+    * Fundamental of Engineering Review Problems [[HTML](worksheets/FE-Review-problems.html)]

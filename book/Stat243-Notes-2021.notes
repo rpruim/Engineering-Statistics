@@ -1,0 +1,42 @@
+\begingroup\bf
+3.4.1
+(p. 54): 
+\endgroup
+moved illustration to a figure -- 2010-12-06
+
+\begingroup\bf
+8.7.1
+(p. 185): 
+\endgroup
+ed: There is a standard ordering of quadrants in mathematics, so labeling isn't needed. We could use directions (upper right), but I don't want to add quadrant numbers to the figure. Also in next example. --- 2010-11-8
+
+\begingroup\bf
+8.7.2
+(p. 192): 
+\endgroup
+in text reference for quote from Rex? --2010-11-27
+
+\begingroup\bf
+9.5.1
+(p. 210): 
+\endgroup
+Check the examples here. Seems to be some mixing of two examples through each other.
+
+\begingroup\bf
+9.5.2
+(p. 214): 
+\endgroup
+Check on this -- base plot? lm or t test?
+
+\begingroup\bf
+9.5.3
+(p. 216): 
+\endgroup
+lm or t test?
+
+\begingroup\bf
+9.5.4
+(p. 222): 
+\endgroup
+ A test of $\beta _1=0$ in a regression model is often used for \emph {model selection} -- if we can not reject the null hypothesis of no relationship between the predictor and the response, then the predictor is not really a useful predictor at all. We might want to use (or \emph {select}) a model without that predictor, instead.
+

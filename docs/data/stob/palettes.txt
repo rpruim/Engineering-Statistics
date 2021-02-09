@@ -1,0 +1,26 @@
+#
+# simulated data inspired by situation at local Grand Rapids company
+# that recycles palettes.  On 5 consecutive days, the number of palettes
+# repaired by each of four workers was recorded.
+# 
+palettes	employee	day
+123	A	day1
+127	A	day2
+126	A	day3
+125	A	day4
+110	A	day5
+118	B	day1
+125	B	day2
+128	B	day3
+125	B	day4
+114	B	day5
+116	C	day1
+119	C	day2
+123	C	day3
+119	C	day4
+109	C	day5
+113	D	day1
+116	D	day2
+119	D	day3
+115	D	day4
+107	D	day5

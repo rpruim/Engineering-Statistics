@@ -1,0 +1,378 @@
+\documentclass[10pt]{article}
+\usepackage{probstat}
+\usepackage[answerdelayed,exercisedelayed,lastexercise]{problems}
+\usepackage[margin = 0.8in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+
+
+\begin{document}
+\pagestyle{fancy}
+\chead{\Large \sf Stat 241 Review Problems}
+
+<<setup, include = FALSE>>=
+library(mosaic)
+library(mosaicCalc)
+library(ggformula)
+library(fastR2)
+library(patchwork)
+theme_set(theme_bw())
+trellis.par.set(theme = col.mosaic())
+knitr::opts_chunk$set(
+  fig.width = 5,
+  fig.height = 3,
+  out.width = ".47\\textwidth",
+  size = "small"
+)
+@
+
+
+\begin{problem}
+Even when things are running smoothly, 5\% of the parts 
+produced by a certain manufacturing process are defective.
+\begin{enumerate}
+\item
+If you select 10 parts at random, what is the probability
+that none of them are defective?
+\end{enumerate}
+Suppose you have a quality control procedure for testing parts 
+to see if they are defective, 
+but that the test procedure sometimes makes mistakes:
+\begin{quote}
+\begin{itemize}
+\item
+If a part is good, it will fail the quality control test 10\% of the time.
+\item
+20\% of the defective parts go undetected by the test.
+\end{itemize}
+\end{quote}
+
+\begin{enumerate}
+\refstepcounter{enumi}
+\item
+What percentage of the parts will fail the quality control test?
+\item
+If a part passes the quality control test, what is the probability
+that the part is defective?
+\item
+	The parts that fail inspection are sold as ``seconds''.
+	If you purchase a ``second'', what is the probability that it is 
+	defective?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+\item
+$\Prob(\mbox{none defective}) = \Prob(\mbox{all are good}) = 
+0.95^{10} = 0.599 = 59.9\%$
+\item
+Even though only $5$\% are defective, nearly $14$\% fail the quality control:
+\begin{align*}
+\Prob(\mbox{fail test}) 
+&= \Prob(\mbox{good \tand fail}) + \Prob(\mbox{bad and fail}) 
+\\
+& = \Prob(\mbox{good}) \Prob(\mbox{fail}\mid \mbox{good}) 
+	+ \Prob(\mbox{bad}) \Prob(\mbox{fail}\mid \mbox{bad}) 
+	\\
+&= 0.95 (0.10) + 0.05 (.80) = 0.095 + 0.04 = 0.135 = 13.5\%
+\end{align*}
+\item
+If a part passes QC, the probability that it is defective
+drops from 5\% to just over 1\%:  
+\begin{align*}
+\Prob(\mbox{bad} \mid \mbox{pass}) 
+&= \frac{ \Prob(\mbox{bad \tand pass})}{\Prob(\mbox{pass})}
+\\
+& = 
+\frac{ 0.05 (0.20) }{ 0.865 }
+=
+0.01156
+\end{align*}
+The cost to get this improvement 
+in quality is the cost of the QC test plus the cost of discarding $10$\% of 
+good parts tested in the QC process.  
+\item
+	\[
+	\Prob( \mbox{bad} \mid \mbox{fail} ) = 
+	\Prob( \mbox{bad} \tand  \mbox{fail} ) = 
+	\Prob( \mbox{fail} )  
+	= 0.04 / (0.04 + 0.095)
+	= \Sexpr{0.04 / (0.04 + 0.095)}
+	\]
+<<>>=
+0.04 / (0.04 + 0.095)
+@
+\end{enumerate}
+\end{solution}
+
+\begin{problem}
+\textbf{Numbers in a hat.}
+In a hat are slips of paper with the number 1 -- 100 on them.
+\begin{enumerate}
+\item
+If you reach in and grab one slip of paper, what is the probability that the 
+number will be greater than 80?
+\item
+If you reach in and grab one slip of paper, what is the probability that 
+it is either greater than 80 or an odd number?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+\item By the equally likely rule:  
+$\frac{20}{100}$ since there are 20 such numbers out of 100 in the hat.
+\item
+Let  $A$ be the  event that the number is odd, and 
+let $B$ be the event that the number if big (bigger than 80).
+Then $P(B \tor A) = P(A) + P(B) - P(A \tand B) = 0.5 + 0.2 - 0.10 = 0.60$.
+\end{enumerate}
+\end{solution}
+
+\begin{problem}
+A manufacturing process produces parts that might have one of two faults.  Let's call them
+type 1 and type 2.  1\% of parts have a type 1 fault, and 2\% of faults have a type 2 fault.
+\begin{enumerate}
+\item
+If having the two types of faults are \textbf{independent} events, 
+what is the probability that a part has a fault (of either type)?
+\item
+If having the two types of faults are \textbf{mutually exclusive events}, 
+what is the probability that a part has a fault (of either type)?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+\item
+$P(B \tor A) = P(A) + P(B) - P(A \tand B) = 0.01 + 0.02 - (0.01)(0.02) = 
+\Sexpr{0.01 + 0.02 - (0.01)*(0.02)}$.
+\item
+$P(B \tor A) = P(A) + P(B) - P(A \tand B) = 0.01 + 0.02 - 0 = 0.03$
+\end{enumerate}
+\end{solution}
+
+\begin{problem}
+\textbf{Lucky Number.}
+The Lucky Number games works as follows.  You pick a lucky number (1 -- 6) and then roll three dice.
+If none of the dice match your lucky number, you get nothing.
+If one of the dice match your lucky number, you get \$3.
+If two of the dice match your lucky number, you get \$10.
+If all three of the dice match your lucky number, you get \$50.
+
+\begin{enumerate}
+\item
+Let $X$ be your winnings in one play of the game.  What is $\E(X)$?
+\item
+What does $\E(X)$ tell you about this game?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+p <- 1/6; q <- 1-p
+vals <- c(0, 3, 10, 50)
+probs <- setNames(c(q^3, 3 * p * q^2, 3 * p^2 * q, p^3), vals)
+probs
+# this should be 1
+sum(probs)
+# E(X)
+sum(vals * probs)
+@
+The value of the game is just under \$2.  If the person running the game
+charges \$2 to play, they will in the long run make just over 3 cents per play.
+\end{solution}
+
+\begin{problem}
+The {\bf pdf} for a continuous random variable $X$ is
+\medskip
+\begin{multicols}{2}
+$
+\displaystyle
+f(x) = \begin{cases}
+  4(x - x^3) & \mbox{when } 0\le x \le 1 \\
+0 & \mbox{otherwise}
+\end{cases}
+$
+\begin{enumerate}
+\item
+Determine $\Prob(X \le \frac{1}{2})$.
+\item
+Determine the mean and variance of $X$.
+\end{enumerate}
+\break
+<<echo = FALSE, out.width = "0.4\\textwidth">>=
+plotFun ( 4 * ( x - x^3) * (0 <= x & x <= 1) ~ x, x.lim = c(-0.2,1.2),
+          discontinuity = Inf, ylab = "f(x)", xlab = "x", main = "a pdf")
+@
+\end{multicols}
+
+\end{problem}
+
+\begin{solution}
+<<tidy = FALSE>>=
+  f <- makeFun( 4*(x-x^3) ~ x )
+  F <- antiD( f(x) ~ x )
+ xF <- antiD( x * f(x) ~ x )
+xxF <- antiD( x^2 * f(x) ~ x )
+F(1) - F(0)                   # should be 1
+m <- xF(1) - xF(0); m         # mean
+xxF(1) - xxF(0) - m^2         # variance
+@
+\end{solution}
+	
+
+\begin{problem}
+The \textbf{kernel} of a continuous distribution is given by $k(x) = 4-x^2$
+on the interval $[-2,2]$.  
+\begin{enumerate}
+	\item
+		Determine the pdf of the distribution.
+	\item
+		Compute the mean and variance of the distribution.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<tidy = FALSE>>=
+F <- antiD( 4 - x^2 ~ x )
+F(2) - F(-2) 
+@
+We can divide by this value to get the pdf.
+% So the pdf is 
+% 	\[
+% 	f(x) = \frac{4 - x^2}{\Sexpr{F(2) - F(-2)}}
+% 	\]
+<<>>=
+f <- makeFun( (4 - x^2) / C ~ x, C = F(2) - F(-2) )
+integrate(f, -2, 2)
+F <- antiD( f(x) ~ x)
+F(2) - F(-2)
+xF <- antiD( x*f(x) ~ x )
+m <- xF(2) - xF(-2)           # mean
+xxF <- antiD( x*x*f(x) ~ x )  
+xxF(2) - xxF(-2) - m^2        # variance
+@
+\end{solution}
+
+
+\begin{problem}
+The \textbf{cdf} for a random variable $X$ is given by $F(x) = x^2$ on $[0, 1]$.
+\begin{enumerate}
+\item
+What is $\Prob(X \le \frac12)$?
+\item
+What is the median of $X$?
+\item
+What are the expected value and variance of $X$?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+\item
+$\Prob(X \le \frac 1/2) = F(1/2) = (1/2)^2 = 1/4$.
+\item
+The median $m$ satisfies $1/2 = \Prob(X \le m) = F(m) = m^2$.
+So $m = \sqrt{1/2} \approx \Sexpr{round(sqrt(1/2), 4)}$.
+\item
+$f(x) = 2x$ on $[0, 1]$.  We can easily integrate by hand, but here is a computer 
+solution.
+<<>>=
+f <- function(x, k) x^k * 2 * x
+# this should be 1
+integrate(f, 0, 1, k = 0)
+# this is the expected value
+integrate(f, 0, 1, k = 1)
+# this is E(X^2)
+integrate(f, 0, 1, k = 2)
+# variance: Var(X) = E(X^2) - E(X)^2
+value(integrate(f, 0, 1, k = 2)) - value(integrate(f, 0, 1, k = 1))^2
+@
+\end{enumerate}
+\end{solution}
+
+\begin{problem}
+Below is the graph of the \term{cdf} of a random variable $Y$.
+
+<<echo = FALSE, out.width = ".25\\textwidth">>=
+plotDist("beta", shape1 = 2, shape2 = 4, kind = "cdf", type = c("l", "g"))
+@
+\begin{enumerate}
+\item
+Use the graph to estimate $\Prob(Y \le 1/2)$
+\item
+Use the graph to estimate the median of $Y$.
+\item
+Sketch the pdf for $Y$.
+\item
+Which is larger, the median of $Y$ or $\E(Y)$?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<echo = FALSE>>=
+setNames(pbeta(0.5, 2, 4) %>% round(1), "P(Y <= 1/2)")
+setNames(qbeta(0.5, 2, 4) %>% round(1), "median")
+plotDist("beta", shape1 = 2, shape2 = 4, type = c("l", "g"))
+f <- function(x, k) x^k * dbeta(x, shape1 = 2, shape2 = 4)
+E.Y <- integrate(f, 0, 1, k = 1) %>% value()
+setNames(E.Y, "mean")
+@
+You can't work out the mean so precisely from your sketch of the pdf, but you
+can know the mean is larger because the distribution is skewed right.
+\end{solution}
+
+\begin{problem}
+The \dataframe{mtcars} data frame has some information from Motor Trend about cars.
+
+<<>>=
+head(mtcars)
+@
+
+Write down R commands to do the following:
+
+\begin{enumerate}
+\item
+Compute the mean weight (\variable{wt}) of these cars.
+\item
+Compute the mean weight of these cars, 
+separately for 4-cylinder, 6-cylinder, and 8-cylinder vehicles.
+(How many different ways can you do this?)
+\item
+Create a scatter plot of fuel efficiency (\variable{mpg}) vs. weight.
+\item
+Create side by side scatter plots 
+of fuel efficiency (\variable{mpg}) vs. weight 
+separately for 4-cylinder, 6-cylinder, and 8-cylinder vehicles.
+\item
+Make up additional numerical and graphical summaries you could make from 
+these data and write down the R commands you would use to create them.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<fig.width = 8, fig.height = 3, out.width = "0.95\\textwidth", fig.show = "hold">>=
+mean(~wt, data = mtcars)
+mean(~wt | cyl, data = mtcars)
+mean(wt ~ cyl, data = mtcars)
+mean(~ wt, groups = cyl, data = mtcars)
+gf_point(mpg ~ wt, data = mtcars) |
+gf_point(mpg ~ wt | cyl, data = mtcars)
+@
+<<fig.width = 8, fig.height = 3, out.width = "0.95\\textwidth", fig.show = "hold">>=
+gf_point(mpg ~ wt | factor(cyl), data = mtcars) |
+gf_point(mpg ~ wt, color = ~ factor(cyl), data = mtcars)
+@
+\end{solution}
+
+\shipoutProblems
+
+\newpage
+\section*{Solutions}
+\shipoutSolutions
+
+
+
+\end{document}

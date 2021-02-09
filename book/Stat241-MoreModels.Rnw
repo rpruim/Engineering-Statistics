@@ -1,0 +1,355 @@
+\Sexpr{set_parent('Math241-Notes.Rnw')}
+\chapter{More Models}
+
+\section{Estimating Uncertainty}
+
+Both the linear and nonlinear models provide us with estimated uncertainty
+(standard errors).  These should be interpreted in a context that is assuming
+the model being fit is reasonable.  It doesn't make sense to put much stock in
+the uncertainty of a linear fit when the relationship is clearly non-linear,
+for example.  First we should use transformation or nonlinear models to obtain
+a better fit.
+
+But once we have a reasonable fit, we can produce a variety of estimated
+uncertainties (standard errors) and confidence intervals.
+
+\begin{example}
+	\label{example:estimate-ambient}%
+	\question
+	Returning to the cooling water example, give an estimate for the ambient temperature.
+
+	\answer
+	\R\ will help us with the computations
+<<>>=
+coef(summary(cooling.model2))
+@
+	So we could report an estimate $\pm$ uncertainty as 
+	\[
+	\Sexpr{round(coef(cooling.model2)[1],1)} \pm
+	\Sexpr{round(coef(summary(cooling.model2))[1,2],1)} 
+	\mbox{ degrees C}
+	\]
+	Alternatively, we could construct a 95\% confidence interval:
+<<>>=
+confint(cooling.model2, level = 0.95)
+@
+
+We could use the same procedure to estimate the other parameters in the model as well.
+\end{example}
+
+\begin{problem}
+	\begin{enumerate}
+		\item
+			Use the output from Example~\ref{example:estimate-ambient} to give an estimate for the heat 
+			exchange constant $k$ in estimate $\pm$ uncertainty form.
+		\item 
+			Use the output from Example~\ref{example:estimate-ambient} to compute
+			a 95\% confidence interval for the heat exchange constant $k$.
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<tidy = FALSE>>=
+coef(summary(cooling.model2))
+k <- coef(summary(cooling.model2))["k","Estimate"]; k
+SE <- coef(summary(cooling.model2))["k","Std. Error"]; SE
+t <- coef(summary(cooling.model2))["k","t value"];t 
+t.star <- qt(.975, df= 222-3); t  # 222 observations - 3 parameters
+t.star * SE
+2 * pt ( t, df = 222-3)             # degrees of freedom check (should match p-value above)
+@
+	\begin{enumerate}
+		\item
+			$-0.0210 \pm 0.0003 = (-0.0213, -0.207)$
+		\item
+			$-0.0210 \pm \Sexpr{round(t.star * SE,5)} = (-0.0217, -0.0203)$  
+	\end{enumerate}
+\end{solution}
+
+\iffalse
+\begin{example}
+	Sometimes the quantity we are most interested in is not one of the parameters of the model but a combination
+	of the parameters.  
+\end{example}
+
+The \function{deltaMethod()} function in \pkg{car} package can be used to make standard error calculations
+via the Delta Method.
+\fi
+
+
+\section{Higher Order Terms and Interaction}
+
+see the handout from class (also available at
+\url{http://dl.dropboxusercontent.com/u/5098197/Math135/In-Class/poly2d.pdf}).
+But remember that transformations can be used to introduce monotonic relationships
+that are not linear, so the primary reason for a quadratic terms is a non-monotonic
+relationship.
+
+\begin{problem}
+	Choose any three scenarios (but not the bicycle one we did in class)
+	from the polynomial models in 2 variables handout 
+	(\url{http://dl.dropboxusercontent.com/u/5098197/Math135/In-Class/poly2d.pdf})
+	and answer the following questions:
+	\begin{enumerate}
+		\item
+			What is the response variable?
+		\item
+			What are the candidate explanatory varaibles?
+		\item
+			Are any of these variables categorical?
+		\item
+			Which terms would you include in a linear model? Explain your choice.
+	\end{enumerate}
+\end{problem}
+
+
+
+\section{Categorical Predictors with More than Two Levels}
+Categorical variables with two possible values (usually called \term{levels}) can be included
+as predictors in a linear model using a coding scheme where one level is coded as 0 and the other as 1.
+A similar thing could be done for categorical variables with more than two levels -- coding the levels
+as 0, 1, 2, 3, etc. -- but that is not the usual coding scheme.  The problem with that coding
+scheme is that model forces some things we don't usually want to force.
+
+Consider the model
+\[
+Y = \beta_0 + \beta_1 x + \varepsilon
+\]
+where $x \in \set{0,1,2,3}$ (coding a categorical variable with 4 levels).  This implies that
+means for the 4 groups are 
+\begin{center}
+\begin{tabular}{cl}
+	\hline
+	Group & Group Mean \\ \hline
+	0 & $\beta_0$ \\
+	1 & $\beta_0 + \beta_1$ \\
+	2 & $\beta_0 + 2 \beta_1$ \\
+	3 & $\beta_0 + 3 \beta_1$ \\
+	\hline
+\end{tabular}
+\end{center}
+This implies that
+\begin{enumerate}
+	\item Each group is normally distributed with a common standard deviation but potentially different
+		means.
+	\item The means are ordered in the same order as the levels. 
+	\item The increase in mean from one group to the next is the same amount as we move 
+		from group 0 to group 1 as it is moving from group 1 to group 2 or group 3 to group 4.
+\end{enumerate}
+Items 2 and 3 are overly restrictive, and often unreasonable assumptions.  The
+usual coding scheme avoids these assumptions.  (Item 1 can also be problematic,
+and if a transformation doesn't fix the problem, then there are other methods
+that avoid this assumption.)
+
+Let's take a look at an example.  
+
+\begin{example}
+	The \dataframe{bugs} data set contains data from an experiment conducted to see
+	if a certain kind of insect is preferentially attracted to certain colors.  Sticky cards 
+	of four different colors were left in an area where the insects were.  Later researchers 
+	returned to see how many insects were stuck to each card.  Here is the output \R\ 
+	generates for a linear model with \variable{Color} as the predictor.
+
+<<>>=
+library(fastR2)
+bugs.model <- lm( NumTrap ~ Color, data = bugs )
+summary(bugs.model)
+@
+<<>>=
+xyplot( NumTrap ~ Color, data = bugs )
+xyplot( resid(bugs.model) ~ fitted(bugs.model))
+@
+<<>>=
+xyplot( resid(bugs.model) ~ Color, data = bugs)
+qqmath( ~resid(bugs.model))
+@
+
+The first thing we notice is that the model has \emph{four} parameters, and intercept and three
+others.  The \function{model.matrix()} function will show us what coding scheme is being used
+by the linear model.  The first four columns in the output below are the model matrix,
+the last two columns are the original data.
+<<>>=
+cbind( model.matrix(bugs.model), bugs)
+@
+From this we see that the model as an intercept (the column of 1's) plus three indicator variables.
+An \term{indicator variable} has value 1 to indicate being in some group and 0 to indicate being 
+out of the group.  So this model is using indicator variables for three of the four colors.
+
+\[
+Y = \beta_0 
++ \beta_1 \boolval{\variable{Color} = \texttt{G}}
++ \beta_2 \boolval{\variable{Color} = \texttt{W}}
++ \beta_3 \boolval{\variable{Color} = \texttt{Y}}
+\]
+
+This implies that the group means are the following.
+\begin{center}
+\begin{tabular}{cl}
+	\hline
+	Group & Group Mean \\ \hline
+	0 & $\beta_0$ \\
+	1 & $\beta_0 + \beta_1$ \\
+	2 & $\beta_0 + \beta_2$ \\
+	3 & $\beta_0 + \beta_3$ \\
+	\hline
+\end{tabular}
+\end{center}
+This gives us enough flexibility to fit any pattern among the means.  It also tells us what 
+hypotheses are being tested in the summary output from the linear model:
+\begin{itemize}
+	\item
+		$H_0$: The mean for color B is 0  (this is probably not interesting)
+	\item
+		$H_0$: Colors B and G have the same mean (we can reject this)
+	\item
+		$H_0$: Colors B and W have the same mean (we cannot reject this)
+	\item
+		$H_0$: Colors B and Y have the same mean (we can reject this)
+\end{itemize}
+These are not all of the possible pairwise comparisons, but they are especially interesting 
+if the first group is a control group to which we want to compare each of the other groups.
+
+There is a subtle issue when making multiple comparisons, however.  To do this correctly, 
+one should make an adjustment to take into account the number and kind of hypotheses being 
+tested.  (The same is true of multiple confidence intervals.)  For more information on this,
+search for terms like ``Dunnet's contrasts'', ``Tukey's Honest Significant Differences", ``Family-wise
+error rate", or ``Multiple Comparisons".
+\end{example}
+
+\section{F tests and $R^2$}
+\label{sec:Rsquared}
+
+\begin{center}
+	\emph{Note: the methods in this section assume a linear model with an intercept term.}
+\end{center}
+
+None of the individual hypothesis tests in the previous example answer the simple question
+\emph{Are all the group means the same?}.  
+This would be equivalent to $\beta_1 = \beta_2 = \beta_3 = 0$.
+There is a test for this, however.  This test fits into a general scheme of
+tests that have a similar structure and are based on a new family of
+distributions called the F-distributions.  The test statistic comes from
+partictioning the variability in the response variable into two parts: 
+the part explained by the model, and the part not explained by the model.  
+\[
+SST = SSM + SSE
+\]
+\begin{itemize}
+	\item
+		$SSE$ is the sum of squares of the residuals:
+		\[ SSE = \sum_{i = 1}^{n} (y_i - \hat y_i)^2 \]
+	\item 
+		$MSE$ is $SSE$ divided by the appropriate degrees of freedom ($n$ minus the number
+		of parameters in the model.)
+	\item
+		$SSM$ is the portion of the variability explained by the model.  That is,
+		$SSM$ measures how different the fitted values ($\hat y$) are from the mean value ($\mean y$):
+		\[
+		SSM = \sum_{i = 1}^n (\hat y_i - \mean y)^2
+		\]
+	\item
+		$MSM = SSM / DFM$, where $DFM$ is the number of parameters in the model.
+	\item
+		$SST = SSM + SSE$ is another familiar sum:
+		\[
+		SST = \sum_{i = 1}^n (y_i - \mean y)^2
+		\]
+	\item
+		$MST = SST/(n-1)$ is the variance of the response variable.
+\end{itemize}
+The fraction of the variability explained by
+the model is 
+\[
+R^2 = \frac{SSM}{SST} = 1 - \frac{SSE}{SST}
+\]
+and the test statistic for the null hypothesis that all the coefficients but the intercept are 0 is
+\[
+F = \frac{ MSM }{ MSE } = \frac{ SSM/DFM }{ SSE/DFE }
+\]
+When $H_0$ is true, then the numerator and denominator should be equally good (i.e., equally bad) 
+at capturing the variability in the response variable and $F$ will be approximately 1.  
+We reject the null hypothesis when $F$ is unusually large, because in this case the 
+model is explaining more than its fair share of the variability.
+
+The p-value is computed by comparing this test statistic to an $F$-distribution with $DFM$ numerator
+degrees of freedom and $DFE$ denominator degrees of freedom.  $R^2$, $F$ and the p-value all appear
+in the summary output for a linear model.  
+
+
+\begin{example}
+<<>>=
+summary( bugs.model )
+@
+As we should have expected from the previous example, we can reject the null hypothesis that 
+all four colors attract the same number of bugs on average.
+
+
+If we had to we could do all the calculations ``by hand'':
+<<tidy = FALSE>>=
+SSE <- sum( resid(bugs.model)^2 ); SSE
+MSE <- SSE / (24 - 4); MSE
+y.bar <- mean( ~ NumTrap, data = bugs); y.bar
+SSM <- sum( (fitted(bugs.model) - y.bar)^2 ); SSM
+MSM <- SSM / 3 ; MSM
+SST <- sum( (bugs$NumTrap - y.bar)^2); SST
+MST <- SST / (4-1); MST
+SST - SSE - SSM    # should be 0
+F <- MSM / MSE; F
+1 - pf( F, 3, 20 )
+@
+\end{example}
+
+\begin{problem}
+	At \url{https://dl.dropboxusercontent.com/u/5098197/ISM/End-Collection.pdf}
+	there is a set of review problems for a course that uses a different text book 
+	and covers some things our course doesn't cover.  Nevertheless, the intersection
+	between the courses is pretty substantial, and some of the problems are quite 
+	suitable for our course.  
+	
+	Do the following problems:
+	\begin{enumerate}
+		\item
+			Problem 1 (crime; lots of parts)
+		\item 
+			Problem 2a--c (short answer)
+		\item
+			Problem 3 (boxplots)
+		\item
+			Problem 4 (Alzheimer's survival)
+		\item
+			Problem 8 (fire damage)
+		\item
+			Problem 9 (baseball)
+		\item
+			Problem 13abfg (multiple choice)
+		\item
+			Problem 15 (model prediction; step by step)
+		\item
+			Problem 21 (confidence intervals)
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+	Solutions are available here: 
+
+	\url{https://dl.dropboxusercontent.com/u/5098197/ISM/End-Collection-with-Answers.pdf}
+
+\end{solution}
+
+\begin{problem}
+	\begin{enumerate}
+		\item
+			In statistics, what is the difference between a parameter and a statistic?  
+		\item
+			How are statistics and parameters (usually) denoted differently in statistical notation?
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+	A statistic is a number describing (a feature of) a sample.  
+	A parameter is a number describing (a feature of) a population.
+	Statistics are usually denoted using roman letters (e.g., $\mean x$, $s$);
+	Parameters are usually denoted using Greek letters (e.g., $\mu$, $\sigma$).
+	When a statistic is intended to estimate a parameter, it is often denoted by 
+	placing a ``hat'' on top of the symbol for the parameter (e.g., $\hat\beta_1$).
+\end{solution}

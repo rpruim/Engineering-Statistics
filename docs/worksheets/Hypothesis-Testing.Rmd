@@ -1,0 +1,459 @@
+---
+title: "Testing Statistical Hypotheses"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ['../styles/ds303-notes.css', '../styles/worksheets.css']
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\T{{\sf T}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+library(patchwork)
+library(reactable)
+theme_set(theme_bw(base_size = 8))
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+
+Let's start with an example.
+
+<div class = "example">
+**Example 1**	Carol’s Cereal Company has been accused of under filling (on average)
+its 20 oz boxes of toasted oats. The evidence: A sample of 100 boxes produced
+an average weight of 19.9 oz with a standard deviation of 0.5 oz.  
+
+How strong is the evidence?  
+
+* Assuming the true average really is 20 oz, 
+what is the probability that a random sample of 100 boxes will 
+average under 20 oz?
+
+* Assuming the true average really is 20 oz, 
+what is the probability that a random sample of 100 boxes will 
+average under 19.9 oz?
+
+* What should we conclude?
+
+<div class = "explain" label = "Show">
+
+\begin{align*}
+\overline{X} & \approx \Norm(20, \sigma / \sqrt{100}) \\
+\frac{\overline{X} - 20}{\sigma / \sqrt{100}} & \approx \Norm(0, 1) \\
+\frac{\overline{X} - 20}{0.5 / \sqrt{100}} & \approx \T(99) \\
+\end{align*}
+
+```{r}
+t <- -0.1 / (0.5/sqrt(100))
+pt( t, df = 99)
+```
+
+So...
+
+* If, on average, the boxes were being filled properly ($\mu = 20$), then
+there is only a 2.4% chance of getting a sample mean as small or smaller than 19.9 oz
+just by chance.
+
+* That could happen just by chance, but it isn't very likely. This provides evidence
+against the hypothesis that the average weight in all boxes is 20 oz.
+
+* We could also compute a confidence interval for the amount of underfilling.
+
+```{r, indent = "    "}
+estimate = 0.1
+SE <- 0.5 / sqrt(100); SE
+tstar <- qt(0.975, df = 99); tstar
+estimate + c(-1,1) * tstar * SE
+```
+
+    * O is not in the interval -- so we have evidence that there is some underfilling.
+    
+    * The interval is just a bit narrower than (0, 0.2), so the amount of underfilling
+    seems to be between none and 0.2 oz.  We have to decide whether that amount of underfilling
+    matters.
+
+</div>
+<br>
+</div>
+
+## Hypothesis Testing
+
+The example above illustrates the reasoning that goes into something called a **hypothesis test**.
+
+* **hypothesis** -- a statement that could be true or false
+
+* **statistical hypothesis** -- a hypothesis about a parameter or paramters ($\mu$, $\beta_1$, $p$, etc.)
+
+    * Examples: $\mu > 25$; $\beta_1 = 1$; $p = 1/6$; $\mu_1 - \mu_2 = 0$  
+    <br>
+    
+
+* **statistical hypothesis test** -- a formal way to assess whether a data set
+is *consistent with* a particular statistical hypothesis or 
+provides *evidence against* a particular statistical hypothesis.
+
+### Four steps
+
+1. State the null and alternative hypotheses.
+
+    * We are looking to see if there is *evidence against the null hypothesis*.
+    
+<br>
+
+2. Compute a test statistic.
+
+    * We need to summarize the evidence in our data as a single number, called
+    the test statistic.
+    
+<br>
+
+3. Determine the p-value 
+
+    * p-value = the probability of observing data at least as unusual as the 
+    data we have, *assuming the null hypothesis is true*
+
+    * This will be computed using the sampling distribution of the test
+    statistic, *assuming the null hypothesis is true*.
+    
+<br>
+
+4. Draw a conclusion.
+
+    We have two possible conclusions:
+    
+    * **If the p-value is small**, that means our data would be unlikely if the null
+    hypothesis were true. This provides evidence *against the null hypothesis*.
+    
+    * **If the p-value is not small**, that means data like our data could happen
+    if the null hypothesis were true, so our data are *consistent with the null hypothesis*
+    hypothesis. That doesn't mean the null hypothesis is true, only that our 
+    data don't provide enough evidence to reject it.
+    
+#### How small is small?
+    
+* This depends somewhat on the situation and the consequences of making an error.
+        
+* The threshold below which we will reject the null hypothesis is called 
+  the **significance level** of a test.  It is usually denoted $\alpha$.
+        
+* The most common significance level is 0.05; but it is better to report
+  the p-value than to only report whether the p-value is above or below this 
+  standard.
+        
+-------------------------------------------------------------------------------------
+ p-value range  what it means
+--------------- ---------------------------------------------------------------------
+ above 0.1      Our data are consistent with the null hypothesis. The null hypothesis
+                may not be true, but our data don't contradict it.
+                 
+ 0.05 - 0.10    Borderline.  Some people call this "suggestive".  We might want to 
+                collect more data, but the current data aren't providing enough evidence
+                to reject the null hypothesis.
+                 
+ 0.01 - 0.05    Minimal evidence to reject the null hypothesis. We have evidence, but not
+                overwhelming evidence. Our data would be fairly unusual if the null
+                hypothesis were true.
+                 
+ 0.001 - 0.01   Stronger evidence. Our data would be quite unusual if the null hypothesis
+                were true.
+                 
+ smaller        As the p-value gets smaller, the evidence against the null hypothesis
+                becomes stronger.
+                 
+-------------------------------------------------------------------------------------
+<br>
+
+### Tests about a population mean ($\mu$)
+
+1. Hypotheses
+
+    * $H_0$: $\mu =$ _______ ($\mu = \mu_0$)
+    
+    * Three possible alternatives
+      
+        * $H_a$: $\mu \neq \mu_0$
+        * $H_a$: $\mu < \mu_0$
+        * $H_a$: $\mu > \mu_0$  
+        <br>
+        
+
+2. Test Statistic
+
+    * $\displaystyle t = \frac{\overline{x} - \mu_0}{s/\sqrt{n}}$
+    
+    * in words: $\displaystyle \frac{ \mbox{data value} - \mbox{hypothesized value}}{SE}$
+
+3. P-value
+
+    * Use `pt()` because $\displaystyle \frac{\overline{X} - \mu}{SE} \approx \T(\mbox{df})$
+    * df = $n - 1$, just like for confidence intervals  
+    <br>
+    
+4. Draw a conclusion.
+
+    * This step is the same for all tests, once you have the p-value.
+
+<br>
+
+<div class = "example">
+<div class = "explain" label = "Show 4 steps for Example 1">
+
+1. Hypotheses
+
+    * $H_0$: $\mu = 20$  
+    * $H_0$: $\mu < 20$
+
+2. Test Statistic
+
+    * $t = \frac{19.9 - 20}{0.5/\sqrt{100}} = `r -0.1 / 0.05`$
+    
+3. P-value
+
+    * `pt(t, df = 99)` = `r pt(t, df = 99)`
+    
+4. Draw a conclusion.
+
+    * There is only a 2.4% chance of seeing a sample mean this small if 
+    the population mean is actually 20 oz.  This gives us evidence against
+    that hypothesis (in favor of underfilling).
+</div>
+</div>
+
+### One and two-sided alternatives
+
+Whether we use a 1- or 2-sided alternative depends on what sort of evidence
+we are looking for.  We won't accuse the cereal company of underfilling 
+the boxes if they have too much cereal in the box, so we have a 1-sided alternative.
+
+**Important:** 
+
+* Using a 1-sided test requires justification. When in doubt, do a two-sided test.
+
+* The choice of 1-sided vs 2-sided alternative may never depend on the data. 
+**If you need the data to decide which direction to use, you should be doing a
+2-sided test.**
+
+
+<div class = "example">
+**Example 2**
+Company A advertises that its gizmo parts have an average diameter of 3.00 cms.
+Company B purchases these parts from company A and depends on the parts meeting
+the advertised average diameter.  If the average diameter is bigger or smaller
+than 3.00 cms, it would create a problem.  So, Company B tests a random sample
+of 100 parts.  It is willing to accept Company A’s claim unless the sample
+provides strong evidence that the claim is false.
+
+The sample mean for the 100 parts in the sample is 3.04 cm 
+and the standard deviation is 0.15 cm.
+
+Should the parts be accepted?
+
+<div class = "explain" label = "Show solution">
+
+```{r}
+t <- (3.04 - 3.0) / (0.15 / sqrt(100)); t
+pt(t, df = 99)
+1 - pt(t, df = 99)
+2 * (1 - pt(t, df = 99))
+```
+
+Since $p < 0.01$, we have strong enough evidence to reject the parts.
+We would only expect a sample of parts to differ this much from the 
+specifications less than 1 time in 1000 if the parts were indeed being
+manufactured to the stated diamter.
+
+</div>
+</div>
+<br>
+
+### Tests and Linear Models
+
+We can also perform test about parameters in a model. For example,
+to test the null hypothesis that $\beta_1 = 0$ in a linear model, we can use
+
+$$
+t = \frac{ \mbox{data value} - \mbox{hypothesized value}}{SE} =
+\frac{\hat \beta_1 - 0}{SE}
+$$
+
+The summary output from `lm()` provices the values of $\hat \beta_1$ and $SE$, so we have 
+everything we need.
+
+<div class = "example">
+**Example 3**
+Is the elongation fractions (%) of an alumimum bar related to the volume fraction of oxide
+in the alloy prior to casting?  Test the null hypothesis that $\beta_1 = 0$.
+
+```{r}
+AluminumBars <-
+  Devore7::xmp12.12 %>%
+  rename(
+    oxide = x,
+    elongation = y
+  )
+AluminumBars %>% head(4) %>% pander()
+gf_point(elongation ~ oxide, data = AluminumBars)
+```
+
+<div class = "explain" label = "Show solution">
+
+```{r}
+model <- lm(elongation ~ oxide, data = AluminumBars)
+msummary(model)
+```
+
+```{r}
+t <- (-0.649 - 0) / 0.0584; t
+2 * pt(t, df = 18)
+```
+
+In this case, there is very strong evidence that $\beta_0 \neq 0$.
+
+**Notes**
+
+1. The $t$ statistic and p-value for this test also appear in the summary output.
+If we want to test a different null hypothesis (like $\beta_1 = 1$, then we need to 
+do the work ourselves using the estimate and standard error provided.
+
+2. This is sometimes called the **model utility test**, because if $\beta_1 = 0$, then
+our predictions don't depend on the explanatory variable at all, so our explanatory
+variable is not useful for predicting the response.
+
+3. This result is consistent with what we learn from a confidence interval for $\beta_1$:
+
+```{r indent = "    "}
+model %>% confint()
+```
+
+    The confidence interval is entirely below 0 (and well separated from 0).
+    
+    **The values inside a 95% confidence interval are exactly the ones that we would not reject in a two-sided hypothesis test if we use 0.05 has our significance level.**
+    
+  
+
+
+</div>
+</div>
+<br>
+
+
+
+
+
+
+
+## Some Practice
+
+**1.** Test for the alternative hypothesis  $\mu < 3.4$ using a sample of size 25 
+with sample mean is  $\overline{x} = 3.3$ and sample standard deviation is $s = 0.7$.
+Show all four steps.
+
+
+**2.**
+Was the average weight of all 1974 automobile models greater than 2900 pounds?
+Use the data in `mtcars` to test this. Does the data in mtcars provide strong
+evidence that the average weight for all 1974 models is greater than 2900
+pounds?
+
+**3.**
+The World Health Organization (WHO) has issued a preliminary guideline for lead
+concentration in drinking water.  It states that the average concentration
+should be at less than 10  $\mu$g/l  (micrograms/liter).  
+Company A produces drinking water.  It must test its water to determine whether it 
+meets the WHO preliminary guideline.
+
+Consider two ways of performing a test:
+
+A. $H_0: \mu = 10$, $H_a: \mu < 10$
+
+B. $H_0: \mu = 10$, $H_a: \mu > 10$
+
+a. What do we conclude if we reject the null hypothesis in A?
+b. What do we conclude if we reject the null hypothesis in B?
+b. What do we conclude if we fail to reject the null hypothesis in B?
+b. What do we conclude if we fail reject the null hypothesis in B?
+e. If you were a consumer, which test would you like performed? Why?
+f. If you worked for Company A, which test would you like to report? Why?
+
+**4.**
+The `warpbreaks` data set contains data on the number of warpbreaks per loom, 
+where a loom corresponds to a fixed length of yarn. 
+There are two types of wool (A and B) in this data set.
+Is there evidence that the two types of wool have a different number of 
+warpbreaks on average?
+
+```{r}
+df_stats(breaks ~ wool, data = warpbreaks) %>% pander()
+```
+
+Note: this is a new situation, but our general form still applies
+
+$$
+t = \frac{\mbox{data value} - \mbox{null hypothesis value}}{SE}
+$$
+
+a. What should you use for data value, null hypothesis value, and SE?
+
+b. Should you do a 1-sided test or a 2-sided test?
+
+c. What p-value do you get? What do you conclude?
+
+d. Check your work using 
+
+
+```{r, eval = FALSE, indent = "    "} 
+t.test(breaks ~ wool, data = warpbreaks)
+```  
+
+    Why won't the results from `t.test()` be exactly the same as what you did by hand?
+
+
+
+
+
+
+

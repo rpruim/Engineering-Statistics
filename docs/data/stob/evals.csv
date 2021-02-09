@@ -1,0 +1,190 @@
+facID,section,course,challenge,amount,effort,importance,classLevel,grade,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15,Q16,Q17,out,useful,class,GPA
+X,1,A,Higher,Higher,Much Higher,Average,Sophomore,B+,4,4,5,3,4,3,5,4,3,4,4,4,4,8.5,8.5,Sophomore,3.3
+X,1,A,Higher,Average,Higher,Average,Sophomore,A,4,3,4,3,4,4,5,5,4,4,4,4,4,2.5,2.5,Sophomore,4
+X,1,A,Higher,Higher,Higher,Average,First Year Student,B+,4,4,4,3,3,3,5,5,5,5,4,4,5,6.5,4.5,First Year Student,3.3
+X,1,A,Average,Average,Average,Lower,Sophomore,A-,3,3,3,2,4,4,5,4,5,5,5,3,4,8.5,6.5,Sophomore,3.7
+X,1,A,Average,Lower,Average,Much Lower,Junior,B-,3,2,3,1,2,2,3,3,2,2,3,3,2,0.5,0.5,Junior,2.7
+X,1,A,Higher,Much Higher,Higher,Lower,Junior,B+,4,5,4,2,5,5,5,5,5,5,5,5,5,2.5,2.5,Junior,3.3
+X,1,A,Much Higher,Much Higher,Much Higher,Higher,First Year Student,C-,5,5,5,4,3,4,4,4,4,3,4,4,4,4.5,4.5,First Year Student,1.7
+X,1,A,Higher,Higher,Higher,Average,Junior,B,4,4,4,3,4,4,5,5,5,5,3,4,4,2.5,2.5,Junior,3
+X,1,A,Lower,Average,Average,Average,Senior,B,2,3,3,3,3,4,4,4,4,5,4,4,4,4.5,4.5,Senior,3
+X,1,A,Much Higher,Average,Much Higher,Average,First Year Student,B+,5,3,5,3,2,1,2,3,2,2,2,1,2,8.5,4.5,First Year Student,3.3
+X,1,A,Higher,Much Higher,Higher,Higher,First Year Student,B-,4,5,4,4,4,4,4,5,4,4,5,4,5,8.5,8.5,First Year Student,2.7
+X,1,A,Much Higher,Higher,Higher,Much Lower,First Year Student,B+,5,4,4,1,3,3,4,4,3,4,2,2,3,0.5,0.5,First Year Student,3.3
+X,1,A,Average,Average,Average,Lower,Junior,B+,3,3,3,2,2,2,4,4,3,3,3,3,2,2.5,2.5,Junior,3.3
+X,1,A,Average,Average,Average,Average,BLANK,B+,3,3,3,3,3,3,5,5,4,4,4,4,4,4.5,2.5,NA,3.3
+X,1,A,Average,Average,Higher,Lower,Senior,A-,3,3,4,2,3,3,3,3,3,3,4,2,3,6.5,2.5,Senior,3.7
+X,1,A,Higher,Average,Higher,Lower,Senior,C+,4,3,4,2,2,2,3,2,2,2,2,2,3,2.5,0.5,Senior,2.3
+X,1,A,Much Higher,Higher,Much Higher,Higher,First Year Student,B-,5,4,5,4,3,3,4,4,2,2,3,3,3,4.5,6.5,First Year Student,2.7
+X,1,A,Higher,Much Higher,Higher,Average,First Year Student,C+,4,5,4,3,5,4,4,4,4,4,4,4,5,8.5,6.5,First Year Student,2.3
+X,1,A,Average,Average,Lower,Average,First Year Student,B,3,3,2,3,3,2,4,4,4,3,4,3,4,6.5,4.5,First Year Student,3
+X,1,A,Average,Average,Average,Average,Senior,B,3,3,3,3,3,2,3,4,4,3,3,2,3,0.5,0.5,Senior,3
+X,1,A,Higher,Average,Much Higher,Average,First Year Student,C+,4,3,5,3,3,3,5,3,3,3,3,2,3,6.5,4.5,First Year Student,2.3
+X,1,A,Higher,Much Higher,Average,Higher,First Year Student,A,4,5,3,4,5,4,5,4,3,3,3,4,5,4.5,4.5,First Year Student,4
+X,1,A,Higher,Much Higher,Much Higher,Higher,First Year Student,B,4,5,5,4,4,3,4,4,5,5,4,4,4,10.5,8.5,First Year Student,3
+X,1,A,Much Higher,Higher,Much Higher,Higher,Junior,B,5,4,5,4,4,3,5,2,3,5,2,2,5,8.5,4.5,Junior,3
+X,1,A,Average,Much Higher,Average,Higher,First Year Student,C+,3,5,3,4,4,3,3,3,3,2,3,4,4,6.5,4.5,First Year Student,2.3
+X,1,A,Higher,Much Higher,Much Higher,Much Higher,First Year Student,B-,4,5,5,5,4,4,4,5,2,3,3,3,5,4.5,2.5,First Year Student,2.7
+X,1,A,Much Higher,Higher,Higher,Average,Senior,B+,5,4,4,3,4,4,5,5,5,5,5,5,5,2.5,0.5,Senior,3.3
+X,1,A,Average,Average,Average,Average,Sophomore,B+,3,3,3,3,3,4,4,4,3,4,4,4,4,0.5,0.5,Sophomore,3.3
+X,1,A,Higher,Higher,Higher,Average,First Year Student,B,4,4,4,3,4,4,5,4,4,4,5,5,5,4.5,4.5,First Year Student,3
+X,2,A,Higher,Much Higher,Average,Average,First Year Student,B+,4,5,3,3,4,3,5,4,4,5,4,5,NA,6.5,4.5,First Year Student,3.3
+X,2,A,Average,Average,Average,Average,Junior,B,3,3,3,3,3,3,4,4,4,3,4,3,3,2.5,2.5,Junior,3
+X,2,A,Higher,Higher,Higher,Higher,First Year Student,B+,4,4,4,4,4,4,5,4,4,4,4,4,4,4.5,4.5,First Year Student,3.3
+X,2,A,Average,Average,Average,Lower,Senior,A-,3,3,3,2,2,4,5,5,5,5,4,1,4,6.5,4.5,Senior,3.7
+X,2,A,Average,Average,Average,Lower,First Year Student,NA,3,3,3,2,4,3,4,4,4,4,4,4,4,0.5,0.5,First Year Student,NA
+X,2,A,Higher,Much Higher,Higher,Average,First Year Student,B-,4,5,4,3,5,4,5,5,5,4,5,5,5,2.5,2.5,First Year Student,2.7
+X,2,A,Average,Average,Average,Lower,Junior,A-,3,3,3,2,3,2,3,5,3,3,3,3,3,0.5,0.5,Junior,3.7
+X,2,A,Much Higher,Higher,Much Higher,Much Higher,First Year Student,B,5,4,5,5,4,4,3,4,3,3,3,3,4,6.5,4.5,First Year Student,3
+X,2,A,Much Higher,Higher,Higher,Average,First Year Student,C,5,4,4,3,5,5,5,5,5,5,5,5,5,8.5,4.5,First Year Student,2
+X,2,A,Higher,Much Higher,Average,Average,First Year Student,B-,4,5,3,3,3,3,3,4,3,3,3,3,3,6.5,4.5,First Year Student,2.7
+X,2,A,Higher,Average,Much Higher,Higher,BLANK,B-,4,3,5,4,3,3,4,3,3,3,2,3,3,6.5,6.5,NA,2.7
+X,2,A,Higher,Higher,Higher,Higher,First Year Student,B-,4,4,4,4,4,4,4,4,4,4,4,4,4,2.5,0.5,First Year Student,2.7
+X,2,A,Higher,Higher,Higher,Higher,First Year Student,A-,4,4,4,4,4,4,4,4,4,5,4,4,5,2.5,0.5,First Year Student,3.7
+X,2,A,Higher,Higher,Higher,Average,Sophomore,B,4,4,4,3,4,3,5,3,3,4,3,4,4,8.5,12.5,Sophomore,3
+X,2,A,Higher,Higher,Higher,Average,First Year Student,B+,4,4,4,3,4,4,5,5,5,5,5,5,5,2.5,2.5,First Year Student,3.3
+X,2,A,Much Higher,Higher,Higher,Higher,BLANK,B+,5,4,4,4,4,4,4,4,4,4,4,4,5,4.5,4.5,NA,3.3
+X,2,A,Much Higher,Higher,Much Higher,Average,First Year Student,C+,5,4,5,3,3,3,4,5,5,5,5,5,5,4.5,2.5,First Year Student,2.3
+X,2,A,Lower,Average,Average,Lower,Junior,A-,2,3,3,2,4,4,4,5,5,5,5,5,5,0.5,0.5,Junior,3.7
+X,2,A,Higher,Average,Average,Lower,Sophomore,A-,4,3,3,2,2,3,4,4,3,3,4,3,3,0.5,0.5,Sophomore,3.7
+X,2,A,Higher,Much Higher,Higher,Much Higher,First Year Student,B+,4,5,4,5,5,5,5,5,5,5,5,5,5,2.5,2.5,First Year Student,3.3
+X,2,A,Average,Average,Average,Average,Junior,B+,3,3,3,3,3,4,4,5,5,5,4,3,4,2.5,2.5,Junior,3.3
+X,2,A,Higher,Much Higher,Average,Higher,First Year Student,B+,4,5,3,4,4,5,5,4,5,5,4,5,5,4.5,6.5,First Year Student,3.3
+X,2,A,Higher,Higher,Higher,Higher,First Year Student,B,4,4,4,4,4,5,4,4,3,3,3,4,5,10.5,6.5,First Year Student,3
+X,2,A,Higher,Higher,Average,Average,Sophomore,B+,4,4,3,3,4,4,4,4,4,4,4,4,4,6.5,6.5,Sophomore,3.3
+X,2,A,Average,Much Higher,Average,Higher,First Year Student,B+,3,5,3,4,5,5,5,5,5,5,5,5,5,4.5,4.5,First Year Student,3.3
+X,2,A,Higher,Higher,Higher,Higher,First Year Student,C,4,4,4,4,4,4,5,5,5,5,5,5,4,8.5,6.5,First Year Student,2
+Y,3,A,Higher,Much Higher,Much Higher,Higher,First Year Student,B+,4,5,5,4,5,5,5,5,5,4,4,4,5,2.5,2.5,First Year Student,3.3
+Y,3,A,Higher,Higher,Higher,Higher,First Year Student,C+,4,4,4,4,3,3,4,4,4,3,4,4,5,8.5,8.5,First Year Student,2.3
+Y,3,A,Higher,Higher,Higher,Higher,First Year Student,B+,4,4,4,4,3,3,4,4,3,4,4,4,4,4.5,4.5,First Year Student,3.3
+Y,3,A,Higher,Average,Average,Higher,First Year Student,B+,4,3,3,4,3,3,3,3,3,3,3,3,3,2.5,2.5,First Year Student,3.3
+Y,3,A,Much Higher,Average,Much Higher,Lower,First Year Student,B,5,3,5,2,4,5,5,4,5,5,5,4,5,4.5,2.5,First Year Student,3
+Y,3,A,Much Higher,Higher,Higher,Average,First Year Student,C,5,4,4,3,4,4,3,3,3,4,2,1,2,6.5,4.5,First Year Student,2
+Y,3,A,Higher,Lower,Much Higher,Much Lower,First Year Student,B,4,2,5,1,2,2,4,3,3,4,3,4,3,2.5,2.5,First Year Student,3
+Y,3,A,Much Higher,Higher,Much Higher,Higher,First Year Student,A,5,4,5,4,5,5,5,5,5,5,4,5,5,6.5,6.5,First Year Student,4
+Y,3,A,Higher,Higher,Higher,Higher,First Year Student,B,4,4,4,4,4,4,4,4,4,4,4,4,4,6.5,4.5,First Year Student,3
+Y,3,A,Higher,Higher,Much Higher,Higher,First Year Student,B,4,4,5,4,4,3,4,4,3,3,3,4,4,8.5,8.5,First Year Student,3
+Y,3,A,Higher,Lower,Average,Lower,First Year Student,B,4,2,3,2,1,2,3,3,3,2,2,3,2,6.5,2.5,First Year Student,3
+Y,3,A,Higher,Much Higher,Higher,Higher,Senior,A,4,5,4,4,5,5,5,5,5,5,5,5,5,4.5,4.5,Senior,4
+Y,3,A,Higher,Average,Average,Lower,First Year Student,B,4,3,3,2,3,3,NA,4,4,4,3,4,3,2.5,2.5,First Year Student,3
+Y,3,A,Higher,Higher,Higher,Higher,First Year Student,B,4,4,4,4,3,4,4,4,4,4,4,4,4,6.5,4.5,First Year Student,3
+Y,3,A,Higher,Higher,Higher,Average,First Year Student,A-,4,4,4,3,5,5,5,4,4,4,4,3,5,4.5,4.5,First Year Student,3.7
+Y,3,A,Higher,Higher,Much Higher,Average,First Year Student,B,4,4,5,3,4,4,5,5,5,5,4,5,5,2.5,4.5,First Year Student,3
+Y,3,A,Higher,Higher,Higher,Average,First Year Student,B,4,4,4,3,3,3,3,3,3,3,3,3,3,6.5,2.5,First Year Student,3
+Y,3,A,Average,Higher,Average,Average,First Year Student,B+,3,4,3,3,4,5,5,3,4,3,3,3,5,6.5,4.5,First Year Student,3.3
+Y,3,A,Much Higher,Higher,Much Higher,Average,First Year Student,B-,5,4,5,3,4,4,5,5,5,5,5,5,5,10.5,8.5,First Year Student,2.7
+Y,4,A,Much Higher,Higher,Much Higher,Higher,First Year Student,B+,5,4,5,4,4,3,5,4,3,3,2,4,5,4.5,2.5,First Year Student,3.3
+Y,4,A,Higher,Higher,Higher,Higher,First Year Student,B+,4,4,4,4,4,5,5,5,5,5,4,5,5,8.5,6.5,First Year Student,3.3
+Y,4,A,Average,Average,Average,Lower,Sophomore,B+,3,3,3,2,2,1,3,1,2,3,3,4,2,4.5,2.5,Sophomore,3.3
+Y,4,A,Higher,Average,Higher,Average,First Year Student,B-,4,3,4,3,4,5,5,4,4,4,4,5,5,6.5,8.5,First Year Student,2.7
+Y,4,A,Average,Higher,Higher,Much Higher,First Year Student,A,3,4,4,5,5,4,5,4,4,4,3,4,5,4.5,16.5,First Year Student,4
+Y,4,A,Higher,Higher,Higher,Average,First Year Student,B,4,4,4,3,4,4,5,5,4,4,5,5,5,8.5,6.5,First Year Student,3
+Y,4,A,Higher,Much Higher,Much Higher,Higher,Junior,C+,4,5,5,4,4,5,5,4,4,5,3,3,4,12.5,6.5,Junior,2.3
+Y,4,A,Higher,Higher,Higher,Average,First Year Student,B-,4,4,4,3,3,4,5,5,4,5,5,5,5,8.5,2.5,First Year Student,2.7
+Y,4,A,Higher,Higher,Higher,Average,First Year Student,B+,4,4,4,3,4,4,5,4,4,4,3,3,4,8.5,8.5,First Year Student,3.3
+Y,4,A,Average,Higher,Higher,Average,First Year Student,B,3,4,4,3,3,4,5,5,4,4,5,4,4,6.5,4.5,First Year Student,3
+Y,4,A,Higher,Higher,Much Higher,Average,First Year Student,B,4,4,5,3,3,5,5,5,5,5,5,5,5,6.5,4.5,First Year Student,3
+Y,4,A,Higher,Much Higher,Higher,Much Higher,First Year Student,B,4,5,4,5,5,5,5,4,4,3,4,4,5,10.5,10.5,First Year Student,3
+Y,4,A,Higher,Higher,Higher,Higher,First Year Student,B,4,4,4,4,3,4,4,4,4,4,3,5,5,10.5,10.5,First Year Student,3
+Y,4,A,Higher,Much Higher,Higher,Higher,First Year Student,B+,4,5,4,4,4,4,5,3,4,4,3,5,5,4.5,4.5,First Year Student,3.3
+Y,4,A,Higher,Much Higher,Higher,Higher,First Year Student,B+,4,5,4,4,4,4,5,5,3,4,3,3,4,6.5,2.5,First Year Student,3.3
+Y,4,A,Higher,Higher,Higher,Average,First Year Student,C,4,4,4,3,4,3,4,4,4,4,5,5,5,6.5,4.5,First Year Student,2
+Y,4,A,Higher,Higher,Higher,Average,First Year Student,B,4,4,4,3,4,3,5,5,5,4,4,3,5,4.5,4.5,First Year Student,3
+Y,4,A,Higher,Average,Average,Higher,First Year Student,B-,4,3,3,4,4,3,5,4,5,5,5,5,5,2.5,2.5,First Year Student,2.7
+Y,4,A,Higher,Higher,Average,Higher,Junior,B,4,4,3,4,5,5,5,5,5,5,4,5,5,4.5,4.5,Junior,3
+Y,4,A,Much Higher,Much Higher,Much Higher,Higher,Sophomore,B,5,5,5,4,4,4,5,4,5,5,5,4,5,16.5,10.5,Sophomore,3
+Y,4,A,Average,Higher,Higher,Higher,First Year Student,A-,3,4,4,4,4,4,4,5,5,5,4,5,5,4.5,2.5,First Year Student,3.7
+Y,4,A,Average,Higher,Higher,Much Higher,First Year Student,A,3,4,4,5,4,NA,5,5,4,5,4,4,4,8.5,4.5,First Year Student,4
+Y,4,A,Higher,Higher,Much Higher,Lower,Sophomore,B-,4,4,5,2,4,4,4,4,4,3,3,4,5,12.5,8.5,Sophomore,2.7
+Y,4,A,Higher,Higher,Higher,Average,First Year Student,A-,4,4,4,3,3,3,4,4,3,3,4,4,4,8.5,8.5,First Year Student,3.7
+Y,4,A,Average,Average,Average,Higher,First Year Student,B-,3,3,3,4,3,3,4,4,4,4,3,3,3,4.5,4.5,First Year Student,2.7
+Y,4,A,Higher,Much Higher,Higher,Higher,First Year Student,B+,4,5,4,4,5,5,5,4,5,5,4,5,5,8.5,8.5,First Year Student,3.3
+Y,4,A,Higher,Higher,Higher,Average,First Year Student,B-,4,4,4,3,5,5,5,5,5,5,4,4,5,8.5,6.5,First Year Student,2.7
+Y,4,A,Higher,Higher,Higher,Higher,First Year Student,A,4,4,4,4,5,5,5,5,5,5,5,4,5,4.5,4.5,First Year Student,4
+Y,4,A,Average,Much Higher,Higher,Higher,First Year Student,B+,3,5,4,4,5,5,5,5,5,5,5,5,5,6.5,4.5,First Year Student,3.3
+Y,4,A,Average,Average,Higher,Lower,First Year Student,B,3,3,4,2,3,3,4,4,4,4,4,4,4,4.5,2.5,First Year Student,3
+Y,4,A,Higher,Higher,Higher,Higher,First Year Student,B+,4,4,4,4,4,5,5,4,5,5,4,5,4,4.5,4.5,First Year Student,3.3
+Z,5,B,Average,Higher,Higher,Average,First Year Student,B,3,4,4,3,4,4,4,3,3,2,2,2,4,4.5,4.5,First Year Student,3
+Z,5,B,Higher,Higher,Much Higher,Average,First Year Student,B,4,4,5,3,3,4,4,3,3,3,4,3,3,4.5,2.5,First Year Student,3
+Z,5,B,Average,Higher,Average,Higher,First Year Student,B+,3,4,3,4,4,4,5,5,3,3,2,3,4,2.5,0.5,First Year Student,3.3
+Z,5,B,Higher,Higher,Average,Average,Sophomore,C-,4,4,3,3,3,2,4,3,3,3,3,3,4,4.5,4.5,Sophomore,1.7
+Z,5,B,Higher,Average,Average,Average,First Year Student,B+,4,3,3,3,3,5,5,5,5,5,5,5,3,2.5,2.5,First Year Student,3.3
+Z,5,B,Average,Higher,Higher,Average,Sophomore,B+,3,4,4,3,3,3,3,3,3,3,3,3,3,4.5,4.5,Sophomore,3.3
+Z,5,B,Higher,Higher,Much Higher,Average,Junior,A-,4,4,5,3,3,4,5,5,4,5,4,3,4,4.5,4.5,Junior,3.7
+Z,5,B,Higher,Higher,Average,Average,Sophomore,A-,4,4,3,3,3,3,3,2,2,2,2,3,3,4.5,4.5,Sophomore,3.7
+Z,5,B,Average,Much Higher,Higher,Higher,First Year Student,B,3,5,4,4,3,4,5,4,4,4,2,3,4,2.5,2.5,First Year Student,3
+Z,5,B,Much Higher,Average,Much Higher,Much Higher,First Year Student,C,5,3,5,5,2,2,4,4,1,4,2,4,3,6.5,4.5,First Year Student,2
+Z,5,B,Higher,Higher,Higher,Higher,Junior,B+,4,4,4,4,5,5,5,5,4,5,5,5,5,8.5,12.5,Junior,3.3
+Z,5,B,Much Higher,Higher,Much Higher,Average,First Year Student,C+,5,4,5,3,4,4,5,4,4,5,5,3,5,8.5,4.5,First Year Student,2.3
+Z,5,B,Much Higher,Much Higher,Much Higher,Much Higher,First Year Student,C,5,5,5,5,5,4,5,5,5,5,5,5,5,8.5,8.5,First Year Student,2
+Z,5,B,Higher,Higher,Higher,Much Higher,First Year Student,A,4,4,4,5,4,3,3,5,4,3,3,3,3,2.5,2.5,First Year Student,4
+Z,5,B,Average,Higher,Average,Average,Senior,B,3,4,3,3,4,4,5,5,4,4,4,4,5,2.5,4.5,Senior,3
+Z,5,B,Higher,Average,Higher,Average,Sophomore,B,4,3,4,3,3,3,2,3,3,3,4,3,3,4.5,4.5,Sophomore,3
+Z,5,B,NA,NA,NA,NA,Senior,A-,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,5,0.5,NA,Senior,3.7
+Z,5,B,Higher,Higher,Higher,Average,First Year Student,C,4,4,4,3,2,2,3,4,3,3,3,2,3,2.5,2.5,First Year Student,2
+Z,5,B,Average,Average,Average,Higher,First Year Student,B,3,3,3,4,4,4,4,4,4,4,3,3,4,2.5,2.5,First Year Student,3
+Z,5,B,Average,Higher,Average,Higher,Sophomore,B-,3,4,3,4,5,5,4,4,4,4,4,5,5,0.5,0.5,Sophomore,2.7
+Z,5,B,Much Higher,Average,Much Higher,Average,First Year Student,C-,5,3,5,3,2,3,3,2,2,1,1,1,2,2.5,0.5,First Year Student,1.7
+Z,5,B,Higher,Lower,Higher,Average,Sophomore,C+,4,2,4,3,1,1,3,1,2,2,2,3,2,8.5,2.5,Sophomore,2.3
+Z,5,B,Much Higher,Much Higher,Much Higher,Average,First Year Student,B,5,5,5,3,4,3,3,5,3,3,3,5,4,8.5,8.5,First Year Student,3
+Z,5,B,Average,Average,Average,Average,Junior,A-,3,3,3,3,4,4,5,4,3,4,4,3,4,2.5,2.5,Junior,3.7
+Z,5,B,Average,Average,Average,Average,Sophomore,A-,3,3,3,3,4,4,4,5,4,4,2,3,4,4.5,4.5,Sophomore,3.7
+Z,5,B,Higher,Average,Higher,Average,Sophomore,D+,4,3,4,3,3,3,3,3,3,3,3,3,3,8.5,8.5,Sophomore,1.3
+Z,5,B,Higher,Higher,Higher,Much Higher,First Year Student,A-,4,4,4,5,4,5,5,5,5,5,5,5,5,6.5,6.5,First Year Student,3.7
+Z,5,B,Higher,Higher,Higher,Much Higher,First Year Student,B,4,4,4,5,4,4,4,4,4,4,3,4,4,2.5,2.5,First Year Student,3
+W,6,B,Higher,Average,Average,Average,First Year Student,B+,4,3,3,3,3,2,4,3,2,3,3,3,3,2.5,0.5,First Year Student,3.3
+W,6,B,Higher,Much Higher,Higher,Much Higher,First Year Student,A,4,5,4,5,5,5,5,4,5,5,5,4,5,2.5,2.5,First Year Student,4
+W,6,B,Higher,Higher,Average,Average,First Year Student,B,4,4,3,3,4,4,5,5,4,4,5,5,5,6.5,6.5,First Year Student,3
+W,6,B,Higher,Higher,Average,Average,First Year Student,B+,4,4,3,3,3,3,5,2,3,4,3,3,4,4.5,4.5,First Year Student,3.3
+W,6,B,Higher,Much Higher,Higher,Much Higher,Junior,A-,4,5,4,5,5,4,5,5,5,5,5,4,5,6.5,6.5,Junior,3.7
+W,6,B,Higher,Higher,Higher,Average,Junior,A-,4,4,4,3,4,3,5,5,5,5,2,5,5,2.5,0.5,Junior,3.7
+W,6,B,Average,Lower,Average,Much Lower,Sophomore,B,3,2,3,1,1,1,4,3,1,2,1,1,2,2.5,0.5,Sophomore,3
+W,6,B,Average,Average,Average,Average,First Year Student,B+,3,3,3,3,3,4,5,4,5,4,4,3,4,6.5,4.5,First Year Student,3.3
+W,6,B,Average,Much Higher,Higher,Much Higher,Sophomore,A-,3,5,4,5,5,3,5,4,5,5,4,4,5,2.5,2.5,Sophomore,3.7
+W,6,B,Higher,Higher,Average,Average,Sophomore,B,4,4,3,3,3,3,4,4,4,4,4,4,5,0.5,0.5,Sophomore,3
+W,6,B,Higher,Average,Average,Average,First Year Student,A-,4,3,3,3,4,4,5,5,4,4,3,2,4,2.5,2.5,First Year Student,3.7
+W,6,B,Higher,Higher,Average,Lower,First Year Student,B+,4,4,3,2,3,3,5,3,3,3,2,3,4,2.5,2.5,First Year Student,3.3
+W,6,B,Higher,Much Higher,Average,Much Higher,Sophomore,A-,4,5,3,5,4,3,4,4,4,4,4,3,4,4.5,4.5,Sophomore,3.7
+W,6,B,Higher,Higher,Higher,Average,First Year Student,B+,4,4,4,3,4,4,5,4,4,4,4,4,4,2.5,2.5,First Year Student,3.3
+W,6,B,Higher,Average,Higher,Average,Sophomore,B-,4,3,4,3,3,3,4,3,4,4,3,3,3,4.5,2.5,Sophomore,2.7
+W,6,B,Higher,Average,Average,Lower,Sophomore,D+,4,3,3,2,3,2,5,4,4,5,4,3,4,2.5,2.5,Sophomore,1.3
+W,6,B,Higher,Higher,Higher,Average,Junior,B-,4,4,4,3,4,4,5,5,4,4,4,4,5,6.5,6.5,Junior,2.7
+W,6,B,Higher,Higher,Much Higher,Average,Sophomore,A-,4,4,5,3,4,4,4,4,3,4,3,4,4,4.5,4.5,Sophomore,3.7
+W,6,B,Average,Much Higher,Higher,Higher,First Year Student,A-,3,5,4,4,4,4,5,5,5,5,5,4,5,4.5,2.5,First Year Student,3.7
+W,6,B,Average,Average,Average,Average,Sophomore,A,3,3,3,3,3,4,5,4,4,5,5,5,5,2.5,2.5,Sophomore,4
+W,6,B,Average,Average,Lower,Lower,BLANK,A,3,3,2,2,3,3,5,4,4,4,5,5,4,4.5,2.5,NA,4
+W,6,B,Much Higher,Higher,Higher,Higher,First Year Student,B,5,4,4,4,4,3,5,5,4,4,4,5,5,4.5,4.5,First Year Student,3
+W,6,B,Much Higher,Higher,Much Higher,Higher,First Year Student,B-,5,4,5,4,4,3,5,5,3,5,5,5,4,4.5,2.5,First Year Student,2.7
+W,6,B,Higher,Higher,Average,Much Higher,First Year Student,A-,4,4,3,5,5,5,5,5,5,5,5,5,5,4.5,4.5,First Year Student,3.7
+W,6,B,Higher,Average,Average,Higher,First Year Student,A-,4,3,3,4,4,4,5,4,4,4,4,4,5,4.5,4.5,First Year Student,3.7
+W,6,B,Higher,Average,Average,Average,Sophomore,C+,4,3,3,3,3,2,5,4,5,5,2,3,3,2.5,2.5,Sophomore,2.3
+W,6,B,Higher,Higher,Higher,Average,Sophomore,B-,4,4,4,3,3,2,4,2,3,3,2,2,4,4.5,2.5,Sophomore,2.7
+W,7,B,Higher,Much Higher,Average,Higher,First Year Student,A,4,5,3,4,5,4,5,5,5,5,5,5,5,4.5,4.5,First Year Student,4
+W,7,B,Average,Average,Average,Average,Sophomore,A-,3,3,3,3,4,3,5,4,4,4,2,3,4,2.5,2.5,Sophomore,3.7
+W,7,B,Higher,Average,Higher,Higher,First Year Student,C,4,3,4,4,4,3,5,4,4,4,2,1,3,4.5,4.5,First Year Student,2
+W,7,B,Higher,Much Higher,Higher,Higher,Sophomore,A-,4,5,4,4,5,5,5,4,4,5,5,3,5,4.5,2.5,Sophomore,3.7
+W,7,B,Higher,Higher,Average,Average,Sophomore,C,4,4,3,3,4,3,4,3,4,5,3,2,4,2.5,2.5,Sophomore,2
+W,7,B,Higher,Average,Average,Average,First Year Student,A-,4,3,3,3,4,4,5,5,5,5,5,5,5,2.5,2.5,First Year Student,3.7
+W,7,B,Average,Average,Average,Higher,First Year Student,B,3,3,3,4,4,4,5,5,4,5,5,5,5,4.5,4.5,First Year Student,3
+W,7,B,Average,Higher,Higher,Higher,First Year Student,B+,3,4,4,4,4,5,5,4,5,5,4,4,5,2.5,0.5,First Year Student,3.3
+W,7,B,Higher,Higher,Average,Higher,Sophomore,A-,4,4,3,4,5,5,5,5,5,5,5,5,5,2.5,2.5,Sophomore,3.7
+W,7,B,Average,Much Higher,Average,Higher,First Year Student,A-,3,5,3,4,5,4,5,5,5,5,4,4,5,2.5,2.5,First Year Student,3.7
+W,7,B,Higher,Higher,Average,Much Higher,First Year Student,A-,4,4,3,5,5,5,5,4,5,5,4,3,5,0.5,0.5,First Year Student,3.7
+W,7,B,Lower,Average,Lower,Much Lower,Senior,A-,2,3,2,1,2,3,5,3,3,4,3,2,4,0.5,0.5,Senior,3.7
+W,7,B,Higher,Much Higher,Average,Average,First Year Student,B-,4,5,3,3,5,4,5,5,4,4,5,4,5,2.5,2.5,First Year Student,2.7
+W,7,B,Higher,Average,Average,Average,First Year Student,B,4,3,3,3,4,3,5,5,4,5,4,3,5,2.5,0.5,First Year Student,3
+W,7,B,Higher,Higher,Higher,Average,First Year Student,B-,4,4,4,3,4,4,5,4,3,4,2,3,4,8.5,6.5,First Year Student,2.7
+W,7,B,Higher,Higher,Higher,Higher,First Year Student,B+,4,4,4,4,5,4,5,3,4,5,4,5,5,4.5,4.5,First Year Student,3.3
+W,7,B,Average,Lower,Average,Average,Sophomore,A,3,2,3,3,2,2,3,5,5,5,5,3,3,2.5,2.5,Sophomore,4
+W,7,B,Average,Average,Average,Average,Junior,B+,3,3,3,3,4,4,5,5,5,4,4,5,5,2.5,2.5,Junior,3.3
+W,7,B,Average,Average,Average,Average,Senior,A-,3,3,3,3,4,3,5,5,5,5,5,5,5,2.5,2.5,Senior,3.7
+W,7,B,Higher,Higher,Average,Average,Sophomore,B+,4,4,3,3,4,4,5,4,4,4,4,3,4,4.5,4.5,Sophomore,3.3
+W,7,B,Average,Much Higher,Average,Much Higher,Sophomore,A,3,5,3,5,5,5,5,5,5,5,5,5,5,4.5,4.5,Sophomore,4
+W,7,B,Higher,Higher,Average,Average,Sophomore,B,4,4,3,3,4,2,5,4,3,2,3,3,3,2.5,2.5,Sophomore,3
+W,7,B,Average,Much Lower,Average,Much Lower,Sophomore,B-,3,1,3,1,1,3,4,4,5,4,3,3,NA,4.5,0.5,Sophomore,2.7
+W,7,B,Higher,Much Higher,Average,Higher,First Year Student,A-,4,5,3,4,5,5,5,5,5,5,5,5,5,6.5,4.5,First Year Student,3.7
+W,7,B,Higher,Higher,Higher,Average,Junior,A-,4,4,4,3,5,5,5,5,5,5,4,5,5,2.5,2.5,Junior,3.7
+W,7,B,Higher,Higher,Much Higher,Higher,Sophomore,B,4,4,5,4,3,3,5,3,4,4,4,4,4,4.5,4.5,Sophomore,3
+W,7,B,Higher,Average,Average,Average,First Year Student,B-,4,3,3,3,3,3,4,3,3,3,3,5,4,4.5,2.5,First Year Student,2.7
+W,7,B,Higher,Higher,Higher,Much Higher,First Year Student,B,4,4,4,5,5,5,5,5,5,5,5,5,5,6.5,8.5,First Year Student,3
+

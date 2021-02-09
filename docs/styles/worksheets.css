@@ -1,0 +1,22 @@
+div.boxed {
+  border-style: solid;
+  border-color: navy;
+  border-width: 2px;
+  border-radius: 10px;
+  padding: 10px 10px 10px 10px;
+  margin: 0px 0px 5px 0px;
+}  
+
+div.example {
+  border-style: solid;
+  border-color: skyblue;
+  border-width: 2px;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 0px 0px 10px 0px;
+}
+
+div.explain {
+  margin: 0px 0px 5px 0px;
+}
+

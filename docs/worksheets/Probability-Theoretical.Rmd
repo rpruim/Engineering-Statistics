@@ -1,0 +1,159 @@
+---
+title: "Calculating Probability Theoretically"
+author: "Stat 241"
+output:
+  pdf_document: default
+  df_document: default
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+theme_set(theme_bw())
+set.seed(20210108)
+```
+
+
+### Theoretical Probability calculations combine 
+
+1.
+
+\vfill
+
+2.
+
+\vfill
+
+3.
+
+\vfill
+
+
+## Probability by Axioms and Rules
+
+### Three Axioms
+
+Let S be a sample space for a random experiment and A and B be  events (sets of
+outcomes). 
+
+* The events A and B are **mutually exclusive** (ME) if A and B have no
+outcomes in common; i.e., A and B cannot occur simultaneously.  
+* The event "A or B" is the event consisting of all outcomes that are either in A or in B (possibly both).
+* The event "A and B" is the event that consists of all outcomes that are in both A and B.
+* The event "not A" consists of all outcomes not in the event A.
+
+1.	$0 \le P(A) \le 1$.
+
+2.	$P(S) = 1$.
+
+3. (Sum Rule) If A and B are mutually exclusive then $P(A \tor B) = P(A) + P(B)$.
+
+    In fact, this works for multple events: 
+    $P(A_1 \tor A_2 \tor A_3 \cdots A_k) = P(A_1) + P(A_2) + P(A_3) + \cdots P(A_k)$
+    as long as all the events are mutuall exclusive (at most one can happen on any given trial).
+
+### Derived Rules
+
+4. (Complement Rule) $P(\tnot A) = 1 - P(A)$.
+
+5. (General Sum Rule)  $P(A \tor B) = P(A) + P(B) - P(A \tand B)$.
+
+6. (Equally Likely Rule)	If the sample space consists of n equally likely outcomes, 
+then 
+$$P(A) =  \frac{|A|}{|S|} =\frac{\mbox{number of outcomes in $A$}}{\mbox{number of outcomes in $S$}}$$
+
+
+## Examples
+
+**1.** 
+Carol has applied for admission to Harvard and to Princeton.  The probability
+that Harvard accepts her is .3, the probability that Princeton accepts her is
+.4, and the probability that both accept her is .2.  What is the probability
+that neither accept her?
+
+\vfill
+
+**2.** Toss a fair die.  
+
+* $S$ =
+
+\vfill
+
+* P(die comes up prime) = 
+
+\vfill
+
+* P(die comes up odd) = 
+
+\vfill
+
+
+**3.**.	Toss a fair coin 3 times.
+
+* $S$ =
+
+\vfill
+
+* If $X$ = number of heads, then the probability table for $X$ is
+
+\vfill
+\vfill
+
+
+\newpage
+
+**4.** Toss a pair of dice. Let $X$ = the sum of the two numbers rolled, then 
+
+* $S$ =  
+
+\vspace{2in}
+
+* The probability table for $X$ is   \vfill \vfill
+
+\vspace{2in}
+
+* Compare with the simulated result
+
+```{r, echo = FALSE, indent = "    ", R.options=list(digits = 3)}
+S = resample(1:6, 10000) + resample(1:6, 10000)
+tally(~ S, format = "prop") %>% round(3) %>% pander()
+```
+
+
+* $P(X \ge 10) =$  \vfill
+
+\vspace{0.5in}
+
+* $P(X < 10) =$   \vfill
+
+\vspace{0.5in}
+
+* $P(\mbox{6 or doubles}) =$
+
+\vspace{1.0in}

@@ -1,0 +1,989 @@
+---
+title: "Propagation of Uncertainty"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ['../styles/ds303-notes.css', '../styles/worksheets.css']
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\T{{\sf T}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+\def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+\def\Partial#1#2{\frac{\partial}{\partial #2} #1}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+library(patchwork)
+theme_set(theme_bw())
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+
+
+## Error and Uncertainty
+
+* **error** = estimate - estimand = actual - estimated
+
+  * We won't know this number because we would not be estimating if we knew the estimand
+ 
+<br>
+
+* **uncertainty** -- a description of the distribution of errors (over the random process of creating an estimate)
+
+<br>
+
+* **standard uncertainty** -- the standard deviation of the distribution of errors (over the random process of 
+creating an estimate)
+
+<br>
+
+### Example: sample mean
+
+$$
+\overline X \approx \Norm(\mu , \frac{\sigma}{\sqrt{n}})\; ,
+$$ 
+so the distribution of errors is 
+
+$$
+\overline X - \mu \approx \Norm(0, \frac{\sigma}{\sqrt{n}})\; ,
+$$ 
+and the standard uncertainty for this estimator is 
+
+$$
+\mbox{standard uncertainty} =  \frac{\sigma}{\sqrt{n}} \approx \frac{s}{\sqrt{n}}\; .
+$$
+
+We will denote the standard uncertainty of a quantity $X$ as $u_X$.
+
+### Example: Difference in means
+
+Similarly, for the difference in two population means (estiamted by taking the difference in two sample means), we have
+
+$$
+\mbox{standard uncertainty}
+= \sqrt{ \frac{\sigma_1^2}{{n_1}}  + \frac{\sigma_2^2}{{n_2}} }
+\approx \sqrt{ \frac{s_1^2}{{n_1}}  + \frac{s_2^2}{{n_2}} }
+$$
+
+### Goal: Estimate standard uncertainty for more situations.
+
+* The methods above worked because we have rules for propagation of means and variances for linear transformations
+and linear combinations.
+
+* We will learn an approximate method that works when things are approximately linear.
+
+* These methods will estimate standard uncertainty (ie, standard deviation of the estimator = SE), but they 
+do not tell us about the *shape* of the distribution of errors. In many situtations the distribution of errors
+will be at least approximately normal, but in other situations it may be quite different.
+
+## Transforamtions of one random variable
+
+An estimator is just a random variable, so we will derive our methods in terms of random variables
+and then apply them to estimators.
+
+We already know that 
+
+* $\E(aX+b) = a \E(X) + b$
+* $\Var(aX+b) = a^2 \Var(X)$
+
+This means that when $Y = f(X)$ and $f$ is a linear function ($f(x) = ax + b$), then we know
+how to compute the mean and variance for $Y$ if we know the mean and variance for $X$.
+
+From calculus, you may remember that we can approximate arbitrary functions using the tangent line
+at a point.
+
+<div class="explain" label = "Show linearization">
+$$
+f(x) \approx f(a) + f'(a) (x - a)
+$$
+
+This approximation will be better if
+
+* $x$ is close to $a$
+* $f(x)$ is not too curvy (ie, $|f''|$ is small)
+
+"Better" and "small" are relative -- be sure to keep units and the range of reasonable values in mind.
+</div>
+
+
+Let's apply this to our random variables. Suppose we know the mean and variance of $X$. We want to estimate
+the mean and variance of $Y = f(X)$.
+
+<div class="explain" label = "Show approximation">
+* let $a = \E(X) = \mu$ 
+
+  * Most of the values of $X$ will be near $\E(X)$, so that is a good place to estimate from.
+  * $\E(X - \mu) = \E(X) - \mu = 0$, so that's also handy.
+  
+<br>
+  
+* Expected Value
+
+\begin{align*}
+\E(Y) &= \E(f(X)) 
+\\ &\approx \E(f(\mu) + f'(\mu) (x - \mu)) 
+\\ &= f(\mu) + f'(\mu) \E(x - \mu) 
+\\ &= f(\mu)
+\end{align*}
+
+  * so $\E(f(X)) \approx f(\E(X))$.
+  
+<br>
+
+* Variance  
+
+\begin{align*}
+\Var(Y) & = \Var(f(\mu) + f'(\mu) (X - \mu)) 
+\\ 
+&= \Var(f'(\mu) (X - \mu))  
+\\
+&= f'(\mu)^2 \Var(X)
+\end{align*}
+
+* Standard deviation
+$$
+\SD(Y) = |f'(\mu)| \SD(X)
+$$
+</div>
+
+### Application to uncertainty estimation
+
+We can't quite use the approximation formula above because we don't know $\mu$. (It's an unknown paramter that we 
+are estimating.)  But we can use our estimate in place of $\mu$. 
+Since the standard uncertainty is just the standard deviation of an estimator, 
+
+<div class = "boxed">
+If 
+
+$$Y = f(X) \;, $$ 
+
+then
+
+$$
+u_Y \approx | f'(\hat x) | u_X
+$$
+</div>
+
+where $\hat x$ is our estimate.
+
+We are simply replacing the mean $\mu$ with our estimate $\hat x$. (Typically, $\E(X) = \mu$, so this estimate will be 
+quite good if our sample size is large.)
+
+<div class = "example">
+**Example 1.**
+Let $A$ be a square with side length $L$.
+Suppose we estimate $L$ to be 3.7 with uncertainty $u_L = 0.2$ cm. (This is often written as $3.7 \pm 0.2$.  When you
+see $\pm$ notation, you must also check to see how it is being used.)
+
+What is our uncertainty in the computed area?
+
+$A = L^2$, so our function is $f(x) = x^2$.  $f'(x) = 2x$.  So we get
+
+\begin{align*}
+u_A & \approx |f'(\hat L)| u_L 
+\\ &= f'(3.7) \cdot 0.2 
+\\ &= 7.4 \cdot 0.2 = 1.48
+\end{align*}
+
+We could express this as $`r 3.7^2` \pm 1.48$. (But stay tuned for a note about how many 
+digits we should be reporting.)
+</div>
+
+<div class ="example">
+**Example 1 (revisited)**. There is another way to estimate uncertainty of a transformed
+measurement.  Let's just simulate. In this case, we simulate values of $L$ that are normally
+distributed near 3.7 with a standard deviation of 0.2. Then we can compute a bunch of simulated
+areas and see what the standard deviation is.
+
+<div class = "explain" label = "Show simulations">
+
+```{r}
+L <- rnorm(10000, mean = 3.7, sd = 0.2)
+A <- L^2
+sd(~ A)
+gf_histogram(~ A)
+gf_qq(~A) %>% gf_qqline()
+```
+
+The estimate in this case is very close to the simulated value.
+
+Compared to a normal distrubtion, this has somewhat "light tails" (the smallest values are not quite as small nor
+then largest quite as large as we would expect). 
+
+Seems to work pretty well in this case.
+</div>
+</div>
+
+
+## Sig Figs and Uncertainty
+
+The guidelines in this sections are based on commonly used practices in 
+physics and engineering.
+
+### What to record, What to report
+ 
+When you record the results of a measurement for which there is an \emph{a priori}
+estimate of uncertainty, the uncertainty should be recorded along with
+the measurement itself.  Similarly, reports of quantities estimated from data
+should also include estimated uncertainties.
+
+As a general guideline, a properly reported scientific estimated quantity includes 
+the following five elements: 
+
+
+1. A number (the estimate)
+2. Units (e.g., m  or kg or seconds) 
+3. A statement about how it was measured or calculated 
+4. A statement about most likely sources of (the largest components of) error
+5. An estimate of the uncertainty
+
+<div class = "example">
+**Example**
+If you measured the length of a pendulum using a meter stick, you
+might report the measurement this way: 
+
+* Length $= 0.834 \pm 0.002$ m 
+* Measured with a meter stick from pivot point to the center of the steel weight. 
+*	Uncertainty reflects the limited accuracy of measurement with a meter stick.
+
+</div>
+	
+In plots, the number is given by the scales of the plot, the units are typically included
+in the axes labels, uncertainties may be represented by ``error bars", and a statement 
+describing the method of measurement or calculation should appear in the plot legend.
+ 
+### How many decimal places?
+ 
+Numerical values and their uncertainties should be recorded to the proper number of
+decimal places.  Most software either reports too many significant digits or
+rounds numbers too much.  For 
+correct professional presentation of your data, follow these guidelines:
+
+* **Rule 1:** The experimental uncertainty should be rounded to one significant
+figure unless the leading digit is a 1, in which case, it is generally
+better to use two digits. [Note: some people prefer that two digits be used
+when the leading digit is a 2 as well.]
+
+* **Rule 2:** A measurement should be displayed to the same number of *decimal places* 
+as the uncertainty on that measurement.
+
+Note carefully the difference between significant figure and decimal place.  
+
+
+The following examples will help: 
+
+<div class="example">
+**Example**
+The timer reports a value of 0.3451 seconds.  The uncertainty on
+the measurement is 0.0038 seconds.    
+
+* By Rule 1, the uncertainty should be
+reported to one significant figure, so we round it to 0.004 seconds.   
+* By Rule 2, the measurement must also be rounded to the third decimal place.  
+
+Thus, the measurement should be reported as $0.345\pm0.004$ seconds. 
+</div>
+ 
+                                                 
+<div class="example">
+**Example**
+The measured value is $7.92538 \cdot 10^4$, 
+and its uncertainty is $2.3872 \cdot 10^2$.
+
+* By Rule 1, the uncertainty should be rounded to one significant figure, so 
+$2 \cdot 10^2$.  
+* By Rule 2, we report the 
+measurement to the same decimal place as the uncertainty, so $7.93 \cdot 10^4$.  
+
+Putting it together, the measurement should be reported as $(7.93 \pm0.02) 10^4$.   
+
+If we use the alternative method for Rule 2, we would report as
+$(7.925\pm 0.024) 10^4$.   
+</div>
+ 
+                                                 
+<div class="example">
+**Example**
+The estimated value is $89.231$, and its uncertainty is $0.1472$.    
+
+* By Rule 1, 
+the uncertainty should be rounded to two significant figures, so $0.15$.
+* By Rule 2, we report the 
+estimate to the same decimal place as the uncertainty, so $89.23  \pm  0.15$.  
+</div>
+ 
+                                                 
+
+### Reporting numbers in a table
+ 
+Multiple similar measurements should be reported in a table.  The column
+headings should clearly and concisely indicate the quantity in each column; the
+column heading must include the units.   Uncertainties should be listed in a
+separate column, located just to the right of the measurement column.
+(Sometimes, uncertainties are listed in parentheses after the estimate instead;
+just make sure the header and legend of the table makes it clear what values are
+being reported, and where.)
+
+<div class = "example">
+**Example**
+A lab group calculated these numbers for kinetic energy and its uncertainty: 
+
+------------------------------
+ Kinetic Energy   uncertainty 
+---------------- -------------
+  0.8682              0.059 
+
+  1.0661              0.071 
+
+  1.0536              0.070 
+
+  1.3881              0.058 
+  
+  0.8782              0.108 
+-----------------------------
+
+This should be reported with appropriate rounding (and units) as
+
+------------------------------
+ Kinetic Energy (J)   uncertainty 
+--------------------- -------------
+    0.87                 0.06 
+
+    1.07                 0.07 
+
+    1.05                 0.07 
+
+    1.39                 0.06 
+
+    0.88                 0.11 
+-----------------------------
+
+</div>
+
+ 
+
+
+## Some Practice
+
+**1.** Suppse you are estimating the area of a square. To do this, you measure the 
+side length 30 times.  Your 30 measurements have a mean of 10.5 cm
+and a standard deviation of 0.25 cm.
+Use this to
+
+a. Compute the standard uncertainty of the measured side length.
+b. Estimate the standard uncertainy of the computed area.
+
+**2.** 
+10 measurements of the edge of a cube produce a sample mean $\overline{x} = 3.11$ in 
+and a sample standard deviation $s = .13$ in. 
+How should the volume of the cube be reported? 
+
+
+<!-- 	SE(x ̅) = s/sqrt(10) = .04 -->
+
+<!-- Volume(x ̅) = 3.113 ± SE(x ̅3) = 30.08 ± SE(x ̅3). -->
+
+<!-- Since volume(x) = f(x) = x3 and f ‘(x) = 3x2,   -->
+
+<!-- SE(x ̅3)   |3x ̅2|*SE(x ̅) = 29.02*.04 = 1.16.  So, the final report is -->
+
+<!-- 		Volume = 30.08 ± 1.16 in3 -->
+
+**3.** A temperature is reported as $357 \pm 2$ degrees Fahrentheit.
+How should it be reported in Celsius? Do this two ways.
+
+a. Use the approximation method we have just learned.
+b. Work it out exactly using our rules for expected value and variance.
+c. How do the two results compare? Why?
+
+**4.**
+An angle has size $\theta$, measured in radians.  The exact value of $\theta$ isn't known, 
+but a sample of size $n = 20$ produces a sample mean of 1.21. and a sd of 0.09. 
+How should the value of $\sin(\theta)$ be reported?
+
+
+<!-- In this case f(x) = sin(x) and f ‘(x) = cos(x), so SE(sin(θ ̅  ))  |cos(θ ̅)|*SE(θ ̅). -->
+
+<!-- SE(θ ̅) = 0.9 /sqrt(20) = 0.02,  cos(1.21) = .353, so SE(sin(θ ̅  ))  .01 -->
+
+<!-- Since sin(1.21 ) = .94, the report would be -->
+
+<!-- 	sin(θ) = 0.94 ± 0.01 -->
+
+**5.**
+An angle $\theta$ is reported as  $1.52 \pm .01$ (in radians),  
+How should $\tan(\theta)$ be reported?
+
+<!-- 	tan(θ) = tan(1.52) ± SE(tan(θ)) = 19.67 ± SE(tan(θ)).  -->
+
+<!-- Since the dervative of tan is sec2, -->
+
+<!--  SE(tan(θ))  |sec2(1.52)|*SE(θ) = 387.89*0.01 = 3.88.   -->
+
+<!-- So, tan(θ) = 19.67 ± 3.88 -->
+
+**6.**
+	An angle is reported as $0.32 \pm .02$ radians. How should we report the cosine of the angle?
+
+**7.**
+The radius of a circle is reported as $r = 3.45 \pm .06$ in.  
+How should we report the area of the circle?
+
+**8.**
+The radius of a sphere is reported as $r = 4.23 \pm .10$ in. 
+How should we report the volume?
+
+
+## Combinations of mutliple random variables
+
+We can do a similar thing with functions of multiple variables. 
+
+<div class = "example">
+<div class = "explain">
+For a function of two independent random variables, the 
+linear approximation has the form
+
+$$
+f(x,y) 
+  \approx  f(a,b) 
+  + \left(\frac{\partial f}{\partial x}\right) (x - a) 
+  + \left(\frac{\partial f}{\partial y}\right) (y - b)
+$$
+where the partial derivatives are evaluated at $(a, b)$.[^notation]
+
+[^notation]: We could denote this as $\left. \frac{\partial f}{\partial x}\right|_{x=a, y=b}$, but 
+it makes the notation pretty messy.
+
+Applying this to random variables $X$ and $Y$ with means $\mu_X$ and $\mu_Y$, we get
+
+$$
+f(X,Y) 
+  \approx  f(\mu_X,\mu_Y) 
+  + \left(\frac{\partial f}{\partial X}\right) (X - \mu_X) 
+  + \left(\frac{\partial f}{\partial Y}\right) (Y - \mu_Y)
+$$
+
+where the partial derivatives are evaluated at $(\mu_X, \mu_Y)$.
+Now we just need to calculate the variance:
+
+\begin{align*}
+\Var(f(X,Y))
+  & \approx  \Var\left( f(\mu_X,\mu_Y) 
+  + \left(\frac{\partial f}{\partial X}\right) (X - \mu_X) 
+  + \left(\frac{\partial f}{\partial Y}\right) (Y - \mu_Y) \right)
+  \\
+  &=
+    \left(\frac{\partial f}{\partial X}\right)^2 \Var(X)  
+  + \left(\frac{\partial f}{\partial Y}\right)^2 \Var(Y) 
+\end{align*}
+
+As before, we don't know $\mu_X$ and $\mu_Y$. So we will plug our estimates into the partial derivatives.
+Taking a square root gives a formula for estimating the standard uncertainty.
+</div>
+</div>
+
+<br>
+
+This method of estimating uncertainties is usually called the **delta method** and is summarized in the box below.
+
+<div class = "boxed">
+	
+### The Delta Method for independent estimates
+
+
+Let $X$ and $Y$ be independent estimators with uncertainties $u_{X}$ and $u_{Y}$,
+and let $W = f(X,Y)$. Then the uncertainty in the estimator $W$ can be
+estimated as
+\[
+	u_{W} \approx
+	\sqrt{ 
+\left(\frac{\partial f}{\partial X}\right)^2 u_X^2
++
+\left(\frac{\partial f}{\partial Y}\right)^2 u_Y^2
+	}
+\]
+
+where the partial derivatives are evaluated using estimated values of $X$ and $Y$.
+	
+<br>
+
+
+The Delta Method can be extended to functions of more (or fewer) than two
+variables by adding (or removing) terms.  Slightly more complicated formulas
+exist to handle situations where the estimators are not independent (but we will
+not cover those in this course).
+	
+<br>
+
+Because this method is based on using a linear approximation to $f$, it works
+better when the linear approximation is better.  In particular, when
+$\frac{\partial^2 f}{\partial X^2}$ or $\frac{\partial^2 f}{\partial Y^2}$ are
+large near the estimated values of $X$ and $Y$, the approximations might not be
+very good.
+</div>
+
+
+<div class = "example">
+**Dimes**
+Suppose you want to estimate the number of dimes in a large sack of dimes.  Here is one method
+you could use:
+
+1. Measure the weight of all the dimes in the bag by placing them (without the bag)
+		on an appropriately sized scale.  (Call this $\hat B$, our estimate for $B$,
+		the actual weight of the dimes in the bag.)
+
+2. Measure the weight of 30 individual dimes and use those measurements to
+		estimate the mean weight of dimes. (Call this $\hat D$.)
+		
+3. Combine these two estimates to compute an estimated number of dimes in the bag.
+		($\hat N = \hat B / \hat D$.)
+
+Suppose that the dimes in our our bag together weigh 10.2 kg and the mean weight of our 30 
+measured dimes is `r mean( ~ mass, data = Dimes)`. 
+Then we would estimate the number of dimes to be 
+
+\[
+10200 / `r mean( ~ mass, data = Dimes)` = `r  10200 / mean( ~ mass, data = Dimes) ` \;.
+\]
+
+But how good is this estimate?  Do we expect to be within a small handful of dimes?  Might we be 
+off by 100 or 500?  Standard uncertainty provides a way to quantify this.  We will proceed in 
+three steps
+
+1. Determine the uncertainty in our estimate for $D$.
+
+<div class = "explain" label = "Show uncertainty for D">
+This is the part we already know how to do. We just need the standard error 
+for a mean: $\frac{s}{\sqrt{n}}$.
+
+```{r}
+df_stats(~ mass, data = Dimes, mean, sd, n = length)
+```
+
+So $u_D = 0.0221 / \sqrt{30} = `r round(0.0221 / sqrt(30), 3)`$.
+</div>
+<br>
+
+2. Determine the uncertainty in our estimate for $B$.
+
+<div class = "explain" label = "Show uncertainty for B">
+For the mass of all the dimes, we need a different approach, since this is not based on 
+the average of several measurments of different bags.  We only have on measurement.
+The scale reads 10.2 kg.  That's probably not the exact mass.  In fact, if the decimal
+readout only shows tenths of a kg, then any value between 10.15 and 10.25 would read as 10.2.
+So a good model for the distribution of errors would be $\Unif(-0.05, 0.05)$.  Looking in our table,
+we see that the variance for this distribution is $\frac{(b-a)^2}{12}$, so the uncertainty
+is 
+
+$$
+u_B = 
+\frac{0.1}{\sqrt{12}} = `r round(0.1 / sqrt(12), 4)` kg
+= 
+`r 1000 * round(0.1 / sqrt(12), 4)` g
+$$
+
+</div>
+<br>
+
+3. Combine these using the delta method to get the uncertainty for $N$.
+
+<div class = "explain" label = "Show uncertainty for N">
+So far we have 
+
+$$
+u_D = 0.004 \qquad u_B = 0.029 kg = 29g
+$$
+The delta method gives an approximate uncertainty for $N$. First, we compute our two partial derivatives for $f(D, B) = B/D$.
+
+\begin{align*}
+\frac{\partial f}{\partial D} &= - B/D^2
+\\
+\frac{\partial f}{\partial B} &= 1/D 
+\end{align*}
+
+Then we combine everything to get $u_N$.
+
+\begin{align*}
+u_N &= \sqrt{ \frac{\hat B^2 }{ \hat D^4} u_D^2 + \frac{1}{\hat D^2} u_B^2}
+\\
+   &= \sqrt{ \frac{10200^2 }{ 2.26^4} 0.004^2  + \frac{1}{2.26^2} 29^2 }
+   \\
+   &= `r sqrt(10200^2 / 2.26^4 * 0.004^2 + 1/2.26^2  * 29^2)`
+\\
+\end{align*}
+
+So we report the number of dimes as $4517 \pm 15$.
+
+</div>
+<br>
+
+</div>
+
+<div class = "example">
+**Dimes and simulation**
+We could also estimate the uncertainty in our estimate for the number of dimes using simulations.
+
+<div class ="explain" label = "Show simulation">
+
+```{r}
+B <- runif(10000, 10150, 10250)
+SampleMeans <- do(10000) * mean( ~ mass, data = resample(Dimes) ) 
+head(SampleMeans, 3)
+D <- SampleMeans$mean 
+N <- B / D
+gf_histogram( ~ N) 
+gf_qq( ~ N)
+sd(N)
+```
+
+Recall: `resample()` samples *with replacement*.  This is a way to use our data set to simulate 
+many possible data sets. Some observations from the original sample may appear more than once, others
+not at all. If we use `sample()`, we will get the same data set every time (just in a different order).
+</div>
+<br>
+
+</div>
+
+## Where do the original uncertainties come from?
+
+In order to use the delta method, we need to have uncertainties for the quantities involved in our function.
+Where do they come from?  There at least to possibilities.
+
+1. From our data
+
+    If our estimate comes from sample data, we should be able to use the uncertainty of our estimator.
+    That's how we determined $u_D$ in the dimes example.  Since $D$ was a sample mean, we used the 
+    standard error for the mean ($\frac{s}{\sqrt{n}}$). 
+    This is measuring **uncertainty due to sampling variability** (variability from sample to sample
+    because of the particular items selected for the sample).
+
+2. From a model
+
+    Our estimated uncertainy for $B$ came from a model for how the scale works. The accuracy of this estimate depends on
+    how well our model matches the behavior of the scale.
+    
+    Three commonly used models for this type of measurement are the uniform, triangle, and normal distributions.
+    Each has an uncertainty that is based on an interval $[a,b]$ in which the true value almost surely lies.
+    (It is actually only the width of this interval that matters.)
+    Here is a table of the uncertainties for these three families, described in terms of $b - a$.
+    
+-------------------------------
+ distribution     uncertainty
+--------------- --------------- 
+   uniform       $\displaystyle \frac{b-a}{2 \sqrt{3}}$
+    		
+	triangle       $\displaystyle \frac{b-a}{2 \sqrt{6}}$
+		   
+	 normal        $\displaystyle \frac{b-a}{2 \cdot 3}$
+		    
+-----------------------
+		
+  *	For the normal distribution, we let $[a, b]$ correspond to the middle 99.7% of the normal distribution (ie, 3 standard deviations
+		in either direction from the mean.  So the width of the interval is 6 standard deviations wide.
+		
+  * Comparing these we see that the uniform is most conservative (gives the largest uncertainty) and the normal distribution
+		is the least, with a triangle distribution somewhere between the two. 
+		
+	* If you have seen uncertainty formulas with 
+		$\sqrt{12}$ or $\sqrt{3}$ in them in your science classes, it is likely these are coming from using the 
+		uniform distribution to model the distribution of error.
+
+## More Practice
+
+
+**9.**
+Choosing good names in R can help you stay organized.  For the dimes problem we might set things up like this:
+
+```{r, eval = FALSE, tidy = FALSE}
+B <-       # measured mass of dimes in bag
+D <-       # estimated average mass of a dime
+u_B <-     # uncertainty for B
+u_D <-     # uncertainty for D
+dB <-      # partial derivative with respect to B
+dD <-      # partial derivative with respect to D
+N <-       # expression to compute N from B and D
+u_N <- sqrt( dB^2 * u_B^2 + dD^2 * u_D^2 )
+```
+
+Fill in the missing parts, run the code, and check that you get the same result as we had above.
+
+**10.** Return to the dimes example.  Suppose you found out that the scale used
+only uses even digits for the tenths of kilogram.  This means the scale is not as accurate
+as we thought.  Given this new information, how should we report the uncertainty for the
+mass of the dimes in the bag? For the number of dimes?
+
+<div class = "explain" label = "Show answer">
+
+```{r include = FALSE}
+B <- 10200
+D <- mean(~mass, data = Dimes) 
+dB <- 1/D 
+dD <- -B / D^2
+u_B <- 200 / sqrt(12)
+u_D <- sd(~mass, data = Dimes) / sqrt(nrow(Dimes))
+N <- B / D
+u_N <- sqrt( dB^2 * u_B^2 + dD^2 * u_D^2)
+```
+
+$u_B = `r u_B`; \quad u_N = `r u_N`$  (How many digits should you keep for each uncertainty?)
+
+</div>
+<br>
+```{r include = FALSE}
+x <- 3.41
+y <- 2.34
+dx <- y
+dy <- x
+u_x <- 0.04
+u_y <- 0.02
+A <- x * y
+u_A <- sqrt( dx^2 * u_x^2 + dy^2 * u_y^2)
+```
+
+**11.** Suppose $x ̂= `r x` \pm `r u_x`$ is the estimate of the length of a 
+rectangle and  $y ̂= `r y` \pm `r u_y`$ is the estimate of its width.  How do we report the area?
+
+<div class ="explain" label = "Show answer">
+$`r A %>% sprintf(fmt = '%#.2f')` \pm `r u_A %>% sprintf(fmt = '%#.2f')`$
+</div>
+</div>
+<br>
+
+
+
+```{r include = FALSE}
+x <- 3.05
+y <- 5.45
+dx <- 2
+dy <- 2
+u_x <- 0.03
+u_y <- 0.11
+P <- 2*x + 2*y
+u_P <- sqrt( dx^2 * u_x^2 + dy^2 * u_y^2)
+```
+
+**12.** The length  of a rectangle is reported as 
+$\hat x = `r x` \pm `r u_x`$ and the width of the rectangle is reported as 
+$\hat y  = `r y` \pm `r u_y`$.  How should perimeter of the rectangle be reported?
+
+<div class = "explain" label = "Show answer">
+
+$`r P %>% sprintf(fmt = '%#.2f')` \pm `r u_P %>% sprintf(fmt = '%#.2f')`$
+(Or $`r P %>% sprintf(fmt = '%#.1f')` \pm `r u_P %>% sprintf(fmt = '%#.1f')`$)
+</div>
+<br>
+
+```{r include = FALSE}
+t <- 5.25
+s <- 3.21
+dt <- 1/s 
+ds <- -t / s^2
+u_t <- 0.03
+u_s <- 0.05
+V <- s / t
+u_V <- sqrt( dt^2 * u_t^2 + ds^2 * u_s^2)
+```
+
+**13.** To estimate the average speed of an object, a physics student measures
+the time and distance traveled as 
+$`r s` \pm `r u_s`$ meters in  $`r t` \pm `r u_t`$ seconds.
+
+How should the average velocity be reported?
+
+<div class = "explain" label = "Show answer">
+
+$`r V %>% sprintf(fmt = '%#.3f')` \pm `r u_V %>% sprintf(fmt = '%#.3f')`$ m/s
+(Or $`r V %>% sprintf(fmt = '%#.2f')` \pm `r u_V %>% sprintf(fmt = '%#.2f')`$ m/s)
+</div>
+<br>
+
+
+**14.**
+When two resistors with resistances $R_1$ and $R_2$ are connected in parallel, 
+the combined resistance satisfies
+\[
+R = \frac{R_1 R_2}{R_1 + R_2} 
+\]
+Suppose the resistances of the two resistors are reported as 
+$20 \pm 0.7$ ohms and $50 \pm 1.2$ ohms.  How should you report the combined resistance?
+
+<div class = "explain" label = "Show answer">
+$14.3 \pm 0.4$
+</div>
+<br>
+
+**15.**
+On an analog, we can usually tell which two marks surround our measured value. 
+In fact, we can usually tell which one is closer. So if our scale as numbers at each integer ($0, 1, 2, 3, \dots$),
+we might be able to tell that the measurement is, for example, "between 13 and 14, but closer to 13".
+What uncertainty should we use for a measurement from this device (assuming a uniform model)?
+
+<div class = "explain" label = "Show answer">
+Since we are sure the value is between 13 and 13.5, we get
+$\displaystyle \frac{0.5}{2 \sqrt{3}}$ = `r 0.5 / (2 * sqrt(3))`
+</div>
+
+<br>
+
+## Relative Uncertainty
+
+Is an uncertainty of 2.5 large or small?  Well, that depends on the scale of numbers involved.
+If our estimate is in the thousands or millions, then 2.5 seems small. If our esimate is 4.3, then 2.5 seems large.
+
+One way to take this into account is to report **relative uncertainty**:
+
+$$
+\mbox{ralative uncertainty} = \frac{\mbox{uncertainty}}{\mbox{estimate}} = \frac{u_X}{\hat x}
+= \frac{u_X}{X}
+$$
+
+Again, we have shown the formula both in a statistician's notation (with a hat and lower case
+to indicate the estimate) and in notation that scientists often use (which is less precise
+regarding estimates vs estimators).
+
+<div class="example">
+Let's compute the relative uncertainty for a product $P = XY$.
+<br>
+
+<div class = "explain" label = "Show example">
+**Example** 
+Let $P = XY$ where $X$ and $Y$ have
+uncertainties $u_X$ and $u_Y$.
+Then $\Partial{P}{X} = Y$ and  $\Partial{P}{Y} =
+X$, so
+
+\begin{align*}
+\frac{u_P}{P} 
+& = \frac{ \sqrt{Y^2 u_X^2 + X^2 u_Y^2}}{P} 
+\\
+& = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{P^2} }
+\\
+& = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{X^2Y^2} }
+\\
+& = \sqrt{ \frac{ u_X^2}{X^2} + \frac{u_Y^2}{Y^2} }
+\\
+& = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
+\end{align*}
+which gives a Pythagorean identity for the relative uncertainties.
+
+```{r include = FALSE}
+x <- 3.41
+y <- 2.34
+dx <- y
+dy <- x
+u_x <- 0.04
+u_y <- 0.02
+A <- x * y
+u_A <- sqrt( dx^2 * u_x^2 + dy^2 * u_y^2)
+```
+</div>
+</div>
+
+<div class="example">
+We can use the rule for relative uncertainty to compute the standard uncertainty for 
+a product
+
+<div class="explain" label = "Show example">
+**Example** Use relative uncertainty to compute the standard uncertainty
+in the area of a rectangle computed by multiplying length and width 
+if length and width are reported as 
+$x = `r x` \pm `r u_x`$ is the estimate of the length of a 
+rectangle and  $y = `r y` \pm `r u_y`$ is the estimate of its width.  
+
+The relative uncertainties in the length and width are 
+	\[ 
+	\frac{`r u_x`}{`r x`} = `r u_x / x` \ \tand  \ 
+	\frac{`r u_y`}{`r y`} = `r u_y / y` 
+	\;.
+	\]
+	
+So the relative uncertainty in the area estimation is
+	\[
+	\sqrt{ (`r u_x / x`)^2 +  (`r u_y / y`)^2 }
+	=
+	`r sqrt((u_x / x )^2 +  ( u_y / y )^2)`
+	\;.
+	\]
+	
+Now we solve
+	\[
+	\frac{u_A}{`r A`} = `r sqrt(( u_x / x)^2 +  ( u_y / y )^2)`
+	\]
+	to get
+	\[
+	u_A = (`r A`) (`r sqrt((u_x / x)^2 + (u_y / y)^2)`) =
+	 `r A * sqrt((u_x / x)^2 +  (u_y / y)^2)`
+	\;.
+	\]
+</div>
+</div>
+
+## More Practice
+
+**16.** Compute the relative uncertainties for 
+the length, width, and perimeter in problem 12.
+
+**17.** Compute the relative uncertainties for the three quantities 
+in the dimes example.
+
+**18.** A measurement is reported as 152 with a relative uncertainty of 3%.
+What is the standard uncertainty for this measurement?
+
+**19.**
+If $X$ has a relative uncertainty of 3% and $Y$ has a relative uncertainty of 4%,
+what is the relative uncertainty of the product $XY$?
+
+**20.** Compute the relative uncertainties for time, distance, and average 
+velocity in problem 13.
+
+**21.**
+Let $Q = X / Y$.  Work out a formula for the relative uncertainty of $Q$ in terms 
+of the relative uncertainties of $X$ and $Y$.
+
+**22.** Check that your formula in 20 is correct for problem 19.
+
+**23.** Check that your formula in 20 is correct for the dimes example.
+
+

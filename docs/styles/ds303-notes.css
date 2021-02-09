@@ -1,0 +1,65 @@
+span.enumerated-chunk{
+  font-size: 150%
+}
+
+do, [do], .do {
+  background-color: #c6e8f5;
+}
+
+/* Code chunks need to be positioned so that the language markers can float right. */
+pre.python, pre.r {
+  position: relative;
+  padding-right: 30px; /* makes room for the language marker */
+}
+
+/* Here are the language markers. */
+pre.python::before {
+  content: "(py)"; display: block; position: absolute; right: 0;
+}
+
+pre.r::before {
+  content: "(r)"; display: block; position: absolute; right: 0;
+}
+
+/* Also set different background colors. */
+pre.python { background-color: #f9f5ec !important; }
+pre.r {      background-color: #75aadb10 !important; }
+
+div.important{
+  border-style: solid;
+  border-width: 2px ;
+  border-radius: 5px;
+  padding: 10px;
+  border-color: #3498eb ;
+}
+
+div.needs-work {
+  border-width: 2px;
+  border-style: solid;
+  border-color: red;
+  border-radius: 5px;
+}
+
+/* *************** code folding ************** */
+
+.showopt {
+  background-color: #004c93;
+  font-size: 12px;
+  color: #FFFFFF;
+  width: 100px;
+  height: 14px;
+  text-align: center;
+  vertical-align: middle !important;
+  float: right;
+  font-family: sans-serif;
+  border-radius: 5px;
+}
+
+.showopt:hover {
+    background-color: #dfe4f2;
+    color: #004c93;
+}
+
+pre.plot {
+  background-color: white !important;
+}

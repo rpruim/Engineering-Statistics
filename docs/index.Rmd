@@ -1,0 +1,76 @@
+---
+title: "Statistics for the Physical Sciences and Engineering"
+author: "Randall Pruim"
+output: 
+  html_document:
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This website has resources for an introductory statistics course taken by engineering students
+at Calvin University.
+
+* [Notes/Text book](book)
+
+* Worksheets
+
+  * Numerical Summaries of data: 
+      [[HTML](worksheets/Numerical-Summaries.html)]
+      
+  * Probability
+  
+    * Probability Terminology: 
+        [[HTML](worksheets/Probability-Terminology.html)]
+        [[PDF](worksheets/Probability-Terminology.pdf)]
+        
+    * Probability Simulations: 
+        [[HTML](worksheets/Probability-Simulations.html)]
+        [[PDF](worksheets/Probability-Simulations.pdf)]
+        
+    * Calculating Probabilities (Theoretical Method): 
+        [[HTML](worksheets/Probability-Theoretical.html)]
+        [[PDF](worksheets/Probability-Theoretical.pdf)]
+        
+    * Conditional Probability: 
+        [[HTML](worksheets/Probability-Conditional.html)]
+        [[PDF](worksheets/Probability-Conditional.pdf)]
+   
+  * Random Variables
+  
+    * Random Variables:
+        [[HTML](worksheets/Random-Variables.html)]
+        
+    * Expected Value and Variance of Random Variables
+        [[HTML](worksheets/Expected-Value-Variance.html)]
+    
+    * Families of Distributions
+        [[HTML](worksheets/Distributions-Families.html)]
+    
+    * Transformations and Combinations
+        [[HTML](worksheets/Distributions-Transformations.html)]
+  
+  * Confidence Intervals
+  
+    * Sampling Distributions and Confidence intervals 
+    [[HTML](worksheets/Sampling-Distributions-and-CIs.html)]
+  
+    * CIs for differences in means and proportions
+    [[HTML](worksheets/CI-diffmean.html)]
+  
+  * Propagation of Uncertainty [[HTML](worksheets/Propagation-of-Uncertainty.html)]
+    
+  * Linear Models 
+  
+    * Intro and Least Squares [[HTML](worksheets/Linear-Models-Intro.html)]
+    * How good are the estimates (standard errors and diagnostics)
+    [[HTML](worksheets/Linear-Models-Estimates.html)]
+    * Linear models and transformations [[HTML](worksheets/Linear-Models-Transformations.html)
+    * Non-linear models [[HTML](worksheets/Linear-Models-NLS.html)]
+   
+  * Hypothesis Testing [[HTML](worksheets/Hypotheis-Testing.html)]
+  
+  * Review
+    * Fundamental of Engineering Review Problems [[HTML](worksheets/FE-Review-problems.html)]

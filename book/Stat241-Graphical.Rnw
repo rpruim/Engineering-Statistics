@@ -1,0 +1,1158 @@
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
+
+\Chapter{Graphical Summaries of Data}
+
+<<setup-graphical, include = FALSE>>=
+theme_set(theme_bw(base_size = 8))
+@
+
+\section{Getting Started With \RStudio}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width = .85\textwidth]{images/RStudio-Welcome.png}
+\end{center}
+\caption{Welcome to \Rstudio.}
+\label{fig:Rstudio-welcome}%
+\end{figure}
+
+%You can access the Calvin \RStudio{} server via links from our course
+%web site (\url{http://www.calvin.edu/~rpruim/courses/m241/S13/}) or from
+%\url{http://dahl.calvin.edu}.
+\RStudio{} is an integrated development environment (IDE) for \R,  
+a freely available language and environment for statistical computing and graphics.
+Both are freely available for Mac, PC, and Linux.  
+
+In addition to running \RStudio{} on your local machine, you have the option
+of accessing an \RStudio{} server via a web browser.  (For best results, avoid 
+Internet Explorer.)
+
+% \subsection{Logging in and changing your password}
+% When you navigate to an \RStudio{} server, you will be prompted to login.  
+% % Your login and password are both your Calvin
+% % userid.  
+% Once you are logged in, you will see something like 
+% Figure~\ref{fig:Rstudio-welcome}.
+% 
+% To change your password:
+% \begin{enumerate}
+% 	\item From the \tab{Tools} menu, select \tab{Shell...}
+% 	\item
+% 		Type \code{yppasswd}
+% 	\item
+% 		You will be prompted for your old password, then your new password twice.
+% 	\item
+% 		If you give a sufficiently strong new password, then
+% 		you will receive notice that your password has been reset.  
+% 		If there was a problem, you will see a message about it and can try again.
+% 	\item
+% 		Once you have reset your password, click on \tab{Close} to close the 
+% 		shell and get back to \RStudio.
+% \end{enumerate}
+
+\subsection{Using R as a calculator}
+
+Notice that \Rstudio\ divides its world into four panels.  Several of the panels
+are further subdivided into multiple tabs.
+The console panel is where we type commands that \R\ will execute. 
+
+\R\ can be used as a calculator.  Try typing the following commands in the console panel.
+\Rindex{sqrt()}%
+\Rindex{log()}%
+\Rindex{log10()}%
+<<arithmetic2>>=
+5 + 3
+15.3 * 23.4
+sqrt(16)
+@
+You can save values to named variables for later reuse
+<<variables2,tidy = FALSE>>=
+product = 15.3 * 23.4       # save result
+product                     # show the result
+product <- 15.3 * 23.4      # <- is assignment operator, same as =
+product                     
+15.3 * 23.4 -> newproduct   # -> assigns to the right
+newproduct
+.5 * product                # half of the product
+log(product)                # (natural) log of the product
+log10(product)              # base 10 log of the product
+log(product, base = 2)        # base 2 log of the product
+@
+
+The semi-colon can be used to place multiple commands on one line.  
+One frequent use of this is to save and print a value all in one go:
+<<variables-semi2,tidy = FALSE>>=
+15.3 * 23.4 -> product; product    # save result and show it
+@
+
+\subsection{Loading packages}
+
+\R\ is divided up into packages.  A few of these are loaded every time you
+run \R, but most have to be selected.  This way you only have as much of \R\ as you
+need.
+
+In the \tab{Packages} tab, check the boxes next to the following packages to
+load them:
+\begin{itemize}
+	\item \pkg{mosaic}  (a package from Project MOSAIC)
+	\item \pkg{DAAG}  (a package that goes with the book \textit{Data Analysis and Graphic})
+\end{itemize}
+You an also load packages by typing, for example
+<<load-package>>=
+library(DAAG)       # loads the DAAG package if it is not already loaded
+@
+
+\subsection{Four Things to Know About \R}
+\begin{enumerate}
+\item \R\ is case-sensitive
+
+If you mis-capitalize something in \R, it won't do what you want.
+
+\item 
+Functions in \R\ use the following syntax:
+<<function-syntax,eval = FALSE>>=
+functionname( argument1, argument2, ... )
+@
+\vspace{-5mm}
+\begin{itemize}
+\item The arguments are \underline{always} \emph{surrounded by (round) parentheses} and 
+\emph{separated by commas}.
+
+Some functions (like \function{data()}) 
+have no required arguments, but you still need the parentheses.
+
+\item
+If you type a function name without the parentheses, you will see the \emph{code} for that
+function -- which probably isn't what you want at this point.
+\end{itemize}
+\item
+TAB completion and arrows can improve typing speed and accuracy.
+
+If you begin a command and hit the TAB key, \R\ will show you a list of
+possible ways to complete the command.  If you hit TAB after the opening
+parenthesis of a function, it will show you the list of arguments it expects.
+The up and down arrows can be used to retrieve past commands.
+\item Hit ESCAPE to break out of a mess.
+	
+	If you get into some sort of mess typing (usually indicated by extra '$+$' 
+	signs along the left edge, indicating that \R\ is waiting for more 
+	input -- perhaps because you have some sort of error in what has gone before), 
+	you can hit the escape key to get back to a clean prompt.
+\end{enumerate}
+
+
+\section{Data in \R}
+
+\myindex{data frame}%
+\myindex{observation unit}%
+\myindex{variable}%
+
+\subsection{Data Frames}
+Most often, data sets in \R\ are stored in a structure called a 
+\term{data frame}.  A data frame is designed to hold ``rectangular data".  
+The people or things being measured or observed are called 
+\term{observational units} (or subjects or cases when they are people).  
+Each observational unit is represented by one row. 
+The different pieces of information recorded for each observational unit are stored in
+separate columns, called \term{variables}.  
+
+\subsection{Data in Packages}
+There are a number of data sets built into \R\
+and many more that come in various add on packages.  
+
+You can see a list of data sets in a particular package like this:
+<<datasets,eval = FALSE>>=
+library(mosaicData)            # load the package
+data(package = "mosaicData")   # see what data sets are in it
+@
+
+You can find a longer list of all data sets available in any loaded package
+using 
+<<eval = FALSE>>=
+data()
+@
+
+
+\subsection{The HELPrct data set}
+The \dataframe{HELPrct} data frame from the \pkg{mosaic} package
+contains data from the Health Evaluation and Linkage to Primary Care
+randomized clinical trial.  You can find out more about the study and
+the data in this data frame by typing
+<<HELPrcthelp,eval = FALSE,tidy = FALSE>>=
+?HELPrct
+@
+
+Among other things, this will tell us something about the subjects (observational units) in
+this study:
+\begin{quote}
+	Eligible subjects were adults, who spoke Spanish or English, reported
+	alcohol, heroin or cocaine as their first or second drug of choice, resided
+	in proximity to the primary care clinic to which they would be referred or
+	were homeless. Patients with established primary care relationships they
+	planned to continue, significant dementia, specific plans to leave the
+	Boston area that would prevent research participation, failure to provide
+	contact information for tracking purposes, or pregnancy were excluded.
+
+Subjects were interviewed at baseline during their detoxification stay and
+follow-up interviews were undertaken every 6 months for 2 years.
+\end{quote}
+
+It is often handy to look at the first few rows of a data frame.  It will
+show you the names of the variables and the kind of data in them:
+<<headHELP>>=
+head(HELPrct)
+@
+
+When there are a lot of variable, this format is hard to read.  The \function{glimps()} or \function{inspect()}
+functions proved some other options.
+
+<<glimpseHELP>>=
+glimpse(HELPrct)
+inspect(HELPrct)
+@
+
+From this we see that there are \Sexpr{nrow(HELPrct)} observational
+units in this data set and \Sexpr{ncol(HELPrct)} variables.
+That's plenty of variables to get us started with exploration of data.
+
+\subsection{The KidsFeet data set}
+Here is another data set in the \pkg{mosaic} package:
+<<>>=
+head(KidsFeet)
+@
+
+\subsection{The oldfaith data set}
+A final example data set comes from the \pkg{alr4} package.  This package is probably not 
+loaded (unless you already loaded it).  You can load it from the \tab{Packages} tab or
+by typing the command
+<<>>=
+library(alr4)      # require(alr4) will also work
+@
+Once you have done that, you will have access to the data set containing information about
+Old Faithful eruptions.
+<<>>=
+head(oldfaith)
+@
+
+If you want to know the size of your data set, you can ask it how many rows and columns it has
+with
+\function{nrow}, \function{ncol}, or \function{dim}:
+<<>>=
+nrow(oldfaith)
+ncol(oldfaith)
+dim(oldfaith)
+@
+In this case we have 270 observations of each of two variables.
+In a data frame, the observational units are always in the rows and the variables
+are always in the columns.  If you create data for use in \R\ (or most other 
+statistical packages), you need to make sure your data are also in this shape.
+
+
+\subsection{Using your own data}
+
+In the Environment tab you will ``Import Dataset".  Click on this import data 
+from a CSV file, Excel spreadsheet, or a few other formats.  When you 
+do this, the R code will be displayed, so you can see how it is done in 
+\R{} code.
+
+If you are using the RStudio server, you will first need to upload your file to the server (unless you can
+access the file via URL).  To do this, choose ``Upload" from the Files tab.
+
+
+\section{Graphical and Numerical Summaries of Data}
+
+\subsection{The Most Important Template}
+
+Using the \pkg{mosiac} and \pkg{ggformula} packages, 
+we can compute a wide variety of graphical and numerical summaries 
+using the following general template:
+
+\begin{center}
+	\Large 
+	\texttt{ \fbox{\texttt{ goal \strut{}}} ( \fbox{\texttt{ y\strut{} }} $\sim$ \fbox{\texttt{ x\strut{} }}, data = \fbox{\texttt{ mydata\strut{} }} ) }
+\end{center}
+We will see this same template used again for linear and non-linear 
+modeling as well, so it is is important to master it.\footnote{This is textbook speak for "you should really 
+take note of this -- probably memorize it."}
+
+\begin{itemize}
+	\item \texttt{goal}: The name of the function generally describes your goal, 
+		the thing you want the computer to produce for you.  In the case of plotting,
+		it is the name of the plot.  When we do numerical summaries it will be the 
+		name of the numerical summary (mean, median, etc.).
+	\item \texttt{y}: For plots, this is the variable that goes on the y-axis. 
+	\item \texttt{x}: For plots, this is the variable that goes on the x-axis. 
+	\item
+		\texttt{formula}: Together, \texttt{y ~ x} is called a \term{formula}.
+		Very often we can think of \texttt{y ~ x} as ``y depends on x''.
+		We will see that sometimes we can omit \texttt{y} ore replace \texttt{x} with \texttt{.} (there must
+		always be something on the right-hand side).  We will even see things like 
+		\texttt{y ~ x | z}.  But the most important formula to learn is \texttt{y ~ x}.
+	\item
+		\texttt{mydata:} A data frame must be given in which the variables mentioned in
+		the formula can be found.  Variables not found there will be looked for in the 
+		enclosing environment.  Sometimes we will take advantage of this to avoid creating
+		a temporary data frame just to make a quick plot, but generally it is best to have
+		all the information inside a data frame.
+\end{itemize}
+
+
+\section{Scatterplots}
+
+The most common way to look at two quantitative variables is with a 
+scatter plot.  The \pkg{ggformula} function for this is \function{gf_point()}, 
+and the basic syntax is
+
+<<xyplot-syntax, eval = FALSE>>=
+gf_point( yvar ~ xvar, data = dataName)
+@
+
+Let's look at an example. Let's see how bill length is realted to body mass in some penguins.
+
+<<xyplot1, tidy = FALSE>>=
+library(palmerpenguins)
+head(penguins) 
+gf_point(bill_length_mm ~ body_mass_g, data = penguins)
+@
+
+That's all there is to it.  We can replace \code{bill_length_mm}, \code{body_mass_g}, and 
+\code{penguins} with any variables and data set we like to get the scatter plot we want.
+
+\subsection{Adding Color}
+
+Let's add some color. Consider the next two examples.
+
+<<setting-color>>=
+gf_point(bill_length_mm ~ body_mass_g, color = "navy", data = penguins)
+@
+
+<<mapping-color>>=
+gf_point(bill_length_mm ~ body_mass_g, color = ~ species, data = penguins)
+@
+
+\begin{itemize}
+\item
+In the first we are \term{setting} the color of the dots to be navy.
+\item
+In the second, we are \term{mapping} color based on \code{species}.
+Think of \code{color = ~ species} as ``color depends on  species".
+\end{itemize}
+
+\subsection{Transparency and dot size}
+
+With so much data in so little space, overplotting (dots on top of each other) can make 
+it hard to see what is going on. We can improve this plot by making the dots smaller
+and semi-transparent.
+
+<<transparency-and-dot-size, fig.width = 5>>=
+gf_point(bill_length_mm ~ body_mass_g, color = ~ species, data = penguins,
+         size = 0.8, alpha = 0.5)
+@
+
+There are many other options we can use to refine our plots.  We'll learn about some of them as we 
+go along. You can use \R{}'s built-in help to find out more.  Our you can type
+
+<<quick-help>>=
+gf_point()
+@
+
+\subsection{Conditional plots (aka Faceting)}
+
+The formula for a \pkg{ggformula} plot can be extended to create multiple
+panels, called facets, based on a ``condition'', often given by another variable. 
+The  general syntax for this becomes
+<<eval = FALSE>>=
+plotname( y ~ x | condition, data = dataName )
+@
+
+You can read the formula \code{y ~ x | condition} as saying that we want to know how y depends on x separately
+for each condition.
+In our penguins example, we might divide up the data according to the islands on which the penguins were spotted.
+
+<<facets, fig.width = 5>>=
+gf_point(bill_length_mm ~ body_mass_g | island, color = ~ species, data = penguins,
+         size = 0.8, alpha = 0.5)
+@
+
+\subsection{Other types of plots}
+
+A scatter plot will be our most common plot for two quantitative variables, but we can use the same
+template for any otehr type of plot.  Here are two examples.
+
+<<penguins-more, fig.width = 5>>=
+gf_density2d(bill_length_mm ~ body_mass_g, color = ~ species, data = penguins, alpha = 0.5)
+gf_hex(bill_length_mm ~ body_mass_g, data = penguins, binwidth = c(250, 2))
+@
+
+
+\section{Graphing the Distribution of One Variable}
+
+A \textbf{distribution} is described by telling what values occur 
+and with what frequency.  That is, the distribution answers two 
+questions:
+\begin{itemize}
+	\item What values?  
+	\item How often?
+\end{itemize}
+
+Statisticians have devised a number of graphs to help us see 
+distributions of a variable visually.  
+In these graphs, \R{} can compute the y-variable for us.  In this case, we simply
+omit the \code{y} part of the formula, so the
+general syntax for making a graph or numerical summary
+of one variable in a data frame is
+<<eval = FALSE>>=
+plotname( ~ variable, data = dataName )
+@
+In other words, there are three pieces of information we must provide to 
+\R\ in order to get the plot we want:
+\begin{itemize}
+	\item
+		The kind of plot. 
+		  (\function{gf_histogram()}, \function{gf_bar()}, 
+		 \function{gf_density()}, \function{gf_boxplot()}, etc.) 
+	\item
+		The name of the variable
+	\item
+		The name of the data frame this variable is a part of.
+\end{itemize}
+
+Note: The same syntax works for numerical summaries as well -- thanks to the \pkg{mosaic}
+package we can apply the same syntax for 
+		\function{mean}, \function{median}, \function{sd},
+		\function{var}, \function{max}, \function{min}, etc.
+		Later we will use this syntax again to compute linear and 
+		nonlinear models.
+
+\subsection{Histograms (and density plots) for quantitative variables}
+
+Histograms (and density plots) are the two most common ways of displaying the distribution 
+of a quantitative variable.
+
+
+Here are a couple examples:
+
+<<histogram>>=
+gf_histogram( ~ Duration, data = oldfaith)  
+gf_histogram( ~ age, data = HELPrct)
+@
+
+In each of these plots the height of the bar indicates how many observations
+fall within the range indicated by the bottom of the bar. So in the histogram below,
+the red bar indicates that there are almost 60 eruptions of duration between 100 and 125 seconds
+in this data set.
+
+<<histogram-explained>>=
+gf_histogram( ~ Duration, data = oldfaith, binwidth = 25, boundary = 100) %>%
+  gf_histogram( ~ Duration, data = oldfaith %>% filter(Duration >100, Duration <= 125), 
+                fill = "red", color = "black", 
+                binwidth = 25, boundary = 100) 
+  
+@
+
+We can control the (approximate) number of bins using the \option{bins}.
+The number of bins (and to a lesser extent the positions of the bins)
+can make a histogram look quite different.
+<<histogram2, fig.width = 3,out.width = '.3\\textwidth'>>=
+gf_histogram( ~ Duration, data = oldfaith, bins = 8 )
+gf_histogram( ~ Duration, data = oldfaith, bins = 15 )
+gf_histogram( ~ Duration, data = oldfaith, bins = 30 )
+@
+
+
+We can use \option{binwidth} to set the width of the bins.
+
+<<binwidth,fig.width = 3,out.width = ".3\\textwidth">>=
+gf_histogram( ~ Duration, data = oldfaith, binwidth = 60 )
+gf_histogram( ~ Duration, data = oldfaith, binwidth = 20 )
+gf_histogram( ~ Duration, data = oldfaith, binwidth = 5 )
+@
+
+\R\ also provides a ``smooth'' version called a density plot and a triangular version
+called a frequency polygon:; 
+
+<<density,fig.width = 3,out.width = ".3\\textwidth">>=
+gf_density( ~ Duration, data = oldfaith )
+gf_dens( ~ Duration, data = oldfaith )
+gf_freqpoly( ~ Duration, data = oldfaith )
+@
+
+
+\subsection{Describing the shape of a distribution}
+
+If we make a histogram of our data, we can describe the overall shape of the distribution.
+Keep in mind that the shape of a particular histogram may depend on the choice of bins.
+Choosing too many or too few bins can hide the true shape of the distribution.  (When in doubt, make
+more than one histogram.)
+
+Here are some words we use to describe shapes of distributions.
+\begin{description}
+\item[symmetric] The left and right sides are mirror images of each other.
+\item[skewed] The distribution stretches out farther in one direction than in the other.  
+(We say the distribution is skewed toward the long tail.)
+\item[uniform] The heights of all the bars are (roughly) the same.  
+(So the data are equally likely to be anywhere within some range.)
+\item[unimodal] There is one major ``bump'' where there is a lot of data.
+\item[bimodal] There are two ``bumps''.
+\item[outlier] An observation that does not fit the overall pattern of the rest of 
+the data.
+\end{description}
+
+We'll learn about another graph used for quantitative variables (boxplots)
+soon.
+
+\subsection{Bar graphs for categorical variables}
+
+Bar graphs are a way of displaying the distribution of a categorical variable.
+
+<<bargraph>>=
+gf_bar( ~ species, data = penguins)   # vertical bars
+gf_bar(species ~ ., data = penguins)  # horizontal bars
+@
+
+Statisticians rarely use pie charts because they are harder to read except in a few special cases (like comparing
+a proportion to 50\%).
+
+\subsection{Overlaying and faceting data}
+
+Overlaying and faceting work the same for these one variables plots as they did for the scatterplots above.
+
+<<fig.width = 3, out.width = "0.3\\textwidth">>=
+gf_bar( ~ species | island, data = penguins)
+gf_histogram( ~ body_mass_g | species, data = penguins)
+gf_dens( ~ body_mass_g, color = ~ species, data = penguins)
+@
+
+For example, we might like to see how the ages of men and women compare 
+in the HELP study, or whether the distribution of weights of male mosquitoes 
+is different from the distribution for females.
+
+<<compare-ages>>=
+gf_histogram( ~ age | sex, data = HELPrct, binwidth = 5)
+gf_dens( ~ length | sex, data = KidsFeet )
+@
+
+
+We can do the same thing for bar graphs.
+
+<<substance-by-sex>>=
+gf_bar( ~ substance | sex, data = HELPrct)
+@
+
+\subsection{Grouping and bar charts}
+
+When dividing bar charts into multiple colors, we can present the segmented bars "stacked" (the default)
+or "dodged":
+
+<<groups>>=
+gf_bar(~substance, fill = ~sex, data = HELPrct)
+gf_bar(~substance, fill = ~sex, data = HELPrct, position = "dodge")
+@
+
+\subsection{Proportions and bar charts}
+
+Sometimes it is better to display bars with proportions rather than counts. But then we must decide
+what to use for the denominator.
+In the first example below, the total of all teh bars adds to 1. In the second plot, the total
+adds to one for each x variable, which makes it easier to see how the proportions of male and female
+.
+
+<<gf-props>>=
+gf_props(~substance, fill = ~sex, data = HELPrct)
+gf_props(~substance, fill = ~sex, data = HELPrct, denom = ~ x)
+@
+
+\section{Labeling plots}
+
+Often the defaults labels are not ideal for publication purposes. You can add titles and captions
+and change the labeling of variables using \function{gf_labs()}.
+
+<<gf-labs>>=
+gf_point(bill_length_mm ~ body_mass_g | island, color = ~ species, data = penguins,
+         size = 0.8, alpha = 0.5) %>%
+  gf_labs(x = "body mass (g)", y = "bill length (mm)", 
+          title = "Some penguin measurments", caption = "Data Source: palmerpenguins")
+@
+
+Notice the \verb!%>%! in the example above.  This important and connects the labeling
+below to the plot above.
+
+\section{Exporting Plots}
+
+You can save plots to files or copy them to the clipboard using the 
+\tab{Export} menu in the \tab{Plots} tab.  It is quite simple to copy the 
+plots to the clipboard and then paste them into a Word document, for example.
+You can even adjust the height and width of the plot first to get it the 
+shape you want.  \emph{But there are much better ways to produce documents 
+with \R{} graphics in them!}  See the next section.
+
+\section{Reproducible Research}
+
+Copy-and-paste is a bad workflow for lots of reasons, including:
+\begin{itemize}
+	\item It is tedious, unless there is very little to copy and paste.
+	\item It is error-prone -- it's easy to copy to little or too much, or to grab the wrong thing,
+		or to copy when you want to cut or cut when you want to copy.
+	\item
+		If something changes, you have to start all over.
+	\item
+		You have no record of what you did (unless you are an unusual person who
+		takes detailed notes about all the copying and pasting).
+\end{itemize}
+So while copy-and-paste seems easy and convenient, it is not \emph{reproducible}.
+Reproducibility is important when projects are large, when it is important to have record of 
+exactly what was done, or when the same analysis is applied to multiple data sets (or a data set
+that is growing over time).
+
+\RStudio\ makes it easy to use techniques of reproducible research to create
+documents that include text, \R\ commands, \R\ output, and \R\ graphics.  
+
+\subsection{R Markdown}
+The simplest version of this uses a format called R Markdown.  Markdown is a simple
+mark up language that allows for a few basic improvements on plain text
+(section headers, bulleted lists, numbered lists, bold, italics, etc.)  R
+Markdown adds the ability to mix in the \R\ stuff.  
+The end product is an HTML file, so it is especially good for producing web 
+documents.\footnote{You can actually mix in arbirary HTML and even css, so if you
+are good at HTML, you can have quite a bit of control over how things look.  Here will
+will focus on the basics.}
+
+\subsubsection{Creating a new document}
+To create a new R Markdown document, go to ``File", ``New File", then ``R Markdown":
+\begin{center}
+	\includegraphics[width = 3in]{images/NewRMarkdown.png}
+\end{center}
+
+From there, choose either ``document" or ``from template".  The \pkg{mosaic} plain 
+template is a good starting point.
+
+\begin{center}
+	\includegraphics[width = 3in]{images/FromTemplate.png}
+\end{center}
+
+
+When you do this, a file editing pane will open with a template inserted.  If
+you click on ``Knit HTML", \RStudio\ will turn this into an HTML file and
+display it for you.  Give it a try.  You will be asked to name your file if you
+haven't already done so.  If you are using the \RStudio\ server in a browser,
+then your file will live on the server (``in the cloud'') rather than on your
+computer.
+
+If you look at the template file you will see that the file has two kinds of
+sections.  Some of this file is just normal text (with some extra symbols to
+make things bold, add in headings, etc.)  You can get a list of all of these
+mark up options by selecting the ``Markdown Quick Reference" in the help
+menu.
+
+\begin{center}
+	\includegraphics[width = 3.5in]{images/MarkdownQuickReference.png}
+\end{center}
+
+The second type of section is an \R\ code chunk.  These are colored differently to make them
+easier to see.  You can insert a new code chunk by selecting by selecting
+the appropriate chunk type (R in our case) from the menu below.
+\begin{center}
+	\includegraphics[width = 1.2in]{images/InsertChunk.png}
+\end{center}
+
+\noindent
+You can also type 
+<<eval = FALSE>>=
+```{r}
+```
+@
+to begin and end the code chunk if you would rather type.
+You can put any \R\ code in these code chunks and the results (text output or graphics) as well
+as the \R\ code will be displayed in your HTML file.
+
+%There are options to do things like (a) run \R\ code without displayng it, (b) run \R\ code without
+%displaying the output, (c) controling size of plots, etc., etc.  
+%But for starting out, this is really all you need to know.
+
+\subsection*{R Markdown files must be self-contained}
+R Markdown files do not have access to things you have done in your console.  (This is good, else 
+your document would change based on things not in the file.)  This means that you must explicitly
+load any data packages that you use \emph{in the R Markdown file}. In this class,
+this means that most of your R Markdown files will have a chunk near the beginning that 
+includes
+
+<<eval = FALSE>>=
+library(mosaic)
+@
+
+\noindent
+If you use one of the RMarkdown templates provided, 
+this (and some otehr things) will be included in the template and save you some time.
+
+\iffalse
+\subsubsection{Creating an R Markdown document}
+To create an R Markdown document, choose ``File", then ``New File", then ``R Markdown".  The file
+will open with a template already loaded.   Take a quick look and you will see that most 
+of this is easy to read.  You can see some text with a few extra symbols thrown in here and 
+there and some chunks of \R\ code.
+Now click on the "knit HTML" button and this document will be converted to HTML.
+
+To create your own content, simply delete out the things you don't want or need
+and replace them with your own content.  If you forget the markup, there is a help button
+that will lead you to a quick reference guide.  To add a chunk of \R\ code, click on 
+``Chunk" and then ``Insert Chunk" and put your \R\ code inside the chunk.
+
+In addition to knitting the document to HTML, you can do a number of other things that will
+make your work more efficient.  In the ``Chunk" menu, you can choose to run a single chunk 
+or all the chunks.  This will execute your commands in the console so you can make sure 
+your \R\ code is working one chunk at a time.  There is also a ``run" button that allows you
+to run just one line from within a chunk.
+
+\subsubsection{R Markdown files do not have access to the console environment}
+One thing you need to remember about R Markdown documents is that the file must be self-contained.
+This ensures that the document is portable.  It also means that the docuemnt does not have 
+access to the things in your console environment.  All data must be loaded in the file.  
+Similarly, all packages you use must also be loaded in the file.  If you start getting messages 
+about objects not being found, one possible cause is that you have forgotten to get some 
+data or some package loaded inside your file.  (Typos are another cause for these messages -- 
+check your spelling and capitalization.)
+\fi
+
+\subsection{Chunk options}
+R Markdown provides a number of chunk options that control how \R\ code is processed.  
+You can use them to do things like:
+\begin{itemize}
+	\item
+		run the code without displaying it (good for polished reports -- your client doesn't want to see the code)
+	\item
+		show the code without running it -- mainly useful for demonstration purposes
+	\item
+		control the size and alignment of graphics
+\end{itemize}
+You can set default values for the chunk options and you can also override them in individual
+chunks.  See the R Markdown help for more information about chunk options.
+
+The default plots are often bigger than required.  The following chunk options are a place to 
+start.  They can be adjusted as necessary.
+<<eval = FALSE>>=
+library(knitr)
+opts_chunk$set(fig.width = 5, fig.height = 2, fig.align = "center", fig.show = "hold")
+@
+
+Some of these document settings can also be set in the YAML header 
+(the top few lines of the RMarkdown file).
+
+\subsection{knitr/latex}
+There is another system that produces PDFs by combining \LaTeX\ and \R.  This is the system
+used to create this document and it gives much more control over paper-like formatting.  The
+quality is good enough for profession publishing.  If you already knwow \LaTeX, it is very
+easy to learn.  If you don't know \LaTeX, then you need to learn the basics of \LaTeX\ to get
+going, but it isn't very difficult.
+
+\R\ code and output can be copied and pasted as well.  It's best to use a 
+fixed width font (like Courier) for \R\ code so that things align properly.
+
+Note:  \RStudio\ provide some nice utilities for creating documents that include
+text, code, graphics, and statistical analyses all in one document.  That's how this 
+document was produced.  The simpler of these is called RMarkdown.  The resulting file
+will be an HTML file with embedded plots.  You can gain more control over the output
+by using \pkg{knitr} which provides a way to combine \LaTeX\ and \R in a single
+document.  The resulting document in this case is a high quality PDF
+
+\iffalse
+\section{A Few Bells and Whistles}
+There are lots of arguments that control how these plots look.  Here are just a
+few examples, some of which we have already seen.
+
+% \subsection{auto.key}
+% \option{auto.key = TRUE} turns on a simple legend for the grouping variable.  
+% (There are ways to have more control, if you need it.)
+% <<iris-xyplot-key,cache = TRUE,fig.width = 2.6,fig.height = 2.4>>=
+% xyplot(Sepal.Length ~ Sepal.Width, groups = Species, data = iris, 
+% 	auto.key = TRUE)   
+% @
+
+\subsection{alpha, size}
+Sometimes it is nice to have elements of a plot be partly transparent.  When
+such elements overlap, they get darker, showing us where data are ``piling up."
+Setting the \argument{alpha} argument to a value between 0 and 1 controls the
+degree of transparency: 1 is completely opaque, 0 is invisible.  The
+\argument{size} argument controls the size of lines and points.
+
+Here is another example using data on 150 iris plants of three species.
+<<iris-xyplot-alpha,cache = TRUE,fig.width = 2.7,fig.height = 2.2>>=
+gf_point(Sepal.Length ~ Sepal.Width, color = ~ Species, data = iris, 
+	alpha = .5,
+	size = 1.3)   
+@
+
+\subsection*{main, sub, xlab, ylab}
+
+You can add a title or subtitle, or change the default labels of the axes.
+<<iris-xyplot-text,cache = TRUE,fig.width = 3,fig.height = 2.5>>=
+gf_point(Sepal.Length ~ Sepal.Width, color = ~Species, data = iris, 
+	main = "Some Iris Data",
+	sub = "(R. A. Fisher analysized this data in 1936)",
+	xlab = "sepal width (cm)",
+	ylab = "sepal length (cm)",
+	alpha = .5        
+)
+@
+
+
+\subsubsection*{linetype, shape}
+These can be used to change the line type, line width, plot character, and
+color.  To specify multiples (one for each group), use the \function{c()} function 
+(see below).
+
+<<pch-lwd-lty,cache = TRUE,fig.width = 3,fig.height = 2.2>>=
+gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = ~ sex)
+gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dotted")
+gf_histogram( ~ age, data = HELPrct, fill = 'steelblue')
+@
+
+You can see a list of the hundreds of available color names using
+\Rindex{colors()}%
+<<colors,eval = FALSE>>=
+colors()
+@
+
+\subsection{trellis.par.set()}
+Default settings for graphics properties can be set as follows:
+
+<<fontsize,eval = TRUE>>=
+theme_set(theme_classic(base_size = 6))    # base size for text is 6 point; classic theme.
+gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dashed")
+theme_set(theme_bw(base_size = 8))    
+gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dashed")
+@
+\fi
+
+\section{Getting Help in RStudio}
+
+\subsection{The \RStudio\ help system}
+There are several ways to get \RStudio\ to help you when you forget something.
+Most objects in packages have help files that you can access by typing something 
+like:
+<<help-questionmark,eval = FALSE,tidy = FALSE>>=
+?bargraph
+?histogram
+?HELPrct
+@
+You can search the help system using
+<<help-GR,eval = FALSE>>=
+help.search('Grand Rapids')    # Does R know anything about Grand Rapids?
+@
+This can be useful if you don't know the name of the function or data set you 
+are looking for.
+
+\subsection{Tab completion}
+As you type the name of a function in \RStudio, you can hit the tab key and it
+will show you a list of all the ways you could complete that name, and after
+you type the opening parenthesis, if you hit the tab key, you will get a list
+of all the arguments and (sometimes) some helpful hints about what they are.)
+
+\subsection{History}
+If you know you have done something before, but can't remember how, you can
+search your history.  The history tab shows a list of recently executed
+commands.  There is also a search bar to help you find things from longer ago.
+
+\subsection{Error messages}
+When things go wrong, \R\ tries to help you out by providing an error message.
+If you can't make sense of the message, you can try copying and pasting your
+command and the error message and sending to me in an email.  One common error
+message is illustrated below.
+<<error-message>>=
+fred <- 23
+frd
+@
+The object \code{frd} is not found because it was mistyped.  It should have
+been \code{fred}.  If you see an ``object not found'' message, check your
+typing and check to make sure that the necessary packages have been loaded.
+
+\section{Graphical Summaries -- Important Ideas}
+
+\subsection{The Most Important Template}
+
+The plots we have created have all followed a single template
+
+\begin{center}
+	\Large 
+	\texttt{ \fbox{\texttt{ goal }} ( \fbox{\texttt{ formula }}, data = \fbox{\texttt{ mydata }}, ... ) }
+\end{center}
+We will see this same template used again for numerical summaries and linear and non-linear 
+modeling as well, so it is is important to master it.
+
+\begin{itemize}
+	\item \texttt{goal}: The name of the function generally describes your goal, 
+		the thing you want the computer to produce for you.  In the case of plotting,
+		it is the name of the plot.  When we do numerical summaries it will be the 
+		name of the numerical summary (mean, median, etc.).
+	\item
+		\texttt{formula}: For plotting, the formula describes which variables are 
+		used on the x-axis, the y-axis and for conditioning.  The general scheme is
+<<eval = FALSE>>=
+y ~ x | z
+@
+		where \texttt{z} is the conditioning variable.  Sometimes \texttt{y} or \texttt{z} 
+		are missing (but the right-hand side \texttt{x} must always be included in a formula).
+	\item
+		\texttt{mydata:} A data frame must be given in which the variables mentioned in
+		the formula can be found.  Variables not found there will be looked for in the 
+		enclosing environment.  Sometimes we will take advantage of this to avoid creating
+		a temporary data frame just to make a quick plot, but generally it is best to have
+		all the information inside a data frame.
+	\item
+	\texttt{...} There are many optional arguments to control sizes, colors, etc.
+	We will introduce these as they are needed. Consult the help files for assistance.
+		
+\end{itemize}
+
+Just fill in the boxes and get your plot.
+
+\subsection{Patterns and Deviations from Patterns}
+The goal of a statistical plot is to help us see 
+\begin{itemize}
+\item 
+potential patterns in the data, and 
+\item
+deviations from those patterns.  
+\end{itemize}
+
+\subsection{Different Plots for Different Kinds of Variables}
+Graphical summaries can help us see the \emph{distribution} of a variable 
+or the \emph{relationships} between two (or more) variables.  The type of plot
+used will depend on the kinds of variables involved.
+There is a nice summary of these on page~48.  You can use \function{demo()} to see how
+to get \R\ to make the plots in this section.
+
+Later, when we do statistical analysis, we will see that the analysis we use will 
+also depend on the kinds of variables involved, so this is an important idea.
+
+\subsection{Side-by-side Plots and Overlays Can Reveal Importance of Additional Factors}
+The \pkg{ggformula} graphics plots make it particularly easy to generate plats that 
+divide the data into groups and either produce a panel for each group (using \verb!|!)
+or display each group in a different way (different colors or symbols, using 
+the \argument{groups} argument).  These plots can reveal the 
+possible influence of additional variables -- sometimes called covariates.
+
+\subsection{Area = (relative) frequency}
+
+Many plots are based on the key idea that our eyes are good at comparing areas.  Plots 
+that use area (e.g., histograms, mosaic plots, bar charts, pie charts) should always obey
+this principle
+\begin{center}
+\large
+Area $ = $ (relative) frequency
+\end{center}
+Plots that violate this principle can be deceptive and distort the true nature
+of the data.  
+
+% \subsubsection*{An Example: Histogram with unequal bin widths}
+% 
+% It is possible to make histograms with bins that have different widths.
+% But in this case it is important that the height of the bars is chosen so 
+% that area (\emph{NOT height}) is proportional to frequency.  
+% Using height instead of area would distort the picture.
+% 
+% When unequal bin sizes are specified, \function{histogram()} by default chooses
+% the density scale:
+% 
+% <<hist-unequal-bins,fig.width = 3,fig.height = 2>>=
+% gf_histogram( ~ Sepal.Length, data = iris, breaks = c(4,5,5.5,5.75,6,6.5,7,8,9))
+% @
+% The density scale is important.
+% It tells \R\ to use a scale such that 
+% the area (height $\times$ width) of the rectangles is equal to the relative frequency.
+% For example, the bar from 5.0 to 5.5 has width $\frac12$ and height about $0.36$, so 
+% the area is $0.18$, which means approximately 18\% of the sepal lengths are 
+% between 5.0 and 5.5.
+% 
+% 
+% It would be incorrect to choose \option{type = "count"} or \option{type = "proportion"} since
+% this distorts the picture of the data.  Fortunately, \R\ will warn you if you try:
+% <<hist-unequal-bins-bad-echo,fig.width = 3,fig.height = 2,eval = FALSE>>=
+% histogram( ~ Sepal.Length, data = iris, breaks = c(4,5,5.5,5.75,6,6.5,7,8,9), type = 'count')
+% @
+% <<hist-unequal-bins-bad,fig.width = 3,fig.height = 2,echo = FALSE>>=
+% trellis.par.set(theme = col.fastR2(bw = T))
+% histogram( ~ Sepal.Length, data = iris, breaks = c(4,5,5.5,5.75,6,6.5,7,8,9),type = "count")
+% trellis.focus('panel',1,1)
+% grid.text(y = .7,'Never do this!', gp = gpar(col = 'red',cex = 2,alpha = .6))
+% trellis.unfocus()
+% trellis.par.set(theme = col.mosaic())
+% @
+% 
+% Notice how different this looks.  Now the heights are equal to the relative
+% frequency, but this makes the wider bars have too much area.
+
+
+\section{Exercises}
+
+The solutions to these exercises should be done using an RMarkdown document
+and knitTHML in RStudio.
+Include both the plots and the code you used to make them as well as any
+required discussion.  Once you get the plots figured out, feel free to 
+use some of the bells and whistles to make the plots even better.
+
+\begin{problem}
+	Create a scatterplot using the two variables in the \dataframe{oldfaith}
+	data frame (available in the \pkg{alr4} package).  
+	What do we learn about Old Faithful eruptions from this plot?
+\end{problem}
+
+
+\begin{problem}
+	Where do the data in the \dataframe{CPS85} data frame (in the 
+	\pkg{mosaic} package) come from?  What are the observational 
+	units?  How many are there?
+\end{problem}
+
+\begin{problem}
+	Choose a quantitative variable that interests you in the \dataframe{CPS85}
+	data set.  Make an appropriate plot and comment on what you see.
+\end{problem}
+
+\begin{problem}
+	Choose a categorical variable that interests you in the \dataframe{CPS85}
+	data set.  Make an appropriate plot and comment on what you see.
+\end{problem}
+
+\begin{problem}
+	Create a plot that displays two or more variables from the 
+	\dataframe{CPS85} data.  At least one should be quantitative 
+	and at least one should be categorical.
+	Comment on what you can learn from your plot.
+\end{problem}
+
+\begin{problem}
+	Where do the data in the \dataframe{mpg} data frame (in the 
+	\pkg{ggplot2} package) come from?  What are the observational 
+	units?  How many are there?
+\end{problem}
+
+\begin{problem}
+	Choose a quantitative variable that interests you in the \dataframe{mpg}
+	data set.  Make an appropriate plot and comment on what you see.
+\end{problem}
+
+\begin{problem}
+	Choose a categorical variable that interests you in the \dataframe{mpg}
+	data set.  Make an appropriate plot and comment on what you see.
+\end{problem}
+
+\begin{problem}
+	Create a plot that displays two or more variables from the 
+	\dataframe{mpg} data.  At least one should be quantitative 
+	and at least one should be categorical.
+	Comment on what you can learn from your plot.
+\end{problem}
+
+\begin{problem}The file at \url{http://www.calvin.edu/~rpruim/data/Fires.csv}
+	is a csv file containing data on wild lands fires in the US over a number of years.
+You can load this data one of two ways.
+\begin{itemize}
+	\item
+		Go to the workspace tab, select \tab{Import Data Set}, choose \tab{From Web URL...}
+		and follow the instructions.
+	\item
+		Use the following command in \R:
+		
+<<>>=
+# equivalent to "From Text (base)" in RStudio
+Fires <- read.csv("https://rpruim.github.io/Engineering-Statistics/data/Fires.csv")
+
+# alternative method -- equivalent to "From Text (readr)" in RStudio
+library(readr)
+Fires <- read_csv("https://rpruim.github.io/Engineering-Statistics/data/Fires.csv")
+@
+\end{itemize}
+You can also use either of these methods to read from a file rather than from a
+web URL, so this is a good way to get your own data into \R.
+\begin{enumerate}
+	\item
+		The source for these data claim that data before a certain year should not be compared
+		to data from after that year because the older data were computed a different way and
+		are not considered as reliable.  What year is the break point?  Use graphs of the data 
+		over time to estimate when something changed.
+	\item
+		You can trim the data to just the subset you want using \function{subset()}.  For 
+		example, to get just the subset of years since 1966, you would use
+<<>>=
+Fires2 <- subset(Fires, Year > 1966)
+@
+		Be sure to use a new name if you want to keep the original data available.
+
+		Do this to create a data set that contains only the data from the new data regime (based on your answer in the previous problem).
+	\item
+		Using only the data from this smaller set, how would describe what is happening with 
+		fires over time?
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+	Use \R's help system to find out what the \variable{i1} and \variable{i2}
+	variables are in the \dataframe{HELPrct} data frame.  Make histograms
+	for each variable and comment on what you find out.  How would you describe
+	the shape of these distributions?  Do you see any outliers (observations
+	that don't seem to fit the pattern of the rest of the data)?  
+\end{problem}
+\begin{problem}
+	Compare the distributions of \variable{i1} and \variable{i2} among men
+	and women.
+\end{problem}
+\begin{solution}
+<<>>=
+gf_dens( ~max_drinks, color = ~ sex, data = HELPrct )
+gf_dens( ~avg_drinks, color = ~ sex, data = HELPrct )
+@
+\end{solution}
+
+\begin{problem}
+	Compare the distributions of \variable{i1} and \variable{i2} among 
+	the three \variable{substance} groups.
+\end{problem}
+\begin{solution}
+<<>>=
+gf_dens( ~i1, color = ~ substance, data = HELPrct )
+gf_dens( ~i2, color = ~ substance, data = HELPrct )
+@
+<<>>=
+gf_dens( ~i1 | sex, color = ~ substance, data = HELPrct )
+gf_dens( ~i2 | sex, color = ~ substance, data = HELPrct )
+@
+<<>>=
+gf_point( i2 ~ i1, color = ~ sex, data =  HELPrct, alpha = .6, size = .6 )
+@
+\end{solution}
+
+\begin{problem}
+	The \dataframe{SnowGR} contains historical data on snowfall in Grand Rapids, MI.
+	The snowfall total for January, 2014 was 36.6 inches.
+	\begin{enumerate}
+		\item
+			Create a histogram of January snowfall totals.  How unusual is 36.6 inches of 
+			snow in January?
+		\item
+			If there is a lot of snow in January, should we expect to have unusually much
+			or little snow in February?  Make a scatter plot comparing January and February
+			snowfall totals and comment on what you see there.
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+gf_histogram( ~ Jan, data = SnowGR)
+@
+36.6 inches is pretty high, but not the highest ever for a January.  Certainly well above average.
+
+<<>>=
+gf_point(Feb ~ Jan, data = SnowGR)
+@
+There is no clear trend.  Somtime the snow keeps on coming, but a heavy snow
+January could be followed by either a heavy or light snow February.
+\end{solution}
+\shipoutProblems
+
+\ifsolutions
+\ifsolutionslocal
+\newpage
+\section*{Solutions}
+\shipoutSolutions
+\fi
+\fi

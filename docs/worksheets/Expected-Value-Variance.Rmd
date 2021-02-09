@@ -1,0 +1,424 @@
+---
+title: "Expected Value and Variance of Random Variables"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ../styles/ds303-notes.css
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\Unif{{\sf Unif}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+theme_set(theme_bw())
+set.seed(20210108)
+```
+
+## Warm-Up
+
+**Example 1.**
+Suppose a student has taken $10$ courses
+and received $5$ A's, $4$ B's, and $1$ C.  Using the traditional numerical scale where 
+an A is worth $4$, a B is worth $3$, and a C is worth $2$, what is this student's 
+GPA (grade point average)?
+
+\vfill
+\vfill
+
+<div class = "explain" label = "Show solution">
+The first thing to notice is that $\frac{4 + 3 + 2}{3} = 3$ is \emph{not} correct.
+  We cannot simply add up the values and divide by the number of values.  Clearly
+  this student should have a GPA that is higher than $3.0$, since there were more A's than
+  C's.
+
+Consider now a correct way to do this calculation:
+\begin{align*}
+	\mbox{GPA} &= \frac{4 + 4 + 4 + 4 + 4 + 3 + 3 + 3 + 3 + 2}{10}
+	\\[2mm]
+	& = \frac{5\cdot 4 + 4\cdot 3 + 1 \cdot 2}{10} \\[1mm]
+	& = \frac{5}{10} \cdot 4 + \frac{4}{10}\cdot 3 + \frac{1}{10} \cdot 2 \\
+	& = 4 \cdot \frac{5}{10} + 3 \cdot \frac{4}{10} + 2 \cdot \frac{1}{10} \\
+	& =  3.4 \;.
+\end{align*}
+</div>
+
+## Expected Value
+
+### The big idea
+
+
+<div class = "explain" label = "Show the Big Idea">
+The key idea here is that the mean is a __sum__ of __values__ times __probabilities__.
+<!-- \textbf{sum of values times probabilities}.   -->
+
+\bigskip
+
+We can write this as
+\[
+\mbox{mean} = \sum \mbox{value} \cdot \mbox{probability}
+\]
+
+### Discrete Random Variables
+
+For a discrete random variable this translates to
+\[
+\mu_X = \E(X) = \sum x f(x)
+\]
+where the sum is taken over all possible values of $X$ and $f$ is the pmf for $X$.
+
+The mean of a random variable also goes by another name: \textbf{expected value}.  We 
+can denote this as $\mu_X$ or $\E(X)$.
+</div>
+<br>
+<br>
+**Example 2.**
+Let $X$ be discrete random variable with probablilities given in the table 
+below.
+
+
+------------------------------------
+   value of $X$      0     1     2    
+------------------ ----- ----- ----- 
+ **probability**    0.2   0.5   0.3
+------------------------------------
+
+What is the mean (expected value) of $X$?
+
+<div class = "explain" label = "Show solution">
+$E(X) = 0 \cdot 0.2 + 1 \cdot 0.5 + 2 \cdot 0.3 = 0.5 + 0.6 = 1.1$
+This value reflects the fact that the random variable is larger than
+1 a bit more often than it is less than 1.
+</div>
+<br>
+<br>
+
+\vfill
+\vfill
+
+\newpage
+
+<br>
+<br>
+**Example 3.**
+A local charity is holding a raffle.  They are selling $1000$ raffle tickets 
+for $5 each.  The owners of five of the raffle tickets will win a prize.  The 
+five prizes are valued at $25, $50, $100, $1000, and $2000.  
+Let $X$ be the value of the prize associated with a random raffle ticket 
+($0 for non-winning tickets). 
+
+a. What is the probability of winning a prize?
+
+b. What is the probability of winning the grand prize?
+
+c. What is the expected value of the prize?
+
+<div class = "explain" label = "Show solution">
+
+* $\Prob{\mbox{the ticket wins a prize}} = \Prob(X > 0) = 5/1000$.
+*	$\Prob{\mbox{the ticket wins the grand prize}} = \Prob(X = 2000) = 1/1000$.
+*	$\Prob{\mbox{the ticket wins a prize worth more than} 75 dollars} = \Prob(X > 75) = 3/1000$.
+
+The expected value of a ticket is
+
+\[
+  0 \cdot \frac{995}{1000}
+  + 25 \cdot \frac{1}{1000}
+  + 50 \cdot \frac{1}{1000}
+  + 100 \cdot \frac{1}{1000}
+  + 1000 \cdot \frac{1}{1000}
+  + 2000 \cdot \frac{1}{1000}
+\]
+
+```{r }
+25 * .001 + 50 * 0.001 + 100 * 0.001 + 1000 * 0.001 + 2000 * 0.001
+# R can help us set up this sum:
+sum(c(25, 50, 100, 1000, 2000) * 0.001)
+```
+
+</div>
+<br>
+<br>
+
+\vfill
+\vfill
+\vfill
+
+### Continuous Random Variables
+
+When working with a continuous random variable, 
+we replace the sum with an integral and replace the 
+probabilities with our density function to get the following definition:
+
+\[
+\E(X) = \mu_X = \int_{-\infty}^{\infty} x f(x) \; dx
+\]
+
+<br>
+<br>
+**Example 4.**
+Calculate	the mean of a symmetric triangle distribution on $[-1, 1]$.
+
+```{r echo = FALSE, fig.width = 5, fig.height = 1.5}
+library(triangle)
+gf_function(dtriangle, args = list(a = -1, b = 1, c = 0), xlim = c(-2, 2))
+```
+
+<div class = "explain" label = "Show solution">	
+\begin{align*}
+	\E(X) & = \int_{-1}^{1} x f(x) \; dx 
+	\\
+	& = \int_{-1}^{0} x (x - 1) \; dx + \int_{0}^1 x (1 - x) \; dx 
+	\\
+	& = \int_{-1}^{0} (x^2 - x) \; dx + \int_{0}^1 (x - x^2) \; dx  
+	\\
+	& = \left.\frac{x^3}{3} - \frac{x^2}{2} \right|_{-1}^0
+	+ \left. \frac{x^2}{2} - \frac{x^3}{3} \right|_{0}^1
+	\\
+	& = \frac13 - \frac12 + \frac12 - \frac13 = 0
+	\\
+\end{align*}
+<br>
+<br>
+
+\newpage
+
+We could also calculate this numerically in R:
+
+```{r fig.width = 5, fig.height = 1.5}
+library(mosaicCalc)
+# define the function -- (abs(x) <= 1) will converted to 0 or 1
+f <- makeFun( (1 - abs(x)) * (abs(x) <= 1) ~ x)
+
+# plot the function to make sure it looks right
+gf_function(f, xlim = c(-2, 2))   
+
+# define x * f(x) as another function
+xf <- makeFun( x * f(x) ~ x )
+# integrate over the interval from -1 to 1 to get E(X)
+integrate(xf, -1, 1)
+
+# use anti-derivative instead -- lower.bound sets the "zero point" for the anti-derivative
+F <- antiD( x * f(x) ~ x, lower.bound = -1)
+F(-1)  # should be 0 because of lower.bound
+F(1)   # should be the expected value -- also 0.
+```
+</div>
+<br>
+<br>
+
+\newpage
+
+## Variance
+
+Arguing similarly, we can compute the variance of a discrete or continuous random
+variable using 
+
+* discrete:
+$\Var(X) = \sigma^2_X = \sum_x (x-\mu_X)^2 f(x) \; dx$
+
+* continuous:
+$\Var(X) = \sigma^2_X = \int_{-\infty}^{\infty} (x-\mu_X)^2 f(x) \; dx$
+
+These can be combined into a single definition by writing
+$$
+\Var(X) = \E((X - \mu_X)^2) \;.
+$$
+Note: It is possible that the sum or integral used to define the mean (or the variance) will fail 
+to converge. In that case, we say that the random variable has no mean (or variance) or that the 
+mean (or variance)  fails to exist.[^converge]
+
+[^converge]: Actually, we will require that
+$\int_{\infty}^{\infty} |x| f(x) \; dx$ converges and
+$\int_{\infty}^{\infty} |x|^2 f(x) \; dx$ converges.
+If these integrals (or the corresponding sums for discrete random variables) fail to converge, 
+we will say that the distribution has no mean (or variance).
+
+<br>
+<br>
+**Example 5.**
+Compute the variance of symmetric triangle distribution on $[-1,1]$.
+
+\vfill
+\vfill
+
+<div class = "explain" label = "Show solution">	
+```{r}	
+f <- makeFun( (1 - abs(x)) * (abs(x) <= 1) ~ x)
+xxf <- makeFun( (x-0)^2 * f(x) ~ x )
+integrate(xxf, -1, 1)
+G <- antiD( (x-0)^2 * f(x) ~ x)
+G(1) - G(-1)
+```
+</div>
+<br>
+<br>
+
+
+\newpage
+
+### Useful identity
+
+Some simple algebraic manipulations of the sum or integral above shows that
+
+\begin{align}
+\Var(X) &= \E(X^2) - \E(X)^2
+\end{align}
+
+
+<br>
+<br>
+**Example 6.**
+Compute the mean and variance of the random variable with pdf given by
+	
+$$
+g(x) = \frac{3x^2}{8} [\![ \; x \in [0,2] \;  ]\!] \;. 
+$$
+
+\vfill
+\vfill
+
+<div class = "explain" label = "Show solution">	
+```{r}	
+g <- makeFun( (3 * x^2/8 ) * (0 <= x & x <= 2) ~ x )
+m <- antiD( x * g(x) ~ x, lower.bound = 0)(2)  # all in one step instead of defining F or G
+m
+v <- antiD( (x - m)^2 * g(x) ~ x, m = m, lower.bound = 0)(2)
+v
+# here's the alternate computation
+antiD( x^2 * g(x) ~ x, lower.bound = 0)(2) - m^2
+```
+</div>
+<br>
+<br>
+
+\bigskip
+
+As with data, the standard deviation is the square root of the variance.
+
+
+
+\newpage
+
+## More Practice
+
+**1.** You are invited to play the following game. 
+You draw two chips without replacement from a jar containing 5 red, 5 blue, and
+5 green chips.   If both chips have the same color you win $5.  If the two chips
+have different colors, you win $3.  On average, how much will you win per game?
+It costs you $4 to play the game.  On average, would you win money, lose money,
+or break even playing this game?
+
+<!-- x    	$5		$3 -->
+<!-- p(x)  	.286		.714 -->
+
+<!-- On average you will win 5*.286 + 3*.714 = $3.57.  On average you will lose playing this game. -->
+
+**2.** Toss a fair coin 3 times. 
+Let X be the number of heads produced.  Find the pmf for $X$ and
+use it to find the average number of heads produced when the coin is tossed 3
+times.
+
+<!-- x		0	1	2	3 -->
+<!-- p(x)	1/8	3/8	3/8	1/8 -->
+
+<!-- E(X) = (0+3+6+3)/8 = 3/2 = 1.5. -->
+
+**3.**	Repeat the previos problem above under the assumption that the coin is biased and 
+only has a 1/4 chance of producing a head.
+
+<!-- x		0		1		2		  3 -->
+<!-- p(x)	27/64		27/64		9/64		1/64 -->
+
+<!-- E(X) = (27+18+3)64 = 48/64 = ¾ = .75. -->
+
+**4.**	Let 
+$f(x) = 2e^{-2x}$ on $(0, \infty)$.
+Create this function in R and use R to integrate it on $[0, \infty)$.
+Note that $e^x$ is expressed in R as `exp(x)`. 
+
+a. Is $f(x)$ is a pdf?
+
+```{r include = FALSE}
+f <- function(x) 2 * exp(-2*x) * (x>=0)
+integrate(f,0,Inf)
+```
+
+b. Use R to compute $\Prob(-1 \le X \le 3)$.
+
+```{r include = FALSE}
+integrate(f,-1,3)
+```
+
+c. Use R to compute the cumulative distribution function $F$ and use $F$ to compute 
+$\Prob(3 \le X \le 10)$.
+
+```{r include = FALSE}
+F <- antiD(f(x) ~ x, lower.bound = 0)
+F(10) - F(3)
+```
+
+d. Use R to compute the mean of $X$.
+
+```{r include = FALSE}
+xf <- function(x) x * f(x)
+integrate(xf,0,Inf)
+```
+
+**5.**
+Let $X$ have the pdf $f(x) = 2x$ on $[0, 1]$.  
+
+a. Find the median of $X$. [Hint: What is a median? -- Don't think about sorting.]
+
+b. What is the 20th percentile of $X$?
+
+
+**6.**
+Do the following by hand, without using R.
+Let $f(x) = C x^3$ on $[0, 3]$ be the pdf for $X$.
+
+a. What is the value of $C$?
+
+b. Compute $\E(X)$.
+
+c. Compute $\Prob(X > 2)$.
+
+d. Determine the median of $X$.
+
+
+
+
+

@@ -1,0 +1,401 @@
+---
+title: "Linear Models -- Estimates"
+author: "Stat 241"
+output:
+  html_document:
+    theme: yeti
+    css: ['../styles/ds303-notes.css', '../styles/worksheets.css']
+  df_document: default
+  pdf_document: default
+---
+
+\def\tor{\operatorname{or}}
+\def\tand{\operatorname{and}}
+\def\tnot{\operatorname{not}}
+\def\Prob{\operatorname{P}}
+\def\E{\operatorname{E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\Binom{{\sf Binom}}
+\def\Norm{{\sf Norm}}
+\def\T{{\sf T}}
+\def\Chisq{{\sf Chisq}}
+\def\Unif{{\sf Unif}}
+\def\Exp{{\sf Exp}}
+\def\Beta{{\sf Beta}}
+\def\Gamm{{\sf Gamma}}
+\def\Weibull{{\sf Weibull}}
+\def\Pois{{\sf Pois}}
+
+<script src="../styles/folding.js"></script>
+
+```{r hooks, message=FALSE, include = FALSE}
+knitr::knit_hooks$set(fold = function(before, options, envir) {
+  if (before) {
+    return(glue::glue('<div fold = "{options$fold}">'))
+  } else {
+    return('</div>\n')
+  }
+})
+```
+
+
+```{r setup, include=FALSE}
+onLine <- TRUE
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width = 5, 
+  fig.height = 2,
+  fig.align = "center"
+)
+library(mosaic)
+library(pander)
+library(mosaicCalc)
+library(triangle)
+library(patchwork)
+library(reactable)
+theme_set(theme_bw(base_size = 7))
+set.seed(20210108)
+options(digits = 3)
+```
+ 
+
+## Quick Review
+
+* Fit lines to data using least squares. (Best line has smallest SSE.)
+
+* Regression line has some nice properties. (slope = $r \frac{s_y}{s_x}$; $(\overline x, \overline y)$ is on the line)
+
+* `lm()` will do all the work of estimating the slope and intercept for us (and more).
+
+* important to use the correct varaible as explanatory and response
+
+## The Linear Model
+
+
+
+### A general framework
+
+Linear models (aka linear regression) and their generalizations 
+explore how to use data to determine the relationship among
+two or more variables when this relationship is not known in advance. 
+The general framework we will use is 
+
+\[
+Y = f(x_1, x_2, \dots, x_k) + \varepsilon
+\]
+
+* $Y$ is the **response** variable that we are trying to estimate
+		from $k$ **explanatory** or **predictor** variables $x_1, x_2, \dots, x_k$.
+		
+* The relationship between the explanatory variables and the response 
+		variables is described by a function $f$.
+		
+* The relationship described by $f$ need not be a perfect fit.  The **error**
+		term in the model, $\varepsilon$, describes how individual responses
+		differ from the value given by $f$: $\varepsilon_i = Y_i - f(X_{1i}, X_{2i}, \dots, X_{ki})$
+		
+    We will model $\varepsilon$ with a 
+		distribution -- typically a distribution with a mean of 0 -- 
+		so another way to think about this model is the for a given 
+		values of the predictors, the values of $Y$ have a distribution.  The mean
+		of this distribution is specified by $f$ and the shape by $\varepsilon$.
+
+
+### Special Case: The Simple Linear Regression Model
+
+\[
+Y = \beta_0 + \beta_1 x + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Norm(0,\sigma)$.}
+\]
+
+In other words:
+
+* The mean response for a given predictor value $x$ is given by a linear formula
+\[
+\mbox{mean response} = \beta_0 + \beta_1 x
+\]
+This can also be written as 
+\[
+\E(Y \mid X = x) = \beta_0 + \beta_1 x
+\]
+
+* The values of $\varepsilon$ are independent.
+* The distribution of all responses for a given predictor value $x$ is normal.
+* The standard deviation of the responses is the same (equal) for each predictor value,
+
+The mnemonic LINE can help us remember these aspects of the model:
+
+* **L**inear relationship 
+* **I**ndependent errors
+* **N**ormal errors
+* **E**qual standard deviation
+
+
+## Checking if the model in appropriate
+
+We should check that each of the elements in LINE seems appropriate for our data set.
+Usually this is done with diagnostic plots.
+
+* **L**: A scatter plot or a residual plot
+* **I**: Auto-correlation (ACF) plot of residuals
+* **N**: Normal-quantile plot of residuals
+* **E**: Residual plot
+
+You will see that **residuals** show up in every one of these. That's because the residuals tell us how the 
+data differ from the line, and the model tells us how they should differ from the line. So looking at residuals 
+can help us see if the four components of our model are reasonable.
+
+We can get the residuals from our model using `resid()`, but we will also see that some of this is automated
+even further with special plotting functions.
+
+
+### Linear Relationship
+
+The obvious pot is a scatter plot of response vs explanatory.
+
+```{r read-eyes}
+Eyes <- 
+  read.table(
+    "https://rpruim.github.io/Engineering-Statistics/data/PalpebralFissure.txt", 
+    header = TRUE)
+gf_point(OSA ~ palpebral, data = Eyes)
+```
+
+These plots tend to fall along a diagonal, which means there is a lot of waste space -- space we could use to magnify 
+our view.  Plotting residuals vs the explanatory variable or the fitted values does this.
+For a simple linear model, the two types of plots are nearly identical and provide the same information.
+
+```{r}
+osa.model <- lm(OSA ~ palpebral, data = Eyes)
+osa.hat <- makeFun(osa.model)  
+predicted <- osa.hat(Eyes$palpebral)   # we could also use fitted(osa.model) here
+gf_point( resid(osa.model) ~ palpebral, data = Eyes,
+  title ="Residuals versus explanatory values") |
+gf_point( resid(osa.model) ~ predicted, data = Eyes,
+  title ="Residuals versus fitted values")
+```
+
+### Independence of errors
+
+An auto-correlation (acf) plot shows the lagged correlation coefficients. What does that mean? We check the 
+correlation coefficient if we compare the residuals to shifted version of the residuals.  That is we compare the 
+first to the second, second to the third, etc. for a lag of 1. Or first to third, second to fourth, etc. for a lag of 2.
+Ideally, all of these correlation coefficients should be pretty small. (Except for lag 0, which will always have 
+a correlation coefficient of 1 because we are comparing the residuals to themselves.
+
+`acf()`[^acf] provides some guidelines to help you just if things are small enough. If most or all of the 
+correlations are within the guidelines (or nearly so), that's good. If the correlations start large
+and gradually decrease, that's a common bad situation suggesting that our measurements are correlated
+and that a different model should be used.
+
+Things look good for this data set:
+
+```{r, fig.height = 4}
+acf(resid(osa.model), ylab = "Residual ACF", main = "")
+```
+
+<div class = "explain" label = "Show details for first two lags">
+Here are the details for the first 2 lags.
+
+```{r}
+tibble(
+  resid = resid(osa.model) %>% round(3),
+  lag1 = lag(resid, 1),
+  lag2 = lag(resid, 2)
+) %>% reactable::reactable()
+
+gf_point(resid(osa.model) ~ lag(resid(osa.model))) |
+gf_point(resid(osa.model) ~ lag(resid(osa.model), 2))
+cor(resid(osa.model) ~ lag(resid(osa.model)), use = "complete.obs")
+cor(resid(osa.model) ~ lag(resid(osa.model),2), use = "complete.obs")
+```
+</div>
+
+[^acf]: Note: `acf()` uses a different plotting scheme from ggformula and sometimes you will need to adjust
+the size of your figure to make it look good.
+
+### Normality of errors
+
+A normal quantile plot is just the thing for this.
+
+```{r}
+gf_qq( ~ resid(osa.model), data = Eyes, title = "Normal QQ plot") 
+```
+
+### Equal Variance
+
+Our residuals vs fitted values or residuals vs. explanatory plots can also give us a sense for whether the
+standard deviation is consistent across the data.
+
+* We are hoping to see that the residual have the same amount of scatter above and below 0 across the plot.
+
+* Note: If you hae more data in some places than in other places, you may see more spread where there is more data,
+so keep that in mind.
+
+* Any pattern in this plots is something that should be investigated.  The model says these should be consistent
+noise.
+
+### Automatic plotting
+
+These plots are made so often, there are functions to automate some of them.
+Of the several plots `plot()` and `mplot()` can make, the first two are most useful for us.
+
+```{r}
+mplot(osa.model, which = 1:2)
+```
+
+
+## How good are our estimates?
+
+If we pass the checks above, we can ask how good the estimates from our model are.  Note, we are estimating 
+several things here:
+
+1. Estimated slope
+
+2. Estimated intercept (usually the least interesting)
+
+3. Estimated fits/predictions
+
+For each we would like to report a confidence interval or uncertainty.[^CI-uncertainty]
+
+[^CI-uncertainty]: Note that these are essentially the same thing, just scaled -- at least when the distributions
+are normal or t.  In that case, standard uncertainty is basically the margin of error for a 68% confidence interval.
+
+### Coefficient estimates
+
+The slope and intercept are sometimes called the coefficients of the linear regression model.
+We can get more information about these estimates using one of the functions below.
+
+```{r}
+summary(osa.model)
+msummary(osa.model)        # slightly terser
+coef(summary(osa.model))   # just the coefficients part
+```
+
+Notice the column labeled "Std. Error" -- that's our standard error (= standard uncertainty).
+
+In the more verbose output, you will also see the degrees of freedom ($n - 2$) in this situation
+we can use to create confidence intervals using our usual template:
+
+$$
+\mbox{estimate} \pm \mbox{critical value} \cdot SE
+$$
+
+```{r}
+3.080 + c(-1, 1) * qt(0.975, df = 28) * 0.151
+```
+
+R can automate all of this for us:
+
+```{r}
+confint(osa.model)
+```
+
+### Estimated response
+
+When estimating a response, we need to determine whether we are interested in estimating
+
+* the *average* response for a given explanatory value [confidence interval]
+* an *individual* response for a given explanatory value [prediction interval]
+
+Also, the standard error formula depends on the particular explanatory value we are interested in.
+Fortunately R can do all the required compuations for either a confidence or a prediction interval.
+
+```{r}
+estimated.osa <- makeFun(osa.model) 
+estimated.osa(1.2)
+estimated.osa(1.2, interval = "confidence")
+estimated.osa(1.2, interval = "prediction")
+```
+
+We can visualize these intervals using `gf_lm()`
+
+```{r}
+gf_point(OSA ~ palpebral, data = Eyes) %>%
+  gf_lm(interval = "confidence", fill = "red") %>%
+  gf_lm(interval = "prediction", fill = "skyblue")
+```
+
+Notice that
+
+* Prediction intervals are much wider than confidence intervals
+since it is harder to predict an individual response than the average over 
+many responses.
+* Both intervals are narrowest near the center of the data and get wider as 
+we move toward the edges of the data (or beyond, but be careful about extrapolation).
+
+
+### An estimate for $\sigma$
+
+The R output also shows the estimated value for $\sigma$.  It is labeled 
+"Residual standard error".  It is computed using 
+
+$$\hat \sigma^2 = \sqrt{ \frac{\sum{e_i^2}}{n-2} }$$
+where $e_i$ is the $i$th residual and $n-2$ is our degrees of freedom.
+The value of $\hat \sigma$ is involved in all of the standard error formulas.
+It is also a measure of how much observations vary above and below the regression line.
+
+
+
+## Cautionary Notes 
+
+### Don't fit a line if a line doesn't fit!
+
+R is happy to fit a linear model to any data set, even if the relationship is nothing 
+like a line. The linear model finds the "best" line assuming that a line is a good 
+description of the relationship.  Always check for linearity before using a linear model.
+
+### Watch for outliers
+
+One or a few values that are very different from the rest can have a big difference
+on a linear model, so always keep an eye out for them.
+
+### Don't Extrapolate!
+
+While it often makes sense to generate model predictions corresponding to
+x-values _within_ the range of values measured in the dataset, it is dangerous
+to _extrapolate_ and make predictions for values _outside_ the range included in
+the dataset.  To assume that the linear relationship observed in the dataset
+holds for explanatory variable values outside the observed range, we would need
+a convincing, valid justification, which is usually not available.  If we
+extrapolate anyway, we risk generating erroneous or even nonsense predictions.
+The problem generally gets worse as we stray further from the observed range of
+explanatory-variable values.
+
+## Some Pratice
+
+**1.**
+Using the `KidsFeet` data set, fit a linear model for predicting foot width from 
+foot length.
+
+a. Run our diagnostics to see if the model is appropriate.
+b. Give a 95% confidence interval for the slope. Compute this two times, once using 
+the summary output and once using `confint()`.
+c. Interpret the slope. What does the slope tell you about kids' feet?
+d. Why isn't the intercept particularly interesting for this example?  [What does 
+the intercept tell you?]
+e. Give a 95% confidence interval for the mean width of a foot among kids who
+have a foot length of 25 cm.
+f. Trey has a foot length of 25cm. Give a 95% prediction interval for the width 
+of his foot.
+
+**2.**
+	The \dataframe{anscombe} data set contains four pairs of explanatory 
+	(\variable{x1}, \variable{x2}, \variable{x3}, and \variable{x4})
+	and response
+	(\variable{y1}, \variable{y2}, \variable{y3}, and \variable{y4})
+	variables.  These data were constructed by Anscombe.
+	
+a. For each of the four pairs, us \R\ to fit a linear model and 
+compare the results.  Use, for example,
+```{r eval = FALSE}
+model1 <- lm(y1 ~ x1, data = anscombe) 
+summary(model1)
+```
+
+b. Briefly describe what you notice looking at the summary output for the four
+models.
+
+c. For each model, create a scatterplot that includes the regression line.
+
+d. Comment on the summaries and the plots.  Why do you think Anscombe invented these data?

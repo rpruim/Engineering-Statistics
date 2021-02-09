@@ -1,0 +1,1889 @@
+\Sexpr{set_parent('Stat241-Notes.Rnw')}
+
+<<include = FALSE>>=
+library(Hmisc)
+@
+\Chapter{Transformation and Combinations of Random Variables}
+
+We will often be interested in random variables that are formed by transformations
+or combinations other random variables.
+\begin{itemize}
+	\item
+		If we roll to dice and let $X$ and $Y$ be the results on each die,
+		then the sum is $X+Y$.
+	\item
+		If $R$ is the radius of a circle, then $A = \pi R^2$ is its area.
+	\item
+		If $X$ and $Y$ are the length and width of a rectangle, then
+		the area is given by $A = X Y$.
+	\item
+		If $F$ is a temperature measured in degrees Fahrenheit, then 
+		$C = \frac{5}{9}(F-32) = \frac59 F - \frac{160}{9}$ is the 
+		temperature in degrees Celsius. (Most other unit conversions
+		are even simpler linear functions.)
+	\item
+		If $W$ is weight in kg and $H$ is height in meters, then
+		$B = W/H^2$ is bmi (body mass index)
+
+	\item
+		If $X_1, X_2, \dots, X_n$ is a random sample, then the mean of the sample
+		is 
+		\[
+		\mean X = \frac{X_1 + X_2 + \cdots X_n}{n}
+		=
+		\frac1n X_1 +
+		\frac1n X_2 + \cdots +
+		\frac1n X_n 
+		\]
+	\end{itemize}
+
+More generally, we are interested in determining the distribution of the random 
+variable $Y$ if 
+\[Y = f(X_1, X_2, \dots, X_n)\]
+and we already know the distributions of $X_1, X_2, \dots, X_n$.
+There are methods for working out the distribution of $Y$ in many such situations, 
+Often it is possible to figure out the distribution of variables formed this way,
+but the methods require more techniques of probability than we will develop in this 
+course.  We will generally be satisfied with one of the following approaches:
+\begin{enumerate}
+	\item
+		Use simulations to approximate the new distribution.
+	\item
+		Calculate (or estimate) the mean and variance of the new distribution,
+		which is often much easier than determining the pdf.
+	\item
+		Rely on theorems that tell us the new distribution in certain special
+		cases.
+\end{enumerate}
+
+\section{Simulations}
+
+In this section we will make use of the fact that each of our familiar distributions
+has a function in \R\ that lets us simulate randomly sampling data from that distribution.
+<<runif>>=
+X <- runif(10000, 0,1)
+Y <- runif(10000, 0,1)
+S <- X + Y
+P <- X * Y
+gf_dhistogram( ~ X , main = "Sample from Unif(0,1)", binwidth = .05, center = 0.025)
+gf_dhistogram( ~ Y , main = "Another sample from Unif(0,1)", binwidth = .05, center = 0.025)
+@
+<<sum-product-uniform-iid>>=
+gf_dhistogram( ~ S , main = "Sum of two iid Unif(0,1) rvs", binwidth = 0.1, center = 0.05)
+gf_dhistogram( ~ P , main = "Product of two iid Unif(0,1) rvs", binwidth = 0.05, center = 0.025)
+@
+
+\subsubsection*{Independence Matters}
+It is important that we have created \texttt{x} and \texttt{y} independently.
+Independent random variables that have the same distribution are called 
+\term{independent identically distributed} (iid) random variables.  As an illustration
+of an extreme situation where the variables in our sum are not independent, let's 
+use the values of \texttt{x} in both roles:
+
+<<sum-product-uniform-non-iid>>=
+S2 <- X + X
+P2 <- X * X 
+gf_dhistogram( ~ S2 , main = "Sum of two non-iid Unif(0,1) rvs", binwidth = 0.1, center = 0.05)
+gf_dhistogram( ~ P2 , main = "Product of two non-iid Unif(0,1) rvs", binwidth = 0.05, center = 0.025)
+@
+Notice how different the resulting distributions are, especially for the sum.
+
+Similar procedures can be used to give an approximate distribution for any combination
+of random variables that we can simulate.
+
+\section{Propagation of Mean and Variance}
+
+Sometimes it is not necessary to know everything about a distribution.  Sometimes knowing 
+the mean or variance suffices, and there are several common situations where the mean
+and variance are easy to calculate
+
+\subsection{Linear Transformations}
+The easiest of these is a linear transformation of a random variable.  
+
+\begin{boxedText}
+If $X$ is a random variable with known mean and variance, then 
+\begin{align*}
+	\E(a X + b) &= a \E(X) + b \; \mbox{, and}
+	\\
+		\Var(a X + b) &= a^2 \Var (X) \; .
+\end{align*}
+\end{boxedText}
+
+These are actually pretty easy to prove from the definitions of mean and variance.  (Just 
+write down the integrals and do some algebra.)  But these results also match our 
+intuition.
+
+\begin{enumerate}
+	\item
+		If we add or subtract a constant $b$, that increases or decreases every
+		value by the same amount.  This will increase the mean by that amount,
+		but does nothing to the variance (since everything is no more or less
+		spread out than it was before).  This explains the $+b$ in the first
+		equation and why $b$ does not appear at all in the formula for the
+		variance.
+
+		\begin{align*}
+		\E(X + b) &= \int_{-\infty}^{\infty} (x+b) f(x) \; dx  
+		      = \int_{-\infty}^{\infty} x f(x) \; dx  
+		      	+ \int_{-\infty}^{\infty} b f(x) \; dx  
+			  = \E(X) + b
+			  \\
+		\Var(X+b) &= \int_{-\infty}^{\infty} (x + b - (\mu + b))^2 f(x) \; dx  
+					= \int_{-\infty}^{\infty} (x - \mu)^2 f(x) \; dx  = \Var(X) 
+		\end{align*}
+	\item
+		Now consider multiplying each value by the same amount $a$.  
+		This scales all the values by $a$, and hence scales the mean by $a$ as well.
+		This also makes the values more or less spread out (more when $|a| > 1$, less when
+		$|a| < 1$).  
+		But it is the standard deviation -- not the 
+		variance -- that increases or decreases by the factor $|a|$.
+		The variance scales with $a^2$.
+
+		\begin{align*}
+		\E(aX) &= \int_{-\infty}^{\infty} ax f(x) \; dx  
+		      = a \int_{-\infty}^{\infty} x f(x) \; dx = a \E(X)
+			  \\
+		\Var(aX) &= \int_{-\infty}^{\infty} (ax - a\mu)^2 f(x) \; dx  
+		      = a^2 \int_{-\infty}^{\infty} (x-\mu)^2 f(x) \; dx = a^2 \Var(X)
+		\end{align*}
+\end{enumerate}
+
+\begin{example}
+	\question
+	Suppose $X$ has a mean of 5 and a standard deviation of 2.  What are the mean
+	and standard deviation of $3 X + 4$?
+
+	\answer
+	$\E(3 X + 4) = 3 \E(X) + 4 = 3 \cdot 5 + 4 = \Sexpr{3*5 + 4}$
+
+	$\Var(3 X + 4) = 3^2 \Var(X) = 3^2 \cdot 2^2 = 36$.  So he standard deviation of 
+	$3X + 4$ is $\sqrt{36} = 6$.  Notice that $6 = 2 \cdot 3$.
+\end{example}
+
+\subsection{Sums}
+
+The most important combination of two random variables is a sum.
+
+\begin{boxedText}
+	Let $X$ and $Y$ be two random variables with known means and variances, then
+\begin{align*}
+	\E(X + Y) &= a \E(X) + \E(Y) \; \mbox{, and}
+	\\
+	\Var(X + Y) &= \Var (X)  + \Var(Y) \; \mbox{, provided $X$ and $Y$ are independent.}
+\end{align*}
+
+That is,
+\medskip
+\begin{itemize}
+	\item The expected value of a sum is the sum of the expected values.
+	\item The variance of a sum is the sum of the variances -- \emph{provided the variables 
+		are independent.}
+\end{itemize}
+\end{boxedText}
+The independence condition for the variance rule is critical.%
+\footnote{
+These results can be proved by setting up the appropriate integrals and 
+rearranging them algebraically.  In this case, one needs to know a bit about 
+joint, marginal, and conditional distributions, so for the sake of time we will 
+omit the proofs.}
+
+\begin{example}
+	\question
+	Suppose $X$ and $Y$ are independent random variables with means 3 and 4 and standard 
+	deviations 1 and 2.  What are the mean and standard deviation of $X + Y$?
+
+	\answer
+	$\E(X+Y) = 3 + 4$.  $\Var(X + Y) = 1^2 + 2^2 = 5$, so $\SD(X + Y) = \sqrt{5} \approx
+	\Sexpr{round(sqrt(5),3)}$.
+\end{example}
+
+\begin{example}
+	\question
+	Let $X \sim \Unif(0,1)$ and $Y \sim \Unif(0,1)$ be independent random variables
+	and let $S = X+Y$.  What are the mean and variance of $S = X + Y$?
+
+	\answer
+	$\E(S) = \E(X) + \E(Y) = \frac12 + \frac12 = 1$.
+	$\Var(S) = \Var(X) + \Var(Y) = \frac1{12} + \frac1{12} = \frac16$.
+
+	Note that this matches the mean and variance of a $\Tri(0,2,1)$-distribution,
+	since 
+	\[ \frac{ 0 + 2 + 1}{3} = 1 \;, \]
+	and 
+	\[
+	\frac{ 0^2 + 2^2 + 1^2 - 0 \cdot 2 - 0\cdot 1 - 1\cdot 2}{18} 
+	= \frac{3}{18} = \frac16 \;. 
+	\]  
+	In fact, it can be shown that $S \sim \Tri(0,2,1)$.
+\end{example}
+
+\newpage
+If we express the rule for variances in terms of standard deviations we get 
+\begin{boxedText}
+	\textbf{The Pythagorean Theorem for standard deviations.}
+	If $X$ and $Y$ are independent random variables, then
+	\[
+	\SD(X+Y) = \sqrt{ \SD(X)^2 + \SD(Y)^2 }\; .
+	\]
+	The independence condition plays the role of the right triangle condition
+	in the usual Pythagorean Theorem.
+\end{boxedText}
+
+\subsection{Linear Combinations}
+The results in the preceding sections can be combined and iterated to get results for
+arbitrary linear combinations of random variables.
+
+\begin{boxedText}
+Let $Y = a_1 X_1 + a_2 X_2 + \cdots + a_k X_k$, then 
+\begin{align*}
+	\E(Y) & = 
+	a_1 \E(X_1) + 
+	a_2 \E(X_1) + 
+	\cdots
+	a_k \E(X_k)  
+	\\[2mm]
+	\Var(Y) & = 
+	a_1^2 \Var(X_1) + 
+	a_2^2 \Var(X_1) + 
+	\cdots
+	a_k^2 \Var(X_k) \; \mbox{, provided $X_1, X_2, \dots, X_k$ are independent.}  
+\end{align*}
+\end{boxedText}
+
+\begin{example}
+	\question
+	Suppose the means and standard deviations of three independent random variables
+	are as in the table below.  
+
+	\begin{center}
+		\begin{tabular}{rrr}
+			\hline
+			variable & mean & standard deviation 
+			\\ \hline
+			$X$ & 100 & 15 \\
+			$Y$ & 120 & 20 \\
+			$Z$ & 110 & 25 \\
+			\hline
+	\end{tabular}
+	\end{center}
+
+	Determine the mean and standard deviation of $X + 2Y - 3Z$.
+
+
+	\answer  The mean is $100 + 2 (120) - 3(110) = \Sexpr{100 + 2*120 - 3*110}$.
+
+	The variance is 
+	$1^2\cdot 15^2 + 2^2 \cdot 20^2 + (-3)^2 \cdot 25^2 = 
+	\Sexpr{ 1^2 * 15^2 + 2^2 * 20^2 + (-3)^2 * 25^2}  $,
+	so the standard deviation is 
+	$\sqrt{ \Sexpr{ 1^2 * 15^2 + 2^2 * 20^2 + (-3)^2 * 25^2}} =
+	\Sexpr{ round(sqrt(1^2 * 15^2 + 2^2 * 20^2 + (-3)^2 * 25^2), 1)}$.
+\end{example}
+
+
+\section{Normal distributions are special}
+
+Normal distributions are special because 
+\myindex{Central Limit Theorem}
+
+\begin{boxedText}
+
+	\centerline{\textbf{Special Properties of Normal Distributions}}
+
+\begin{enumerate}
+	\item
+	Linear combinations of independent normal random variables are again normal.
+
+	\medskip
+
+\item
+	Sums of iid random variables from \emph{any distribution} are approximately
+	normal provided the number of terms in the sum is large enough.
+
+	This result follows from what is known as the \term{Central Limit Theorem}.
+	The Central Limit Theorem explains why the normal distributions
+	are so important and why so many things have approximately normal distributions.
+\end{enumerate}
+\end{boxedText}
+
+This means that just knowing the mean and standard deviation 
+tells us everything we need to know about the distribution of the linear 
+combination of normal random variables.
+
+\begin{example}
+	Let $X \sim \Norm(10,2)$ and $Y\sim \Norm(12,4)$.  If $X$ and $Y$ are independent,
+	then 
+	\[X + Y \sim \Norm(10 + 12, \sqrt{2^2 + 4^2}) 
+	= \Norm(22, \Sexpr{round(sqrt(2^2 + 4^2),2)}) \;.
+	\]
+
+\end{example}
+
+\begin{example}
+	Let $X \sim \Norm(10,2)$ and $Y\sim \Norm(12,4)$.  If $X$ and $Y$ are independent,
+	then 
+	\[X - Y \sim \Norm(10 - 12, \sqrt{2^2 + 4^2}) 
+	= \Norm(-2, \Sexpr{round(sqrt(2^2 + 4^2),2)})\; .
+	\]
+\end{example}
+
+\begin{example}
+	\question Use simulation to illustrate the previous two results.
+
+	\answer
+<<>>=
+X <- rnorm(5000, 10, 2)
+Y <- rnorm(5000, 12, 4)
+Sum <- X + Y
+Diff <- X - Y
+fitdistr(Sum, "normal")
+fitdistr(Diff, "normal")
+gf_dhistogram(~ Sum) %>% gf_fitdistr(dist = "norm") 
+gf_dhistogram(~ Diff) %>% gf_fitdistr(dist = "norm") 
+gf_qq(~ Sum) 
+gf_qq(~ Diff) 
+@
+\end{example}
+
+\begin{example}
+	Let $X_i \simiid \Unif(0,1)$.  Consider $S = \sum_{i = 1}^{12} X_i$.  
+	Since $\E(X_i) = \frac12$ and $\Var(X_i) = \frac{1^2}{12} = \frac1{12}$
+
+	\begin{align*}
+	\E(S) &= \frac12  + \frac12  + \cdots \frac12  = 12 \cdot \frac12  = 6
+	\\
+	\Var(S) & = \frac1{12} + \frac1{12} + \cdots \frac 1{12} = 12 \cdot \frac1{12} = 1
+\end{align*}
+Furthermore, the normal approximation for $S$ is quite good:
+
+<<tidy = FALSE>>=
+X1 <- runif(5000,0,1); X2 <- runif(5000,0,1); X3 <- runif(5000,0,1) 
+X4 <- runif(5000,0,1); X5 <- runif(5000,0,1); X6 <- runif(5000,0,1) 
+X7 <- runif(5000,0,1); X8 <- runif(5000,0,1); X9 <- runif(5000,0,1) 
+X10 <- runif(5000,0,1); X11 <- runif(5000,0,1); X12 <- runif(5000,0,1) 
+S <- X1 + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12
+fitdistr(S, "normal")
+gf_dhistogram(~S)  %>% gf_fitdistr(dist = "norm")
+gf_qq(~S)
+@
+This means that $S - 6 \approx \Norm(0,1)$.  This has been used in computer software
+as a relatively easy way to simulate normal data given a good psuedorandom number generator
+for $\Unif(0,1)$.
+\end{example}
+
+\section{Estimating the Mean of a Population by Sampling}
+
+As important as data are in statistics, typically we are not interested in our 
+data set, but rather in what we can learn from our data about some larger situation.
+For example,
+\begin{enumerate}
+	\item
+		Quality assurance engineers test a few parts to make a decision about 
+		whether the production process is working correctly for all the parts.  
+	\item 
+	Automobile manufacturers crash a small number of vehicles to learn how
+	their (other) cars might perform in an accident.  
+\item 
+	Public opinion pollsters survey a (relatively) small number of people in order to learn
+about the opinions of millions of people.
+\item
+	In order to estimate the number of dimes in a large sack of times, you decide to
+	weigh the sack of dimes and divide by the mean weight of a dime.  To do this you
+	need to know the mean weight of a dime.  You decide to carefully weigh 30 dimes
+	and use those weights to estimate the mean weight of a dime.
+\end{enumerate}
+
+We have now developed enough background to begin learning how this process works. 
+We begin by introducing some key terms:
+\begin{description}
+	\item[population] The collection of individuals, objects, or processes we want to 
+		know something about.
+
+	\item[parameter] A number that describes (a feature of) a population.
+
+		In typical applications, parameters are unknown and data are collected
+		for the purpose of estimating parameters.
+
+	\item[sample] The collection of individuals, objects, or processes we have data
+		about.  Ideally, the sample is a well chosen subset of the population.
+
+	\item[statistic] A number that describes (a feature of) a sample.
+
+	\item[sampling distribution] The distribution of a statistic under random sampling.
+
+		The process of random sampling leads to a random sample, from which a statistic
+		could be computed.  Since that number depends on a random process (sampling),
+		it is a random variable.  The sampling distribution should not be confused
+		with the distribution of an individual sample (nor with the distribution of 
+		the population).
+
+\end{description}
+
+\begin{examples}
+\begin{enumerate}
+	\item
+		Quality assurance engineers test a few parts to make a decision about 
+		whether the production process is working correctly for all the parts.  
+	\begin{itemize}
+		\item
+			population: all parts produced at the plant
+		\item
+			sample: the parts tested in the quality control protocol
+		\item
+			parameter: mean strength of all parts produced at the plant
+		\item
+			statistic: mean strength of the tested parts
+	\end{itemize}
+
+	\item 
+	Automobile manufacturers crash a small number of vehicles to learn how
+	their (other) cars might perform in an accident.  
+
+		The tested cars are the sample.  All of the cars produced are the population.
+	\begin{itemize}
+		\item
+			population: all cars (of a certain model) produced
+		\item
+			sample: the small number of cars that were used in the crash test
+	\end{itemize}
+
+\item 
+	Public opinion pollsters survey a (relatively) small number of people in order to learn
+about the opinions of millions of people.
+
+	\begin{itemize}
+		\item
+			population: all voters
+		\item
+			sample: people actually contacted
+		\item
+			parameter: proportion of all voters who will vote for candidate A
+		\item
+			statistic: proportion of sample who claim they will vote for candidate A
+	\end{itemize}
+
+\item
+	The mean weight of a dime can be estimated from the weights of 30 dimes.
+
+	\begin{itemize}
+		\item
+			population: all dimes in the sack  
+		\item
+			sample: 30 dimes actually weighed
+		\item
+			parameter: the mean weight of all the dimes in the sack
+		\item
+			statistic: the mean weight of the 30 dimes actually weighed.
+	\end{itemize}
+
+\end{enumerate}
+\end{examples}
+
+\begin{boxedText}
+{\sf \bfseries The Central Limit Theorem.}
+If $X_1, X_1, \dots, X_n$ is an iid random sample (of some quantitative variable) 
+from a population with mean $\mu$ and standard deviation $\sigma$,
+then the sampling distribution of the sample mean or sample sum 
+of a large enough random sample is approximately normally distributed.  In fact,
+\medskip
+
+\begin{itemize}
+\item $\displaystyle \mean X \approx \Norm(\mu, \frac{\sigma}{\sqrt{n}}) $
+\item $\displaystyle \sum_{i = 1}^{n} X_i \approx \Norm(\mu, {\sigma}{\sqrt{n}}) $
+\end{itemize}
+\medskip
+
+The approximations are better 
+\begin{itemize}
+\item
+when the population distribution is similar to a normal distribution, and 
+%(unimodal, nearly symmetric, etc.)
+\item
+when the sample size is larger,
+\end{itemize}
+and are exact when the population distribution is normal.
+
+\medskip
+The Central Limit Theorem is illustrated nicely in an applet available 
+from the Rice Virtual Laboratory in Statistics
+(\url{http://onlinestatbook.com/stat_sim/sampling_dist/index.html}).
+\end{boxedText}
+
+Important things to note about the Central Limit Theorem
+\begin{enumerate}
+	\item
+		There are three distributions involved: the population, individual sample(s),
+		and the sampling distribution.
+	\item
+		Large enough is usually not all that large (30--40 is large enough for 
+		most quantitative population distributions you are likely to encounter).
+	\item
+		We could already calculate the expected value and variance of means
+		and sums, the new information in the Central Limit Theorem is about the
+		shape of the resulting sampling distribution.
+	\item
+		The Central Limit Theorem requires a random sample.  In situations where
+		random sampling is not possible, the Central Limit Theorem may still be 
+		approximately correct or other more complicated methods may be required.
+\end{enumerate}
+
+\subsection{Estimands, estimates, estimators}
+
+When the goal of sampling is to estimate a parameter, it is handy to have the 
+following terminology:
+\begin{description}
+	\item[estimand] A parameter we are trying to estimate.  (Sometimes also called the 
+		\term{measureand}.)
+
+	\item[estimate] A statistic calculated from a particular data set and used to 
+		estimate the estimand.  (Sometimes called a \term{measurement}.)
+
+	\item[estimator] A random variable obtained by calculating an estimate 
+		from a random sample.
+
+	\item[unbiased estimator] An estimator for which the expected value is equal
+		to the estimand.  So an unbiased estimator is ``correct on average''.
+\end{description}
+In this section, our estimand is the mean of the population ($mu$) and our estimator 
+is $\mean X$, the mean of a random sample.  We will use $\mean x$ to denote 
+the estimate computed from a particular sample; this is an estimate.
+
+\subsection{If we knew $\sigma$}
+
+Typically we will not know $\sigma$ or $\mu$.  (To know them, one would typically
+need to know the entire population, but then we would not need to use statistics
+to estimate $\mu$ because we would know the exact answer.)  But for the moment,
+let's pretend we live in a fantasy world where we know $\sigma$.
+
+\begin{example}
+	Suppose the standard deviation of the weight of all dimes in our sack of dimes is $0.03$.
+	If we collect a random sample of 25 dimes, then 
+
+	\[
+	\mean X \approx \Norm(\mu, \frac{\sigma}{\sqrt{n}}) = \Norm(\mu, 0.006)
+	\]
+	so 
+	\[
+	\mean X - \mu  \approx \Norm(0, \frac{\sigma}{\sqrt{n}}) = \Norm(0, 0.006) \;.
+	\]
+
+	This means that
+	\begin{align*}
+	\Prob(| \mean X - \mu | \le 0.006) &\approx 0.68
+	\\[4mm]
+	\Prob(| \mean X - \mu | \le 0.012) &\approx 0.95
+\end{align*}
+So we can be quite confident that our sample mean will be within 0.012 g of the $\mu$,
+mean weight of all dimes in the sack.
+
+Expressed in words, the claim is that 95\% of random samples lead to a sample mean
+that is within 0.012 g of the true mean.  Of course, that means 5\% of samples lead
+to a sample mean that is farther away than that.  For any given sample, there is 
+no way to know if it is one of the 95\% or one of the 5\%.
+\end{example}
+
+
+\subsection{Confidence Intervals ($\sigma$ known)}
+
+The typical way of expressing this is with a confidence interval.  The key idea 
+is this:
+
+\begin{center}
+If $\mean X$ is close to $\mu$, then $\mu$ is close to $\mean X$.
+\end{center}
+
+So an approximate 95\% confidence interval is 
+\[
+\mean x \pm 2 SE 
+= \mean x \pm 2 \frac{\sigma}{\sqrt{n}}
+\]
+or more precisely
+\[
+\mean x \pm 1.96 \frac{\sigma}{\sqrt{n}}
+\]
+because
+<<>>=
+qnorm(0.975)
+@
+Notice the switch from $\mean X$ to $\mean x$.  We used $\mean X$ when we were
+considering the random variable formed by taking a random sample and computing
+the sample mean.  $\mean X$ is a random variable with a distribution.
+When we are considering a specific data set, we write $\mean x$ instead.
+
+There is a subtly here that often gets people confused about the interpretation
+of a confidence interval.  Although 95\% of samples result in 95\% confidence
+intervals that contain the true mean, it is not correct to say that a particular 
+confidence interval has a 95\% chance of containing the true mean.  Neither the 
+particular confidence interval nor the true mean are random, so no reasonable
+probability statement can be made \emph{about a particular confidence interval
+computed from a particular data set}.
+
+\subsection{Confidence Intervals ($\sigma$ unknown)}
+
+The more typical situation is that $\sigma$ is not known and needs to be estimated 
+from the data.  It has been known for a long time that when randomly sampling 
+from a normal population,
+
+\[
+\E\left( \sum_{i = 1}^n (X_i - \mean X)^2 \right) = (n-1) \sigma^2
+\]
+
+This means that 
+
+\[
+S^2 = \frac{ \sum_{i = 1}^n (X_i - \mean X)^2 }{n-1}
+\]
+is an unbiased estimator of $\sigma^2$.\footnote{In fact more is known.  The
+distribution of $S^2$ is a member of the Gamma family of distributions.} This
+explains the reason for the $n-1$ in the denominator of the sample
+variance.\footnote{Side note: the sample standard deviation is a \emph{biased}
+estimator for the population standard deviation.  (On average it will be too
+small.)}
+
+An obvious, but not quite correct solution to our unknown $\sigma$ dilemma is to use
+$s$ in pace of $\sigma$.  In fact this was routinely done until 1908 
+\cite{Student1908}, 
+when William Gosset, publishing under the pseudonym Student, pointed out that 
+when sampling from a $\Norm(\mu, \sigma)$ popoulation,
+
+\[
+\frac{ \mean X - \mu}{\sigma/\sqrt{n}} \sim \Norm(0,1)
+\mbox{\;\ but\ } 
+\frac{ \mean X - \mu}{s/\sqrt{n}} \sim \Tdist(n-1)
+\]
+The new family of distributions (called Student's $t$-distributions) are very 
+similar to the normal distributions -- but ``shorter and fatter''.  This means that
+one must go farther into the tails of a $t$-distribution to capture the central 95\%.
+
+<<fig.width = 8, fig.height = 4, fig.keep = 'last'>>=
+gf_dist("norm", main = "Normal and T-distributions") %>%
+  gf_fun(dt(x,df = 2) ~ x, col = 'gray80') %>%
+  gf_fun(dt(x,df = 4) ~ x, col = 'gray60') %>%
+  gf_fun(dt(x,df = 8) ~ x, col = 'gray40') %>%
+  gf_fun(dt(x,df = 16) ~ x, col = 'gray20')
+@
+
+The resulting confidence interval has the form
+\[
+\mean x \pm t_* \frac{s}{\sqrt{n}}
+\]
+
+
+%\url{http://webspace.ship.edu/pgmarr/Geo441/Readings/Student%201908%20-%20The%20Probable%20error%20of%20a%20Mean.pdf}
+
+\subsection{Standard Error}
+
+The Central Limit Theorem tells us that (under certain condidtions), the standard 
+deviation of the sampling distribution for the sample mean is $\frac{\sigma}{\sqrt{n}}$.
+Typically we don't know $\sigma$ so we estimate this quantity with 
+$\frac{s}{\sqrt{n}}$.
+To avoid having to say ``the estimated standard deviation of the sampling distribution'', 
+we introduce a new term
+\begin{description}
+	\item[standard error] the estimated standard deviation of a sampling distribution
+\end{description}
+
+We will typically abbreviate standard error as SE. (Some authors use se.)
+Statistical software often includes standard errors in output.
+
+Confidence intervals for the mean can now be expressed as 
+\[
+\mean x \pm t_* SE
+\]
+We will see other intervals that make use of the $t$-distributions.  All of them
+share a common structure:
+
+\begin{boxedText}
+		\[
+		\mbox{estimate} \pm t_* SE
+		\]
+\end{boxedText}
+
+
+The value of $t_*$ needed for a 95\% confidence interval is calculated
+similar to the way we calculated $z_*$, but we need to know the degrees 
+of freedom parameter for the $t$-distribution ($n-1$ for this situation).
+
+\begin{example}
+	Suppose a sample of 30 dimes has a mean weight of 2.258 g and a standard 
+	deviation of 0.022 g.  We can calculate a 95\% confidence interval as follows:
+
+<<tidy = FALSE>>=
+x_bar <- 2.258
+t_star <- qt(0.975, df = 29); t_star
+SE <- 0.022/ sqrt(30); SE     # standard error
+ME <- t_star * SE; ME         # margin of error
+x_bar + c(-1,1) * ME
+@
+
+If you have the data (and not just the 
+the summary statistics $\mean x$ and $s$), \R\ can automate this entire computation
+for us with the \function{t.test()} function.
+
+<<>>=
+t.test( ~ mass, data = Dimes)    
+confint(t.test( ~ mass, data = Dimes))  # just the CI without the other stuff
+@
+\end{example}
+
+\subsection{Interpreting Confidence Intervals}
+Here is an illustration of 100 confidence intervals computed by sampling from a 
+normal population with mean $\mu = 100$.
+
+<<CIsim01, echo = FALSE, fig.width = 8>>=
+results <- CIsim(25,100, args = list(mean = 100, sd = 10), estimand = 100, verbose = FALSE)
+p <- xYplot(Cbind(estimate,lower,upper) ~ sample,
+   data = results,
+   par.settings = col.mosaic(), 
+   groups = cover)
+ladd(panel.abline(h = 100), plot = p)
+@
+
+Notice that some of the samples have larger means (the dots) and some smaller means.
+Also some have wider intervals and some narrower (because $s$ varies from sample to
+sample).  But most of the intervals contain the estimand (100).  A few do not.
+
+\myindex{confidence level}%
+\myindex{coverage rate}%
+In the long-run, 95\% of the intervals should ``cover'' the estimand and 5\% should 
+fail to cover.  95\% is referred to as the \term{confidence level} or 
+\term{coverage rate}.
+
+As we can see, the estimand is not always contained in the confidence interval.
+But, in a way that we will be able to make more formal later, a confidence interval 
+is a range of plausible values for the estimand -- values that are consistent with 
+the data in a probabilistic sense.  The level of confidence is related to 
+how strong the evidence must be for us to declare that a value is not consistent
+with the data.
+
+
+\subsection{Other confidence levels}
+\myindex{critical value}%
+We can use other \term{confidence levels} by using a different 
+\term{critical value} $t_*$.  
+So the general
+form for our confidence interval is
+
+\[
+\mean x \pm t_* SE
+\]
+
+\begin{example}
+	A 98\% confidence interval, for example, requires a larger value of $t_*$.
+	If the sample size is $n = 30$, then we use
+
+<<>>=
+qt(0.99, df = 29)
+@
+Notice the use of 0.99 in this command.  We want to find the limits of the 
+central 98\% of the standard normal distribution.  If the central portion contains
+98\% of the distribution, then each tail contains 1\%.  
+
+%<<results = 'hide', fig.width = 6>>=
+%qt(c(0.01, 0.99))
+%@
+
+We could also have used the following to calculate $t_*$.
+<<>>=
+qt(0.01, df = 29)
+@
+\end{example}
+
+\begin{example}
+	\question Compute a 98\% confidence interval for the mean weight of a dime
+	based on our \dataframe{dimes} data set.
+
+	\answer
+	We can do this by hand:
+<<>>=
+x_bar <- 2.258
+t_star <- qt(0.99, df = 29); t_star
+SE <- 0.022/ sqrt(30); SE     # standard error
+ME <- t_star * SE; ME         # margin of error
+x_bar + c(-1,1) * ME
+@
+\noindent
+or let \R\ do the work for us:
+<<>>=
+t.test( ~ mass, data = Dimes, conf.level = 0.98)
+confint(t.test( ~ mass, data = Dimes, conf.level = 0.98))
+@
+\end{example}
+
+\subsection{Robustness}
+\myindex{robustness}%
+The confidence intervals based on the $t$-distributions assume that the population
+is normal.  The degree to which a statistical procedure works even when some or all
+of the assumptions used to derive its mathematical properties are not satisfied
+is referred to as the \term{robustness} of the procedure.  The $t$-based confidence
+intervals are quite robust.
+
+Quantifying robustness precisely is difficult because how well a procedure works
+may depend on many factors.  The general principles are
+\begin{itemize}
+	\item The bigger the better. 
+
+		The larger the sample size, the less it mattes what the population
+		distribution is.
+	\item
+		The more normal the better.  
+
+		The closer the population is to a normal distribution,
+		the smaller the sample sizes may be.
+\end{itemize}
+
+For assistance in particular applications, we offer the following rules of thumb.
+
+\begin{enumerate}
+	\item If the population is normal, the confidence intervals achieve
+		the stated coverage rate for all sample sizes.
+
+		But since small data sets provide very little indication
+		of the shape of the population distribution, the normality assumption
+		must be justified by something other than the data.
+		(Perhaps other larger data sets collected in a similar fashion 
+		have shown that normality is a good assumption or perhaps there
+		is some theoretical reason to accept the normality assumption.)
+
+	\item
+		For modestly sized samples ($15 \le n \le 40$), the $t$-based 
+		confidence is acceptable as long as the distribution appears 
+		to be unimodal and is not strongly skewed.
+
+	\item
+		For large sample size ($n \ge 40$), the $t$-procedure will work acceptably
+		well for most unimodal distributions.
+
+		But keep in mind, if the distribution is strongly skewed, the 
+		mean might not be the best parameter to estimate.
+
+	\item
+		Because both the sample mean and the sample variance are sensitive
+		to outliers, one should proceed with caution when outliers 
+		are present.
+
+		Outliers that are due to mistakes and can be corrected, should be.  Outliers that can be verified
+		to be incorrect but cannot be corrected should be removed.  It is not
+		acceptable to remove an outlier just because you don't want it in your data.
+		But sometimes statisticians do ``leave one out analysis" where they run the 
+		analysis with and without the outlier.  If the conclusions are the same, then
+		the conclusions can be safely drawn.  But if the conclusions are different,
+		likely additional data will be needed to resolve the differences.
+
+		Don't forget: sometimes the outliers are the interesting part of the story.
+		Determining what makes them different from the rest of the data may be 
+		the most important thing.
+
+\end{enumerate}
+
+
+
+\newpage
+\section{Exercises}
+
+\begin{problem}
+	Let $X$ and $Y$ be independent $\Gamm(\texttt{shape} = 2, \texttt{scale} = 3)$ random 
+	variables.  
+	Let $S = X+Y$ and let $D = X - Y$.
+	Use simulations (with 5000 replications) and quantile-quantile pltos 
+	to answer the following:
+
+	\begin{enumerate}
+		\item
+			Fit a normal distribution to $S$ using \function{fitdistr()}.  
+			Is the normal distribution a good fit?
+		\item
+			Fit a Gamma distribution to $S$ using \function{fitdistr()}.  
+			Is the Gamma distribution a good fit?
+		\item
+			Fit a normal distribution to $D$ using \function{fitdistr()}.  
+			Is the normal distribution a good fit?
+		\item
+			Why is it not a good idea to fit a Gamma distribution to $D$?
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<warning = FALSE>>=
+n <- 5000
+X <- rgamma(n,  shape = 2, scale = 3)
+Y <- rgamma(n,  shape = 2, scale = 3)
+S <- X + Y
+D <- X - Y
+@
+<<warning = FALSE>>=
+fitdistr(S, "normal")
+gf_qq( ~ S)
+gf_density( ~ S)
+@
+<<warning = FALSE>>=
+fitdistr(S, "gamma")
+gf_qq( ~ S, distribution = qgamma, dparams = list(shape = 4.04, rate = 0.333))
+gf_density( ~ S)
+@
+The gamma distribution fits $S$ much better than the normal does.  But notice that the 
+shape parameter is larger than the shape parameters for $X$ and $Y$.
+
+<<warning = FALSE>>=
+fitdistr(D, "normal")
+gf_qq( ~ D)
+gf_density( ~ D)
+@
+
+This time the distribution is symmetric, so the problems are not as obvious as for $S$, but the 
+normal quantile plots shows some clear curve (there is lots of data, so very little noise in
+this plot).  The problem is that the shape is not like a normal distribution.  
+The density plot perhaps makes this clearer if you are not familiar with qq-plots.
+\end{solution}
+
+\begin{problem}
+	If $X \sim \Norm(110, 15)$ and $Y \sim \Norm(100, 20)$ are independent
+	random varaibles:
+	
+	\begin{enumerate}
+		\item
+			What is $\Prob(X \ge 140)$?
+		\item
+			What is $\Prob(Y \ge 140)$?
+		\item
+			What is $\Prob(X \ge 150)$?
+		\item
+			What is $\Prob(Y \ge 150)$?
+		\item
+			What is $\Prob(X + Y \ge 250)$?
+		\item
+			What is $\Prob(X \ge Y)$? (Hint: $X \ge Y \Leftrightarrow X - Y \ge 0$.)
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+1 - pnorm(140, mean = 110, sd = 15) #  P(X > 140)
+1 - pnorm(140, mean = 100, sd = 20) #  P(Y > 140)
+1 - pnorm(150, mean = 110, sd = 15) #  P(X > 150)
+1 - pnorm(150, mean = 100, sd = 20) #  P(Y > 150)
+@
+$X + Y \sim \Norm(210, 25 )$ because $110 + 100 = 210$ and $15^2 + 20^2 = 25^2$.  
+So $\Prob(X + Y \ge 250)$ is
+<<>>=
+1 - pnorm(250, 210, 25) 
+@
+$X - Y \sim \Norm(10, 25 )$ because $110 - 100 = 210$ and $15^2 + 20^2 = 25^2$.  
+So $\Prob(X - Y \ge 0)$ is
+<<>>=
+1 - pnorm(0, 10, 25) 
+@
+\end{solution}
+
+\begin{problem}
+	Suppose $X$ and $Y$ are independent random variables with means
+	and standard deviations as listed below.
+
+	\begin{center}
+		\begin{tabular}{ccc}
+			\hline
+			& mean & standard deviation\\
+			\hline
+			$X$ & 54 & 12 \\
+			$Y$ & 48 & 9 \\
+			\hline
+		\end{tabular}
+	\end{center}
+
+	What are the mean and standard deviation of each of the following:
+
+	\begin{enumerate}
+		\item $X + Y$
+		\item $2X$
+		\item $2X + 3Y$
+		\item $2X - 3Y$
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+# part a
+c(mean = 54 + 48, sd= sqrt(12^2 + 9^2))
+# part b
+c(mean = 2 * 54, sd= 2 * 12)
+# part c
+c(mean = 2 * 54 + 3 * 48, sd= sqrt(2^2 * 12^2 + 3^2 * 9^2))
+# part d
+c(mean = 2 * 54 - 3 * 48, sd= sqrt(2^2 * 12^2 + (-3)^2 * 9^2))
+@
+\end{solution}
+
+\begin{problem}
+	You are interested to know the mean height of male Calvin students.
+	Assuming the standard deviation is similar to that of the population
+	at large, we will assume $\sigma = 2.8$ inches.
+
+	\begin{enumerate}
+		\item
+			What is the distribution of $\mean X - \mu$?
+			(Hint: start by determining the distribution of $\mean X$.)
+
+		\item If you measure the heights of a sample of 20 students,
+			what is the probability that your mean will be within 
+			1 inch of the actual mean?
+			
+		\item
+			How large would your sample need to be to make this probability
+			be 95\%?
+	\end{enumerate}
+\end{problem}
+\begin{solution}
+	\begin{enumerate}
+		\item
+			$\Norm(0, \frac{\sigma}{\sqrt{n}}) = 
+			 \Norm(0, \frac{2.8}{\sqrt{n}}) $ 
+		 \item
+<<>>=
+pnorm(1, mean = 0, sd = 2.8/sqrt(20)) - pnorm(-1, mean = 0, sd = 2.8/sqrt(20))
+@
+		 \item
+			 We would need 1 to be equal to $2 \frac{\sigma}{\sqrt n}$. So
+<<>>=
+n <- (2 * (2.8))^2; n
+# double check:
+n <- round(n); n  # should have an integer
+pnorm(1, mean = 0, sd = 2.8/sqrt(n)) - pnorm(-1, mean = 0, sd = 2.8/sqrt(n))
+@
+
+			 This can also be done by guessing and checking for the value of $n$ (sort of like the 
+			 guessing game where someone tells you ``higher'' or ``lower'' after each guess until 
+			 you converge on the number they have selected.
+<<>>=
+prob <- makeFun(pnorm(1, mean = 0, sd = 2.8/sqrt(n)) - pnorm(-1, mean = 0, sd = 2.8/sqrt(n)) ~ n)
+prob(20)
+prob(40)
+prob(30)
+prob(32)
+prob(31)
+@
+R can even automate this for us:
+<<>>=
+uniroot(makeFun(prob(n) - 0.95 ~ n), c(20, 40))  # look for a solution between 20 and 40
+@
+We should round the answer, of course.
+	\end{enumerate}
+\end{solution}
+
+\begin{problem}
+Give an approximate 95\% confidence interval for a population mean $\mu$ 
+if the sample of size $n = 25$ has mean $\mean x = 8.5$ and the population standard deviation is 
+$\sigma = 1.7$.
+\end{problem}
+
+\begin{solution}
+<<tidy = FALSE>>=
+SE <- 1.7 / sqrt(25) ; SE # standard error
+ME <- 2 * SE; ME          # margin of error
+8.5 + c(-1,1) * ME        # approx 95% CI
+@
+\end{solution}
+
+
+\begin{problem}
+	Determine the critical value $t_*$ for each of the following confidence levels and 
+	sample sizes.
+	\begin{enumerate}
+		\item
+			95\% confidence level; $n = 4$
+		\item
+			95\% confidence level; $n = 24$
+		\item
+			98\% confidence level; $n = 15$
+		\item
+			90\% confidence level; $n = 20$
+		\item
+			99\% confidence level; $n = 12$
+		\item
+			95\% confidence level; $n = 123$
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+Here's a fancy version that gets all the answers at once.  (You didn't need to know
+you could do it this way, but \R\ is pretty handy this way.)
+<<>>=
+answers <- qt(c(.975, .975, .99, .95, .995, .975), df = c(3,23,14,19,11,122))
+names(answers) <- letters[1:length(answers)]
+answers
+@
+\end{solution}
+
+\begin{problem}
+	Below is a normal-quantile plot and some summary information from a 
+	sample of the stride rates (strides per second) 
+	of healthy men.
+
+<<echo = FALSE>>=
+library(Devore7)
+names(ex07.37) <- "strideRate"
+gf_qq(~strideRate, data = ex07.37)
+df_stats( ~ strideRate, data = ex07.37)
+@
+	\begin{enumerate}
+		\item
+			What is the standard error of the mean for this sample?
+		\item 
+			Construct a 98\% confidence interval 
+			for the mean stride rate of healthy men.  
+		\item
+			Does the normal-quantile plot suggest any reasons to worry about the 
+			normality assumption?
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+t.test( ~ strideRate, data = ex07.37, conf.level = 0.98)
+@
+	The normal quantile plot is OK but not great.  There are some flat spots in
+	the plot indicating ties.  This is probably because the number of steps was
+	counted over a short length of time, so the underlying data is probably
+	discrete -- leading to the ties.  But the distribution is unimodal and 
+	not heavily skewed.  With a sample size of 20 we can probably proceed 
+	cautiously.  (In practice, we might want to confirm the results with a method
+	taht doesn't require such a strong normality assumption, but we don't know
+	any of those methods yet.)
+\end{solution}
+
+\begin{problem}
+Lake Mary problem.
+\end{problem}
+
+% \begin{problem}
+% 	The \dataframe{lakemary} data set in the \pkg{Stob} package describes the 
+% 	lengths and ages of a sample of fish.  Since size is likely associated with
+% 	age, let's create a subset of this sample that includes only the fish 
+% 	that are 4 years old:
+% <<>>=
+% tally(~Age, lakemary)
+% fish4 <- subset(lakemary, Age==4)  # note the double == here
+% tally(~Age, fish4)
+% @
+% 	\begin{enumerate}
+% 		\item
+% 			Compute a 95\% confidence interval for the mean length 
+% 			of a 4-year-old fish in Lake Mary.
+% 		\item
+% 			What assumptions must we be willing to make if we are 
+% 			going to interpret this confidence interval in the usual way?
+% 		\item
+% 			What fraction of the fish in this sample have lengths within
+% 			the confidence interval you just constructed?  Does this give 
+% 			any cause for worry?
+% 		\item
+% 			Repeat this for 3-year-old fish.  Does this suggest that 
+% 			4-year-old fish are indeed larger than 3-year-old fish?  
+% 			
+% 			(Note: This is not really the right way to make this sort of comparison.
+% 			There is a much better way. Stay tuned.)
+% 	\end{enumerate}
+% \end{problem}
+% 
+% \begin{solution}
+% 	\begin{enumerate}
+% 		\item 4-year-old fish
+% Here's the 95\% confidence interval.
+% <<>>=
+% confint(t.test( ~ Length, data = fish4))
+% @
+% \noindent
+% We must be willing to assume that the sampling process produces a reasonable approximation
+% to a random (iid) sample.  (We might need to know something about how the fish were 
+% captured to decide if this is reasonable.  A method of catching fish that works better for 
+% larger fish than for smaller fish, or vice versa, would be problematic.)  
+% A normal-quantile plot doesn't suggest any reason to be overly worried about
+% the normality assumption.
+% <<>>=
+% qqmath(~Length, data = fish4)
+% @
+% <<tidy = FALSE>>=
+% int <- confint(t.test( ~Length, data = fish4))
+% int
+% lo <- int[2]
+% hi <- int[3]
+% tally ( ~ (lo < Length & Length < hi), data = fish4)
+% @
+% None of the fish have a length inside the confidence interval -- this is far below 95\%.  
+% \textbf{\emph{This is NOT a problem.}}
+% The confidence interval is not about the lengths of individual fish, it is about 
+% the mean for the population of fish.  (Side note: It looks like many of the measurements
+% were rounded to the nearest 10 cm, and since our confidence interval fit between 150 and 160,
+% there were no fish of those lengths.)
+% 
+% \item 3-year-old fish
+% <<tidy = FALSE>>=
+% fish3 <- subset(lakemary, Age==3)  # note the double == here
+% qqmath(~Length, data = fish3)
+% int <- confint(t.test(~Length, data = fish3))
+% int
+% lo <- int[2]; hi <- int[3]
+% lo
+% hi
+% tally ( ~ (lo < Length & Length < hi), data = fish3)
+% @
+% 	\item
+% 		Since the two confidence intervals do not overlap, we have a pretty strong
+% 		indication that the 4-year-olds are (on average) longer.  This isn't really
+% 		the right way to test for this -- we'll learn better ways soon.
+% 
+% 		Here is a plot that shows how length varies by age.
+% <<>>=
+% bwplot(Length ~ factor(Age), data = lakemary)
+% xyplot(Length ~ factor(Age), data = lakemary, cex = 2, alpha = 0.3)
+% @
+% \end{enumerate}
+% \end{solution}
+
+\begin{problem}
+	% Devore7; prob 7.32
+	A random sample of size $n = 8$ E-glass fiber test specimens of a certain 
+	type yielded a sample mean interfacial shear yield stress of 30.2 and a sample
+	standard deviation of 3.1.  Assuming that the population of interfacial shear 
+	yield stress measurements is approximately normal, compute a 95\% confidence
+	interval for the true average stress.
+\end{problem}
+
+\begin{solution}
+<<tidy = FALSE>>=
+SE <- 3.1 / sqrt(8); SE              # standard error
+t_star <- qt(0.975, df = 7); t_star  # critical value
+me <- t_star * SE; me                # margin of error
+30.2 + c(-1,1) * me                  # the 95% confidence interval
+@
+\end{solution}
+
+
+\begin{problem}
+	% Devore7; prob 7.33
+	The code below will create a data set containing a sample of observations
+	of polymerization degree for some paper specimens.  The data have been 
+	sorted to assist in typing.  (If the data actually occurred in this order,
+	we would probably be doing a different sort of analysis.)
+<<>>=
+Paper <- 
+	tibble(
+	  polymer = 
+	    c(418, 421, 421, 422, 425, 427, 431, 434, 
+        437, 439, 446, 447, 448, 453, 454, 463, 465))
+@
+	\begin{enumerate}
+		\item Create a normal-quantile plot to see if there are any reasons
+			to worry about the assumption that the population is approximately normal.
+		\item
+				Calculate 
+				a 95\% confidence interval for the mean
+				degree of polymerization for the population of such paper runs.
+				The authors of the paper did this too.
+		\item
+			Based on your confidence interval, is 440 a plausible value
+			for the mean degree of polymerization?  Explain.
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+gf_qq( ~ polymer, data = Paper)
+gf_density( ~ polymer, data = Paper)
+t.test( ~ polymer, data = Paper)
+@
+The tails of the sample distribution do not stretch quite as far as we would expect 
+for a normal distribution, but the distribution is unimodal and not heavily skewed,
+so we are probably still OK.
+\end{solution}
+
+
+\begin{problem}
+	Using the same data, Alice constructs a 95\% confidence interval
+	and Bob creates a 98\% confidence interval.  Which interval will be wider?  Why?
+\end{problem}
+
+\begin{solution}
+	Bob's interval will be wider because he used a higher level of confidence.  (This will
+	cause $t_*$ to be larger.  They will both have the same standard error.)
+\end{solution}
+
+\begin{problem}
+	Charlie and Denise are working on the same physics lab.  Charlie leaves lab early
+	and only has a sample size of $n = 15$.  Denise stays longer and has a sample
+	size of $n = 45$.  Each of them construct a 95\% confidence interval from their
+	samples.
+	\begin{enumerate}
+		\item
+	Whose confidence interval would you expect to be wider?
+\item
+	Under what conditions could it be the other way around?
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+We would expect the two standard deviations to be fairly close, but since Denise 
+has quite a bit more data, her standard error will be smaller.  This will make her
+interval narrower.  So Charlie's interval will be wider, unless Charlie gets an unusually 
+small standard deviation and Denise gets an unusually large standard deviation.
+\end{solution}
+
+\begin{problem}
+	Find an article from the engineering or science literature that computes a
+	confidence interval for a mean (be careful, you may see confidence intervals
+	for many other parameters) and also reports the sample mean and
+	standard deviation.  Check their computation to see if you both get the
+	same confidence interval.  Give a full citation for the article you used.
+
+	Google scholar might be a useful tool for this.  Or you might ask an
+	engineering or physics professor for an appropriate engineering journal to
+	page through in the library.  Since the chances are small that two students
+	will find the same article if working independently, I expect to see lots
+	of different articles used for this problem.
+
+	If your article looks particularly interesting or contains statistical 
+	things that you don't understand but would like to understand, let me know,
+	and perhaps we can do something later in the semester with your article.
+	It's easiest to do this if you can give me a URL for locating the paper online.
+\end{problem}
+
+\begin{solution}
+Answers will vary.
+\end{solution}
+
+\shipoutProblems
+
+
+\newpage
+
+\section*{Review Exercises}
+
+\begin{problem}
+Even when things are running smoothly, 5\% of the parts 
+produced by a certain manufacturing process are defective.
+\begin{enumerate}
+\item
+If you select 10 parts at random, what is the probability
+that none of them are defective?
+\end{enumerate}
+Suppose you have a quality control procedure for testing parts 
+to see if they are defective, 
+but that the test procedure sometimes makes mistakes:
+\begin{quote}
+\begin{itemize}
+\item
+If a part is good, it will fail the quality control test 10\% of the time.
+\item
+20\% of the defective parts go undetected by the test.
+\end{itemize}
+\end{quote}
+
+\begin{enumerate}
+\refstepcounter{enumi}
+\item
+What percentage of the parts will fail the quality control test?
+\item
+If a part passes the quality control test, what is the probability
+that the part is defective?
+\item
+	The parts that fail inspection are sold as ``seconds''.
+	If you purchase a ``second'', what is the probability that it is 
+	defective?
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+\item
+$\Prob(\mbox{none defective}) = \Prob(\mbox{all are good}) = 
+0.95^{10} = 0.599 = 59.9\%$
+\item
+Even though only $5$\% are defective, nearly $14$\% fail the quality control:
+\begin{align*}
+\Prob(\mbox{fail test}) 
+&= \Prob(\mbox{good \tand fail}) + \Prob(\mbox{bad and fail}) 
+\\
+& = \Prob(\mbox{good}) \Prob(\mbox{fail}\mid \mbox{good}) 
+	+ \Prob(\mbox{bad}) \Prob(\mbox{fail}\mid \mbox{bad}) 
+	\\
+&= 0.95 (0.10) + 0.05 (.80) = 0.095 + 0.04 = 0.135 = 13.5\%
+\end{align*}
+\item
+If a part passes QC, the probability that it is defective
+drops from 5\% to just over 1\%:  
+\begin{align*}
+\Prob(\mbox{bad} \mid \mbox{pass}) 
+&= \frac{ \Prob(\mbox{bad \tand pass})}{\Prob(\mbox{pass})}
+\\
+& = 
+\frac{ 0.05 (0.20) }{ 0.865 }
+=
+0.01156
+\end{align*}
+The cost to get this improvement 
+in quality is the cost of the QC test plus the cost of discarding $9.5$\% of 
+good parts in the QC process.  
+\item
+	\[
+	\Prob(\mbox{bad} \mid \mbox{fail}) = 
+	\Prob(\mbox{bad} \tand  \mbox{fail}) = 
+	\Prob(\mbox{fail})  
+	= 0.04 / (0.04 + 0.095)
+	= \Sexpr{0.04 / (0.04 + 0.095)}
+	\]
+<<>>=
+0.04 / (0.04 + 0.095)
+@
+\end{enumerate}
+\end{solution}
+
+\begin{problem}
+Here is a normal quantile plot from a data set.
+<<echo=FALSE>>=
+x <- rgamma(100, shape = 2)
+gf_qq( ~ x , xlab = "", ylab = "")
+@
+Sketch what a density plot of this same data would look like.
+\end{problem}
+
+\begin{solution}
+<<echo=FALSE>>=
+gf_density( ~ x)
+@
+The important feature to get right is the direction of the skew.
+\end{solution}
+
+\begin{problem}
+	You should know how to compute confidence intervals for a single 
+	quantitative variable both ``by hand'' and using \function{t.test()}
+	if you have data.  Here is a template problem you can use to practice
+	both of these.
+	\begin{enumerate}
+		\item Select a data set and a quantitative variable in that data set.
+			For example, \variable{Length} in the \dataframe{KidsFeet} data
+			set.
+		\item
+			Use \function{df_stats} to compute some summary statistics.
+<<>>=
+df_stats ( ~ length, data = KidsFeet)
+@
+		\item
+			Pick a confidence level.  Example: 90\% confidence.
+		\item
+			From this information, compute a confidence interval
+		\item
+			Now check that you got it right using \function{t.test()}
+		\item
+			It is possible that you chose a variable for which 
+			this is not an appropriate procedure.  Be sure to check for that, too.
+	\end{enumerate}
+You can find other data sets using 
+<<eval = FALSE>>=
+data()
+@
+You won't run out of examples before you run out of energy for doing these.
+\end{problem}
+
+\begin{solution}
+<<tidy = FALSE>>=
+df_stats( ~ length, data = KidsFeet)
+x_bar <- 24.72
+n <- 39; n
+s <- 1.32; s
+SE <- s / sqrt(n) ; SE
+t_star <- qt(0.95, df = 38) ; t_star
+me <- t_star * SE; me
+interval(t.test( ~length, data = KidsFeet)) 
+gf_qq( ~length, data = KidsFeet)
+@
+The normal-quantile plot does not reveal any causes for concern, but 
+we might be concerned that the distributions for boys and girls are different.  Let's do
+a graphical check to see if that is a problem.
+<<>>=
+gf_boxplot(length ~ sex, data = KidsFeet)
+gf_density( ~ length, groups = sex, data = KidsFeet)
+@
+Indeed, it appears that the girls' feet are on average a bit shorter, so perhaps 
+we should create a confidence intervals separately for each group.  Now you have two
+problems.  You can get started with
+<<>>=
+df_stats(length ~ sex, data = KidsFeet)
+@
+
+\end{solution}
+
+\begin{problem}
+The {\bf pdf} for a continuous random variable $X$ is
+\medskip
+
+$
+\displaystyle
+f(x) = \begin{cases}
+  4(x - x^3) & \mbox{when } 0\le x \le 1 \\
+0 & \mbox{otherwise}
+\end{cases}
+$
+<<echo = FALSE>>=
+gf_fun(4 * (x - x^3) * (0 <= x & x <= 1) ~ x, xlim = c(-0.2, 1.2)) %>%
+  gf_labs(y = "f(x)", x = "x", title = "a pdf")
+@
+
+\begin{enumerate}
+\item
+Determine $\Prob(X \le \frac{1}{2})$.
+\item
+Determine the mean and variance of $X$.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<tidy = FALSE>>=
+  f <- makeFun(4*(x-x^3) ~ x)
+  F <- antiD(f(x) ~ x)
+ xF <- antiD(x * f(x) ~ x)
+xxF <- antiD(x^2 * f(x) ~ x)
+F(1) - F(0)                   # should be 1
+m <- xF(1) - xF(0); m         # mean
+xxF(1) - xxF(0) - m^2         # variance
+@
+\end{solution}
+	
+
+\begin{problem}
+The kernel of a continuous distribution is given by $k(x) = 4-x^2$
+on the interval $[-2,2]$.  
+\begin{enumerate}
+	\item
+		Determine the pdf of the distribution.
+	\item
+		Compute the mean and variance of the distribution.
+\end{enumerate}
+\newpage
+\end{problem}
+
+\begin{solution}
+<<tidy = FALSE>>=
+F <- antiD(4 - x^2 ~ x)
+F(2) - F(-2) 
+@
+	So the pdf is 
+	\[
+	f(x) = \frac{4 - x^2}{\Sexpr{F(2) - F(-2)}}
+	\]
+<<>>=
+f <- makeFun((4 - x^2) / C ~ x, C = F(2) - F(-2))
+integrate(f, -2, 2)
+F <- antiD(f(x) ~ x)
+F(2) - F(-2)
+xF <- antiD(x*f(x) ~ x)
+m <- xF(2) - xF(-2)           # mean
+xxF <- antiD(x*x*f(x) ~ x)  
+xxF(2) - xxF(-2) - m^2        # variance
+@
+\end{solution}
+
+
+\begin{problem}
+	Let $X \sim \Gamm(\texttt{shape} = 3, \texttt{rate} = 2) $.
+	\begin{enumerate}
+		\item
+			Plot the pdf of the distribution of $X$.
+		\item
+			Determine $\Prob(X \le 1)$.
+		\item
+			What proportion of the distribution is between $1$ and $3$?
+		\item
+			Use the table to determine the mean, variance, and standard deviation
+			of $X$.
+		\item
+			Use integration to determine the mean, variance, and standard deviation
+			of $X$.  (You should get the same answers as above.)
+		\item
+			Make up other problems like this for any of the distributions
+			in the table if you want additional practice.
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<tidy=FALSE>>=
+gf_dist("gamma", params = list(shape = 3, rate = 2))
+pgamma(1, shape = 3, rate = 2)
+pgamma(3, shape = 3, rate = 2) -  pgamma(1, shape = 3, rate = 2)
+F <- antiD(dgamma(x, shape = 3, rate = 2) ~ x)
+F(Inf) - F(0)    # should be 1.
+xF <- antiD(x * dgamma(x, shape = 3, rate = 2) ~ x)
+m <- xF(Inf) - xF(0); m
+xxF <- antiD(x^2 * dgamma(x, shape = 3, rate = 2) ~ x)
+xxF(Inf) - xxF(0)
+xxF(Inf) - xxF(0) - m^2 # variance
+@
+\end{solution}
+
+	
+\begin{problem}
+Suppose $X$ an $Y$ are independent random variables with means and 
+standard deviations as given in the following table.
+
+\begin{center}
+\begin{tabular}{ccc}
+variable & mean & standard deviation  \\
+$X$ & 40 & 3 \\
+$Y$ & 50 & 4 \\
+\end{tabular}
+\end{center}
+
+Determine the mean and standard deviation of the following:
+\begin{center}
+\begin{tabular}{|rc|p{2in}|p{2in}|}
+\hline
+\multicolumn{2}{|c|}{variable} & \multicolumn{1}{c|}{mean} & \multicolumn{1}{c|}{standard deviation}\\[2mm]
+\hline
+&&& \\
+a)& $X + Y$  & & \\[6mm]
+\hline
+&&& \\
+b)& $X - Y$  & & \\[6mm]
+\hline
+&&& \\
+c)& $\frac{1}{2} X + 7$  & & \\[6mm]
+\hline
+\end{tabular}
+\end{center}
+
+Reminder: Expected value is another term for mean.
+\end{problem}
+
+
+\begin{solution}
+$\E(X+Y) = \E(X) + \E(Y) = 40 + 50 = 90$.
+
+$\Var(X+Y) = \Var(X) + \Var(Y) = 3^2 + 4^2 = 5^2$.
+So standard deviation = $5$.
+
+$\E(X-Y) = \E(X) - \E(Y) = 40 - 50 = -10$.
+
+$\Var(X-Y) = \Var(X + (-Y)) = \Var(X) + \Var(-Y) = 3^2 + 4^2 = 5^2$.
+So standard deviation = $5$.
+
+$\E(\frac12 X+7) = \frac12\E(X) + 7 = 27$.
+
+$\Var(\frac12 X+7) = \frac14\Var(X) = \frac94$.
+So standard deviation = $\sqrt{\frac94}$.
+\end{solution}
+
+
+\iffalse
+%% This data was among the CMU data sets that we removed from mosaic
+\begin{problem}
+	The \dataframe{StudentSurvey} data set 
+	contains student responses to a survey.
+	\begin{enumerate}
+%		\item
+%			What percent of the students in the survey had cell phones?
+		\item
+			What were the mean and standard deviation of the number 
+			of minutes students spend exercising on a typical day?
+		\item
+			What percent of students responded that they don't exercise
+			at all on a typical day?
+		\item
+			Construct a histogram, a density plot, and a normal-quantile
+			plot for number of minutes exercised by these students.
+			Comment on any interesting features.
+		\item
+			Fit a distribution to this distribution.  What family of distributions
+			did you choose?  Why?  How well does it appear to fit?
+			(Remember that for some distributions you need to decide how you will
+			handle 0's and missing values.)
+	\end{enumerate}
+\end{problem}
+
+\begin{solution}
+Notice how similar all of these commands are.  (Also that if there is missing data, \R\ reports
+NA when you ask for the mean and standard deviation.)
+<<eval=TRUE, >>=
+mean( ~ Exer, data = StudentSurvey)
+mean( ~ Exer, data = StudentSurvey, na.rm = TRUE)
+sd( ~ Exer, data = StudentSurvey, na.rm = TRUE)
+tally( ~ (Exer == 0) , data = StudentSurvey, format = "percent")
+gf_dhistogram( ~ Exer, data = StudentSurvey)
+gf_density( ~ Exer, data = StudentSurvey)
+gf_qq( ~ Exer, data = StudentSurvey)
+@
+Let's fit a gamma, since values cannot be below 0 and the distribution is clearly skewed.
+(Weibull might be another choice.)
+Remember that we need to remove any values of 0 before we do the fit.  In this case, we will
+do this by mapping them to a value of 0.5 since the smallest non-zero value in the data set
+is 1.  We also have to remove the two students who did not report.
+<<eval=TRUE, warning=FALSE>>=
+StudentSurvey2 <- StudentSurvey %>%
+  filter(!is.na(Exer)) %>%  # remove non-responders
+  mutate(Exer2 = ifelse(Exer <= 0, 0.5, Exer))
+fitdistr(StudentSurvey2$Exer2, "gamma")
+gf_dhistogram( ~ Exer2, data = StudentSurvey2) %>% 
+  gf_fitdistr(dist = "gamma")
+gf_qq( ~ Exer2, data=StudentSurvey2, dist=qgamma, dparams = list(shape=0.442, rate=0.0124))
+@
+\end{solution}
+\fi
+
+\begin{problem}
+	\begin{enumerate}
+		\item
+			What is the difference between a statistic and a parameter?
+		\item
+			What is a sampling distribution?
+		\item
+			Create other similar problems using important terms from this class.
+	\end{enumerate}
+\end{problem}
+
+
+%% This data was among the CMU data sets that have been pulled from the mosaic package
+\begin{problem}
+Critical flicker frequency (called \variable{Flicker} in the data set below) is the 
+lowest flicker rate at which the human eye
+can detect that a light source (from a flourenscent bulb or a computer screen, for example)
+is flickering.  Knowing the cff is important for product manufacturing (since detectable
+flickering is annoying for the consumer).  The command below loads data from 
+from a 1973 study that attempted to determine whether the cff, which varies 
+from person to person, is partially determined by eye color.  
+<<>>=
+Flicker <- read.file("http://www.statsci.org/data/general/flicker.txt")
+@
+
+Create a plot that can be used to visualise the data.  What does your plot suggest
+the answer might be? (Does eye color matter?)
+\end{problem}
+
+\begin{solution}
+Here are two possibilities:
+<<>>=
+gf_boxplot(Flicker ~ Colour, data = Flicker)
+gf_density( ~ Flicker, fill=~Colour, data = Flicker) %>%
+  gf_refine(scale_fill_manual(values = c('steelblue', 'tan4', 'forestgreen')))
+@
+The general trend appears to be that lighter colored eyes (if you consider blue
+to be lighter than green) appear to be able to detect higher flicker rates, but
+there is overlap among the groups.
+\newpage
+\end{solution}
+
+\begin{problem}
+Let $\mean X_1$ be the distibution of sample means from a population with mean $\mu_1$ and standard deviation $\sigma_1$.
+Let $\mean X_2$ be the distibution of sample means from a population with mean $\mu_2$ and standard deviation $\sigma_2$.
+What is the distribution of $\mean X_1 - \mean X_2$? (Hint: start by determining the distributions of 
+$\mean X_1$ and $\mean X_2$, then use what we know about differences.)
+\end{problem}
+
+\begin{problem}
+Similar to the previous problem, we can work out the (approximate) sampling distribution for the difference 
+between two proportions. Use the fact that the sampling distribution for a sample proportion is approximately
+$\Norm(p, \sqrt{\frac{p(1-p)}{\sqrt{n}}})$ to work out the (approximate) sampling distribution for the 
+difference between two sample proportions.
+\newpage
+\end{problem}
+
+\begin{problem}
+Below is the summary of some data from a study 
+comparing two types of concrete beams by measuring their ultimate load (in kN).
+
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+type & sample size & mean & standard deviation \\
+\hline
+fiberglass grid & 26 & 33.4 & 2.2 \\
+commercial carbon grid & 26 & 42.8 & 4.3 \\
+\hline
+\end{tabular}
+\end{center}
+
+Create a 95\% confidence interval for the difference in the mean ultimate load for 
+the two types of beam.
+\end{problem}
+
+\begin{solution}
+<<>>=
+SE <- sqrt( 2.2^2 / 26 + 4.3^2 / 26); SE
+tstar <- qt(0.975, df = 25); tstar   # conservative
+42.8 - 33.4 + c(-1,1) * tstar * SE
+@
+\end{solution}
+
+\begin{problem}
+The \code{Devore7::ex9.23} data set has data on the extensibility (\%) of two types of fabric, but it is 
+arranged awkwardly. Let's fix that:
+
+<<>>=
+library(tidyr)
+Fabric <- 
+  Devore7::ex09.23 %>% 
+  pivot_longer( everything(), names_to = "quality", values_to = "extensibility",
+                values_drop_na = TRUE) 
+head(Fabric) 
+df_stats(extensibility ~ quality, data = Fabric)
+@
+
+\begin{enumerate}
+\item
+Use the summary above to compute a 95\% confidence interval for the difference in mean extensitibility
+for the two types of fabric.
+
+\item
+Then use \function{t.test()} to compute the confidence interval.  How do the degrees of freedom
+from \function{t.test()} compare with the upper and lower bounds we have for degrees of freedom?
+Which end of the range is it closer to?  Why?
+
+\item Create normal-quantile plots for each group.  Does it seem plausible that that the populations 
+are normal? Is it important that this be plausible?
+\end{enumerate}
+
+Extensibility is related to the shape and drape when fabric is used to make clothing.
+\end{problem}
+
+\begin{solution}
+<<>>=
+library(tidyr)
+Fabric <- 
+  Devore7::ex09.23 %>% 
+  pivot_longer( everything(), names_to = "quality", values_to = "extensibility",
+                values_drop_na = TRUE) 
+head(Fabric) %>% pander()
+df_stats(extensibility ~ quality, data = Fabric)
+t.test(extensibility ~ quality, data = Fabric)
+@
+
+\end{solution}
+
+\begin{problem}
+A sample of parts from two factories was inspected. At factory A, 172 out of 213 were rated "highest quality".
+At factory B, 184 out of 207 were rated "highest quality".
+\begin{enumerate}
+\item
+Compute the proportion of highest quality parts produced in each sample.
+\item
+Compute a 95\% confidence interval for the difference in the proportions of parts that receive the 
+highest quality rating from the two factories.  Do this first without using \function{prop.test()}, then
+repeat with \function{prop.test()} and compare the results.
+\item
+Based on this data, can we be confident that one factory is better than the other? Explain.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+<<>>=
+prop.test( c(172, 184), c(184, 207)) %>% confint()
+prop.test( c(172, 184), c(184, 207), correct = FALSE) %>% confint()
+@
+\end{solution}
+
+\shipoutProblems
+
+\ifsolutions
+\ifsolutionslocal
+\newpage
+\section*{Solutions}
+\shipoutSolutions
+\fi
+\fi

@@ -83,7 +83,7 @@ This is really just one way of describing a function, called the
 **probability mass function** (or pmf).  The pmf satisfies
 $$
 f(x) = \Prob(X = x)
-$$ {#eqn-pmf}
+$$ {#eq-pmf}
 
 Sometimes instead of providing a table, we will be able to specify
 the pmf using a formula.  For example, we could define a pmf $g$ by
@@ -233,7 +233,7 @@ and describes a continuous random variable $X$ such that
 
 $$
    \Prob(a \le X \le b) = \int_a^b f(x) \; dx \;.
-$$ { #eqn-integral-for-probability }
+$$ { #eq-integral-for-probability }
 ::: 
 
 <!-- end boxedText -->
@@ -631,7 +631,7 @@ $$
 \begin{align*}
 \Var(X) &= \E(X^2) - \E(X)^2
 \end{align*}
-$$ {#eqn-var-shortcut}
+$$ {#eq-var-shortcut}
 
 
 ::: {.problem #exr-show-pdf}
@@ -1237,7 +1237,7 @@ distribution is
 
 $$ 
 f(x) = \frac{ 1}{\sigma\sqrt{2\pi}} e^{-(x-\mu)^2/2\sigma^2}
-$$ {#eqn-normal-pdf}
+$$ {#eq-normal-pdf}
 
 <!-- +---------------------------------------+--------------------------------------------------------+ -->
 <!-- | distribution                          | pdf                                                    | -->

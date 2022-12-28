@@ -1,9 +1,13 @@
 project:
   type: book
-
+  
+execute:
+  freeze: auto
+  
 format:
   html:
     theme: cosmo
+    code-copy: true
     toc: true
     toc-location: right
     df-print: paged
@@ -34,6 +38,11 @@ book:
   title: "Statistics for the Physical Sciences and Engineering"
   author: "Randall Pruim "
   date: last_modified
+  favicon: cover.png
+  search: true
+  downloads: [epub, pdf]
+  sidebar: 
+    style: docked
   chapters:
     - index.qmd
     - Stat241-Chap0.qmd
@@ -41,17 +50,17 @@ book:
     - Stat241-Numerical.qmd
     - Stat241-Probability.qmd
     - Stat241-RandomVariables.qmd
+    - Stat241-Transformations.qmd
     - Stat241-Propagation.qmd
     - Stat241-SimpleLinear.qmd
     - Stat241-NonLinear.qmd
     - Stat241-HypothesisTesting.qmd
+    - Stat241-MoreExamples.qmd
     - references.qmd
 
 bibliography: ['bibtex/R.bib', 'bibtex/DataSets.bib', 'bibtex/StatsBook.bib']
 
 todo:
-    - Stat241-MoreExamples.qmd
     - Stat241-MoreModels.qmd
     - Stat241-Notes.qmd
-    - Stat241-Transformations.qmd
     - HeatXCanalysis.qmd

@@ -41,12 +41,19 @@ This kind of model is called multiple regression. Mathematically, it means fitti
 $$ y ~ \beta_0 + \beta_1*x_1 + \beta_2*x_2 + \beta_3*x_3 ...$$
 
 Multiple regression often makes sense when you are studying a complex process where there is most likely "more than one thing going on."  For example, you might consider modelling population growth rates worldwide using a data set including a set of social, economic, health, and political indicators compiled using data from the World Health Organization and partner organizations. The dataset description is available online: <http://www.exploredata.net/Downloads/WHO-Data-Set>.  One idea might be to look for a linear relationship between per-capita income and population growth rate:
+
+```{r}
+#| include: false
+
+whodat <- 
+  read.csv('../docs/data/WHO.csv', 
+           header = TRUE, strip.white = TRUE, sep = ",")
+```
+
 ```{r} 
-#| label: fig-who-slm 
+#| label: fig-who-plot1 
 #| fig-cap: Population growth rate and per capita income.
  
-whodat <- read.csv("http://www.exploredata.net/ftp/WHO.csv", 
-                   header = TRUE, strip.white = TRUE, sep = ",")
 # simplify some variable names
 names(whodat)[10] <- "PopGrowthRate"
 names(whodat)[6] <- "IncomePerCapita"
@@ -55,12 +62,15 @@ gf_point(PopGrowthRate ~ IncomePerCapita, data = whodat)
 ```
 
 ```{r}
-#| label: fig-who-slm-2 
+#| label: fig-who-slm1 
 who.m1 <- lm(PopGrowthRate ~ IncomePerCapita, data = whodat)
 summary(who.m1)
+```
+
+```{r}
+#| include: false
 gf_point(PopGrowthRate ~ FemaleSchoolEnrollment, data = whodat)
 ```
- 
 
 The $R^2$ value of this model is very low. But that could be because, unsurprisingly, there are *many* factors contributing to population growth rate, not *just* income.  For example, what about education? Perhaps more-educated women have fewer children, lowering the population growth rate.  So we might want to model population growth rate as a function of *both* income and education.
 
@@ -75,7 +85,11 @@ summary(who.m2)
 ```
  
 
-We would need to follow up with our diagnostics to fully assess these two models, but comparison of the $R^2$ values immediately shows that $R^2$ is much higher for the second model. In other words, the multiple regression has succeeded in explaining more of the variance in population growth rates than the simple linear regression with only one predictor.  
+We would need to follow up with our diagnostics to fully assess these two
+models, but comparison of the $R^2$ values immediately shows that $R^2$ is much
+higher for the second model. In other words, the multiple regression has
+succeeded in explaining more of the variance in population growth rates than the
+simple linear regression with only one predictor.
 
 
 ## Violations of Linear Regression Assumptions
@@ -91,7 +105,7 @@ The table below provides an overview of various problems you might uncover as yo
 |	Assumption     | Description of Problem | Options |
 |----------------|------------------------|--------------------------------------------------------------------------------|
 |	Linearity      | Scatterplot (or residual plots) indicate nonlinear relationship | Transform explanatory and or response variables. Alternative: fit a non-linear model using the R function `nls()` | 
-|	Independence of errors | ACF plot indicates strong dependence of errors over time (or space) | Fit an ``autoregressive" model, where this relationship between subsequent or nearby measurements is expected and accounted for.  To do this in R, replace `lm(y$\sim$x)` with something like `gls(y$\sim$x, correlation = corAR1(form = $\sim$1))`.  |
+|	Independence of errors | ACF plot indicates strong dependence of errors over time (or space) | Fit an "autoregressive" model, where this relationship between subsequent or nearby measurements is expected and accounted for.  To do this in R, replace `lm(y$\sim$x)` with something like `gls(y$\sim$x, correlation = corAR1(form = $\sim$1))`.  |
 | Normality of errors | Residual QQ plots indicates departure from normality | First check if other assumptions may also be violated, and try options listed there. If that fails, you may need to add additional predictor variables to your model; or to fit a generalized linear model, a more sophisticated type of regression that we will not cover in this course. |
 | Equal Variance (homeoskedasticity) | Variance of errors is not constant over the full range of response values, or over time | First, make sure that the linearity assumption is not violated. Next, if you have the option of including additional predictors in your model, it may be helpful.  Next, transforming the response variable may help. Finally, if none of those options provide a solution, you can fit a model with non-constant error variance. For example, if variance increases with fitted response values, you can replace `lm(y$\sim$x)` with something like `nls(y$\sim$x, weights = varPower())` |  
 
@@ -259,7 +273,7 @@ Notice that the intercpet is not directly involved in estimating $\hbar$, but th
 the line and obtain our slope without it.
 	
 	Many non-linear relationships can be transformed to linearity.  
-	Exercise~@prob:transformations presents several more examples
+	@exr-transformations presents several more examples
 	and asks you to determine a suitable transformation.
 
 #.  To obtain a better fit.
@@ -571,8 +585,9 @@ might be straightened by moving up the ladder for $y$ or down the ladder for $x$
 
 :::{.columns}
 
-::::{.column width="50%"}
+::::{.column width="45%"}
 ```{tikz}
+#| echo: false
 #| label: fig-tukey-buldge
 #| fig-cap: Tukey and Mosteller's buldging rule
 \begin{tikzpicture}[scale = 1.6]
@@ -603,7 +618,7 @@ might be straightened by moving up the ladder for $y$ or down the ladder for $x$
 
 ::::
 
-::::{.column width="50%"}
+::::{.column width="45%"}
 
 | power     | transformation                 |
 |-----------|--------------------------------|
@@ -964,7 +979,7 @@ $$
 \begin{align*}
 \texttt{time} &= \alpha_0 + \alpha_1 \sqrt{\texttt{height}}
 \end{align*}
-$$ {#eqn-balldrop}
+$$ {#eq-balldrop}
 
 using nonlinear least squares.  
 ```{r tidy = FALSE}
@@ -1172,56 +1187,56 @@ of the differences between them:
 
 ::: {.enumerate}
 
-a.  Some models cannot be expressed as linear models, even after transformations.
+1. Some models cannot be expressed as linear models, even after transformations.
 
-		In this case we only have one option, the non-linear model.
+    In this case we only have one option, the non-linear model.
 
-#.  Linear models can be fit quickly and accurately without numerical
+2. Linear models can be fit quickly and accurately without numerical
 		optimization algorithms because they satisfy nice linear algebra
 		properties.
 
-		The use of numerical optimizers in non-linear least squares models
+    The use of numerical optimizers in non-linear least squares models
 		makes them subject to potential problems with the optimizers.  They may
 		not converge, may converge to the wrong thing, or convergence may depend
 		on choosing an appropriate starting point for the search.
 
-#.  The two types of models make different assumptions about the error terms.
+3. The two types of models make different assumptions about the error terms.
 
-		In particular, when we apply transformations to achieve a linear model,
+    In particular, when we apply transformations to achieve a linear model,
 		those transformations often affect the distribution of the error terms as 
 		well.  For example, if we apply a log-log transformation to fit a power law,
 		then the model is
 		
-$$
-\begin{align*}
+    $$
+    \begin{align*}
 		\log( y ) &= \beta_0 + \beta_1 \log(x) + \varepsilon
 		\\
 		y &= e^{\beta_0}  x^{\beta_1} e^\varepsilon
 		\\
 		y &= \alpha  x^{\beta_1} e^\varepsilon
-\end{align*}
-$$
+    \end{align*}
+    $$
 
     So the errors are multiplicative rather than additive and
 	they have a normal distribution *after* applying the logarithmic
 	transformation.  This implies that the relative errors should be about
 	the same magnitude rather than the absolute errors.
 	
-	  This is potentially very different from the nonlinear
+    This is potentially very different from the nonlinear
 	model where the errors are additive:
 	
-$$
-	y = \alpha x^\beta + \varepsilon
-$$
+    $$
+	    y = \alpha x^\beta + \varepsilon
+    $$
 
-		Plots of residuals vs. fits and qq-plots for residuals can help us diagnose
+    Plots of residuals vs. fits and qq-plots for residuals can help us diagnose
 		whether the assumptions of a model are reasonable for a particular 
 		data set.
 
-#.  Linear models provide an easy way to produce confidence intervals for 
+4. Linear models provide an easy way to produce confidence intervals for 
 		a mean response or an individual response.
 
-		The models fit using `nls()` do not have this capability.
+    The models fit using `nls()` do not have this capability.
 ::: 
 <!-- end enumerate -->
 
@@ -1269,23 +1284,16 @@ For example, if
 
 ::::{.columns}
 :::::{.column width="50%"}
-a.
-	  $y = a b^x$.
-a.
-	  $y = a x^b$.
-a.
-	  $y = \frac{1}{a + bx}$.
-a.
-	  $y = \frac{x}{a + bx}$.
+a. $y = a b^x$.
+a. $y = a x^b$.
+a. $y = \frac{1}{a + bx}$.
+a. $y = \frac{x}{a + bx}$.
 :::::
+
 :::::{.column width="50%"}
-d.
-	  $y = a x^2 + b x + c$.
-a.
-	  $\displaystyle y = \frac{1}{1+e^{a+bx}}$.
-	  \smallskip
-a.
-	  $\displaystyle y = \frac{100}{1+e^{a+bx}}$.
+e. $y = a x^2 + b x + c$.
+a. $\displaystyle y = \frac{1}{1+e^{a+bx}}$.
+a. $\displaystyle y = \frac{100}{1+e^{a+bx}}$.
 :::::
 ::::
 :::
@@ -1294,41 +1302,34 @@ a.
 
 :::: {.enumerate}
 
-a. 
-	$\log(y) = \log(a) + x \log(b)$, 
+a. $\log(y) = \log(a) + x \log(b)$, 
 	so $g(y) = \log(y)$,
 	$f(x) = x$, 
 	$\beta_0 = \log(a)$,
 	and $\beta_1 = \log(b)$.
-a. 
-	$\log(y) = \log(a) + b \log(x)$, 
+a. $\log(y) = \log(a) + b \log(x)$, 
 	so $g(y) = \log(y)$,
 	$f(x) = \log(x)$, 
 	$\beta_0 = \log(a)$,
 	and $\beta_1 = b$.
-a. 
-	$\frac{1}{y} = a + b x$, 
+a. $\frac{1}{y} = a + b x$, 
 	so $g(y) = \frac{1}{y}$,
 	$f(x) = x$, 
 	$\beta_0 = a$,
 	and $\beta_1 = b$.
-a. 
-	$\frac{1}{y} = \frac{a}{x} + b$, 
+a. $\frac{1}{y} = \frac{a}{x} + b$, 
 	so $g(y) = \frac{1}{y}$,
 	$f(x) = \frac{1}{x}$, 
 	$\beta_0 = b$,
 	and $\beta_1 = a$.
-a. 
-	not possible
-a. 
-	$\frac{1}{y} = 1 + e^{a + bx}$, so
+a. not possible
+a. $\frac{1}{y} = 1 + e^{a + bx}$, so
 	$\log(\frac{1}{y} - 1) = \log( \frac{1-y}{y} ) = {a + bx}$, 
 	so $g(y) = \log(\frac{1-y}{y})$,
 	$f(x) = {x}$, 
 	$\beta_0 = a$,
 	and $\beta_1 = b$.
-a. 
-	$\frac{100}{y} = 1 + e^{a + bx}$, so
+a. $\frac{100}{y} = 1 + e^{a + bx}$, so
 	$\log(\frac{100}{y} - 1) = \log( \frac{100-y}{y} ) = {a + bx}$, 
 	so $g(y) = \log(\frac{100-y}{y})$,
 	$f(x) = {x}$, 
@@ -1345,7 +1346,7 @@ a.
 **Errors and transformations**
 <!-- \probNote{Would make a good partial solution for students.}% -->
   What happens to the role of the error terms ($\varepsilon$) when we transform 
-  the data?  For each transformation from Exercise~@prob:transformations,
+  the data?  For each transformation from @exr-transformations,
   start with the form
 $$
   g(y) = \beta_0 + \beta_1 f(x) + \varepsilon
@@ -1367,19 +1368,16 @@ $$
 
 The transformations in the ladder of re-expression also affects the shape
 of a distribution.  
+
 :::: {.enumerate}
 
-a. 
-If a distribution is symmetric, how does the shape change as we 
+a. If a distribution is symmetric, how does the shape change as we 
 move up the ladder?
-a. 
-If a distribution is symmetric, how does the shape change as we 
+a. If a distribution is symmetric, how does the shape change as we 
 move down the ladder?
-a. 
-If a distribution is left skewed, in what direction should we move to 
+a. If a distribution is left skewed, in what direction should we move to 
 make the distribution more symmetric?
-a. 
-If a distribution is right skewed, in what direction should we move to 
+a. If a distribution is right skewed, in what direction should we move to 
 make the distribution more symmetric?
 :::: 
 <!-- end enumerate -->
@@ -1671,16 +1669,13 @@ in grams and velocity in meters per second.
 terminal velocity is given in the `height` variable.)
 
 By fitting models to this data, determine which of the following "drag laws" matches the data best:
+
 :::: {.itemize}
 
-a. 
-Drag is proportional to velocity.
-#. 
-Drag is proportional to the square of velocity.
-#. 
-Drag is proportional to the square root of velocity.
-#. 
-Drag is proportional to the logarithm of velocity.
+a. Drag is proportional to velocity.
+#. Drag is proportional to the square of velocity.
+#. Drag is proportional to the square root of velocity.
+#. Drag is proportional to the logarithm of velocity.
 :::: 
 <!-- end itemize -->
 
@@ -1772,7 +1767,7 @@ Redo @exr-drag after removing this data.
 <!-- end problem -->
 
 
-::: {.problem exr-spheres-1}
+::: {.problem #exr-spheres-1}
 **Spheres**
 
 The `Spheres` data set (in the **`fastR2`** package)

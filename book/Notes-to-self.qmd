@@ -1,0 +1,12 @@
+---
+title: "Notes to Self"
+subtitle: For Engineering Stats Book
+format: html
+editor: source
+---
+
+## 2. Graphical Summaries
+
+* RMarkdown -> Quarto
+
+* Check figure layout

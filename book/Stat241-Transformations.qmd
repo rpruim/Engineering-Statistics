@@ -339,8 +339,8 @@ Sum <- X + Y
 Diff <- X - Y
 fitdistr(Sum, "normal")
 fitdistr(Diff, "normal")
-gf_dhistogram(~ Sum) %>% gf_fitdistr(dist = "norm") 
-gf_dhistogram(~ Diff) %>% gf_fitdistr(dist = "norm") 
+gf_dhistogram(~ Sum) |> gf_fitdistr(dist = "norm") 
+gf_dhistogram(~ Diff) |> gf_fitdistr(dist = "norm") 
 gf_qq(~ Sum) 
 gf_qq(~ Diff) 
 @
@@ -364,7 +364,7 @@ X7 <- runif(5000,0,1); X8 <- runif(5000,0,1); X9 <- runif(5000,0,1)
 X10 <- runif(5000,0,1); X11 <- runif(5000,0,1); X12 <- runif(5000,0,1) 
 S <- X1 + X2 + X3 + X4 + X5 + X6 + X7 + X8 + X9 + X10 + X11 + X12
 fitdistr(S, "normal")
-gf_dhistogram(~S)  %>% gf_fitdistr(dist = "norm")
+gf_dhistogram(~S)  |> gf_fitdistr(dist = "norm")
 gf_qq(~S)
 @
 This means that $S - 6 \approx \Norm(0,1)$.  This has been used in computer software
@@ -657,10 +657,10 @@ similar to the normal distributions -- but ``shorter and fatter''.  This means t
 one must go farther into the tails of a $t$-distribution to capture the central 95\%.
 
 <<fig.width = 8, fig.height = 4, fig.keep = 'last'>>=
-gf_dist("norm", main = "Normal and T-distributions") %>%
-  gf_fun(dt(x,df = 2) ~ x, col = 'gray80') %>%
-  gf_fun(dt(x,df = 4) ~ x, col = 'gray60') %>%
-  gf_fun(dt(x,df = 8) ~ x, col = 'gray40') %>%
+gf_dist("norm", main = "Normal and T-distributions") |>
+  gf_fun(dt(x,df = 2) ~ x, col = 'gray80') |>
+  gf_fun(dt(x,df = 4) ~ x, col = 'gray60') |>
+  gf_fun(dt(x,df = 8) ~ x, col = 'gray40') |>
   gf_fun(dt(x,df = 16) ~ x, col = 'gray20')
 @
 
@@ -1524,7 +1524,7 @@ f(x) = \begin{cases}
 \end{cases}
 $
 <<echo = FALSE>>=
-gf_fun(4 * (x - x^3) * (0 <= x & x <= 1) ~ x, xlim = c(-0.2, 1.2)) %>%
+gf_fun(4 * (x - x^3) * (0 <= x & x <= 1) ~ x, xlim = c(-0.2, 1.2)) |>
   gf_labs(y = "f(x)", x = "x", title = "a pdf")
 @
 
@@ -1716,11 +1716,11 @@ Remember that we need to remove any values of 0 before we do the fit.  In this c
 do this by mapping them to a value of 0.5 since the smallest non-zero value in the data set
 is 1.  We also have to remove the two students who did not report.
 <<eval=TRUE, warning=FALSE>>=
-StudentSurvey2 <- StudentSurvey %>%
-  filter(!is.na(Exer)) %>%  # remove non-responders
+StudentSurvey2 <- StudentSurvey |>
+  filter(!is.na(Exer)) |>  # remove non-responders
   mutate(Exer2 = ifelse(Exer <= 0, 0.5, Exer))
 fitdistr(StudentSurvey2$Exer2, "gamma")
-gf_dhistogram( ~ Exer2, data = StudentSurvey2) %>% 
+gf_dhistogram( ~ Exer2, data = StudentSurvey2) |> 
   gf_fitdistr(dist = "gamma")
 gf_qq( ~ Exer2, data=StudentSurvey2, dist=qgamma, dparams = list(shape=0.442, rate=0.0124))
 @
@@ -1760,7 +1760,7 @@ the answer might be? (Does eye color matter?)
 Here are two possibilities:
 <<>>=
 gf_boxplot(Flicker ~ Colour, data = Flicker)
-gf_density( ~ Flicker, fill=~Colour, data = Flicker) %>%
+gf_density( ~ Flicker, fill=~Colour, data = Flicker) |>
   gf_refine(scale_fill_manual(values = c('steelblue', 'tan4', 'forestgreen')))
 @
 The general trend appears to be that lighter colored eyes (if you consider blue
@@ -1818,7 +1818,7 @@ arranged awkwardly. Let's fix that:
 <<>>=
 library(tidyr)
 Fabric <- 
-  Devore7::ex09.23 %>% 
+  Devore7::ex09.23 |> 
   pivot_longer( everything(), names_to = "quality", values_to = "extensibility",
                 values_drop_na = TRUE) 
 head(Fabric) 
@@ -1846,10 +1846,10 @@ Extensibility is related to the shape and drape when fabric is used to make clot
 <<>>=
 library(tidyr)
 Fabric <- 
-  Devore7::ex09.23 %>% 
+  Devore7::ex09.23 |> 
   pivot_longer( everything(), names_to = "quality", values_to = "extensibility",
                 values_drop_na = TRUE) 
-head(Fabric) %>% pander()
+head(Fabric) |> pander()
 df_stats(extensibility ~ quality, data = Fabric)
 t.test(extensibility ~ quality, data = Fabric)
 @
@@ -1873,8 +1873,8 @@ Based on this data, can we be confident that one factory is better than the othe
 
 \begin{solution}
 <<>>=
-prop.test( c(172, 184), c(184, 207)) %>% confint()
-prop.test( c(172, 184), c(184, 207), correct = FALSE) %>% confint()
+prop.test( c(172, 184), c(184, 207)) |> confint()
+prop.test( c(172, 184), c(184, 207), correct = FALSE) |> confint()
 @
 \end{solution}
 

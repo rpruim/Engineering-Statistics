@@ -1,0 +1,57 @@
+project:
+  type: book
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-location: right
+    df-print: paged
+    fig-height: 2.5
+    fig-width: 4.5
+    fig-align: center
+  pdf:
+    documentclass: scrreprt
+
+css: book.css
+
+tbl-cap-location: bottom
+
+filters: 
+  - latex-environment
+  
+environments:
+  - center: center
+  - problem: problem
+  - solution: solution
+  - example: example
+  - boxedText: boxedText
+  
+commands: 
+  - blue: blue
+
+book:
+  title: "Statistics for the Physical Sciences and Engineering"
+  author: "Randall Pruim "
+  date: last_modified
+  chapters:
+    - index.qmd
+    - Stat241-Chap0.qmd
+    - Stat241-Graphical.qmd
+    - Stat241-Numerical.qmd
+    - Stat241-Probability.qmd
+    - Stat241-RandomVariables.qmd
+    - Stat241-Propagation.qmd
+    - Stat241-SimpleLinear.qmd
+    - Stat241-NonLinear.qmd
+    - Stat241-HypothesisTesting.qmd
+    - references.qmd
+
+bibliography: ['bibtex/R.bib', 'bibtex/DataSets.bib', 'bibtex/StatsBook.bib']
+
+todo:
+    - Stat241-MoreExamples.qmd
+    - Stat241-MoreModels.qmd
+    - Stat241-Notes.qmd
+    - Stat241-Transformations.qmd
+    - HeatXCanalysis.qmd

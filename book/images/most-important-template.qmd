@@ -1,0 +1,12 @@
+---
+format: pdf
+---
+
+$$
+\Large 
+\fbox{\texttt{ goal \strut{}}} \raisebox{-3pt}{\Huge (} 
+\fbox{\texttt{ y\strut{} }} 
+\sim 
+\fbox{\texttt{ x\strut{} }}, 
+\mbox{data} = \fbox{\texttt{ mydata\strut{} }} \raisebox{-3pt}{\Huge )}
+$$

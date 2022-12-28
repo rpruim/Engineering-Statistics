@@ -660,10 +660,10 @@ one must go farther into the tails of a $t$-distribution to capture the central 
 
 <<fig.width=8, fig.height=4, fig.keep='last'>>=
 x <- seq(from=-3, by=0.05, to = 3)
-gf_dist(dist="norm", title="Normal and T-distributions") %>%
-gf_line( dt(x,df=2) ~ x, col='gray80') %>%
-gf_line( dt(x,df=4) ~ x, col='gray60') %>%
-gf_line( dt(x,df=8) ~ x, col='gray40') %>%
+gf_dist(dist="norm", title="Normal and T-distributions") |>
+gf_line( dt(x,df=2) ~ x, col='gray80') |>
+gf_line( dt(x,df=4) ~ x, col='gray60') |>
+gf_line( dt(x,df=8) ~ x, col='gray40') |>
 gf_line( dt(x,df=16) ~ x, col='gray20')
 @
 
@@ -1221,7 +1221,7 @@ there were no fish of those lengths.)
 
 \item 3-year-old fish
 <<tidy=FALSE>>=
-fish3 <- lakemary %>%
+fish3 <- lakemary |>
   filter(Age==3)  # note the double == here
 gf_qq(~Length, data=fish3)
 int <- confint(t.test(~Length, data=fish3))

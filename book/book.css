@@ -1,0 +1,50 @@
+.center{
+  text-align: center;
+}
+
+/*
+table.table {
+  padding: 0px;
+  margin: 10px;
+  width: 5%;
+  
+} 
+*/
+
+.fullwidth {
+  padding: 0px;
+  margin: 10px;
+  width: 95%;
+  
+}
+
+div.boxedText, div.example{
+  border-radius: 8px;
+  border-style: solid;
+  border-color: navy;
+  padding: 5px;
+  margin: 10px;
+}
+
+div.example {
+  border-color: forestgreen;
+}
+
+
+div.problem{
+  border-radius: 8px;
+  border-style: solid;
+  border-color: navy;
+  padding: 5px;
+  margin: 10px;
+}
+
+
+div.solution{
+  border-radius: 8px;
+  border-style: solid;
+  border-color: red;
+  padding: 5px;
+  margin: 10px;
+  display: none;
+}

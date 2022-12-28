@@ -1,22 +1,30 @@
-\Sexpr{set_parent('Stat241-Notes.Rnw')}
 
-\setcounter{chapter}{5}
+# Propagation of Uncertainty {#sec-propagation}
 
-\chapter{Propagation of Uncertainty}
-\label{chap:propagation}% 
+```{r}
+#| label: setup-propagation
+#| include: false
+library(mosaic)
+```
 
-\myindex{uncertainty|defidx}
+:::{.hidden}
+$$
+\def\Partial#1#2{\frac{\partial #1}{\partial #2}}
+$$
+:::
+
 You have probably been told (in physics labs, for example) to report all measurements
-along with an \term{uncertainty}.  The reporting often uses the notation:
+along with an **uncertainty**.  The reporting often uses the notation:
 
-\[ \mbox{measurement} \pm \mbox{uncertainty} \;. \]
-%
+$$
+\mbox{measurement} \pm \mbox{uncertainty} \;. 
+$$
 But what is uncertainty and how is it calculated?  These are topics for this chapter.
 
-\section{Error and Uncertainty}
-Although many people mistakenly conflate the terms \term{error} and \term{uncertainty}, 
+## Error and Uncertainty
+Although many people mistakenly conflate the terms **error** and **uncertainty**, 
 these are two different, but related concepts.  
-The word ``error" in the context of scientific measurement has a rather
+The word "error" in the context of scientific measurement has a rather
 different meaning from its use in everyday English. It does not mean blunder or
 goof (although a blunder or goof could increase the amount of experimental error). 
 Instead, error refers to the unavoidable fact that
@@ -25,75 +33,87 @@ the measurements scientists record are not exactly correct.
 
 Error is easily defined:
 
-\begin{boxedText}
-	\[ \mbox{error} = \mbox{estimate} - \mbox{estimand} \]
+::: {.boxedText #def-error}
+
+$$ 
+\mbox{error} = \mbox{estimate} - \mbox{estimand} 
+$$
 or, equivalently,
-	\[ \mbox{error} = \mbox{measurement} - \mbox{measurand} \]
-\end{boxedText}
+$$ 
+\mbox{error} = \mbox{measurement} - \mbox{measurand} 
+$$
+::: 
+<!-- end boxedText -->
+
 That is, error is the difference between the number we have measured or calculated and the 
 number that calculation is attempting to estimate.  In most applications, we do not know 
 the error exactly, because we do not know the estimand.  This is where uncertainty comes in.
 
-\term{Uncertainty} is a numerical measure summarizing how large the error \emph{might be}.  There are several different types, or definitions, or uncertainty.  The different definitions of uncertainty have in common that they are all trying to describe a statistical distribution of errors.  
-% Typically, we arrange things so that the mean
-% of this distribution is 0 (so that on average our estimates will be correct).  
+**Uncertainty** is a numerical measure summarizing how large the error *might be*.  There are several different types, or definitions, or uncertainty.  The different definitions of uncertainty have in common that they are all trying to describe a statistical distribution of errors.  
+<!--  Typically, we arrange things so that the mean -->
+<!--  of this distribution is 0 (so that on average our estimates will be correct).   -->
 Knowing something about this distribution
 of the errors can tell us how close our estimates tend to be to the estimand.
 
-We will use \term{standard uncertainty} unless we say otherwise.
-\begin{boxedText}
-	\term{Standard uncertainty} is the (estimated) standard deviation of 
+We will use **standard uncertainty** unless we say otherwise.
+::: {.boxedText #def-standard-uncertainty}
+
+	**Standard uncertainty** is the (estimated) standard deviation of 
 	the distribution of errors.
-\end{boxedText}
+::: 
+<!-- end boxedText -->
+
 You may wonder how we can know the distribution of errors when we cannot know the error.
 That is a good question, which we will begin to address via an example.
 
-\section{An Example: Estimating the number of dimes in a sack of dimes}
-<<dimes,include = FALSE,tidy = FALSE>>=
+## An Example: Estimating the number of dimes in a sack of dimes
+```{r dimes,include = FALSE,tidy = FALSE}
 B <- 10200; B
 D <- mean( ~ mass, data = Dimes); D
 uB <- 100/sqrt(12); uB
 sD <- sd( ~ mass, data = Dimes); sD 
 uD <- sd( ~ mass, data = Dimes) / sqrt( nrow(Dimes) ); uD
 u <- sqrt( 1/D^2 * uB^2 + B^2/D^4 * uD^2  )
-@
+```
+
 
 Suppose you want to estimate the number of dimes in a large sack of dimes.  Here is one method
 you could use:
 
-\begin{enumerate}
-	\item Measure the weight of all the dimes in the bag by placing them (without the bag)
+::: {.enumerate}
+
+#.  Measure the weight of all the dimes in the bag by placing them (without the bag)
 		on an appropriately sized scale.  (Call this $\hat B$, our estimate for $B$,
 		the actual weight of the dimes in the bag.)
-	\item
-		Measure the weight of 30 individual dimes and use those measurements to
+#.  Measure the weight of 30 individual dimes and use those measurements to
 		estimate the mean weight of dimes. (Call this $\hat D$.)
-	\item
-		Combine these two estimates to compute an estimated number of dimes in the bag.
+#.  Combine these two estimates to compute an estimated number of dimes in the bag.
 		($\hat N = \hat B / \hat D$.)
-\end{enumerate}
+::: 
+<!-- end enumerate -->
+
 
 Suppose that the dimes in our our bag together weigh 10.2 kg and the mean weight of our 30 
-measured dimes is \Sexpr{mean( ~ mass, data = Dimes)}. 
+measured dimes is `r mean( ~ mass, data = Dimes)`. 
 Then we would estimate the number of dimes to be 
-\[
-10200 / \Sexpr{mean( ~ mass, data = Dimes)} = \Sexpr{ 10200 / mean( ~ mass, data = Dimes) } \;.
-\]
+$$
+10200 / `r mean( ~ mass, data = Dimes)` = `r  10200 / mean( ~ mass, data = Dimes) ` \;.
+$$
 But how good is this estimate?  Do we expect to be within a small handful of dimes?  Might we be 
 off by 100 or 500?  Standard uncertainty provides a way to quantify this.  But first, 
 we need to calculate uncertainty for the two ingredients in this recipe: 
 the total weight of all the dimes in the bag ($\hat B$), and the mean weight of the 
 30 measured dimes ($\hat D$).
 
-\subsection{Calculating a Standard Uncertainty without Using Data}
+### Calculating a Standard Uncertainty without Using Data
 
 We only measure the bag of dimes once (and might expect that the value
 observed on the digital read out would be the same if we measured it repeatedly
 anyway), so the distribution involved in our uncertainty calculation will be 
 based on some assumptions about the workings of our scale.  For example, we could
 model a reading of 10.2 kg with
-a $\Unif(10.15, 10.25)$-distribution.\footnote{Other models are possible, and the choice of 
-model matters for the uncertainty calculation that will result.}  
+a $\Unif(10.15, 10.25)$-distribution.^[Other models are possible, and the choice of 
+model matters for the uncertainty calculation that will result.]  
 This model reflects the assumption that if the actual weight is anywhere between 10.15 and 10.25,
 the reading will be 10.2 and that the actual weight is equally likely to be anywhere within
 that range.
@@ -101,92 +121,89 @@ that range.
 If we interpret the 10.2 reading in this way, then the uncertainty can be
 calculated as the standard deviation of a $\Unif(10.15, 10.25)$-distribution:  
 
-\[
+$$
 u_{\hat B} = \frac{b-a}{\sqrt{12}} 
 = \frac{10.25-10.15}{\sqrt{12}} 
 = \frac{0.1}{\sqrt{12}} 
-= \Sexpr{0.1/sqrt(12)} kg
-= \Sexpr{1000 * 0.1/sqrt(12)} g
-\]
+= `r 0.1/sqrt(12)` kg
+= `r 1000 * 0.1/sqrt(12)` g
+$$
 
-\subsection{Calculating a Standard Uncertainty Using Data}
+### Calculating a Standard Uncertainty Using Data
 
 The situation for our estimated mean weight of a dime is a little different.  We weighed 30 dimes, 
 and calculated the mean mass of one dime from those data.  But if we repeated the measurements many times -- 
-taking another 30 dimes, calculating the average...taking \emph{another} 30 dimes, calculating 
-\emph{another} average...and so on many times...how much variability would there be in the 
-\emph{calculated averages}? 
+taking another 30 dimes, calculating the average...taking *another* 30 dimes, calculating 
+*another* average...and so on many times...how much variability would there be in the 
+*calculated averages*? 
 We will learn how to estimate this quantity ourselves soon; for now, 
 we will take it as a given that it is $\frac{s}{\sqrt{n}}$, 
 where $s$ is the standard deviation of one sample (the masses of 30 dimes), and $n$ is the sample 
 size (here, 30). So the uncertainty in our mean dime weight is about:
-% First, note that we measured the masses of 30 individual dimes, so
-% we have data that can tell us something about the variability in the weights of dimes.  
-% This would not be the case if we simply measured all 30 dimes at once and
-% divided by 30 to get the average.  Second, we are interested in how accurately we can
-% estimate the mean weight of the dimes in the sack, 
-% not in how accurately we can estimate the weight of any particular dime.  
-% df_stats( ~ mass, data = Dimes)
-%
+<!--  First, note that we measured the masses of 30 individual dimes, so -->
+<!--  we have data that can tell us something about the variability in the weights of dimes.   -->
+<!--  This would not be the case if we simply measured all 30 dimes at once and -->
+<!--  divided by 30 to get the average.  Second, we are interested in how accurately we can -->
+<!--  estimate the mean weight of the dimes in the sack,  -->
+<!--  not in how accurately we can estimate the weight of any particular dime.   -->
+<!--  df_stats( ~ mass, data = Dimes) -->
+<!--  -->
 
-\[
+$$
 u_{\hat D} = \frac{s}{\sqrt{n}} 
-= \frac{\Sexpr{sD}}{\sqrt{30}} 
-= \Sexpr{uD}\;.
-\]
+= \frac{`r sD`}{\sqrt{30}} 
+= `r uD`\;.
+$$
 So we would report our estimate for the mean weight of a dime as 
-\[
-\Sexpr{D} \pm \Sexpr{uD} \;.
-\]
+$$
+`r D` \pm `r uD` \;.
+$$
 
-% <<<<<<< HEAD:Stat241-Propagation.Rnw
 This notation looks like a confidence interval,
 and indeed it is a confidence interval.
-Since we are using $t_* = 1$, this is approximately a 68\% confidence interval:
-% \Sexpr{ round(100 * (pt(1,df = 29) - pt(-1,df = 29)),1)} \% confidence interval.
-<<>>=
-pt(1,df = 29) - pt(-1,df = 29)
-@
-% 
-% =======
-% >>>>>>> c25168dd6c03b5958e6d874fffc45a873a27e0d5:Math241-Propagation.Rnw
+Since we are using $t_* = 1$, this is approximately a 68\% confidence interval: 
+```{r }
+pt(1, df = 29) - pt(-1, df = 29)
+```
 
-\subsection{Propagating Error by the Delta Method}
+
+### Propagating Error by the Delta Method
 Now that we have computed the uncertainties for $B$ and $D$, we need to find a way to combine
 them to determine the uncertainty for $B/D$.  For this we use a linear approximation of the function $f(B,D) = B/D$.
 
 Recall from calculus that 
-\[
+$$
 f(x,y) \approx f(a, b)
 +
 \frac{\partial f}{\partial x} (x-a)
 +
 \frac{\partial f}{\partial y} (y-b) \;,
-\]
+$$
 where the partial derivatives are evaluated at $(x,y) = (a,b)$.
 
 If we apply this to our estimators $\hat B$ and $\hat D$, we get
-\[
+$$
 f(\hat B,\hat D) \approx f( B, D ) 
 +
 \frac{\partial f}{\partial \hat B} (\hat B- B)
 +
 \frac{\partial f}{\partial \hat D} (\hat D- D)
 \;.
-\]
-\iffalse
-\[
-f(\hat B,\hat D) \approx f( \mu_{\hat B}, \mu_{\hat D}) 
-+
-\frac{\partial f}{\partial \hat B} (\hat B-\mu_{\hat B})
-+
-\frac{\partial f}{\partial \hat D} (\hat D-\mu_{\hat D})
-\;.
-\]
-\fi
-%where the partial derivatives are evaluated at $(\hat B, \hat D) = (B,D)$.
+$$
+<!-- \iffalse -->
+<!-- $$ -->
+<!-- f(\hat B,\hat D) \approx f( \mu_{\hat B}, \mu_{\hat D})  -->
+<!-- + -->
+<!-- \frac{\partial f}{\partial \hat B} (\hat B-\mu_{\hat B}) -->
+<!-- + -->
+<!-- \frac{\partial f}{\partial \hat D} (\hat D-\mu_{\hat D}) -->
+<!-- \;. -->
+<!-- $$ -->
+<!-- \fi -->
+<!-- where the partial derivatives are evaluated at $(\hat B, \hat D) = (B,D)$. -->
 
 From this it follows that
+$$
 \begin{align*}
 	\E(f(\hat B,\hat D)) &\approx 
 	\E\left(f( B, D)\right)
@@ -199,19 +216,23 @@ From this it follows that
 \\
 &= f(B,D) \;.
 \end{align*}
+$$
+
 (The 0's come because our estimators are approximately unbiased: $\E(\hat B) \approx B$ and $\E(\hat D) \approx D$.)
 This says that $\hat B/ \hat D$ is a reasonable estimate for $B/D$ -- it is approximately
-unbiased.\footnote{There is a small sleight of hand here.  Technically, we should evaluate
+unbiased.^[There is a small sleight of hand here.  Technically, we should evaluate
 the partial derivatives at the unknown values $B$ and $D$.  We will instead plug in our 
 particular estimates (from our data) for $\hat B$ and $\hat D$.  To denote all of this 
 completely rigorously, we would need to have separate notation for $\hat B$ considered
 as a random variable (that has an expected value and variance) and as a number (the value
-computed from our particular data).  We're avoiding this extra layer of notation.}
+computed from our particular data).  We're avoiding this extra layer of notation.]
 
-But we really want an expression for the uncertainty -- the variance (which we will turn into a standard deviation).  We use similar logic to the expectation calculation above, and we will need to use the finding (not proven here) that for constants $a$ and $b$ and random variable $X$, $Var(aX+b) = a^2 Var(X)$. Assuming $\hat B$ and $\hat D$ are independent,\footnote{A more general formula
+But we really want an expression for the uncertainty -- the variance (which we will turn into a standard deviation).  We use similar logic to the expectation calculation above, and we will need to use the finding (not proven here) that for constants $a$ and $b$ and random variable $X$, $Var(aX+b) = a^2 Var(X)$. Assuming $\hat B$ and $\hat D$ are independent,^[A more general formula
 can approximate the propagation of uncertainty in cases where $\hat B$ and $\hat D$ 
-cannot be assumed to be independent.} a reasonable assumption in this situation,
+cannot be assumed to be independent.] a reasonable assumption in this situation,
 we get
+
+$$
 \begin{align*}
 	\\[5mm]
 \Var(f(\hat B,\hat D))
@@ -229,70 +250,74 @@ we get
 +
 \left(\frac{\partial f}{\partial \hat D}\right)^2 \Var(\hat D)
 \end{align*}
+$$
+
 where again we evaluate the partial derivatives with $\hat{B}$ and $\hat{D}$.
 
 Applying this to $f(\hat B,\hat D) = \hat B/\hat D$, we get
+$$
 \begin{align*}
 	\frac{\partial f}{\partial \hat B} &= \frac{1}{\hat D}
 	\\
 	\frac{\partial f}{\partial \hat D} &= \frac{-\hat B}{\hat D^2}
 \end{align*}
-So our uncertainty for the estimated number of dimes (remember, we want the standard deviation, which will be the square root of the variance estimate we just derived) is
-\[
+$$
+So our uncertainty for the estimated number of dimes (remember, we want the
+standard deviation, which will be the square root of the variance estimate we
+just derived) is
+$$
 \sqrt{
-\frac{1}{\Sexpr{D}^2} \cdot \Sexpr{uB}^2 
-+ \left(\frac{\Sexpr{round(B,4)}}{\Sexpr{D}^2}\right)^2 \cdot \Sexpr{uD}^2}
+\frac{1}{`r D`^2} \cdot `r uB`^2 
++ \left(\frac{`r round(B,4)`}{`r D`^2}\right)^2 \cdot `r uD`^2}
 =
-\Sexpr{u} \;,
-\]
+`r u` \;,
+$$
 and we would report our estimated number of dimes as 
-\[ 
-\Sexpr{round(B/D)} \pm \Sexpr{round(u)} \; \mbox{dimes} \;.
-\]
+$$ 
+`r round(B/D)` \pm `r round(u)` \; \mbox{dimes} \;.
+$$
 
-\myindex{Delta Method|defidx}%
 The method described in this example is generally referred to as the
-\term{Delta Method}.  Often scientists and engineers who are using this method don't use the hat notation
+**Delta Method**.  Often scientists and engineers who are using this method don't use the hat notation
 to distinguish between estimates/estimators and estimands.  In the box below, we've 
 dropped the hats.
 
-\begin{boxedText}
-	\centerline{\textsf{\bfseries The Delta Method for independent estimates}}
+::: {.boxedText}
 
-	\medskip
+### The Delta Method for independent estimates {-}
 
-	Let $X$ and $Y$ be independent estimates with uncertainties $u_{X}$ and $u_{Y}$,  
-	and let $W = f(X,Y)$.
-	Then the uncertainty in the estimate for $W$ can be estimated as 
-	\[
+Let $X$ and $Y$ be independent estimates with uncertainties $u_{X}$ and $u_{Y}$,  
+and let $W = f(X,Y)$.
+Then the uncertainty in the estimate for $W$ can be estimated as 
+$$
 	u_{W} \approx
 	\sqrt{ 
 \left(\frac{\partial f}{\partial X}\right)^2 u_X^2
 +
 \left(\frac{\partial f}{\partial Y}\right)^2 u_Y^2
 	}
-	\]
-	where the partial derivatives are evaluated using estimated values of $X$ and $Y$.
+$$
+where the partial derivatives are evaluated using estimated values of $X$ and $Y$.
 
-	\medskip
 
-	The Delta Method can be extended to functions of more (or fewer) than two variables by
-	adding (or removing) terms.  Slightly more complicated formulas exist to handle
-	situations where the estimators are not independent (but we will not cover those in this course).
+The Delta Method can be extended to functions of more (or fewer) than two variables by
+adding (or removing) terms.  Slightly more complicated formulas exist to handle
+situations where the estimators are not independent (but we will not cover those in this course).
+	
+Because this method is based on using a linear approximation to $f$, it works better
+when the linear approximation is better.  In particular, when
+$\frac{\partial^2 f}{\partial X^2}$ or
+$\frac{\partial^2 f}{\partial Y^2}$ are large near the estimated 
+values of $X$ and $Y$, the approximations might not be very good.
+::: 
+<!-- end boxedText -->
 
-	\medskip
-	Because this method is based on using a linear approximation to $f$, it works better
-	when the linear approximation is better.  In particular, when
-	$\frac{\partial^2 f}{\partial X^2}$ or
-	$\frac{\partial^2 f}{\partial Y^2}$ are large near the estimated 
-	values of $X$ and $Y$, the approximations might not be very good.
-\end{boxedText}
 
-\subsection{Estimating Uncertainty via Simulations}
+### Estimating Uncertainty via Simulations
 
 We can also estimate the uncertainty in the estimated number of dimes using simulations.
 
-<<dimes-sim,cache = TRUE>>=
+```{r dimes-sim,cache = TRUE}
 B <- runif(10000, 10150, 10250)
 SampleMeans <- do(10000) * mean( ~ mass, data = resample(Dimes) )
 head(SampleMeans ,3)
@@ -301,40 +326,44 @@ N <- B / D
 histogram( ~ N)
 gf_qq( ~ N)
 sd(N)
-@
+```
+
 A few explanatory notes regarding the computation above.
-\begin{enumerate}
-	\item
-		\function{resample()} samples from a data frame \emph{with replacement}.  That is,
+::: {.enumerate}
+
+#.  `resample()()` samples from a data frame *with replacement*.  That is,
 		some of the rows may appear more than once, others not at all.  Resampling
 		is a common way to estimate a sampling distribution from a single sample.
-		\function{resample()} can also be used on a ``bare" vector (that is, a vector of data points not contained within a data frame, as exemplified below).
+		`resample()()` can also be used on a "bare" vector (that is, a vector of data points not contained within a data frame, as exemplified below).
 
-<<>>=
+```{r }
 resample(1:10)    # some items may be chosen more than once
 sample(1:10)      # no item may be chosen more than once, so this just shuffles
 shuffle(1:10)     # this also shuffles
-@
-\item
-	When \function{do()} doesn't know what to call the result of what it is ``doing'', it
-	calls it \variable{result}.  (Sometimes \function{do()} can figure out a better name.)
-\item
+```
+
+#. 
+	When `do()()` doesn't know what to call the result of what it is "doing", it
+	calls it `result`.  (Sometimes `do()()` can figure out a better name.)
+#. 
 	The simulated distribution of $N = B/D$ is unimodal, roughly symmetric, and reasonably 
 	well approximated by a normal distribution (but clearly not exactly normal).  
 	The Delta Method does not guarantee
 	that the distribution will be approximately normal -- it only estimates the 
 	variance.  Sometimes the distribution will be skewed or have heavier or lighter
 	tails than a normal distribution.
-\item
+#. 
 	The results of the Delta Method and simulation are very close.  Each is an acceptable method for approximating 
 	the same thing, so this is not surprising.
-\end{enumerate}
+::: 
+<!-- end enumerate -->
 
-\section{Reporting Measurements and Estimates}
 
-\subsection{What to record, What to report}
+## Reporting Measurements and Estimates
+
+### What to record, What to report
  
-When you record the results of a measurement for which there is an \emph{a priori}
+When you record the results of a measurement for which there is an *a priori*
 estimate of uncertainty,  the uncertainty should be recorded along with
 the measurement itself.  Similarly, reports of quantities estimated from data
 should also include estimated uncertainties.
@@ -342,245 +371,245 @@ should also include estimated uncertainties.
 As a general guideline, a properly reported scientific estimated quantity includes 
 the following five elements: 
 
-\begin{enumerate}
-\item A number (the estimate)
-\item Units (e.g., m  or kg or seconds) 
-\item A statement about how it was measured or calculated 
-\item A statement about most likely sources of (the largest components of) error
-\item An estimate of the uncertainty
-\end{enumerate}
+::: {.enumerate}
 
-\begin{example}
+#.  A number (the estimate)
+#.  Units (e.g., m  or kg or seconds) 
+#.  A statement about how it was measured or calculated 
+#.  A statement about most likely sources of (the largest components of) error
+#.  An estimate of the uncertainty
+::: 
+<!-- end enumerate -->
+
+
+::: {.example #exm-pendulum}
+
 If you measured the length of a pendulum using a meter stick, you
 might report the measurement this way: 
 
-\begin{itemize}
-	\item
-		Length $= 0.834 \pm 0.002$ m 
-	\item
-Measured with a meter stick from pivot point to the center of the steel weight. 
+:::: {.itemize}
 
-	\item
-Uncertainty reflects the limited accuracy of measurement with a meter stick.
-\end{itemize}
-\end{example}
+#. Length $= 0.834 \pm 0.002$ m 
+#. Measured with a meter stick from pivot point to the center of the steel weight. 
+
+#. Uncertainty reflects the limited accuracy of measurement with a meter stick.
+:::: 
+<!-- end itemize -->
+
+::: 
+<!-- end example -->
+
 In plots, the number is given by the scales of the plot, the units are typically included
-in the axes labels, uncertainties may be represented by ``error bars", and a statement 
+in the axes labels, uncertainties may be represented by "error bars", and a statement 
 describing the method of measurement or calculation should appear in the plot legend.
  
-\subsection{How many decimal places?}
+### How many decimal places?
  
 Numerical values and their uncertainties should be recorded to the proper number of
 decimal places.  Most software either reports too many significant digits or
 rounds numbers too much.  For 
 correct professional presentation of your data, follow these guidelines:
-%rules \cite[Section 2.2]{Taylor}:
-\begin{enumerate}
-  \item
-The experimental uncertainty should be rounded to one significant 
+::: {.enumerate}
+
+#. The experimental uncertainty should be rounded to one significant 
 figure unless the leading digit is a 1, in which case, it is generally better to use two digits.
-\item
-A measurement should be displayed to the same number of decimal places as the 
+#. A measurement should be displayed to the same number of decimal places as the 
 uncertainty on that measurement.  
-\end{enumerate}
+::: 
+<!-- end enumerate -->
+
 Note carefully the difference between significant figure and decimal place.  
 The following examples will help: 
 
-\begin{example}
-The timer reports a value of 0.3451 seconds.  The uncertainty on
-the measurement is 0.0038 seconds.    
-By Rule 1, the uncertainty should be
-reported to one significant figure, so we round it to 0.004 seconds.   
-By Rule 2, the measurement must also be rounded to the third decimal place.  Thus, the
-measurement should be reported as $0.345\pm0.004$ seconds. 
-\end{example}
- 
+::: {.example #exm-uncertainy-reporting-1}
+
+The timer reports a value of 0.3451 seconds.  The uncertainty on the measurement
+is 0.0038 seconds. By Rule 1, the uncertainty should be reported to one
+significant figure, so we round it to 0.004 seconds. By Rule 2, the measurement
+must also be rounded to the third decimal place.  Thus, the measurement should
+be reported as $0.345\pm0.004$ seconds.
+::: 
+<!-- end example -->
+
                                                  
-\begin{example} 
-The measured value is $7.92538 \cdot 10^4$, 
-and its uncertainty is $2.3872 \cdot 10^2$.    By Rule 1, 
-the uncertainty should be rounded to one significant figure, so 
-$2 \cdot 10^2$.  
-By Rule 2, we report the 
-measurement to the same decimal place as the uncertainty, so $7.93 \cdot 10^4$.  
-Putting it together, the 
-measurement should be reported as $(7.93\pm0.02) 10^4$.   
-\end{example}
+::: {.example #exm-uncertainy-reporting-2}
  
- 
-\begin{example} 
-The estimated value is $89.231$, 
-and its uncertainty is $0.1472$.    By Rule 1, 
-the uncertainty should be rounded to two significant figures, so $0.15$.
-By Rule 2, we report the 
-estimate to the same decimal place as the uncertainty, so $89.23  \pm  0.15$.  
-\end{example}
+The measured value is $7.92538 \cdot 10^4$, and its uncertainty is $2.3872 \cdot 10^2$.
+By Rule 1, the uncertainty should be rounded to one significant
+figure, so $2 \cdot 10^2$. By Rule 2, we report the measurement to the same
+decimal place as the uncertainty, so $7.93 \cdot 10^4$. Putting it together, the
+measurement should be reported as $(7.93\pm0.02) 10^4$.
+::: 
+<!-- end example -->
 
-%For more on reporting uncertainties and rounding, see section \ref{sec:3F}
+ 
+ 
+::: {.example #exm-uncertainty}
+ 
+The estimated value is $89.231$, and its uncertainty is $0.1472$.    By Rule 1,
+the uncertainty should be rounded to two significant figures, so $0.15$. By Rule
+2, we report the estimate to the same decimal place as the uncertainty, so
+$89.23  \pm  0.15$.
+::: 
+<!-- end example -->
+
+
+<!-- %For more on reporting uncertainties and rounding, see section \ref{sec:3F} -->
  
 
-\subsection{Reporting numbers in a table}
+### Reporting numbers in a table
  
 Multiple similar measurements should be reported in a table.  The column
 headings should clearly and concisely indicate the quantity in each column; the
 column heading must include the units.   Uncertainties should be listed in a
 separate column, located just to the right of the measurement column.  (Sometimes, uncertainties are listed in parentheses after the estimate instead; just make sure the header and legend of the table makes it clear what values are being reported, and where.) 
 
-\begin{example}
+::: {.example #exm-kinetic-energy-uncertainty}
+
 A lab group calculated these numbers for kinetic energy and its uncertainty: 
 
-\begin{center} 
-\begin{tabular}{|r|r|}
-  \hline
-Kinetic Energy & uncertainty 
-\\
-\hline
-0.8682 & 0.059 
-\\
-1.0661 & 0.071 
-\\
-1.0536 & 0.070 
-\\
-1.3881 & 0.058 
-\\
-0.8782 & 0.108 
-\\
-\hline
-\end{tabular}
-\end{center} 
+| Kinetic Energy | uncertainty |
+| 0.8682 | 0.059 |
+| 1.0661 | 0.071 |
+| 1.0536 | 0.070 |
+| 1.3881 | 0.058 |
+| 0.8782 | 0.108 |
 
 This should be reported with appropriate rounding as
 
-\begin{center} 
-\begin{tabular}{|r|r|}
-  \hline
-Kinetic Energy & uncertainty 
-\\
-\hline
-0.87 & 0.06 
-\\
-1.07 & 0.07 
-\\
-1.05 & 0.07 
-\\
-1.39 & 0.06 
-\\
-0.88 & 0.11 
-\\
-\hline
-\end{tabular}
-\end{center} 
-\end{example}
 
-
- 
+| Kinetic Energy | uncertainty   |
+|----------------|---------------|
+| 0.87 | 0.06 |
+| 1.07 | 0.07 |
+| 1.05 | 0.07 |
+| 1.39 | 0.06 |
+| 0.88 | 0.11 |
+::: 
+<!-- end example -->
 
 
 
-\section{Additional Propagation of Uncertainty Examples}
-\label{sec:propagationExamples}%
 
-\begin{example}
-	\question
+## Additional Propagation of Uncertainty Examples {#sec-propagation-examples}
+
+::: {.example}
+
+**Q.** 
 	The side of a square is measured and reported as $12.3 \pm 0.2$ mm.
 	How should the area be reported?
 
-	\answer
-	Our estimate for the area is $12.3^2 = \Sexpr{12.3^2}$. 
+**A.** 
+	Our estimate for the area is $12.3^2 = `r 12.3^2`$. 
 	Our transformation is $f(x) = x^2$, so $\Partial{f}{x} = f'(x) = 2x$.  
 	Applying the Delta Method, our uncertainty is
 
-	\[
-	\sqrt{ (2 (12.3))^2 (0.2)^2 } = 2 (12.3)(0.2) = \Sexpr{2 * 12.3 * 0.2}
-	\]
+$$
+	\sqrt{ (2 (12.3))^2 (0.2)^2 } = 2 (12.3)(0.2) = `r 2 * 12.3 * 0.2`
+$$
 	and we report the area as
-	$\Sexpr{round(12.3^2,0)} \pm \Sexpr{signif(2*12.3*0.2,1)}$.
+	$`r round(12.3^2,0)` \pm `r signif(2*12.3*0.2,1)`$.
 
 	It is worth looking at the relative uncertainty of the linear and area measurements.
-	\begin{align*}
-		\frac{0.2}{12.3} &= \Sexpr{0.2 / 12.3}
+$$
+\begin{align*}
+		\frac{0.2}{12.3} &= `r 0.2 / 12.3`
 		\\
-		\frac{\Sexpr{signif(2 *12.3*0.2,1)}}{\Sexpr{round(12.3^2,0)}} 
-		&= \Sexpr{signif(2 * 12.3 * 0.2 / 12.3^2, 3)}
-	\end{align*}
+		\frac{`r signif(2 *12.3*0.2,1)`}{`r round(12.3^2,0)`} 
+		&= `r signif(2 * 12.3 * 0.2 / 12.3^2, 3)`
+\end{align*}
+
+$$
 So the relative uncertainty of the area measurement is twice the relative uncertainty
 of the linear measurement.
-\end{example}
+::: 
+<!-- end example -->
+
 
 The preceding example demonstrates a simplified version of the Delta Method formula 
 when we are dealing with only one estimator.
 
-\begin{boxedText}
-	\centerline{\textsf{\bfseries The Delta Method for one estimator}}
+::: {.boxedText}
+
+	%s{\textsf{\bfseries The Delta Method for one estimator}}
 
 	Let $X$ be an estimator with uncertainty $u_{X}$ and let $\hat W = f(\hat X)$.
 	Then the uncertainty in the estimate $W$ can be estimated as 
-	\[
+	$$
 	u_{W} \approx
 \left|\frac{df}{dX}\right| u_X
-	\]
+	$$
 	where the derivative is evaluated using the estimated value of $X$, $\hat{X}$.
-\end{boxedText}
+::: 
+<!-- end boxedText -->
 
 
 
-\begin{example}
-\label{example:box1}
-	\question
-	The sides of a rectangle are measured and reported as $12.3 \pm 0.2$ mm and
-	$6.3 \pm 0.1$ mm.
-	How should the area be reported?
 
-	\answer
-	Our estimate for the area is $12.3 \cdot 6.3 = \Sexpr{12.3 * 6.3}$.  
+::: {.example #exm-box1}
 
-	Now we need to estimate the uncertainty.
-	Our transformation is $f(x,y) = xy$, so   $\frac{\partial f}{\partial x} = y$ and 
-	$\frac{\partial f}{\partial y} = x$. 
-\[
+**Q.** 
+The sides of a rectangle are measured and reported as $12.3 \pm 0.2$ mm and
+$6.3 \pm 0.1$ mm.
+How should the area be reported?
+
+**A.** 
+Our estimate for the area is $12.3 \cdot 6.3 = `r 12.3 * 6.3`$.  
+
+Now we need to estimate the uncertainty.
+Our transformation is $f(x,y) = xy$, so   $\frac{\partial f}{\partial x} = y$ and 
+$\frac{\partial f}{\partial y} = x$. 
+
+$$
 \sqrt{ 6.3^2 \cdot 0.2^2 + 12.3^2 \cdot 0.1^2 } =
-\Sexpr{sqrt(6.3^2 * 0.2^2 + 12.3^2 * 0.1^2) } 
-\]
+`r sqrt(6.3^2 * 0.2^2 + 12.3^2 * 0.1^2) ` 
+$$
+
 and we should report the area as 
-\[
-\Sexpr{round(6.3 * 12.3,1)} \pm 
-	\Sexpr{signif(sqrt(6.3^2 * 0.2^2 + 12.3^2 * 0.1^2),2)} 
-\]
-%or
-%\[
-%\Sexpr{round(6.3 * 12.3,0)} \pm \Sexpr{signif(sqrt(6.3^2 * 0.2^2 + 12.3^2 * 0.1^2),1)} 
-%\]
-\end{example}
 
-\myindex{relative uncertainty}%
-Sometimes it is more convenient to think about \term{relative uncertainty}:
+$$
+`r round(6.3 * 12.3,1)` \pm 
+	`r signif(sqrt(6.3^2 * 0.2^2 + 12.3^2 * 0.1^2),2)` 
+$$
+<!-- or -->
+<!-- $$ -->
+<!-- `r round(6.3 * 12.3,0)` \pm `r signif(sqrt(6.3^2 * 0.2^2 + 12.3^2 * 0.1^2),1)`  -->
+<!-- $$ -->
+::: 
+<!-- end example -->
 
-\begin{boxedText}
-\centerline{\textsf{\bfseries Absolute and relative uncertainty}}
-\medskip
 
-\[
+Sometimes it is more convenient to think about **relative uncertainty**:
+
+::: {.boxedText #def-relative-uncertainty}
+
+### Relative uncertainty {-}
+
+$$
 \mbox{relative uncertainty} 
 = \frac{ \mbox{uncertainty of measurement} }{\mbox{magnitude of measurement}}
-\]
+$$
 For example, if we measure a mass to be $10.2$ g with an uncertainty of $0.3$ g, the 
 relative uncertainty is 
-\[
+$$
 \frac{0.3}{10.2} 
-= \Sexpr{0.3/10.2}
-= \Sexpr{round(100 * 0.3/10.2,1)} \%
-\]
+= `r 0.3/10.2`
+= `r round(100 * 0.3/10.2,1)` \<!--  -->
+$$
 Often it is the case that uncertainty grows with the magnitude of the estimate, and relative uncertainty
 is a way of comparing the uncertainty in large measured values with the uncertainty of 
 small measured values on a more equal basis.  Relative uncertainty is also independent 
 of the units used.
-\end{boxedText}
+::: 
+<!-- end boxedText -->
+
 
 In the example above, we get a nice formula if we compute relative uncertainty
 instead of absolute uncertainty.  Let $P = XY$ where $X$ and $Y$ have
 uncertainties $u_X$ and $u_Y$.  Then $\Partial{P}{X} = Y$ and $\Partial{P}{Y} =
 X$, so
 
+$$
 \begin{align*}
 \frac{u_P}{P} 
 & = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{P^2} }
@@ -591,6 +620,7 @@ X$, so
 \\
 & = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
 \end{align*}
+$$
 which gives a Pythagorean identity for the relative uncertainties.
 
 The computations are the same for any product.  
@@ -600,108 +630,119 @@ area (length $\times$ width),
 work (force $\times$ distance), 
 distance (velocity $\times$ time), etc.
 
-\begin{example}
-	\question
-	Use relative uncertainty to estimate the area of the rectangle 
-	in 	Example~\ref{example:box1}.
+::: {.example #exm-relative-uncertainty-rectangle}
 
-	\answer
-	The relative uncertainties in the length and width are 
-	\[ 
-	\frac{0.2}{12.3} = \Sexpr{0.2/12.3} \tand 
-	\frac{0.1}{6.3} = \Sexpr{0.1/6.3} 
+**Q.** 
+Use relative uncertainty to estimate the area of the rectangle 
+in 	@exm-box1.
+
+**A.** 
+The relative uncertainties in the length and width are 
+$$ 
+	\frac{0.2}{12.3} = `r 0.2/12.3` \tand 
+	\frac{0.1}{6.3} = `r 0.1/6.3` 
 	\;.
-	\]
+$$
 	So the relative uncertainty in the area estimation is 
-	\[
+$$
 	\sqrt{ 
-	(\Sexpr{0.2/12.3})^2 +  (\Sexpr{0.1/6.3})^2 }
+	(`r 0.2/12.3`)^2 +  (`r 0.1/6.3`)^2 }
 	=
-	\Sexpr{ sqrt((0.2/12.3)^2 +  (0.1/6.3)^2) }
+	`r  sqrt((0.2/12.3)^2 +  (0.1/6.3)^2) `
 	\;.
-	\]
+$$
 	Now we solve 
-	\[
-	\frac{u_A}{77.49} = \Sexpr{ sqrt((0.2/12.3)^2 +  (0.1/6.3)^2) }
-	\]
-	to get 
-	\[
-	u_A = (77.49) (\Sexpr{ sqrt((0.2/12.3)^2 +  (0.1/6.3)^2) }) =
-	\Sexpr{ 77.49 * sqrt((0.2/12.3)^2 +  (0.1/6.3)^2) } 
+$$
+	\frac{u_A}{77.49} = `r  sqrt((0.2/12.3)^2 +  (0.1/6.3)^2) `
+$$
+to get 
+$$
+	u_A = (77.49) (`r  sqrt((0.2/12.3)^2 +  (0.1/6.3)^2) `) =
+	`r  77.49 * sqrt((0.2/12.3)^2 +  (0.1/6.3)^2) ` 
 	\;.
-	\]
-	Notice that this matches the result from 
-	Example~\ref{example:box1}.
+$$
+Notice that this matches the result from @exm-box1.
 
-\end{example}
+::: 
+<!-- end example -->
 
-\begin{example}
-	\question
+
+::: {.example #exm-resistors}
+
+**Q.** 
 	When two resistors with resistances $R_1$ and $R_2$ are connected in parallel, 
 	the combined resistance satisfies
-	\[
+	$$
 	R = \frac{R_1 R_2}{R_1 + R_2} 
-	\]
+	$$
 	Suppose the resistances of the two resistors are reported as 
 	$20 \pm 0.7$ ohms and $50 \pm 1.2$ ohms.  How should you report the combined resistance?
 
-	\answer
-	Our estimate is $\hat R = \frac{ 20 \cdot 50}{ 20 + 50} = \Sexpr{20*50/(20 + 50)}$.
+**A.** 
+	Our estimate is $\hat R = \frac{ 20 \cdot 50}{ 20 + 50} = `r 20*50/(20 + 50)`$.
 	To estimate the uncertainty, we need the partial derivatives 
 	$\Partial{R}{R_1}$ and $\partial{R}{R_2}$.
 
-	\begin{align*}
+$$
+\begin{align*}
 		\Partial{R}{R_1} &= \frac{ (R_1+R_2)R_2 - (R_1 R_2) }{(R_1 + R_2)^2}
 		\\
 		&= \left( \frac{ R_2}{R_1 + R_2}\right)^2 
 		\\
-		&= \left( \frac{ 50}{20 + 50}\right)^2  = \Sexpr{(50/70)^2}
-	\end{align*}
-	Similarly,
-	\begin{align*}
-		\Partial{R}{R_2} 
-		&= \left( \frac{ R_1}{R_1 + R_2}\right)^2
-		\\
-		&= \left( \frac{ 20}{20 + 50}\right)^2 = \Sexpr{( 20 / 70 )^2}
-	\end{align*}
-<<resistors,include = FALSE>>=
+		&= \left( \frac{ 50}{20 + 50}\right)^2  = `r (50/70)^2`
+\end{align*}
+$$
+Similarly,
+$$
+\begin{align*}
+\Partial{R}{R_2} 
+&= \left( \frac{ R_1}{R_1 + R_2}\right)^2
+\\
+&= \left( \frac{ 20}{20 + 50}\right)^2 = `r ( 20 / 70 )^2`
+\end{align*}
+$$
+```{r resistors,include = FALSE}
 R <- 20*50/(20 + 50)
 u1 <- 0.7; u2 <- 1.2
 p1 <- (50/70)^2; p2 <- (20/70)^2
 u <- sqrt( p1^2 * u1^2 + p2^2 *u2^2 )
 r <- 1 + round(-log10(u))
-@
-	So our estimated uncertainty is given by
-\[
-	u_R = \sqrt{ (\Sexpr{p1})^2 (\Sexpr{u1})^2 + (\Sexpr{p2})^2)(\Sexpr{u2}^2) }
-	= \Sexpr{u} \;.
-\]
+```
+
+So our estimated uncertainty is given by
+$$
+	u_R = \sqrt{ (`r p1`)^2 (`r u1`)^2 + (`r p2`)^2)(`r u2`^2) }
+	= `r u` \;.
+$$
 So we report the combined resistance as 
 
-\[
-\Sexpr{round(R,r)} \pm \Sexpr{round(u,r)}
-\]
+$$
+`r round(R,r)` \pm `r round(u,r)`
+$$
 
-\end{example}
+::: 
+<!-- end example -->
 
 
-\section{Experimental Error and Its Causes} % Taylor ref here 2 
+
+## Experimental Error and Its Causes 
+
 There are many reasons for experimental error, and it is important to identify
 potential causes for experimental error, to reduce their effects when possible,
 and to handle them appropriately in any case.
 
 
-\subsection{Random error: Same procedure, different results}
+### Random error: Same procedure, different results
 
 Even if measurements are taken by carefully trained scientists using
-highly precise instruments, repeated measurements of the ``same thing"
+highly precise instruments, repeated measurements of the "same thing"
 may not always give the same value.
 
 All data collection is done in the context of variability,
 and statistics allows us to interpret our data in this context.
 
 
-\subsubsection{The moving target}
+#### The moving target
 One reason that a measurement may change is that what we are measuring
 may be changing.  Some quantities depend on environmental factors (like 
 temperature and atmospheric pressure, for example) that may change
@@ -717,22 +758,22 @@ differences among those objects may lead to variability in measurements.   If
 measurements are made on a sample of living things, the variability from one
 individual to the next could be quite large.  But even in the physical
 sciences, each run of an experiment may require the use of different
-``consumables'' that have slightly different properties that affect 
+``consumables" that have slightly different properties that affect 
 our measurements.
 
-\iffalse
-\subsubsection{Measurement error}
+<!-- \iffalse -->
+<!-- \subsubsection{Measurement error} -->
 
-Another source of variability is the measuring process itself.  Every
-measurements are made on a sample of living things, the variability from one
-individual to the next could be quite large.  But even in the physical
-sciences, each run of an experiment may require the use of different
-``consumables'' that have slightly different properties that affect 
-our measurements.
-\fi
+<!-- Another source of variability is the measuring process itself.  Every -->
+<!-- measurements are made on a sample of living things, the variability from one -->
+<!-- individual to the next could be quite large.  But even in the physical -->
+<!-- sciences, each run of an experiment may require the use of different -->
+<!-- ``consumables'' that have slightly different properties that affect  -->
+<!-- our measurements. -->
+<!-- \fi -->
 
 
-\subsubsection{Measurement error}
+#### Measurement error
 
 Another source of error is the measuring process itself.  Every
 measuring device has its limits, as do the humans who are using them.
@@ -745,18 +786,17 @@ might employ slightly different methods, or be more or less skillful in
 their measuring.
 
 The variability from one measurement to another that would exist even if there
-were no moving target effect is called \term{measurement error}.  In practice,
+were no moving target effect is called **measurement error**.  In practice,
 it can be difficult or impossible to isolate the moving target effect from
 measurement error, so they may be combined into one source of variability which
-we will call 
-\term{random error}.
+we will call **random error**.
 In physics, the moving target effect is often small -- at least in carefully
 designed experiments -- so that random error is dominated by the 
 difficulties of measuring the quantity under study.  In other disciplines,
 the relative magnitudes may be reversed.
 
 The best way to estimate the effects of random error is by making repeated
-measurements and comparing them.  The \term{discrepancies} (differences between
+measurements and comparing them.  The **discrepancies** (differences between
 measurements) provide an indication of the amount of random error.  
 
 Sometimes
@@ -765,12 +805,12 @@ can be especially important when our ability to take repeated measurements is
 limited or when limitations of our measurement apparatus make it impossible
 to directly observe the effects of random error.
 
-\subsubsection{Invisible measurement error}
+#### Invisible measurement error
 Although there is no theoretical limit to the precision of a numerical quantity 
 like mass, time, velocity, etc., every measurement device has limited precision.
 Because of this lack of precision in our measurement device, it may well be 
 that repeated measuremets will all look identical.  
-\emph{But this does not mean that they are exactly correct.}  
+*But this does not mean that they are exactly correct.*  
 
 For example,
 if we measure temperature using a digital thermometer that has a display
@@ -786,23 +826,25 @@ a different measuring tool will need to be used.
 If other sources of variability are small, this kind of measurement error 
 may completely mask them.
 
-\subsection{Systematic error: A tendency to over- or under-estimate}
+### Systematic error: A tendency to over- or under-estimate
 Even if your target were not moving, and even if there were no 
 variability in measurements from time to time, and even if our measurement
 apparatus were perfectly precise, there is still
 a chance that a measurement might not give the value we are searching 
 for because the procedure used might tend to give results that over-
-or under-estimate the quantity being measured.  This kind of error may be referred to as either \term{bias} or \term{systematic error}.
+or under-estimate the quantity being measured.  This kind of error may be referred to as either **bias** or **systematic error**.
 
 
-\begin{boxedText}
-	\term{Bias} or \term{Systematic error} refers to the tendency 
-to either over- or under-estimate a quantity.  It is a tendency to ``be off 
-in a particular direction''.
-\end{boxedText}
+::: {.boxedText #def-bias}
+**Bias** or **Systematic error** refers to the tendency 
+to either over- or under-estimate a quantity.  It is a tendency to "be off 
+in a particular direction".
+::: 
+<!-- end boxedText -->
 
-\subsubsection{Calibration errors}
-Perhaps the easiest type of systematic error to understand is \textbf{calibration error}.
+
+#### Calibration errors
+Perhaps the easiest type of systematic error to understand is **calibration error**.
 If a measuring device is not properly calibrated, the resulting measurements may be 
 too large or too small.
 For example, if a timing device uses an internal clock that runs a bit slow, it will
@@ -818,7 +860,7 @@ standard quantities is an important part of quality scientific experimentation
 because it helps reduce the effects of systematic bias.  
 
 
-\subsubsection{Design flaws}
+#### Design flaws
 
 Poorly designed experiments can also introduce systematic error.  For example,
 imagine an experiment where a steel ball is dropped from a platform at
@@ -826,61 +868,62 @@ different heights and the time is recorded until the ball hits the ground.
 To save time, the researchers set the platform at a specified height and drop the ball
 multiple times before moving the platform to a new height and repeating.
 Using this method, any error in measuring the height of the platform will affect all
-the drops from that height \emph{in the same way}.  This introduces an unknown amount
+the drops from that height *in the same way*.  This introduces an unknown amount
 of systematic error into the measurements taken at each height.  An alternative design
 in which the heights are done in random order and in which the platform height is 
 reset before each drop would likely have somewhat more random error but would avoid this
 source of systematic error.
 
-\subsubsection{Dealing with systematic error}
+#### Dealing with systematic error
 Systematic error is generally more difficult to handle than random error in
 part because there is often no good way to measure how large systematic error
 might be or even to detect that it is occurring.
 
-\subsection{Relative Magnitudes of Errors from Different Sources}
+### Relative Magnitudes of Errors from Different Sources
 
 We have identified several potential sources of error.  
-%In the next section we will learn
-%how to quantify the uncertainty that results.  But even without quantified methods, 
+<!-- In the next section we will learn -->
+<!-- how to quantify the uncertainty that results.  But even without quantified methods,  -->
 It is good to get in the habit of qualitatively determining which sources you expect to contribute
 relatively larger and smaller amounts of error.  Often we can ignore the sources of relatively
 smaller potential error and focus our attention on the sources of relatively larger potential
 error.
 
 
-\section{Uncertainty -- How Much Error Might There Be?}
+## Uncertainty -- How Much Error Might There Be?
 
-In Section~\ref{sec:propagationExamples} we did several examples of propagation of 
+In @sec-propagation-examples we did several examples of propagation of 
 uncertainty.  But uncertainty cannot be propagated to derived estimates unless we already
 have estimated uncertainties for the components of the derivation.
 Where do these uncertainty estimates come from?
 
 As we have mentioned before, it is not possible to measure error directly.  
-% This makes dealing with error a bit tricky.  In our dimes example we illustrated
-% two common ways that uncertainty estimates are obtained. 
+<!--  This makes dealing with error a bit tricky.  In our dimes example we illustrated -->
+<!--  two common ways that uncertainty estimates are obtained.  -->
 If we knew the amount of an error exactly, we would correct for it and obtain the exact, correct 
 estimate of the value we were trying to measure.  
 Since we do not know the error exactly, we have to try to use our data 
 (and our prior knowledge about the situation) to try to estimate it. In this section we focus 
 our attention on this part of the uncertainty calculation.
 
-\subsection{Looking at variability in your data}
+### Looking at variability in your data
 
 If you have repeated measurements, a histogram, boxplot, or density plot of these 
 measurements can provide a 
-visual representations that shows both what is ``typical'' or ``average'' and how much 
+visual representations that shows both what is "typical" or "average" and how much 
 variability there is in the data.  
 
-\begin{figure}[h]
-<<variability, echo = FALSE,out.width = ".3\\textwidth",caption = "Representations of the same 25 measurements">>=
+```{r}
+#| label: fig-variability 
+#| echo: FALSE
+#| out.width: ".3\\textwidth"
+#| fig-cap: "Three graphical representations of the same 25 measurements"
 set.seed(1234)
 x <- rnorm(25, 10, 2)
-gf_histogram( ~ x, bins = 10) %>% gf_labs(x = "")
-gf_dens( ~ x) %>% gf_labs(x = "")
-gf_boxplot( ~ x) %>% gf_labs(x = "")
-@
-\caption{Three graphical representations of the same 25 measurents.}
-\end{figure}
+gf_histogram( ~ x, bins = 10) |> gf_labs(x = "")
+gf_dens( ~ x) |> gf_labs(x = "")
+gf_boxplot( ~ x) |> gf_labs(x = "")
+```
 
 
 In addition, graphical displays of your data may help isolate outliers -- values
@@ -888,37 +931,40 @@ that don't seem to fit the pattern of the rest of the data.  Outliers should not
 from your data without furhter investigation.  You need to know why these values are 
 different from the rest.  Was there a mistake in the measurement?  Was the value recorded
 incorrectly (decimal point in the wrong place, wrong units, transposed digits, typo)?
-Or was there something different going on -- so that the potential outlier is \emph{really} an important, informative data point that is trying to tell you something about the process you are measuring?  An outlier might be the key observation in 
+Or was there something different going on -- so that the potential outlier is *really* an important, informative data point that is trying to tell you something about the process you are measuring?  An outlier might be the key observation in 
 your data set -- don't throw it away without investigating.
 
-\subsection{Estimating uncertainty from your data}
-\label{sec:uncertainty-from-data}
+### Estimating uncertainty from your data {#sec-uncertainty-from-data}
 
 Whenever possible, you should make multiple measurements of the same phenomenon.
 The variability among these measurements allows us to estimate the uncertainty.
 If we are using the mean of multiple measurements as our estimate, then the uncertainty
-is the ``standard error of the mean" (which we will derive in the following chapter):
+is the "standard error of the mean" (which we will derive in the following chapter):
 
-\[ 
+$$ 
 SE = \frac{s}{\sqrt{n}} 
-\]
+$$
 This is how we estimated the uncertainty in our estimate for the mean weight of a dime.
 
 In other more complicated study designs, some other standard error formula may be used.
 
-\subsection{Estimating uncertainty in other ways}
-\label{sec:uncertainty-without-data}
+### Estimating uncertainty in other ways {sec-uncertainty-without-data}
+
 Estimating uncertainty from data is only possible if 
-\begin{itemize}
-\item You have multiple measurements from which to estimate the variability, and 
-\item The measurements actually vary (aren't masked by imprecise measuring devices, 
+::: {.itemize}
+* You have multiple measurements from which to estimate the variability, and 
+* The measurements actually vary (aren't masked by imprecise measuring devices, 
 for example).
-\end{itemize}
+::: 
+<!-- end itemize -->
+
 
 Frequently, these conditions are not met, but we still want to quantify the uncertainty.
 
-%\subsubsection{Overcoming lack of measurement precision}
-\subsubsection{The uniform model for measurement (im)precision}
+<!-- #### Overcoming lack of measurement precision -->
+
+#### The uniform model for measurement (im)precision
+
 There are many measuring devises that provide limited precision so that the 
 best we may be able to say is that we know the measured value to be in some interval $[a,b]$.
 This would be the case for measuring devices with digital displays, for example.  
@@ -928,29 +974,29 @@ Presumably, this means that the actual measurement can lie anywhere between
 have no way of knowing where within that interval the value might be.
 
 We don't want to report the uncertainty as $b-a$ or even $(b-a)/2$.  These would be
-overestimates of the ``average" amount of error.
+overestimates of the "average" amount of error.
 Here, we aren't looking for an upper bound on the potential error; we want to estimate something 
 like the average amount of error.
 
-In this case we can estiamte a standard uncertainty based on the \term{uniform distribution}.  
+In this case we can estiamte a standard uncertainty based on the **uniform distribution**.  
 Recall, a uniform
-distribution is one in which every value in some interval is ``equally likely''.
+distribution is one in which every value in some interval is "equally likely".
 A uniform distribution has standard deviation $s = \frac{b-a}{\sqrt{12}}$, so we will
 use this as our estimate for standard uncertainty as well.
 Notice that 
-$\frac{2}{\sqrt{12}} = \frac{1}{\sqrt{3}} = \Sexpr{1/sqrt(3)} $.
+$\frac{2}{\sqrt{12}} = \frac{1}{\sqrt{3}} = `r 1/sqrt(3)`$.
 This means that adding and subtracting one standard uncertainty from the center 
 of the interval
-\[
+$$
 \frac{a+b}{2} \pm \frac{b-a}{\sqrt{12}}
-\]
-will cover about 58\% of the interval.  
-This is quite a bit less than the 68\% covered by the central portion of a normal 
+$$
+will cover about 58\<!--  of the interval.   -->
+This is quite a bit less than the 68\<!--  covered by the central portion of a normal  -->
 distribution (within 1 standard deviation of the mean).
-For a ``back of the envelope'' computation, to use an uncertainty with a similar amount of ``coverage" to the ``coverage" that the standard deviation has for the normal distribution, we might choose to use the approximation 
+For a "back of the envelope" computation, to use an uncertainty with a similar amount of "coverage" to the "coverage" that the standard deviation has for the normal distribution, we might choose to use the approximation 
 $\frac{b-a}{\sqrt{12}} \approx \frac{b-a}{3}$,
 since this will slightly over-estimate the uncertainty and lead to a central covering
-probability of $2/3 \approx 68\%$.
+probability of $2/3 \approx 68$\%.
 
 This same idea can be used when working with analog scales, but in this case, we typically
 can see that the value is closer to one end than the other or closer to the center than
@@ -960,53 +1006,55 @@ are saying we know the value is in the interval $[12.3, 12.35]$, which is only h
 wide as the scale of the ruler.  We can then use a uniform distribution as above, except that the limits $a$ and $b$ of the distribution are a bit narrower now.  
 (On some analog scales, it may be possible to do even better than this.)
 
-\begin{example}
+::: {.example #exm-reading-scale}
+
 Measuring length on a ruler with a 1 mm scale, we could use $\frac{1/2}{\sqrt{12}}$
 as the estimated uncertainty of the measurement if the primary source of error is reading
 the scale.  Of course, it may be that lining up the scale with the object being measured
 introduces more uncertainty than reading the scale does.  That may lead us to choose a 
 larger value for our estimated uncertainty.
-\end{example}
+::: 
+<!-- end example -->
 
-\subsubsection{Other models for measurement (im)precision}
+
+#### Other models for measurement (im)precision
+
 Other distributions, most notably the triangle and normal distributions, are sometimes
 used instead of the uniform distribution to model errors in measurements made
 with various devices.  Each of these models produces a somewhat smaller estimate
 for the uncertainty than you would get using a uniform distribution.  In the case of the normal distribution, typically one considers
 half the width of the interval to be spanned by 3 standard deviations of the
-normal distribution (since that would capture 99.7\% of the distribution.  If $a$ and $b$
+normal distribution (since that would capture 99.7% of the distribution.  If $a$ and $b$ 
 are the lower and upper limits of plausible values corresponding to a measurement,
 the three uncertainty calculations are as follows:
 
-\begin{center}
-	\begin{tabular}{lc}
-		\hline
-		distribution & uncertainty
-		\\
-		\hline
-		\\[-3mm]
-		uniform & $\displaystyle \frac{b-a}{2 \sqrt{3}}$
-		\\[5mm]
-		triangle & $\displaystyle \frac{b-a}{2 \sqrt{6}}$
-		\\[5mm]
-		normal & $\displaystyle \frac{b-a}{2 \cdot 3}$
-		\\[3mm]
-		\hline
-	\end{tabular}
-\end{center}
+
+| distribution | uncertainty                            |
+|--------------|----------------------------------------|
+|	uniform      | $\displaystyle \frac{b-a}{2 \sqrt{3}}$ |
+| triangle     | $\displaystyle \frac{b-a}{2 \sqrt{6}}$ |
+|	normal       | $\displaystyle \frac{b-a}{2 \cdot 3}$  |
+
+: Uncertainties based on 3 different distributions. {#tbl-uncertainties-from-distributions}
+
+
 This makes the uniform distribution the most conservative and the normal distribution the least conservative.
 
-%Because our uncertainty is based on a standard deviation, we will be able to combine
-%it with other uncertainties when we learn about propagation of uncertainty.
+<!-- Because our uncertainty is based on a standard deviation, we will be able to combine -->
+<!-- it with other uncertainties when we learn about propagation of uncertainty. -->
 
-\subsubsection{Taking advantage of other data}
+#### Taking advantage of other data
 
 Sometimes previous experience with a device or protocol may provide us with a good 
 estimate for the uncertainty even before we collect our data.  In such cases, we can 
-use these \emph{a priori} uncertainties both in planning and in analysis, but it is also
+use these *a priori* uncertainties both in planning and in analysis, but it is also
 good to check that the data collected are consistent with the estimated uncertainties.
 
-\begin{problem}
+
+## Exercises
+
+::: {.problem #exr-diabetes-drug}
+
 A clinical trial with 30 patients has been performed in
 which the volume of distribution 
 (the theoretical volume that would be necessary to contain the total 
@@ -1014,203 +1062,225 @@ amount of an administered drug at the same concentration that it is observed
 in the blood plasma) of a new anti-diabetes drug 
 was measured for each patient.  The sample mean was 10.2 L with a 
 standard deviation of 1.9 L.
-\begin{enumerate}
-\item
-Calculate a 95\% confidence interval
-for the the mean volume of distribution.
-\item
-Calculate a 99\% confidence interval
-for the the mean volume of distribution.
-\item
-Calculate the standard uncertainty for the mean volume of distribution.
-\end{enumerate}
-\end{problem}
+:::: {.enumerate}
 
-\begin{solution}
-<<some-solution>>=
-# 95 % CI
+#. 
+Calculate a 95\<!--  confidence interval -->
+for the the mean volume of distribution.
+#. 
+Calculate a 99\<!--  confidence interval -->
+for the the mean volume of distribution.
+#. 
+Calculate the standard uncertainty for the mean volume of distribution.
+:::: 
+<!-- end enumerate -->
+
+::: 
+<!-- end problem -->
+
+
+::: {.solution}
+
+```{r some-solution}
+# 95 <!--  CI -->
 t.star <- qt(.975, df = 29); t.star
 ME <- t.star *  1.9 / sqrt(30); ME
 1.2 + c(-1,1) * ME
-# 99 % CI
+# 99 <!--  CI -->
 t.star <- qt(.995, df = 29); t.star
 ME <- t.star *  1.9 / sqrt(30); ME
 10.2 + c(-1,1) * ME
 # standard uncertainty = SE = s / sqrt(n)
 1.9 / sqrt(30)
-@
-\end{solution}
+```
 
-\begin{problem}
+::: 
+<!-- end solution -->
+
+
+::: {.problem #exr-linear-thermal-expansion}
+
 A handbook gives the value of the coefficient of linear thermal expansion of 
 pure copper at 20 degrees C, $\alpha_{20}$(Cu), as 
 $16.52 \times 10^{-6} \ {}^\circ C^{-1}$
-and simply states that ``the error in this value should not exceed 
-$0.40 \times 10^{-6} \ {}^{\circ} C^{-1}$.''
-\begin{enumerate}
-\item
+and simply states that "the error in this value should not exceed 
+$0.40 \times 10^{-6} \ {}^{\circ} C^{-1}$."
+:::: {.enumerate}
+
+#. 
 Based on this limited information, and assuming a rectangular distribution,
 compute the standard uncertainty.
-\item
+#. 
 Based on this limited information, and assuming a triangular distribution,
 compute the standard uncertainty.
-\item
+#. 
 Why might one prefer one of these over the other?
-\end{enumerate}
-\end{problem}
+:::: 
+<!-- end enumerate -->
 
-\begin{solution}
-<<>>=
+::: 
+<!-- end problem -->
+
+
+::: {.solution}
+
+```{r }
 # rectangualr: sd = width / sqrt(12) = width / (2 * sqrt(3))
 0.4 * 2 / sqrt(12)
 0.4 / sqrt(3)
 # triangular: sd = width / (2 * sqrt(6))
 0.4 * 2 / (2 * sqrt(6))
 0.4 / sqrt(6)
-@
+```
+
 
 The uniform distribution is a more conservative assumption.  The trianlge distribution should only
 be used in situations where errors are more likely to be smaller than larger 
 (with the the specified bounds).
-\end{solution}
+::: 
+<!-- end solution -->
 
-\begin{problem}
+
+::: {.problem #exr-standard-solution}
+
 The following data are given in in the certificate of a standard solution: 
 C(HCl) = ($0.10000 \pm 0.00010$) mol/l. 
 No additional information is given on the type of the uncertainty. 
 (The $\pm$ part here is not the uncertainty but is supposed to indicate
 upper and lower bounds on  the error.)
-\begin{enumerate}
-\item
+:::: {.enumerate}
+
+#. 
 Convert the uncertainty to standard uncertainty assuming a
 rectangular distribution.
-\item
+#. 
 Convert the uncertainty to standard uncertainty assuming a
 triangular distribution.
-\end{enumerate}
-\end{problem}
+:::: 
+<!-- end enumerate -->
 
-\begin{solution}
-<<>>=
+::: 
+<!-- end problem -->
+
+
+::: {.solution}
+
+```{r }
 # rectangular
 0.0001 / sqrt(3)
 # trianglular
 0.0001 / sqrt(6)
-@
-\end{solution}
+```
 
-\begin{problem}
+::: 
+<!-- end solution -->
+
+
+::: {.problem #exr-uncertainty-circle}
+
 The area of a circle is to be calculated from a measured radius.  The measurement and its
 standard uncertainty are reported as 
-\[
+$$
 12.5 \pm 0.3 \mbox{m} \;.
-\]
+$$
 What should the researchers report as the area?
-\end{problem}
+::: 
+<!-- end problem -->
 
-\begin{solution}
+
+::: {.solution}
+
 Let $f(R) = \pi R^2$.  Then $\Partial{f}{R} = 2\pi R$, so the uncertainty in the area estimation
 is 
-\[
-\sqrt{ (2 \pi R)^2 (0.3)^2 } = 2 \pi R \cdot 0.3  = \Sexpr{2 * pi * 12.5 * 0.3} 
+$$
+\sqrt{ (2 \pi R)^2 (0.3)^2 } = 2 \pi R \cdot 0.3  = `r 2 * pi * 12.5 * 0.3` 
 \mathrm{m}^2
 \;.
-\]
+$$
 We can report the area as 
-$\Sexpr{round(pi * 12.5^2, -1)} \pm \Sexpr{round(2 * pi * 12.5 * 0.3, -1)}$.
-\end{solution}
+$`r round(pi * 12.5^2, -1)` \pm `r round(2 * pi * 12.5 * 0.3, -1)`$.
+::: 
+<!-- end solution -->
 
 
-\begin{problem}
+
+::: {.problem #exr-reporting-digits}
+
 	Below are some computer-computed estimates and uncertainties.  They are far too precise (there are way too
 	many digits reported).  Use standard practice to report each estimate with the correct number of digits.
 
-	\begin{center}
-	\begin{tabular}{rr}
-		\hline
-		estimate & uncertainty
-		\\
-		\hline
-		5.43210 & 0.024135
-		\\
-		1535.68 & 12.7342 
-		\\
-		576.3415 & 3.453567
-		\\
-		0.00148932 & 0.0000278
-		\\
-		\hline
-	\end{tabular}
-	\end{center}
-\end{problem}
+| estimate   | uncertainty    |
+|------------|----------------|
+|	5.43210    | 0.024135       |
+|	1535.68    | 12.7342        |
+|	576.3415   | 3.453567       |
+|	0.00148932 | 0.0000278      |
+		
+::: 
+<!-- end problem -->
 
-\begin{solution}
-	\begin{center}
-	\begin{tabular}{rr}
-		\hline
-		estimate & uncertainty
-		\\
-		\hline
-		5.43 & 0.02
-		\\
-		1536 & 13
-		\\
-		576 & 3
-		\\
-		0.00149 & 0.00003
-		\\
-		\hline
-	\end{tabular}
-	\end{center}
-\end{solution}
 
-\begin{problem}
+::: {.solution}
+
+
+| estimate   | uncertainty    |
+|------------|----------------|
+|	5.43       | 0.02           |
+|	1536       | 13             |
+|	576        | 3              |
+|	0.00149    | 0.00003        |
+		
+::: 
+<!-- end solution -->
+
+
+::: {.problem #exr-volume-of-tank}
+
 	A student is calculating the volume of a rectangular tank by measuring 
 	the length, width, and height.  These measurements are recorded as 
 	 $L = 2.65 \pm 0.02$cm, $W = 3.10 \pm 0.02$cm, and $H = 4.61\pm 0.05$ cm.
 
 	 How should the volume be reported?
-\end{problem}
+::: 
+<!-- end problem -->
 
-\begin{solution}
+
+::: {.solution}
+
 	In a product the relative uncertainties add, so
-<<tidy = FALSE>>=
+```{r tidy = FALSE}
 L <- 2.65; W <- 3.10; H <- 4.61
 uL <- 0.02; uW <- 0.02; uH <- 0.05
 V <- L * W * H; V
 uV <- sqrt( (uL/L)^2 + (uW/W)^2 + (uH/H)^2) * V; uV
-@
-	So we report $\Sexpr{round(V,1)} \pm \Sexpr{round(uV,1)}$
+```
 
-\end{solution}
+	So we report $`r round(V,1)` \pm `r round(uV,1)`$
 
-\begin{problem}
-	Estimate (with uncertainty) 
-	the amount of gasoline burned by personal cars in a particular
-	year in the US from the following estimates and uncertainties for that
-	year:
+::: 
+<!-- end solution -->
 
-	% note: estimates found online for 2011.  uncertainties made 
-	% up but roughly based on the number of digits reported in online sources.
-	\begin{center}
-		\begin{tabular}{lrr}
-			\hline
-			quantity & estimate & uncertainty
-			\\
-			\hline
-			cars per person & 0.80 & 0.12
-			\\
-			population (millions of people) & 311.6 & .2 
-			\\
-			fleet fuel efficiency (mpg) & 23.7 & 1.7 
-			\\
-			average distance driven per vehicle (miles) & 12,000 & 2,000 
-			\\
-			\hline
-		\end{tabular}
-	\end{center}
 
-	Note:  Various estimates for these quantities are available online, but 
+::: {.problem #exr-gasoline-consumption}
+
+Estimate (with uncertainty) 
+the amount of gasoline burned by personal cars in a particular
+year in the US from the following estimates and uncertainties for that
+year:
+
+	<!--  note: estimates found online for 2011.  uncertainties made  -->
+	<!--  up but roughly based on the number of digits reported in online sources. -->
+	
+	
+| quantity                                    | estimate | uncertainty |
+|---------------------------------------------|----------|-------------|
+|	cars per person                             | 0.80     | 0.12        |
+| population (millions of people)             | 311.6    | .2          |
+|	fleet fuel efficiency (mpg)                 | 23.7     | 1.7         |
+| average distance driven per vehicle (miles) | 12,000   | 2,000       |
+
+
+Note:  Various estimates for these quantities are available online, but 
 	most do not report uncertainty.  The uncertainties here reflect the 
 	number of significant figures used to report these numbers and the 
 	variability between estimates found at different web sites.
@@ -1218,17 +1288,21 @@ uV <- sqrt( (uL/L)^2 + (uW/W)^2 + (uH/H)^2) * V; uV
 	clear.  So treat this as an exercise in propagation of error, but 
 	understand that better estimates of fuel consumption (and uncertainty)
 	would be possible with better data.
-\end{problem}
+::: 
+<!-- end problem -->
 
 
-\begin{solution}
+
+::: {.solution}
+
 The total fuel consumed is given by
-\[
+$$
 F = \frac{kPd}{E}
-\]
+$$
 where $k$ is the cars per person, $P$ is total population, $d$ is average distance 
 driven per car, and $E$ is the average efficiency.
 
+$$
 \begin{align*}
 \Partial{F}{k} &= \frac{Pd}{E} 
 \\
@@ -1238,14 +1312,15 @@ driven per car, and $E$ is the average efficiency.
 \\
 \Partial{F}{E} &= \frac{-kPd}{E^2}
 \end{align*}
+$$
 
 So the estimated amount of fuel consumed (in millions of gallons) is 
-\[
+$$
 \frac{kPd}{E} = \frac{0.8 \cdot 311.6 \cdot 12000 }{23.7}
-= \Sexpr{0.8 * 311.6 * 12000 / 23.7}
-\]
+= `r 0.8 * 311.6 * 12000 / 23.7`
+$$
 and the uncertainty can be computed as follows:
-<<tidy = FALSE>>=
+```{r tidy = FALSE}
 k <- 0.8; u_k <- 0.12
 P <- 311.6; u_P <- 0.2
 d <- 12000; u_d <- 2000
@@ -1267,70 +1342,87 @@ u_F <-
     )
 u_F
 sqrt(sum(variances))
-@
-\noindent
+```
+
+
 So we might report fuel consumption as 
-\Sexpr{round(0.8 * 311.6 * 12000 / 23.7, -4)} $\pm$ 
-\Sexpr{round(u_F, -4)} millions of gallons or 
-\Sexpr{round(0.8 * 311.6 * 12000 / 23.7 / 1000, -1)} $\pm$ 
-\Sexpr{round(u_F/1000, -1)} billions of gallons.
+`r round(0.8 * 311.6 * 12000 / 23.7, -4)` $\pm$ 
+`r round(u_F, -4)` millions of gallons or 
+`r round(0.8 * 311.6 * 12000 / 23.7 / 1000, -1)` $\pm$ 
+`r round(u_F/1000, -1)` billions of gallons.
 
 Note: This problem can also be done in stages.  First we estimate the number 
 of (millions of) cars using
-\[
+$$
 C = k P \;.
-\]
+$$
 
-<<>>=
+```{r }
 C <- k * P; C
 u_C <- sqrt( P^2 * u_k^2 + k^2 * u_P^2); u_C
-@
+```
+
 
 The number of (millions of) miles driven is estimated by $M = C d$:
-<<>>=
+```{r }
 M <- C * d; M
 u_M <- sqrt( d^2 * u_C^2 + C^2 * u_d^2); u_M
-@
+```
+
 
 Finally, the fuel used is $F = M / E$.
-<<>>=
+```{r }
 F = M / E
 u_F = sqrt( (1/E)^2 * u_M^2 + (M/E^2)^2 * u_E^2); u_F
-@
+```
+
 
 This gives the same result (again in millions of gallons of gasoline).
 
 It would also be possible to relative uncertainty to do this problem, since 
 we have nice formulas for the relative uncertainty in products and quotients.
-\end{solution}
+::: 
+<!-- end solution -->
 
-\begin{problem}
-	\label{prob:speed-propagation}%
-	A physics student is calculating the speed of a falling object by measuring the time
+
+::: {.problem #exr-speed-propagation}
+
+A physics student is calculating the speed of a falling object by measuring the time
 	it takes for the object to move between two timing sensors.
 	If she records the time as $0.43 \pm 0.02$ seconds and the distance as 
 	$1.637 \pm 0.006$ m, how should she report the speed in $m/s$?
-\end{problem}
+::: 
+<!-- end problem -->
 
-\begin{solution}
+
+::: {.solution}
+
 	See the next problem for the answer.
-\end{solution}
+::: 
+<!-- end solution -->
 
 
-\begin{problem}
-	\begin{enumerate}
-		\item
-			Work out a formula for the relative uncertainty of $Q = X/Y$ given
+
+::: {.problem #exr-relative-uncertainty-quotient}
+
+:::: {.enumerate}
+
+#. Work out a formula for the relative uncertainty of $Q = X/Y$ given
 			relative uncertainties for $X$ and $Y$.
-		\item
-			Redo problem~\ref{prob:speed-propagation} using your new formula.
-	\end{enumerate}
-\end{problem}
+#. Redo @exr-speed-propagation using your new formula.
+:::: 
+<!-- end enumerate -->
 
-\begin{solution}
+::: 
+<!-- end problem -->
+
+
+::: {.solution}
+
 	Let $Q = X Y^{-1}$.  So 
 	$\Partial{Q}{X} = Y^{-1}$ and 
 	$\Partial{Q}{Y} = -X Y^{-2}$.  From this we get
+$$
 \begin{align*}
 \frac{u_Q}{Q} 
 & = \sqrt{ \frac{ Y^{-2} u_X^2 + X^2 Y^{-4} u_Y^2}{Q^2} }
@@ -1341,25 +1433,19 @@ we have nice formulas for the relative uncertainty in products and quotients.
 \\
 & = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
 \end{align*}
+$$
+
 which gives a Pythagorean identity for the relative uncertainties just as it 
 did for a product.
 
-<<tidy = FALSE>>=
+```{r tidy = FALSE}
 V <- 1.637 / 0.43; V
 uV <- sqrt( (0.02/.43)^2 + (0.006/1.637)^2 ) * V; uV
-@
+```
+
 So we report
-$\Sexpr{round(V,2)} \pm \Sexpr{round(uV,2)}$.
-\end{solution}
+$`r round(V,2)` \pm `r round(uV,2)`$.
+::: 
+<!-- end solution -->
 
-\newpage
-\section{Exercises}
-\shipoutProblems
 
-\ifsolutions
-\ifsolutionslocal
-\newpage
-\section*{Solutions}
-\shipoutSolutions
-\fi
-\fi

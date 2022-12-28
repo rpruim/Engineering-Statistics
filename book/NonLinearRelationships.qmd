@@ -221,7 +221,7 @@ but an estimated value (based on the linear equation given).
 \R\ can add a regression line to our scatter plot if we ask it to.
 \begin{center}
 <<osa-scatter>>=
-gf_point( OSA ~ palpebral, data = Eyes) %>%
+gf_point( OSA ~ palpebral, data = Eyes) |>
   gf_lm()
 @
 \end{center}
@@ -511,8 +511,8 @@ intervals.
 Notice how most of the dots are within the prediction bands, but not within the 
 confidence bands.
 <<fig.width = ".7\\textwidth">>=
-gf_point(OSA ~ palpebral, data = Eyes) %>%
-  gf_lm(interval = "confidence") %>%
+gf_point(OSA ~ palpebral, data = Eyes) |>
+  gf_lm(interval = "confidence") |>
   gf_lm(interval = "prediction") 
 @
 
@@ -526,7 +526,7 @@ size 1).
 	Use the output below to answer some questions about rainfall volume  and 
 	runoff volume (both in $m^3$) for a particular stretch of a Texas highway.
 <<echo = FALSE>>=
-TexasHighway <- ex12.16
+TexasHighway <- Devore7::ex12.16
 names(TexasHighway) <- c('rainfall','runoff')
 rain.model <- lm(runoff ~ rainfall, data = TexasHighway)
 summary(rain.model)
@@ -1696,10 +1696,10 @@ f(ACT = 30, interval = "prediction")
 @
 		\item
 <<>>=
-gf_point(GPA ~ ACT, data = grades) %>%
-  gf_lm(interval = "confidence") %>%
+gf_point(GPA ~ ACT, data = grades) |>
+  gf_lm(interval = "confidence") |>
   gf_lm(interval = "prediction")
-gf_point(resid(grades.model) ~ fitted(grades.model)) %>%
+gf_point(resid(grades.model) ~ fitted(grades.model)) |>
   gf_smooth()
 @
 			There are no major concerns with the regression model. The

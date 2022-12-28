@@ -70,7 +70,7 @@ gf_point(m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations", siz
 The recorded flow rates are in L/min.  We will convert them to L/sec and use seconds as
 our standard unit of time troughout the analyses.
 <<tidy = FALSE>>=
-HeatX <- HeatX %>%
+HeatX <- HeatX |>
   mutate(
     m.hot = m.hot / 60,
     m.cold = m.cold / 60
@@ -149,7 +149,7 @@ from the temperature change and the mass flow rate as follows:
 We can estimate the values of $\dot{Q}$ from our data by direct caclulation:
 <<tidy = FALSE>>=
 C_p <- 4.18
-HeatX2 <- HeatX %>%
+HeatX2 <- HeatX |>
   mutate(
     Q.cold = m.cold * C_p * (T.cold.out - T.cold.in),
     Q.hot  = m.hot  * C_p * (T.hot.out  - T.hot.in),
@@ -264,7 +264,7 @@ to be $1$ degree C and the uncertainty in flow rate to be $0.5$ liters per
 minute (i.e., \Sexpr{0.5/60} L/sec), then we can compute the uncertainties in 
 the $\dot{Q}$ values as follows
 <<tidy = FALSE>>=
-HeatX2<- HeatX2 %>%
+HeatX2<- HeatX2 |>
   mutate(
     u.Q.cold = C_p *sqrt( (T.cold.out - T.cold.in)^2 * (0.5/60)^2  + m.cold^2 * 2),  
     u.Q.hot =  C_p *sqrt( (T.hot.out  - T.hot.in)^2  * (0.5/60)^2  +  m.hot^2 * 2) 
@@ -280,7 +280,7 @@ where the estimates are not independent.  To do it's job,
 \begin{itemize}
 \item A named vector of estimates,
 <<>>=
-estimates <- HeatX[1, 2:7] %>% unlist()  # unlist() turns the data frame into a vector
+estimates <- HeatX[1, 2:7] |> unlist()  # unlist() turns the data frame into a vector
 estimates
 @
 \item 
@@ -319,7 +319,7 @@ Sometimes the uncertainties of a given variable are different at different value
 In that case, we can put the uncertainties into the data frame.  For the current 
 example, this is just extra work, but we include it here to show how it works.
 <<tidy = FALSE>>=
-HeatX3 <- HeatX %>%
+HeatX3 <- HeatX |>
   mutate(
     u.cold.in = 1, u.cold.out = 1, u.hot.in = 1, u.hot.out = 1, 
     u.m.cold = 0.5/60, u.m.hot = 0.5/60
@@ -340,7 +340,7 @@ But this number is also known experimentally and has an uncertainty associated w
 Do our results change if we include this uncertainty in our calculations?
 
 <<tidy = FALSE>>=
-deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
+deltaMethod( HeatX |> mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
   uncertainties = c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/60, C_p = 0.1))
 @
 
@@ -390,7 +390,7 @@ better than we have been assuming).  Then our uncertainties for $\dot{Q}$ would 
 dramatically.
 
 <<>>=
-deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
+deltaMethod( HeatX |> mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
   uncertainties = c(T.cold.in = 0.1, T.cold.out = 0.1, m.cold = 0.5/60, C_p = 0.1))
 @
 
@@ -398,7 +398,7 @@ But if we improve the uncertainty in the mass flow rate by a factor of 10, it ha
 modest impact on our uncertainty for $\dot{Q}$.
 
 <<>>=
-deltaMethod( HeatX %>% mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
+deltaMethod( HeatX |> mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
   uncertainties = c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/600, C_p = 0.1))
 @
 
@@ -426,7 +426,7 @@ information needed.
 exprforU <- paste("C_p * m.cold * (T.cold.out - T.cold.in) /",
                   "( pi * D *  L  * ((T.cold.out - T.hot.in) - (T.cold.in - T.hot.out)) /",
                   " log ( (T.cold.out - T.hot.in) / (T.cold.in - T.hot.out) ) )")
-HeatX4 <- HeatX %>%
+HeatX4 <- HeatX |>
   mutate(D = 0.0143, L = 1.626, C_p = 4.18)
 HeatX4
 deltaMethod(HeatX4, exprforU, 

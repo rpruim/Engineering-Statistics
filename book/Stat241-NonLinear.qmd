@@ -24,6 +24,7 @@ haveInternet <- tryCatch( {
 
 
 ## How big is your $R^2$?
+
 One part of regression model diagnostics is to check the fitted model's $R^2$ value, which gives an 
 indication of the proportion of the variance in the response that has been "explained" by the model.  
 A low value (closer to 0) means that data points are spread far around the best fit line; a high one 
@@ -282,7 +283,7 @@ the line and obtain our slope without it.
 	to the data, then it would be inappropriate to fit a linear regression (and conclusions drawn from that model would be incorrect and misleading).  
 	In the absence of theoretical reasons to expect a particular mathematical relationship between the variables being studied, we may select 
 	transformations based on the shape of the relationship as 
-	revealed in a scatterplot.  Section~@sec:ladderOfReexpression
+	revealed in a scatterplot.  @sec-ladder-of-reexpression
 	provides some guidance for selecting transformations in
 	this situation.
 
@@ -578,7 +579,7 @@ require moving farther up or down the ladder.
 <!-- isn't needed.  We could use directions (upper right), but I don't want to add  -->
 <!-- quadrant numbers to the figure.  Also in next example.  --- 2010-11-8}<!--  --> -->
 A curve bulging in the 
-same direction as the one in the first quadrant of Figure~@fig:TukeyBulge,
+same direction as the one in the first quadrant of @fig-tukey-bulge,
 for example, might be straightened by moving up the ladder of transformations
 for $x$ or $y$ (or both), while a curve like the one in the second quadrant, 
 might be straightened by moving up the ladder for $y$ or down the ladder for $x$.
@@ -641,7 +642,7 @@ the overall fit.  The resulting models may or may not have
 a natural, or obvious, interpretation.  These transformations also affect the 
 shape of the distributions of the explanatory and response variables
 and, more importantly, of the residuals from the linear model  
-(see @exr-Tukey-bulge-skew).
+(see @exr-tukey-bulge-skew).
 When several different transformations lead to reasonable linear fits, these other
 factors may lead us to prefer one over another.
 
@@ -693,10 +694,10 @@ gf_point(y ~ x)
 
 
 **A.** 
-This type of bulge appears in quadrant IV of Figure~@fig:TukeyBulge,
+This type of bulge appears in quadrant IV of @fig-tukey-bulge,
 so we can hope to improve the fit by moving 
 up the ladder for $x$ or down the ladder for $y$.
-As we see in Figure~@fig:TukeyBulgeMany, 
+As we see in @fig-tukey-bulge-many, 
 the fit generally improves as we move down and to the right -- but not too
 far, lest we over-correct.
 A $\log$-transformation of the response ($a = 1$, $b = 0$) seems 
@@ -707,7 +708,7 @@ quite linear, but the residuals appear to have a better distribution as well.
 
 
 ```{r}
-#| label: fig-tukey-bugle-many
+#| label: fig-tukey-bulge-many
 #| fig-cap: Using the ladder of re-expression to find a better fit.
 #| echo: false
 #| fig.width: 6 
@@ -757,7 +758,7 @@ there may be some inaccuracy in the measurement of the height.
 In this experiment, the apparatus was set up once for each height and then several observations were made.  So any error in this set-up affected all time measurements for
 that height in the same way.  This could explain why the residuals for 
 each height are clustered the way they are since it violates the assumption
-that the errors are *independent*.  (See Example~@example:balldropRM
+that the errors are *independent*.  (See @exm-balldrop-rm
 for a simple attempt to deal with this problem.)
 ::: 
 <!-- end example -->

@@ -59,8 +59,3 @@ book:
     - references.qmd
 
 bibliography: ['bibtex/R.bib', 'bibtex/DataSets.bib', 'bibtex/StatsBook.bib']
-
-todo:
-    - Stat241-MoreModels.qmd
-    - Stat241-Notes.qmd
-    - HeatXCanalysis.qmd

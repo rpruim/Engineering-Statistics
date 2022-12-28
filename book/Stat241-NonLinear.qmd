@@ -547,8 +547,6 @@ gf_line( 1/fitted(conc.model) ~ time, data = Concentration)
 
 
 ### The Ladder of Re-expression {#sec-ladder-of-rexpression}
-<!-- \label{sec:ladderOfReexpression}% -->
-<!-- \label{sec:tukey-bulge}% -->
 
 Sometimes we have data for which there is no theory (yet) to suggest the form
 of a model.  In such a case, we may let the data help suggest a model.
@@ -589,7 +587,7 @@ might be straightened by moving up the ladder for $y$ or down the ladder for $x$
 ::::{.column width="45%"}
 ```{tikz}
 #| echo: false
-#| label: fig-tukey-buldge
+#| label: fig-tukey-bulge
 #| fig-cap: Tukey and Mosteller's buldging rule
 \begin{tikzpicture}[scale = 1.6]
 \draw(175:1cm) arc (175:95:1cm);
@@ -1763,7 +1761,7 @@ See previous problem.
 
 @exr-drag-problems suggests that some
 of the data should be removed before analyzing the `Drag` data set.
-Redo @exr-drag after removing this data.
+Redo @exr-drag1 after removing this data.
 ::: 
 <!-- end problem -->
 

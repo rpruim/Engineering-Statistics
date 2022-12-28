@@ -383,8 +383,8 @@ gf_boxplot( weight ~ sex, data = Mosquitoes)
 
 Note the effect of the  `width = 0.1, height = 0` -- 
 this tells `gf_jitter()` to move each data point slightly left or right, but not at all up or down. 
-to reduces overplotting (data points being plotted exactly on top of one another) without losing any information,
-making it clearer how many data points were observed for each possible combination of x- and y-values. 
+This can be used to reduce overplotting (data points being plotted on top of one another) without losing 
+any information, making it clearer how many data points were observed for each possible combination of x- and y-values. 
 
 ## Summarizing Categorical Variables
 

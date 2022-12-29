@@ -12,30 +12,6 @@ library(tidyr)
 theme_set(theme_bw())
 ```
 
-::: {.hidden}
-$$
-\def\reals{\mathbb{R}}
-\def\card#1{| #1 |}
-\def\mean{\overline}
-\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
-\def\Prob{\operatorname{Prob}}
-\def\tand{\operatorname{and}}
-\def\tor{\operatorname{or}}
-\def\tnot{\operatorname{not}}
-\def\E{{\operatorname E}}
-\def\Var{\operatorname{Var}}
-\def\SD{\operatorname{SD}}
-\def\union{\cup}
-\def\intersect{\cap}
-\def\Unif{{\sf Unif}}
-\def\Rayliegh{{\sf Rayliegh}}
-\def\Exp{{\sf Exp}}
-\def\Norm{{\sf Norm}}
-\def\Tri{{\sf Tri}}
-\def\Gamm{{\sf Gamma}}
-\def\Weibull{{\sf Weibull}}
-\def\boolval#1{[\![ #1 ]\!]}
-$$
 
 We will often be interested in random variables that are formed by transformations
 or combinations other random variables.
@@ -160,11 +136,11 @@ The easiest of these is a linear transformation of a random variable.
 If $X$ is a random variable with known mean and variance, then 
 
 $$
-\begin{align*}
+\begin{aligned}
 	\E(a X + b) &= a \E(X) + b \; \mbox{, and}
 	\\
 		\Var(a X + b) &= a^2 \Var (X) \; .
-\end{align*}
+\end{aligned}
 $$
 
 ::: 
@@ -185,7 +161,7 @@ intuition.
 		variance.
 
 $$
-\begin{align*}
+\begin{aligned}
 		\E(X + b) &= \int_{-\infty}^{\infty} (x+b) f(x) \; dx  
 		      = \int_{-\infty}^{\infty} x f(x) \; dx  
 		      	+ \int_{-\infty}^{\infty} b f(x) \; dx  
@@ -193,7 +169,7 @@ $$
 			  \\
 		\Var(X+b) &= \int_{-\infty}^{\infty} (x + b - (\mu + b))^2 f(x) \; dx  
 					= \int_{-\infty}^{\infty} (x - \mu)^2 f(x) \; dx  = \Var(X) 
-\end{align*}
+\end{aligned}
 $$
 
 
@@ -206,13 +182,13 @@ $$
 		The variance scales with $a^2$.
 
 $$
-\begin{align*}
+\begin{aligned}
 		\E(aX) &= \int_{-\infty}^{\infty} ax f(x) \; dx  
 		      = a \int_{-\infty}^{\infty} x f(x) \; dx = a \E(X)
 			  \\
 		\Var(aX) &= \int_{-\infty}^{\infty} (ax - a\mu)^2 f(x) \; dx  
 		      = a^2 \int_{-\infty}^{\infty} (x-\mu)^2 f(x) \; dx = a^2 \Var(X)
-\end{align*}
+\end{aligned}
 $$
 
 :::: 
@@ -242,11 +218,11 @@ The most important combination of two random variables is a sum.
 Let $X$ and $Y$ be two random variables with known means and variances, then
 	
 $$
-\begin{align*}
+\begin{aligned}
 	\E(X + Y) &= a \E(X) + \E(Y) \; \mbox{, and}
 	\\
 	\Var(X + Y) &= \Var (X)  + \Var(Y) \; \mbox{, provided $X$ and $Y$ are independent.}
-\end{align*}
+\end{aligned}
 $$
 
 That is,
@@ -334,7 +310,7 @@ arbitrary linear combinations of random variables.
 Let $Y = a_1 X_1 + a_2 X_2 + \cdots + a_k X_k$, then 
 
 $$
-\begin{align*}
+\begin{aligned}
 	\E(Y) & = 
 	a_1 \E(X_1) + 
 	a_2 \E(X_1) + 
@@ -348,7 +324,7 @@ $$
 	a_k^2 \Var(X_k) \; ,
 	\\
 	& \qquad \mbox{provided $X_1, X_2, \dots, X_k$ are independent.}  
-\end{align*}
+\end{aligned}
 $$
 
 ::: 
@@ -469,11 +445,11 @@ Let $X_i \simiid \Unif(0,1)$.  Consider $S = \sum_{i = 1}^{12} X_i$.
 Since $\E(X_i) = \frac12$ and $\Var(X_i) = \frac{1^2}{12} = \frac1{12}$
 
 $$
-\begin{align*}
+\begin{aligned}
 	\E(S) &= \frac12  + \frac12  + \cdots \frac12  = 12 \cdot \frac12  = 6
 	\\
 	\Var(S) & = \frac1{12} + \frac1{12} + \cdots \frac 1{12} = 12 \cdot \frac1{12} = 1
-\end{align*}
+\end{aligned}
 $$
 
 Furthermore, the normal approximation for $S$ is quite good:
@@ -703,11 +679,11 @@ $$
 This means that
 
 $$
-\begin{align*}
+\begin{aligned}
 	\Prob(| \mean X - \mu | \le 0.006) &\approx 0.68
 	\\[4mm]
 	\Prob(| \mean X - \mu | \le 0.012) &\approx 0.95
-\end{align*}
+\end{aligned}
 $$
 
 So we can be quite confident that our sample mean will be within 0.012 g of the $\mu$,
@@ -1223,7 +1199,7 @@ c. How large would your sample need to be to make this probability
 :::: {.enumerate}
 
 a. $\Norm(0, \frac{\sigma}{\sqrt{n}}) = 
-			 \Norm(0, \frac{2.8}{\sqrt{n}}) $
+			 \Norm(0, \frac{2.8}{\sqrt{n}})$
 b.
 
 ```{r }
@@ -1662,29 +1638,29 @@ a. $\Prob(\mbox{none defective}) = \Prob(\mbox{all are good}) =
 b. Even though only $5$% are defective, nearly $14$% fail the quality control:
 
 $$
-\begin{align*}
+\begin{aligned}
 \Prob(\mbox{fail test}) 
-&= \Prob(\mbox{good \tand fail}) + \Prob(\mbox{bad and fail}) 
+&= \Prob(\mbox{good and fail}) + \Prob(\mbox{bad and fail}) 
 \\
 & = \Prob(\mbox{good}) \Prob(\mbox{fail}\mid \mbox{good}) 
 	+ \Prob(\mbox{bad}) \Prob(\mbox{fail}\mid \mbox{bad}) 
 	\\
 &= 0.95 (0.10) + 0.05 (.80) = 0.095 + 0.04 = 0.135 = 13.5\%
-\end{align*}
+\end{aligned}
 $$
 c. If a part passes QC, the probability that it is defective
 drops from 5% to just over 1%:  
 
 $$
-\begin{align*}
+\begin{aligned}
 \Prob(\mbox{bad} \mid \mbox{pass}) 
-&= \frac{ \Prob(\mbox{bad \tand pass})}{\Prob(\mbox{pass})}
+&= \frac{ \Prob(\mbox{bad and pass})}{\Prob(\mbox{pass})}
 \\
 & = 
 \frac{ 0.05 (0.20) }{ 0.865 }
 =
 0.01156
-\end{align*}
+\end{aligned}
 $$
 
 The cost to get this improvement 
@@ -1695,7 +1671,7 @@ d.
 
 $$
 	\Prob(\mbox{bad} \mid \mbox{fail}) = 
-	\Prob(\mbox{bad} \tand  \mbox{fail}) = 
+	\Prob(\mbox{bad} and  \mbox{fail}) = 
 	\Prob(\mbox{fail})  
 	= 0.04 / (0.04 + 0.095)
 	= `r 0.04 / (0.04 + 0.095)`
@@ -1898,7 +1874,7 @@ xxF(2) - xxF(-2) - m^2        # variance
 ::: {.problem #exr-working-with-gamma}
 **Gamma distributions**
 
-Let $X \sim \Gamm(`shape` = 3, `rate` = 2) $.
+Let $X \sim \Gamm(`shape` = 3, `rate` = 2)$.
 
 :::: {.enumerate}
 

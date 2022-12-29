@@ -14,31 +14,6 @@ theme_set(theme_bw())
 ```
 
 
-::: {.hidden}
-$$
-\def\reals{\mathbb{R}}
-\def\card#1{| #1 |}
-\def\mean{\overline}
-\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
-\def\Prob{\operatorname{Prob}}
-\def\tand{\operatorname{and}}
-\def\tor{\operatorname{or}}
-\def\tnot{\operatorname{not}}
-\def\E{{\operatorname E}}
-\def\Var{\operatorname{Var}}
-\def\SD{\operatorname{SD}}
-\def\union{\cup}
-\def\intersect{\cap}
-\def\Unif{{\sf Unif}}
-\def\Rayliegh{{\sf Rayliegh}}
-\def\Exp{{\sf Exp}}
-\def\Norm{{\sf Norm}}
-\def\Tri{{\sf Tri}}
-\def\Gamm{{\sf Gamma}}
-\def\Weibull{{\sf Weibull}}
-\def\boolval#1{[\![ #1 ]\!]}
-$$
-:::
 
 ## Key Definitions and Ideas
 
@@ -437,7 +412,7 @@ crossings is equally likely.
 
 \section{Conditional Probability}
 
-::: {.example #exm-condKids}
+::: {.example #exm-cond-kids}
 
 **Q.** Suppose a family has two children and one of them is a boy. What
 is the probability that the other is a girl?
@@ -446,7 +421,8 @@ is the probability that the other is a girl?
 <!--  First we introduce some notation.  Let $X$ be a random variable -->
 <!--  that counts the number of girls and let $Y$ be a random variable -->
 <!--  that counts the number of boys (since they have Y chromosomes). -->
-<!--  We'll also  --> We'll make the simplifying assumption that boys
+<!--  We'll also  --> 
+We'll make the simplifying assumption that boys
 and girls are equally likely (which is not exactly true). Under that
 assumption, there are four equally likely families: BB, BG, GB, and GG.
 But only three of these have at least one boy, and we already know our
@@ -456,21 +432,21 @@ probability is $2/3$.
 
 We illustrate the restricted sample space (3 outcomes in a box) in the 
 figure below. Two of these three outcomes have at least one girl.
-(See @fig-condKids.)
+(See @eq-cond-kids.)
 
 $$
 \mbox{GG} \ \ \  \fbox{BG \ \ \ GB \ \ \ BB}
-$$ {#fig-condKids}
+$$ {#eq-cond-kids}
 
 We can also think of this in a different way. In our original sample
 space of four equally likely families, 
 
 $$
-\begin{align*}
+\begin{aligned}
 \evProb{at least one girl} & =  3/4 \; , \\ % \mbox{ , and } \\
 \evProb{at least one girl \emph{and} at least one boy} & =  2/4 \; , \tand\\
 \frac{2/4}{3/4} & =  2/3 \; ;
-\end{align*}
+\end{aligned}
 $$
 
 so $2/3$ of the time when there is at least one boy, there is also a
@@ -588,7 +564,7 @@ and read the conditional probability from the table.
     This is the probability that a randomly selected kid who prefers red
     is a girl.
 
-6.  \$\displaystyle \Prob(B \mid G) = \frac{0}{16/34} = 0 \$ because
+6.  $\displaystyle \Prob(B \mid G) = \frac{0}{16/34} = 0$ because
     none of the girls are boys.
 
     This is the probability that a randomly selected girl is a boy.
@@ -602,13 +578,13 @@ the probability of an intersection.
 
 ::: {.boxedText #lem-probOfInt}
 
-Let $A$ and $B$ be events with non-zero probability. Then \$\$
+Let $A$ and $B$ be events with non-zero probability. Then 
 
 $$
-\begin{align*}
+\begin{aligned}
 \Prob(A \intersect B) & = \Prob(A) \cdot\Prob(B \mid A)
 \\ & = \Prob(B) \cdot\Prob(A \mid B) ;.
-\end{align*}
+\end{aligned}
 $$
 
 This follows directly from the definition of conditional probability by
@@ -639,22 +615,22 @@ the probability of getting a flush (all cards the same suit)?
 the $i$th card is the same suit as all previous cards. Then
 
 $$
-  \begin{eqnarray*}
-\evProb{flush} & = & \Prob(A_1 
+\begin{aligned}
+\evProb{flush} & =  \Prob(A_1 
   \intersect  A_2
   \intersect  A_3
   \intersect  A_4
   \intersect  A_5) \\
-  & = &  \Prob(A_1) 
+  & =  \Prob(A_1) 
     \cdot \Prob(A_2 \mid A_1)
     \cdot \Prob(A_3 \mid A_1 \intersect A_2)
-    \\ & & \quad
+    \\ & \quad
     \cdot \Prob(A_4 \mid A_1 \intersect A_2 \intersect A_3)
-    \\ & & \quad
+    \\ & \quad
     \cdot \Prob(A_5 \mid A_1 \intersect A_2 \intersect A_3 \intersect A_4) \\
-    & = & 1 \cdot \frac{12}{51} \cdot \frac{11}{50} \cdot \frac{10}{49} 
+    & = 1 \cdot \frac{12}{51} \cdot \frac{11}{50} \cdot \frac{10}{49} 
     \cdot \frac{9}{48} \; 
-\end{eqnarray*}
+\end{aligned}
 $$
 :::
 
@@ -676,7 +652,7 @@ table.
 **A.** 
 
 $$
-\begin{align*}
+\begin{aligned}
 \Prob(X = 2) &= 
 \Prob(\mbox{first is blue} \tand \mbox{second is blue}) 
 \\
@@ -686,13 +662,13 @@ $$
 &= \frac26 \cdot \frac15 
 \\
 &= \frac{2}{30} \;.
-\end{align*}
+\end{aligned}
 $$
 
 Similarly 
 
 $$
-\begin{align*}
+\begin{aligned}
 \Prob(X = 0) &= 
 \Prob(\mbox{first is red} \tand \mbox{second is red}) 
 \\
@@ -701,8 +677,8 @@ $$
 \\
 &= \frac46 \cdot \frac35 
 \\
-&= \frac{12}{30}$ 
-\end{align*}
+&= \frac{12}{30} 
+\end{aligned}
 $$
 
 Finally, $\Prob(X = 1) = 1 - \Prob(X = 0) - \Prob(X = 2) = 1 - \frac{14}{30} = \frac{16}{30}$.
@@ -781,7 +757,7 @@ signif(0.001 * 0.99 / (0.001 * 0.99 + 0.999 * 0.02), 3)
 ```
 
 $$
-\begin{align*}
+\begin{aligned}
 \Prob(D \mid +) & = \frac{\Prob(D \intersect +)}{\Prob(+)}
 \\[5mm]
 &= \frac{\Prob(D) \cdot \Prob(+ \mid D)}{\Prob(D \intersect +)  + 
@@ -789,7 +765,7 @@ $$
 \\[5mm]
 & = \frac{0.001 \cdot 0.99}{0.001 \cdot 0.99 + 0.999 \cdot 0.02}
                       =  `r signif(0.001 * 0.99 / (0.001 * 0.99 + 0.999 * 0.02), 3)`
-\end{align*}
+\end{aligned}
 $$
 
 A tree diagram is a useful way to visualize these calculations.
@@ -905,14 +881,14 @@ $$
 If we assume the lifetimes of the parts are independent, then
 
 $$
-\begin{align*}
+\begin{aligned}
 \Prob(G_1 \tand G_2 \tand\cdots\tand G_{10})
 & =
 \underbrace{.99 \cdot.99 \cdot.99 \cdots.99}_{\mbox{10 of these}}
 \\
 & = .99^{10} \\
 & = `r .99^(10)`\;.
-\end{align*}
+\end{aligned}
 $$
 
 The independence assumption may or may not be valid. That depends on the
@@ -1064,11 +1040,11 @@ Let $X$ be the sum of the results of rolling two fair six-sided dice.
 <!-- end problem -->
 
 ::: {.solution}
-$\Prob(\mbox{$X\$ is even and $X < 5$}) = \Prob(X = 2 \torX = 4) =
-1/36 + 3/36 = 4/36 = `r 4/36`\$.
+The probability that $X$ is even and less than five is 
+$\Prob(X = 2 \tor X = 4) = 1/36 + 3/36 = 4/36 = `r 4/36`$.
 
-$\Prob(\mbox{$X\$ is even or $X < 5$}) = \Prob(\mbox{$X$ is even}) +
-\Prob(X = 3) = 18/36 + 2/36 = 20/36 = `r 20/36`\$.
+The probability that $X$ is even or less than five is 
+$\Prob(\mbox{X is even}) + \Prob(X = 3) = 18/36 + 2/36 = 20/36 = `r 20/36`$.
 :::
 <!-- end solution -->
 
@@ -1153,8 +1129,8 @@ device only functions properly if both parts are functioning properly.
 
 ::: {.solution}
 Assuming failure of each part is independent of failure of the other,
-the probability that both function properly is \$0.98 \cdot 0.97 =
-`r 0.98 * 0.97` \$.
+the probability that both function properly is 
+$0.98 \cdot 0.97 = `r 0.98 * 0.97`$.
 
 Alternatively, if we assume that failures are mutually exclusive, then
 the probability of failure would be $0.02 + 0.03 = 0.05$ and the
@@ -1227,23 +1203,23 @@ compared to 24.8 million (23.1%) men."
 Part b is the most interesting (once you can do that, you can do part c
 the same way). Let $W$ be the event that someone is a woman, $S$ that
 they are a smoker, and $C$ that they get cancer. Let
-$x = \Prob( C | W \intersectS^c)$. Then
-$\Prob( C | W \intersectS ) = 13x$.
+$x = \Prob( C | W \intersect S^c)$. Then
+$\Prob( C | W \intersect S ) = 13x$.
 
 $$
-\begin{align*}
+\begin{aligned}
     \Prob( S | W \intersect C ) 
     & = \frac{ \Prob(S \intersect W \intersect C) }{\Prob(W \intersect C)}
     \\
     & = \frac{ \Prob(S \intersect W \intersect C) }
     {\Prob(S \intersect W \intersect C) + \Prob( S^c \intersect W \intersect C)}
-\end{align*}
+\end{aligned}
 $$
 
 So we just need to compute the two probabilities in the denominator.
 
 $$
-\begin{align*}
+\begin{aligned}
     \Prob(S \intersect W \intersect C)
     &= \Prob(W) \cdot \Prob(S \mid W) \cdot \Prob(C \mid W \intersect S) 
     \\
@@ -1253,7 +1229,7 @@ $$
     &= \Prob(W) \cdot \Prob(S^c \mid W) \cdot \Prob(C \mid W \intersect S^c) 
     \\
     &= \Prob(W) \cdot 0.817 \cdot x
-\end{align*}
+\end{aligned}
 $$
 
 After factoring out $x \cdot \Prob(W)$, the arithmetic is now easy:
@@ -1434,12 +1410,20 @@ What is the probability that the yellow M&M came from the 1994 bag?
 
 ::: {.solution}
 Let's use the following notation for events related to this problem:
-<!-- begin itemize --> :::: {.itemize} 1. \$G_4 = \$ green from 1994 bag
-2. \$G_6 = \$ green from 1996 bag 3. \$Y_4 = \$ yellow from 1994 bag 4.
-\$Y_6 = \$ yellow from 1996 bag <!-- end itemize -->
+<!-- begin itemize --> 
+:::: {.itemize} 
 
-Then our question becomes $$
-\begin{align*}
+1. $G_4 =$ green from 1994 bag
+2. $G_6 =$ green from 1996 bag 
+3. $Y_4 =$ yellow from 1994 bag 
+4. $Y_6 =$ yellow from 1996 bag 
+
+:::: 
+<!-- end itemize -->
+
+Then our question becomes 
+$$
+\begin{aligned}
 \Prob( Y_4 \tand G_6 \mid 
        (Y_4 \tand G_6) \tor (Y_6 \tand G_4) )
        & =
@@ -1448,7 +1432,7 @@ Then our question becomes $$
 \\
 & = \frac{\Prob( Y_4 \tand G_6 ) }
      {\Prob(Y_4 \tand G_6) + \Prob(Y_6 \tand G_4)}
-\end{align*}
+\end{aligned}
 $$
 
 The individual probabilities can be worked out as 
@@ -1474,4 +1458,4 @@ A tree diagram could be used to depict these probabilities as well.
 :::
 <!-- end solution -->
 
-![](images/cigarettes-cartoon){fig-align="center"}
+![](images/cigarettes-cartoon.png){fig-align="center"}

@@ -71,7 +71,7 @@ Temperatures ($T_{1}$--$T_{4}$) are measured by thermocouples.\footnote{See
 \url{http://www.omega.com/techref/themointro.html} for an introduction.}
 
 
-%\section{Observations}
+<!-- %\section{Observations} -->
 
 Each observation consists of four~(4) temperature measurements 
 and two~(2) mass flow rate measurements. 
@@ -194,8 +194,8 @@ $Q$ using the delta method.
 \item
 Let $f(\dot{m}, \Delta T) = C_p \dot{m} \Delta T$
 \item
-$ \displaystyle \Partial{f}{\dot m} = C_p \Delta T$ and 
-$ \displaystyle \Partial{f}{\Delta T} = C_p \dot{m}$, so
+$\displaystyle \Partial{f}{\dot m} = C_p \Delta T$ and 
+$\displaystyle \Partial{f}{\Delta T} = C_p \dot{m}$, so
 \item
 $ \displaystyle
 u_{\dot Q} \approx   C_p \sqrt{ (\Delta T)^2 u^2_{\dot m}  + \dot{m}^2 2 u_T^2 }

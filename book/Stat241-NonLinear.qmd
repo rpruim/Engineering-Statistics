@@ -39,7 +39,9 @@ explanatory variables -- that is, fitting a model with more than one explanatory
 It could have two predictors, three, or as many as you can (sensibly) come up with. 
 This kind of model is called multiple regression. Mathematically, it means fitting a model of the form:
 
-$$ y ~ \beta_0 + \beta_1*x_1 + \beta_2*x_2 + \beta_3*x_3 ...$$
+$$
+y ~ \beta_0 + \beta_1*x_1 + \beta_2*x_2 + \beta_3*x_3 ...
+$$
 
 Multiple regression often makes sense when you are studying a complex process where there is most likely "more than one thing going on."  For example, you might consider modelling population growth rates worldwide using a data set including a set of social, economic, health, and political indicators compiled using data from the World Health Organization and partner organizations. The dataset description is available online: <http://www.exploredata.net/Downloads/WHO-Data-Set>.  One idea might be to look for a linear relationship between per-capita income and population growth rate:
 
@@ -140,9 +142,13 @@ acf(resid(chick.mod))
 
 This is a big problem, because it tends to result in standard error estimates that are artificially small. In other words: we think we have estimated our slope and intercept parameters *much* more precisely than we really have, and would report falsely narrow confidence intervals.
 To fix the problem, we can consider replacing our simple linear regression:
-$$ y ~ \beta_0 + \beta_1x + \epsilon$$
+$$
+y ~ \beta_0 + \beta_1x + \epsilon
+$$
 (where $\epsilon \sim N(0, \sigma)$) with a model that expects that subsequent residuals to depend on previous ones, so that the residual for the data point collected at time $t$ is:
-$$ e_t = \rho e_{t-1} + \epsilon$$
+$$
+e_t = \rho e_{t-1} + \epsilon
+$$
 (where, still, $\epsilon \sim N(0, \sigma)$; and $\rho$ is a new parameter indicating how strong the dependence over time is.)  This is called an AR(1) process, or an auto-regressive process of order 1.  It can be fit easily in R using the function `gls()` instead of \text{lm()}. `gls()` does "generalized least-squares" fitting, and is found in the package `nlme`.  The function call syntax illustrated in this example will work any time the explanatory variable is the time (or space) one that is causing the non-independence.
 
 ```{r ar1_fit, tidy=FALSE}
@@ -283,7 +289,7 @@ the line and obtain our slope without it.
 	to the data, then it would be inappropriate to fit a linear regression (and conclusions drawn from that model would be incorrect and misleading).  
 	In the absence of theoretical reasons to expect a particular mathematical relationship between the variables being studied, we may select 
 	transformations based on the shape of the relationship as 
-	revealed in a scatterplot.  @sec-ladder-of-reexpression
+	revealed in a scatterplot.  @sec-ladder-of-re-expression
 	provides some guidance for selecting transformations in
 	this situation.
 
@@ -409,7 +415,7 @@ In the old days, before computers could readily transform the data, special
 graph paper was produced with semi-log or log-log scales to facilitate this
 sort of plot.  
 <!--  R can also create plots with transformed scales.   -->
-% Here are some
+<!-- % Here are some -->
 <!--  examples using artifical data satisfying a power law (with exponent 1.5). -->
 R can easily create plots with transformed scales.  
 Use `gf_refine()` with input `scales_*_log10()` to your call 
@@ -445,7 +451,7 @@ where $C$ is concentration and $t$ is time.
 
 This is equivalent to 
 $$
-\begin{align*}
+\begin{aligned}
  - \frac{dC}{dt}  &=  k \cdot C^\alpha
 \\
  - \int C^{-\alpha} \; dC  &=  \int k \;dt 
@@ -455,7 +461,7 @@ $$
  \frac{1}{\beta} C^{-\beta} & = k t + d
  \\
 C^{-\beta} & = \beta k t + \beta d
-\end{align*}
+\end{aligned}
 $$
 
 If we know $\beta = \alpha - 1$ (i.e., if we know $\alpha$), 
@@ -470,11 +476,11 @@ from which we can easily recover $d$ and $k$.
 Alternatively, if we know $d = 0$ (i.e., if we know that $C = 0$ when $t = 0$), 
 then we can use
 $$
-\begin{align*}
+\begin{aligned}
 	\log( C^{-\beta} )  = -\beta \log(C) &= \log(\beta k t ) = \log(\beta k) + \log t
  \\
  \log(C) &= - \frac{\log(\beta k)}{\beta} - \frac{1}{\beta} \log t
-\end{align*}
+\end{aligned}
 $$
 
 Now if we fit a model of the form 
@@ -546,7 +552,7 @@ gf_line( 1/fitted(conc.model) ~ time, data = Concentration)
 
 
 
-### The Ladder of Re-expression {#sec-ladder-of-rexpression}
+### The Ladder of Re-expression {#sec-ladder-of-re-expression}
 
 Sometimes we have data for which there is no theory (yet) to suggest the form
 of a model.  In such a case, we may let the data help suggest a model.
@@ -567,7 +573,7 @@ The identity transformation has power~$1$.
 The logarithmic transformation is a special case and is included in the 
 list associated with a power of $0$.  
 The direction of the required transformation can be obtained
-from @fig-tukey-buge and @tbl-ladder, which shows four bulge types,
+from @fig-tukey-bulge and @tbl-ladder, which shows four bulge types,
 represented by the curves in each of the four quadrants.  
 A bulge can potentially be straightened by 
 applying a transformation to one or both variables, moving up 
@@ -975,9 +981,9 @@ Let's illustrate with an example.
 
 Returning to the ball dropping experiment, let's fit 
 $$
-\begin{align*}
+\begin{aligned}
 \texttt{time} &= \alpha_0 + \alpha_1 \sqrt{\texttt{height}}
-\end{align*}
+\end{aligned}
 $$ {#eq-balldrop}
 
 using nonlinear least squares.  
@@ -1207,13 +1213,13 @@ of the differences between them:
 		then the model is
 		
     $$
-    \begin{align*}
+    \begin{aligned}
 		\log( y ) &= \beta_0 + \beta_1 \log(x) + \varepsilon
 		\\
 		y &= e^{\beta_0}  x^{\beta_1} e^\varepsilon
 		\\
 		y &= \alpha  x^{\beta_1} e^\varepsilon
-    \end{align*}
+    \end{aligned}
     $$
 
     So the errors are multiplicative rather than additive and

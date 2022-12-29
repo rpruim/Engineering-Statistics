@@ -12,31 +12,6 @@ theme_set(theme_bw())
 onLine <- TRUE
 ```
 
-::: {.hidden}
-$$
-\def\reals{\mathbb{R}}
-\def\card#1{| #1 |}
-\def\mean{\overline}
-\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
-\def\Prob{\operatorname{Prob}}
-\def\tand{\operatorname{and}}
-\def\tor{\operatorname{or}}
-\def\tnot{\operatorname{not}}
-\def\E{{\operatorname E}}
-\def\Var{\operatorname{Var}}
-\def\SD{\operatorname{SD}}
-\def\union{\cup}
-\def\intersect{\cap}
-\def\Unif{{\sf Unif}}
-\def\Rayliegh{{\sf Rayliegh}}
-\def\Exp{{\sf Exp}}
-\def\Norm{{\sf Norm}}
-\def\Tri{{\sf Tri}}
-\def\Gamm{{\sf Gamma}}
-\def\Weibull{{\sf Weibull}}
-\def\boolval#1{[\![ #1 ]\!]}
-$$
-:::
 
 ::: {.description}
 * **random variable** a random process that results in a number
@@ -357,15 +332,15 @@ Since the total area is $8/3$, if $\frac{k(x)}{8/3}$ is the pdf.
 ### Cumulative distribution functions
 
 
-% The \textbf{cumulative distribution function} (cdf) returns the probability of being
-% less than or equal to some value.  We generally use a capital letter ($F$, $G$, etc.)
-% to denote a cdf.
-% $$
-% F_X(x) = \Prob( X \le x)  \; .
-% $$
+<!-- % The \textbf{cumulative distribution function} (cdf) returns the probability of being -->
+<!-- % less than or equal to some value.  We generally use a capital letter ($F$, $G$, etc.) -->
+<!-- % to denote a cdf. -->
+<!-- % $$ -->
+<!-- % F_X(x) = \Prob( X \le x)  \; . -->
+<!-- % $$ -->
 
-% If we help R choose the anti-derivative, we get a useful function called 
-% the \term{cumulative distribution function}, abbreviated cdf.
+<!-- % If we help R choose the anti-derivative, we get a useful function called  -->
+<!-- % the \term{cumulative distribution function}, abbreviated cdf. -->
 
 
 ::: {.boxedText}
@@ -436,14 +411,14 @@ C's.
 Consider now a correct way to do this calculation:
 
 $$
-\begin{align*}
+\begin{aligned}
 	\mbox{GPA} &= \frac{4 + 4 + 4 + 4 + 4 + 3 + 3 + 3 + 3 + 2}{10}
 	\\[2mm]
 	& = \frac{5\cdot 4 + 4\cdot 3 + 1 \cdot 2}{10} \\[1mm]
 	& = \frac{5}{10} \cdot 4 + \frac{4}{10}\cdot 3 + \frac{1}{10} \cdot 2 \\
 	& = 4 \cdot \frac{5}{10} + 3 \cdot \frac{4}{10} + 2 \cdot \frac{1}{10} \\
 	& =  3.4 \;.
-\end{align*}
+\end{aligned}
 $$
 
 :::
@@ -502,7 +477,7 @@ Then:
 
 * $\evProb{the ticket wins a prize} = \Prob(X > 0) = 5/1000$.
 * $\evProb{the ticket wins the grand prize} = \Prob(X = 2000) = 1/1000$.
-* $\evProb{the ticket wins a prize worth more than \$$75$}  = \Prob(X > 75) = 3/1000$.
+* $\evProb{the ticket wins a prize worth more than \$75}  = \Prob(X > 75) = 3/1000$.
 ::: 
 <!-- end itemize -->
 
@@ -551,7 +526,7 @@ If this integral fails to converge, we will also say that the distribution has n
 **A.** We simply compute the integral from the definition.
 
 $$
-\begin{align*}
+\begin{aligned}
 \E(X) & = \int_{-1}^{1} x f(x) \; dx 
 \\
 	& = \int_{-1}^{0} x (x-1) \; dx + \int_{0}^1 x ( 1-x ) \; dx 
@@ -562,7 +537,7 @@ $$
 	+ \left. \frac{x^2}{2} - \frac{x^3}{3} \right|_{0}^1
 	\\
 	& = \frac13 - \frac12 + \frac12 - \frac13 = 0
-\end{align*}
+\end{aligned}
 $$
 
 This isn't surprising, by symmetry we would expect this result.
@@ -588,7 +563,7 @@ Arguing similarly, we can compute the variance of a discrete or continuous rando
 variable using 
 ::: {.itemize}
 
-* discrete: $\Var(X) = \sigma^2_X = \sum x (x-\mu_X)^2 $
+* discrete: $\Var(X) = \sigma^2_X = \sum x (x-\mu_X)^2$
 
 * continuous: $\Var(X) = \sigma^2_X = \int_{-\infty}^{\infty} (x-\mu_X)^2 f(x) \; dx$
 ::: 
@@ -628,9 +603,9 @@ G(1) - G(-1)
 Some simple algebraic manipulations of the sum or integral above shows that
 
 $$
-\begin{align*}
+\begin{aligned}
 \Var(X) &= \E(X^2) - \E(X)^2
-\end{align*}
+\end{aligned}
 $$ {#eq-var-shortcut}
 
 
@@ -721,7 +696,7 @@ $$
 We can do this by working out the integral involved:
 
 $$
-\begin{align*}
+\begin{aligned}
 0.25 &= \int_{-1}^{x} 1 - |t| \; dt 
 	\\
 	 &= \int_{-1}^{x} 1 + t \; dt 
@@ -735,7 +710,7 @@ $$
 	 0 & =  x^2/2 + x + 1/4
 	 \\
 	 0 & =  2x^2 + 4x + 1
-\end{align*}
+\end{aligned}
 $$
 
 So by the quadratic formula, $x = \frac{1}{2} \sqrt{2} - 1 = `r 1/2*sqrt(2) - 1`$.
@@ -1404,8 +1379,8 @@ compute the mean and variance of each of the following distributions.
 
 a.  $\Beta(2,3)$
 a.  $\Beta(20,30)$
-a.  $\Gamm(`shape` = 2,`scale` = 3)$
-a.  $\Weibull(`shape` = 2,`scale` = 3)$
+a.  $\Gamm(`shape` = 2, `scale` = 3)$
+a.  $\Weibull(`shape` = 2, `scale` = 3)$
 :::: 
 <!-- end enumerate -->
 
@@ -1457,9 +1432,9 @@ of the distribution that lies between 0.5 and 1.
 
 a.  $\Exp(`rate` = 2)$
 b.  $\Beta(`shape1` = 3, `shape2` = 2)$
-c.  $\Norm(`mean` = 1, `sd = 2`)$
-d.  $\Weibull(`shape` = 2, `scale = 1/2`)$
-e.  $\Gamm(`shape` = 2, `scale = 1/2`)$
+c.  $\Norm(`mean` = 1, `sd` = 2)$
+d.  $\Weibull(`shape` = 2, `scale` = 1/2)$
+e.  $\Gamm(`shape` = 2, `scale` = 1/2)$
 :::: 
 <!-- end enumerate -->
 
@@ -1863,39 +1838,40 @@ To employ this method, we need to know the means and variances of our favorite f
 
 ::: {.example #exm-windspeed-2}
 
-	Let's return to the wind speeds in @exm-windspeed.
-	The formulas for the mean and variance of a Weibull distribution involve
-	the gamma function $\Gamma()$, which might be unfamiliar to you.  So let's 
-	simplify things.
+Let's return to the wind speeds in @exm-windspeed.
+The formulas for the mean and variance of a Weibull distribution involve
+the gamma function $\Gamma()$, which might be unfamiliar to you.  So let's 
+simplify things.
 
-	Theoretical properties and observations of wind speeds at other locations 
-	suggest that using a shape parameter of $\alpha = 2$ is often a good choice (but 
-	shape does differ from location to location depending on how consistent or 
-	variable the wind speeds are).
-	The Weibull distributions with $\alpha = 2$ have a special name, they are 
-	called the **Rayleigh** distributions.  
-	So $\Rayleigh(\beta) = \Weibull(\alpha = 2, \beta)$.
-	In this case, from @tbl-cont-dist, we see that to calculate 
-	the mean we need the value of $\Gamma(1 + \frac{1}{2}) = \Gamma(1.5) = \sqrt{\pi}/2$.
+Theoretical properties and observations of wind speeds at other locations 
+suggest that using a shape parameter of $\alpha = 2$ is often a good choice (but 
+shape does differ from location to location depending on how consistent or 
+variable the wind speeds are).
+The Weibull distributions with $\alpha = 2$ have a special name, they are 
+called the **Rayleigh** distributions.  
+So $\Rayleigh(\beta) = \Weibull(\alpha = 2, \beta)$.
+In this case, from @tbl-cont-dist, we see that to calculate 
+the mean we need the value of $\Gamma(1 + \frac{1}{2}) = \Gamma(1.5) = \sqrt{\pi}/2$.
 ```{r }
 gamma(1.5)
 sqrt(pi)/2
 ```
 
-	From @tbl-cont-dist we see that the mean of a 
-	$\Rayleigh(\beta)$-distribution is 
-	$$
-	\E(X) = \beta \frac{\sqrt{\pi}}{2}
-	$$
+From @tbl-cont-dist we see that the mean of a 
+$\Rayleigh(\beta)$-distribution is 
+$$
+\E(X) = \beta \frac{\sqrt{\pi}}{2}
+$$
 
-	Now we can choose our estimate $\hat \beta$ for $\beta$ so that 
-	$$
+Now we can choose our estimate $\hat \beta$ for $\beta$ so that 
+$$
 	\hat \beta \frac{\sqrt{\pi}}{2} = \overline x  ;.
-	$$
-	That is,
-	$$
+$$
+That is,
+$$
 	\hat\beta = \frac{2 \overline x }{\sqrt{\pi}}
-	$$
+$$
+
 ```{r }
 x.bar <- mean(~speed, data = Wind) 
 x.bar
@@ -1908,7 +1884,7 @@ $\Rayleigh(`r round(beta.hat,2)`) = \Weibull(2, `r round(beta.hat,2)`)$
 
 Although the Rayleigh distributions are not as flexible as the Weibull or Gamma 
 distributions, and although maximum likelihood is generally preferred over the
-method of moments, the method of moments fit of a Rayliegh distribution does have
+method of moments, the method of moments fit of a Rayleigh distribution does have
 one advantage: it can be computed even if all you know is the mean of some sample data.
 Sometimes, that is all you can easily get your hands on (because the people who collected
 the raw data only report numerical summaries).  You can find average wind speeds of for 
@@ -1926,10 +1902,10 @@ For the normal distributions this is particularly easy since the parameters are 
 and standard deviation, so we get
 
 $$
-\begin{align*}
+\begin{aligned}
 \hat\mu &= \mean x\\
 \hat\sigma^2 &= s_x^2\\
-\end{align*}
+\end{aligned}
 $$
 
 ```{r tidy = FALSE}
@@ -2012,7 +1988,7 @@ the fit for the data set at hand.
 <!-- 	  \\[5.2mm] -->
 <!-- \multicolumn{2}{|l}{  Standard normal: $\Norm(0,1)$ } && \\ -->
 <!--   &  -->
-<!--   $ \displaystyle \frac{1}{\sqrt{2\pi}} {e^{-\frac12 z^2}}$ -->
+<!--   $\displaystyle \frac{1}{\sqrt{2\pi}} {e^{-\frac12 z^2}}$ -->
 <!--   	& $0$ & $1$ -->
 <!-- \\[4.2mm] -->
 <!-- \multicolumn{2}{|l}{  Normal: $\Norm(\mu,\sigma)$ } && \\ -->
@@ -2324,11 +2300,11 @@ fitdistr(Wind$speed2, "gamma")
 Now we solve
 
 $$
-\begin{align*}
+\begin{aligned}
 \alpha \beta & = \mean x  = `r mean(~speed2, data = Wind)`
 \\
 \alpha \beta^2 & = s^2 = `r var(~speed2, data = Wind)`
-\end{align*}
+\end{aligned}
 $$
 
 Dividing the second by the first gives $\hat \beta = \sfrac{s^2}{\mean x}$.
@@ -2366,7 +2342,7 @@ a. Use this information and the method of moments to estimate the
 	shape and rate parameters of a Gamma distribution.
 a. 	In principal, we could do the same for a Weibull distribution, but the 
 	formulas aren't as easy to work with. 
-	Fit a Rayliegh distribution instead (i.e., a Weibull
+	Fit a Rayleigh distribution instead (i.e., a Weibull
 	distribution with shape parameter equal to 2).
 :::: 
 <!-- end enumerate -->
@@ -2387,7 +2363,7 @@ alpha.hat <- m / beta.hat ; alpha.hat
 lambda.hat <- 1/ beta.hat ; lambda.hat
 ```
 
-For the Rayliegh distribution we solve 
+For the Rayleigh distribution we solve 
 $\hat \beta \frac{\sqrt{\pi}}{2} = \mean x$   for 
 $\hat \beta$ and get
 $$
@@ -2562,9 +2538,10 @@ whenever $f$ is a pdf and all the integrals involved converge.
 
 ::: {.solution}
 
-$$
-\begin{align*}
+Some algebra and properties of integrals are all we need:
 
+$$
+\begin{aligned}
 \int_{-\infty}^{\infty} (x - \mu_X) ^2 f(x) \; dx
 	&=
 	\int_{-\infty}^{\infty} (x^2 - 2\mu_X x + \mu_X^2) f(x) \; dx
@@ -2579,7 +2556,7 @@ $$
 	\\
 	&=
 	\Var(X) - \E(X)^2 
-\end{algin*}
+\end{aligned}
 $$
 
 ::: 

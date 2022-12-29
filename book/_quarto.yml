@@ -14,8 +14,10 @@ format:
     fig-height: 2.5
     fig-width: 4.5
     fig-align: center
-  pdf:
-    documentclass: scrreprt
+  pdf: 
+    documentclass: report
+    include-in-header: 
+      macros.tex
 
 css: book.css
 
@@ -26,17 +28,14 @@ filters:
   
 environments:
   - center: center
-  - problem: problem
-  - solution: solution
-  - example: example
-  - boxedText: boxedText
+  - problem: exercise
   
 commands: 
   - blue: blue
 
 book:
   title: "Statistics for the Physical Sciences and Engineering"
-  author: "Randall Pruim "
+  author: "Randall Pruim"
   date: last_modified
   favicon: cover.png
   search: true

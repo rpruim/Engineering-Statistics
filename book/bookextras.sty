@@ -1,0 +1,544 @@
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesClass{bookextras}[2007/05/25]
+\RequirePackage{xkeyval,ifthen,amsthm}
+\RequirePackage{fancyvrb}
+
+\newdimen\betweenumberspace          % dimension for space between
+\betweenumberspace=5\p@               % number and text of titles
+
+% size and style of headings
+\newcommand{\partsize}{\LARGE}
+\newcommand{\partstyle}{\bfseries\boldmath}
+\newcommand{\chapsize}{\Large}
+\newcommand{\chapstyle}{\bfseries\boldmath}
+\newcommand{\secsize}{\large}
+\newcommand{\secstyle}{\bfseries\boldmath}
+\newcommand{\subsecsize}{\normalsize}
+\newcommand{\subsecstyle}{\bfseries\boldmath}
+
+\def\newendpage {\par
+                 \ifdim \pagetotal>\topskip
+                     \else\thispagestyle{empty}
+                 \fi
+                 \vfil\penalty -\@M}
+\def\clearpage{%
+  \ifvmode
+    \ifnum \@dbltopnum =\m@ne
+      \ifdim \pagetotal <\topskip
+        \hbox{}
+      \fi
+    \fi
+  \fi
+  \newendpage
+  \write\m@ne{}
+  \vbox{}
+  \penalty -\@Mi
+}
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+    \hbox{}\newendpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+
+\newcommand{\clearemptydoublepage}{%
+        \newpage{\pagestyle{empty}\cleardoublepage}}
+\newcommand{\startnewpage}{\if@openright\clearemptydoublepage\else\clearpage\fi}
+
+% redefinition of \part
+
+\def\l@part#1#2{\addpenalty{\@secpenalty}%
+   \addvspace{2em \@plus\p@}%
+   \begingroup
+     \parindent \z@
+     \rightskip \z@ \@plus 5em
+     \hrule\vskip5\p@
+%     \bfseries\boldmath
+     \Large \sf \bfseries
+     \leavevmode
+     #1\par
+     \vskip5\p@
+     \hrule
+     \vskip\p@
+     \nobreak
+   \endgroup}
+
+\def\@dotsep{2}
+
+\@ifundefined{thechapterend}{\def\thechapterend{}}{}
+
+\renewcommand\part{\clearemptydoublepage
+         \thispagestyle{empty}
+         \if@twocolumn
+            \onecolumn
+            \@tempswatrue
+         \else
+            \@tempswafalse
+         \fi
+         \@ifundefined{thispagecropped}{}{\thispagecropped}
+         \secdef\@part\@spart}
+
+\def\@part[#1]#2{\ifnum \c@secnumdepth >-2\relax
+        \refstepcounter{part}
+        \addcontentsline{toc}{part}{\partname\
+        \thepart\thechapterend\hskip\betweenumberspace
+        #1}\else
+        \addcontentsline{toc}{part}{#1}\fi
+   \markboth{}{}
+   {\raggedleft
+    \ifnum \c@secnumdepth >-2\relax
+      \sf %\normalfont
+	  \partstyle\partsize\vrule height 34pt width 0pt depth 0pt%
+     \partname\ \thepart\llap{\smash{\lower 5pt\hbox to\textwidth{\hrulefill}}}
+    \par
+    \vskip 128.3\p@ \fi
+    #2\par}\@endpart}
+%
+% \@endpart finishes the part page
+%
+\def\@endpart{\vfil\newpage
+   \if@twoside
+       \hbox{}
+       \thispagestyle{empty}
+       \newpage
+   \fi
+   \if@tempswa
+     \twocolumn
+   \fi}
+%
+\def\@spart#1{{\raggedleft
+   \normalfont\partsize\partstyle
+   #1\par}\@endpart}
+%
+
+% footinfo option (provides an informatory line on every page)
+\def\MacroPackageNameA{bookextras.sty}
+% \thetime, \thedate and \timstamp are macros to include
+% time, date (or both) of the TeX run in the document
+\def\maketimestamp{\count255=\time
+\divide\count255 by 60\relax
+\edef\thetime{\the\count255:}%
+\multiply\count255 by-60\relax
+\advance\count255 by\time
+\edef\thetime{\thetime\ifnum\count255<10 0\fi\the\count255}
+\edef\thedate{\number\day-\ifcase\month\or Jan\or Feb\or Mar\or
+             Apr\or May\or Jun\or Jul\or Aug\or Sep\or Oct\or
+             Nov\or Dec\fi-\number\year}
+\def\timstamp{\hbox to\hsize{\tt\hfil\thedate\hfil\thetime\hfil}}}
+\maketimestamp
+%
+
+% \footinfo generates a info footline on every page containing
+% pagenumber, jobname, macroname, and timestamp
+%\DeclareOption{footinfo}{\AtBeginDocument{\maketimestamp
+%   \def\@oddfoot{{\footnotesize\tt 
+%   job: \jobname (page \thepage)\hfil 
+%  %               macro: \MacroPackageNameA\hfil
+%  date/time: \thedate/\thetime} \hfil \thepage}%
+%   \let\@evenfoot=\@oddfoot}}
+%
+\DeclareOption{footinfo}{\AtBeginDocument{\maketimestamp
+	\cfoot[\footnotesize\tt job: \jobname; page: \thepage]%
+	{\footnotesize\tt job: \jobname; page:\thepage}%
+    \ifoot[\footnotesize\tt date/time: \thedate/\thetime]{\footnotesize\tt date/time: \thedate/\thetime}%
+	}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\fillqed}{\hfill\qed}
+
+% an example that can be used to change display of theorem-like stuff:
+
+\iffalse
+\newenvironment{mytheorem}[1]{%
+\def\typeOfThm{#1}
+
+\noindent\rule[-.03in]{.5in}{.03in}\hrulefill
+\vspace{-.08in}
+
+\begin{\typeOfThm}
+}%
+{%
+\end{\typeOfThm}
+\vspace{-.10in}
+%\noindent\hrulefill
+\noindent\hrulefill\rule{.5in}{.03in}
+\pagebreak[3]
+
+}
+
+\newtheoremstyle{myplain}% name
+{3pt}% Space above
+{3pt}% Space below
+{}% Body font
+{}% Indent amount
+{\itshape}% Theorem head font
+{.}% Punctuation after theorem head
+{.5em}% Space after theorem head
+{}% Theorem head spec (can be left empty, meaning normal)
+
+\theoremstyle{definition}
+\newtheorem{amsthm}{Theorem}[section]
+%\newenvironment{thm}{\begin{mytheorem}{amsthm}}{\end{mytheorem}}
+
+\newtheorem{amscor}[amsthm]{Corollary}
+\newenvironment{cor}{\begin{mytheorem}{amscor}}{\end{mytheorem}}
+\newenvironment{corollary}{\begin{mytheorem}{amscor}}{\end{mytheorem}}
+
+\newtheorem{amstheorem}[amsthm]{Theorem}
+\newenvironment{theorem}{\begin{mytheorem}{amstheorem}}{\end{mytheorem}}
+
+\newtheorem{amslem}[amsthm]{Lemma}
+\newenvironment{lem}{\begin{mytheorem}{amslem}}{\end{mytheorem}}
+
+\newtheorem{amslemma}[amsthm]{Lemma}
+\newenvironment{lemma}{\begin{mytheorem}{amslemma}}{\end{mytheorem}}
+
+\newtheorem{amsdraftDefinition}[amsthm]{Draft Definition}
+\newenvironment{draftDefinition}{\begin{mytheorem}{amsdraftDefinition}}{\end{mytheorem}}
+
+\newtheorem{amsdefinition}[amsthm]{Definition}
+\newenvironment{definition}{\begin{mytheorem}{amsdefinition}}{\end{mytheorem}}
+
+\theoremstyle{remark}
+\newtheorem{rem}[amsthm]{Remark}
+\newtheorem{remark}[amsthm]{Remark}
+
+%\theoremstyle{definition}
+%\newtheorem{def}[thm]{Definition}
+
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\question}{{\noindent \sf \bfseries Q. }}
+
+\newcommand{\answer}{{\medskip \noindent \sf \bfseries A. }}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\long\def\todo#1{
+\bigskip
+\bigskip
+
+\begin{fmpage}{.9\textwidth}
+\textbf{\large To do:} #1
+\end{fmpage}
+\bigskip
+}
+
+\newenvironment{boxedText}[1][\textwidth]%
+{%
+\begin{center}
+\begin{fmpage}{#1}
+}%
+{%
+\end{fmpage}
+\end{center}
+}
+
+\newenvironment{boxedTable}[2][tbp]%
+{%
+\begin{table}[#1]
+  \refstepcounter{table}
+  \begin{center}
+\begin{fmpage}{\textwidth}
+  \begin{center}
+	\sf \large Box~\expandafter\thetable. #2
+\end{center}
+\medskip
+}%
+{%
+\end{fmpage}
+\end{center}
+\end{table}		% need to do something about exercises that follow boxedTable
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\idx#1{\index{#1}\relax#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{exampleCtr}[section]
+\newcounter{subexampleCtr}[exampleCtr]
+\newlength{\exampleHeaderLength}
+\newlength{\topRuleLength}
+\newboolean{rjpExampleStart}
+\newboolean{rjpExampleContinue}
+\def\theexampleCtr{\thesection.\arabic{exampleCtr}}
+
+\def\putExampleInAux#1{\label{#1}}
+
+\define@key{rjpExample}{foo}[unset]{foo is #1}%
+\define@key{rjpExample}{label}[unset]{\label{#1}}%
+\define@key{rjpExample}{continue}[false]{\setboolean{rjpExampleContinue}{#1}}%
+\define@key{rjpExample}{start}[false]{\setboolean{rjpExampleStart}{#1}}%
+\newenvironment{example}[1][]%
+{%
+\setkeys{rjpExample}{#1}%
+\ifthenelse{\boolean{rjpExampleContinue}}%
+{% next in series
+  \stepcounter{subexampleCtr}%
+  \def\theexampleCtr{\thesection.\arabic{exampleCtr}\alph{subexampleCtr}}
+}%
+{% 
+  \ifthenelse{\boolean{rjpExampleStart}}%
+  {% first of series
+	\refstepcounter{exampleCtr}%
+	\stepcounter{subexampleCtr}%
+	\def\theexampleCtr{\thesection.\arabic{exampleCtr}\alph{subexampleCtr}}%
+  }%
+  {% stand alone example
+	\refstepcounter{exampleCtr}%
+	\def\theexampleCtr{\thesection.\arabic{exampleCtr}}%
+  }%
+}
+\begingroup
+\medskip
+%\vskip 5pt plus 10pt minus 2pt
+\vspace*{2cm}
+
+\vspace{-2cm}%
+\noindent 
+%\settolength{\exampleHeaderLength}{\sf \bfseries \theexampleCtr}%
+%\settolength{\exampleHeaderLength}{foo}%
+\setlength{\topRuleLength}{.45\textwidth}%
+%\addtolength{\topRuleLength}{-\exampleHeaderLength}
+\noindent
+{\sf \bfseries Example \theexampleCtr} \rule{\topRuleLength}{0.02in}%\rule{1.5in}{0pt}
+\nopagebreak[4]
+\smallskip
+\nopagebreak[4]
+      \begin{list}{}{%
+        \setlength{\topsep}{0pt}%
+        \setlength{\leftmargin}{4ex}%
+        \setlength{\rightmargin}{0ex}%
+        \setlength{\listparindent}{\parindent}%
+        \setlength{\itemindent}{\parindent}%
+        \setlength{\parsep}{\parskip}%
+}%
+\item[]%
+\noindent%
+}%
+{%
+
+\nopagebreak%
+\vspace{-.05in}%
+\nopagebreak
+\hfill \rule{.15\textwidth}{.02in}\rule{.10in}{.10in}%
+\medskip%
+\end{list}
+\pagebreak[3]
+%\vskip 5pt plus 10pt minus 2pt
+
+\endgroup%
+%\noindent%
+}%
+
+\newlength{\tempfmlength}
+\newsavebox{\fmbox}
+\newenvironment{fmpage}[1]
+     {
+	 \medskip
+	 \setlength{\tempfmlength}{#1}
+	 \begin{lrbox}{\fmbox}
+	   \begin{minipage}{#1}
+		 \vspace*{.02\tempfmlength}
+		 \hfill
+	   \begin{minipage}{.95 \tempfmlength}}
+		 {\end{minipage}\hfill
+		 \vspace*{.015\tempfmlength}
+		 \end{minipage}\end{lrbox}\fbox{\usebox{\fmbox}}
+	 \medskip
+	 }
+
+\newenvironment{goal}{%
+\begin{center}
+  \begin{fmpage}{5.5in}
+	\mbox{ \Large \textsf{Goal:\ \strut}}%
+	\begin{minipage}[t]{4.8in}
+}{%
+\end{minipage}
+\end{fmpage}
+\end{center}
+}
+
+
+\newenvironment{goals}{%
+\begin{center}
+  \begin{fmpage}{5.5in}
+	\mbox{ \Large \textsf{Goals:\ \strut}}%
+	\begin{minipage}[t]{4.7in}
+}{%
+\end{minipage}
+\end{fmpage}
+\end{center}
+}
+
+\newenvironment{remember}{%
+\begin{center}
+  \begin{fmpage}{5.5in}
+	\mbox{ \large \textsf{Remember:\ \strut}}%
+	\begin{minipage}[t]{4.6in}
+}{%
+\end{minipage}
+\end{fmpage}
+\end{center}
+}
+
+
+\newenvironment{summary}{%
+\begin{center}
+  \begin{fmpage}{5.5in}
+	\mbox{ \large \textsf{Summary:\ \strut}}%
+	\begin{minipage}[t]{4.5in}
+}{%
+\end{minipage}
+\end{fmpage}
+\end{center}
+}
+
+\newenvironment{myfmpage}{%
+\begin{center}
+  \begin{fmpage}{5.5in}
+}{%
+\end{fmpage}
+\end{center}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% R code and images inclusion
+%
+
+\newcommand{\rterm}[1]{\textsf{#1}}
+\newcommand{\Rterm}[1]{\textsf{#1}}
+
+
+\def\myRuleColor{\color{black!50!white}}
+\colorlet{myRuleColor}{black!50!white}
+\newcommand{\includeRout}[1]{%
+\VerbatimInput[firstline=21,lastline=-4,framerule=.5mm,frame=leftline,rulecolor=\myRuleColor,fontsize=\small]{../R/Rout/#1.Rout}
+}
+
+\newcommand{\Routput}[1]{%
+\typeout{Including R output from #1}
+\VerbatimInput[framerule=.5mm,
+	frame=leftline,
+	rulecolor=\myRuleColor,
+	fontsize=\small]{#1}
+}
+
+
+%\newcommand{\includeR}[1]{%
+%\typeout{Including R output from #1}
+%\VerbatimInput[framerule=.5mm,
+%	frame=leftline,
+%	rulecolor=\myRuleColor,
+%	fontsize=\small]{#1}
+%}
+
+%%%% this is not working  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\setIncludeRpath#1{\gdef\includeRpath{#1}}
+\def\setIncludeRext#1{\gdef\includeRext{#1}}
+\define@key{rjpIncludeR}{foo}[unset]{foo is #1}%
+%\define@key{rjpIncludeR}{path}[R/Rout/]{\setIncludeRpath{#1}}
+%\define@key{rjpIncludeR}{ext}[R/Rout/]{\setIncludeRext{#1}}
+\define@key{rjpIncludeR}{path}[R/Rout/]{\typeout{path=#1}}
+\define@key{rjpIncludeR}{ext}[R/Rout/]{\typeout{ext=#1}}
+\newcommand{\includeRnew}[2][]{%
+\setkeys{rjpIncludeR}{#1}%
+\typeout{Including R output from #1}
+\VerbatimInput[framerule=.5mm, frame=leftline, rulecolor=\myRuleColor, fontsize=\small]{#2}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\marginparwidth}{1.2in}
+\let\oldmarginpar\marginpar
+\newcommand\xmarginpar[1]{\-\oldmarginpar[\raggedleft\footnotesize #1]%
+{\raggedright\footnotesize #1}}
+
+
+\DefineVerbatimEnvironment%
+{Rcode}{Verbatim}
+{framerule=.5mm,frame=leftline,rulecolor=\myRuleColor,fontsize=\small}
+
+\def\includeRaus#1{%
+\vspace*{2cm}
+
+\vspace{-2cm}
+
+\hfill \makebox[0pt]{\fbox{\tiny #1}}
+\vspace*{-3ex}
+
+%\xmarginpar{\fbox{\tiny #1}}%
+\includeR{../R/Rout/#1.Raus}
+%\hfill 
+%\rule{1in}{.3pt}
+%\rule{1in}{.3pt}
+%\hfill
+}
+\def\includeRchunk#1{%
+
+\hfill \makebox[0pt]{\fbox{\tiny #1}}
+\vspace*{-3ex}
+
+%\xmarginpar{\fbox{\tiny #1}}%
+\includeR{../R/Rchunk/#1.Rchunk}
+%\hfill 
+%\rule{1in}{.3pt}
+%\rule{1in}{.3pt}
+%\hfill
+}
+
+\def\includeRausTwo#1{%
+
+\hfill \makebox[0pt]{\fbox{\tiny #1}}
+\vspace*{-3ex}
+
+\begin{multicols}{2}
+\includeR{../R/Rout/#1.Raus}
+\end{multicols}
+}
+
+%\newenvironment{Rcode}{%
+%\medskip
+%
+%%\hspace*{.25in}
+%\begin{longtable}{||l}
+%  \begin{minipage}{.85\textwidth}
+%	\footnotesize
+%\begin{alltt}
+%}{%
+%\end{alltt}
+%\end{minipage}
+%\end{longtable}
+%\medskip
+%
+%}
+%
+%\renewenvironment{Rcode}{%
+%
+%%\hspace*{0.05\textwidth}
+%\begin{alltt}\small
+%}{%
+%\end{alltt}
+%}
+
+%\renewenvironment{Rcode}{%
+%
+%%\hspace*{0.05\textwidth}
+%\begin{Verbatim}[frame=leftline]
+%}{%
+%\end{Verbatim}
+%}
+
+\newcommand{\wig}{$\wiggle$}
+\newcommand{\cran}{\href{http://cran.r-project.org/}{CRAN}}
+
+\newcommand{\datahref}[1]{%
+\url{http://www.calvin.edu/~rpruim/data/#1}%
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProcessOptions\relax
+\endinput

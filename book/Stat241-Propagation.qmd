@@ -7,11 +7,6 @@
 library(mosaic)
 ```
 
-:::{.hidden}
-$$
-\def\Partial#1#2{\frac{\partial #1}{\partial #2}}
-$$
-:::
 
 You have probably been told (in physics labs, for example) to report all measurements
 along with an **uncertainty**.  The reporting often uses the notation:
@@ -204,7 +199,7 @@ $$
 
 From this it follows that
 $$
-\begin{align*}
+\begin{aligned}
 	\E(f(\hat B,\hat D)) &\approx 
 	\E\left(f( B, D)\right)
 +
@@ -215,7 +210,7 @@ $$
 &\approx f(B,D) + 0 + 0 
 \\
 &= f(B,D) \;.
-\end{align*}
+\end{aligned}
 $$
 
 (The 0's come because our estimators are approximately unbiased: $\E(\hat B) \approx B$ and $\E(\hat D) \approx D$.)
@@ -233,7 +228,7 @@ cannot be assumed to be independent.] a reasonable assumption in this situation,
 we get
 
 $$
-\begin{align*}
+\begin{aligned}
 	\\[5mm]
 \Var(f(\hat B,\hat D))
 &\approx 
@@ -249,18 +244,18 @@ $$
 \left(\frac{\partial f}{\partial \hat B}\right)^2 \Var(\hat B)
 +
 \left(\frac{\partial f}{\partial \hat D}\right)^2 \Var(\hat D)
-\end{align*}
+\end{aligned}
 $$
 
 where again we evaluate the partial derivatives with $\hat{B}$ and $\hat{D}$.
 
 Applying this to $f(\hat B,\hat D) = \hat B/\hat D$, we get
 $$
-\begin{align*}
+\begin{aligned}
 	\frac{\partial f}{\partial \hat B} &= \frac{1}{\hat D}
 	\\
 	\frac{\partial f}{\partial \hat D} &= \frac{-\hat B}{\hat D^2}
-\end{align*}
+\end{aligned}
 $$
 So our uncertainty for the estimated number of dimes (remember, we want the
 standard deviation, which will be the square root of the variance estimate we
@@ -500,26 +495,27 @@ This should be reported with appropriate rounding as
 	How should the area be reported?
 
 **A.** 
-	Our estimate for the area is $12.3^2 = `r 12.3^2`$. 
-	Our transformation is $f(x) = x^2$, so $\Partial{f}{x} = f'(x) = 2x$.  
-	Applying the Delta Method, our uncertainty is
+Our estimate for the area is $12.3^2 = `r 12.3^2`$. 
+Our transformation is $f(x) = x^2$, so $\Partial{f}{x} = f'(x) = 2x$.  
+Applying the Delta Method, our uncertainty is
 
 $$
 	\sqrt{ (2 (12.3))^2 (0.2)^2 } = 2 (12.3)(0.2) = `r 2 * 12.3 * 0.2`
 $$
-	and we report the area as
-	$`r round(12.3^2,0)` \pm `r signif(2*12.3*0.2,1)`$.
+and we report the area as
+$`r round(12.3^2,0)` \pm `r signif(2*12.3*0.2,1)`$.
 
-	It is worth looking at the relative uncertainty of the linear and area measurements.
+It is worth looking at the relative uncertainty of the linear and area measurements.
+	
 $$
-\begin{align*}
+\begin{aligned}
 		\frac{0.2}{12.3} &= `r 0.2 / 12.3`
 		\\
 		\frac{`r signif(2 *12.3*0.2,1)`}{`r round(12.3^2,0)`} 
 		&= `r signif(2 * 12.3 * 0.2 / 12.3^2, 3)`
-\end{align*}
-
+\end{aligned}
 $$
+
 So the relative uncertainty of the area measurement is twice the relative uncertainty
 of the linear measurement.
 ::: 
@@ -533,13 +529,14 @@ when we are dealing with only one estimator.
 
 	%s{\textsf{\bfseries The Delta Method for one estimator}}
 
-	Let $X$ be an estimator with uncertainty $u_{X}$ and let $\hat W = f(\hat X)$.
-	Then the uncertainty in the estimate $W$ can be estimated as 
-	$$
+Let $X$ be an estimator with uncertainty $u_{X}$ and let $\hat W = f(\hat X)$.
+Then the uncertainty in the estimate $W$ can be estimated as 
+
+$$
 	u_{W} \approx
 \left|\frac{df}{dX}\right| u_X
-	$$
-	where the derivative is evaluated using the estimated value of $X$, $\hat{X}$.
+$$
+where the derivative is evaluated using the estimated value of $X$, $\hat{X}$.
 ::: 
 <!-- end boxedText -->
 
@@ -591,10 +588,11 @@ $$
 $$
 For example, if we measure a mass to be $10.2$ g with an uncertainty of $0.3$ g, the 
 relative uncertainty is 
+
 $$
 \frac{0.3}{10.2} 
 = `r 0.3/10.2`
-= `r round(100 * 0.3/10.2,1)` \<!--  -->
+= `r round(100 * 0.3/10.2,1)` %
 $$
 Often it is the case that uncertainty grows with the magnitude of the estimate, and relative uncertainty
 is a way of comparing the uncertainty in large measured values with the uncertainty of 
@@ -610,7 +608,7 @@ uncertainties $u_X$ and $u_Y$.  Then $\Partial{P}{X} = Y$ and $\Partial{P}{Y} =
 X$, so
 
 $$
-\begin{align*}
+\begin{aligned}
 \frac{u_P}{P} 
 & = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{P^2} }
 \\
@@ -619,7 +617,7 @@ $$
 & = \sqrt{ \frac{ u_X^2}{X^2} + \frac{u_Y^2}{Y^2} }
 \\
 & = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
-\end{align*}
+\end{aligned}
 $$
 which gives a Pythagorean identity for the relative uncertainties.
 
@@ -639,7 +637,7 @@ in 	@exm-box1.
 **A.** 
 The relative uncertainties in the length and width are 
 $$ 
-	\frac{0.2}{12.3} = `r 0.2/12.3` \tand 
+	\frac{0.2}{12.3} = `r 0.2/12.3` \ \tand \  
 	\frac{0.1}{6.3} = `r 0.1/6.3` 
 	\;.
 $$
@@ -670,36 +668,36 @@ Notice that this matches the result from @exm-box1.
 ::: {.example #exm-resistors}
 
 **Q.** 
-	When two resistors with resistances $R_1$ and $R_2$ are connected in parallel, 
-	the combined resistance satisfies
-	$$
-	R = \frac{R_1 R_2}{R_1 + R_2} 
-	$$
-	Suppose the resistances of the two resistors are reported as 
-	$20 \pm 0.7$ ohms and $50 \pm 1.2$ ohms.  How should you report the combined resistance?
+When two resistors with resistances $R_1$ and $R_2$ are connected in parallel, 
+the combined resistance satisfies
+$$
+R = \frac{R_1 R_2}{R_1 + R_2} 
+$$
+Suppose the resistances of the two resistors are reported as 
+$20 \pm 0.7$ ohms and $50 \pm 1.2$ ohms.  How should you report the combined resistance?
 
 **A.** 
-	Our estimate is $\hat R = \frac{ 20 \cdot 50}{ 20 + 50} = `r 20*50/(20 + 50)`$.
-	To estimate the uncertainty, we need the partial derivatives 
-	$\Partial{R}{R_1}$ and $\partial{R}{R_2}$.
+Our estimate is $\hat R = \frac{ 20 \cdot 50}{ 20 + 50} = `r 20*50/(20 + 50)`$.
+To estimate the uncertainty, we need the partial derivatives 
+$\Partial{R}{R_1}$ and $\partial{R}{R_2}$.
 
 $$
-\begin{align*}
+\begin{aligned}
 		\Partial{R}{R_1} &= \frac{ (R_1+R_2)R_2 - (R_1 R_2) }{(R_1 + R_2)^2}
 		\\
 		&= \left( \frac{ R_2}{R_1 + R_2}\right)^2 
 		\\
 		&= \left( \frac{ 50}{20 + 50}\right)^2  = `r (50/70)^2`
-\end{align*}
+\end{aligned}
 $$
 Similarly,
 $$
-\begin{align*}
+\begin{aligned}
 \Partial{R}{R_2} 
 &= \left( \frac{ R_1}{R_1 + R_2}\right)^2
 \\
 &= \left( \frac{ 20}{20 + 50}\right)^2 = `r ( 20 / 70 )^2`
-\end{align*}
+\end{aligned}
 $$
 ```{r resistors,include = FALSE}
 R <- 20*50/(20 + 50)
@@ -990,13 +988,13 @@ of the interval
 $$
 \frac{a+b}{2} \pm \frac{b-a}{\sqrt{12}}
 $$
-will cover about 58\<!--  of the interval.   -->
-This is quite a bit less than the 68\<!--  covered by the central portion of a normal  -->
+will cover about 58% of the interval.
+This is quite a bit less than the 68% covered by the central portion of a normal
 distribution (within 1 standard deviation of the mean).
 For a "back of the envelope" computation, to use an uncertainty with a similar amount of "coverage" to the "coverage" that the standard deviation has for the normal distribution, we might choose to use the approximation 
 $\frac{b-a}{\sqrt{12}} \approx \frac{b-a}{3}$,
 since this will slightly over-estimate the uncertainty and lead to a central covering
-probability of $2/3 \approx 68$\%.
+probability of $2/3 \approx 68$%.
 
 This same idea can be used when working with analog scales, but in this case, we typically
 can see that the value is closer to one end than the other or closer to the center than
@@ -1065,10 +1063,10 @@ standard deviation of 1.9 L.
 :::: {.enumerate}
 
 #. 
-Calculate a 95\<!--  confidence interval -->
+Calculate a 95% confidence interval 
 for the the mean volume of distribution.
 #. 
-Calculate a 99\<!--  confidence interval -->
+Calculate a 99% confidence interval 
 for the the mean volume of distribution.
 #. 
 Calculate the standard uncertainty for the mean volume of distribution.
@@ -1303,7 +1301,7 @@ where $k$ is the cars per person, $P$ is total population, $d$ is average distan
 driven per car, and $E$ is the average efficiency.
 
 $$
-\begin{align*}
+\begin{aligned}
 \Partial{F}{k} &= \frac{Pd}{E} 
 \\
 \Partial{F}{P} &= \frac{kd}{E}
@@ -1311,7 +1309,7 @@ $$
 \Partial{F}{d} &= \frac{kP}{E}
 \\
 \Partial{F}{E} &= \frac{-kPd}{E^2}
-\end{align*}
+\end{aligned}
 $$
 
 So the estimated amount of fuel consumed (in millions of gallons) is 
@@ -1423,7 +1421,7 @@ A physics student is calculating the speed of a falling object by measuring the 
 	$\Partial{Q}{X} = Y^{-1}$ and 
 	$\Partial{Q}{Y} = -X Y^{-2}$.  From this we get
 $$
-\begin{align*}
+\begin{aligned}
 \frac{u_Q}{Q} 
 & = \sqrt{ \frac{ Y^{-2} u_X^2 + X^2 Y^{-4} u_Y^2}{Q^2} }
 \\
@@ -1432,7 +1430,7 @@ $$
 & = \sqrt{ \frac{ u_X^2}{X^2} + \frac{u_Y^2}{Y^2} }
 \\
 & = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
-\end{align*}
+\end{aligned}
 $$
 
 which gives a Pythagorean identity for the relative uncertainties just as it 

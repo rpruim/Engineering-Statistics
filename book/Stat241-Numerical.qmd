@@ -170,7 +170,7 @@ Measures of center attempt to give us a sense of what is a
 typical value for the distribution.
 
 $$
-\begin{align*}
+\begin{aligned}
 \mbox{mean of $y$} 
 &=
 \overline{y}
@@ -182,7 +182,7 @@ $$
 \mbox{the ``middle'' number}
 \\
 & \quad\quad \mbox{(after putting the numbers in increasing order)}
-\end{align*}
+\end{aligned}
 $$
 
 <!-- begin itemize -->
@@ -207,7 +207,7 @@ the average of the middle two observations.
 ## Measures of Spread
 
 $$
-\begin{align*}
+\begin{aligned}
 \mbox{variance of $y$}
 = s^2_y 
 &= 
@@ -222,7 +222,7 @@ $$
 &= Q_3 - Q_1 
 \\
 & = \mbox{difference between first and third quartiles (defined shortly)}
-\end{align*}
+\end{aligned}
 $$
 
 <!-- begin itemize -->
@@ -392,9 +392,9 @@ The most common summary of a categorical variable is the **proportion**
 of observations in each category. For a single category:
 
 $$
-\begin{align*}
+\begin{aligned}
 \hat p & = \frac{\mbox{number in one category}}{n}
-\end{align*}
+\end{aligned}
 $$
 
 

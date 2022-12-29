@@ -1,31 +1,6 @@
 
 # Linear Models
 
-::: {.hidden}
-$$
-\def\reals{\mathbb{R}}
-\def\card#1{| #1 |}
-\def\mean{\overline}
-\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
-\def\Prob{\operatorname{Prob}}
-\def\tand{\operatorname{and}}
-\def\tor{\operatorname{or}}
-\def\tnot{\operatorname{not}}
-\def\E{{\operatorname E}}
-\def\Var{\operatorname{Var}}
-\def\SD{\operatorname{SD}}
-\def\union{\cup}
-\def\intersect{\cap}
-\def\Unif{{\sf Unif}}
-\def\Rayliegh{{\sf Rayliegh}}
-\def\Exp{{\sf Exp}}
-\def\Norm{{\sf Norm}}
-\def\Tri{{\sf Tri}}
-\def\Gamm{{\sf Gamma}}
-\def\Weibull{{\sf Weibull}}
-\def\boolval#1{[\![ #1 ]\!]}
-$$
-:::
 
 ```{r include = FALSE}
 #| label: setup-simple-linear-regression
@@ -467,11 +442,11 @@ equivalently $\sigma^2$).  This is the parameter that describes how tightly thin
 cluster around the regression line.  We can estimate $\sigma^2$ from our residuals:
 
 $$
-\begin{align*}
+\begin{aligned}
 \hat\sigma^2 & = MSE = \frac{ \sum_i e_i^2 }{ n -2 }
 \\
 \hat\sigma & = RMSE = \sqrt{MSE} = \sqrt{\frac{ \sum_i e_i^2 }{ n -2 } }
-\end{align*}
+\end{aligned}
 $$
 
 The acronyms $MSE$ and $RMSE$ stand for **Mean Squared Error** and 
@@ -1084,11 +1059,11 @@ model1 <- lm(y1 ~ x1, data = anscombe); summary(model1)
 
 ::: {.solution}
 
-  Anscombe's data show that it is not sufficient to look only at the 
-  numerical summaries produced by regression software.  His four data
-  sets produce nearly identical output of \verb!lm()! and \verb!anova()!
-  yet show very different fits.  An inspection of the residuals (or even
-  simple scatterplots) quickly reveals the various difficulties.
+Anscombe's data show that it is not sufficient to look only at the 
+numerical summaries produced by regression software.  His four data
+sets produce nearly identical output of \verb!lm()! and \verb!anova()!
+yet show very different fits.  An inspection of the residuals (or even
+simple scatterplots) quickly reveals the various difficulties.
 ::: 
 <!-- end solution -->
 

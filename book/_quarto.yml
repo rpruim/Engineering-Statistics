@@ -17,10 +17,6 @@ format:
     fig-height: 2.5
     fig-width: 4.5
     fig-align: center
-  pdf: 
-    documentclass: report
-    include-in-header: 
-      macros.tex
 
 css: book.css
 

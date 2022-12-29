@@ -1,5 +1,8 @@
 project:
   type: book
+  output-dir: _book
+  preview:
+    port: 4300
   
 execute:
   freeze: auto

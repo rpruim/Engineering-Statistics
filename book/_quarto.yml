@@ -3,6 +3,7 @@ project:
   output-dir: _site
   preview:
     port: 4300
+ 
   
 execute:
   freeze: auto
@@ -34,11 +35,12 @@ commands:
 
 book:
   title: "Statistics for the Physical Sciences and Engineering"
+  output-file: "Pruim-Stat-for-Phys-Sci-and-Engr"
   author: "Randall Pruim"
   date: last_modified
   favicon: cover.png
   search: true
-  downloads: [epub, pdf]
+  downloads: [pdf]
   sidebar: 
     style: docked
   chapters:

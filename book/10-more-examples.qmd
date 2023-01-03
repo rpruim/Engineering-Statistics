@@ -280,10 +280,10 @@ HeatX2
 
 Note: We are using the fact that $u_{\Delta T} = \sqrt{2} u_T$.
 
-We can also use `deltaMethod()()` in the **`car`** package to do this
-arithmetic for us.  In fact, `deltaMathod()()` can even handle cases
+We can also use `deltaMethod()` in the **`car`** package to do this
+arithmetic for us.  In fact, `deltaMathod()` can even handle cases
 where the estimates are not independent.  To do it's job,
-`deltaMethod()()` requires
+`deltaMethod()` requires
 
 ::: {.itemize}
 
@@ -321,7 +321,7 @@ deltaMethod(estimates, exprforQ, vc)
 
 
 
-The **`deltaMethod`** package adds additional interfaces for `deltaMethod()()` to 
+The **`deltaMethod`** package adds additional interfaces for `deltaMethod()` to 
 make this even easier.
 
 ```{r }
@@ -525,7 +525,7 @@ This is left as an exercise for you.
 ## Standard Errors in `fitdistr()` output
 
 We had not yet learned about uncertainty and standard errors when we learned about 
-`fitdistr()()`, but the output from the function includes an estimated standard
+`fitdistr()`, but the output from the function includes an estimated standard
 error.
 ```{r }
 library(fastR2)

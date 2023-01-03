@@ -328,10 +328,10 @@ A few explanatory notes regarding the computation above.
 
 ::: {.enumerate}
 
-#.  `resample()()` samples from a data frame *with replacement*.  That is,
+#.  `resample()` samples from a data frame *with replacement*.  That is,
 		some of the rows may appear more than once, others not at all.  Resampling
 		is a common way to estimate a sampling distribution from a single sample.
-		`resample()()` can also be used on a "bare" vector (that is, a vector of data points not contained within a data frame, as exemplified below).
+		`resample()` can also be used on a "bare" vector (that is, a vector of data points not contained within a data frame, as exemplified below).
 
 ```{r }
 resample(1:10)    # some items may be chosen more than once
@@ -340,8 +340,8 @@ shuffle(1:10)     # this also shuffles
 ```
 
 #. 
-	When `do()()` doesn't know what to call the result of what it is "doing", it
-	calls it `result`.  (Sometimes `do()()` can figure out a better name.)
+	When `do()` doesn't know what to call the result of what it is "doing", it
+	calls it `result`.  (Sometimes `do()` can figure out a better name.)
 #. 
 	The simulated distribution of $N = B/D$ is unimodal, roughly symmetric, and reasonably 
 	well approximated by a normal distribution (but clearly not exactly normal).  

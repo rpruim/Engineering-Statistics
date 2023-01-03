@@ -205,7 +205,7 @@ fitLine(1.2, 0.8, squares = TRUE)
 
 If your line is a good fit, then $SSE$ will be small.  
 The best fitting line will have the smallest possible $SSE$.   
-The `lm()()` function will find this best fitting line for us.
+The `lm()` function will find this best fitting line for us.
 ```{r tidy = FALSE}
 model1 <- lm( y ~ x, data = SomeData ); model1
 ```
@@ -220,7 +220,7 @@ gf_point(y ~ x, data = SomeData) |>
   gf_lm()
 ```
 
-We can compute $SSE$ using the `resid()()` function.
+We can compute $SSE$ using the `resid()` function.
 ```{r tidy = FALSE}
 SSE <- sum (resid(model1)^2); SSE
 ```
@@ -328,7 +328,7 @@ osa.model <- lm(OSA ~ palpebral, data = Eyes)
 osa.model
 ```
 
-`lm()()` stands for linear model.  The default output includes the estimates
+`lm()` stands for linear model.  The default output includes the estimates
 of the coefficients ($\hat\beta_0$ and $\hat \beta_1$) based on the data.  If that is the 
 only information we want, then we can use 
 ```{r }
@@ -388,7 +388,7 @@ $$
 = `r round(coef(osa.model)[1],3) + round(coef(osa.model)[2],3) * 1.2` 
 $$
 
-R\ can automate this for us too.  The `makeFun()()` function will
+R\ can automate this for us too.  The `makeFun()` function will
 create a function from our model.  
 If we input a palpebral measurement into this function, the function
 will return the estimated OSA.
@@ -541,7 +541,7 @@ For all the scatter plots, we want to make sure the residuals "look random" -- t
 ::: {.example}
 
 Returning to our OSA data, we can obtain the residuals using the 
-`resid()()` function and plot them.
+`resid()` function and plot them.
 ```{r }
 osa.hat <- makeFun(osa.model)
 preds <- osa.hat(Eyes$palpebral)
@@ -569,7 +569,7 @@ should be random noise following a normal distribution with constant standard de
 In this case things look pretty good. 
 
 We can save ourselves a little typing if we create these plots using 
-`plot()()` or `mplot()()`.
+`plot()` or `mplot()`.
 ```{r fig.height = 3}
 mplot(osa.model, w = 1:2)
 ```
@@ -629,7 +629,7 @@ Returning to the OSA data, compute standard uncertainties and 95% confidence int
 for $\beta_0$ and $\beta_1$.
 
 **A.** 
-The `summary()()` function provides additional information about the 
+The `summary()` function provides additional information about the 
 model:
 ```{r }
 summary(osa.model)
@@ -684,7 +684,7 @@ $$
 	as our estimate for $\sigma$.)
 
 	R\ can compute confidence intervals for both parameters using the function
-	`confint()()`:
+	`confint()`:
 ```{r }
 confint(osa.model)
 ```

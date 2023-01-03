@@ -155,8 +155,8 @@ gf_dhistogram( ~ Duration, data = oldfaith)
 ```
 
 
-The density scale is the same scale that is used by `gf_dens()()` and `gf_density()()`, 
-and it is the default scale for histograms created using `gf_dhistogram()()`.
+The density scale is the same scale that is used by `gf_dens()` and `gf_density()`, 
+and it is the default scale for histograms created using `gf_dhistogram()`.
 
 ```{r histogram-density}
 #| label: fig-histogram-and-density
@@ -272,7 +272,7 @@ This implies that $f$ is a density function.
 	1 - \frac{2}{8} = \frac{3}{4}$.
 
 We can also let R do (numerical) integration for us.  There are two ways to do this.
-The first method uses the `integrate()()` function.
+The first method uses the `integrate()` function.
 ```{r }
 integrate( f, -Inf, 1 )
 # this will be more accurate since we aren't asking R to approximate
@@ -286,7 +286,7 @@ integrate( f, -.5, .5 ) |> value()   # |> is the "then" operator
 ```
 
 
-An alternative approach uses `antiD()()` from the **`mosaicCalc`** package.
+An alternative approach uses `antiD()` from the **`mosaicCalc`** package.
 ```{r tidy = FALSE}
 library(mosaicCalc)
 F <- antiD( f(x) ~ x)
@@ -1321,7 +1321,7 @@ pnorm( 700, 500, 100) - pnorm(400, 500, 100)
 ```
 
 
-The `xpnorm()()` function will additionally draw pictures of the normal 
+The `xpnorm()` function will additionally draw pictures of the normal 
 distribution with a portion of the distribution shaded in.
 ```{r }
 xpnorm(700,500,100) - xpnorm(400, 500, 100)
@@ -1333,7 +1333,7 @@ xpnorm(700,500,100) - xpnorm(400, 500, 100)
 
 ::: {.example #exm-qnorm-SAT}
 
-We can use `qnorm()()` to compute percentiles.  For example, let's calculate
+We can use `qnorm()` to compute percentiles.  For example, let's calculate
 the 75th percentile for SAT distributions.
 
 ```{r }
@@ -1634,13 +1634,13 @@ shape of our histogram indicates that this is a reasonable family of distributio
 
 **Q.** Which Weibull distribution is the best model for our data?
 
-**A.** The `fitdistr()()` in the **`MASS`** package uses the method of 
+**A.** The `fitdistr()` in the **`MASS`** package uses the method of 
 **maximum likelihood** to fit univariate (one variable) distributions.
 ```{r fitdistr-windspeed, error = TRUE}
 fitdistr( Wind$speed, "weibull" )
 ```
 
-For `fitdistr()()` to fit a Weibull distribution, all of the data must be positive,
+For `fitdistr()` to fit a Weibull distribution, all of the data must be positive,
 but our data includes some 0's.  
 ```{r zeros}
 tally( ~ (speed == 0), data = Wind)
@@ -1671,8 +1671,8 @@ mle <- fitdistr( Wind$speed2, "weibull" )
 This says that the best fitting (in the sense of maximum likelihood) Weibull
 distribution is the $\Weibull(`r paste(round(mle$est,2),sep = ",")`)$-distribution.
 
-The `gf_histogram()()` function has an option to overlay the distribution
-fit by `fitdistr()()` so we can see how good the fit is graphically.
+The `gf_histogram()` function has an option to overlay the distribution
+fit by `fitdistr()` so we can see how good the fit is graphically.
 ```{r xhistogram-Wind,warning = FALSE}
 gf_dhistogram( ~ speed2, data = Wind) |>
   gf_fitdistr( ~ speed2, data = Wind, dist = "weibull")
@@ -1687,7 +1687,7 @@ gf_dhistogram( ~ speed2, data = Wind) |>
 ```
 
 
-`gf_fitdistr()()` is inheriting the formula and data from `gf_dhistogram()()`.
+`gf_fitdistr()` is inheriting the formula and data from `gf_dhistogram()`.
 ::: 
 <!-- end example -->
 
@@ -1725,7 +1725,7 @@ is roughly symetric (very good games are about the same amount above average as
 the very poor games are below average).  Weibull and Gamma distributions have
 the built in feature that scores cannot be negative and would allow for a
 skewed distribution.
-The `fitdistr()()` function in the **`MASS`** package can fit each of these.
+The `fitdistr()` function in the **`MASS`** package can fit each of these.
 ```{r jordan1, warning=FALSE}
 library(fastR2)     # the Jordan8687 data set is in this package
 fitdistr(Jordan8687$points, "normal")
@@ -1749,7 +1749,7 @@ The three fits are similar, but not identical.
 
 ### Maximum Likelihood
 
-The `fitdistr()()` function uses the maximum likelihood method to estimate
+The `fitdistr()` function uses the maximum likelihood method to estimate
 distribution parameters.
 The maximum likelihood method is one of the most commonly used estimation methods
 in all of statistics because (1) it can be used in a wide range of applications,
@@ -2085,7 +2085,7 @@ Quantile-quantile plots offer an alternative approach.  As the name suggests, th
 to compare the quantiles of our data to the quantiles of a theoretical distribution.  These
 are then plotted as a scatter plot.  Let's go through those steps with a small data
 set so we can see all the moving parts, then we'll learn how to automate the whole
-process using `gf_qq()()`.
+process using `gf_qq()`.
 
 ### Normal-Quantile Plots
 
@@ -2142,7 +2142,7 @@ gf_point(observed ~ theoretical, data = QQData2, title = "Hand made QQ-plot", xl
 ```
 
 
-This whole process is automated by the `gf_qq()()` function.
+This whole process is automated by the `gf_qq()` function.
 ```{r }
 gf_qq( ~ points, data = SmallJordan, title = "Sub-sample" )
 gf_qq( ~ points, data = Jordan8687, title = "Full data set" )
@@ -2236,7 +2236,7 @@ Wind <-
 
 What is the estimated value of the rate parameter?
 
-b.  Now use `fitdistr()()` to fit an exponential
+b.  Now use `fitdistr()` to fit an exponential
 	distribution using maximum likelihood.
 	
 c.  How do the two estimates for the rate parameter compare?
@@ -2293,7 +2293,7 @@ a. Using @tbl-cont-dist and the method of moments,
 fit a Gamma distribution to the Twin Falls wind speed data.
 What are the estimated values of the shape and rate parameters?
 b. How do the method of moments estimates for the parameters compare to the 
-	maximum likelihood estimates from `fitdistr()()`?
+	maximum likelihood estimates from `fitdistr()`?
 :::: 
 <!-- end enumerate -->
 
@@ -2404,7 +2404,7 @@ head(Baby)
 
 	The `cry.count` variable records the number of distinct cry vocalizations 
 	within 20 seconds.  Choose a family of distributions to fit to this data
-	and do the fit using `fitdistr()()`. Also include a plot showing 
+	and do the fit using `fitdistr()`. Also include a plot showing 
 	a histogram and your fitted density curve.
 ::: 
 <!-- end problem -->
@@ -2444,7 +2444,7 @@ gf_dhistogram(~cry.count, data = Baby, title = "Weibull") |>
 
 Create normal quantile plots for the ages of patients in the `HELPrct`
 	data set separated by `substance`. (Getting separate or overlaid plots
-	using `gf_qq()()` works just like it does for other **`ggformula`** plots).
+	using `gf_qq()` works just like it does for other **`ggformula`** plots).
 
 	Comment on the plots.
 {{< pagebreak >}}

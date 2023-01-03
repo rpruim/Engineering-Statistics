@@ -143,6 +143,12 @@ A histogram is a simple picture describing the "density" of data.
 Histogram bars are tall in regions where there is more data -- i.e., where the data are 
 more "dense".  
 ```{r histograms-count-density}
+#| label: fig-oldfaith-histograms
+#| layout-ncol: 2
+#| fig-cap: Two histograms of the Old Faithful eruption data.
+#| fig-subcap:
+#|   - A frequency histogram.
+#|   - A density histogram.
 library(alr4)
 gf_histogram(  ~ Duration, data = oldfaith)
 gf_dhistogram( ~ Duration, data = oldfaith)
@@ -153,6 +159,8 @@ The density scale is the same scale that is used by `gf_dens()()` and `gf_densit
 and it is the default scale for histograms created using `gf_dhistogram()()`.
 
 ```{r histogram-density}
+#| label: fig-histogram-and-density
+#| fig-cap: A histogram with an overlaid density curve.
 library(alr4)
 gf_dhistogram( ~ Duration, data = oldfaith, binwidth = 20, center = 110) |>
 gf_dens( ~ Duration, data = oldfaith)
@@ -1084,6 +1092,8 @@ functions to make things even easier.
 
 
 ```{r gf-dist-eponential}
+#| label: fig-exponential-4
+#| fig-cap: An exponential distribution with rate = 4.
 gf_dist("exp", rate = 4)
 ```
 
@@ -1227,6 +1237,7 @@ $$ {#eq-normal-pdf}
 
 
 ```{r echo = FALSE, fig.width = 7}
+#| fig-align: center
 gf_dist("norm") |>
   gf_theme(axis.text.y = element_blank()) |>
   gf_labs(y = "") |>

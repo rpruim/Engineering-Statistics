@@ -325,6 +325,7 @@ sd(N)
 ```
 
 A few explanatory notes regarding the computation above.
+
 ::: {.enumerate}
 
 #.  `resample()()` samples from a data frame *with replacement*.  That is,
@@ -405,6 +406,7 @@ Numerical values and their uncertainties should be recorded to the proper number
 decimal places.  Most software either reports too many significant digits or
 rounds numbers too much.  For 
 correct professional presentation of your data, follow these guidelines:
+
 ::: {.enumerate}
 
 #. The experimental uncertainty should be rounded to one significant 
@@ -950,6 +952,7 @@ In other more complicated study designs, some other standard error formula may b
 ### Estimating uncertainty in other ways {sec-uncertainty-without-data}
 
 Estimating uncertainty from data is only possible if 
+
 ::: {.itemize}
 * You have multiple measurements from which to estimate the variability, and 
 * The measurements actually vary (aren't masked by imprecise measuring devices, 
@@ -1061,6 +1064,7 @@ amount of an administered drug at the same concentration that it is observed
 in the blood plasma) of a new anti-diabetes drug 
 was measured for each patient.  The sample mean was 10.2 L with a 
 standard deviation of 1.9 L.
+
 :::: {.enumerate}
 
 #. 
@@ -1104,6 +1108,7 @@ pure copper at 20 degrees C, $\alpha_{20}$(Cu), as
 $16.52 \times 10^{-6} \ {}^\circ C^{-1}$
 and simply states that "the error in this value should not exceed 
 $0.40 \times 10^{-6} \ {}^{\circ} C^{-1}$."
+
 :::: {.enumerate}
 
 #. 
@@ -1147,6 +1152,7 @@ C(HCl) = ($0.10000 \pm 0.00010$) mol/l.
 No additional information is given on the type of the uncertainty. 
 (The $\pm$ part here is not the uncertainty but is supposed to indicate
 upper and lower bounds on  the error.)
+
 :::: {.enumerate}
 
 #. 

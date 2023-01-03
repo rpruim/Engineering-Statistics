@@ -1071,16 +1071,12 @@ $Y = 2$ for rolls of $(3,1)$, $(4,2)$, $(5,3)$, and $(6,4)$. Each of
 these can also happen in the other order, so the probability is
 $8/36 = 2/9 = `r 2/9`$.
 
-:::: {.center}
-::::: {.tabular}
-        TEX COMMAND NOT FOUND hline         value of $Y$ & 0 & 1 & 2 & 3 & 4 & 5 \\
-        TEX COMMAND NOT FOUND hline         probability & 6/36 & 10/36 & 8/36 & 6/36 & 4/36 & 2/36 \\
-        TEX COMMAND NOT FOUND hline     ::: 
 
-:::::
-<!-- end tabular -->
-::::
-<!-- end center -->
+value of $Y$ | 0 | 1 | 2 | 3 | 4 | 5 
+-------------|---|---|---|---|---|---
+probability | 6/36 | 10/36 | 8/36 | 6/36 | 4/36 | 2/36 
+
+
 
 ```{r }
 c(6,10,8,6,4,2) / 36
@@ -1410,6 +1406,7 @@ What is the probability that the yellow M&M came from the 1994 bag?
 
 ::: {.solution}
 Let's use the following notation for events related to this problem:
+
 <!-- begin itemize --> 
 :::: {.itemize} 
 

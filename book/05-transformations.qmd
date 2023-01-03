@@ -498,20 +498,25 @@ and use those weights to estimate the mean weight of a dime.
 
 We have now developed enough background to begin learning how this process works. 
 We begin by introducing some key terms:
+
 ::: {.description}
 
-#. [population] The collection of individuals, objects, or processes we want to 
+* **population** The collection of individuals, objects, or processes we want to 
 		know something about.
-#. [parameter] A number that describes (a feature of) a population.
+		
+* **parameter** A number that describes (a feature of) a population.
 
-		In typical applications, parameters are unknown and data are collected
+    In typical applications, parameters are unknown and data are collected
 		for the purpose of estimating parameters.
-#. [sample] The collection of individuals, objects, or processes we have data
+		
+* **sample** The collection of individuals, objects, or processes we have data
 		about.  Ideally, the sample is a well chosen subset of the population.
-#. [statistic] A number that describes (a feature of) a sample.
-#. [sampling distribution] The distribution of a statistic under random sampling.
+		
+* **statistic** A number that describes (a feature of) a sample.
+		
+* **sampling distribution** The distribution of a statistic under random sampling.
 
-		The process of random sampling leads to a random sample, from which a statistic
+    The process of random sampling leads to a random sample, from which a statistic
 		could be computed.  Since that number depends on a random process (sampling),
 		it is a random variable.  The sampling distribution should not be confused
 		with the distribution of an individual sample (nor with the distribution of 
@@ -530,10 +535,10 @@ a.  Quality assurance engineers test a few parts to make a decision about
 		
 ::::: {.itemize}
 
-* population: all parts produced at the plant
-* sample: the parts tested in the quality control protocol
-* parameter: mean strength of all parts produced at the plant
-* statistic: mean strength of the tested parts
+    * population: all parts produced at the plant
+    * sample: the parts tested in the quality control protocol
+    * parameter: mean strength of all parts produced at the plant
+    * statistic: mean strength of the tested parts
 ::::: 
 <!-- end itemize -->
 
@@ -542,8 +547,12 @@ their (other) cars might perform in an accident.
 
 ::::: {.itemize}
 
-* population: all cars (of a certain model) produced
-* sample: the small number of cars that were used in the crash test
+    * population: all cars (of a certain model) produced
+    * sample: the small number of cars that were used in the crash test
+    * paramter: average amount of force applied to crash dummy's head in all such crashes (not
+      just the crashes done in the lab)
+    * statistic: average amount of force applied to crash dummy's head in the crashes
+      that were tested
 ::::: 
 <!-- end itemize -->
 
@@ -552,10 +561,10 @@ about the opinions of millions of people.
 
 ::::: {.itemize}
 
-* population: all voters
-* sample: people actually contacted
-* parameter: proportion of all voters who will vote for candidate A
-* statistic: proportion of sample who claim they will vote for candidate A
+    * population: all voters
+    * sample: people actually contacted
+    * parameter: proportion of all voters who will vote for candidate A
+    * statistic: proportion of sample who claim they will vote for candidate A
 ::::: 
 <!-- end itemize -->
 
@@ -563,10 +572,10 @@ d. The mean weight of a dime can be estimated from the weights of 30 dimes.
 
 ::::: {.itemize}
 
-* population: all dimes in the sack
-* sample: 30 dimes actually weighed
-* parameter: the mean weight of all the dimes in the sack
-* statistic: the mean weight of the 30 dimes actually weighed.
+    * population: all dimes in the sack
+    * sample: 30 dimes actually weighed
+    * parameter: the mean weight of all the dimes in the sack
+    * statistic: the mean weight of the 30 dimes actually weighed.
 ::::: 
 <!-- end itemize -->
 

@@ -90,7 +90,7 @@ We want to determine the best fitting line to the data.  The usual method is
 the method of least squares^[In this case, it turns out that the least 
 squares and maximum likelihood methods produce exactly the same results.],
 which chooses the line that has the 
-* smallest possible sum of squares of residuals*, where residuals are defined by
+*smallest possible sum of squares of residuals*, where residuals are defined by
 
 $$
 \mbox{residual} = \mbox{observed} - \mbox{predicted}
@@ -102,7 +102,7 @@ Consider the following small data set.
 
 :::{.columns}
 
-::::{.columnn width="50<!-- "} -->
+::::{.columnn width="45%"}
 ```{r tidy = FALSE}
 SomeData <- tibble(
   x = c(1,2,4,5,6),
@@ -112,7 +112,8 @@ SomeData
 ```
 
 ::::
-::::{.columnn width="50<!-- "} -->
+
+::::{.columnn width="45%"}
 ```{r tidy = FALSE,fig.height = 3.2}
 gf_point( y ~ x, data = SomeData) |>
   gf_lims(y = c(0, 7), x = c(0, 7))
@@ -644,11 +645,12 @@ coef(summary(osa.model))
 From this we see the estimates ($\hat \beta$'s)
 displayed again.  Next to each of those is a standard error.  That is the standard
 uncertainty for these estimates.  So we could report our estimated coefficients as 
+
 $$
-	\beta_0: `r sprintf("<!-- .2f", coef(osa.model)[1])` \pm  -->
+	\beta_0: `r sprintf("%.2f", coef(osa.model)[1])` \pm  -->
 		`r round(sqrt(diag(vcov(osa.model))[1]), 2)`
 	\qquad
-	\beta_1: `r sprintf("<!-- .2f", coef(osa.model)[2])` \pm  -->
+	\beta_1: `r sprintf("%.2f", coef(osa.model)[2])` \pm  
 		`r round(sqrt(diag(vcov(osa.model))[2]), 2)`
 $$
 
@@ -778,7 +780,7 @@ summary(rain.model)
 
 ::: {.solution}
 
-::: {.enumerate}
+:::: {.enumerate}
 
 #.  The residual degrees of freedom is $13$, so there were $13 + 2 = 15$
 			observations.
@@ -807,7 +809,7 @@ like an uncertainty).
 	proportion.  Roughly 83% of the rain water is being measured as runoff. 
 #. 
 	$5.24$
-::: 
+:::: 
 <!-- end enumerate -->
 
 ::: 
@@ -820,18 +822,15 @@ like an uncertainty).
 
 The `KidsFeet` data set contains variables giving the widths and lengths
 of feet of some grade school kids.
-::: {.enumerate}
 
-#.  Perform our usual diagnostics to see whether there are any reasons
+1. Perform our usual diagnostics to see whether there are any reasons
 			to be concerned about using a simple linear model in this situation.
-#.  Based on this data, what estimate would you give for the width of a 
+2. Based on this data, what estimate would you give for the width of a 
 			Billy's foot if Billy's foot is 24 cm long?  
 			(Use a 95% confidence level.)
-#.  Based on this data, what estimate would you give for the average width of a 
+3. Based on this data, what estimate would you give for the average width of a 
 			kids' feet that 24 cm long?
 			(Use a 95% confidence level.)
-::: 
-<!-- end enumerate -->
 
 ::: 
 <!-- end problem -->
@@ -858,11 +857,13 @@ f(24, interval = "confidence")
 We can't estimate Billy's foot width very accurately (between 8.0 and 9.6 cm),
 but we can estimate the average foot width for all kids with a foot length of
 24 cm more accurately (between 8.67 and 8.96 cm).
+
 ::: 
 <!-- end solution -->
 
 
-::: {.problem exr-bike-space}
+::: {.problem #exr-bike-space}
+
 **Space for bicycles**
 
 Some traffic engineers were interested to study interactions between bicycle and 
@@ -876,18 +877,14 @@ Data were collected at 10 different sites with bicycle lanes.
 The data are available in the `ex12.21` data set in 
 the **`Devore7`** package.
 
-::: {.enumerate}
-
-#.  Write out an equation for the least squares regression line for 
+1. Write out an equation for the least squares regression line for 
 			predicting separation distance from available space.
-#.  Give an estimate (with uncertainty) for the slope and interpret it.
-#.  A new bicycle lane is planned for a street that has 15 feet of available
+2. Give an estimate (with uncertainty) for the slope and interpret it.
+3. A new bicycle lane is planned for a street that has 15 feet of available
 			space.  Give an interval estimate for the separation distance 
 			on this new street.  Should you use a confidence interval or a prediction
 			interval?  Why?
-#.  Give a scenario in which you would use the other kind of interval.
-::: 
-<!-- end enumerate -->
+4. Give a scenario in which you would use the other kind of interval.
 
 ::: 
 <!-- end problem -->
@@ -930,17 +927,18 @@ a large genetics study.  You can find out more about the data set with
 
 ::: {.enumerate}
 
-#.  Using this data, fit a linear model that can be used 
+#. Using this data, fit a linear model that can be used 
 		to predict weight from height.  What is the equation 
 		of the least squares regression line?
-#.  Give a 95% confidence interval for the slope of this regression
+#. Give a 95% confidence interval for the slope of this regression
 		and interpret it in context.  (Hint: what are the units?)
-#.  Give a 95% confidence interval for the mean weight of all 
+#. Give a 95% confidence interval for the mean weight of all 
 		non-diabetic men who are 6 feet tall.  
 		
-		Note the heights are in cm and the weights are in kg, so you will need to convert 
+    Note the heights are in cm and the weights are in kg, so you will need to convert 
 		units to use inches and pounds.  (2.54 cm per inch, 2.2 pounds per kg)
-#.  Perform regression diagnostics.  Is there any reason to be concerned
+		
+#. Perform regression diagnostics.  Is there any reason to be concerned
 		about this analysis?
 ::: 
 <!-- end enumerate -->
@@ -950,7 +948,7 @@ a large genetics study.  You can find out more about the data set with
 
 ::: {.solution}
 
-::: {.enumerate}
+:::: {.enumerate}
 
 #. 
 
@@ -1022,7 +1020,7 @@ $$
 = `r round(exp(coef(model2)[1]),1)` 
 		\cdot (`r round(exp(coef(model2)[2]),3)`)^{`height`}
 $$
-::: 
+:::: 
 <!-- end enumerate -->
 
 ::: 
@@ -1035,21 +1033,25 @@ $$
 The `anscombe` data set contains four pairs of explanatory (`x1`, `x2`, `x3`, and `x4`)
 and response (`y1`, `y2`, `y3`, and `y4`) variables. 
 These data were constructed by Anscombe (@Anscombe:1973:Graphs).
+
 :::: {.enumerate}
 
-#. For each of the four pairs, us R\ to fit a linear model and compare the results.  Use, for example,
+1. For each of the four pairs, us R\ to fit a linear model and compare the results.  
+    Briefly describe what you notice looking at this output.  (You do not have
+		to submit the output itself -- let's save some paper.)
 
-```{r eval = FALSE}
-model1 <- lm(y1 ~ x1, data = anscombe); summary(model1)
+    Use, for example,
+
+```{r }
+#| eval: false
+    model1 <- lm(y1 ~ x1, data = anscombe); summary(model1)
 ```
 
-			Briefly describe what you notice looking at this output.  (You do not have
-			to submit the output itself -- let's save some paper.)
-#.  For each model, create a scatterplot that includes the regression line.
-			(Make the plots fairly small and submit them.
-			Use `fig.width` and `fig.height` or "output options" (the little gear icon)
-			to control the size of the plots in RMarkdown.)
-#.  Comment on the results.  Why do you think Anscombe invented these data?
+		
+2. For each model, create a scatterplot that includes the regression line.
+			(Make the plots fairly small and submit them.)
+			
+3. Comment on the results.  Why do you think Anscombe invented these data?
 :::: 
 <!-- end enumerate -->
 
@@ -1073,6 +1075,7 @@ simple scatterplots) quickly reveals the various difficulties.
 
 Find an article from the engineering or science literature that uses 
 a simple linear model and report the following information:
+
 :::: {.enumerate}
 
 a.  Print the first page of the article (with title and abstract) and write
@@ -1110,10 +1113,9 @@ independently, I expect to see lots of different articles used for this problem.
 <!-- things that you don't understand but would like to understand, let me know, -->
 <!-- and perhaps we can do something later in the semester with your article. -->
 <!-- It's easiest to do this if you can give me a URL for locating the paper online. -->
+
 ::: 
 <!-- end problem -->
-
-
 
 ::: {.problem #exr-human-waste-in-japan}
 **Human waste in Japan**

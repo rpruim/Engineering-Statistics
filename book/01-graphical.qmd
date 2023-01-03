@@ -725,10 +725,8 @@ To create a new Quarto document, go to "File", "New File", then "Quarto document
 From there, choose either "document" or "from template".  The `mosaic` plain 
 template is a good starting point.
 
-<!-- begin center -->
 
-	![Caption](%s.png)width = 3in]{images/FromTemplate.png}
-<!-- end center -->
+![](images/FromTemplate.png){width="3in"}
 
 
 When you do this, a file editing pane will open with a template inserted.  If
@@ -744,26 +742,16 @@ make things bold, add in headings, etc.)  You can get a list of all of these
 mark up options by selecting the "Markdown Quick Reference" in the help
 menu.
 
-<!-- begin center -->
 
-	![Caption](%s.png)width = 3.5in]{images/MarkdownQuickReference.png}
-<!-- end center -->
+![](images/MarkdownQuickReference.png){width="3.5in"}
 
 The second type of section is an R code chunk.  These are colored differently to make them
 easier to see.  You can insert a new code chunk by selecting by selecting
 the appropriate chunk type (R in our case) from the menu below.
-<!-- begin center -->
 
-	![Caption](%s.png)width = 1.2in]{images/InsertChunk.png}
-<!-- end center -->
+![](images/InsertChunk.png){width="1.2in"}
 
-You can also type 
-````
-```{r}
-```
-```
 
-to begin and end the code chunk if you would rather type.
 You can put any R code in these code chunks and the results (text output or graphics) as well
 as the R code will be displayed in your HTML file.
 
@@ -964,7 +952,8 @@ like:
 ```
 
 You can search the help system using
-```{r help-GR,eval = FALSE}
+
+```{r help-GR, eval = FALSE}
 help.search('Grand Rapids')    # Does R know anything about Grand Rapids?
 ```
 

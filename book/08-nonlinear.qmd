@@ -214,6 +214,7 @@ The rest of this chapter will provide detailed information on how to deal with s
 
 Linear regression assumes a linear relationship between predictor and response variables, but not all relationships between pairs of quantitative variables are linear.  There are two common ways to deal with
 nonlinear relationships:
+
 ::: {.enumerate}
 
 #. Transform the data before beginning linear regression analysis, so that there *is* a linear relationship between the (transformed) variables.
@@ -623,6 +624,9 @@ might be straightened by moving up the ladder for $y$ or down the ladder for $x$
 
 ::::
 
+::::{.column width="5%"}
+::::
+
 ::::{.column width="45%"}
 
 | power     | transformation                 |
@@ -640,6 +644,8 @@ might be straightened by moving up the ladder for $y$ or down the ladder for $x$
 : Ladder of re-expression {#tbl-ladder}
 
 ::::
+
+:::
 
 This method focuses primarily on transformations designed to improve
 the overall fit.  The resulting models may or may not have 
@@ -960,6 +966,7 @@ where $f$ may be any parameterized function.
 The R function for fitting these
 models is `nls()`.  This function works much like `lm()`,
 but there are some important differences:
+
 :::: {.enumerate}
 
 a.  Because the model does not have to be linear, we have
@@ -1288,6 +1295,7 @@ For example, if
 	  $\beta_1 = b$.
 
 ::::{.columns}
+
 :::::{.column width="50%"}
 a. $y = a b^x$.
 a. $y = a x^b$.

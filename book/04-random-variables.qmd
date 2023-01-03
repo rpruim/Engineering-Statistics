@@ -29,6 +29,7 @@ of random variables that are neither discrete nor continuous.]
 
 A discrete random variable takes on values from a discrete set of possibilities,
 typically either a finite set or a subset of the integers.  Here are some examples.
+
 ::: {.enumerate}
 
 #. If we roll a die and record the number, there are six possible values,
@@ -391,6 +392,7 @@ Indeed, once we learn how to get the cdf function in R this will
 be our primary way to calculate probabilities in applications.
 
 ## Mean and Variance
+
 ### The mean of a random variable
 
 The definition for the mean of a random variable will be motivated 
@@ -561,6 +563,7 @@ F(1)
 
 Arguing similarly, we can compute the variance of a discrete or continuous random
 variable using 
+
 ::: {.itemize}
 
 * discrete: $\Var(X) = \sigma^2_X = \sum x (x-\mu_X)^2$
@@ -761,8 +764,6 @@ For each distribution, there are four functions in R that always start
 with a single letter followed by a name for the distribution.  In the case 
 of the triangle distributions, these functions are 
 
-:::{.full-width}
-
 
 | Function                 | What it does                                                                                   |	
 |--------------------------|------------------------------------------------------------------------------------------------|
@@ -773,7 +774,6 @@ of the triangle distributions, these functions are
 
 : Triangle distributions in R {#tbl-triangle-in-R}
 
-:::
 
 ::: {.example #exm-triangle-in-R}
 
@@ -852,6 +852,7 @@ $$
 $$ 
 
 be the kernel of a continuous distribution.
+
 :::: {.enumerate}
 
 a. 			Determine the pdf for this distribution.
@@ -949,6 +950,7 @@ with `unif`.
 
 **Q.** 	Let $X \sim \Unif(1,4)$.  Use R to calculate the following values and 
 	check the values using geometry:
+	
 :::: {.enumerate}
 
 a. $\Prob(X \le 2)$
@@ -994,6 +996,7 @@ antiD( x^2 * dunif(x,0,10) ~ x, lower.bound = 0)(10) - m^2
 
 The exponential distributions are useful for modeling the time until some "event" 
 occurs.  The model is based on the assumptions that 
+
 :::: {.enumerate}
 
 a. The probability of an event occurring in any small interval of time 
@@ -1045,7 +1048,6 @@ Notice that the function describing this distribution is defined only for x-valu
 The exponential distribution function is a pretty easy function to integrate, but R provides the now familiar
 functions to make things even easier.
 
-:::{.full-width}
 
 | Function               | What it does                                               	                                |
 |------------------------|----------------------------------------------------------------------------------------------|
@@ -1375,12 +1377,13 @@ gf_dist("beta", params = list(shape1 = 0.9, shape2 = 0.85), title = "Beta(0.9,0.
 
 Use R to plot the pdf and 
 compute the mean and variance of each of the following distributions.
+
 :::: {.enumerate}
 
 a.  $\Beta(2,3)$
 a.  $\Beta(20,30)$
-a.  $\Gamm(`shape` = 2, `scale` = 3)$
-a.  $\Weibull(`shape` = 2, `scale` = 3)$
+a.  $\Gamm(\texttt{shape} = 2, \texttt{scale} = 3)$
+a.  $\Weibull(\texttt{shape} = 2, \texttt{scale} = 3)$
 :::: 
 <!-- end enumerate -->
 
@@ -1428,13 +1431,14 @@ antiD( x^2 * dweibull(x,2,scale = 3) ~ x, lower.bound = 0 )(Inf) - m^2
 
 For each of the following distributions, determine the proportion 
 of the distribution that lies between 0.5 and 1.
+
 :::: {.enumerate}
 
-a.  $\Exp(`rate` = 2)$
-b.  $\Beta(`shape1` = 3, `shape2` = 2)$
-c.  $\Norm(`mean` = 1, `sd` = 2)$
-d.  $\Weibull(`shape` = 2, `scale` = 1/2)$
-e.  $\Gamm(`shape` = 2, `scale` = 1/2)$
+a.  $\Exp(\texttt{rate} = 2)$
+b.  $\Beta(\texttt{shape1} = 3, \texttt{shape2} = 2)$
+c.  $\Norm(\texttt{mean} = 1, \texttt{sd} = 2)$
+d.  $\Weibull(\texttt{shape} = 2, \texttt{scale} = 1/2)$
+e.  $\Gamm(\texttt{shape} = 2, \texttt{scale} = 1/2)$
 :::: 
 <!-- end enumerate -->
 
@@ -1460,14 +1464,11 @@ pgamma(1, 2, scale = 1/2)   - pgamma(0.5, 2, scale = 1/2)
 
 A binomial distribution is a discrete distribution with two parameters ($n$ and $p$,
 or as R calls them \verb!size! and \verb!prob!) describing a situation in which
-::: {.enumerate}
 
-#.  Our random process consists of $n$ identical sub-processes (called trials).
-#.  Each trial has one of two outcomes (traditionally called success and failure).
-#.  The probability of success is $p$ for each trial.
-#.  The outcome of each trial is independent of the others.
-::: 
-<!-- end enumerate -->
+1.  Our random process consists of $n$ identical sub-processes (called trials).
+2.  Each trial has one of two outcomes (traditionally called success and failure).
+3.  The probability of success is $p$ for each trial.
+4.  The outcome of each trial is independent of the others.
 
 The binomial random varialbe counts the number of successes.
 

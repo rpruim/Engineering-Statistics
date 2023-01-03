@@ -1,0 +1,36 @@
+
+$$
+\def\reals{\mathbb{R}}
+\def\card#1{| #1 |}
+\def\mean{\overline}
+\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
+\def\Prob{\operatorname{Prob}}
+\def\tand{\operatorname{and}}
+\def\tor{\operatorname{or}}
+\def\tnot{\operatorname{not}}
+\def\E{{\operatorname E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\union{\cup}
+\def\intersect{\cap}
+\def\Unif{\mathsf{Unif}}
+\def\Rayleigh{\mathsf{Rayleigh}}
+\def\Exp{\mathsf{Exp}}
+\def\Norm{\mathsf{Norm}}
+\def\Tri{\mathsf{Tri}}
+\def\Gamm{\mathsf{Gamma}}
+\def\Pois{\mathsf{Pois}}
+\def\Binom{\mathsf{Binom}}
+\def\Weibull{\mathsf{Weibull}}
+\def\Tdist{\mathsf{T}}
+\def\Fdist{\mathsf{F}}
+\def\Chisq{\mathsf{Chisq}}
+\def\boolval#1{[\![ #1 ]\!]}
+\def\simiid{\stackrel{\mathrm{iid}{\sim}}}
+
+\def\sfrac#1#2{{#1}/{#2}}
+\def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+\def\Partial#1#2{\frac{\partial}{\partial #2} #1}
+
+\def\myindex#1{\relax}
+$$

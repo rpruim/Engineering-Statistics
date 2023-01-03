@@ -1,24 +1,15 @@
 project:
   type: book
-  output-dir: _site
+  output-dir: ../docs/quarto-book
   preview:
     port: 4300
- 
   
 execute:
   freeze: auto
   
 format:
-  html:
-    include-in-header: macros.qmd
-    theme: cosmo
-    code-copy: true
-    toc: true
-    toc-location: right
-    df-print: paged
-    fig-height: 2.5
-    fig-width: 4.5
-    fig-align: center
+  pdf: 
+    include-in-header: macros.tex
 
 css: book.css
 

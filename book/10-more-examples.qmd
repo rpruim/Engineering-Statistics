@@ -336,6 +336,7 @@ deltaMethod(HeatX, exprforQ,
 Sometimes the uncertainties of a given variable are different at different values.
 In that case, we can put the uncertainties into the data frame.  For the current 
 example, this is just extra work, but we include it here to show how it works.
+
 ```{r tidy = FALSE}
 HeatX3 <- HeatX |>
   mutate(
@@ -411,8 +412,11 @@ better than we have been assuming).  Then our uncertainties for $\dot{Q}$ would 
 dramatically.
 
 ```{r }
-deltaMethod( HeatX |> mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
-  uncertainties = c(T.cold.in = 0.1, T.cold.out = 0.1, m.cold = 0.5/60, C_p = 0.1))
+HeatX |>
+  mutate(C_p = 4.18) |>  # add in a column for C_p
+  deltaMethod(
+    exprforQ,      
+    uncertainties = c(T.cold.in = 0.1, T.cold.out = 0.1, m.cold = 0.5/60, C_p = 0.1))
 ```
 
 
@@ -420,8 +424,11 @@ But if we improve the uncertainty in the mass flow rate by a factor of 10, it ha
 modest impact on our uncertainty for $\dot{Q}$.
 
 ```{r }
-deltaMethod( HeatX |> mutate(C_p = 4.18), exprforQ,      # add in a column for C_p
-  uncertainties = c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/600, C_p = 0.1))
+HeatX |>
+  mutate(C_p = 4.18) |>  # add in a column for C_p
+  deltaMethod(
+    exprforQ,      
+    uncertainties = c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/600, C_p = 0.1))
 ```
 
 
@@ -452,11 +459,13 @@ exprforU <- paste("C_p * m.cold * (T.cold.out - T.cold.in) /",
 HeatX4 <- HeatX |>
   mutate(D = 0.0143, L = 1.626, C_p = 4.18)
 HeatX4
-deltaMethod(HeatX4, exprforU, 
+deltaMethod(
+  HeatX4, 
+  exprforU, 
   uncertainties = c(
-	T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/60, 
-	T.hot.in = 1.0, T.hot.out = 1.0, m.hot = 0.5/60, 
-	C_p = 0.1, D = 0.0004, L = 0.0006),
+    T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/60, 
+    T.hot.in = 1.0, T.hot.out = 1.0, m.hot = 0.5/60, 
+    C_p = 0.1, D = 0.0004, L = 0.0006),
   constants = list(pi = pi)
 )
 ```

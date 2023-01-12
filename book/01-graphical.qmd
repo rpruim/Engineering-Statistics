@@ -1,5 +1,5 @@
 ---
-fig.height: 2.5
+fig-height: 2.5
 ---
 
 # Graphical Summaries of Data
@@ -188,8 +188,8 @@ head(HELPrct)
 ```
 
 
-When there are a lot of variables, this format can be hard to read.  The `glimps()` or `inspect()`
-functions proved some other options.
+When there are a lot of variables, this format can be hard to read.  The `glimpse()` or `inspect()`
+functions provide some other options.
 
 ```{r glimpseHELP}
 glimpse(HELPrct)
@@ -294,7 +294,7 @@ take note of this -- probably memorize it."]
 ## Scatterplots
 
 The most common way to look at two quantitative variables is with a 
-scatter plot.  The `gformula` function for this is `gf_point()`, 
+scatter plot.  The `ggformula` function for this is `gf_point()`, 
 and the basic syntax is
 
 ```{r xyplot-syntax, eval = FALSE}
@@ -344,7 +344,7 @@ because they were missing data needed for the plot (either `bill_length_mm` or `
 ```{r}
 #| code-fold: true
 # This is a bit of bonus code, 
-# in case you are interested to see how we find these two pengins.
+# in case you are interested to see how we find these two penguins.
 penguins |> 
   filter(is.na(bill_length_mm) | is.na(body_mass_g))
 ```
@@ -358,7 +358,6 @@ and semi-transparent.
 ```{r }
 #| label: transparency-and-dot-size
 #| fig-width: 5
-#| fig-height: 2.5
 #| fig-cap: "Adjustments to `alpha` and `size`."
 gf_point(bill_length_mm ~ body_mass_g, 
          color = ~ species, data = penguins,
@@ -401,7 +400,7 @@ gf_point(bill_length_mm ~ body_mass_g | island,
 ### Other types of plots
 
 A scatter plot will be our most common plot for two quantitative variables, but we can use the same
-template for any otehr type of plot.  Here are two examples.
+template for any other type of plot.  Here are two examples.
 
 ```{r }
 #| label: fig-penguins-more
@@ -485,7 +484,6 @@ in this data set.
 #| echo: false
 #| label: fig-histogram-explained
 #| fig-cap: The red bar indicates that there are almost 60 eruptions of duration between 100 and 125 seconds in this data set.
-#| fig-height: 2.5
 #| fig-width: 6
 #| fig-align: center
 gf_histogram( ~ Duration, data = oldfaith, binwidth = 25, boundary = 100) |>
@@ -502,7 +500,7 @@ can make a histogram look quite different.
 
 ```{r}
 #| label: fig-histogram2 
-#| fig-cap: "Histogams with different numbers of bins."
+#| fig-cap: "Histograms with different numbers of bins."
 #| fig-subcap: ""
 #| layout-ncol: 3
 
@@ -600,8 +598,8 @@ gf_dens( ~ body_mass_g, color = ~ species, data = penguins)
 
 
 For example, we might like to see how the ages of men and women compare 
-in the HELP study, or whether the distribution of weights of male mosquitoes 
-is different from the distribution for females.
+in the HELP study, or whether the distribution of lengths of boys' feet 
+is different from the distribution for girls.
 
 ```{r compare-ages}
 #| layout-ncol: 2
@@ -642,7 +640,7 @@ gf_bar(~substance, fill = ~sex, data = HELPrct, position = "dodge")
 
 Sometimes it is better to display bars with proportions rather than counts. But then we must decide
 what to use for the denominator.
-In the first example below, the total of all teh bars adds to 1. In the second plot, the total
+In the first example below, the total of all the bars adds to 1. In the second plot, the total
 adds to one for each x variable, which makes it easier to see how the proportions of male and female
 .
 
@@ -683,7 +681,7 @@ You can even adjust the height and width of the plot first to get it the
 shape you want.  _But there are much better ways to produce documents 
 with R graphics in them!_  See the next section.
 
-## Reproducibilty
+## Reproducible Documents
 
 Copy-and-paste is a bad workflow for lots of reasons, including:
 <!-- begin itemize -->
@@ -703,76 +701,112 @@ that is growing over time).
 RStudio  makes it easy to use techniques of reproducible research to create
 documents that include text, R commands, R output, and R graphics.
 
-### Quarto
+### Quarto 
 
-The simplest version of this uses a format called Quarto^[A similar, but older, way of doing this uses R Markdown.
+The simplest version of this uses a format called Quarto.^[A similar, but older, way of doing this uses R Markdown.
 If you have used R Markdown before, learning Quarto will be very easy -- they are very similar.]
 Quarto is a simple mark up language that allows for a few basic improvements on plain text
-(section headers, bulleted lists, numbered lists, bold, italics, etc.).
+(section headers, bulletted lists, numbered lists, bold, italics, etc.).
 Quarto adds the ability to mix in the R stuff. (And it has some fancier stuff, like
 embedding videos.)
-The end product can be an HTML file, a PDF document, even a Word document. HTML
-is especially good for producing web documents, but it is also useful as preview mode,
-even if you eventually render to PDF (or Word).^[You can actually mix in arbirary HTML and even css, so if you
+The end product can be an HTML file, a PDF document, even a Word or PowerPoint document. 
+HTML is especially good for producing web documents, but it is also useful as preview mode,
+even if you eventually render to PDF (or Word).^[You can actually mix in arbitrary HTML and even css, so if you
 are good at HTML, you can have quite a bit of control over how things look. But if you do that, some things
-won't convert ot PDF or Word. Here will will focus on the basics and things that work in 
+won't convert to PDF or Word. Here will will focus on the basics and things that work in 
 multiple output formats.]
 
 #### Creating a new document
 
-To create a new Quarto document, go to "File", "New File", then "Quarto document":
+To create a new Quarto document, go to "File", "New File", then "Quarto document".
 
-From there, choose either "document" or "from template".  The `mosaic` plain 
-template is a good starting point.
+![](images/file-new-quarto-document.png){width="40%" fig-align=center}
 
-
-![](images/FromTemplate.png){width="3in"}
-
-
-When you do this, a file editing pane will open with a template inserted.  If
-you click on "Knit HTML", RStudio  will turn this into an HTML file and
-display it for you.  Give it a try.  You will be asked to name your file if you
+When you do this, a file editing pane will open with a simple example quarto file inserted.  If
+you click on "Render", RStudio  will turn this into an HTML file and
+display it for you. Give it a try.  You will be asked to name your file if you
 haven't already done so.  If you are using the RStudio  server in a browser,
-then your file will live on the server (``in the cloud") rather than on your
+then your file will live on the server ("in the cloud") rather than on your
 computer.
 
-If you look at the template file you will see that the file has two kinds of
-sections.  Some of this file is just normal text (with some extra symbols to
-make things bold, add in headings, etc.)  You can get a list of all of these
-mark up options by selecting the "Markdown Quick Reference" in the help
-menu.
+### Three kinds of sections
+
+If you look at the example file you will see that the file has three kinds of
+sections.  
+
+#### YAML header
+
+At the top of the document is the YAML (Yet Another Markup Language) header. This is where 
+you set things like the author and title for your document and specify certain settings that 
+control how the document is processed.
+
+It is important that this section is syntactically correct (mathing quatoation marks, correct indentation, etc.).
+If you get an error message with YAML or yaml in it, you will know that something has gone wrong in the YAML
+header.
+
+:::{.callout-tip}
+#### Fixing YAML errors
+
+If you can't figure out the problem with your YAML header, copy and paste in the YAML from some other document (a previous document you have made or a new one) and edit from there.
+:::
+
+#### Text blocks
+
+Some of this file is just normal text (with some styling to
+make headers, bold, italics, etc.)
+
+#### Code chunks
+
+The third type of section is an R code chunk.  These are colored differently to
+make them easier to see.  You can insert a new code chunk by clicking on the icon 
+pictured below.
 
 
-![](images/MarkdownQuickReference.png){width="3.5in"}
-
-The second type of section is an R code chunk.  These are colored differently to make them
-easier to see.  You can insert a new code chunk by selecting by selecting
-the appropriate chunk type (R in our case) from the menu below.
-
-![](images/InsertChunk.png){width="1.2in"}
-
+![](images/insert-r-chunk.png){width="1.2in" fig-align=center}
 
 You can put any R code in these code chunks and the results (text output or graphics) as well
-as the R code will be displayed in your HTML file.
+as the R code will be displayed in your HTML file.^[There are options to do things like (a) run R code without displaying it, (b) run R code without
+displaying the output, (c) controlling size of plots, etc., etc.
+But for starting out, this is really all you need to know.]
 
-<!-- There are options to do things like (a) run R code without displayng it, (b) run R code without -->
-<!-- displaying the output, (c) controling size of plots, etc., etc.   -->
-<!-- But for starting out, this is really all you need to know. -->
+#### Source vs Visual view
 
-### R Markdown files must be self-contained {-}
-R Markdown files do not have access to things you have done in your console.  (This is good, else 
+RStudio provides two different views of Quarto files. The default is the **Visual view**.
+This looks a bit like a simplified version of Word. There is a toolbar you can use to 
+create bold, italics, headers, etc. 
+
+If you click on **Source** in the upper left corner, you will get a different view.
+This will show your documents as Markdown.  You will see that in this view, headers are 
+indicated with `#`, `##`, `###`, etc.  `*italics*` turns into *italics*, and `**bold**` turns
+into **bold**. 
+
+You can get a list of all of these mark up shortcuts by selecting the "Markdown Quick Reference" in the help
+menu.
+
+![](images/markdown-quick-reference.png){width="3.5in" fig-align="center"}
+
+If you type these while in the Visual view, the will be immediately converted over for you.
+
+### Quarto files must be self-contained {-}
+
+Quarto files do not have access to things you have done in your console.  (This is good, else 
 your document would change based on things not in the file.)  This means that you must explicitly
-load any data packages that you use _in the R Markdown file_. In this class,
-this means that most of your R Markdown files will have a chunk near the beginning that 
+load any data or packages that you use _in the Quarto file_. In this class,
+this means that most of your Quarto files will have a chunk near the beginning that 
 includes
 
-```{r eval = FALSE}
+````
+```{{r}}
+#| include: false
 library(mosaic)
 ```
+````
 
+The special `#| include: false` comments tells Quarto to run the code, but not to include anything 
+in your document. That way you don't have to see all of the package loading messages in your document.
 
-If you use one of the RMarkdown templates provided, 
-this (and some otehr things) will be included in the template and save you some time.
+<!-- If you use one of the RMarkdown templates provided,  -->
+<!-- this (and some other things) will be included in the template and save you some time. -->
 
 <!-- \iffalse -->
 <!-- \subsubsection{Creating an R Markdown document} -->
@@ -795,7 +829,7 @@ this (and some otehr things) will be included in the template and save you some 
 
 <!-- \subsubsection{R Markdown files do not have access to the console environment} -->
 <!-- One thing you need to remember about R Markdown documents is that the file must be self-contained. -->
-<!-- This ensures that the document is portable.  It also means that the docuemnt does not have  -->
+<!-- This ensures that the document is portable.  It also means that the document does not have  -->
 <!-- access to the things in your console environment.  All data must be loaded in the file.   -->
 <!-- Similarly, all packages you use must also be loaded in the file.  If you start getting messages  -->
 <!-- about objects not being found, one possible cause is that you have forgotten to get some  -->
@@ -804,49 +838,75 @@ this (and some otehr things) will be included in the template and save you some 
 <!-- \fi -->
 
 ### Chunk options
-R Markdown provides a number of chunk options that control how R code is processed.
+
+Quarto provides a number of chunk options that control how R code is processed.
 You can use them to do things like:
 
-<!-- begin itemize -->
-* the code without displaying it (good for polished reports -- your client doesn't want to see the code)
-* the code without running it -- mainly useful for demonstration purposes
-* the size and alignment of graphics
-<!-- end itemize -->
+* run the code without displaying it (good for polished reports -- your client doesn't want to see the code)
+* show the code without running it -- mainly useful for demonstration purposes
+* set the size and alignment of graphics
 
 You can set default values for the chunk options and you can also override them in individual
-chunks.  See the R Markdown help for more information about chunk options.
+chunks. See <https://quarto.org/docs/computations/execution-options.html> for more information about 
+chunk options.
 
-The default plots are often bigger than required.  The following chunk options are a place to 
-start.  They can be adjusted as necessary.
+The default plots are often bigger than required. You can adjust this by sitting the 
+`fig-width` and `fig-height` chunk options. They can be adjusted as necessary.
 
-```{r eval = FALSE}
-library(knitr)
-opts_chunk$set(fig.width = 5, fig.height = 2, fig.align = "center", fig.show = "hold")
+```{r}
+#| echo: fenced
+#| fig-width: 4
+#| fig-height: 3
+#| fig-align: center
+gf_histogram(~ Duration, data = oldfaith)
+```
+```{r}
+#| echo: fenced
+#| fig-width: 8
+#| fig-height: 2
+#| fig-align: center
+gf_histogram(~ Duration, data = oldfaith)
+```
+
+You can set default sizes for the entire document by putting them in your YAML header at the top
+of the document:
+
+```{yaml}
+#| eval: false
+format:
+  html:
+    fig-width: 8
+    fig-height: 2
+    fig-align: center
+  pdf:
+    fig-width: 4
+    fig-height: 3
+    fig-align: center
 ```
 
 
-Some of these document settings can also be set in the YAML header 
-(the top few lines of the RMarkdown file).
+<!-- ### knitr/latex -->
+<!-- There is another system that produces PDFs by combining \LaTeX{} and R This is the system -->
+<!-- used to create this document and it gives much more control over paper-like formatting.  The -->
+<!-- quality is good enough for professional publishing.  If you already know \LaTeX{} it is very -->
+<!-- easy to learn.  If you don't know \LaTeX{} then you need to learn the basics of \LaTeX{} to get -->
+<!-- going, but it isn't very difficult. -->
 
-### knitr/latex
-There is another system that produces PDFs by combining TEX COMMAND NOT FOUND LaTeX   and R This is the system
-used to create this document and it gives much more control over paper-like formatting.  The
-quality is good enough for profession publishing.  If you already knwow TEX COMMAND NOT FOUND LaTeX   it is very
-easy to learn.  If you don't know TEX COMMAND NOT FOUND LaTeX   then you need to learn the basics of TEX COMMAND NOT FOUND LaTeX   to get
-going, but it isn't very difficult.
+<!-- R code and output can be copied and pasted as well.  It's best to use a  -->
+<!-- fixed width font (like Courier) for R code so that things align properly. -->
 
-R code and output can be copied and pasted as well.  It's best to use a 
-fixed width font (like Courier) for R code so that things align properly.
+<!-- Note:  RStudio  provide some nice utilities for creating documents that include -->
+<!-- text, code, graphics, and statistical analyses all in one document.  That's how this  -->
+<!-- document was produced.  The simpler of these is called RMarkdown.  The resulting file -->
+<!-- will be an HTML file with embedded plots.  You can gain more control over the output -->
+<!-- by using `knitr` which provides a way to combine $\LaTeX$ and R in a single -->
+<!-- document.  The resulting document in this case is a high quality PDF -->
 
-Note:  RStudio  provide some nice utilities for creating documents that include
-text, code, graphics, and statistical analyses all in one document.  That's how this 
-document was produced.  The simpler of these is called RMarkdown.  The resulting file
-will be an HTML file with embedded plots.  You can gain more control over the output
-by using `knitr` which provides a way to combine $\LaTeX$ and R in a single
-document.  The resulting document in this case is a high quality PDF
+<!-- The block below should be commented out -->
 
-<!-- The block below should be commented out -->## A Few Bells and Whistles
-There are lots of arguments that control how these plots look.  Here are just a
+## A Few Bells and Whistles for Plotting
+
+There are lots of arguments that control how plots look.  Here are just a
 few examples, some of which we have already seen.
 
 <!--  ### auto.key -->
@@ -859,6 +919,7 @@ few examples, some of which we have already seen.
  -->
 
 ### alpha, size
+
 Sometimes it is nice to have elements of a plot be partly transparent.  When
 such elements overlap, they get darker, showing us where data are "piling up."
 Setting the `alpha` argument to a value between 0 and 1 controls the
@@ -877,18 +938,19 @@ gf_point(Sepal.Length ~ Sepal.Width, color = ~ Species, data = iris,
 ```
 
 
-### main, sub, xlab, ylab {-}
+### title, subtitle, caption, xlab, ylab {-}
 
 You can add a title or subtitle, or change the default labels of the axes.
 
 ```{r }
 #| label: fig-iris-xyplot-text
-#| fig-cap: We can add labels using `main`, `sub`, `xlab`, and `ylab`. (Using `gf_labs()` is another way to do this.)
+#| fig-cap: We can add labels using `title`, `subtitle`, `xlab`, and `ylab`. (Using `gf_labs()` is another way to do this.)
 #| fig.width: 6 
 #| fig.height: 3.5
 gf_point(Sepal.Length ~ Sepal.Width, color = ~Species, data = iris, 
-	main = "Some Iris Data",
-	sub = "(R. A. Fisher analysized this data in 1936)",
+	title = "Some Iris Data",
+	subtitle = "(R. A. Fisher analysized this data in 1936)",
+	caption = "Source: R's built-in iris data set",
 	xlab = "sepal width (cm)",
 	ylab = "sepal length (cm)",
 	alpha = .6 
@@ -899,7 +961,7 @@ gf_point(Sepal.Length ~ Sepal.Width, color = ~Species, data = iris,
 
 #### linetype, linewidth, fill, shape {-}
 
-These can be used to change the line type, line width, plot sympbol, and color of filled in regions.
+These can be used to change the line type, line width, plot symbol, and color of filled in regions.
 <!-- To specify multiples (one for each group), use the `c()` function (see below). -->
 
 ```{r }
@@ -916,7 +978,6 @@ gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = ~ sex)
 gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dotted")
 gf_histogram( ~ age, data = HELPrct, fill = 'steelblue')
 ```
-
 
 You can see a list of the hundreds of available color names using `colors()`:
 
@@ -961,12 +1022,14 @@ This can be useful if you don't know the name of the function or data set you
 are looking for.
 
 ### Tab completion
+
 As you type the name of a function in RStudio  you can hit the tab key and it
 will show you a list of all the ways you could complete that name, and after
 you type the opening parenthesis, if you hit the tab key, you will get a list
 of all the arguments and (sometimes) some helpful hints about what they are.)
 
 ### History
+
 If you know you have done something before, but can't remember how, you can
 search your history.  The history tab shows a list of recently executed
 commands.  There is also a search bar to help you find things from longer ago.
@@ -1044,7 +1107,7 @@ also depend on the kinds of variables involved, so this is an important idea.
 
 ### Side-by-side Plots and Overlays Can Reveal Importance of Additional Factors
 
-The `ggformula` graphics plots make it particularly easy to generate plats that 
+The `ggformula` graphics plots make it particularly easy to generate plots that 
 divide the data into groups and either produce a panel for each group (using |!)
 or display each group in a different way (different colors or symbols, using 
 the `groups` argument).  These plots can reveal the 
@@ -1104,9 +1167,8 @@ of the data.
 
 ## Exercises
 
-The solutions to these exercises should be done using an RMarkdown document
-and knitTHML in RStudio.
-Include both the plots and the code you used to make them as well as any
+In your solutions to these exercises
+include both the plots and the code you used to make them as well as any
 required discussion.  Once you get the plots figured out, feel free to 
 use some of the bells and whistles to make the plots even better.
 
@@ -1164,7 +1226,7 @@ data set.  Make an appropriate plot and comment on what you see.
 :::
 
 :::{.problem #exr-mpg-cat}
-**Categorial variable in mpg**
+**Categorical variable in mpg**
 
 Choose a categorical variable that interests you in the `mpg`
 data set.  Make an appropriate plot and comment on what you see.
@@ -1300,6 +1362,6 @@ gf_histogram( ~ Jan, data = SnowGR)
 gf_point(Feb ~ Jan, data = SnowGR)
 ```
 
-There is no clear trend.  Somtime the snow keeps on coming, but a heavy snow
+There is no clear trend.  Sometimes the snow keeps on coming, but a heavy snow
 January could be followed by either a heavy or light snow February.
 :::

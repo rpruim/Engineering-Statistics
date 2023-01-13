@@ -76,7 +76,7 @@ tally( ~age, data = HELPrct )
 
 ### Tabulating in bins (optional)
 Usually a graph is the best way to display and summarize quantitative data, but
-if you need to creat a summary table, you may need to group quantitative data
+if you need to crest a summary table, you may need to group quantitative data
 into bins.  We just have to tell R what the bins are.
 For example, suppose we wanted to group the 20s, 30s, 40s, etc. together.
 
@@ -198,7 +198,7 @@ when the distribution is symmetric than when it is skewed.
 #. The median is a **resistant** measure  (resistant to the presence of outlier) -- it is not affected much by a few very large or very small values.
 <!-- end itemize -->
 
-[^median]: A note about calculating medians: If the number of datapoints is odd,
+[^median]: A note about calculating medians: If the number of data points is odd,
 the median is the middle value (after putting the observations in increasing
 order). In cases where there is an even number of observations, the median is
 the average of the middle two observations.  
@@ -307,7 +307,7 @@ the five **quantiles**:
 <!-- begin itemize -->
 
 #. $Q_0$, the minimum
-#. $Q_1$, the first quartile (25th percintile) 
+#. $Q_1$, the first quartile (25th percentile) 
 #. $Q_2$, the median (50th percentile)
 #. $Q_3$, the third quartile (75th percentile)
 #. $Q_4$, the maximum
@@ -324,7 +324,7 @@ gf_boxplot(~age, data = HELPrct)
 Boxplots provide a way of comparing multiple groups that is especially informative and visually effective.  Here is one way to make boxplots of multiple groups (it 
 should look familiar from what we know about histogram):
 ```{r }
-#| label: fig-boxplot-facets}
+#| label: fig-boxplot-facets
 #| fig-cap: Facets are not the best way to display this sort of plot.
 #| fig.height: 1.5
 gf_boxplot(~age | substance ~ ., data = HELPrct)
@@ -407,7 +407,7 @@ $$
 $$
 
 If we code our categorical variable using 1 for observations in a
-single category of interst -- "the one category" --
+single category of interest -- "the one category" --
 and 0 for observations in any other category, then
 *a proportion is a sample mean*.
 
@@ -434,7 +434,7 @@ that has the smallest possible variance.
 Compute the mean and variance of this data set "by hand"
 (that is, without using `mean()` or `sd()` or `var()` or `df_stats(), etc.
 in R or similar features on a calculator).
-You can check your hand calculation using R, but show the hand calclulation.
+You can check your hand calculation using R, but show the hand calculation.
 :::
 
 ::: {.solution}
@@ -456,7 +456,7 @@ that has the largest possible variance.
 Compute the variance of this data set "by hand"
 (that is, without using `mean()` or `sd()` or 
 `var()` or `df_stats()`, etc. in R or similar features on a calculator). 
-You can check your hand calculation using R, but show the hand calclulation.
+You can check your hand calculation using R, but show the hand calculation.
 :::
 
 ::: {.solution}

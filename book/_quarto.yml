@@ -3,10 +3,6 @@ project:
   output-dir: _site
   preview:
     port: 4300
- 
-  
-execute:
-  freeze: auto
   
 format:
   html:
@@ -19,6 +15,9 @@ format:
     fig-height: 2.5
     fig-width: 4.5
     fig-align: center
+  pdf: 
+    geometry: 
+      - "margin=0.9in"
 
 css: book.css
 

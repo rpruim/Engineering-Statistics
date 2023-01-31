@@ -680,13 +680,13 @@ X - Y \sim \Norm(10 - 12, \sqrt{2^2 + 4^2})
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  22.02806629    4.38658746 
- ( 0.06203571) ( 0.04386587)</code></pre>
+  21.90981107    4.45151130 
+ ( 0.06295388) ( 0.04451511)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  -2.01030253    4.39468683 
- ( 0.06215026) ( 0.04394687)</code></pre>
+  -1.96090884    4.46157512 
+ ( 0.06309620) ( 0.04461575)</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -732,9 +732,9 @@ Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="ma
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<pre><code>      mean          sd    
-  5.99295451   1.00556217 
- (0.01422080) (0.01005562)</code></pre>
+<pre><code>      mean           sd     
+  6.033745965   0.994912618 
+ (0.014070189) (0.009949126)</code></pre>
 </div>
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="05-transformations_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="432"></p>
@@ -928,7 +928,7 @@ Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="ma
 <p><span class="math display">\[
 S^2 = \frac{ \sum_{i = 1}^n (X_i - \mean X)^2 }{n-1}
 \]</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> This explains the reason for the <span class="math inline">\(n-1\)</span> in the denominator of the sample variance.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>An obvious, but not quite correct solution to our unknown <span class="math inline">\(\sigma\)</span> dilemma is to use <span class="math inline">\(s\)</span> in pace of <span class="math inline">\(\sigma\)</span>. In fact this was routinely done until 1908 <span class="citation" data-cites="Student1908">Student (<a href="references.html#ref-Student1908" role="doc-biblioref">1908</a>)</span>, when William Gosset, publishing under the pseudonym Student, pointed out that when sampling from a <span class="math inline">\(\Norm(\mu, \sigma)\)</span> popoulation,</p>
+<p>An obvious, but not quite correct solution to our unknown <span class="math inline">\(\sigma\)</span> dilemma is to use <span class="math inline">\(s\)</span> in pace of <span class="math inline">\(\sigma\)</span>. In fact this was routinely done until 1908 <span class="citation" data-cites="Student1908">Student (<a href="references.html#ref-Student1908" role="doc-biblioref">1908</a>)</span>, when William Gosset, publishing under the pseudonym Student, pointed out that when sampling from a <span class="math inline">\(\Norm(\mu, \sigma)\)</span> population,</p>
 <p><span class="math display">\[
 \frac{ \mean X - \mu}{\sigma/\sqrt{n}} \sim \Norm(0,1)
 \mbox{\;\ but\ }
@@ -959,7 +959,7 @@ S^2 = \frac{ \sum_{i = 1}^n (X_i - \mean X)^2 }{n-1}
 </section>
 <section id="standard-error" class="level3" data-number="5.4.5">
 <h3 data-number="5.4.5" class="anchored" data-anchor-id="standard-error"><span class="header-section-number">5.4.5</span> Standard Error</h3>
-<p>The Central Limit Theorem tells us that (under certain condidtions), the standard deviation of the sampling distribution for the sample mean is <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>. Typically we don’t know <span class="math inline">\(\sigma\)</span> so we estimate this quantity with <span class="math inline">\(\frac{s}{\sqrt{n}}\)</span>. To avoid having to say “the estimated standard deviation of the sampling distribution”, we introduce a new term</p>
+<p>The Central Limit Theorem tells us that (under certain conditions), the standard deviation of the sampling distribution for the sample mean is <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>. Typically we don’t know <span class="math inline">\(\sigma\)</span> so we estimate this quantity with <span class="math inline">\(\frac{s}{\sqrt{n}}\)</span>. To avoid having to say “the estimated standard deviation of the sampling distribution”, we introduce a new term</p>
 <div class="description">
 <ul>
 <li><strong>standard error</strong> the estimated standard deviation of a sampling distribution</li>
@@ -1169,7 +1169,7 @@ mean of x
 <div id="exr-gamma-sims-and-qq" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 5.1 </strong></span><strong>Gamma distributions</strong></p>
 <p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be independent <span class="math inline">\(\Gamm(\texttt{shape} = 2, \texttt{scale} = 3)\)</span> random variables.<br>
-Let <span class="math inline">\(S = X+Y\)</span> and let <span class="math inline">\(D = X - Y\)</span>. Use simulations (with 5000 replications) and quantile-quantile pltos to answer the following:</p>
+Let <span class="math inline">\(S = X+Y\)</span> and let <span class="math inline">\(D = X - Y\)</span>. Use simulations (with 5000 replications) and quantile-quantile plots to answer the following:</p>
 <div class="enumerate">
 <ol type="a">
 <li>Fit a normal distribution to <span class="math inline">\(S\)</span> using <code>fitdistr()</code>.<br>
@@ -1197,8 +1197,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean           sd     
-  11.87055036    6.05627222 
- ( 0.08564862) ( 0.06056272)</code></pre>
+  11.74338061    5.97830327 
+ ( 0.08454598) ( 0.05978303)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1213,8 +1213,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"gamma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      shape         rate    
-  3.850195723   0.324348622 
- (0.073908630) (0.006650551)</code></pre>
+  3.864842047   0.329108223 
+ (0.074200617) (0.006747429)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S, <span class="at">distribution =</span> qgamma, <span class="at">dparams =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="fl">4.04</span>, <span class="at">rate =</span> <span class="fl">0.333</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1229,9 +1229,9 @@ Is the normal distribution a good fit?</li>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(D, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      mean           sd     
-  -0.07902866    5.93318421 
- ( 0.08390790) ( 0.05933184)</code></pre>
+<pre><code>      mean          sd    
+  0.07960858   5.74300445 
+ (0.08121835) (0.05743004)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> D)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1248,7 +1248,7 @@ The density plot perhaps makes this clearer if you are not familiar with qq-plot
 <!-- end solution -->
 <div id="exr-normal-probabilities" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 5.2 </strong></span><strong>Normal probabilities</strong></p>
-<p>If <span class="math inline">\(X \sim \Norm(110, 15)\)</span> and <span class="math inline">\(Y \sim \Norm(100, 20)\)</span> are independent random varaibles:</p>
+<p>If <span class="math inline">\(X \sim \Norm(110, 15)\)</span> and <span class="math inline">\(Y \sim \Norm(100, 20)\)</span> are independent random variables:</p>
 <div class="enumerate">
 <ol type="a">
 <li>What is <span class="math inline">\(\Prob(X \ge 140)\)</span>?</li>
@@ -2221,14 +2221,14 @@ f(x) = \begin{cases}
 <!--  This data was among the CMU data sets that have been pulled from the mosaic package -->
 <div id="exr-flicker" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 5.20 </strong></span><strong>Critical flicker frequency</strong></p>
-<p>Critical flicker frequency (called <code>Flicker</code> in the data set below) is the lowest flicker rate at which the human eye can detect that a light source (from a flourenscent bulb or a computer screen, for example) is flickering. Knowing the cff is important for product manufacturing (since detectable flickering is annoying for the consumer). The command below loads data from from a 1973 study that attempted to determine whether the cff, which varies from person to person, is partially determined by eye color.</p>
+<p>Critical flicker frequency (called <code>Flicker</code> in the data set below) is the lowest flicker rate at which the human eye can detect that a light source (from a florescent bulb or a computer screen, for example) is flickering. Knowing the cff is important for product manufacturing (since detectable flickering is annoying for the consumer). The command below loads data from from a 1973 study that attempted to determine whether the cff, which varies from person to person, is partially determined by eye color.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a>Flicker <span class="ot">&lt;-</span> <span class="fu">read.file</span>(<span class="st">"http://www.statsci.org/data/general/flicker.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Reading data with read.table()</code></pre>
 </div>
 </div>
-<p>Create a plot that can be used to visualise the data. What does your plot suggest the answer might be? (Does eye color matter?)</p>
+<p>Create a plot that can be used to visualize the data. What does your plot suggest the answer might be? (Does eye color matter?)</p>
 </div>
 <!-- end problem -->
 <div class="solution proof">
@@ -2250,7 +2250,7 @@ f(x) = \begin{cases}
 <!-- end solution -->
 <div id="exr-difference-between-two-means" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 5.21 </strong></span><strong>Difference between two means</strong></p>
-<p>Let <span class="math inline">\(\mean X_1\)</span> be the distibution of sample means from a population with mean <span class="math inline">\(\mu_1\)</span> and standard deviation <span class="math inline">\(\sigma_1\)</span>. Let <span class="math inline">\(\mean X_2\)</span> be the distibution of sample means from a population with mean <span class="math inline">\(\mu_2\)</span> and standard deviation <span class="math inline">\(\sigma_2\)</span>. What is the distribution of <span class="math inline">\(\mean X_1 - \mean X_2\)</span>? (Hint: start by determining the distributions of <span class="math inline">\(\mean X_1\)</span> and <span class="math inline">\(\mean X_2\)</span>, then use what we know about differences.)</p>
+<p>Let <span class="math inline">\(\mean X_1\)</span> be the distribution of sample means from a population with mean <span class="math inline">\(\mu_1\)</span> and standard deviation <span class="math inline">\(\sigma_1\)</span>. Let <span class="math inline">\(\mean X_2\)</span> be the distribution of sample means from a population with mean <span class="math inline">\(\mu_2\)</span> and standard deviation <span class="math inline">\(\sigma_2\)</span>. What is the distribution of <span class="math inline">\(\mean X_1 - \mean X_2\)</span>? (Hint: start by determining the distributions of <span class="math inline">\(\mean X_1\)</span> and <span class="math inline">\(\mean X_2\)</span>, then use what we know about differences.)</p>
 </div>
 <!-- end problem -->
 <div id="exr-difference-between-two-proportions" class="problem theorem exercise">
@@ -2343,7 +2343,7 @@ f(x) = \begin{cases}
 </div>
 <div class="enumerate">
 <ol type="a">
-<li>Use the summary above to compute a 95% confidence interval for the difference in mean extensitibility for the two types of fabric.</li>
+<li>Use the summary above to compute a 95% confidence interval for the difference in mean extensibility for the two types of fabric.</li>
 <li>Then use <code>t.test()</code> to compute the confidence interval. How do the degrees of freedom from <code>t.test()</code> compare with the upper and lower bounds we have for degrees of freedom? Which end of the range is it closer to? Why?</li>
 <li>Create normal-quantile plots for each group. Does it seem plausible that that the populations are normal? Is it important that this be plausible?</li>
 </ol>

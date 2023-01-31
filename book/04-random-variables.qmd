@@ -35,7 +35,7 @@ typically either a finite set or a subset of the integers.  Here are some exampl
 #. If we roll a die and record the number, there are six possible values,
 so the random variable is discrete.
 #. If we keep flipping a coin until we get a head and record the number of coin
-tosses, then the possible values of the random variable are $1, 2, 3, \dots
+tosses, then the possible values of the random variable are $1, 2, 3, \dots$
 This is also a discrete random variable.
 ::: 
 <!-- end enumerate -->
@@ -43,7 +43,7 @@ This is also a discrete random variable.
 
 
 For each of the possible values of a discrete random variable, there is some
-probability of that value occuring.  So to specify a discrete random variable,
+probability of that value occurring.  So to specify a discrete random variable,
 we need to specify those probabilities.  When there are only a small number 
 of possible value, we can do this with a table.
 
@@ -78,19 +78,19 @@ which is the same as specifying $g$ with the following table.
 +-------------------+------+------+-------+
 :::
 
-Here's one more example.  Let $W$ be a random varaible that can take on any integer
+Here's one more example.  Let $W$ be a random variable that can take on any integer
 value and has pmf given by
 
 $$
 h(w) = \left(\frac{1}{2}\right)^{w+1} \mbox {for $w = 0, 1, 2, 3, \dots$}
 $$
 
-So, for example, $\Prob(W = 2) = h(2) = \left(\frac12 \right)^3 = \frac18$.
+So, for example, $\Prob(W = 2) = h(2) = \left(\frac{1}{2} \right)^3 = \frac18$.
 
 Probabilities can be obtained from the pmf by adding:
 
 
-* $\Prob( X > 0 ) = 0.5 + 0.3 - 0.8$
+* $\Prob( X > 0 ) = 0.5 + 0.3 = 0.8$
 * $\Prob( Y > 0) = 0.5 + 0.25$
 * $\Prob(W > 0) = \frac{1}{4} + \frac{1}{8} + \frac{1}{16} + \cdots = \frac{1}{2}$
 * $\Prob(W > 0) = 1 - \Prob(W = 0) = 1 - \frac{1}{2} = \frac{1}{2}$
@@ -117,9 +117,9 @@ But we can work out the first few probabilities:
 
 ::: {.itemize}
 
-* $f(0) = \Prob(X = 0) = 0.08$.  (She has to miss the first shot.)
-* $f(1) = \Prob(X = 1) = (0.92)(0.08)$.  (She has to make the first and miss the second.)
-* $f(2) = \Prob(X = 2) = (0.92)^2(0.08)$.  (She has to make the first two, then miss the third.)
+* $f(1) = \Prob(X = 1) = 0.08$.  (She has to miss the first shot.)
+* $f(2) = \Prob(X = 2) = (0.92)(0.08)$.  (She has to make the first and miss the second.)
+* $f(3) = \Prob(X = 3) = (0.92)^2(0.08)$.  (She has to make the first two, then miss the third.)
 ::: 
 <!-- end itemize -->
 
@@ -129,8 +129,8 @@ algebraic form for the pmf:
 $$
 f(x) = \Prob(X = x) = (0.92)^{x-1}(0.08)
 $$
-where $x$ is a positive integer.  (If $x$ is not an integer, or $x < 1$, then $f(x) = 0$, since
-those values are not possible.)
+where $x$ is a positive integer.  (If $x$ is not an integer, or $x < 1$, then
+$f(x) = 0$, since those values are not possible.)
 ::: 
 <!-- end example -->
 
@@ -217,7 +217,7 @@ and describes a continuous random variable $X$ such that
 
 $$
    \Prob(a \le X \le b) = \int_a^b f(x) \; dx \;.
-$$ { #eq-integral-for-probability }
+$${#eq-integral-for-probability}
 ::: 
 
 <!-- end boxedText -->
@@ -235,10 +235,10 @@ $$
 Show that $f$ is a density function.  Let $X$ be the associated random 
 variable, and compute the following probabilities:
 
-1. $\Prob(X\le0)$
+1. $\Prob(X \le 0)$
 2. $\Prob(X \le 1)$
-3. $\Prob(X \le \frac12)$
-4. $\Prob(-\frac12 X \le \frac12)$
+3. $\Prob(X \le \frac{1}{2})$
+4. $\Prob(-\frac{1}{2} \le X \le \frac{1}{2})$
 
 **A.**
 While we could set up integrals for these, it is easier to solve them using 
@@ -262,13 +262,15 @@ $$
 $$
 This implies that $f$ is a density function.
 
-1. $\Prob(X \le 1)  = \int_{-\infty}^{1} f(x) \; dx  =
+1. $\Prob(X \le 0) = 1/2$ by symmetry or using $\frac{1}{2} \cdot 1 \cdot 1$ to compute the area of the triangle.
+
+2. $\Prob(X \le 1)  = \int_{-\infty}^{1} f(x) \; dx  =
 \int_{-1}^{1} f(x) \; dx = 1$.
 
-2. $\Prob(X \le \frac12) = \int_{-\infty}^{1/2} f(x) \; dx  =
-\int_{-1}^{1/2} f(x) \; dx = 1 - \frac12 \cdot \frac12 \cdot \frac12 = \frac78$.
+3. $\Prob(X \le \frac{1}{2}) = \int_{-\infty}^{1/2} f(x) \; dx  =
+\int_{-1}^{1/2} f(x) \; dx = 1 - \frac{1}{2} \cdot \frac{1}{2} \cdot \frac{1}{2} = \frac78$.
 
-3. $\Prob( -\frac12 \le X \le \frac 12 )  = \int_{-1/2}^{1/2} f(x) \; dx =
+4. $\Prob( -\frac{1}{2} \le X \le \frac 12 )  = \int_{-1/2}^{1/2} f(x) \; dx =
 	1 - \frac{2}{8} = \frac{3}{4}$.
 
 We can also let R do (numerical) integration for us.  There are two ways to do this.
@@ -327,12 +329,19 @@ Determine the pdf.
 $$
 \int_{-\infty}^{\infty} k(x) \; dx \;. 
 $$
+
 ```{r }
 k <- makeFun( x^2 * ( 0 <= x & x <= 2) ~ x )
-plotFun(k(x) ~ x, xlim = c(-1,3))
 integrate( k, 0, 2)
 K <- antiD(k(x) ~ x, lower.bound = 0)
 K(2)
+```
+```{r}
+#| echo: false
+#| label: fig-kernel-x-squared
+#| fig-cap: A kernel function.
+#| fig-align: center
+plotFun(k(x) ~ x, xlim = c(-1,3), ylab = "k(x)", col = "navy")
 ```
 
 Since the total area is $8/3$, if $\frac{k(x)}{8/3}$ is the pdf.
@@ -384,7 +393,7 @@ F(.5) - F(-.5)      # P( -0.5 <= X <= 0.5 )
 <!-- end example -->
 
 
-<!-- ## Working with Probability Density Funcitons -->
+<!-- ## Working with Probability Density Functions -->
 
 We have already seen that we can use a pdf $f$ to calculate probabilities via integration, 
 and that there is a special anti-derivative of $f$ called the cdf such that the cdf $F$
@@ -449,7 +458,7 @@ can denote the mean of $X$ by either $\mu_X$ or $\E(X)$.
 
 ::: {.example #exm-mean-exp-value-1}
 
-Let $X$ be discrete random variable with probablilities given in the table 
+Let $X$ be discrete random variable with probabilities given in the table 
 below.
 
 :::: {.center}
@@ -520,8 +529,8 @@ $$
 $$
 
 If you recall doing center of mass problems you may recognize this integral as
-the first moment. (For pdfs, we don't need to divide by the ``mass'' because the
-total ``mass'' is the area under the curve, which will always be 1 for a random
+the first moment. (For pdfs, we don't need to divide by the "mass" because the
+total "mass" is the area under the curve, which will always be 1 for a random
 variable).
 
 Note: It is possible that the integral used to define the mean will fail to converge.
@@ -541,12 +550,12 @@ $$
 \\
 	& = \int_{-1}^{0} x (x-1) \; dx + \int_{0}^1 x ( 1-x ) \; dx 
 	\\
-	& = \int_{-1}^{0} x^2-x) \; dx + \int_{0}^1 x-x^2 ) \; dx  
+	& = \int_{-1}^{0} x^2-x \; dx + \int_{0}^1 x-x^2  \; dx  
 	\\
 	& = \left. \frac{x^3}{3} - \frac{x^2}{2} \right|_{-1}^0
 	+ \left. \frac{x^2}{2} - \frac{x^3}{3} \right|_{0}^1
 	\\
-	& = \frac13 - \frac12 + \frac12 - \frac13 = 0
+	& = \frac13 - \frac{1}{2} + \frac{1}{2} - \frac13 = 0
 \end{aligned}
 $$
 
@@ -574,7 +583,7 @@ variable using
 
 ::: {.itemize}
 
-* discrete: $\Var(X) = \sigma^2_X = \sum x (x-\mu_X)^2$
+* discrete: $\Var(X) = \sigma^2_X = \sum_x (x-\mu_X)^2$
 
 * continuous: $\Var(X) = \sigma^2_X = \int_{-\infty}^{\infty} (x-\mu_X)^2 f(x) \; dx$
 ::: 
@@ -625,9 +634,9 @@ $$ {#eq-var-shortcut}
 Let $f(x) = 5/4 - x^3$  on $[0,1]$.  
 
 1. Show that $f$ is a pdf.
-2. Calculate $\Prob(X \le\frac12)$.
-3. Calculate $\Prob(X \ge\frac12)$.
-4. Calculate $\Prob(X = \frac12)$.
+2. Calculate $\Prob(X \le\frac{1}{2})$.
+3. Calculate $\Prob(X \ge\frac{1}{2})$.
+4. Calculate $\Prob(X = \frac{1}{2})$.
 
 
 ::: 
@@ -728,8 +737,10 @@ So by the quadratic formula, $x = \frac{1}{2} \sqrt{2} - 1 = `r 1/2*sqrt(2) - 1`
 
 We can check this by evaluating the cdf.
 ```{r }
+f <- makeFun( (1 - abs(x)) * (abs(x) <= 1) ~ x )
+F <- antiD(f(x) ~ x, lower.bound = -1)
 x <- 1/2*sqrt(2) - 1
-F(x)
+F(x) 
 ```
 
 
@@ -785,7 +796,7 @@ of the triangle distributions, these functions are
 
 ::: {.example #exm-triangle-in-R}
 
-**Q.** Let $X \sim\Tri0,4,1)$.  Use R to answer the following questions.
+**Q.** Let $X \sim\Tri(0,4,1)$.  Use R to answer the following questions.
 
 :::: {.enumerate}
 a. Plot the pdf for $X$.
@@ -809,8 +820,8 @@ gf_dist("triangle", a = 0, b = 4, c = 1)
 Here is the R code to answer the remaining questions.
 
 ```{r }
-ptriangle(1, 0, 4, 1)   # P(X <= 4); notice that his is NOT 1/2
-ptriangle(2, 0, 4, 1)   # P(X <= 4); also NOT 1/2
+ptriangle(1, 0, 4, 1)   # P(X <= 1); notice that his is NOT 1/2
+ptriangle(2, 0, 4, 1)   # P(X <= 2); also NOT 1/2
 qtriangle(0.5, 0, 4, 1) # median is the 0.5-quantile
 T <- antiD( x * dtriangle(x, 0,4,1) ~ x, lower.bound = 0)
 T(4)                    # mean of X
@@ -836,10 +847,10 @@ rather than R
 
 :::: {.itemize}
 
-* $\Prob(X \le 1) = \frac 12 \cdot 1 \cdot \frac12 = \frac 14$
-* $\Prob(X \le 2) = 1 - \Prob(X \ge 2) =  1 - \frac12 \cdot 2 \cdot \frac13  = 1 - \frac 13 = \frac23$.
+* $\Prob(X \le 1) = \frac 12 \cdot 1 \cdot \frac{1}{2} = \frac 14$
+* $\Prob(X \le 2) = 1 - \Prob(X \ge 2) =  1 - \frac{1}{2} \cdot 2 \cdot \frac13  = 1 - \frac 13 = \frac23$.
 * The median $m$ is a number between 1 and 2 and satisfies
-			$\frac 12 = \Prob(X \ge m) = \frac12 (4-m) \frac{4-m}{6}$.  
+			$\frac 12 = \Prob(X \ge m) = \frac{1}{2} (4-m) \frac{4-m}{6}$.  
 			Solving for $m$ we get $m = 4 - \sqrt{6} = `r 4 - sqrt(6)`$.
 :::: 
 <!-- end itemize -->
@@ -974,7 +985,7 @@ punif(2,1,4)   # P(X <= 2 )
 qunif(.8, 1,4) # 80th percentile
 ```
 
-We could also get the 80th percentile by solving the equation $\frac{3}{(x-1)} = 0.8$
+We could also get the 80th percentile by solving the equation $\frac{x-1}{3} = 0.8$.
 From this we get $\frac{x}{3} = 0.8 + 1/3$, so $x = 3 ( 0.8 + 1/3) = 2.4 + 1 = 3.4$.
 ::: 
 <!-- end example -->
@@ -1060,7 +1071,7 @@ functions to make things even easier.
 | Function               | What it does                                               	                                |
 |------------------------|----------------------------------------------------------------------------------------------|
 | `dexp(x, rate)`        | Computes value of the pdf at `x`.                                                            |
-| `pexp(q, rate)`        | Computes value of the cdf at `x`, i.e., $\Prob(X \le \texttt{q})$.                           |
+| `pexp(q, rate)`        | Computes value of the cdf at `q`, i.e., $\Prob(X \le \texttt{q})$.                           |
 |	`qexp(p, rate)`        | Computes quantiles, that is a value $q$ so that $\Prob(X \le \texttt{q}) = \texttt{p}$.      | 
 |	`rexp(n, rate)`        | Randomly samples `n` values from the $\Exp(\lambda)$ distribution where $\lambda$ = `rate`.  |
 
@@ -1131,7 +1142,7 @@ $1/30$ of an hour (on average) for the first event to happen.
 
 ### Gamma and Weibull Distributions
 
-The Gamma and Weibull familities of distributions are generalizations of the exponential
+The Gamma and Weibull families of distributions are generalizations of the exponential
 distribution.  Each family has two parameters, a rate parameter as in 
 the exponential distribution, and an additional parameter called the shape 
 parameter (denoted by $\alpha$ below).  The reciprocal of the rate parameter
@@ -1142,9 +1153,9 @@ scale.
 +----------------------------------------+----------------------------------------------------------+
 + distribution                           + kernel                                                   +
 +========================================+==========================================================+
-| $\Gamm(\alpha, \lambda)$               | $ k(x) = x^{\alpha} e^{-\lambda x}$ for $x \ge 0$        |
+| $\Gamm(\alpha, \lambda)$               | $k(x) = x^{\alpha} e^{-\lambda x}$ for $x \ge 0$         |
 +----------------------------------------+----------------------------------------------------------+
-| $\Weibull(\alpha, \lambda)$            | $ k(x) = x^{\alpha} e^{-\lambda x^{\alpha}}$ for $x > 0$ |
+| $\Weibull(\alpha, \lambda)$            | $k(x) = x^{\alpha} e^{-\lambda x^{\alpha}}$ for $x > 0$  |
 +----------------------------------------+----------------------------------------------------------+
 
 : Kernels for Gamma and Weibull distributions.
@@ -1163,8 +1174,8 @@ The now familiar functions are available for each of these distributions.
 | Function                                      | What it does                                                                            |	
 |------------------------|----------------------------------------------------------------------------------------------------------------|
 | `dgamma(x, shape, rate = 1, scale = 1/rate)`  | Computes value of the pdf at `x`.                                                       |
-| `pgmma(x, shape, rate = 1, scale = 1/rate)`   | Computes value of the cdf at `x`, i.e., $\Prob(X \le \texttt{q})$.                      |
-|	`qgamma(x, shape, rate = 1, scale = 1/rate)`  | Computes quantiles, that is a value $q$ so that $\Prob(X \le \texttt{q}) = \texttt{p}$. |
+| `pgamma(q, shape, rate = 1, scale = 1/rate)`   | Computes value of the cdf at `q`, i.e., $\Prob(X \le \texttt{q})$.                      |
+|	`qgamma(p, shape, rate = 1, scale = 1/rate)`  | Computes quantiles, that is a value $q$ so that $\Prob(X \le \texttt{q}) = \texttt{p}$. |
 |	`rgamma(n, shape, rate, scale = 1/rate)`      | Randomly samples `n` values from the Gamma distribution.                                |
 
 : Gamma distributions in R.
@@ -1172,8 +1183,8 @@ The now familiar functions are available for each of these distributions.
 | Function                                      | What it does                                                                                |	
 |-----------------------------------------------|---------------------------------------------------------------------------------------------|
 | `dweibull(x, shape, scale = 1)`               | Computes value of the pdf at `x`.                                                           |
-| `pweibull(x, shape, scale = 1)`               | Computes value of the cdf at `x`, i.e., $\Prob(X \le \texttt{q})$.                          | 
-| `qweibull(x, shape, scale = 1)`               | Computes quantiles, that is a value $q$ so that $\Prob(X \le \texttt{q}) = \texttt{p}$.     |
+| `pweibull(q, shape, scale = 1)`               | Computes value of the cdf at `q`, i.e., $\Prob(X \le \texttt{q})$.                          | 
+| `qweibull(p, shape, scale = 1)`               | Computes quantiles, that is a value $q$ so that $\Prob(X \le \texttt{q}) = \texttt{p}$.     |
 |	`rweibull(n, shape, scale = 1)`               | Randomly samples `n` values from the Weibull distribution.                                  |
 
 : Weibull distributions in R.
@@ -1197,7 +1208,7 @@ are aptly named.
 #| layout-ncol: 2
 gf_dist("gamma", params = list(shape = 2, rate = 1), title = "Gamma(2,1)")
 gf_dist("gamma", params = list(shape = 5, rate = 1), title = "Gamma(5,1)")
-gf_dist("gamma", params = list(shape = 2, scale = 10), title = "Gamma(5,10)")
+gf_dist("gamma", params = list(shape = 2, scale = 10), title = "Gamma(2,10)")
 gf_dist("gamma", params = list(shape = 5, scale = 10), title = "Gamma(5,10)")
 ```
 
@@ -1218,12 +1229,12 @@ gf_dist("weibull", params = list(shape = 5, scale = 10),title = "Weibull(5,10)")
 
 We come now to the most famous family of distributions -- the normal
 distributions (also called Gaussian distributions).  These symmetric 
-distributions have the famous ``bell shape'' and are described by two parameters, 
+distributions have the famous "bell shape" and are described by two parameters, 
 the mean $\mu$ and the standard deviation $\sigma$.  The pdf for a $\Norm(\mu, \sigma)$
 distribution is 
 
 $$ 
-f(x) = \frac{ 1}{\sigma\sqrt{2\pi}} e^{-(x-\mu)^2/2\sigma^2}
+f(x) = \frac{ 1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
 $$ {#eq-normal-pdf}
 
 <!-- +---------------------------------------+--------------------------------------------------------+ -->
@@ -1304,7 +1315,7 @@ distributed with a mean of 500 and a standard deviation of 100.
 **A.**
 
 1. 68\%
-2. Since 68\% are bewteen 400 and 600, the other 32\% must be outside that
+2. Since 68\% are between 400 and 600, the other 32\% must be outside that
 			range, half above and half below.  So 16\% are above 600.
 3. Since 95\% are between 300 and 700, the other 5\% must be outside that 
 			range, half above and half below.  So 2.5\% are below 300.
@@ -1474,14 +1485,14 @@ pgamma(1, 2, scale = 1/2)   - pgamma(0.5, 2, scale = 1/2)
 ### Binomial Distributions
 
 A binomial distribution is a discrete distribution with two parameters ($n$ and $p$,
-or as R calls them \verb!size! and \verb!prob!) describing a situation in which
+or as R calls them `size` and `prob` describing a situation in which
 
 1.  Our random process consists of $n$ identical sub-processes (called trials).
 2.  Each trial has one of two outcomes (traditionally called success and failure).
 3.  The probability of success is $p$ for each trial.
 4.  The outcome of each trial is independent of the others.
 
-The binomial random varialbe counts the number of successes.
+The binomial random variable counts the number of successes.
 
 ::: {.example #exm-freethrow-amy}
 
@@ -1493,7 +1504,7 @@ a. Amy is a 92% free throw shooter.  If she attempts 50 free throws and we let  
 $Y$ be the number that she makes, then $Y \sim \Binom(50, 0.92)$ (assuming that 
 each shot is independent of the others.^[Whether an individual shooter's 
 shots are independent or exhibit longer runs of "hot" and "cold"
-streaks that we would expect under indpendence has been investigated by 
+streaks that we would expect under independence has been investigated by 
 many people.  The general conclusion seems to be that the independence 
 assumption matches reality pretty closely.])
 :::: 
@@ -1526,7 +1537,7 @@ As with the continuous distributions, we have our usual functions available.
 | Function                     | What it does                                                                                                |	
 |------------------------------|-------------------------------------------------------------------------------------------------------------|
 | `dbinom(x, size, prob)`      | Computes value of the pmf at `x`.                                                                           |
-| `pbinom(q, size, prob)`      | Computes value of the cdf at `x`, i.e., $\Prob(X \le \texttt{q})$.                                          |
+| `pbinom(q, size, prob)`      | Computes value of the cdf at `q`, i.e., $\Prob(X \le \texttt{q})$.                                          |
 |	`qbinom(p, size, prob)`      | Computes quantiles, that is a value $q$ so that $\Prob(X \le \texttt{q}) = \texttt{p}$.                     |
 |	`rbinom(n, size, prob)`      | Randomly samples `n` values from the $\Binom(n, \pi)$ distribution where $n$ = `size` and $\pi$ = `prob`.   |
 
@@ -1549,7 +1560,7 @@ of events that happen over the fixed amount of time or space we are observing.
 
 :::: {.enumerate}
 
-a.  Let $X$ be the number of clicks of a Gieger counter in a 1 second interval.
+a.  Let $X$ be the number of clicks of a Geiger counter in a 1 second interval.
 Since each click corresponds to a radioactive decay event which we generally assume
 occur "at random" but according to some average rate, a Poisson random variable
 would be a good model for this.  The rate parameter would be the average number 
@@ -1590,7 +1601,7 @@ the following:
 | Function           | What it does                                                                                   |
 |--------------------|------------------------------------------------------------------------------------------------|
 | `dpois(x, lambda)` | Computes value of the pmf at `x`.                                                              |
-| `ppois(q, lambda)` | Computes value of the cdf at `x`, i.e., $\Prob(X \le \texttt{q})$.                             |
+| `ppois(q, lambda)` | Computes value of the cdf at `q`, i.e., $\Prob(X \le \texttt{q})$.                             |
 | `qpois(p, lambda)` | Computes quantiles, that is a value $q$ so that $\Prob(X \le \texttt{q}) = \texttt{p}$.        |
 | `rpois(n, lambda)` | Randomly samples `n` values from the $\Pois(\lambda)$ distribution where $\lambda$ = `lambda`. |
 
@@ -1704,7 +1715,7 @@ gf_dhistogram( ~ speed2, data = Wind) |>
 
 
 By eye, it appears that the Gamma distribution fits this data set slightly better, but
-there may other reasons to prefer the Weibull distribution.  In fact,
+there may be other reasons to prefer the Weibull distribution.  In fact,
 there has been a good deal of research done regarding which distributions to use 
 for wind speed data fitting.  The answer to the question of which distributions should 
 be used seems to be that it depends on the purpose for your modeling:  
@@ -1721,7 +1732,7 @@ parameter of interest." @Morgan2011:WindSpeed
 Possible models for the points scored each game that season are normal, Weibull, and 
 Gamma distributions.
 The normal distributions might be a good choice if we think that the distributions
-is roughly symetric (very good games are about the same amount above average as
+is roughly symmetric (very good games are about the same amount above average as
 the very poor games are below average).  Weibull and Gamma distributions have
 the built in feature that scores cannot be negative and would allow for a
 skewed distribution.
@@ -1737,9 +1748,9 @@ We can use a histogram with overlaid density curve to see how well these fits co
 to the data.
 ```{r jordan2, warning=FALSE}
 gf_dhistogram(~ points, data = Jordan8687, binwidth = 5) |>
-  gf_fitdistr(dist = "dnorm", color = ~"normal") |>
-  gf_fitdistr(dist = "dweibull", color = ~ "Weibull") |>
-  gf_fitdistr(dist = "dgamma", color = ~ "Gamma")
+  gf_fitdistr(dist = "norm", color = ~"normal") |>
+  gf_fitdistr(dist = "weibull", color = ~ "Weibull") |>
+  gf_fitdistr(dist = "gamma", color = ~ "Gamma")
 ```
 
 The three fits are similar, but not identical.  
@@ -1782,7 +1793,7 @@ $1$ or a $2$.  Your challenge is to guess which die he is using.
 $2$.  Which die do you think he was using?
 
 **A.** 
-The probability of obtaining a $1$ or a $2$ is one of $\frac12$,
+The probability of obtaining a $1$ or a $2$ is one of $\frac{1}{2}$,
 $\frac13$, or $\frac15$, depending on which die is being used.  Our data
 are possible with any of the three dice, but let's see how likely they are
 in each case.
@@ -1790,9 +1801,9 @@ in each case.
 ::: {.itemize}
 
 * If $\evProb{roll 1 or 2}  = \frac15$, 
-then the probability of obtaining exactly Michael's data is 
+then the probability of obtaining exactly Micheal's data is 
 $$
-\left(\frac15\right)^3 \left(\frac45\right)^7  =  `r (1/5)^3 * (4/3)^7`
+\left(\frac15\right)^3 \left(\frac45\right)^7  =  `r (1/5)^3 * (4/5)^7`
 \;.
 $$
 
@@ -1801,17 +1812,17 @@ $1/5$ and 7 with probability $4/5$.  Since the events are independent,
 we can multiply all of these probabilities.)
 
 * If $\evProb{roll 1 or 2}  = \frac13$, 
-then the probability of obtaining exactly Michael's data is 
+then the probability of obtaining exactly Micheal's data is 
 $$
 \left(\frac13\right)^3 \left(\frac23\right)^7 
 =  `r (1/3)^3 * (2/3)^7`
 \;.
 $$
 
-* If $\evProb{roll 1 or 2}  = \frac12$, 
-then the probability of obtaining exactly Michael's data is 
+* If $\evProb{roll 1 or 2}  = \frac{1}{2}$, 
+then the probability of obtaining exactly Micheal's data is 
 $$
-\left(\frac12\right)^3 \left(\frac12\right)^7 = `r .2^3 * .8^7`
+\left(\frac{1}{2}\right)^3 \left(\frac{1}{2}\right)^7 = `r .2^3 * .8^7`
 \;.
 $$
 ::: 
@@ -1835,18 +1846,18 @@ and numerical approximation methods for others.  In some cases, you will get war
 messages about attempts to apply a function to values that don't make sense (trying to
 take logs or square roots of negative numbers, zero in the denominator, etc.) as the 
 numerical approximation algorithm explores options in an attempt to find the best fit.
-The help documenation for `fitdistr()` explains which distributions it can 
+The help documentation for `fitdistr()` explains which distributions it can 
 handle and what method is used for each.
 
 ### The method of moments
 An easy (but sometimes fairly crude) way to estimate the parameters of a distribution
 is the method of moments.  You will often see this method used in engineering textbooks,
-espeically if they do not rely on software that implements others methods (like the 
+especially if they do not rely on software that implements other methods (like the 
 maximum likelihood method).
 
 The basic idea is to set up a system of  equations where we set the mean of the data equal to the mean of the distribution, the variance of the data equal to the variance of the distribution, etc.^[If our distribution has more than 2 parameters, we will need higher moments, which we will not cover here.]  
 
-To employ this method, we need to know the means and variances of our favorite families of distributions (in terms of the parameters of the distributions).  For all of the distributions we have seen, one can work out formulas for the means and variances in terms of the parameters involved.  These are listed in @tbl-cont-dist
+To employ this method, we need to know the means and variances of our favorite families of distributions (in terms of the parameters of the distributions).  For all of the distributions we have seen, one can work out formulas for the means and variances in terms of the parameters involved.  These are listed in @tbl-distributions
 
 ::: {.example #exm-windspeed-2}
 
@@ -1862,14 +1873,14 @@ variable the wind speeds are).
 The Weibull distributions with $\alpha = 2$ have a special name, they are 
 called the **Rayleigh** distributions.  
 So $\Rayleigh(\beta) = \Weibull(\alpha = 2, \beta)$.
-In this case, from @tbl-cont-dist, we see that to calculate 
+In this case, from @tbl-distributions, we see that to calculate 
 the mean we need the value of $\Gamma(1 + \frac{1}{2}) = \Gamma(1.5) = \sqrt{\pi}/2$.
 ```{r }
 gamma(1.5)
 sqrt(pi)/2
 ```
 
-From @tbl-cont-dist we see that the mean of a 
+From @tbl-distributions we see that the mean of a 
 $\Rayleigh(\beta)$-distribution is 
 $$
 \E(X) = \beta \frac{\sqrt{\pi}}{2}
@@ -1899,7 +1910,7 @@ distributions, and although maximum likelihood is generally preferred over the
 method of moments, the method of moments fit of a Rayleigh distribution does have
 one advantage: it can be computed even if all you know is the mean of some sample data.
 Sometimes, that is all you can easily get your hands on (because the people who collected
-the raw data only report numerical summaries).  You can find average wind speeds of for 
+the raw data only report numerical summaries).  You can find average wind speeds for 
 many locations online, for example here:
 <http://www.wrcc.dri.edu/htmlfiles/westwind.final.html>
 ::: 
@@ -1941,28 +1952,73 @@ never negative.  So choosing one of those seems like a better idea.
 The following plot shows, as we expected, that the normal distribution is not a particularly
 good fit.
 ```{r }
-histogram(~speed, data = Wind, fit = "normal")
+gf_histogram(~speed, data = Wind, fit = "normal")
 ```
 
 It is important to remember that the best fit using a poor choice for the family
-of distriubtions might not be a useful fit.  
+of distributions might not be a useful fit.  
 The choice of distributions is made based on a combination of theoretical 
 considerations, experience from previous data sets, and the quality of 
 the fit for the data set at hand.
 ::: 
 <!-- end example -->
 
-+---------------+---------------+--------------------+
-| Fruit         | Price         | Advantages         |
-+===============+===============+====================+
-| Bananas       | $1.34         | - built-in wrapper |
-|               |               | - bright color     |
-+---------------+---------------+--------------------+
-| Oranges       | $2.10         | - cures scurvy     |
-|               |               | - tasty            |
-+---------------+---------------+--------------------+
 
-: Some (families of) continuous distributions. {#tbl-cont-dist}
+Standard names for parameters that appear in several distributions in
+@tbl-distributions include \texttt{rate} ($\lambda$), \texttt{shape} ($\alpha$),
+and \texttt{scale}  ($\beta$). In the normal distributions, $\mu$ and $\sigma$
+are called `mean` and \texttt{sd} in R, and in the uniform distributions, $a$
+and $b$ are called \texttt{min} and \texttt{max}. The function $\Gamma(x)$ that
+appears in the formulas for the Weibull and Beta distributions is a kind of
+continuous extrapolation from the factorial function. The \texttt{gamma()}
+function will calculate these values in R."
+  
+```{r}
+#| echo: false
+#| label: tbl-distributions
+#| tbl-cap: "Some common (families of) distributions"
+tribble(
+  ~ distribution, ~ `pdf or pmf`, ~ mean, ~ variance,
+   r"(Uniform: $\Unif(a, b)$)",
+      r"($\displaystyle  \frac{1}{b-a}$ for $x in [a, b]$)",
+      r"($\displaystyle \frac{b+a}{2}$)",
+      r"($\displaystyle \frac{(b-a)^2}{12}$)",
+   r"(Standard normal: $\Norm(0,1)$)",
+     r"($\displaystyle \frac{1}{\sqrt{2\pi}} {e^{-\frac{1}{2} z^2}}$)",
+     "0", "1",
+   r"(Normal: $\Norm(\mu,\sigma)$)",
+	    r"($\displaystyle \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{1}{2} (\frac{x-\mu} {\sigma})^2}$)",
+  	  r"($\mu$)",
+  	  r"($\sigma$)",
+   r"(Exponential: $\Exp(\lambda)$)",
+	    r"($\lambda e^{-\lambda x}$ for $x > 0$)",
+      r"($1/\lambda$)",
+      r"($1/\lambda^2$)",
+   r"(Gamma: $\Gamm(\alpha, \lambda = \frac{1}{\beta})$)",
+	   r"($\displaystyle \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}$ for $x > 0$)",
+  	 r"($\alpha/\lambda = \alpha \beta)",
+	   r"($\alpha/\lambda^2 = \alpha \beta^2$)",
+   r"(Weibull: $\Weibull(\alpha,\beta = \frac{1}{\lambda})$)",
+	   r"($\displaystyle \frac{\alpha}{\beta^\alpha} x^{\alpha-1} e^{-(x/\beta)^\alpha}$ for $x > 0$)",
+	   r"($\beta \Gamma(1 + \frac1{\alpha})$)",
+	   r"($\beta^2 \left[ \Gamma(1 + \frac{2}{\alpha}) - \left[ \Gamma(1 + \frac{1}{\alpha}) \right]^2 \right]$)",
+   r"(Beta: $\Beta(\alpha, \beta)$)",
+      r"($\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1}(1-x)^{\beta-1}$ for $x \in (0,1)$)",
+	    r"($\displaystyle \frac{\alpha}{\alpha + \beta}$)",
+	    r"($\displaystyle \frac{\alpha \beta }{(\alpha + \beta)^2(\alpha + \beta + 1)}$)",
+   r"(Binomial: $\Binom(n, p)$)",
+	    r"($\displaystyle \binom{n}{x} p^x (1-p)^{n-x}$ for integer $x$ with $0 \le x \le n$)",
+	    r"($np$)",
+	    r"($np(1-p)$)",
+  r"(Poisson: $\Pois(\lambda)$)", 
+    r"($\displaystyle \frac{e^{-\lambda} \lambda^x} {x!}$)",
+    r"($\lambda$)", r"($\lambda$)"
+    ) |>
+  pander::pander(split.table=Inf)
+```
+
+: Some (families of) continuous distributions. {#tbl-distributions}
+
 
 <!-- \begin{table} -->
 <!-- \begin{center} -->
@@ -2000,13 +2056,13 @@ the fit for the data set at hand.
 <!-- 	  \\[5.2mm] -->
 <!-- \multicolumn{2}{|l}{  Standard normal: $\Norm(0,1)$ } && \\ -->
 <!--   &  -->
-<!--   $\displaystyle \frac{1}{\sqrt{2\pi}} {e^{-\frac12 z^2}}$ -->
+<!--   $\displaystyle \frac{1}{\sqrt{2\pi}} {e^{-\frac{1}{2} z^2}}$ -->
 <!--   	& $0$ & $1$ -->
 <!-- \\[4.2mm] -->
 <!-- \multicolumn{2}{|l}{  Normal: $\Norm(\mu,\sigma)$ } && \\ -->
 <!--   & $ -->
 <!-- 	 \displaystyle \frac{1}{\sigma\sqrt{2\pi}} \cdot  -->
-<!--      		e^{-\frac12 (\frac{x-\mu} -->
+<!--      		e^{-\frac{1}{2} (\frac{x-\mu} -->
 <!-- 			{\sigma})^2}$ -->
 <!--   	& $\mu$ & $\sigma^2$ -->
 <!-- \\[5.2mm] -->
@@ -2064,11 +2120,11 @@ the fit for the data set at hand.
 <!-- Standard names for parameters that appear in several distributions -->
 <!-- include \texttt{rate} ($\lambda$), \texttt{shape} ($\alpha$), and \texttt{scale} ($\beta$). -->
 <!-- In the normal distributions, $\mu$ and $\sigma$ are called \texttt{mean} and \texttt{sd} -->
-<!-- in \R, and in the uniform distirbutions, $a$ and $b$ are called \texttt{min} and \texttt{max}. -->
+<!-- in \R, and in the uniform distributions, $a$ and $b$ are called \texttt{min} and \texttt{max}. -->
 <!-- The function $\Gamma(x)$ that appears in the formulas for the Weibull and Beta -->
 <!-- distributions is a kind of continuous extrapolation from the factorial function. -->
 <!-- The \texttt{gamma()} function will calculate these values.} -->
-<!-- \label{tbl-cont-dist} -->
+<!-- \label{tbl-distributions} -->
 <!-- \end{table} -->
 
 
@@ -2077,7 +2133,7 @@ the fit for the data set at hand.
 To this point we have looked at how well a distribution fits the data by overlaying a density
 curve on a histogram.  While this is instructive, it is not the easiest way to make a 
 graphical comparison between a data set and a theoretical distribution.   Our eyes
-are much better and judging whether something is linear than they are at judging whether 
+are much better at judging whether something is linear than they are at judging whether 
 shapes have a particular kind of curve.  Furthermore, certain optical misperceptions
 tend to cause people to exaggerate some kinds of differences and underestimate others.
 
@@ -2225,7 +2281,7 @@ gf_qq( ~speed2, data = Wind, distribution = fittedqweibull )
 
 :::: {.enumerate}
 
-a.  Using @tbl-cont-dist and the method of moments,
+a.  Using @tbl-distributions and the method of moments,
 fit an exponential distribution to the Twin Falls wind speed data.
 
 ```{r }
@@ -2289,7 +2345,7 @@ gf_qq( ~ speed, data = Wind, distribution = qexp)
 	you will need to solve a system of two equations with two unknowns.
 :::: {.enumerate}
 
-a. Using @tbl-cont-dist and the method of moments,
+a. Using @tbl-distributions and the method of moments,
 fit a Gamma distribution to the Twin Falls wind speed data.
 What are the estimated values of the shape and rate parameters?
 b. How do the method of moments estimates for the parameters compare to the 
@@ -2420,7 +2476,7 @@ fitdistr(Baby$cry.count, "Weibull")
 gf_dhistogram( ~ cry.count, data = Baby, binwidth = 1) |>
   gf_fitdistr( ~ cry.count, data = Baby, "gamma", title = "Gamma")
 gf_dhistogram(~cry.count, data = Baby, title = "Weibull") |>
-  gf_fitdistr(~ cry.count, data = Baby, "dweibull")
+  gf_fitdistr(~ cry.count, data = Baby, "weibull")
 ```
 
 ::: 
@@ -2430,7 +2486,7 @@ gf_dhistogram(~cry.count, data = Baby, title = "Weibull") |>
 <!-- \iffalse -->
 <!-- \begin{problem} -->
 <!-- 	For each of the following, give a family of distributions -->
-<!-- 	that might make a reasonable model and say breifly why you chose that family -->
+<!-- 	that might make a reasonable model and say briefly why you chose that family -->
 <!-- 	\begin{enumerate} -->
 <!-- 		\item -->
 <!-- 			Batting averages of MIAA base ball players.  (A batting average is roughly -->
@@ -2459,7 +2515,7 @@ Create normal quantile plots for the ages of patients in the `HELPrct`
 gf_qq( ~ age | substance, data = HELPrct)
 ```
 
-The qq-plot for the alchol group looks good.  The other two (especially cocaine) show
+The qq-plot for the alcohol group looks good.  The other two (especially cocaine) show
 signs of skew -- indicated by the curve to the qq plot.
 ```{r }
 gf_dens( ~ age | substance, data = HELPrct)
@@ -2698,5 +2754,6 @@ qnorm(.30, mean = 64.3, sd = 2.6)
 
 ::: 
 <!-- end solution -->
+
 
 

@@ -769,7 +769,7 @@ our measurements.
 <!-- measurements are made on a sample of living things, the variability from one -->
 <!-- individual to the next could be quite large.  But even in the physical -->
 <!-- sciences, each run of an experiment may require the use of different -->
-<!-- ``consumables'' that have slightly different properties that affect  -->
+<!-- "consumables" that have slightly different properties that affect  -->
 <!-- our measurements. -->
 <!-- \fi -->
 

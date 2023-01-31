@@ -52,7 +52,7 @@ The terms below will help us talk about randomness and probability.
 
 -   **probability distribution** The distribution of a random variable.
     (Remember that a distribution describes *what values?* and *with
-    what freqency?*)
+    what frequency?*)
 
 <!-- end description -->
 
@@ -171,7 +171,7 @@ we like.
 rflip(10)
 ```
 
-The `do()` function allows us to execute an R command ("do" somthing in
+The `do()` function allows us to execute an R command ("do" something in
 R) over and over, as many times as we choose. Here, our `rflip()`
 command simulates 10 coin-flips. First we'll "do" our command three
 times and show the results. Then we'll do it 10,000 times and store the
@@ -1312,7 +1312,7 @@ c / (c + d)
 
 <!-- % %% http://allendowney.blogspot.com/2011/10/my-favorite-bayess-theorem-problems.html -->
 
-<!-- % %% Note: not a Bayes Theorem probelm -->
+<!-- % %% Note: not a Bayes Theorem problem -->
 
 <!-- % John had a twin brother who died at birth.   -->
 
@@ -1326,7 +1326,7 @@ c / (c + d)
 
 <!-- % ``Twins are estimated to be approximately 1.9% of the world population,  -->
 
-<!-- % with monozygotic [identical] twins making up 0.15% of the total popultion---and 8%  -->
+<!-- % with monozygotic [identical] twins making up 0.15% of the total population---and 8%  -->
 
 <!-- % of all twins.'' -->
 
@@ -1335,7 +1335,7 @@ c / (c + d)
 ::: {.problem #exr-acceptanceSampling}
 **Acceptance sampling**
 
-An engineer orders a shipment of 100 indentical parts.\
+An engineer orders a shipment of 100 identical parts.\
 Before accepting the shipment, he tests three of them.\
 If the they all test good, he accepts the entire shipment.\
 If any of them tests bad, he rejects the shipment.

@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics for the Physical Sciences and Engineering - 10&nbsp; More Examples</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./09-hypothesis-testing.html" rel="prev">
+<link href="./cover.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+</head><body class="nav-sidebar docked">$$
+\def\reals{\mathbb{R}}
+\def\card#1{| #1 |}
+\def\mean{\overline}
+\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
+\def\Prob{\operatorname{Prob}}
+\def\tand{\operatorname{and}}
+\def\tor{\operatorname{or}}
+\def\tnot{\operatorname{not}}
+\def\E{{\operatorname E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\union{\cup}
+\def\intersect{\cap}
+\def\Unif{\mathsf{Unif}}
+\def\Beta{\mathsf{Beta}}
+\def\Rayleigh{\mathsf{Rayleigh}}
+\def\Exp{\mathsf{Exp}}
+\def\Norm{\mathsf{Norm}}
+\def\Tri{\mathsf{Tri}}
+\def\Gamm{\mathsf{Gamma}}
+\def\Pois{\mathsf{Pois}}
+\def\Binom{\mathsf{Binom}}
+\def\Weibull{\mathsf{Weibull}}
+\def\Tdist{\mathsf{T}}
+\def\Fdist{\mathsf{F}}
+\def\Chisq{\mathsf{Chisq}}
+\def\boolval#1{[\![ #1 ]\!]}
+\def\simiid{\stackrel{\mathrm{iid}{\sim}}}
+
+\def\sfrac#1#2{{#1}/{#2}}
+\def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+\def\Partial#1#2{\frac{\partial}{\partial #2} #1}
+
+\def\myindex#1{\relax}
+$$
+
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="book.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">More Examples</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for the Physical Sciences and Engineering</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Pruim-Stat-for-Phys-Sci-and-Engr.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-chap0.html" class="sidebar-item-text sidebar-link">Where do numbers come from?</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-graphical.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Graphical Summaries of Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-numerical.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Numerical Summaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-probability.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Probability</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-random-variables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-transformations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformation and Combinations of Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-propagation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Propagation of Uncertainty</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-simple-linear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-nonlinear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Beyond Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-more-examples.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">More Examples</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-hxer" id="toc-sec-hxer" class="nav-link active" data-scroll-target="#sec-hxer"><span class="toc-section-number">10.1</span>  Heat Exchanger Example</a>
+  <ul class="collapse">
+  <li><a href="#apparatus-and-measurements" id="toc-apparatus-and-measurements" class="nav-link" data-scroll-target="#apparatus-and-measurements"><span class="toc-section-number">10.1.1</span>  Apparatus and Measurements</a></li>
+  <li><a href="#standardizing-units" id="toc-standardizing-units" class="nav-link" data-scroll-target="#standardizing-units"><span class="toc-section-number">10.1.2</span>  Standardizing Units</a></li>
+  <li><a href="#calculating-the-heat-transfer-dot-q" id="toc-calculating-the-heat-transfer-dot-q" class="nav-link" data-scroll-target="#calculating-the-heat-transfer-dot-q"><span class="toc-section-number">10.1.3</span>  Calculating the heat transfer, <span class="math inline">\(\dot Q\)</span></a></li>
+  <li><a href="#estimating-heat-exchanged-with-environment" id="toc-estimating-heat-exchanged-with-environment" class="nav-link" data-scroll-target="#estimating-heat-exchanged-with-environment"><span class="toc-section-number">10.1.4</span>  Estimating heat exchanged with environment</a></li>
+  <li><a href="#estimating-heat-transfer-between-hot-and-cold-water-dotq" id="toc-estimating-heat-transfer-between-hot-and-cold-water-dotq" class="nav-link" data-scroll-target="#estimating-heat-transfer-between-hot-and-cold-water-dotq"><span class="toc-section-number">10.1.5</span>  Estimating heat transfer between hot and cold water, <span class="math inline">\(\dot{Q}\)</span></a></li>
+  <li><a href="#does-the-uncertainty-in-c_p-matter" id="toc-does-the-uncertainty-in-c_p-matter" class="nav-link" data-scroll-target="#does-the-uncertainty-in-c_p-matter"><span class="toc-section-number">10.1.6</span>  Does the uncertainty in <span class="math inline">\(C_p\)</span> matter?</a></li>
+  <li><a href="#using-relative-uncertainty" id="toc-using-relative-uncertainty" class="nav-link" data-scroll-target="#using-relative-uncertainty"><span class="toc-section-number">10.1.7</span>  Using relative uncertainty</a></li>
+  <li><a href="#estimating-the-heat-transfer-coefficient-u" id="toc-estimating-the-heat-transfer-coefficient-u" class="nav-link" data-scroll-target="#estimating-the-heat-transfer-coefficient-u"><span class="toc-section-number">10.1.8</span>  Estimating the heat transfer coefficient, <span class="math inline">\(U\)</span></a></li>
+  <li><a href="#estimating-the-nusselt-number-correlation-a" id="toc-estimating-the-nusselt-number-correlation-a" class="nav-link" data-scroll-target="#estimating-the-nusselt-number-correlation-a"><span class="toc-section-number">10.1.9</span>  Estimating the Nusselt number correlation, <span class="math inline">\(a\)</span></a></li>
+  </ul></li>
+  <li><a href="#standard-errors-in-fitdistr-output" id="toc-standard-errors-in-fitdistr-output" class="nav-link" data-scroll-target="#standard-errors-in-fitdistr-output"><span class="toc-section-number">10.2</span>  Standard Errors in <code>fitdistr()</code> output</a></li>
+  <li><a href="#sec-r-squared" id="toc-sec-r-squared" class="nav-link" data-scroll-target="#sec-r-squared"><span class="toc-section-number">10.3</span>  <span class="math inline">\(R^2\)</span></a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">10.4</span>  Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-more-examples" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">More Examples</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="sec-hxer" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-hxer"><span class="header-section-number">10.1</span> Heat Exchanger Example</h2>
+<p>In this section will discuss several parts of the statistical analysis of a laboratory experiment involving a heat exchanger.</p>
+<section id="apparatus-and-measurements" class="level3" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="apparatus-and-measurements"><span class="header-section-number">10.1.1</span> Apparatus and Measurements</h3>
+<p><a href="#fig-hxer">Figure&nbsp;<span>10.1</span></a> shows a diagram illustrating the heat exchanger. Fluids of different temperatures flow in the annulus (<span class="math inline">\(\dot{m}_{3}\)</span>) and in the inner tube (<span class="math inline">\(\dot{m}_{1}\)</span>). The entire apparatus is insulated, so we expect little or no heat to be exchanged with the surroundings.</p>
+<div id="fig-hxer" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/HXerFig.png" style="height:3in" class="figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;10.1: Heat exchanger with statepoints.</figcaption><p></p>
+</figure>
+</div>
+<p>Mass flow rates (<span class="math inline">\(\dot{m}\)</span>) are controlled via valves. Two mass flow rates (<span class="math inline">\(\dot{m}_{1}\)</span> and <span class="math inline">\(\dot{m}_{3}\)</span>) are measured by rotameters.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Temperatures (<span class="math inline">\(T_{1}\)</span>–<span class="math inline">\(T_{4}\)</span>) are measured by thermocouples.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<!-- ## Observations -->
+<p>Each observation consists of four~(4) temperature measurements and two~(2) mass flow rate measurements. Here is an example data set with one set of measurements at each of 6 experimental conditions: <!-- %<<include = FALSE>>= --> <!-- %HeatX <- data.frame( --> <!-- %  trial = 1:6, --> <!-- %  T.cold.in = c(14.3, 14.1, 14.1, 14.2, 14.1, 14.1), --> <!-- %  T.cold.out = c(18.6, 18.7, 19.4, 18.4, 17.4, 16.9), --> <!-- %  # T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8), --> <!-- %  T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8), --> <!-- %  T.hot.out = c(33.9, 32.8, 33.4, 31.8, 30.9, 30.4), --> <!-- %  m.cold = c(10, 7.5, 5, 5, 7.5, 10), --> <!-- %  m.hot = c(10, 10, 10, 5, 5, 5) --> <!-- %)   --> <!-- %@ --></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastR2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>HeatX   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["trial"],"name":[1],"type":["int"],"align":["right"]},{"label":["T.cold.in"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["T.hot.in"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["T.hot.out"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["m.hot"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"14.3","3":"18.6","4":"38.2","5":"33.9","6":"10.0","7":"10"},{"1":"2","2":"14.1","3":"18.7","4":"35.9","5":"32.8","6":"7.5","7":"10"},{"1":"3","2":"14.1","3":"19.4","4":"35.9","5":"33.4","6":"5.0","7":"10"},{"1":"4","2":"14.2","3":"18.4","4":"35.8","5":"31.8","6":"5.0","7":"5"},{"1":"5","2":"14.1","3":"17.4","4":"35.7","5":"30.9","6":"7.5","7":"5"},{"1":"6","2":"14.1","3":"16.9","4":"35.8","5":"30.4","6":"10.0","7":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(m.hot <span class="sc">~</span> m.cold, <span class="at">data =</span> HeatX, <span class="at">main =</span> <span class="st">"Experimental Configurations"</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-more-examples_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<!-- % Note: \function{read.csv()} can read data from a file as well.  If you are using the server -->
+<!-- % version of \RStudio\ you first need to upload your CSV file to the server.  Look in the \tab{Files}  -->
+<!-- % pane for the upload button to upload your own data. -->
+</section>
+<section id="standardizing-units" class="level3" data-number="10.1.2">
+<h3 data-number="10.1.2" class="anchored" data-anchor-id="standardizing-units"><span class="header-section-number">10.1.2</span> Standardizing Units</h3>
+<p>The recorded flow rates are in L/min. We will convert them to L/sec and use seconds as our standard unit of time troughout the analyses.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>HeatX <span class="ot">&lt;-</span> HeatX <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">m.hot =</span> m.hot <span class="sc">/</span> <span class="dv">60</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">m.cold =</span> m.cold <span class="sc">/</span> <span class="dv">60</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We could also convert temperatures to degrees Kelvin, but since temperatures only appear as differences between two temperatures in the expression used here, we can leave them in degrees Celsius.</p>
+<!-- ### Notation -->
+<p>Table <a href="#tbl-hxer-definitions">Table&nbsp;<span>10.1</span></a> contains notation and definitions of important quantities involved in the heat exchanger experiment.</p>
+<div id="tbl-hxer-definitions" class="anchored">
+<table class="table">
+<caption>Table&nbsp;10.1: Notation for quantities involved in the heat exchanger experiment. Note, some of the physical “constants” are actually temperature dependant. In these cases, a value has been chosen that reflects the temperature range (approx. 15–35 degrees C) seen in the data.</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 27%">
+<col style="width: 26%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Units</th>
+<th>Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\dot{Q}\)</span></td>
+<td>heat transfer rate</td>
+<td><span class="math inline">\(\mathrm{W}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\dot{m}\)</span></td>
+<td>mass flow rate</td>
+<td><span class="math inline">\(\mathrm{kg}/\mathrm{s}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(C_{p}\)</span></td>
+<td>specific heat</td>
+<td><span class="math inline">\(\mathrm{kJ}/(\mathrm{kg}\cdot\mathrm{K})\)</span></td>
+<td><span class="math inline">\(4.18 \pm 0.1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T\)</span></td>
+<td>temperature</td>
+<td><span class="math inline">\(\mathrm{K}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(D\)</span></td>
+<td>diameter of inner tube</td>
+<td><span class="math inline">\(\mathrm{m}\)</span></td>
+<td><span class="math inline">\(0.0143 \pm 0.0004\)</span> m</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td>(<span class="math inline">\(9/16 \pm 1/64\)</span> inches)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(L\)</span></td>
+<td>length of the heat exchanger</td>
+<td><span class="math inline">\(\mathrm{m}\)</span></td>
+<td><span class="math inline">\(1.626 \pm 0.006\)</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td>(<span class="math inline">\(64 \pm 1/4\)</span> inches)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(A\)</span></td>
+<td>surface area of the inner tube (<span class="math inline">\(\pi D L\)</span>)</td>
+<td>m<span class="math inline">\(^{2}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(U\)</span></td>
+<td>heat transfer coefficient</td>
+<td><span class="math inline">\(\mathrm{W}/(\mathrm{m}^{2} \cdot \mathrm{K})\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(h\)</span></td>
+<td>convective heat transfer coefficient (<span class="math inline">\(\approx 2 U\)</span>)</td>
+<td><span class="math inline">\(\mathrm{W}/(\mathrm{m}^2\cdot \mathrm{K}\)</span>)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\Delta T_{lm}\)</span></td>
+<td>logarithmic mean temperature difference</td>
+<td><span class="math inline">\(\mathrm{K}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(Nu_{D}\)</span></td>
+<td>Nusselt number based on <span class="math inline">\(D\)</span></td>
+<td>–</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(Re_{D}\)</span></td>
+<td>Reynolds number based on <span class="math inline">\(D\)</span></td>
+<td>–</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(Pr\)</span></td>
+<td>Prandtl number</td>
+<td>–</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mu\)</span></td>
+<td>dynamic viscosity</td>
+<td><span class="math inline">\(\mathrm{kg}/(\mathrm{m} \cdot \mathrm{s})\)</span></td>
+<td><span class="math inline">\(0.00102 \pm 0.00001\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(k\)</span></td>
+<td>water thermal conductivity</td>
+<td><span class="math inline">\(\mathrm{W}/(\mathrm{m} \cdot \mathrm{K})\)</span></td>
+<td><span class="math inline">\(0.598 \pm 0.004\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- \iffalse -->
+<!-- \section{Experimental plan} -->
+<!-- One possible experimental plan is to take data at -->
+<!-- four~(4) values of $\dot{m_{1}}$ and two~(2) values of $\dot{m}_{3}$, -->
+<!-- for a total of 8 observations. -->
+<!-- Repeated observations could be obtained at one combination of  -->
+<!-- $\dot{m}_{1}$ and $\dot{m}_{3}$. -->
+<!-- \fi -->
+</section>
+<section id="calculating-the-heat-transfer-dot-q" class="level3" data-number="10.1.3">
+<h3 data-number="10.1.3" class="anchored" data-anchor-id="calculating-the-heat-transfer-dot-q"><span class="header-section-number">10.1.3</span> Calculating the heat transfer, <span class="math inline">\(\dot Q\)</span></h3>
+<p>The amount of heat exchanged between the hot and cold water can be determined from the temperature change and the mass flow rate as follows:</p>
+<p><span id="eq-hxer1"><span class="math display">\[
+    \dot{Q}_{1} = \dot{m}_{1} C_{p} (T_{2} - T_{1})
+\tag{10.1}\]</span></span></p>
+<p><span id="eq-hxer2"><span class="math display">\[
+    \dot{Q}_{3} = \dot{m}_{3} C_{p} (T_{4} - T_{3})
+\tag{10.2}\]</span></span></p>
+<p>We can estimate the values of <span class="math inline">\(\dot{Q}\)</span> from our data by direct caclulation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>C_p <span class="ot">&lt;-</span> <span class="fl">4.18</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>HeatX2 <span class="ot">&lt;-</span> HeatX <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q.cold =</span> m.cold <span class="sc">*</span> C_p <span class="sc">*</span> (T.cold.out <span class="sc">-</span> T.cold.in),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q.hot  =</span> m.hot  <span class="sc">*</span> C_p <span class="sc">*</span> (T.hot.out  <span class="sc">-</span> T.hot.in),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q.env  =</span> Q.cold <span class="sc">+</span> Q.hot</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>HeatX2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["trial"],"name":[1],"type":["int"],"align":["right"]},{"label":["T.cold.in"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["T.hot.in"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["T.hot.out"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["m.hot"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Q.cold"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Q.hot"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Q.env"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"14.3","3":"18.6","4":"38.2","5":"33.9","6":"0.16666667","7":"0.16666667","8":"2.995667","9":"-2.995667","10":"-2.220446e-15"},{"1":"2","2":"14.1","3":"18.7","4":"35.9","5":"32.8","6":"0.12500000","7":"0.16666667","8":"2.403500","9":"-2.159667","10":"2.438333e-01"},{"1":"3","2":"14.1","3":"19.4","4":"35.9","5":"33.4","6":"0.08333333","7":"0.16666667","8":"1.846167","9":"-1.741667","10":"1.045000e-01"},{"1":"4","2":"14.2","3":"18.4","4":"35.8","5":"31.8","6":"0.08333333","7":"0.08333333","8":"1.463000","9":"-1.393333","10":"6.966667e-02"},{"1":"5","2":"14.1","3":"17.4","4":"35.7","5":"30.9","6":"0.12500000","7":"0.08333333","8":"1.724250","9":"-1.672000","10":"5.225000e-02"},{"1":"6","2":"14.1","3":"16.9","4":"35.8","5":"30.4","6":"0.16666667","7":"0.08333333","8":"1.950667","9":"-1.881000","10":"6.966667e-02"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="estimating-heat-exchanged-with-environment" class="level3" data-number="10.1.4">
+<h3 data-number="10.1.4" class="anchored" data-anchor-id="estimating-heat-exchanged-with-environment"><span class="header-section-number">10.1.4</span> Estimating heat exchanged with environment</h3>
+<p>If no heat were exchanged with the environment and all measurements were without error, then our two estimates of <span class="math inline">\(\dot Q\)</span> would sum to 0. (Heat lost to one fluid is gained by the other.)</p>
+<p>Assuming any loss to (or gain from) the environment is essentially constant for the apparatus over the experimental conditions analysed, we can use our 6 observations to estimate the amount of heat exchanged with the environment:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>( <span class="sc">~</span> Q.env, <span class="at">data =</span> HeatX2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["response"],"name":[1],"type":["chr"],"align":["left"]},{"label":["min"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Q1"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["median"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Q3"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[9],"type":["int"],"align":["right"]},{"label":["missing"],"name":[10],"type":["int"],"align":["right"]}],"data":[{"1":"Q.env","2":"-2.220446e-15","3":"0.05660417","4":"0.06966667","5":"0.09579167","6":"0.2438333","7":"0.08998611","8":"0.08273681","9":"6","10":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( <span class="st">""</span> <span class="sc">~</span> Q.env, <span class="at">data =</span> HeatX2, <span class="at">alpha =</span> .<span class="dv">6</span>, <span class="at">cex =</span> <span class="dv">3</span>, <span class="at">jitter.data =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-more-examples_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>From this we can compute either a p-value for the hypothesis test that the mean difference in heat change is 0 or create a confidence interval for the mean difference in heat change. The information above is enough to do this “by hand” using the standard error formula <span class="math inline">\(SE = \frac{s}{\sqrt{n}}\)</span> and a t-distribution with <span class="math inline">\(n-1 = 5\)</span> degrees of freedom.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">=</span> <span class="fl">0.08274</span> <span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">6</span>); SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03377846</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.09003</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">5</span>) <span class="sc">*</span> SE       <span class="co"># 95&lt;!--  CI --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.003199695 0.176860305</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="fl">0.08999</span> <span class="sc">-</span> <span class="dv">0</span>) <span class="sc">/</span> SE; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.664124</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span><span class="fu">abs</span>(t), <span class="at">df =</span> <span class="dv">5</span> )                        <span class="co"># p-value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04466228</code></pre>
+</div>
+</div>
+<p>Or we can let R do all the computations for us:</p>
+<!-- %qplot( Q.env, " ", data = HeatX2,  -->
+<!-- %       geom = "point", size = I(6), alpha = I(.5),  -->
+<!-- %       position = position_jitter(width = 0, height = .1)) -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>( <span class="sc">~</span> Q.env, <span class="at">data =</span> HeatX2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  Q.env
+t = 2.6641, df = 5, p-value = 0.04466
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.003159159 0.176813063
+sample estimates:
+ mean of x 
+0.08998611 </code></pre>
+</div>
+</div>
+<p>In our example data, there is modest evidence for exchange with the environment, but the estimated amount of heat gained from the environment is not very precisely estimated. Even at the highest end of the confidence interval, the heat exchanged with the environment is an order of magnitude smaller than the heat exchanged within in the apparatus.</p>
+<p>Notes:</p>
+<div class="enumerate">
+<ol>
+<li>The fact that heat is gained to the system suggests that the cold water was in the outer pipe and hot water in the inner pipe.</li>
+<li>This analysis assumes that the amount of heat gained/lost is constant over the different set-ups. From this small data set, there is not clear evidence of some other relationship between heat exchanged with the environment and the experimental set up:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Q.env <span class="sc">~</span> m.cold, <span class="at">data =</span> HeatX2, <span class="at">color =</span> <span class="sc">~</span> <span class="fu">paste</span>(<span class="st">"m.hot ="</span>, <span class="fu">round</span>(m.hot,<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="10-more-examples_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+<ol>
+<li>The t-test and interval are based on the assumption that the distribution of deviations between the measured environment heat exchange and the actual is normally distributed. The data set is too small to provide much evidence upon which to judge whether this is a reasonable assumption. The largest value is quite a bit larger than the rest, but even if we remove that observation, our conclusions don’t change dramatically:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>( <span class="sc">~</span> Q.env, <span class="at">data =</span> <span class="fu">subset</span>(HeatX2, Q.env <span class="sc">&lt;</span> <span class="fu">max</span>(Q.env)) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  Q.env
+t = 3.4701, df = 4, p-value = 0.02558
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.01183725 0.10659609
+sample estimates:
+ mean of x 
+0.05921667 </code></pre>
+</div>
+</div>
+</div>
+<!-- end enumerate -->
+<p>Overall, we conclude that there is likely some heat exchanged with the environment, but the amount of heat exchange with the environment appears to be at most a small factor in this situation.</p>
+</section>
+<section id="estimating-heat-transfer-between-hot-and-cold-water-dotq" class="level3" data-number="10.1.5">
+<h3 data-number="10.1.5" class="anchored" data-anchor-id="estimating-heat-transfer-between-hot-and-cold-water-dotq"><span class="header-section-number">10.1.5</span> Estimating heat transfer between hot and cold water, <span class="math inline">\(\dot{Q}\)</span></h3>
+<p>Estimating <span class="math inline">\(\dot{Q}\)</span> with uncertainty is not possible from this data alone since since <span class="math inline">\(\dot{Q}\)</span> is not measured directly, and we have only one measurement for each experimental condition (so no way to look at how variable such measurements are without additional information. Furthermore, the design doesn’t provide a method for estimating the uncertainty in <span class="math inline">\(\dot{m}\)</span> and <span class="math inline">\(T\)</span>.</p>
+<p>If, however, there are external estimates of the uncertainties for temperature and flow rate, and if we can assume these uncertainties are approximately independent, then we can use propagation of uncertainty to estimate the uncertainty in our estimates for heat exchanged. Such uncertainties might come from specifications of the equipment used or be based on past experience of the researcher.</p>
+<p>For example, suppose that the uncertainties in temperature and flow rate measurements are approximately constant (over the range of temperatures involved): <span class="math inline">\(u_T\)</span>, and <span class="math inline">\(u_{\dot{m}}\)</span>. Then the uncertainty in the difference between two independent temperatures is <span class="math inline">\(\sqrt{ u_T^2 + u_T^2 } = \sqrt{2} u_T\)</span>, and we can estimate the uncertainty in <span class="math inline">\(\dot Q\)</span> using the delta method.</p>
+<div class="itemize">
+<ul>
+<li>Let <span class="math inline">\(\dot{Q}(\dot{m}, \Delta T) = C_p \dot{m} \Delta T\)</span></li>
+<li><span class="math inline">\(\displaystyle \Partial{\dot{Q}}{\dot m} = C_p \Delta T\)</span> and <span class="math inline">\(\displaystyle \Partial{\dot{Q}}{\Delta T} = C_p \dot{m}\)</span>, so</li>
+<li><span class="math inline">\(\displaystyle u_{\dot Q} \approx C_p \sqrt{ (\Delta T)^2 u^2_{\dot m} + \dot{m}^2 u_{\Delta T}^2 }\)</span></li>
+</ul>
+</div>
+<!-- end itemize -->
+<p>If we estimate the uncertainty in measured temperatures to be <span class="math inline">\(1\)</span> degree C and the uncertainty in flow rate to be <span class="math inline">\(0.5\)</span> liters per minute (i.e., 0.0083333 L/sec), then we can compute the uncertainties in the <span class="math inline">\(\dot{Q}\)</span> values as follows</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>HeatX2<span class="ot">&lt;-</span> HeatX2 <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">u.Q.cold =</span> C_p <span class="sc">*</span><span class="fu">sqrt</span>( (T.cold.out <span class="sc">-</span> T.cold.in)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>)<span class="sc">^</span><span class="dv">2</span>  <span class="sc">+</span> m.cold<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>),  </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">u.Q.hot =</span>  C_p <span class="sc">*</span><span class="fu">sqrt</span>( (T.hot.out  <span class="sc">-</span> T.hot.in)<span class="sc">^</span><span class="dv">2</span>  <span class="sc">*</span> (<span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>)<span class="sc">^</span><span class="dv">2</span>  <span class="sc">+</span>  m.hot<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>) </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>HeatX2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["trial"],"name":[1],"type":["int"],"align":["right"]},{"label":["T.cold.in"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["T.hot.in"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["T.hot.out"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["m.hot"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Q.cold"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Q.hot"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Q.env"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["u.Q.cold"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["u.Q.hot"],"name":[12],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"14.3","3":"18.6","4":"38.2","5":"33.9","6":"0.16666667","7":"0.16666667","8":"2.995667","9":"-2.995667","10":"-2.220446e-15","11":"0.9965560","12":"0.9965560"},{"1":"2","2":"14.1","3":"18.7","4":"35.9","5":"32.8","6":"0.12500000","7":"0.16666667","8":"2.403500","9":"-2.159667","10":"2.438333e-01","11":"0.7561000","12":"0.9911354"},{"1":"3","2":"14.1","3":"19.4","4":"35.9","5":"33.4","6":"0.08333333","7":"0.16666667","8":"1.846167","9":"-1.741667","10":"1.045000e-01","11":"0.5260756","12":"0.9890765"},{"1":"4","2":"14.2","3":"18.4","4":"35.8","5":"31.8","6":"0.08333333","7":"0.08333333","8":"1.463000","9":"-1.393333","10":"6.966667e-02","11":"0.5138832","12":"0.5119434"},{"1":"5","2":"14.1","3":"17.4","4":"35.7","5":"30.9","6":"0.12500000","7":"0.08333333","8":"1.724250","9":"-1.672000","10":"5.225000e-02","11":"0.7478141","12":"0.5202192"},{"1":"6","2":"14.1","3":"16.9","4":"35.8","5":"30.4","6":"0.16666667","7":"0.08333333","8":"1.950667","9":"-1.881000","10":"6.966667e-02","11":"0.9900513","12":"0.5273081"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Note: We are using the fact that <span class="math inline">\(u_{\Delta T} = \sqrt{2} u_T\)</span>.</p>
+<p>We can also use <code>deltaMethod()</code> in the <strong><code>car</code></strong> package to do this arithmetic for us. In fact, <code>deltaMathod()</code> can even handle cases where the estimates are not independent. To do it’s job, <code>deltaMethod()</code> requires</p>
+<div class="itemize">
+<ul>
+<li>A named vector of estimates,</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>estimates <span class="ot">&lt;-</span> HeatX[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>] <span class="sc">|&gt;</span> <span class="fu">unlist</span>()  <span class="co"># unlist() turns the data frame into a vector</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>estimates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> T.cold.in T.cold.out   T.hot.in  T.hot.out     m.cold      m.hot 
+14.3000000 18.6000000 38.2000000 33.9000000  0.1666667  0.1666667 </code></pre>
+</div>
+</div>
+<ul>
+<li>An expression for the derived quantity as a quoted string (it will do the derivatives for us!),</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>exprforQ <span class="ot">&lt;-</span> <span class="st">"(T.cold.out - T.cold.in) * C_p * m.cold"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>A variance-covariance matrix. In the simple case where things are independent, this is just a matrix with the squared uncertainties on the diagonal and 0 everywhere else.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>vc <span class="ot">&lt;-</span> <span class="fu">diag</span>( <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,.<span class="dv">5</span><span class="sc">/</span><span class="dv">60</span>,.<span class="dv">5</span><span class="sc">/</span><span class="dv">60</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>vc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]         [,5]         [,6]
+[1,]    1    0    0    0 0.000000e+00 0.000000e+00
+[2,]    0    1    0    0 0.000000e+00 0.000000e+00
+[3,]    0    0    1    0 0.000000e+00 0.000000e+00
+[4,]    0    0    0    1 0.000000e+00 0.000000e+00
+[5,]    0    0    0    0 6.944444e-05 0.000000e+00
+[6,]    0    0    0    0 0.000000e+00 6.944444e-05</code></pre>
+</div>
+</div>
+</div>
+<!-- end itemize -->
+<p>Let’s see how it compares to the (first row of the) results above:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">deltaMethod</span>(estimates, exprforQ, vc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Estimate"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2.5 %"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["97.5 %"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.995667","2":"0.996556","3":"1.042453","4":"4.948881","_rn_":"(T.cold.out - T.cold.in) * C_p * m.cold"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>The <strong><code>deltaMethod</code></strong> package adds additional interfaces for <code>deltaMethod()</code> to make this even easier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(deltaMethod)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">deltaMethod</span>(HeatX, exprforQ, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">uncertainties =</span> <span class="fu">c</span>(<span class="at">T.cold.in =</span> <span class="fl">1.0</span>, <span class="at">T.cold.out =</span> <span class="fl">1.0</span>, <span class="at">m.cold =</span> <span class="fl">0.5</span> <span class="sc">/</span> <span class="dv">60</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Converting uncertainties to a covariance matrix assuming independence ...</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["T.cold.in"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Estimate"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["2.5 %"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["97.5 %"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"14.3","2":"18.6","3":"0.16666667","4":"2.995667","5":"0.9965560","6":"1.04245272","7":"4.948881","_rn_":"1"},{"1":"14.1","2":"18.7","3":"0.12500000","4":"2.403500","5":"0.7561000","6":"0.92157122","7":"3.885429","_rn_":"2"},{"1":"14.1","2":"19.4","3":"0.08333333","4":"1.846167","5":"0.5260756","6":"0.81507744","7":"2.877256","_rn_":"3"},{"1":"14.2","2":"18.4","3":"0.08333333","4":"1.463000","5":"0.5138832","6":"0.45580749","7":"2.470193","_rn_":"4"},{"1":"14.1","2":"17.4","3":"0.12500000","4":"1.724250","5":"0.7478141","6":"0.25856120","7":"3.189939","_rn_":"5"},{"1":"14.1","2":"16.9","3":"0.16666667","4":"1.950667","5":"0.9900513","6":"0.01020171","7":"3.891132","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<section id="dealing-with-uncertainties-that-are-not-constant" class="level4" data-number="10.1.5.1">
+<h4 data-number="10.1.5.1" class="anchored" data-anchor-id="dealing-with-uncertainties-that-are-not-constant"><span class="header-section-number">10.1.5.1</span> Dealing with uncertainties that are not constant</h4>
+<p>Sometimes the uncertainties of a given variable are different at different values. In that case, we can put the uncertainties into the data frame. For the current example, this is just extra work, but we include it here to show how it works.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>HeatX3 <span class="ot">&lt;-</span> HeatX <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">u.cold.in =</span> <span class="dv">1</span>, <span class="at">u.cold.out =</span> <span class="dv">1</span>, <span class="at">u.hot.in =</span> <span class="dv">1</span>, <span class="at">u.hot.out =</span> <span class="dv">1</span>, </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">u.m.cold =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>, <span class="at">u.m.hot =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>HeatX3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["trial"],"name":[1],"type":["int"],"align":["right"]},{"label":["T.cold.in"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["T.hot.in"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["T.hot.out"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["m.hot"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["u.cold.in"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["u.cold.out"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["u.hot.in"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["u.hot.out"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["u.m.cold"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["u.m.hot"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"14.3","3":"18.6","4":"38.2","5":"33.9","6":"0.16666667","7":"0.16666667","8":"1","9":"1","10":"1","11":"1","12":"0.008333333","13":"0.008333333"},{"1":"2","2":"14.1","3":"18.7","4":"35.9","5":"32.8","6":"0.12500000","7":"0.16666667","8":"1","9":"1","10":"1","11":"1","12":"0.008333333","13":"0.008333333"},{"1":"3","2":"14.1","3":"19.4","4":"35.9","5":"33.4","6":"0.08333333","7":"0.16666667","8":"1","9":"1","10":"1","11":"1","12":"0.008333333","13":"0.008333333"},{"1":"4","2":"14.2","3":"18.4","4":"35.8","5":"31.8","6":"0.08333333","7":"0.08333333","8":"1","9":"1","10":"1","11":"1","12":"0.008333333","13":"0.008333333"},{"1":"5","2":"14.1","3":"17.4","4":"35.7","5":"30.9","6":"0.12500000","7":"0.08333333","8":"1","9":"1","10":"1","11":"1","12":"0.008333333","13":"0.008333333"},{"1":"6","2":"14.1","3":"16.9","4":"35.8","5":"30.4","6":"0.16666667","7":"0.08333333","8":"1","9":"1","10":"1","11":"1","12":"0.008333333","13":"0.008333333"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deltaMethod</span>(HeatX3,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  exprforQ, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimates     =</span> <span class="fu">c</span>(<span class="st">"T.cold.in"</span>, <span class="st">"T.cold.out"</span>, <span class="st">"m.cold"</span>),    <span class="co"># columns with estimates</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">uncertainties =</span> <span class="fu">c</span>(<span class="st">"u.cold.in"</span>, <span class="st">"u.cold.out"</span>, <span class="st">"u.m.cold"</span>))  <span class="co"># and uncertainties</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Converting uncertainties to a covariance matrix assuming independence ...</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["T.cold.in"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["T.cold.in"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Estimate"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["2.5 %"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["97.5 %"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"14.3","2":"18.6","3":"0.16666667","4":"14.3","5":"18.6","6":"0.16666667","7":"2.995667","8":"16.617216","9":"-29.57348","10":"35.56481","_rn_":"1"},{"1":"14.1","2":"18.7","3":"0.12500000","4":"14.1","5":"18.7","6":"0.12500000","7":"2.403500","8":"12.470795","9":"-22.03881","10":"26.84581","_rn_":"2"},{"1":"14.1","2":"19.4","3":"0.08333333","4":"14.1","5":"19.4","6":"0.08333333","7":"1.846167","8":"8.555538","9":"-14.92238","10":"18.61471","_rn_":"3"},{"1":"14.2","2":"18.4","3":"0.08333333","4":"14.2","5":"18.4","6":"0.08333333","7":"1.463000","8":"8.227158","9":"-14.66193","10":"17.58793","_rn_":"4"},{"1":"14.1","2":"17.4","3":"0.12500000","4":"14.1","5":"17.4","6":"0.12500000","7":"1.724250","8":"11.828135","9":"-21.45847","10":"24.90697","_rn_":"5"},{"1":"14.1","2":"16.9","3":"0.16666667","4":"14.1","5":"16.9","6":"0.16666667","7":"1.950667","8":"15.456897","9":"-28.34429","10":"32.24563","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Although our uncertainties are the same in each row, this method allows for uncertainties to be specified separately for each row of the data.</p>
+</section>
+</section>
+<section id="does-the-uncertainty-in-c_p-matter" class="level3" data-number="10.1.6">
+<h3 data-number="10.1.6" class="anchored" data-anchor-id="does-the-uncertainty-in-c_p-matter"><span class="header-section-number">10.1.6</span> Does the uncertainty in <span class="math inline">\(C_p\)</span> matter?</h3>
+<p>In the analysis above, we treated <span class="math inline">\(C_p\)</span> as a constant (with arbitrary precision).<br>
+But this number is also known experimentally and has an uncertainty associated with it. Do our results change if we include this uncertainty in our calculations?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deltaMethod</span>( HeatX <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">C_p =</span> <span class="fl">4.18</span>), exprforQ,      <span class="co"># add in a column for C_p</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">uncertainties =</span> <span class="fu">c</span>(<span class="at">T.cold.in =</span> <span class="fl">1.0</span>, <span class="at">T.cold.out =</span> <span class="fl">1.0</span>, <span class="at">m.cold =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>, <span class="at">C_p =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Converting uncertainties to a covariance matrix assuming independence ...</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["T.cold.in"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["C_p"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Estimate"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["2.5 %"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["97.5 %"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"14.3","2":"18.6","3":"0.16666667","4":"4.18","5":"2.995667","6":"0.9991296","7":"1.03740855","8":"4.953925","_rn_":"1"},{"1":"14.1","2":"18.7","3":"0.12500000","4":"4.18","5":"2.403500","6":"0.7582832","7":"0.91729216","8":"3.889708","_rn_":"2"},{"1":"14.1","2":"19.4","3":"0.08333333","4":"4.18","5":"1.846167","6":"0.5279263","7":"0.81145004","8":"2.880883","_rn_":"3"},{"1":"14.2","2":"18.4","3":"0.08333333","4":"4.18","5":"1.463000","6":"0.5150737","7":"0.45347411","8":"2.472526","_rn_":"4"},{"1":"14.1","2":"17.4","3":"0.12500000","4":"4.18","5":"1.724250","6":"0.7489510","7":"0.25633306","8":"3.192167","_rn_":"5"},{"1":"14.1","2":"16.9","3":"0.16666667","4":"4.18","5":"1.950667","6":"0.9911506","7":"0.00804728","8":"3.893286","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Comparing these results to the results above we see that the uncertainty increases, but only by amounts that are barely visible (a few parts per 1,000 – not enough to affect how we report the uncertainty given our rules for reporting digits). This has no meaningful impact on our analysis.</p>
+<p>We can often simplify propagation of uncertainty calculations by identifying which components of the uncertainty are driving the size of the overall uncertainty. In this case, the imprecision in the estimated value of <span class="math inline">\(C_p\)</span> is unimportant. If we want to improve our uncertainty, we must improve our measurements of temperature and/or flow rate.</p>
+</section>
+<section id="using-relative-uncertainty" class="level3" data-number="10.1.7">
+<h3 data-number="10.1.7" class="anchored" data-anchor-id="using-relative-uncertainty"><span class="header-section-number">10.1.7</span> Using relative uncertainty</h3>
+<p>Recall that for products, there is a Pythagorean relationship for relative uncertainties.</p>
+<p><span class="math display">\[
+\frac{u_{\dot Q}}{\dot Q} \approx
+\sqrt{
+(\frac{u_{\dot m}}{\dot{m}})^2
++
+(\frac{u_{\Delta T}}{\Delta T})^2
++
+(\frac{u_{C_p}}{C_p})^2
+}
+\]</span> This is useful in determining what uncertainties contribute most to the overall uncertainty. For example, using the values in the first row of the data set.</p>
+<div class="itemize">
+<ul>
+<li><span class="math inline">\(\displaystyle \frac{u_{\dot{m}}}{\dot{m}} = \frac{0.5/60}{10/60} = 0.05\)</span></li>
+<li><span class="math inline">\(\displaystyle \frac{u_{\Delta T}}{\Delta T} = \frac{\sqrt{2}}{4.5} = 0.3142697\)</span></li>
+<li><span class="math inline">\(\displaystyle \frac{u_{C_p}}{C_p} = \frac{0.1}{4.18} = 0.0239234\)</span></li>
+</ul>
+</div>
+<!-- end itemize -->
+<p>From this we can see that it is the imprecise temperature measurements that are our biggest problem. Even if we eliminated the other uncertainties, we would still have a relative uncertainty of over <span class="math inline">\(30\)</span>%. The details vary a bit from row to row, but the uncertainty in in temperature is our biggest obstacle. In addition to increasing the precision of our temperature sensors, we could also potentially improve things by designing a heat exchanger with more dramatic changes in temperature.</p>
+<p>Suppose, for example, we could estimate temperature with an uncertainty of 0.1 degrees (ten times better than we have been assuming). Then our uncertainties for <span class="math inline">\(\dot{Q}\)</span> would change pretty dramatically.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>HeatX <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">C_p =</span> <span class="fl">4.18</span>) <span class="sc">|&gt;</span>  <span class="co"># add in a column for C_p</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">deltaMethod</span>(</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    exprforQ,      </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">uncertainties =</span> <span class="fu">c</span>(<span class="at">T.cold.in =</span> <span class="fl">0.1</span>, <span class="at">T.cold.out =</span> <span class="fl">0.1</span>, <span class="at">m.cold =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>, <span class="at">C_p =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Converting uncertainties to a covariance matrix assuming independence ...</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["T.cold.in"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["C_p"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Estimate"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["2.5 %"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["97.5 %"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"14.3","2":"18.6","3":"0.16666667","4":"4.18","5":"2.995667","6":"0.1930752","7":"2.617246","8":"3.374087","_rn_":"1"},{"1":"14.1","2":"18.7","3":"0.12500000","4":"4.18","5":"2.403500","6":"0.1855831","7":"2.039764","8":"2.767236","_rn_":"2"},{"1":"14.1","2":"19.4","3":"0.08333333","4":"4.18","5":"1.846167","6":"0.1961141","7":"1.461790","8":"2.230543","_rn_":"3"},{"1":"14.2","2":"18.4","3":"0.08333333","4":"4.18","5":"1.463000","6":"0.1582890","7":"1.152759","8":"1.773241","_rn_":"4"},{"1":"14.1","2":"17.4","3":"0.12500000","4":"4.18","5":"1.724250","6":"0.1427417","7":"1.444481","8":"2.004019","_rn_":"5"},{"1":"14.1","2":"16.9","3":"0.16666667","4":"4.18","5":"1.950667","6":"0.1462786","7":"1.663966","8":"2.237367","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>But if we improve the uncertainty in the mass flow rate by a factor of 10, it has only a modest impact on our uncertainty for <span class="math inline">\(\dot{Q}\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>HeatX <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">C_p =</span> <span class="fl">4.18</span>) <span class="sc">|&gt;</span>  <span class="co"># add in a column for C_p</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">deltaMethod</span>(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    exprforQ,      </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">uncertainties =</span> <span class="fu">c</span>(<span class="at">T.cold.in =</span> <span class="fl">1.0</span>, <span class="at">T.cold.out =</span> <span class="fl">1.0</span>, <span class="at">m.cold =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">600</span>, <span class="at">C_p =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Converting uncertainties to a covariance matrix assuming independence ...</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["T.cold.in"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["C_p"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Estimate"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["2.5 %"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["97.5 %"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"14.3","2":"18.6","3":"0.16666667","4":"4.18","5":"2.995667","6":"0.9879521","7":"1.05931613","8":"4.932017","_rn_":"1"},{"1":"14.1","2":"18.7","3":"0.12500000","4":"4.18","5":"2.403500","6":"0.7413336","7":"0.95051286","8":"3.856487","_rn_":"2"},{"1":"14.1","2":"19.4","3":"0.08333333","4":"4.18","5":"1.846167","6":"0.4949381","7":"0.87610576","8":"2.816228","_rn_":"3"},{"1":"14.2","2":"18.4","3":"0.08333333","4":"4.18","5":"1.463000","6":"0.4940762","7":"0.49462851","8":"2.431371","_rn_":"4"},{"1":"14.1","2":"17.4","3":"0.12500000","4":"4.18","5":"1.724250","6":"0.7401663","7":"0.27355065","8":"3.174949","_rn_":"5"},{"1":"14.1","2":"16.9","3":"0.16666667","4":"4.18","5":"1.950667","6":"0.9863883","7":"0.01738121","8":"3.883952","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="estimating-the-heat-transfer-coefficient-u" class="level3" data-number="10.1.8">
+<h3 data-number="10.1.8" class="anchored" data-anchor-id="estimating-the-heat-transfer-coefficient-u"><span class="header-section-number">10.1.8</span> Estimating the heat transfer coefficient, <span class="math inline">\(U\)</span></h3>
+<p>Next, we estimate a heat transfer coefficient (<span class="math inline">\(U\)</span>) for both streams,</p>
+<p><span class="math display">\[
+U = \frac{\dot{Q}}{A \Delta T_{lm}},
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\Delta T_{lm} \equiv \frac{(T_{1} - T_{4}) - (T_{2} - T_{3})}{\log\left( \frac{T_{1} - T_{4}}{T_{2} - T_{3}} \right)}.
+\]</span></p>
+<p>We can apply the same ideas to estimate the uncertainty in <span class="math inline">\(U\)</span>. This time, working it out by hand would be considerably more tedious because of the number of variables involved and the form of the expression to be differentiated. Fortunately, R is happy to take care of those details if we just specify the information needed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>exprforU <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"C_p * m.cold * (T.cold.out - T.cold.in) /"</span>,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"( pi * D *  L  * ((T.cold.out - T.hot.in) - (T.cold.in - T.hot.out)) /"</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">" log ( (T.cold.out - T.hot.in) / (T.cold.in - T.hot.out) ) )"</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>HeatX4 <span class="ot">&lt;-</span> HeatX <span class="sc">|&gt;</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">D =</span> <span class="fl">0.0143</span>, <span class="at">L =</span> <span class="fl">1.626</span>, <span class="at">C_p =</span> <span class="fl">4.18</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>HeatX4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["trial"],"name":[1],"type":["int"],"align":["right"]},{"label":["T.cold.in"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["T.hot.in"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["T.hot.out"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["m.hot"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["D"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["C_p"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"14.3","3":"18.6","4":"38.2","5":"33.9","6":"0.16666667","7":"0.16666667","8":"0.0143","9":"1.626","10":"4.18"},{"1":"2","2":"14.1","3":"18.7","4":"35.9","5":"32.8","6":"0.12500000","7":"0.16666667","8":"0.0143","9":"1.626","10":"4.18"},{"1":"3","2":"14.1","3":"19.4","4":"35.9","5":"33.4","6":"0.08333333","7":"0.16666667","8":"0.0143","9":"1.626","10":"4.18"},{"1":"4","2":"14.2","3":"18.4","4":"35.8","5":"31.8","6":"0.08333333","7":"0.08333333","8":"0.0143","9":"1.626","10":"4.18"},{"1":"5","2":"14.1","3":"17.4","4":"35.7","5":"30.9","6":"0.12500000","7":"0.08333333","8":"0.0143","9":"1.626","10":"4.18"},{"1":"6","2":"14.1","3":"16.9","4":"35.8","5":"30.4","6":"0.16666667","7":"0.08333333","8":"0.0143","9":"1.626","10":"4.18"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deltaMethod</span>(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  HeatX4, </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  exprforU, </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">uncertainties =</span> <span class="fu">c</span>(</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">T.cold.in =</span> <span class="fl">1.0</span>, <span class="at">T.cold.out =</span> <span class="fl">1.0</span>, <span class="at">m.cold =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>, </span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">T.hot.in =</span> <span class="fl">1.0</span>, <span class="at">T.hot.out =</span> <span class="fl">1.0</span>, <span class="at">m.hot =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>, </span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">C_p =</span> <span class="fl">0.1</span>, <span class="at">D =</span> <span class="fl">0.0004</span>, <span class="at">L =</span> <span class="fl">0.0006</span>),</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">constants =</span> <span class="fu">list</span>(<span class="at">pi =</span> pi)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Converting uncertainties to a covariance matrix assuming independence ...</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["T.cold.in"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["T.cold.out"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["m.cold"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["T.hot.in"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["T.hot.out"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["m.hot"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["C_p"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["D"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["L"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Estimate"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["2.5 %"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["97.5 %"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"14.3","2":"18.6","3":"0.16666667","4":"38.2","5":"33.9","6":"0.16666667","7":"4.18","8":"0.0143","9":"1.626","10":"-2.563109","11":"2.650228e+14","12":"-5.194352e+14","13":"5.194352e+14","_rn_":"1"},{"1":"14.1","2":"18.7","3":"0.12500000","4":"35.9","5":"32.8","6":"0.16666667","7":"4.18","8":"0.0143","9":"1.626","10":"-1.834113","11":"5.917860e-01","12":"-2.993993e+00","13":"-6.742339e-01","_rn_":"2"},{"1":"14.1","2":"19.4","3":"0.08333333","4":"35.9","5":"33.4","6":"0.16666667","7":"4.18","8":"0.0143","9":"1.626","10":"-1.414814","11":"4.168660e-01","12":"-2.231856e+00","13":"-5.977715e-01","_rn_":"3"},{"1":"14.2","2":"18.4","3":"0.08333333","4":"35.8","5":"31.8","6":"0.08333333","7":"4.18","8":"0.0143","9":"1.626","10":"-1.144470","11":"4.096225e-01","12":"-1.947316e+00","13":"-3.416251e-01","_rn_":"4"},{"1":"14.1","2":"17.4","3":"0.12500000","4":"35.7","5":"30.9","6":"0.08333333","7":"4.18","8":"0.0143","9":"1.626","10":"-1.345802","11":"5.892800e-01","12":"-2.500770e+00","13":"-1.908347e-01","_rn_":"5"},{"1":"14.1","2":"16.9","3":"0.16666667","4":"35.8","5":"30.4","6":"0.08333333","7":"4.18","8":"0.0143","9":"1.626","10":"-1.520042","11":"7.753836e-01","12":"-3.039766e+00","13":"-3.181344e-04","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Note the use of the <code>constants</code> argument here to specify the value of <code>pi</code>.<br>
+We could also have specified <span class="math inline">\(C_p\)</span> this way if we decided to ignore the uncertainty in that value. But since it is no harder to include that uncertainty, we included it.</p>
+</section>
+<section id="estimating-the-nusselt-number-correlation-a" class="level3" data-number="10.1.9">
+<h3 data-number="10.1.9" class="anchored" data-anchor-id="estimating-the-nusselt-number-correlation-a"><span class="header-section-number">10.1.9</span> Estimating the Nusselt number correlation, <span class="math inline">\(a\)</span></h3>
+<p>Finally, we can estimate the parameter <span class="math inline">\(a\)</span> in a Nusselt number correlation for turbulent flow (<span class="math inline">\(Re_{D} &gt; 2300\)</span>):</p>
+<p><span class="math display">\[
+    a = \frac{Nu_D}{Re_{D}^{0.8} Pr^{1/3}},
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+    Nu_{D} = \frac{h D}{k} \approx \frac{ 2 U D}{k},
+\]</span></p>
+<p><span class="math display">\[
+    Re_{D} = \frac{4 \dot{m}}{\pi D \mu},
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+    Pr = \frac{\mu C_{p}}{k}.
+\]</span></p>
+<p>The uncertainty in the estimates for <span class="math inline">\(a\)</span> can be estimated in a similar manner. For that purpose, we assume that the exponents on <span class="math inline">\(Re_{D}\)</span> and <span class="math inline">\(Pr\)</span> (0.8 and 1/3, respectively) are constant. The values of <span class="math inline">\(C_{p}\)</span>, <span class="math inline">\(k\)</span>, and <span class="math inline">\(\mu\)</span> are given in <a href="#tbl-hxer-definitions">Table&nbsp;<span>10.1</span></a>.</p>
+<p>To complete our uncertainty calculation we must</p>
+<div class="enumerate">
+<ol>
+<li>Create an expression for the quantity we are interested in (as a quoted string).</li>
+<li>Create a data frame that has all of the components of this expression that have uncertainties.</li>
+<li>Create a named vector of uncertainties. The names should correspond to the variables names in the data frame, the values are the uncertainties. (Alternatively, the uncertainties can be put inside the data frame and the arguments <code>estimtates</code> and <code>uncertainties</code> can be used to specify which columns are the estimates and which are the corresponding uncertainties.)</li>
+<li>Create a list that contains the value of any constants (or values for which we are ignoring that there is uncertainty because the uncertainty is so small that it doesn’t affect the analysis).</li>
+</ol>
+</div>
+<!-- end enumerate -->
+<p>This is left as an exercise for you.</p>
+</section>
+</section>
+<section id="standard-errors-in-fitdistr-output" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="standard-errors-in-fitdistr-output"><span class="header-section-number">10.2</span> Standard Errors in <code>fitdistr()</code> output</h2>
+<p>We had not yet learned about uncertainty and standard errors when we learned about <code>fitdistr()</code>, but the output from the function includes an estimated standard error.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastR2)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(Jordan8687<span class="sc">$</span>points, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      mean          sd    
+  37.0853659    9.8639541 
+ ( 1.0892915) ( 0.7702454)</code></pre>
+</div>
+</div>
+<p>The parenthesized numbers are the estimated standard errors associated with each parameter estimate. In this case, it is easy to compute the standard error for the mean ourselves using <span class="math inline">\(SE = s / \sqrt{n}\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>( <span class="sc">~</span> points, <span class="at">data =</span> Jordan8687) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">82</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.095995</code></pre>
+</div>
+</div>
+</section>
+<section id="sec-r-squared" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="sec-r-squared"><span class="header-section-number">10.3</span> <span class="math inline">\(R^2\)</span></h2>
+<div class="center">
+<p><em>Note: the methods in this section assume a linear model with an intercept term.</em></p>
+</div>
+<!-- end center -->
+<p>Recall that linear models are fit by minimizing the sum of the squares of the residuals:% <span class="math display">\[
+RSS = SSE = \sum_{i = 1}^{n} ( y_i - \hat y)^2
+\]</span> This expression reminds us of<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <span class="math display">\[
+SST = \sum_{i = 1}^{n} ( y_i - \mean y)^2 \;,
+\]</span> the numerator of the variance of <span class="math inline">\(y\)</span>. <span class="math inline">\(SST\)</span> is a measure of the total variation in the response variable.</p>
+<p>A little algebra shows that<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> <span class="math display">\[
+SSM = SST - SSE =
+\sum_{i = 1}^{n} ( \hat y - \mean y)^2 \;,
+\]</span> We can now define <span class="math inline">\(R^2\)</span> by <span class="math display">\[
+R^2 = \frac{SSM}{SST}  = \frac{SSM}{ SSM + SSE }
+= \mbox{proportion of variability in the response explained by the model.}
+\]</span> <span class="math inline">\(R^2\)</span> is always between 0 and 1 and is reported in the summary output for linear models. It is the square of the correlation coefficient that we saw earlier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(sat <span class="sc">~</span> expend, <span class="at">data =</span> SAT))  <span class="co"># how does the average SAT score depend on money spent?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = sat ~ expend, data = SAT)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-145.074  -46.821    4.087   40.034  128.489 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 1089.294     44.390  24.539  &lt; 2e-16 ***
+expend       -20.892      7.328  -2.851  0.00641 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 69.91 on 48 degrees of freedom
+Multiple R-squared:  0.1448,    Adjusted R-squared:  0.127 
+F-statistic: 8.128 on 1 and 48 DF,  p-value: 0.006408</code></pre>
+</div>
+</div>
+<p>Notice that <span class="math inline">\(R^2 &lt; 15%\)</span> and that the coefficient on <code>expend</code> is negative – indicating that spending more is associated with <em>worse</em> scores on the SAT.</p>
+<p>One reason for this is that in some states most college bound students take the SAT, but in other states, the ACT is more common so the pool of students taking the SAT is stronger. If we add <code>frac</code> – the fraction of students in a given state who took the SAT.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(sat <span class="sc">~</span> expend <span class="sc">+</span> frac, <span class="at">data =</span> SAT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = sat ~ expend + frac, data = SAT)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-88.400 -22.884   1.968  19.142  68.755 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 993.8317    21.8332  45.519  &lt; 2e-16 ***
+expend       12.2865     4.2243   2.909  0.00553 ** 
+frac         -2.8509     0.2151 -13.253  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 32.46 on 47 degrees of freedom
+Multiple R-squared:  0.8195,    Adjusted R-squared:  0.8118 
+F-statistic: 106.7 on 2 and 47 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Notice how much larger <span class="math inline">\(R^2\)</span> is now, and that the sign of the coefficient on <code>expend</code> is not positive – as we would have expected.</p>
+<p>It is important to note that adding in the additional variable <code>frac</code> gives a very different impression of the effect of <code>expend</code> on <code>sat</code>. Most of our examples have dealt with one response to one predictor, but in many situations, this is too simplistic and the inclusion of multiple predictors in the model is required to understand their impact on the response.</p>
+</section>
+<section id="exercises" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="exercises"><span class="header-section-number">10.4</span> Exercises</h2>
+<div id="exr-uncertainty-nusselt" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 10.1 </strong></span>Give an estimate with uncertainty for the Nusselt number correlation using the data in <code>HeatX</code> used in this chapter.</p>
+</div>
+<!-- end problem -->
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>See <a href="http://www.omega.com/prodinfo/rotameters.html" class="uri">http://www.omega.com/prodinfo/rotameters.html</a> for an introduction.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>See <a href="http://www.omega.com/techref/themointro.html" class="uri">http://www.omega.com/techref/themointro.html</a> for an introduction.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><span class="math inline">\(SST\)</span> stands for Total Sum of Squares.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>SSM stands for Model Sum of Squares.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./09-hypothesis-testing.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

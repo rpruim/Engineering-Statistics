@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics for the Physical Sciences and Engineering - 1&nbsp; Graphical Summaries of Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02-numerical.html" rel="next">
+<link href="./00-chap0.html" rel="prev">
+<link href="./cover.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+</head><body class="nav-sidebar docked">$$
+\def\reals{\mathbb{R}}
+\def\card#1{| #1 |}
+\def\mean{\overline}
+\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
+\def\Prob{\operatorname{Prob}}
+\def\tand{\operatorname{and}}
+\def\tor{\operatorname{or}}
+\def\tnot{\operatorname{not}}
+\def\E{{\operatorname E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\union{\cup}
+\def\intersect{\cap}
+\def\Unif{\mathsf{Unif}}
+\def\Beta{\mathsf{Beta}}
+\def\Rayleigh{\mathsf{Rayleigh}}
+\def\Exp{\mathsf{Exp}}
+\def\Norm{\mathsf{Norm}}
+\def\Tri{\mathsf{Tri}}
+\def\Gamm{\mathsf{Gamma}}
+\def\Pois{\mathsf{Pois}}
+\def\Binom{\mathsf{Binom}}
+\def\Weibull{\mathsf{Weibull}}
+\def\Tdist{\mathsf{T}}
+\def\Fdist{\mathsf{F}}
+\def\Chisq{\mathsf{Chisq}}
+\def\boolval#1{[\![ #1 ]\!]}
+\def\simiid{\stackrel{\mathrm{iid}{\sim}}}
+
+\def\sfrac#1#2{{#1}/{#2}}
+\def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+\def\Partial#1#2{\frac{\partial}{\partial #2} #1}
+
+\def\myindex#1{\relax}
+$$
+
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="book.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Graphical Summaries of Data</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for the Physical Sciences and Engineering</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Pruim-Stat-for-Phys-Sci-and-Engr.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-chap0.html" class="sidebar-item-text sidebar-link">Where do numbers come from?</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-graphical.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Graphical Summaries of Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-numerical.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Numerical Summaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-probability.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Probability</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-random-variables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-transformations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformation and Combinations of Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-propagation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Propagation of Uncertainty</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-simple-linear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-nonlinear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Beyond Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-more-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">More Examples</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#getting-started-with-rstudio" id="toc-getting-started-with-rstudio" class="nav-link active" data-scroll-target="#getting-started-with-rstudio"><span class="toc-section-number">1.1</span>  Getting Started With RStudio</a>
+  <ul class="collapse">
+  <li><a href="#using-r-as-a-calculator" id="toc-using-r-as-a-calculator" class="nav-link" data-scroll-target="#using-r-as-a-calculator"><span class="toc-section-number">1.1.1</span>  Using R as a calculator</a></li>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages"><span class="toc-section-number">1.1.2</span>  Loading packages</a></li>
+  <li><a href="#four-things-to-know-about-r" id="toc-four-things-to-know-about-r" class="nav-link" data-scroll-target="#four-things-to-know-about-r"><span class="toc-section-number">1.1.3</span>  Four Things to Know About R</a></li>
+  </ul></li>
+  <li><a href="#data-in-r" id="toc-data-in-r" class="nav-link" data-scroll-target="#data-in-r"><span class="toc-section-number">1.2</span>  Data in R</a>
+  <ul class="collapse">
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="toc-section-number">1.2.1</span>  Data Frames</a></li>
+  <li><a href="#data-in-packages" id="toc-data-in-packages" class="nav-link" data-scroll-target="#data-in-packages"><span class="toc-section-number">1.2.2</span>  Data in Packages</a></li>
+  <li><a href="#the-helprct-data-set" id="toc-the-helprct-data-set" class="nav-link" data-scroll-target="#the-helprct-data-set"><span class="toc-section-number">1.2.3</span>  The HELPrct data set</a></li>
+  <li><a href="#the-kidsfeet-data-set" id="toc-the-kidsfeet-data-set" class="nav-link" data-scroll-target="#the-kidsfeet-data-set"><span class="toc-section-number">1.2.4</span>  The KidsFeet data set</a></li>
+  <li><a href="#the-oldfaith-data-set" id="toc-the-oldfaith-data-set" class="nav-link" data-scroll-target="#the-oldfaith-data-set"><span class="toc-section-number">1.2.5</span>  The oldfaith data set</a></li>
+  <li><a href="#using-your-own-data" id="toc-using-your-own-data" class="nav-link" data-scroll-target="#using-your-own-data"><span class="toc-section-number">1.2.6</span>  Using your own data</a></li>
+  </ul></li>
+  <li><a href="#graphical-and-numerical-summaries-of-data" id="toc-graphical-and-numerical-summaries-of-data" class="nav-link" data-scroll-target="#graphical-and-numerical-summaries-of-data"><span class="toc-section-number">1.3</span>  Graphical and Numerical Summaries of Data</a>
+  <ul class="collapse">
+  <li><a href="#the-most-important-template" id="toc-the-most-important-template" class="nav-link" data-scroll-target="#the-most-important-template"><span class="toc-section-number">1.3.1</span>  The Most Important Template</a></li>
+  </ul></li>
+  <li><a href="#scatterplots" id="toc-scatterplots" class="nav-link" data-scroll-target="#scatterplots"><span class="toc-section-number">1.4</span>  Scatterplots</a>
+  <ul class="collapse">
+  <li><a href="#adding-color" id="toc-adding-color" class="nav-link" data-scroll-target="#adding-color"><span class="toc-section-number">1.4.1</span>  Adding Color</a></li>
+  <li><a href="#transparency-and-dot-size" id="toc-transparency-and-dot-size" class="nav-link" data-scroll-target="#transparency-and-dot-size"><span class="toc-section-number">1.4.2</span>  Transparency and dot size</a></li>
+  <li><a href="#conditional-plots-aka-faceting" id="toc-conditional-plots-aka-faceting" class="nav-link" data-scroll-target="#conditional-plots-aka-faceting"><span class="toc-section-number">1.4.3</span>  Conditional plots (aka Faceting)</a></li>
+  <li><a href="#other-types-of-plots" id="toc-other-types-of-plots" class="nav-link" data-scroll-target="#other-types-of-plots"><span class="toc-section-number">1.4.4</span>  Other types of plots</a></li>
+  </ul></li>
+  <li><a href="#graphing-the-distribution-of-one-variable" id="toc-graphing-the-distribution-of-one-variable" class="nav-link" data-scroll-target="#graphing-the-distribution-of-one-variable"><span class="toc-section-number">1.5</span>  Graphing the Distribution of One Variable</a>
+  <ul class="collapse">
+  <li><a href="#histograms-and-density-plots-for-quantitative-variables" id="toc-histograms-and-density-plots-for-quantitative-variables" class="nav-link" data-scroll-target="#histograms-and-density-plots-for-quantitative-variables"><span class="toc-section-number">1.5.1</span>  Histograms (and density plots) for quantitative variables</a></li>
+  <li><a href="#describing-the-shape-of-a-distribution" id="toc-describing-the-shape-of-a-distribution" class="nav-link" data-scroll-target="#describing-the-shape-of-a-distribution"><span class="toc-section-number">1.5.2</span>  Describing the shape of a distribution</a></li>
+  <li><a href="#bar-graphs-for-categorical-variables" id="toc-bar-graphs-for-categorical-variables" class="nav-link" data-scroll-target="#bar-graphs-for-categorical-variables"><span class="toc-section-number">1.5.3</span>  Bar graphs for categorical variables</a></li>
+  <li><a href="#overlaying-and-faceting-data" id="toc-overlaying-and-faceting-data" class="nav-link" data-scroll-target="#overlaying-and-faceting-data"><span class="toc-section-number">1.5.4</span>  Overlaying and faceting data</a></li>
+  <li><a href="#grouping-and-bar-charts" id="toc-grouping-and-bar-charts" class="nav-link" data-scroll-target="#grouping-and-bar-charts"><span class="toc-section-number">1.5.5</span>  Grouping and bar charts</a></li>
+  <li><a href="#proportions-and-bar-charts" id="toc-proportions-and-bar-charts" class="nav-link" data-scroll-target="#proportions-and-bar-charts"><span class="toc-section-number">1.5.6</span>  Proportions and bar charts</a></li>
+  </ul></li>
+  <li><a href="#labeling-plots" id="toc-labeling-plots" class="nav-link" data-scroll-target="#labeling-plots"><span class="toc-section-number">1.6</span>  Labeling plots</a></li>
+  <li><a href="#exporting-plots" id="toc-exporting-plots" class="nav-link" data-scroll-target="#exporting-plots"><span class="toc-section-number">1.7</span>  Exporting Plots</a></li>
+  <li><a href="#reproducible-documents" id="toc-reproducible-documents" class="nav-link" data-scroll-target="#reproducible-documents"><span class="toc-section-number">1.8</span>  Reproducible Documents</a>
+  <ul class="collapse">
+  <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><span class="toc-section-number">1.8.1</span>  Quarto</a></li>
+  <li><a href="#three-kinds-of-sections" id="toc-three-kinds-of-sections" class="nav-link" data-scroll-target="#three-kinds-of-sections"><span class="toc-section-number">1.8.2</span>  Three kinds of sections</a></li>
+  <li><a href="#quarto-files-must-be-self-contained" id="toc-quarto-files-must-be-self-contained" class="nav-link" data-scroll-target="#quarto-files-must-be-self-contained">Quarto files must be self-contained</a></li>
+  <li><a href="#chunk-options" id="toc-chunk-options" class="nav-link" data-scroll-target="#chunk-options"><span class="toc-section-number">1.8.3</span>  Chunk options</a></li>
+  </ul></li>
+  <li><a href="#a-few-bells-and-whistles-for-plotting" id="toc-a-few-bells-and-whistles-for-plotting" class="nav-link" data-scroll-target="#a-few-bells-and-whistles-for-plotting"><span class="toc-section-number">1.9</span>  A Few Bells and Whistles for Plotting</a>
+  <ul class="collapse">
+  <li><a href="#alpha-size" id="toc-alpha-size" class="nav-link" data-scroll-target="#alpha-size"><span class="toc-section-number">1.9.1</span>  alpha, size</a></li>
+  <li><a href="#title-subtitle-caption-xlab-ylab" id="toc-title-subtitle-caption-xlab-ylab" class="nav-link" data-scroll-target="#title-subtitle-caption-xlab-ylab">title, subtitle, caption, xlab, ylab</a></li>
+  </ul></li>
+  <li><a href="#getting-help-in-rstudio" id="toc-getting-help-in-rstudio" class="nav-link" data-scroll-target="#getting-help-in-rstudio"><span class="toc-section-number">1.10</span>  Getting Help in RStudio</a>
+  <ul class="collapse">
+  <li><a href="#the-rstudio-help-system" id="toc-the-rstudio-help-system" class="nav-link" data-scroll-target="#the-rstudio-help-system"><span class="toc-section-number">1.10.1</span>  The RStudio help system</a></li>
+  <li><a href="#tab-completion" id="toc-tab-completion" class="nav-link" data-scroll-target="#tab-completion"><span class="toc-section-number">1.10.2</span>  Tab completion</a></li>
+  <li><a href="#history" id="toc-history" class="nav-link" data-scroll-target="#history"><span class="toc-section-number">1.10.3</span>  History</a></li>
+  <li><a href="#error-messages" id="toc-error-messages" class="nav-link" data-scroll-target="#error-messages"><span class="toc-section-number">1.10.4</span>  Error messages</a></li>
+  </ul></li>
+  <li><a href="#graphical-summaries-important-ideas" id="toc-graphical-summaries-important-ideas" class="nav-link" data-scroll-target="#graphical-summaries-important-ideas"><span class="toc-section-number">1.11</span>  Graphical Summaries – Important Ideas</a>
+  <ul class="collapse">
+  <li><a href="#the-most-important-template-1" id="toc-the-most-important-template-1" class="nav-link" data-scroll-target="#the-most-important-template-1"><span class="toc-section-number">1.11.1</span>  The Most Important Template</a></li>
+  <li><a href="#patterns-and-deviations-from-patterns" id="toc-patterns-and-deviations-from-patterns" class="nav-link" data-scroll-target="#patterns-and-deviations-from-patterns"><span class="toc-section-number">1.11.2</span>  Patterns and Deviations from Patterns</a></li>
+  <li><a href="#different-plots-for-different-kinds-of-variables" id="toc-different-plots-for-different-kinds-of-variables" class="nav-link" data-scroll-target="#different-plots-for-different-kinds-of-variables"><span class="toc-section-number">1.11.3</span>  Different Plots for Different Kinds of Variables</a></li>
+  <li><a href="#side-by-side-plots-and-overlays-can-reveal-importance-of-additional-factors" id="toc-side-by-side-plots-and-overlays-can-reveal-importance-of-additional-factors" class="nav-link" data-scroll-target="#side-by-side-plots-and-overlays-can-reveal-importance-of-additional-factors"><span class="toc-section-number">1.11.4</span>  Side-by-side Plots and Overlays Can Reveal Importance of Additional Factors</a></li>
+  <li><a href="#area-relative-frequency" id="toc-area-relative-frequency" class="nav-link" data-scroll-target="#area-relative-frequency"><span class="toc-section-number">1.11.5</span>  Area = (relative) frequency</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">1.12</span>  Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Graphical Summaries of Data</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="getting-started-with-rstudio" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="getting-started-with-rstudio"><span class="header-section-number">1.1</span> Getting Started With RStudio</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/RStudio-Welcome.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Welcome to RStudio</figcaption><p></p>
+</figure>
+</div>
+<p>RStudio is an integrated development environment (IDE) for R a freely available language and environment for statistical computing and graphics. Both are freely available for Mac, PC, and Linux.</p>
+<p>In addition to running RStudio on your local machine, you have the option of accessing an RStudio server via a web browser. (For best results, avoid Internet Explorer.)</p>
+<section id="using-r-as-a-calculator" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="using-r-as-a-calculator"><span class="header-section-number">1.1.1</span> Using R as a calculator</h3>
+<p>Notice that RStudio divides its world into four panels. Several of the panels are further subdivided into multiple tabs. The console panel is where we type commands that R will execute.</p>
+<p>R can be used as a calculator. Try typing the following commands in the console panel.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="sc">+</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fl">15.3</span> <span class="sc">*</span> <span class="fl">23.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 358.02</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>You can save values to named variables for later reuse</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>product <span class="ot">=</span> <span class="fl">15.3</span> <span class="sc">*</span> <span class="fl">23.4</span>       <span class="co"># save result</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>product                     <span class="co"># show the result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 358.02</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>product <span class="ot">&lt;-</span> <span class="fl">15.3</span> <span class="sc">*</span> <span class="fl">23.4</span>      <span class="co"># &lt;- is assignment operator, same as =</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>product</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 358.02</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fl">15.3</span> <span class="sc">*</span> <span class="fl">23.4</span> <span class="ot">-&gt;</span> newproduct   <span class="co"># -&gt; assigns to the right</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>newproduct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 358.02</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>.<span class="dv">5</span> <span class="sc">*</span> product                <span class="co"># half of the product</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 179.01</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(product)                <span class="co"># (natural) log of the product</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.880589</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log10</span>(product)              <span class="co"># base 10 log of the product</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.553907</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(product, <span class="at">base =</span> <span class="dv">2</span>)        <span class="co"># base 2 log of the product</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.483896</code></pre>
+</div>
+</div>
+<p>The semi-colon can be used to place multiple commands on one line. One frequent use of this is to save and print a value all in one go:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fl">15.3</span> <span class="sc">*</span> <span class="fl">23.4</span> <span class="ot">-&gt;</span> product; product    <span class="co"># save result and show it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 358.02</code></pre>
+</div>
+</div>
+</section>
+<section id="loading-packages" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="loading-packages"><span class="header-section-number">1.1.2</span> Loading packages</h3>
+<p>R is divided up into packages. A few of these are loaded every time you run R but most have to be selected. This way you only have as much of R as you need.</p>
+<p>In the <strong>Packages</strong> tab, check the boxes next to the following packages to load them: <!-- begin itemize --></p>
+<ol>
+<li>mosaic (a package from Project MOSAIC)</li>
+<li>DAAG (a package that goes with the book <em>Data Analysis and Graphic</em>)</li>
+</ol>
+<!-- end itemize -->
+<p>You an also load packages by typing, for example</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)       <span class="co"># loads the DAAG package if it is not already loaded</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="four-things-to-know-about-r" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="four-things-to-know-about-r"><span class="header-section-number">1.1.3</span> Four Things to Know About R</h3>
+<section id="r-is-case-sensitive" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="r-is-case-sensitive">1. R is case-sensitive</h4>
+<p>If you mis-capitalize something in R it won’t do what you want. If you get an error message about an “object not found”, check to see that you spelled it correctly.</p>
+</section>
+<section id="functions-in-r-use-the-following-syntax" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="functions-in-r-use-the-following-syntax">2. Functions in R use the following syntax:</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functionname</span>( argument1, argument2, ... )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="a">
+<li><p>The arguments are <strong>always</strong> <em>surrounded by (round) parentheses</em> and <em>separated by commas</em>.</p></li>
+<li><p>Some functions (like <code>data()</code>) have no required arguments, but you still need the parentheses.</p></li>
+<li><p>If you type a function name without the parentheses, you will see the <em>code</em> for that function – which probably isn’t what you want at this point.</p></li>
+</ol>
+</section>
+<section id="tab-completion-and-arrows-can-improve-typing-speed-and-accuracy." class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="tab-completion-and-arrows-can-improve-typing-speed-and-accuracy.">3. TAB completion and arrows can improve typing speed and accuracy.</h4>
+<p>If you begin a command and hit the TAB key, R will show you a list of possible ways to complete the command. If you hit TAB after the opening parenthesis of a function, it will show you the list of arguments it expects. The up and down arrows can be used to retrieve past commands.</p>
+</section>
+<section id="hit-escape-to-break-out-of-a-mess." class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="hit-escape-to-break-out-of-a-mess.">4. Hit ESCAPE to break out of a mess.</h4>
+<p>If you get into some sort of mess typing (usually indicated by extra ‘<span class="math inline">\(+\)</span>’ signs along the left edge, indicating that R is waiting for more input – perhaps because you have some sort of error in what has gone before), you can hit the escape key to get back to a clean prompt.</p>
+</section>
+</section>
+</section>
+<section id="data-in-r" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="data-in-r"><span class="header-section-number">1.2</span> Data in R</h2>
+<section id="data-frames" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">1.2.1</span> Data Frames</h3>
+<p>Most often, data sets in R are stored in a structure called a <strong>data frame</strong>. A data frame is designed to hold “rectangular data”. The people or things being measured or observed are called <strong>observational units</strong> (or subjects or cases when they are people). Each observational unit is represented by one row. The different pieces of information recorded for each observational unit are stored in separate columns, called <strong>variables</strong>.</p>
+</section>
+<section id="data-in-packages" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="data-in-packages"><span class="header-section-number">1.2.2</span> Data in Packages</h3>
+<p>There are a number of data sets built into R and many more that come in various add on packages.</p>
+<p>You can see a list of data sets in a particular package like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaicData)            <span class="co"># load the package</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">"mosaicData"</span>)   <span class="co"># see what data sets are in it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can find a longer list of all data sets available in any loaded package using</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="the-helprct-data-set" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="the-helprct-data-set"><span class="header-section-number">1.2.3</span> The HELPrct data set</h3>
+<p>The <code>HELPrct</code> data frame from the <code>mosaic</code> package contains data from the Health Evaluation and Linkage to Primary Care randomized clinical trial. You can find out more about the study and the data in this data frame by typing</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>?HELPrct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Among other things, this will tell us something about the subjects (observational units) in this study:</p>
+<blockquote class="blockquote">
+<p>Eligible subjects were adults, who spoke Spanish or English, reported alcohol, heroin or cocaine as their first or second drug of choice, resided in proximity to the primary care clinic to which they would be referred or were homeless. Patients with established primary care relationships they planned to continue, significant dementia, specific plans to leave the Boston area that would prevent research participation, failure to provide contact information for tracking purposes, or pregnancy were excluded.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Subjects were interviewed at baseline during their detoxification stay and follow-up interviews were undertaken every 6 months for 2 years.</p>
+</blockquote>
+<p>It is often handy to look at the first few rows of a data frame. It will show you the names of the variables and the kind of data in them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(HELPrct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["age"],"name":[1],"type":["int"],"align":["right"]},{"label":["anysubstatus"],"name":[2],"type":["int"],"align":["right"]},{"label":["anysub"],"name":[3],"type":["fct"],"align":["left"]},{"label":["cesd"],"name":[4],"type":["int"],"align":["right"]},{"label":["d1"],"name":[5],"type":["int"],"align":["right"]},{"label":["daysanysub"],"name":[6],"type":["int"],"align":["right"]},{"label":["dayslink"],"name":[7],"type":["int"],"align":["right"]},{"label":["drugrisk"],"name":[8],"type":["int"],"align":["right"]},{"label":["e2b"],"name":[9],"type":["int"],"align":["right"]},{"label":["female"],"name":[10],"type":["int"],"align":["right"]},{"label":["sex"],"name":[11],"type":["fct"],"align":["left"]},{"label":["g1b"],"name":[12],"type":["fct"],"align":["left"]},{"label":["homeless"],"name":[13],"type":["fct"],"align":["left"]},{"label":["i1"],"name":[14],"type":["int"],"align":["right"]},{"label":["i2"],"name":[15],"type":["int"],"align":["right"]},{"label":["id"],"name":[16],"type":["int"],"align":["right"]},{"label":["indtot"],"name":[17],"type":["int"],"align":["right"]},{"label":["linkstatus"],"name":[18],"type":["int"],"align":["right"]},{"label":["link"],"name":[19],"type":["fct"],"align":["left"]},{"label":["mcs"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["pcs"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["pss_fr"],"name":[22],"type":["int"],"align":["right"]},{"label":["racegrp"],"name":[23],"type":["fct"],"align":["left"]},{"label":["satreat"],"name":[24],"type":["fct"],"align":["left"]},{"label":["sexrisk"],"name":[25],"type":["int"],"align":["right"]},{"label":["substance"],"name":[26],"type":["fct"],"align":["left"]},{"label":["treat"],"name":[27],"type":["fct"],"align":["left"]},{"label":["avg_drinks"],"name":[28],"type":["int"],"align":["right"]},{"label":["max_drinks"],"name":[29],"type":["int"],"align":["right"]},{"label":["hospitalizations"],"name":[30],"type":["int"],"align":["right"]}],"data":[{"1":"37","2":"1","3":"yes","4":"49","5":"3","6":"177","7":"225","8":"0","9":"NA","10":"0","11":"male","12":"yes","13":"housed","14":"13","15":"26","16":"1","17":"39","18":"1","19":"yes","20":"25.111990","21":"58.41369","22":"0","23":"black","24":"no","25":"4","26":"cocaine","27":"yes","28":"13","29":"26","30":"3","_rn_":"1"},{"1":"37","2":"1","3":"yes","4":"30","5":"22","6":"2","7":"NA","8":"0","9":"NA","10":"0","11":"male","12":"yes","13":"homeless","14":"56","15":"62","16":"2","17":"43","18":"NA","19":"NA","20":"26.670307","21":"36.03694","22":"1","23":"white","24":"no","25":"7","26":"alcohol","27":"yes","28":"56","29":"62","30":"22","_rn_":"2"},{"1":"26","2":"1","3":"yes","4":"39","5":"0","6":"3","7":"365","8":"20","9":"NA","10":"0","11":"male","12":"no","13":"housed","14":"0","15":"0","16":"3","17":"41","18":"0","19":"no","20":"6.762923","21":"74.80633","22":"13","23":"black","24":"no","25":"2","26":"heroin","27":"no","28":"0","29":"0","30":"0","_rn_":"3"},{"1":"39","2":"1","3":"yes","4":"15","5":"2","6":"189","7":"343","8":"0","9":"1","10":"1","11":"female","12":"no","13":"housed","14":"5","15":"5","16":"4","17":"28","18":"0","19":"no","20":"43.967880","21":"61.93168","22":"11","23":"white","24":"yes","25":"4","26":"heroin","27":"no","28":"5","29":"5","30":"2","_rn_":"4"},{"1":"32","2":"1","3":"yes","4":"39","5":"12","6":"2","7":"57","8":"0","9":"1","10":"0","11":"male","12":"no","13":"homeless","14":"10","15":"13","16":"5","17":"38","18":"1","19":"yes","20":"21.675755","21":"37.34558","22":"10","23":"black","24":"no","25":"6","26":"cocaine","27":"no","28":"10","29":"13","30":"12","_rn_":"5"},{"1":"47","2":"1","3":"yes","4":"6","5":"1","6":"31","7":"365","8":"0","9":"NA","10":"1","11":"female","12":"no","13":"housed","14":"4","15":"4","16":"6","17":"29","18":"0","19":"no","20":"55.508991","21":"46.47521","22":"5","23":"black","24":"no","25":"5","26":"cocaine","27":"yes","28":"4","29":"4","30":"1","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>When there are a lot of variables, this format can be hard to read. The <code>glimpse()</code> or <code>inspect()</code> functions provide some other options.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(HELPrct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 453
+Columns: 30
+$ age              &lt;int&gt; 37, 37, 26, 39, 32, 47, 49, 28, 50, 39, 34, 58, 58, 6…
+$ anysubstatus     &lt;int&gt; 1, 1, 1, 1, 1, 1, NA, 1, 1, 1, NA, 0, 1, 1, 1, 1, 1, …
+$ anysub           &lt;fct&gt; yes, yes, yes, yes, yes, yes, NA, yes, yes, yes, NA, …
+$ cesd             &lt;int&gt; 49, 30, 39, 15, 39, 6, 52, 32, 50, 46, 46, 49, 22, 36…
+$ d1               &lt;int&gt; 3, 22, 0, 2, 12, 1, 14, 1, 14, 4, 0, 3, 5, 10, 2, 6, …
+$ daysanysub       &lt;int&gt; 177, 2, 3, 189, 2, 31, NA, 47, 31, 115, NA, 192, 6, 6…
+$ dayslink         &lt;int&gt; 225, NA, 365, 343, 57, 365, 334, 365, 365, 382, 365, …
+$ drugrisk         &lt;int&gt; 0, 0, 20, 0, 0, 0, 0, 7, 18, 20, 8, 0, 0, 0, 0, 0, 0,…
+$ e2b              &lt;int&gt; NA, NA, NA, 1, 1, NA, 1, 8, 7, 3, NA, NA, NA, 1, NA, …
+$ female           &lt;int&gt; 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0,…
+$ sex              &lt;fct&gt; male, male, male, female, male, female, female, male,…
+$ g1b              &lt;fct&gt; yes, yes, no, no, no, no, yes, yes, no, no, no, no, n…
+$ homeless         &lt;fct&gt; housed, homeless, housed, housed, homeless, housed, h…
+$ i1               &lt;int&gt; 13, 56, 0, 5, 10, 4, 13, 12, 71, 20, 0, 13, 20, 13, 5…
+$ i2               &lt;int&gt; 26, 62, 0, 5, 13, 4, 20, 24, 129, 27, 0, 13, 31, 20, …
+$ id               &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17…
+$ indtot           &lt;int&gt; 39, 43, 41, 28, 38, 29, 38, 44, 44, 44, 34, 11, 40, 4…
+$ linkstatus       &lt;int&gt; 1, NA, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0…
+$ link             &lt;fct&gt; yes, NA, no, no, yes, no, no, no, no, no, no, no, no,…
+$ mcs              &lt;dbl&gt; 25.111990, 26.670307, 6.762923, 43.967880, 21.675755,…
+$ pcs              &lt;dbl&gt; 58.41369, 36.03694, 74.80633, 61.93168, 37.34558, 46.…
+$ pss_fr           &lt;int&gt; 0, 1, 13, 11, 10, 5, 1, 4, 5, 0, 0, 13, 13, 1, 1, 7, …
+$ racegrp          &lt;fct&gt; black, white, black, white, black, black, black, whit…
+$ satreat          &lt;fct&gt; no, no, no, yes, no, no, yes, yes, no, yes, no, yes, …
+$ sexrisk          &lt;int&gt; 4, 7, 2, 4, 6, 5, 8, 6, 8, 0, 2, 0, 1, 4, 8, 3, 4, 4,…
+$ substance        &lt;fct&gt; cocaine, alcohol, heroin, heroin, cocaine, cocaine, c…
+$ treat            &lt;fct&gt; yes, yes, no, no, no, yes, no, yes, no, yes, yes, no,…
+$ avg_drinks       &lt;int&gt; 13, 56, 0, 5, 10, 4, 13, 12, 71, 20, 0, 13, 20, 13, 5…
+$ max_drinks       &lt;int&gt; 26, 62, 0, 5, 13, 4, 20, 24, 129, 27, 0, 13, 31, 20, …
+$ hospitalizations &lt;int&gt; 3, 22, 0, 2, 12, 1, 14, 1, 14, 4, 0, 3, 5, 10, 2, 6, …</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(HELPrct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+categorical variables:  
+       name  class levels   n missing
+1    anysub factor      2 246     207
+2       sex factor      2 453       0
+3       g1b factor      2 453       0
+4  homeless factor      2 453       0
+5      link factor      2 431      22
+6   racegrp factor      4 453       0
+7   satreat factor      2 453       0
+8 substance factor      3 453       0
+9     treat factor      2 453       0
+                                   distribution
+1 yes (77.2%), no (22.8%)                      
+2 male (76.4%), female (23.6%)                 
+3 no (72%), yes (28%)                          
+4 housed (53.9%), homeless (46.1%)             
+5 no (62.2%), yes (37.8%)                      
+6 black (46.6%), white (36.6%) ...             
+7 no (71.5%), yes (28.5%)                      
+8 alcohol (39.1%), cocaine (33.6%) ...         
+9 no (50.3%), yes (49.7%)                      
+
+quantitative variables:  
+               name   class       min        Q1    median        Q3       max
+1               age integer 19.000000  30.00000  35.00000  40.00000  60.00000
+2      anysubstatus integer  0.000000   1.00000   1.00000   1.00000   1.00000
+3              cesd integer  1.000000  25.00000  34.00000  41.00000  60.00000
+4                d1 integer  0.000000   1.00000   2.00000   3.00000 100.00000
+5        daysanysub integer  0.000000   5.00000  33.00000 164.25000 268.00000
+6          dayslink integer  2.000000  74.00000 361.00000 365.00000 456.00000
+7          drugrisk integer  0.000000   0.00000   0.00000   1.00000  21.00000
+8               e2b integer  1.000000   1.00000   2.00000   3.00000  21.00000
+9            female integer  0.000000   0.00000   0.00000   0.00000   1.00000
+10               i1 integer  0.000000   3.00000  13.00000  26.00000 142.00000
+11               i2 integer  0.000000   4.00000  18.00000  33.00000 184.00000
+12               id integer  1.000000 119.00000 233.00000 348.00000 470.00000
+13           indtot integer  4.000000  32.00000  38.00000  41.00000  45.00000
+14       linkstatus integer  0.000000   0.00000   0.00000   1.00000   1.00000
+15              mcs numeric  6.762923  21.67575  28.60242  40.94134  62.17550
+16              pcs numeric 14.074291  40.38438  48.87681  56.95329  74.80633
+17           pss_fr integer  0.000000   3.00000   7.00000  10.00000  14.00000
+18          sexrisk integer  0.000000   3.00000   4.00000   6.00000  14.00000
+19       avg_drinks integer  0.000000   3.00000  13.00000  26.00000 142.00000
+20       max_drinks integer  0.000000   4.00000  18.00000  33.00000 184.00000
+21 hospitalizations integer  0.000000   1.00000   2.00000   3.00000 100.00000
+          mean          sd   n missing
+1   35.6534216   7.7102660 453       0
+2    0.7723577   0.4201653 246     207
+3   32.8476821  12.5144598 453       0
+4    3.0596026   6.1875894 453       0
+5   75.3073770  79.2374134 244     209
+6  255.6055684 151.0226916 431      22
+7    1.8871681   4.3365219 452       1
+8    2.5046729   2.5245232 214     239
+9    0.2362031   0.4252180 453       0
+10  17.9072848  20.0202390 453       0
+11  24.5474614  28.0201504 453       0
+12 233.4017660 134.7467214 453       0
+13  35.7284768   7.1522016 453       0
+14   0.3781903   0.4854990 431      22
+15  31.6766783  12.8393373 453       0
+16  48.0485416  10.7846027 453       0
+17   6.7064018   3.9950056 453       0
+18   4.6423841   2.8001526 453       0
+19  17.9072848  20.0202390 453       0
+20  24.5474614  28.0201504 453       0
+21   3.0596026   6.1875894 453       0</code></pre>
+</div>
+</div>
+<p>From this we see that there are 453 observational units in this data set and 30 variables. That’s plenty of variables to get us started with exploration of data.</p>
+</section>
+<section id="the-kidsfeet-data-set" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="the-kidsfeet-data-set"><span class="header-section-number">1.2.4</span> The KidsFeet data set</h3>
+<p>Here is another data set in the <code>mosaic</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["fct"],"align":["left"]},{"label":["birthmonth"],"name":[2],"type":["int"],"align":["right"]},{"label":["birthyear"],"name":[3],"type":["int"],"align":["right"]},{"label":["length"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["width"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[6],"type":["fct"],"align":["left"]},{"label":["biggerfoot"],"name":[7],"type":["fct"],"align":["left"]},{"label":["domhand"],"name":[8],"type":["fct"],"align":["left"]}],"data":[{"1":"David","2":"5","3":"88","4":"24.4","5":"8.4","6":"B","7":"L","8":"R","_rn_":"1"},{"1":"Lars","2":"10","3":"87","4":"25.4","5":"8.8","6":"B","7":"L","8":"L","_rn_":"2"},{"1":"Zach","2":"12","3":"87","4":"24.5","5":"9.7","6":"B","7":"R","8":"R","_rn_":"3"},{"1":"Josh","2":"1","3":"88","4":"25.2","5":"9.8","6":"B","7":"L","8":"R","_rn_":"4"},{"1":"Lang","2":"2","3":"88","4":"25.1","5":"8.9","6":"B","7":"L","8":"R","_rn_":"5"},{"1":"Scotty","2":"3","3":"88","4":"25.7","5":"9.7","6":"B","7":"R","8":"R","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="the-oldfaith-data-set" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="the-oldfaith-data-set"><span class="header-section-number">1.2.5</span> The oldfaith data set</h3>
+<p>A final example data set comes from the <code>alr4</code> package. This package is probably not loaded (unless you already loaded it). You can load it from the <strong>Packages</strong> tab or by typing the command</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(alr4)      <span class="co"># require(alr4) will also work</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once you have done that, you will have access to the data set containing information about Old Faithful eruptions.</p>
+<div class="center">
+<div class="quarto-video"><iframe src="https://www.youtube.com/embed/Qxf3xzirBrs" width="560" height="315" title="Old Faithful" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(oldfaith)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Duration"],"name":[1],"type":["int"],"align":["right"]},{"label":["Interval"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"216","2":"79","_rn_":"1"},{"1":"108","2":"54","_rn_":"2"},{"1":"200","2":"74","_rn_":"3"},{"1":"137","2":"62","_rn_":"4"},{"1":"272","2":"85","_rn_":"5"},{"1":"173","2":"55","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>If you want to know the size of your data set, you can ask it how many rows and columns it has with <code>nrow()</code>, <code>ncol()</code>, or <code>dim()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(oldfaith)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 270</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(oldfaith)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(oldfaith)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 270   2</code></pre>
+</div>
+</div>
+<p>In this case we have 270 observations of each of two variables (the length of an eruption and the time until the next eruption). In a data frame, the observational units are always in the rows and the variables are always in the columns. If you create data for use in R (or most other statistical packages), you need to make sure your data are also in this shape.</p>
+</section>
+<section id="using-your-own-data" class="level3" data-number="1.2.6">
+<h3 data-number="1.2.6" class="anchored" data-anchor-id="using-your-own-data"><span class="header-section-number">1.2.6</span> Using your own data</h3>
+<p>In the Environment tab you will “Import Dataset”. Click on this import data from a CSV file, Excel spreadsheet, or a few other formats. When you do this, the R code will be displayed, so you can see how it is done in R code.</p>
+<p>If you are using the RStudio server, you will first need to upload your file to the server (unless you can access the file via URL). To do this, choose “Upload” from the Files tab.</p>
+</section>
+</section>
+<section id="graphical-and-numerical-summaries-of-data" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="graphical-and-numerical-summaries-of-data"><span class="header-section-number">1.3</span> Graphical and Numerical Summaries of Data</h2>
+<section id="the-most-important-template" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="the-most-important-template"><span class="header-section-number">1.3.1</span> The Most Important Template</h3>
+<p>Using the <code>mosiac</code> and <code>ggformula</code> packages, we can compute a wide variety of graphical and numerical summaries using the following general template:</p>
+<div class="{boxedText}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/most-important-template.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<p></p><figcaption class="figure-caption">The most important template</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>We will see this same template used again for linear and non-linear modeling as well, so it is is important to master it.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<ul>
+<li><code>goal</code>: The name of the function generally describes your goal, the thing you want the computer to produce for you. In the case of plotting, it is the name of the plot. When we do numerical summaries it will be the name of the numerical summary (mean, median, etc.).</li>
+<li><code>y</code>: For plots, this is the variable that goes on the y-axis.</li>
+<li><code>x</code>: For plots, this is the variable that goes on the x-axis.</li>
+<li><code>formula</code>: Together, <code>y ~ x</code> is called a <strong>formula</strong>. Very often we can think of <code>y ~ x</code> as “y depends on x”. We will see that sometimes we can omit <code>y</code> ore replace <code>x</code> with <code>.</code> (there must always be something on the right-hand side). We will even see things like <code>y ~ x | z</code>. But the most important formula to learn is <code>y ~ x</code>.</li>
+<li><code>mydata:</code> A data frame must be given in which the variables mentioned in the formula can be found. Variables not found there will be looked for in the enclosing environment. Sometimes we will take advantage of this to avoid creating a temporary data frame just to make a quick plot, but generally it is best to have all the information inside a data frame.</li>
+</ul>
+</section>
+</section>
+<section id="scatterplots" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="scatterplots"><span class="header-section-number">1.4</span> Scatterplots</h2>
+<p>The most common way to look at two quantitative variables is with a scatter plot. The <code>ggformula</code> function for this is <code>gf_point()</code>, and the basic syntax is</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( yvar <span class="sc">~</span> xvar, <span class="at">data =</span> dataName)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s look at an example. Let’s see how bill length is related to body mass in some penguins.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-gf-point-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div data-pagedtable="false">
+
+<script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["bill_length_mm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[5],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[6],"type":["int"],"align":["right"]},{"label":["sex"],"name":[7],"type":["fct"],"align":["left"]},{"label":["year"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"Adelie","2":"Torgersen","3":"39.1","4":"18.7","5":"181","6":"3750","7":"male","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"39.5","4":"17.4","5":"186","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"40.3","4":"18.0","5":"195","6":"3250","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"36.7","4":"19.3","5":"193","6":"3450","7":"female","8":"2007"},{"1":"Adelie","2":"Torgersen","3":"39.3","4":"20.6","5":"190","6":"3650","7":"male","8":"2007"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.1: A scatter plot of penguin data.</figcaption><p></p>
+</figure>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-gf-point-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-gf-point-1.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.2: A scatter plot of penguin data.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>That’s all there is to it. We can replace <code>bill_length_mm</code>, <code>body_mass_g</code>, and <code>penguins</code> with any variables and data set we like to get the scatter plot we want.</p>
+<section id="adding-color" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="adding-color"><span class="header-section-number">1.4.1</span> Adding Color</h3>
+<p>Let’s add some color. Consider the next two examples.</p>
+<div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">color =</span> <span class="st">"navy"</span>, <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">color =</span> <span class="sc">~</span> species, <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-mapping-and-setting-color-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-mapping-and-setting-color-1.png" class="img-fluid figure-img" width="432"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.3: Setting color</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-mapping-and-setting-color-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-mapping-and-setting-color-2.png" class="img-fluid figure-img" width="432"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.4: Mapping color</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- begin itemize -->
+<ul>
+<li>In the first we are <strong>setting</strong> the color of the dots to be navy.</li>
+<li>In the second, we are <strong>mapping</strong> color based on <code>species</code>. Think of <code>color = ~ species</code> as “color depends on species”. <!-- end itemize --></li>
+</ul>
+<p>The warnings, by the way, are indicating that two rows of data were not used in making the plot because they were missing data needed for the plot (either <code>bill_length_mm</code> or <code>body_mass_g</code>).</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a bit of bonus code, </span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in case you are interested to see how we find these two penguins.</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(bill_length_mm) <span class="sc">|</span> <span class="fu">is.na</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["bill_length_mm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[5],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[6],"type":["int"],"align":["right"]},{"label":["sex"],"name":[7],"type":["fct"],"align":["left"]},{"label":["year"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"Adelie","2":"Torgersen","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"2009"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="transparency-and-dot-size" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="transparency-and-dot-size"><span class="header-section-number">1.4.2</span> Transparency and dot size</h3>
+<p>With so much data in so little space, overplotting (dots on top of each other) can make it hard to see what is going on. We can improve this plot by making the dots smaller and semi-transparent.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(bill_length_mm <span class="sc">~</span> body_mass_g, </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="sc">~</span> species, <span class="at">data =</span> penguins,</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/transparency-and-dot-size-1.png" class="img-fluid figure-img" width="480"></p>
+<p></p><figcaption class="figure-caption">Adjustments to <code>alpha</code> and <code>size</code>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There are many other options we can use to refine our plots. We’ll learn about some of them as we go along. You can use R ’s built-in help to find out more. Our you can type</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>gf_point() uses 
+    * a formula with shape y ~ x. 
+    * geom:  point 
+    * key attributes:  alpha, color, size, shape, fill, group, stroke
+
+For more information, try ?gf_point</code></pre>
+</div>
+</div>
+</section>
+<section id="conditional-plots-aka-faceting" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="conditional-plots-aka-faceting"><span class="header-section-number">1.4.3</span> Conditional plots (aka Faceting)</h3>
+<p>The formula for a <code>ggformula</code> plot can be extended to create multiple panels, called facets, based on a “condition”, often given by another variable. The general syntax for this becomes</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotname</span>( y <span class="sc">~</span> x <span class="sc">|</span> condition, <span class="at">data =</span> dataName )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can read the formula <code>y ~ x | condition</code> as saying that we want to know how y depends on x separately for each condition. In our penguins example, we might divide up the data according to the islands on which the penguins were spotted.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">|</span> island, </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="sc">~</span> species, <span class="at">data =</span> penguins,</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-facets" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-facets-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.5: Using facets to separate the species.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="other-types-of-plots" class="level3" data-number="1.4.4">
+<h3 data-number="1.4.4" class="anchored" data-anchor-id="other-types-of-plots"><span class="header-section-number">1.4.4</span> Other types of plots</h3>
+<p>A scatter plot will be our most common plot for two quantitative variables, but we can use the same template for any other type of plot. Here are two examples.</p>
+<div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_density2d</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">color =</span> <span class="sc">~</span> species, <span class="at">data =</span> penguins, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_density2d()`).</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_hex</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">data =</span> penguins, <span class="at">binwidth =</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_binhex()`).</code></pre>
+</div>
+<div id="fig-penguins-more" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-penguins-more-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-penguins-more-1.png" class="img-fluid figure-img" data-ref-parent="fig-penguins-more" width="432"></p>
+<p></p><figcaption class="figure-caption">(a) A 2-d density plot.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-penguins-more-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-penguins-more-2.png" class="img-fluid figure-img" data-ref-parent="fig-penguins-more" width="432"></p>
+<p></p><figcaption class="figure-caption">(b) A hex plot.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.6: More plots of penguins.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="graphing-the-distribution-of-one-variable" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="graphing-the-distribution-of-one-variable"><span class="header-section-number">1.5</span> Graphing the Distribution of One Variable</h2>
+<p>A <strong>distribution</strong> is described by telling what values occur and with what frequency. That is, the distribution answers two questions: <!-- begin itemize --></p>
+<ul>
+<li>What values?</li>
+<li>How often? <!-- end itemize --></li>
+</ul>
+<p>Statisticians have devised a number of graphs to help us see distributions of a variable visually. In these graphs, R can compute the y-variable for us. In this case, we simply omit the <code>y</code> part of the formula, so the general syntax for making a graph or numerical summary of one variable in a data frame is</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotname</span>( <span class="sc">~</span> variable, <span class="at">data =</span> dataName )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In other words, there are three pieces of information we must provide to R in order to get the plot we want:</p>
+<div class="enumerate">
+<ol type="1">
+<li><p>The <strong>kind of plot</strong>. (<code>gf_histogram()</code>, <code>gf_bar()</code>, <code>gf_density()</code>, <code>gf_boxplot()</code>, etc.)</p></li>
+<li><p>The name of the <strong>variable</strong> to plot.</p></li>
+<li><p>The name of the <strong>data frame</strong> this variable is a part of.</p></li>
+</ol>
+</div>
+<p>Note: The same syntax works for numerical summaries as well – thanks to the <code>mosaic</code> package we can apply the same syntax for <code>mean()</code>, <code>median()</code>, <code>sd()</code>, <code>var()</code>, <code>max()</code>, <code>min()</code>, etc. Later we will use this syntax again to compute linear and nonlinear models.</p>
+<section id="histograms-and-density-plots-for-quantitative-variables" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="histograms-and-density-plots-for-quantitative-variables"><span class="header-section-number">1.5.1</span> Histograms (and density plots) for quantitative variables</h3>
+<p>Histograms (and density plots) are the two most common ways of displaying the distribution of a quantitative variable.</p>
+<p>Here are a couple examples:</p>
+<div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> age, <span class="at">data =</span> HELPrct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-histogram" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-histogram-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-histogram-1.png" class="img-fluid figure-img" data-ref-parent="fig-histogram" width="432"></p>
+<p></p><figcaption class="figure-caption">(a)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-histogram-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-histogram-2.png" class="img-fluid figure-img" data-ref-parent="fig-histogram" width="432"></p>
+<p></p><figcaption class="figure-caption">(b)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.7: Example histograms.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>In each of these plots the height of the bar indicates how many observations fall within the range indicated by the bottom of the bar. So in the histogram below, the red bar indicates that there are almost 60 eruptions of duration between 100 and 125 seconds in this data set.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-histogram-explained" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-histogram-explained-1.png" class="img-fluid figure-img" width="576"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.8: The red bar indicates that there are almost 60 eruptions of duration between 100 and 125 seconds in this data set.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can control the (approximate) number of bins using the <code>bins</code> argument. The number of bins (and to a lesser extent the positions of the bins) can make a histogram look quite different.</p>
+<div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith, <span class="at">bins =</span> <span class="dv">8</span> )</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith, <span class="at">bins =</span> <span class="dv">15</span> )</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith, <span class="at">bins =</span> <span class="dv">30</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-histogram2" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histogram2-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-histogram2-1.png" class="img-fluid figure-img" data-ref-parent="fig-histogram2" width="432"></p>
+<p></p><figcaption class="figure-caption">(a)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histogram2-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-histogram2-2.png" class="img-fluid figure-img" data-ref-parent="fig-histogram2" width="432"></p>
+<p></p><figcaption class="figure-caption">(b)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histogram2-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-histogram2-3.png" class="img-fluid figure-img" data-ref-parent="fig-histogram2" width="432"></p>
+<p></p><figcaption class="figure-caption">(c)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.9: Histograms with different numbers of bins.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>We can use <code>binwidth</code> to set the width of the bins.</p>
+<div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith, <span class="at">binwidth =</span> <span class="dv">60</span> )</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith, <span class="at">binwidth =</span> <span class="dv">20</span> )</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith, <span class="at">binwidth =</span> <span class="dv">5</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-histogram3" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histogram3-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-histogram3-1.png" class="img-fluid figure-img" data-ref-parent="fig-histogram3" width="432"></p>
+<p></p><figcaption class="figure-caption">(a)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histogram3-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-histogram3-2.png" class="img-fluid figure-img" data-ref-parent="fig-histogram3" width="432"></p>
+<p></p><figcaption class="figure-caption">(b)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histogram3-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-histogram3-3.png" class="img-fluid figure-img" data-ref-parent="fig-histogram3" width="432"></p>
+<p></p><figcaption class="figure-caption">(c)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.10: Histograms with different bin widths.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>R also provides a “smooth” version called a density plot and a triangular version called a frequency polygon:;</p>
+<div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_density</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith )</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith )</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_freqpoly</span>( <span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div id="fig-density" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-density-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-density-1.png" class="img-fluid figure-img" data-ref-parent="fig-density" width="432"></p>
+<p></p><figcaption class="figure-caption">(a)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-density-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-density-2.png" class="img-fluid figure-img" data-ref-parent="fig-density" width="432"></p>
+<p></p><figcaption class="figure-caption">(b)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-density-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-density-3.png" class="img-fluid figure-img" data-ref-parent="fig-density" width="432"></p>
+<p></p><figcaption class="figure-caption">(c)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.11: Density plots and frequency polygons.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="describing-the-shape-of-a-distribution" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="describing-the-shape-of-a-distribution"><span class="header-section-number">1.5.2</span> Describing the shape of a distribution</h3>
+<p>If we make a histogram of our data, we can describe the overall shape of the distribution. Keep in mind that the shape of a particular histogram may depend on the choice of bins. Choosing too many or too few bins can hide the true shape of the distribution. (When in doubt, make more than one histogram.)</p>
+<p>Here are some words we use to describe shapes of distributions.</p>
+<!-- begin description -->
+<ul>
+<li><strong>symmetric</strong> The left and right sides are mirror images of each other.</li>
+<li><strong>skewed</strong> The distribution stretches out farther in one direction than in the other. (We say the distribution is skewed toward the long tail.)</li>
+<li><strong>uniform</strong> The heights of all the bars are (roughly) the same. (So the data are equally likely to be anywhere within some range.)</li>
+<li><strong>unimodal</strong> There is one major “bump” where there is a lot of data.</li>
+<li><strong>bimodal</strong> There are two “bumps”.</li>
+<li><strong>outlier</strong> An observation that does not fit the overall pattern of the rest of the data. <!-- end description --></li>
+</ul>
+<p>We’ll learn about another graph used for quantitative variables (boxplots) soon.</p>
+</section>
+<section id="bar-graphs-for-categorical-variables" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="bar-graphs-for-categorical-variables"><span class="header-section-number">1.5.3</span> Bar graphs for categorical variables</h3>
+<p>Bar graphs are a way of displaying the distribution of a categorical variable.</p>
+<div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>( <span class="sc">~</span> species, <span class="at">data =</span> penguins)   <span class="co"># vertical bars</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>(species <span class="sc">~</span> ., <span class="at">data =</span> penguins)  <span class="co"># horizontal bars</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-bargraph" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-bargraph-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-bargraph-1.png" class="img-fluid figure-img" data-ref-parent="fig-bargraph" width="432"></p>
+<p></p><figcaption class="figure-caption">(a) vertical bars</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-bargraph-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-bargraph-2.png" class="img-fluid figure-img" data-ref-parent="fig-bargraph" width="432"></p>
+<p></p><figcaption class="figure-caption">(b) horizontal bars</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.12: Bar graphs</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>Statisticians rarely use pie charts because they are harder to read except in a few special cases (like comparing a proportion to 50%).</p>
+</section>
+<section id="overlaying-and-faceting-data" class="level3" data-number="1.5.4">
+<h3 data-number="1.5.4" class="anchored" data-anchor-id="overlaying-and-faceting-data"><span class="header-section-number">1.5.4</span> Overlaying and faceting data</h3>
+<p>Overlaying and faceting work the same for these one variables plots as they did for the scatterplots above.</p>
+<div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>( <span class="sc">~</span> species <span class="sc">|</span> island, <span class="at">data =</span> penguins)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> body_mass_g <span class="sc">|</span> species, <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_bin()`).</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span> body_mass_g, <span class="at">color =</span> <span class="sc">~</span> species, <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_density()`).</code></pre>
+</div>
+<div id="fig-overlaying-and-faceting" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-overlaying-and-faceting-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-overlaying-and-faceting-1.png" class="img-fluid figure-img" data-ref-parent="fig-overlaying-and-faceting" width="432"></p>
+<p></p><figcaption class="figure-caption">(a)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-overlaying-and-faceting-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-overlaying-and-faceting-2.png" class="img-fluid figure-img" data-ref-parent="fig-overlaying-and-faceting" width="432"></p>
+<p></p><figcaption class="figure-caption">(b)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-overlaying-and-faceting-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-overlaying-and-faceting-3.png" class="img-fluid figure-img" data-ref-parent="fig-overlaying-and-faceting" width="432"></p>
+<p></p><figcaption class="figure-caption">(c)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.13: Overlaying and faceting in plots</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>For example, we might like to see how the ages of men and women compare in the HELP study, or whether the distribution of lengths of boys’ feet is different from the distribution for girls.</p>
+<div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> age <span class="sc">|</span> sex, <span class="at">data =</span> HELPrct, <span class="at">binwidth =</span> <span class="dv">5</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span> length <span class="sc">|</span> sex, <span class="at">data =</span> KidsFeet )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="01-graphical_files/figure-html/compare-ages-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="01-graphical_files/figure-html/compare-ages-2.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+</div>
+</div>
+<p>We can do the same thing for bar graphs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>( <span class="sc">~</span> substance <span class="sc">|</span> sex, <span class="at">data =</span> HELPrct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-substance-by-sex" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-substance-by-sex-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.14: Facets in a bar graph.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="grouping-and-bar-charts" class="level3" data-number="1.5.5">
+<h3 data-number="1.5.5" class="anchored" data-anchor-id="grouping-and-bar-charts"><span class="header-section-number">1.5.5</span> Grouping and bar charts</h3>
+<p>When dividing bar charts into multiple colors, we can present the segmented bars “stacked” (the default) or “dodged”:</p>
+<div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>(<span class="sc">~</span>substance, <span class="at">fill =</span> <span class="sc">~</span>sex, <span class="at">data =</span> HELPrct)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_bar</span>(<span class="sc">~</span>substance, <span class="at">fill =</span> <span class="sc">~</span>sex, <span class="at">data =</span> HELPrct, <span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-stack-and-dodge" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-stack-and-dodge-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-stack-and-dodge-1.png" class="img-fluid figure-img" data-ref-parent="fig-stack-and-dodge" width="432"></p>
+<p></p><figcaption class="figure-caption">(a) Stacked bar graph.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-stack-and-dodge-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-stack-and-dodge-2.png" class="img-fluid figure-img" data-ref-parent="fig-stack-and-dodge" width="432"></p>
+<p></p><figcaption class="figure-caption">(b) Dodged bar graph.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.15: We can show different groups using stacked or dodged bar graphs.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section>
+<section id="proportions-and-bar-charts" class="level3" data-number="1.5.6">
+<h3 data-number="1.5.6" class="anchored" data-anchor-id="proportions-and-bar-charts"><span class="header-section-number">1.5.6</span> Proportions and bar charts</h3>
+<p>Sometimes it is better to display bars with proportions rather than counts. But then we must decide what to use for the denominator. In the first example below, the total of all the bars adds to 1. In the second plot, the total adds to one for each x variable, which makes it easier to see how the proportions of male and female .</p>
+<div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_props</span>(<span class="sc">~</span>substance, <span class="at">fill =</span> <span class="sc">~</span>sex, <span class="at">data =</span> HELPrct)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_props</span>(<span class="sc">~</span>substance, <span class="at">fill =</span> <span class="sc">~</span>sex, <span class="at">data =</span> HELPrct, <span class="at">denom =</span> <span class="sc">~</span> x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="01-graphical_files/figure-html/gf-props-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="01-graphical_files/figure-html/gf-props-2.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="labeling-plots" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="labeling-plots"><span class="header-section-number">1.6</span> Labeling plots</h2>
+<p>Often the defaults labels are not ideal for publication purposes. You can add titles and captions and change the labeling of variables using <code>gf_labs()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">|</span> island, </span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="sc">~</span> species, <span class="at">data =</span> penguins,</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>(<span class="at">x =</span> <span class="st">"body mass (g)"</span>, <span class="at">y =</span> <span class="st">"bill length (mm)"</span>, </span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">"Penguin measurments on 3 islands"</span>, <span class="at">caption =</span> <span class="st">"Data Source: palmerpenguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-gf-labs" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-gf-labs-1.png" class="img-fluid figure-img" width="768"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.16: Informative labels and make plots easier to read.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice the <code>|&gt;</code> (called the <strong>pipe symbol</strong> and sometimes read “then”) in the example above. This important and connects the labeling below to the plot above.</p>
+</section>
+<section id="exporting-plots" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="exporting-plots"><span class="header-section-number">1.7</span> Exporting Plots</h2>
+<p>You can save plots to files or copy them to the clipboard using the <strong>Export</strong> menu in the <strong>Plots</strong> tab. It is quite simple to copy the plots to the clipboard and then paste them into a Word document, for example. You can even adjust the height and width of the plot first to get it the shape you want. <em>But there are much better ways to produce documents with R graphics in them!</em> See the next section.</p>
+</section>
+<section id="reproducible-documents" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="reproducible-documents"><span class="header-section-number">1.8</span> Reproducible Documents</h2>
+<p>Copy-and-paste is a bad workflow for lots of reasons, including: <!-- begin itemize --></p>
+<ul>
+<li>It is tedious, unless there is very little to copy and paste.</li>
+<li>It is error-prone – it’s easy to copy to little or too much, or to grab the wrong thing, or to copy when you want to cut or cut when you want to copy.</li>
+<li>If something changes, you have to start all over.</li>
+<li>You have no record of what you did (unless you are an unusual person who takes detailed notes about all the copying and pasting). <!-- end itemize --> So while copy-and-paste seems easy and convenient, it is not <em>reproducible</em>. Reproducibility is important when projects are large, when it is important to have record of exactly what was done, or when the same analysis is applied to multiple data sets (or a data set that is growing over time).</li>
+</ul>
+<p>RStudio makes it easy to use techniques of reproducible research to create documents that include text, R commands, R output, and R graphics.</p>
+<section id="quarto" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="quarto"><span class="header-section-number">1.8.1</span> Quarto</h3>
+<p>The simplest version of this uses a format called Quarto.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Quarto is a simple mark up language that allows for a few basic improvements on plain text (section headers, bulletted lists, numbered lists, bold, italics, etc.). Quarto adds the ability to mix in the R stuff. (And it has some fancier stuff, like embedding videos.) The end product can be an HTML file, a PDF document, even a Word or PowerPoint document. HTML is especially good for producing web documents, but it is also useful as preview mode, even if you eventually render to PDF (or Word).<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<section id="creating-a-new-document" class="level4" data-number="1.8.1.1">
+<h4 data-number="1.8.1.1" class="anchored" data-anchor-id="creating-a-new-document"><span class="header-section-number">1.8.1.1</span> Creating a new document</h4>
+<p>To create a new Quarto document, go to “File”, “New File”, then “Quarto document”.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/file-new-quarto-document.png" class="img-fluid figure-img" style="width:40.0%"></p>
+</figure>
+</div>
+<p>When you do this, a file editing pane will open with a simple example quarto file inserted. If you click on “Render”, RStudio will turn this into an HTML file and display it for you. Give it a try. You will be asked to name your file if you haven’t already done so. If you are using the RStudio server in a browser, then your file will live on the server (“in the cloud”) rather than on your computer.</p>
+</section>
+</section>
+<section id="three-kinds-of-sections" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="three-kinds-of-sections"><span class="header-section-number">1.8.2</span> Three kinds of sections</h3>
+<p>If you look at the example file you will see that the file has three kinds of sections.</p>
+<section id="yaml-header" class="level4" data-number="1.8.2.1">
+<h4 data-number="1.8.2.1" class="anchored" data-anchor-id="yaml-header"><span class="header-section-number">1.8.2.1</span> YAML header</h4>
+<p>At the top of the document is the YAML (Yet Another Markup Language) header. This is where you set things like the author and title for your document and specify certain settings that control how the document is processed.</p>
+<p>It is important that this section is syntactically correct (mathing quatoation marks, correct indentation, etc.). If you get an error message with YAML or yaml in it, you will know that something has gone wrong in the YAML header.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Fixing YAML errors
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you can’t figure out the problem with your YAML header, copy and paste in the YAML from some other document (a previous document you have made or a new one) and edit from there.</p>
+</div>
+</div>
+</section>
+<section id="text-blocks" class="level4" data-number="1.8.2.2">
+<h4 data-number="1.8.2.2" class="anchored" data-anchor-id="text-blocks"><span class="header-section-number">1.8.2.2</span> Text blocks</h4>
+<p>Some of this file is just normal text (with some styling to make headers, bold, italics, etc.)</p>
+</section>
+<section id="code-chunks" class="level4" data-number="1.8.2.3">
+<h4 data-number="1.8.2.3" class="anchored" data-anchor-id="code-chunks"><span class="header-section-number">1.8.2.3</span> Code chunks</h4>
+<p>The third type of section is an R code chunk. These are colored differently to make them easier to see. You can insert a new code chunk by clicking on the icon pictured below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/insert-r-chunk.png" class="img-fluid figure-img" style="width:1.2in"></p>
+</figure>
+</div>
+<p>You can put any R code in these code chunks and the results (text output or graphics) as well as the R code will be displayed in your HTML file.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+</section>
+<section id="source-vs-visual-view" class="level4" data-number="1.8.2.4">
+<h4 data-number="1.8.2.4" class="anchored" data-anchor-id="source-vs-visual-view"><span class="header-section-number">1.8.2.4</span> Source vs Visual view</h4>
+<p>RStudio provides two different views of Quarto files. The default is the <strong>Visual view</strong>. This looks a bit like a simplified version of Word. There is a toolbar you can use to create bold, italics, headers, etc.</p>
+<p>If you click on <strong>Source</strong> in the upper left corner, you will get a different view. This will show your documents as Markdown. You will see that in this view, headers are indicated with <code>#</code>, <code>##</code>, <code>###</code>, etc. <code>*italics*</code> turns into <em>italics</em>, and <code>**bold**</code> turns into <strong>bold</strong>.</p>
+<p>You can get a list of all of these mark up shortcuts by selecting the “Markdown Quick Reference” in the help menu.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/markdown-quick-reference.png" class="img-fluid figure-img" style="width:3.5in"></p>
+</figure>
+</div>
+<p>If you type these while in the Visual view, the will be immediately converted over for you.</p>
+</section>
+</section>
+<section id="quarto-files-must-be-self-contained" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="quarto-files-must-be-self-contained">Quarto files must be self-contained</h3>
+<p>Quarto files do not have access to things you have done in your console. (This is good, else your document would change based on things not in the file.) This means that you must explicitly load any data or packages that you use <em>in the Quarto file</em>. In this class, this means that most of your Quarto files will have a chunk near the beginning that includes</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The special <code>#| include: false</code> comments tells Quarto to run the code, but not to include anything in your document. That way you don’t have to see all of the package loading messages in your document.</p>
+<!-- If you use one of the RMarkdown templates provided,  -->
+<!-- this (and some other things) will be included in the template and save you some time. -->
+<!-- \iffalse -->
+<!-- \subsubsection{Creating an R Markdown document} -->
+<!-- To create an R Markdown document, choose ``File", then ``New File", then ``R Markdown".  The file -->
+<!-- will open with a template already loaded.   Take a quick look and you will see that most  -->
+<!-- of this is easy to read.  You can see some text with a few extra symbols thrown in here and  -->
+<!-- there and some chunks of \R\ code. -->
+<!-- Now click on the "knit HTML" button and this document will be converted to HTML. -->
+<!-- To create your own content, simply delete out the things you don't want or need -->
+<!-- and replace them with your own content.  If you forget the markup, there is a help button -->
+<!-- that will lead you to a quick reference guide.  To add a chunk of \R\ code, click on  -->
+<!-- ``Chunk" and then ``Insert Chunk" and put your \R\ code inside the chunk. -->
+<!-- In addition to knitting the document to HTML, you can do a number of other things that will -->
+<!-- make your work more efficient.  In the ``Chunk" menu, you can choose to run a single chunk  -->
+<!-- or all the chunks.  This will execute your commands in the console so you can make sure  -->
+<!-- your \R\ code is working one chunk at a time.  There is also a ``run" button that allows you -->
+<!-- to run just one line from within a chunk. -->
+<!-- \subsubsection{R Markdown files do not have access to the console environment} -->
+<!-- One thing you need to remember about R Markdown documents is that the file must be self-contained. -->
+
+<!-- This ensures that the document is portable.  It also means that the document does not have  -->
+<!-- access to the things in your console environment.  All data must be loaded in the file.   -->
+<!-- Similarly, all packages you use must also be loaded in the file.  If you start getting messages  -->
+<!-- about objects not being found, one possible cause is that you have forgotten to get some  -->
+<!-- data or some package loaded inside your file.  (Typos are another cause for these messages --  -->
+<!-- check your spelling and capitalization.) -->
+<!-- \fi -->
+</section>
+<section id="chunk-options" class="level3" data-number="1.8.3">
+<h3 data-number="1.8.3" class="anchored" data-anchor-id="chunk-options"><span class="header-section-number">1.8.3</span> Chunk options</h3>
+<p>Quarto provides a number of chunk options that control how R code is processed. You can use them to do things like:</p>
+<ul>
+<li>run the code without displaying it (good for polished reports – your client doesn’t want to see the code)</li>
+<li>show the code without running it – mainly useful for demonstration purposes</li>
+<li>set the size and alignment of graphics</li>
+</ul>
+<p>You can set default values for the chunk options and you can also override them in individual chunks. See <a href="https://quarto.org/docs/computations/execution-options.html" class="uri">https://quarto.org/docs/computations/execution-options.html</a> for more information about chunk options.</p>
+<p>The default plots are often bigger than required. You can adjust this by sitting the <code>fig-width</code> and <code>fig-height</code> chunk options. They can be adjusted as necessary.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3</span></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>(<span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith)</span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 2</span></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>(<span class="sc">~</span> Duration, <span class="at">data =</span> oldfaith)</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can set default sizes for the entire document by putting them in your YAML header at the top of the document:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-width</span><span class="kw">:</span><span class="at"> </span><span class="dv">8</span></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-height</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span></span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-width</span><span class="kw">:</span><span class="at"> </span><span class="dv">4</span></span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-height</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fig-align</span><span class="kw">:</span><span class="at"> center</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!-- ### knitr/latex -->
+<!-- There is another system that produces PDFs by combining \LaTeX{} and R This is the system -->
+<!-- used to create this document and it gives much more control over paper-like formatting.  The -->
+<!-- quality is good enough for professional publishing.  If you already know \LaTeX{} it is very -->
+<!-- easy to learn.  If you don't know \LaTeX{} then you need to learn the basics of \LaTeX{} to get -->
+<!-- going, but it isn't very difficult. -->
+<!-- R code and output can be copied and pasted as well.  It's best to use a  -->
+<!-- fixed width font (like Courier) for R code so that things align properly. -->
+<!-- Note:  RStudio  provide some nice utilities for creating documents that include -->
+<!-- text, code, graphics, and statistical analyses all in one document.  That's how this  -->
+<!-- document was produced.  The simpler of these is called RMarkdown.  The resulting file -->
+<!-- will be an HTML file with embedded plots.  You can gain more control over the output -->
+<!-- by using `knitr` which provides a way to combine $\LaTeX$ and R in a single -->
+<!-- document.  The resulting document in this case is a high quality PDF -->
+<!-- The block below should be commented out -->
+</section>
+</section>
+<section id="a-few-bells-and-whistles-for-plotting" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="a-few-bells-and-whistles-for-plotting"><span class="header-section-number">1.9</span> A Few Bells and Whistles for Plotting</h2>
+<p>There are lots of arguments that control how plots look. Here are just a few examples, some of which we have already seen.</p>
+<!--  ### auto.key -->
+<!--  <span style="color:brown">auto.key = TRUE</span> turns on a simple legend for the grouping variable.   -->
+<!--  (There are ways to have more control, if you need it.) -->
+<!--  <<iris-xyplot-key,cache = TRUE,fig.width = 2.6,fig.height = 2.4>>= -->
+<!--  xyplot(Sepal.Length ~ Sepal.Width, groups = Species, data = iris,  -->
+<!--    auto.key = TRUE)    -->
+<!--  ```
+ -->
+<section id="alpha-size" class="level3" data-number="1.9.1">
+<h3 data-number="1.9.1" class="anchored" data-anchor-id="alpha-size"><span class="header-section-number">1.9.1</span> alpha, size</h3>
+<p>Sometimes it is nice to have elements of a plot be partly transparent. When such elements overlap, they get darker, showing us where data are “piling up.” Setting the <code>alpha</code> argument to a value between 0 and 1 controls the degree of transparency: 1 is completely opaque, 0 is invisible. The <code>size</code> argument controls the size of lines and points.</p>
+<p>Here is another example using data on 150 iris plants of three species.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Sepal.Length <span class="sc">~</span> Sepal.Width, <span class="at">color =</span> <span class="sc">~</span> Species, <span class="at">data =</span> iris, </span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> .<span class="dv">6</span>, <span class="at">size =</span> <span class="fl">1.8</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-iris-alpha" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-iris-alpha-1.png" class="img-fluid figure-img" width="576"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.17: 150 iris plants from 3 species.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="title-subtitle-caption-xlab-ylab" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="title-subtitle-caption-xlab-ylab">title, subtitle, caption, xlab, ylab</h3>
+<p>You can add a title or subtitle, or change the default labels of the axes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Sepal.Length <span class="sc">~</span> Sepal.Width, <span class="at">color =</span> <span class="sc">~</span>Species, <span class="at">data =</span> iris, </span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Some Iris Data"</span>,</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"(R. A. Fisher analysized this data in 1936)"</span>,</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: R's built-in iris data set"</span>,</span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"sepal width (cm)"</span>,</span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"sepal length (cm)"</span>,</span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> .<span class="dv">6</span> </span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-iris-xyplot-text" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-iris-xyplot-text-1.png" class="img-fluid figure-img" width="576"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.18: We can add labels using <code>title</code>, <code>subtitle</code>, <code>xlab</code>, and <code>ylab</code>. (Using <code>gf_labs()</code> is another way to do this.)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="linetype-linewidth-fill-shape" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="linetype-linewidth-fill-shape">linetype, linewidth, fill, shape</h4>
+<p>These can be used to change the line type, line width, plot symbol, and color of filled in regions. <!-- To specify multiples (one for each group), use the `c()` function (see below). --></p>
+<div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>age, <span class="at">data =</span> HELPrct, <span class="at">color =</span> <span class="sc">~</span> sex, <span class="at">linetype =</span> <span class="sc">~</span> sex)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>age, <span class="at">data =</span> HELPrct, <span class="at">color =</span> <span class="sc">~</span> sex, <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> age, <span class="at">data =</span> HELPrct, <span class="at">fill =</span> <span class="st">'steelblue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-pch-lwd-lty" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-pch-lwd-lty-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-pch-lwd-lty-1.png" class="img-fluid figure-img" data-ref-parent="fig-pch-lwd-lty" width="480"></p>
+<p></p><figcaption class="figure-caption">(a) Mapping linetype</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-pch-lwd-lty-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-pch-lwd-lty-2.png" class="img-fluid figure-img" data-ref-parent="fig-pch-lwd-lty" width="480"></p>
+<p></p><figcaption class="figure-caption">(b) Setting linetype</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-pch-lwd-lty-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="01-graphical_files/figure-html/fig-pch-lwd-lty-3.png" class="img-fluid figure-img" data-ref-parent="fig-pch-lwd-lty" width="480"></p>
+<p></p><figcaption class="figure-caption">(c) Use fill, rather than color, for filled in regions.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.19: Examples using <code>linetype</code> and <code>fill</code>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>You can see a list of the hundreds of available color names using <code>colors()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colors</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!-- ### Setting some defaults -->
+<!-- Default settings for graphics properties can be set as follows: -->
+<!-- ```{r } -->
+<!-- #| label: fig-fontsize -->
+<!-- #| fig-cap: "" -->
+<!-- #| layout-ncol: 1 -->
+<!-- theme_set(theme_classic(base_size = 6))    # base size for text is 6 point; classic theme. -->
+<!-- gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dashed") -->
+<!-- theme_set(theme_bw(base_size = 8))     -->
+<!-- gf_dens( ~age, data = HELPrct, color = ~ sex, linetype = "dashed") -->
+<!-- ``` -->
+</section>
+</section>
+</section>
+<section id="getting-help-in-rstudio" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="getting-help-in-rstudio"><span class="header-section-number">1.10</span> Getting Help in RStudio</h2>
+<section id="the-rstudio-help-system" class="level3" data-number="1.10.1">
+<h3 data-number="1.10.1" class="anchored" data-anchor-id="the-rstudio-help-system"><span class="header-section-number">1.10.1</span> The RStudio help system</h3>
+<p>There are several ways to get RStudio to help you when you forget something. Most objects in packages have help files that you can access by typing something like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>?bargraph</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>?histogram</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>?HELPrct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can search the help system using</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help.search</span>(<span class="st">'Grand Rapids'</span>)    <span class="co"># Does R know anything about Grand Rapids?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This can be useful if you don’t know the name of the function or data set you are looking for.</p>
+</section>
+<section id="tab-completion" class="level3" data-number="1.10.2">
+<h3 data-number="1.10.2" class="anchored" data-anchor-id="tab-completion"><span class="header-section-number">1.10.2</span> Tab completion</h3>
+<p>As you type the name of a function in RStudio you can hit the tab key and it will show you a list of all the ways you could complete that name, and after you type the opening parenthesis, if you hit the tab key, you will get a list of all the arguments and (sometimes) some helpful hints about what they are.)</p>
+</section>
+<section id="history" class="level3" data-number="1.10.3">
+<h3 data-number="1.10.3" class="anchored" data-anchor-id="history"><span class="header-section-number">1.10.3</span> History</h3>
+<p>If you know you have done something before, but can’t remember how, you can search your history. The history tab shows a list of recently executed commands. There is also a search bar to help you find things from longer ago.</p>
+</section>
+<section id="error-messages" class="level3" data-number="1.10.4">
+<h3 data-number="1.10.4" class="anchored" data-anchor-id="error-messages"><span class="header-section-number">1.10.4</span> Error messages</h3>
+<p>When things go wrong, R tries to help you out by providing an error message. If you can’t make sense of the message, you can try copying and pasting your command and the error message and sending to me in an email. One common error message is illustrated below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>fred <span class="ot">&lt;-</span> <span class="dv">23</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>frd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in eval(expr, envir, enclos): object 'frd' not found</code></pre>
+</div>
+</div>
+<p>The object <code>frd</code> is not found because it was mistyped. It should have been <code>fred</code>. If you see an “object not found” message, check your typing and check to make sure that the necessary packages have been loaded.</p>
+</section>
+</section>
+<section id="graphical-summaries-important-ideas" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="graphical-summaries-important-ideas"><span class="header-section-number">1.11</span> Graphical Summaries – Important Ideas</h2>
+<section id="the-most-important-template-1" class="level3" data-number="1.11.1">
+<h3 data-number="1.11.1" class="anchored" data-anchor-id="the-most-important-template-1"><span class="header-section-number">1.11.1</span> The Most Important Template</h3>
+<p>The plots we have created have all followed a single template</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/most-important-template.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<p></p><figcaption class="figure-caption">The most important template</figcaption><p></p>
+</figure>
+</div>
+<p>We will see this same template used again for numerical summaries and linear and non-linear modeling as well, so it is is important to master it. To use it, you just fill in the boxes with the information for your particular task.</p>
+<!-- begin itemize -->
+<ul>
+<li><code>goal</code>: The name of the function generally describes your goal, the thing you want the computer to produce for you. In the case of plotting, it is the name of the plot. When we do numerical summaries it will be the name of the numerical summary (mean, median, etc.).</li>
+<li><code>formula</code>: For plotting, the formula describes which variables are used on the x-axis, the y-axis and for conditioning. The general scheme is <code>y ~ x | z</code> where <code>z</code> is the conditioning variable. Sometimes <code>y</code> or <code>z</code> are missing (but the right-hand side <code>x</code> must always be included in a formula).</li>
+<li><code>mydata:</code> A data frame must be given in which the variables mentioned in the formula can be found. Variables not found there will be looked for in the enclosing environment. Sometimes we will take advantage of this to avoid creating a temporary data frame just to make a quick plot, but generally it is best to have all the information inside a data frame.</li>
+<li><code>...</code> There are many optional arguments to control sizes, colors, etc. We will introduce these as they are needed, but several examples have been given in this chapter as well. Consult the help files for assistance.</li>
+</ul>
+<!-- end itemize -->
+<p>Just fill in the boxes and get your plot.</p>
+</section>
+<section id="patterns-and-deviations-from-patterns" class="level3" data-number="1.11.2">
+<h3 data-number="1.11.2" class="anchored" data-anchor-id="patterns-and-deviations-from-patterns"><span class="header-section-number">1.11.2</span> Patterns and Deviations from Patterns</h3>
+<p>The goal of a statistical plot is to help us see <!-- begin itemize --></p>
+<ul>
+<li>potential patterns in the data, and</li>
+<li>deviations from those patterns. <!-- end itemize --></li>
+</ul>
+</section>
+<section id="different-plots-for-different-kinds-of-variables" class="level3" data-number="1.11.3">
+<h3 data-number="1.11.3" class="anchored" data-anchor-id="different-plots-for-different-kinds-of-variables"><span class="header-section-number">1.11.3</span> Different Plots for Different Kinds of Variables</h3>
+<p>Graphical summaries can help us see the <em>distribution</em> of a variable or the <em>relationships</em> between two (or more) variables. The type of plot used will depend on the kinds of variables involved. There is a nice summary of these on page~48. You can use <code>demo()</code> to see how to get R to make the plots in this section.</p>
+<p>Later, when we do statistical analysis, we will see that the analysis we use will also depend on the kinds of variables involved, so this is an important idea.</p>
+</section>
+<section id="side-by-side-plots-and-overlays-can-reveal-importance-of-additional-factors" class="level3" data-number="1.11.4">
+<h3 data-number="1.11.4" class="anchored" data-anchor-id="side-by-side-plots-and-overlays-can-reveal-importance-of-additional-factors"><span class="header-section-number">1.11.4</span> Side-by-side Plots and Overlays Can Reveal Importance of Additional Factors</h3>
+<p>The <code>ggformula</code> graphics plots make it particularly easy to generate plots that divide the data into groups and either produce a panel for each group (using |!) or display each group in a different way (different colors or symbols, using the <code>groups</code> argument). These plots can reveal the possible influence of additional variables – sometimes called covariates.</p>
+</section>
+<section id="area-relative-frequency" class="level3" data-number="1.11.5">
+<h3 data-number="1.11.5" class="anchored" data-anchor-id="area-relative-frequency"><span class="header-section-number">1.11.5</span> Area = (relative) frequency</h3>
+<p>Many plots are based on the key idea that our eyes are good at comparing areas. Plots that use area (e.g., histograms, mosaic plots, bar charts, pie charts) should always obey this principle</p>
+<div class="center">
+<p>Area <span class="math inline">\(=\)</span> (relative) frequency</p>
+</div>
+<p>Plots that violate this principle can be deceptive and distort the true nature of the data.</p>
+<!-- % \subsubsection*{An Example: Histogram with unequal bin widths} -->
+<!-- %  -->
+<!-- % It is possible to make histograms with bins that have different widths. -->
+<!-- % But in this case it is important that the height of the bars is chosen so  -->
+<!-- % that area (\emph{NOT height}) is proportional to frequency.   -->
+<!-- % Using height instead of area would distort the picture. -->
+<!-- %  -->
+<!-- % When unequal bin sizes are specified, \function{histogram()} by default chooses -->
+<!-- % the density scale: -->
+<!-- %  -->
+<!-- % <<hist-unequal-bins,fig.width = 3,fig.height = 2>>= -->
+<!-- % gf_histogram( ~ Sepal.Length, data = iris, breaks = c(4,5,5.5,5.75,6,6.5,7,8,9)) -->
+<!-- % @ -->
+<!-- % The density scale is important. -->
+<!-- % It tells \R\ to use a scale such that  -->
+<!-- % the area (height $\times$ width) of the rectangles is equal to the relative frequency. -->
+<!-- % For example, the bar from 5.0 to 5.5 has width $\frac12$ and height about $0.36$, so  -->
+<!-- % the area is $0.18$, which means approximately 18\% of the sepal lengths are  -->
+<!-- % between 5.0 and 5.5. -->
+<!-- %  -->
+<!-- %  -->
+<!-- % It would be incorrect to choose \option{type = "count"} or \option{type = "proportion"} since -->
+<!-- % this distorts the picture of the data.  Fortunately, \R\ will warn you if you try: -->
+<!-- % <<hist-unequal-bins-bad-echo,fig.width = 3,fig.height = 2,eval = FALSE>>= -->
+<!-- % histogram( ~ Sepal.Length, data = iris, breaks = c(4,5,5.5,5.75,6,6.5,7,8,9), type = 'count') -->
+<!-- % @ -->
+<!-- % <<hist-unequal-bins-bad,fig.width = 3,fig.height = 2,echo = FALSE>>= -->
+<!-- % trellis.par.set(theme = col.fastR2(bw = T)) -->
+<!-- % histogram( ~ Sepal.Length, data = iris, breaks = c(4,5,5.5,5.75,6,6.5,7,8,9),type = "count") -->
+<!-- % trellis.focus('panel',1,1) -->
+<!-- % grid.text(y = .7,'Never do this!', gp = gpar(col = 'red',cex = 2,alpha = .6)) -->
+<!-- % trellis.unfocus() -->
+<!-- % trellis.par.set(theme = col.mosaic()) -->
+<!-- % @ -->
+<!-- %  -->
+<!-- % Notice how different this looks.  Now the heights are equal to the relative -->
+<!-- % frequency, but this makes the wider bars have too much area. -->
+</section>
+</section>
+<section id="exercises" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="exercises"><span class="header-section-number">1.12</span> Exercises</h2>
+<p>In your solutions to these exercises include both the plots and the code you used to make them as well as any required discussion. Once you get the plots figured out, feel free to use some of the bells and whistles to make the plots even better.</p>
+<div id="exr-oldfaith" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.1 </strong></span><strong>Old Faithful</strong></p>
+<p>Create a scatterplot using the two variables in the <code>oldfaith</code> data frame (available in the <code>alr4</code> package). What do we learn about Old Faithful eruptions from this plot?</p>
+</div>
+<div id="exr-CPS85" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.2 </strong></span><strong>CPS85</strong></p>
+<p>Where do the data in the <code>CPS85</code> data frame (in the <code>mosaic</code> package) come from? What are the observational units? How many are there?</p>
+</div>
+<div id="exr-CPS85-quant" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.3 </strong></span><strong>Quantitative variable in CPS85</strong></p>
+<p>Choose a quantitative variable that interests you in the <code>CPS85</code> data set. Make an appropriate plot and comment on what you see.</p>
+</div>
+<div id="exr-CPS85-cat" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.4 </strong></span><strong>Categorical variable in CPS85</strong></p>
+<p>Choose a categorical variable that interests you in the <code>CPS85</code> data set. Make an appropriate plot and comment on what you see.</p>
+</div>
+<div id="exr-CPS85-2-vars" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.5 </strong></span><strong>Multiple variables in CPS85</strong></p>
+<p>Create a plot that displays two or more variables from the <code>CPS85</code> data. At least one should be quantitative and at least one should be categorical. Comment on what you can learn from your plot.</p>
+</div>
+<div id="exr-mpg" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.6 </strong></span><strong>mpg</strong></p>
+<p>Where do the data in the <code>mpg</code> data frame (in the <code>ggplot2</code> package) come from? What are the observational units? How many are there?</p>
+</div>
+<div id="exr-mpg-quant" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.7 </strong></span><strong>Quantitative variable in mpg</strong></p>
+<p>Choose a quantitative variable that interests you in the <code>mpg</code> data set. Make an appropriate plot and comment on what you see.</p>
+</div>
+<div id="exr-mpg-cat" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.8 </strong></span><strong>Categorical variable in mpg</strong></p>
+<p>Choose a categorical variable that interests you in the <code>mpg</code> data set. Make an appropriate plot and comment on what you see.</p>
+</div>
+<div id="exr-mpg-multivar" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.9 </strong></span><strong>Multiple variables in mpg</strong></p>
+<p>Create a plot that displays two or more variables from the <code>mpg</code> data. At least one should be quantitative and at least one should be categorical. Comment on what you can learn from your plot.</p>
+</div>
+<div id="exr-fires" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.10 </strong></span><strong>Fires</strong></p>
+<p>The file at <a href="https://rpruim.github.io/Engineering-Statistics/data/Fires.csv" class="uri">https://rpruim.github.io/Engineering-Statistics/data/Fires.csv</a> is a csv file containing data on wild lands fires in the US over a number of years. You can load this data one of two ways.</p>
+<ul>
+<li>Go to the <strong>Environment</strong> tab, select <strong>Import Dataset</strong>, choose <strong>From Text</strong> (either option will due) and follow the instructions.</li>
+<li>Use the following command in R</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://rpruim.github.io/Engineering-Statistics/data/Fires.csv"</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="co"># equivalent to "From Text (base)" in RStudio</span></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>Fires <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url)</span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative method -- equivalent to "From Text (readr)" in RStudio</span></span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a>Fires <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 52 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (3): Year, Fires, Acres
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>You can also use either of these methods to read from a file rather than from a web URL, so this is a good way to get your own data into R</p>
+<ol type="a">
+<li>The source for these data claim that data before a certain year should not be compared to data from after that year because the older data were computed a different way and are not considered as reliable. What year is the break point? Use graphs of the data over time to estimate when something changed.</li>
+<li>Create a data set that contains only the data from the new data regime (based on your answer in the previous problem). You can trim the data to just the subset you want using <code>filter()</code>. For example, to get just the subset of years since 1966, you could use the code below. (Be sure to save the result with a new new name if you want to keep the original data available.)</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>Fires2 <span class="ot">&lt;-</span>               <span class="co"># create a new data set called Fires2</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  Fires <span class="sc">|&gt;</span>              <span class="co"># start with all the Fires data</span></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">&gt;</span> <span class="dv">1966</span>)   <span class="co"># then filter to keep only years after 1966</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="a">
+<li>Using only the data from the smaller set you just created, how would you describe what is happening with fires over time?</li>
+</ol>
+</div>
+<div id="exr-i1-and-i2" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.11 </strong></span><strong>What are i1 and i2?</strong></p>
+<p>Use R s help system to find out what the <code>i1</code> and <code>i2</code> variables are in the <code>HELPrct</code> data frame. Make histograms for each variable and comment on what you find out. How would you describe the shape of these distributions? Do you see any outliers (observations that don’t seem to fit the pattern of the rest of the data)?</p>
+</div>
+<div id="exr-i1-and-i2-by-sex" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.12 </strong></span><strong>i1 and i2 among men and among women</strong></p>
+<p>Compare the distribution of <code>i1</code> among men vs.&nbsp;among women. Do the same for <code>i2</code>.</p>
+</div>
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>max_drinks, <span class="at">color =</span> <span class="sc">~</span> sex, <span class="at">data =</span> HELPrct )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>avg_drinks, <span class="at">color =</span> <span class="sc">~</span> sex, <span class="at">data =</span> HELPrct )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-33-2.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+</div>
+<div id="exr-i1-and-i2-by-substance" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.13 </strong></span><strong>i1 and i2 among different treatment groups</strong></p>
+<p>Compare the distributions of <code>i1</code> among the three <code>substance</code> groups. Do the same for <code>i2</code>.</p>
+</div>
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>i1, <span class="at">color =</span> <span class="sc">~</span> substance, <span class="at">data =</span> HELPrct )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>i2, <span class="at">color =</span> <span class="sc">~</span> substance, <span class="at">data =</span> HELPrct )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-34-2.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>i1 <span class="sc">|</span> sex, <span class="at">color =</span> <span class="sc">~</span> substance, <span class="at">data =</span> HELPrct )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>i2 <span class="sc">|</span> sex, <span class="at">color =</span> <span class="sc">~</span> substance, <span class="at">data =</span> HELPrct )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-35-2.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( i2 <span class="sc">~</span> i1, <span class="at">color =</span> <span class="sc">~</span> sex, <span class="at">data =</span>  HELPrct, <span class="at">alpha =</span> .<span class="dv">6</span>, <span class="at">size =</span> .<span class="dv">6</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+</div>
+<div id="exr-snow-gr" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.14 </strong></span><strong>Snow in GR</strong></p>
+<p>The <code>SnowGR</code> contains historical data on snowfall in Grand Rapids, MI. The snowfall total for January, 2014 was 36.6 inches.</p>
+<ol type="a">
+<li><p>Create a histogram of January snowfall totals. How unusual is 36.6 inches of snow in January?</p></li>
+<li><p>If there is a lot of snow in January, should we expect to have unusually much or little snow in February? Make a scatter plot comparing January and February snowfall totals and comment on what you see there.</p></li>
+</ol>
+</div>
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> Jan, <span class="at">data =</span> SnowGR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>36.6 inches is pretty high, but not the highest ever for a January. Certainly well above average.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Feb <span class="sc">~</span> Jan, <span class="at">data =</span> SnowGR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="01-graphical_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>There is no clear trend. Sometimes the snow keeps on coming, but a heavy snow January could be followed by either a heavy or light snow February.</p>
+</div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>This is textbook speak for “you should really take note of this – probably memorize it.”<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>A similar, but older, way of doing this uses R Markdown. If you have used R Markdown before, learning Quarto will be very easy – they are very similar.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>You can actually mix in arbitrary HTML and even css, so if you are good at HTML, you can have quite a bit of control over how things look. But if you do that, some things won’t convert to PDF or Word. Here will will focus on the basics and things that work in multiple output formats.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>There are options to do things like (a) run R code without displaying it, (b) run R code without displaying the output, (c) controlling size of plots, etc., etc. But for starting out, this is really all you need to know.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./00-chap0.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Where do numbers come from?</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02-numerical.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Numerical Summaries</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

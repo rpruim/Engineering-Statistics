@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics for the Physical Sciences and Engineering - 3&nbsp; Probability</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./04-random-variables.html" rel="next">
+<link href="./02-numerical.html" rel="prev">
+<link href="./cover.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+</head><body class="nav-sidebar docked">$$
+\def\reals{\mathbb{R}}
+\def\card#1{| #1 |}
+\def\mean{\overline}
+\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
+\def\Prob{\operatorname{Prob}}
+\def\tand{\operatorname{and}}
+\def\tor{\operatorname{or}}
+\def\tnot{\operatorname{not}}
+\def\E{{\operatorname E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\union{\cup}
+\def\intersect{\cap}
+\def\Unif{\mathsf{Unif}}
+\def\Beta{\mathsf{Beta}}
+\def\Rayleigh{\mathsf{Rayleigh}}
+\def\Exp{\mathsf{Exp}}
+\def\Norm{\mathsf{Norm}}
+\def\Tri{\mathsf{Tri}}
+\def\Gamm{\mathsf{Gamma}}
+\def\Pois{\mathsf{Pois}}
+\def\Binom{\mathsf{Binom}}
+\def\Weibull{\mathsf{Weibull}}
+\def\Tdist{\mathsf{T}}
+\def\Fdist{\mathsf{F}}
+\def\Chisq{\mathsf{Chisq}}
+\def\boolval#1{[\![ #1 ]\!]}
+\def\simiid{\stackrel{\mathrm{iid}{\sim}}}
+
+\def\sfrac#1#2{{#1}/{#2}}
+\def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+\def\Partial#1#2{\frac{\partial}{\partial #2} #1}
+
+\def\myindex#1{\relax}
+$$
+
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="book.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Probability</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for the Physical Sciences and Engineering</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Pruim-Stat-for-Phys-Sci-and-Engr.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-chap0.html" class="sidebar-item-text sidebar-link">Where do numbers come from?</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-graphical.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Graphical Summaries of Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-numerical.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Numerical Summaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-probability.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Probability</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-random-variables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-transformations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformation and Combinations of Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-propagation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Propagation of Uncertainty</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-simple-linear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-nonlinear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Beyond Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-more-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">More Examples</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#key-definitions-and-ideas" id="toc-key-definitions-and-ideas" class="nav-link active" data-scroll-target="#key-definitions-and-ideas"><span class="toc-section-number">3.1</span>  Key Definitions and Ideas</a>
+  <ul class="collapse">
+  <li><a href="#examples-of-random-variables" id="toc-examples-of-random-variables" class="nav-link" data-scroll-target="#examples-of-random-variables"><span class="toc-section-number">3.1.1</span>  Examples of random variables</a></li>
+  </ul></li>
+  <li><a href="#calculating-probabilities-empirically" id="toc-calculating-probabilities-empirically" class="nav-link" data-scroll-target="#calculating-probabilities-empirically"><span class="toc-section-number">3.2</span>  Calculating Probabilities Empirically</a></li>
+  <li><a href="#sec-theoretical-prob" id="toc-sec-theoretical-prob" class="nav-link" data-scroll-target="#sec-theoretical-prob"><span class="toc-section-number">3.3</span>  Calculating Probabilities Theoretically</a>
+  <ul class="collapse">
+  <li><a href="#the-three-probability-axioms" id="toc-the-three-probability-axioms" class="nav-link" data-scroll-target="#the-three-probability-axioms"><span class="toc-section-number">3.3.1</span>  The Three Probability Axioms</a></li>
+  <li><a href="#other-probability-rules" id="toc-other-probability-rules" class="nav-link" data-scroll-target="#other-probability-rules"><span class="toc-section-number">3.3.2</span>  Other Probability Rules</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="toc-section-number">3.3.3</span>  Independence</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">3.4</span>  Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Probability</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="key-definitions-and-ideas" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="key-definitions-and-ideas"><span class="header-section-number">3.1</span> Key Definitions and Ideas</h2>
+<p>The terms below will help us talk about randomness and probability.</p>
+<!-- begin description -->
+<ul>
+<li><p><strong>random process</strong> A repeatable process that has multiple unpredictable potential outcomes.</p>
+<p>Although we sometimes use language that suggests that a <em>particular result</em> is random, it is really the <em>process</em> that is random, not its results.</p></li>
+<li><p><strong>outcome</strong> A potential result of a random process.</p></li>
+<li><p><strong>sample space</strong> The set of all possible potential outcomes of a random process.</p></li>
+<li><p><strong>event</strong> A subset of the sample space.<br>
+That is, a set of outcomes (possibly all or none of the outcomes).</p>
+<p>Statisticians often use capital letters from the beginning of the alphabet for events.</p></li>
+<li><p><strong>trial</strong> One repetition of a random process.</p></li>
+<li><p><strong>mutually exclusive</strong> events. Events that cannot happen on the same trial.</p></li>
+<li><p><strong>probability</strong> A numerical value between 0 and 1 assigned to an event to indicate how often the event occurs (in the long run).</p></li>
+<li><p><strong>random variable</strong> A random variable is a variable whose value is a numerical outcome of a random process.</p></li>
+<li><p><strong>probability distribution</strong> The distribution of a random variable. (Remember that a distribution describes <em>what values?</em> and <em>with what frequency?</em>)</p></li>
+</ul>
+<!-- end description -->
+<section id="examples-of-random-variables" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="examples-of-random-variables"><span class="header-section-number">3.1.1</span> Examples of random variables</h3>
+<p>Below are some random processes that result in a number.</p>
+<ul>
+<li>Roll a die and record the <strong>number</strong>.</li>
+<li>Roll two dice and record the <strong>sum</strong>.</li>
+<li>Flip 100 coins and count the <strong>number of heads</strong>.</li>
+<li>Sample 1000 people and <strong>count</strong> how many approve of the job the president is doing.</li>
+</ul>
+<p>Note: Statisticians usually use capital letters (often from the end of the alphabet) for random variables, like this:</p>
+<div class="center">
+<p>Let <span class="math inline">\(X\)</span> be the number of heads in 10 flips of a fair coin. What is <span class="math inline">\(\Prob(X = 5)\)</span>?</p>
+</div>
+<p>As an example of a probability distribution, we can first consider a <em>discrete</em> random variable. Most of the examples of random variables given above are discrete. In other words, the values they can take on come from a set containing a finite number of possible values. For example, if you roll a 6-sided die and record the number that comes up, there are only size possible outcomes, which are equally likely: the integers 1, 2, 3, 4, 5 and 6. For discrete random variables, the probability distribution shows all the possible values on the x-axis, and the likelihood of observing each of those values on the y-axis. Since there are a finite number of possible values that can be observed, these likelihoods are actually the <em>probabilities</em> of observing each outcome, and the sum of all the probabilities must be 1 (see <a href="#sec-theoretical-prob"><span>Section&nbsp;3.3</span></a> for details). For our example, where we rolled a die and recorded the value:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="03-probability_files/figure-html/discrete-pmf-1.png" class="img-fluid" width="624"></p>
+</div>
+</div>
+<p>Things are a bit more complicated for <em>continuous</em> random variables (the ones that can take on any numerical value). Here, there sample space (the set of possible distinct values the random variable can take on) is infinite. One consequence of this fact is that the interpretation of the y-axis values of the probability distribution changes. The y-axis will still indicate the relative likelihood of observing any given value of the random variable. However, here the random variable can take on an infinite number of possible values. In this case, we can’t interpret the y-axis values as probabilities. They y axis units are called “Likelihood” or “Density”, and they indicate the relative frequency of each outcome. For a densityplot, Density is scaled such that the integral over all possible x-values (the area under the curve) is 1. (For a histogram, Density is scaled so that the total area of all the boxes added together is 1.) We can think of the histograms and density plots we have been creating using continuous variables from R datasets as attempts to use data to approximate the distributions of random variables. For example, we might consider the growth of flower petals of the iris <em>Iris setosa</em> as a random process, and let <code>X</code> be a random variable that is the length of each iris petal. We could plot a histogram to approximate the distribution of <code>X</code> using the variable <code>Petal.Length</code> from the <code>iris</code> data (from the <strong><code>datasets</code></strong> package in base R).</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="03-probability_files/figure-html/cont-pdf-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="calculating-probabilities-empirically" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="calculating-probabilities-empirically"><span class="header-section-number">3.2</span> Calculating Probabilities Empirically</h2>
+<p>We would like to calculate the probability of an event <span class="math inline">\(A\)</span>, denoted <span class="math inline">\(\Prob(A)\)</span>.</p>
+<p>In the next section, we will see how to calculate probabilities based on the Axioms of probability, and logic. But first, we will consider ways to make the calculations empirically – based on observing many repetitions of a random process (in real life or in a computer simulation) and observing how often an event of interest occurs.</p>
+<p>Random processes are repeatable, so practically, we can calculate empirical probabilities by simply repeating the process over and over and keeping track of how often the event <span class="math inline">\(A\)</span> occurs. For example, we could flip a coin 10,000 times and see what fraction are heads.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><span class="math display">\[
+\mbox{Empirical Probability} =
+\frac{\mbox{number of times $A$ occured}}
+{\mbox{number of times random process was repeated}}
+\]</span></p>
+<p>Modern computing provides another way to compute empirical probabilities. If we can simulate our random process on a computer, then we can repeat the process many times very quickly.</p>
+<div id="exm-5Heads" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.1 </strong></span><strong>Q.</strong> What is the probability of getting exactly 5 heads if you flip a fair coin 10 times? Using our random variable notation, let <span class="math inline">\(X\)</span> be the number of heads in 10 flips of a fair coin. We want to know <span class="math inline">\(\Prob(X = 5)\)</span>.</p>
+<p><strong>A.</strong> The <code>rflip()</code> function simulates flipping a coin as many times as we like.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rflip</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Flipping 10 coins [ Prob(Heads) = 0.5 ] ...
+
+T H H H T H T H T H
+
+Number of Heads: 6 [Proportion Heads: 0.6]</code></pre>
+</div>
+</div>
+<p>The <code>do()</code> function allows us to execute an R command (“do” something in R) over and over, as many times as we choose. Here, our <code>rflip()</code> command simulates 10 coin-flips. First we’ll “do” our command three times and show the results. Then we’ll do it 10,000 times and store the results in a variable called <code>tosses</code>, so we can create a table and a plot showing the empirical distribution.</p>
+<div class="cell" data-hash="03-probability_cache/html/coin-tosses_09f593aa9238d2d87303b9fb401d0963">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">3</span>) <span class="sc">*</span> <span class="fu">rflip</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["n"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["heads"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["tails"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["prop"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"10","2":"6","3":"4","4":"0.6"},{"1":"10","2":"4","3":"6","4":"0.4"},{"1":"10","2":"6","3":"4","4":"0.6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">10000</span>) <span class="sc">*</span> <span class="fu">rflip</span>(<span class="dv">10</span>) <span class="ot">-&gt;</span> tosses</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>(<span class="sc">~</span> heads, <span class="at">data =</span> tosses, <span class="at">format =</span> <span class="st">"prop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>heads
+     0      1      2      3      4      5      6      7      8      9     10 
+0.0008 0.0091 0.0422 0.1254 0.1982 0.2466 0.2114 0.1176 0.0392 0.0088 0.0007 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> heads, <span class="at">data =</span> tosses, <span class="at">binwidth =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03-probability_files/figure-html/coin-tosses-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>Based on this sample, we would estimate that <span class="math inline">\(\Prob(X = 5) \approx 0.2466\)</span>.</p>
+</div>
+<div id="exm-doublesSims" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.2 </strong></span><strong>Q.</strong> Use simulations to estimate the probability of rolling doubles using two fair standard dice.</p>
+<p><strong>A.</strong> We can simulate rolling a die with the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>                <span class="co"># the numbers 1 through 6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3 4 5 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>)  <span class="co"># ten rolls of a 6-sided die</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 2 1 4 1 1 2 6 2 5 4</code></pre>
+</div>
+</div>
+<p>The first 2 input arguments of <code>resample()</code> are <code>x</code> (the set of values from which you want to resample) and <code>size</code> (the number of items to choose from <code>x</code>). You can also think of <code>size</code> as the number of <em>times</em> to sample from <code>x</code>, if you are imagining sampling one item from <code>x</code> each time.</p>
+<p>If we do this 10,000 times for each of two dice…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>die1 <span class="ot">&lt;-</span> <span class="fu">resample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">10000</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>die2 <span class="ot">&lt;-</span> <span class="fu">resample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">10000</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># let's check that things look reasonable</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(die1) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6 2 1 6 6 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(die2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 4 4 1 2</code></pre>
+</div>
+</div>
+<p>Then we can tabulate how often the two numbers matched in one of two ways:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span>(die1 <span class="sc">==</span> die2) )    <span class="co"># </span><span class="al">NOTE</span><span class="co"> the double == here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(die1 == die2)
+ TRUE FALSE 
+ 1634  8366 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop</span>( <span class="sc">~</span>(die1 <span class="sc">==</span> die2) )     <span class="co"># </span><span class="al">NOTE</span><span class="co"> the double == here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop_TRUE 
+   0.1634 </code></pre>
+</div>
+</div>
+<p>So the probability appears to be approximately 0.1634.</p>
+</div>
+<div id="exm-sum8" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.3 </strong></span><strong>Q.</strong> Use simulation to estimate the probability of rolling a sum of 8 when rolling two fair six-sided dice.</p>
+<p><strong>A.</strong> We have already generated 10000 random rolls, so let’s just reuse them. (Alternatively, we could generate new rolls.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> die1 <span class="sc">+</span> die2 </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># R adds element-wise: </span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   first entry of die1 + first of die2, </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   second to second, etc.</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">prop</span>( <span class="sc">~</span> (s <span class="sc">==</span> <span class="dv">8</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop_TRUE 
+   0.1443 </code></pre>
+</div>
+</div>
+<p>We can estimate the probability of any sum the same way.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span> s )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>s
+   2    3    4    5    6    7    8    9   10   11   12 
+ 291  579  810 1067 1382 1625 1443 1102  855  571  275 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span> s, <span class="at">format =</span> <span class="st">"percent"</span> )   <span class="co"># if we are too lazy to divide by 10000 ourselves</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>s
+    2     3     4     5     6     7     8     9    10    11    12 
+ 2.91  5.79  8.10 10.67 13.82 16.25 14.43 11.02  8.55  5.71  2.75 </code></pre>
+</div>
+</div>
+<p>Here’s a slightly fancier version that puts all the information into a data frame. Note the use of the function <code>data.frame()</code> to create the data table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>rolls <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">first =</span> die1, <span class="at">second =</span> die2, <span class="at">sum =</span> die1 <span class="sc">+</span> die2 )</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rolls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["first"],"name":[1],"type":["int"],"align":["right"]},{"label":["second"],"name":[2],"type":["int"],"align":["right"]},{"label":["sum"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"6","2":"1","3":"7","_rn_":"1"},{"1":"2","2":"2","3":"4","_rn_":"2"},{"1":"1","2":"4","3":"5","_rn_":"3"},{"1":"6","2":"4","3":"10","_rn_":"4"},{"1":"6","2":"1","3":"7","_rn_":"5"},{"1":"4","2":"2","3":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span>sum, <span class="at">data =</span> rolls, <span class="at">format =</span> <span class="st">"proportion"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>sum
+     2      3      4      5      6      7      8      9     10     11     12 
+0.0291 0.0579 0.0810 0.1067 0.1382 0.1625 0.1443 0.1102 0.0855 0.0571 0.0275 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> sum, <span class="at">data =</span> rolls, <span class="at">binwidth =</span> <span class="dv">1</span>)    <span class="co"># setting width is important for integer data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03-probability_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-theoretical-prob" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-theoretical-prob"><span class="header-section-number">3.3</span> Calculating Probabilities Theoretically</h2>
+<p>The theoretical method combines <!-- begin enumerate --></p>
+<ol type="1">
+<li>Some basic facts about probability (the Probability Axioms and Rules),</li>
+<li>Some assumptions about the particular situation at hand, and</li>
+<li>Mathematical reasoning (arithmetic, algebra, logic, etc.). <!-- end enumerate --></li>
+</ol>
+<section id="the-three-probability-axioms" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="the-three-probability-axioms"><span class="header-section-number">3.3.1</span> The Three Probability Axioms</h3>
+<div class="boxedText">
+<p>Let <span class="math inline">\(S\)</span> be the sample space and let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be events.</p>
+<ol type="1">
+<li>Probability is between 0 and 1: <span class="math inline">\(0 \le \Prob(A) \le 1\)</span>.</li>
+<li>The probability of the sample space is 1: <span class="math inline">\(\Prob(S) = 1\)</span>.</li>
+<li>Additivity: If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are mutually exclusive, then <span class="math inline">\(\Prob(A \tor B) = \Prob(A) + \Prob(B)\)</span>.</li>
+</ol>
+</div>
+<section id="notation-notes" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="notation-notes">Notation Notes</h4>
+<p><span class="math inline">\(\Prob(A \tor B)\)</span> is the probability that either <span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span> (or both) occurs. Often this is written <span class="math inline">\(\Prob(A \union B)\)</span>. <span class="math inline">\(A \union B\)</span> is usually read “<span class="math inline">\(A\)</span> union <span class="math inline">\(B\)</span>”. The union of two sets is the set that contains all elements of both sets.</p>
+<p><span class="math inline">\(\Prob(A \tand B)\)</span> is the probability that <em>both</em> <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> occur. This is also written <span class="math inline">\(\Prob(A \intersect B)\)</span>. <span class="math inline">\(A \intersect B\)</span> is usually read “<span class="math inline">\(A\)</span> intersect <span class="math inline">\(B\)</span>”.</p>
+<p>Saying that <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are mutually exclusive is the same as saying that there are no outcomes in <span class="math inline">\(A\intersect B\)</span>, i.e., that <span class="math inline">\(A \intersect B = \emptyset\)</span>.</p>
+</section>
+</section>
+<section id="other-probability-rules" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="other-probability-rules"><span class="header-section-number">3.3.2</span> Other Probability Rules</h3>
+<p>These rules all follow from the axioms (although we will not necessarily prove them all here).</p>
+<div class="boxedText">
+<section id="the-addition-rule" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="the-addition-rule">The Addition Rule</h4>
+<p>If events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are mutually exclusive, then <span class="math inline">\(\Prob(A \tor B) = \Prob(A) + \Prob(B)\)</span>. That’s the additivity axiom. A more general rule holds even when the events are not mutually exclusive: <span class="math display">\[
+\Prob(A \tor B) = \Prob(A) + \Prob(B) - \Prob(A \tand B) \; .
+\]</span></p>
+</section>
+<section id="the-complement-rule" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="the-complement-rule">The Complement Rule</h4>
+<p><span class="math display">\[
+\Prob(\tnot  A) = 1 - \Prob(A)
+\]</span></p>
+</section>
+<section id="the-equally-likely-rule" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="the-equally-likely-rule">The Equally Likely Rule</h4>
+<p>If the sample space consists of <span class="math inline">\(n\)</span> equally likely outcomes, then the probability of an event <span class="math inline">\(A\)</span> is given by</p>
+<p><span class="math display">\[
+\Prob(A)
+= \frac{ \mbox{number of outcomes in $A$}}{n}
+= \frac{ \card{A} }{\card{S} }\; .
+\]</span></p>
+<p><em>Warning:</em> One of the most common mistakes in probability is to apply this rule when the outcomes are not equally likely.</p>
+</section>
+</div>
+<div id="exm-equallyLikley" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.4 </strong></span>Here are several examples where we can (and cannot) use the Equally Likely Rule.</p>
+<ol type="a">
+<li><p>Coin Toss: <span class="math inline">\(\Prob(\mbox{heads}) = \frac{1}{2}\)</span> if heads and tails are equally likely.</p></li>
+<li><p>Rolling a Die: <span class="math inline">\(\Prob(\mbox{even}) = \frac{3}{6}\)</span> if the die is fair (each of the six numbers equally likely to occur).</p></li>
+<li><p>Sum of two Dice: the sum is a number between 2 and 12, but these numbers are NOT equally likely.</p>
+<p>There are 36 equally likely combinations of two dice:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="03-probability_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="336"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let <span class="math inline">\(X\)</span> be the sum of two dice.</p>
+<ul>
+<li><span class="math inline">\(\Prob(X = 3) = \frac{2}{36} = \frac{1}{18}\)</span></li>
+<li><span class="math inline">\(\Prob(X = 7) = \frac{6}{36} = \frac{1}{6}\)</span></li>
+<li><span class="math inline">\(\Prob(\mbox{doubles}) = \frac{6}{36} = \frac{1}{6}\)</span></li>
+</ul></li>
+<li><p>Punnet Squares</p>
+<p>This example comes from animal or human genetics. Here, we consider a gene with two alleles: A is the dominant allele, and a is the recessive one. Each individual has two copies of every gene, so there are three possible combinations of alleles (called “genotypes”): AA, Aa, and aa. AA and Aa individuals have the dominant A physical characteristic (called the “phenotype”); aa individuals have the recessive a phenotype. Imagine that two Aa individuals mate and produce offspring. In this Aa <span class="math inline">\(\times\)</span> Aa cross, if A is the dominant allele, then the probability of the dominant phenotype is <span class="math inline">\(\frac{3}{4}\)</span>, and the probability of the recessive phenotype is <span class="math inline">\(\frac{1}{4}\)</span> because each of the four possible crossings is equally likely.</p></li>
+</ol>
+<div class="center">
+<table class="table">
+<caption>A Punnet Square</caption>
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">a</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">AA</td>
+<td style="text-align: center;">Aa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">a</td>
+<td style="text-align: center;">aA</td>
+<td style="text-align: center;">aa</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/date-punnet.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><a href="http://xkcd.com/634/" class="uri">http://xkcd.com/634/</a></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- end example -->
+<div style="page-break-after: always;"></div>
+<div id="exm-cond-kids" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.5 </strong></span><strong>Q.</strong> Suppose a family has two children and one of them is a boy. What is the probability that the other is a girl?</p>
+<p><strong>A.</strong> <!--  First we introduce some notation.  Let $X$ be a random variable --> <!--  that counts the number of girls and let $Y$ be a random variable --> <!--  that counts the number of boys (since they have Y chromosomes). --> <!--  We'll also  --> We’ll make the simplifying assumption that boys and girls are equally likely (which is not exactly true). Under that assumption, there are four equally likely families: BB, BG, GB, and GG. But only three of these have at least one boy, and we already know our family has at least one boy, so our sample space is really <span class="math inline">\(\{BB, BG, GB\}\)</span>. Of these, two have a girl as well as a boy. So the probability is <span class="math inline">\(2/3\)</span>.</p>
+<p>We illustrate the restricted sample space (3 outcomes in a box) in the figure below. Two of these three outcomes have at least one girl. (See <a href="#eq-cond-kids">Equation&nbsp;<span>3.1</span></a>.)</p>
+<p><span id="eq-cond-kids"><span class="math display">\[
+\mbox{GG} \ \ \  \fbox{BG \ \ \ GB \ \ \ BB}
+\tag{3.1}\]</span></span></p>
+<p>We can also think of this in a different way. In our original sample space of four equally likely families,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\evProb{at least one girl} &amp; =  3/4 \; , \\ % \mbox{ , and } \\
+\evProb{at least one girl \emph{and} at least one boy} &amp; =  2/4 \; , \tand\\
+\frac{2/4}{3/4} &amp; =  2/3 \; ;
+\end{aligned}
+\]</span></p>
+<p>so <span class="math inline">\(2/3\)</span> of the time when there is at least one boy, there is also a girl. We will denote this probability as <span class="math inline">\(\Prob(\mbox{at least one girl} \mid \mbox{at least one boy})\)</span>. We’ll read this as “the probability that there is at least one girl <em>given that</em> there is at least one boy”. See <a href="#fig-VennConditional">Figure&nbsp;<span>3.1</span></a> and <a href="#def-condProb">Definition&nbsp;<span>3.1</span></a>.</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-VennConditional" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-probability_files/figure-html/fig-VennConditional-1.png" class="img-fluid figure-img" width="432"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.1: A Venn diagram illustrating the definition of conditional probability. <span class="math inline">\(\Prob(A \mid B)\)</span> is the ratio of the area of the football shaped region that is both shaded and striped (<span class="math inline">\(A \intersect B\)</span>) to the area of the shaded circle (<span class="math inline">\(B\)</span>).</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- % The example above indicates how we should define conditional probability  -->
+<!-- % generally. -->
+<!-- % \todo{Venn Diagram} -->
+<div id="def-condProb" class="boxedText theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.1 </strong></span>Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be two events such that <span class="math inline">\(\Prob(B) \neq 0\)</span>.<br>
+The of <span class="math inline">\(A\)</span> given <span class="math inline">\(B\)</span> is defined by <span class="math display">\[
+\Prob(A \mid B) = \frac{\Prob(A \intersect B) }{ \Prob(B) } ; .
+\]</span> If <span class="math inline">\(\Prob(B) = 0\)</span>, then <span class="math inline">\(\Prob(A \mid B)\)</span> is undefined.</p>
+</div>
+<!-- end boxedText -->
+<div id="exm-TshirtColor" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.6 </strong></span>A class of <span class="math inline">\(5\)</span>th graders was asked what color should be used for the class T-shirt, red or purple. The table below contains a summary of the students’ responses:</p>
+<table class="table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 19%">
+<col style="width: 20%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>Red</td>
+<td>Purple</td>
+</tr>
+<tr class="even">
+<td>Girls</td>
+<td><span class="math inline">\(7\)</span></td>
+<td><span class="math inline">\(9\)</span></td>
+</tr>
+<tr class="odd">
+<td>Boys</td>
+<td><span class="math inline">\(10\)</span></td>
+<td><span class="math inline">\(8\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Q.</strong> Suppose we randomly select a student from this class. Let <span class="math inline">\(R\)</span> be the event that a child prefers a red T-shirt. Let <span class="math inline">\(B\)</span> be the event that the child is a boy, and let <span class="math inline">\(G\)</span> be the event that the child is a girl.<br>
+Express each of the following probabilities in words and determine their values:</p>
+<div class="multicols">
+<div class="itemize">
+<ol type="1">
+<li><span class="math inline">\(\Prob(R)\)</span>,</li>
+<li><span class="math inline">\(\Prob(R \mid B)\)</span>,</li>
+<li><span class="math inline">\(\Prob(B \mid R)\)</span>,</li>
+<li><span class="math inline">\(\Prob(R \mid G)\)</span>,</li>
+<li><span class="math inline">\(\Prob(G \mid R)\)</span>,</li>
+<li><span class="math inline">\(\Prob(B \mid G)\)</span>.</li>
+</ol>
+</div>
+<!-- end itemize -->
+</div>
+<!-- end multicols -->
+<p><strong>A.</strong> The conditional probabilities can be computed in two ways. We can use the formula from the definition of conditional probability directly, or we can consider the condition event to be a new, smaller sample space and read the conditional probability from the table.</p>
+<div class="itemize">
+<ol type="1">
+<li><p><span class="math inline">\(\Prob(R) = 17/34 = 1/2\)</span> because <span class="math inline">\(17\)</span> of the <span class="math inline">\(34\)</span> kids prefer red</p>
+<p>This is the probability that a randomly selected student prefers red</p></li>
+<li><p><span class="math inline">\(\displaystyle \Prob(R \mid B) = \frac{10/34}{18/34} = \frac{10}{18}\)</span> because <span class="math inline">\(10\)</span> of the <span class="math inline">\(18\)</span> boys prefer red</p>
+<p>This is the probability that a randomly selected boy prefers red</p></li>
+<li><p><span class="math inline">\(\displaystyle \Prob(B \mid R)= \frac{10/34}{17/34} = \frac{10}{17}\)</span> because <span class="math inline">\(10\)</span> of the <span class="math inline">\(17\)</span> students who prefer red are boys.</p>
+<p>This is the probability that a randomly selected student who prefers red is a boy.</p></li>
+<li><p><span class="math inline">\(\displaystyle \Prob(R \mid G) = \frac{7/34}{16/34} = \frac{7}{16}\)</span> because <span class="math inline">\(7\)</span> of the <span class="math inline">\(16\)</span> girls prefer red</p>
+<p>This is the probability that a randomly selected girl prefers red</p></li>
+<li><p><span class="math inline">\(\displaystyle \Prob(G \mid R) = \frac{7/34}{17/34} = \frac{7}{17}\)</span> because <span class="math inline">\(7\)</span> of the <span class="math inline">\(17\)</span> kids who prefer red are girls.</p>
+<p>This is the probability that a randomly selected kid who prefers red is a girl.</p></li>
+<li><p><span class="math inline">\(\displaystyle \Prob(B \mid G) = \frac{0}{16/34} = 0\)</span> because none of the girls are boys.</p>
+<p>This is the probability that a randomly selected girl is a boy.</p></li>
+</ol>
+</div>
+<!-- end itemize -->
+</div>
+<p>One important use of conditional probability is as a tool to calculate the probability of an intersection.</p>
+<div id="lem-probOfInt" class="boxedText theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 3.1 </strong></span>Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be events with non-zero probability. Then</p>
+<p><span class="math display">\[
+\begin{aligned}
+\Prob(A \intersect B) &amp; = \Prob(A) \cdot\Prob(B \mid A)
+\\ &amp; = \Prob(B) \cdot\Prob(A \mid B) ;.
+\end{aligned}
+\]</span></p>
+<p>This follows directly from the definition of conditional probability by a little bit of algebra and can be generalized to more than two events.</p>
+</div>
+<!-- end boxedText -->
+<div id="exm-doubles" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.7 </strong></span><strong>Q.</strong> If you roll two standard dice, what is the probability of doubles? (Doubles is when the two numbers match.)</p>
+<p><strong>A.</strong> Let <span class="math inline">\(A\)</span> be the event that we get a number between <span class="math inline">\(1\)</span> and <span class="math inline">\(6\)</span> on the first die. So <span class="math inline">\(\Prob(A) = 1\)</span>. Let <span class="math inline">\(B\)</span> be the event that the second number matches the first. Then the probability of doubles is <span class="math inline">\(\Prob(A \intersect B) = \Prob(A) \cdot\Prob(B \mid A) = 1 \cdot\frac{1}{6} = \frac{1}{6}\)</span> since regardless of what is rolled on the first die, <span class="math inline">\(1\)</span> of the <span class="math inline">\(6\)</span> possibilities for the second die will match it.</p>
+</div>
+<div id="exm-flush" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.8 </strong></span><strong>Q.</strong> A <span class="math inline">\(5\)</span>-card hand is dealt from a standard <span class="math inline">\(52\)</span>-card deck. What is the probability of getting a flush (all cards the same suit)?</p>
+<p><strong>A.</strong> Imagine dealing the cards in order. Let <span class="math inline">\(A_i\)</span> be the event that the <span class="math inline">\(i\)</span>th card is the same suit as all previous cards. Then</p>
+<p><span class="math display">\[
+\begin{aligned}
+\evProb{flush} &amp; =  \Prob(A_1
+  \intersect  A_2
+  \intersect  A_3
+  \intersect  A_4
+  \intersect  A_5) \\
+  &amp; =  \Prob(A_1)
+    \cdot \Prob(A_2 \mid A_1)
+    \cdot \Prob(A_3 \mid A_1 \intersect A_2)
+    \\ &amp; \quad
+    \cdot \Prob(A_4 \mid A_1 \intersect A_2 \intersect A_3)
+    \\ &amp; \quad
+    \cdot \Prob(A_5 \mid A_1 \intersect A_2 \intersect A_3 \intersect A_4) \\
+    &amp; = 1 \cdot \frac{12}{51} \cdot \frac{11}{50} \cdot \frac{10}{49}
+    \cdot \frac{9}{48} \;
+\end{aligned}
+\]</span></p>
+</div>
+<div id="exm-valentines" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.9 </strong></span><strong>Q.</strong> In a bowl are 4 red Valentine hearts and 2 blue Valentine hearts.</p>
+<p>If you reach in without looking and select two of the Valentines, let <span class="math inline">\(X\)</span> be the number of blue Valentines. Fill in the following probability table.</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">value of <span class="math inline">\(X\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">probability</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>A.</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+\Prob(X = 2) &amp;=
+\Prob(\mbox{first is blue} \tand \mbox{second is blue})
+\\
+&amp;= \Prob(\mbox{first is blue}) \cdot
+      \Prob(\mbox{second is blue} \mid \mbox{first is blue})
+\\
+&amp;= \frac26 \cdot \frac15
+\\
+&amp;= \frac{2}{30} \;.
+\end{aligned}
+\]</span></p>
+<p>Similarly</p>
+<p><span class="math display">\[
+\begin{aligned}
+\Prob(X = 0) &amp;=
+\Prob(\mbox{first is red} \tand \mbox{second is red})
+\\
+&amp;= \Prob(\mbox{first is red}) \cdot
+     \Prob( \mbox{second is red} \mid \mbox{first is red})
+\\
+&amp;= \frac46 \cdot \frac35
+\\
+&amp;= \frac{12}{30}
+\end{aligned}
+\]</span></p>
+<p>Finally, <span class="math inline">\(\Prob(X = 1) = 1 - \Prob(X = 0) - \Prob(X = 2) = 1 - \frac{14}{30} = \frac{16}{30}\)</span>.</p>
+<p>We can represent this using a <strong>tree diagram</strong> as well.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="03-probability_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>The edges in the tree represent conditional probabilities which we can multiply together to the probability that all events on a particular branch happen. The first level of branching represents what kind of Valentine is selected first, the second level represents the second selection.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<div id="exm-sensitivitySpecificity" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.10 </strong></span><strong>Q.</strong> Suppose a test correctly identifies diseased people <span class="math inline">\(99\)</span>% identifies healthy people <span class="math inline">\(98\)</span>% Furthermore assume that in a certain population, one person in <span class="math inline">\(1000\)</span> has the disease. If a random person is tested and the test comes back positive, what is the probability that the person has the disease?</p>
+<p><strong>A.</strong> We begin by introducing some notation. Let <span class="math inline">\(D\)</span> be the event that a person has the disease. Let <span class="math inline">\(H\)</span> be the event that the person is healthy. Let <span class="math inline">\(+\)</span> be the event that the test comes back positive (meaning it indicates disease – probably a negative from the perspective of the person tested). Let <span class="math inline">\(-\)</span> be the event that the test is negative.</p>
+<div class="itemize">
+<ul>
+<li><p><span class="math inline">\(\Prob(D) = 0.001\)</span>, so <span class="math inline">\(\Prob(H) = 0.999\)</span>.</p></li>
+<li><p><span class="math inline">\(\Prob(+ \mid D) = 0.99\)</span>, so <span class="math inline">\(\Prob(- \mid D) = 0.01\)</span>.</p>
+<p><span class="math inline">\(\Prob(+ \mid D)\)</span> is called the <strong>sensitivity</strong> of the test. (It tells how sensitive the test is to the presence of the disease.)</p></li>
+<li><p><span class="math inline">\(\Prob(- \mid H) = 0.98\)</span>, so <span class="math inline">\(\Prob(+ \mid H) = 0.02\)</span>.</p>
+<p><span class="math inline">\(\Prob(- \mid H)\)</span> is called the <strong>specificity</strong> of the test. </p></li>
+<li><p><span class="math inline">\(\!\!\!\!\!\)</span></p></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\Prob(D \mid +) &amp; = \frac{\Prob(D \intersect +)}{\Prob(+)}
+\\[5mm]
+&amp;= \frac{\Prob(D) \cdot \Prob(+ \mid D)}{\Prob(D \intersect +)  +
+    \Prob(H \intersect +)  }
+\\[5mm]
+&amp; = \frac{0.001 \cdot 0.99}{0.001 \cdot 0.99 + 0.999 \cdot 0.02}
+                      =  0.0472
+\end{aligned}
+\]</span></p>
+<p>A tree diagram is a useful way to visualize these calculations.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="03-probability_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>This low probability surprises most people the first time they see it. This means that if the test result of a random person comes back positive, the probability that that person has the disease is less than <span class="math inline">\(5\)</span>%, even though the test is “highly accurate”. This is one reason why we do not routinely screen an entire population for a rare disease – such screening would produce many more false positives than true positives.</p>
+<p>Of course, if a doctor orders a test, it is usually because there are some other symptoms. This changes the <em>a priori</em> probability that the patient has the disease. <a href="#exr-bayesDisease">Exercise&nbsp;<span>3.9</span></a> gives you a chance to explore this further.</p>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="independence" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="independence"><span class="header-section-number">3.3.3</span> Independence</h3>
+<div id="def-independentEvents" class="boxedText theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.2 </strong></span>Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be two events such that <span class="math inline">\(\Prob(B) = \Prob(B \mid A)\)</span>. Such events are called <strong>independent</strong>.</p>
+</div>
+<!-- end boxedText -->
+<p>When events are independent, then</p>
+<p><span class="math display">\[
+\Prob(A \tand B) = \Prob(A) \cdot \Prob(B \mid A) = \Prob(A) \cdot \Prob(B) \;.
+\]</span> This makes probability calculations much simpler – but it only applies for independent events.</p>
+<div id="exm-doubles" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.11 </strong></span><strong>Q.</strong> What is the probability of rolling double sixes with standard 6-sided dice?</p>
+<p><strong>A.</strong> Let <span class="math inline">\(A\)</span> be the event that the first die is a 6 and let <span class="math inline">\(B\)</span> be the event that the second die is a 6. Since <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are independent, <span class="math inline">\(\Prob(A \tand B) = \Prob(A) \cdot \Prob(B) = \frac16 \cdot \frac16 = \frac{1}{36}\)</span>.</p>
+</div>
+<div id="exm-5Heads" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.12 </strong></span><strong>Q.</strong> What is the probability of flipping a coin five times and getting 5 heads?</p>
+<p><strong>A.</strong> Since each coin toss is independent of the others, the probability of getting five heads is the product of the probabilities of each coin coming up heads:</p>
+<p><span class="math display">\[
+\Prob(\mbox{5 heads in 5 flips}) = (0.5)^5 = 0.03125
+\]</span></p>
+</div>
+<div id="exm-partFailures" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 3.13 </strong></span><strong>Q.</strong> A manufacturer claims that 99% of its parts will still be functioning properly two years after purchase. If you purchase 10 of these parts, what is the probability that all 10 of them are still functioning properly two years later (assuming the manufacturer’s claim is correct)?</p>
+<p><strong>A.</strong> Let <span class="math inline">\(G_i\)</span> be the event that part <span class="math inline">\(i\)</span> is still functioning properly after two years. We want to calculate</p>
+<p><span class="math display">\[
+\Prob(G_1 \tand G_2
+\tand\cdots\tand G\_{10});.
+\]</span> If we assume the lifetimes of the parts are independent, then</p>
+<p><span class="math display">\[
+\begin{aligned}
+\Prob(G_1 \tand G_2 \tand\cdots\tand G_{10})
+&amp; =
+\underbrace{.99 \cdot.99 \cdot.99 \cdots.99}_{\mbox{10 of these}}
+\\
+&amp; = .99^{10} \\
+&amp; = 0.9043821\;.
+\end{aligned}
+\]</span></p>
+<p>The independence assumption may or may not be valid. That depends on the manufacturing process. For example, if the primary way a part goes bad is that the package is dropped during shipping, then if you by a box of 10 and the first part is bad, they will all be bad. And if the box was handled carefully and never dropped, and the first part used is good, they will likely all be good. So in that extreme case, the probability that all 10 are functioning properly after two years is 99%.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.4</span> Exercises</h2>
+<div id="exr-freeThrow" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.1 </strong></span><strong>Free throw Amy</strong></p>
+<p>Amy is a 92% free throw shooter. If she shoots 100 free throws after practice, what is the probability that she makes at least 95 of them? Use simulation to estimate this probability.</p>
+<p>(You can use <code>rflip()</code> to simulate shooting free throws. The <code>prob</code> argument lets you set the probability. In this case, you need to set it to <span class="math inline">\(0.92\)</span>. Then think of a head as a made free throw and a tail as a missed free throw.)</p>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)    <span class="co"># so we get the same simulated results each time we compile.</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> <span class="fu">rflip</span>(<span class="dv">100</span>, <span class="at">prob =</span> <span class="fl">0.92</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span> heads <span class="sc">&gt;</span> <span class="dv">95</span>, <span class="at">data =</span> sims)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>heads &gt; 95
+ TRUE FALSE 
+   94   906 </code></pre>
+</div>
+</div>
+<p>So the probability that Amy makes more than 95 shots in 100 attempts is approximately 0.094</p>
+</div>
+<!-- end solution -->
+<div id="exr-dice" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.2 </strong></span><strong>Dice</strong></p>
+<div class="enumerate">
+<ol type="1">
+<li><p>Use simulation to estimate the probability of rolling a difference of 2 when rolling two fair six-sided dice.</p></li>
+<li><p>Make a histogram showing the results for all of the possible differences.</p></li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> die1 <span class="sc">-</span> die2</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span> d )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>d
+  -5   -4   -3   -2   -1    0    1    2    3    4    5 
+ 279  610  765 1092 1409 1634 1423 1165  792  555  276 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop</span>( <span class="sc">~</span> (d <span class="sc">==</span> <span class="dv">8</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop_TRUE 
+        0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> d, <span class="at">binwidth =</span> <span class="dv">1</span>)    <span class="co"># setting width is important for integer data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03-probability_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+</div>
+<!-- end solution -->
+<div id="exr-cards" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.3 </strong></span><strong>Cards</strong></p>
+<p>Use simulation to estimate the probability that when dealing 5 cards from a standard (well-shuffled) deck of 52 cards all five are diamonds.</p>
+<p>You can simulate the deck of cards using the numbers 1 through 52 and consider the numbers 1 through 13 to be the diamonds. Instead of using <code>resample()</code>, which would allow you to get the same card more than once, we need to use <code>sample()</code>, which does not. (You can also use <code>deal()</code> which does the same thing.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10 38 43 25 37</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 19 15 36 24 31</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deal</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 46 43 20 29 40</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deal</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17 24 10 11 37</code></pre>
+</div>
+</div>
+<p>There is another way to make the calculation, using the function <code>sum()</code>. R can tell you how many cards are below 14 using <code>sum()</code> because R turns TRUE into 1 and FALSE into 0 when you do a sum.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">5</span>) <span class="sc">&lt;</span> <span class="dv">14</span> ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">5</span>) <span class="sc">&lt;</span> <span class="dv">14</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>( <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">5</span>) <span class="sc">&lt;</span> <span class="dv">14</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p>You can use <code>do()</code> to do this many times. (Three is <em>not</em> many! We just do a small number here for illustration purposes.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">3</span>) <span class="sc">*</span> <span class="fu">sum</span>( <span class="fu">sample</span>( <span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">5</span> ) <span class="sc">&lt;</span> <span class="dv">14</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sum"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"0"},{"1":"0"},{"1":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span> sum, <span class="fu">do</span>(<span class="dv">10000</span>) <span class="sc">*</span> <span class="fu">sum</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>, <span class="dv">5</span>) <span class="sc">&lt;</span> <span class="dv">14</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>sum
+   0    1    2    3    4    5 
+2218 3992 2826  853  107    4 </code></pre>
+</div>
+</div>
+</div>
+<!-- end solution -->
+<div id="exr-manufacturing" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.4 </strong></span><strong>Quality control</strong></p>
+<p>Parts in a manufacturing plant go through two quality control checks before they are shipped. 99% of parts pass inspection A and 98% parts pass inspection B. 0.5% fail both inspections.</p>
+<p>What percentage of parts pass both inspections?</p>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span></p>
+<pre><code>$\Prob(\mbox{fail at least one}) = \Prob(\mbox{fail A or fail B}) =
+\Prob(\mbox{fail A}) + \Prob(\mbox{fail B}) - \Prob(\mbox{fail both})
+= 0.01 + 0.02 - 0.05 = 0.025$.
+
+So $\Prob(\mbox{pass both}) = 1 - 0.025 = 0.975$.</code></pre>
+</div>
+<!-- end solution -->
+<div id="exr-sumOfDice" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.5 </strong></span><strong>Sum of dice</strong></p>
+<p>Let <span class="math inline">\(X\)</span> be the sum of the results of rolling two fair six-sided dice.</p>
+<div class="enumerate">
+<ol type="1">
+<li>What is <span class="math inline">\(\Prob(X \mbox{ is even} \tand X &lt; 5)\)</span>?</li>
+<li>What is <span class="math inline">\(\Prob(X \mbox{ is even} \tor X &lt; 5)\)</span>?</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span>The probability that <span class="math inline">\(X\)</span> is even and less than five is <span class="math inline">\(\Prob(X = 2 \tor X = 4) = 1/36 + 3/36 = 4/36 = 0.1111111\)</span>.</p>
+<p>The probability that <span class="math inline">\(X\)</span> is even or less than five is <span class="math inline">\(\Prob(\mbox{X is even}) + \Prob(X = 3) = 18/36 + 2/36 = 20/36 = 0.5555556\)</span>.</p>
+</div>
+<!-- end solution -->
+<div id="exr-diffDice" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.6 </strong></span><strong>Difference in dice</strong></p>
+<p>Let <span class="math inline">\(Y\)</span> be the difference between the larger and smaller number when two fair dice are rolled. (So if you roll a 2 and a 4, then the value of <span class="math inline">\(Y\)</span> is 2.)</p>
+<div class="enumerate">
+<ol type="1">
+<li>What is <span class="math inline">\(\Prob(Y = 2)\)</span>?</li>
+<li>What are the other possible values of <span class="math inline">\(Y\)</span>?</li>
+<li>Calculate the probability for each possible value of <span class="math inline">\(Y\)</span> and put those values in a table.</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span><span class="math inline">\(Y = 2\)</span> for rolls of <span class="math inline">\((3,1)\)</span>, <span class="math inline">\((4,2)\)</span>, <span class="math inline">\((5,3)\)</span>, and <span class="math inline">\((6,4)\)</span>. Each of these can also happen in the other order, so the probability is <span class="math inline">\(8/36 = 2/9 = 0.2222222\)</span>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>value of <span class="math inline">\(Y\)</span></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>probability</td>
+<td>6/36</td>
+<td>10/36</td>
+<td>8/36</td>
+<td>6/36</td>
+<td>4/36</td>
+<td>2/36</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>) <span class="sc">/</span> <span class="dv">36</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.16666667 0.27777778 0.22222222 0.16666667 0.11111111 0.05555556</code></pre>
+</div>
+</div>
+</div>
+<!-- end solution -->
+<div id="exr-kids" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.7 </strong></span><strong>Kids</strong></p>
+<p>For the probabilities below, you may assume the that for each birth, the probability of having a boy or a girl is <span class="math inline">\(1/2\)</span> and that each birth is independent of other births.</p>
+<div class="enumerate">
+<ol type="1">
+<li>Suppose a family has three kids. What is the probability that at least one of the kids is a boy?</li>
+<li>Suppose a family has three kids, at least one of which is a girl. Now what is the probability that at least one of the kids is a boy?</li>
+<li>Suppose a family has three kids, at least two of which are girls. Now what is the probability that at least one of the kids is a boy?</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div id="exr-device-with-two-parts" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.8 </strong></span>**A device with two parts</p>
+<p>A device is assembled from two primary parts. 2% of the first type of part are defective and 3% of the other type of part are defective. The device only functions properly if both parts are functioning properly.</p>
+<div class="enumerate">
+<ol type="1">
+<li><p>What assumption do you need to make to calculate the probability that a device assembled in this way will function properly? Is it a reasonable assumption in this situation? Explain.</p></li>
+<li><p>What is the probability that that a device assembled in this way will function properly?</p></li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span>Assuming failure of each part is independent of failure of the other, the probability that both function properly is <span class="math inline">\(0.98 \cdot 0.97 = 0.9506\)</span>.</p>
+<p>Alternatively, if we assume that failures are mutually exclusive, then the probability of failure would be <span class="math inline">\(0.02 + 0.03 = 0.05\)</span> and the probability of proper functioning would be <span class="math inline">\(0.95\)</span>.</p>
+<p>The independence assumption is reasonable if, for example, the two parts are made by separate manufacturing processes and the device is assembled by randomly selecting a part of each type, which may or may not be a good part right from the start.</p>
+<p>The mutually exclusive failure is probably harder to justify, since likely there will be some situations in which both parts fail.</p>
+</div>
+<!-- end solution -->
+<div id="exr-bayesDisease" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.9 </strong></span><strong>Testing for a disease, revisited</strong></p>
+<p>In the situation of Example <a href="#exm-sensitivitySpecificity">Example&nbsp;<span>3.10</span></a>, how does the answer change if the baseline probability of having the disease is <span class="math inline">\(1/10\)</span> instead of <span class="math inline">\(1/1000\)</span>? (This might be the case if a person is exhibiting symptoms, for example.)</p>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P(D) = 0.001</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.001</span> <span class="sc">*</span> <span class="fl">0.99</span> <span class="sc">/</span> (<span class="fl">0.001</span> <span class="sc">*</span> <span class="fl">0.99</span> <span class="sc">+</span> <span class="fl">0.999</span> <span class="sc">*</span> <span class="fl">0.02</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0472103</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P(D) = 0.10</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.1</span> <span class="sc">*</span> <span class="fl">0.9</span> <span class="sc">/</span> (<span class="fl">0.10</span> <span class="sc">*</span> <span class="fl">0.99</span> <span class="sc">+</span> <span class="fl">0.9</span> <span class="sc">*</span> <span class="fl">0.02</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7692308</code></pre>
+</div>
+</div>
+</div>
+<!-- end solution -->
+<div id="exr-smokers" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.10 </strong></span><strong>Smoking and lung cancer</strong></p>
+<p>According to the CDC, “Compared to nonsmokers, men who smoke are about 23 times more likely to develop lung cancer and women who smoke are about 13 times more likely.” According to the American Lung Association: “In 2008, 21.1 million (18.3%) women smoked in the United States compared to 24.8 million (23.1%) men.”</p>
+<div class="enumerate">
+<ol type="1">
+<li><p>If you learn that a person is a smoker and no nothing else about the person, what is the probability that the person is a woman?</p></li>
+<li><p>If you learn that a woman has been diagnosed with lung cancer, and you know nothing else about her, what is the probability that she is a smoker?</p></li>
+<li><p>If you learn that a man has been diagnosed with lung cancer, and you know nothing else about him, what is the probability that he is a smoker?</p></li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a)</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fl">21.1</span> <span class="sc">/</span> ( <span class="fl">21.1</span> <span class="sc">+</span> <span class="fl">24.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.459695</code></pre>
+</div>
+</div>
+<p>Part b is the most interesting (once you can do that, you can do part c the same way). Let <span class="math inline">\(W\)</span> be the event that someone is a woman, <span class="math inline">\(S\)</span> that they are a smoker, and <span class="math inline">\(C\)</span> that they get cancer. Let <span class="math inline">\(x = \Prob( C | W \intersect S^c)\)</span>. Then <span class="math inline">\(\Prob( C | W \intersect S ) = 13x\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \Prob( S | W \intersect C )
+    &amp; = \frac{ \Prob(S \intersect W \intersect C) }{\Prob(W \intersect C)}
+    \\
+    &amp; = \frac{ \Prob(S \intersect W \intersect C) }
+    {\Prob(S \intersect W \intersect C) + \Prob( S^c \intersect W \intersect C)}
+\end{aligned}
+\]</span></p>
+<p>So we just need to compute the two probabilities in the denominator.</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \Prob(S \intersect W \intersect C)
+    &amp;= \Prob(W) \cdot \Prob(S \mid W) \cdot \Prob(C \mid W \intersect S)
+    \\
+    &amp;= \Prob(W) \cdot 0.183 \cdot 13x
+    \\
+    \Prob(S^c \intersect W \intersect C)
+    &amp;= \Prob(W) \cdot \Prob(S^c \mid W) \cdot \Prob(C \mid W \intersect S^c)
+    \\
+    &amp;= \Prob(W) \cdot 0.817 \cdot x
+\end{aligned}
+\]</span></p>
+<p>After factoring out <span class="math inline">\(x \cdot \Prob(W)\)</span>, the arithmetic is now easy:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># b) After factoring out a constant from numerator and denominator we are left with</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.183</span> <span class="sc">*</span> <span class="dv">13</span> <span class="sc">/</span> ( <span class="fl">0.183</span> <span class="sc">*</span> <span class="dv">13</span> <span class="sc">+</span> .<span class="dv">817</span> <span class="sc">*</span> <span class="dv">1</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.744368</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># c) After factoring out a constant from numerator and denominator we are left with</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.231</span> <span class="sc">*</span> <span class="dv">23</span> <span class="sc">/</span> ( <span class="fl">0.231</span> <span class="sc">*</span> <span class="dv">23</span> <span class="sc">+</span> .<span class="dv">769</span> <span class="sc">*</span> <span class="dv">1</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8735613</code></pre>
+</div>
+</div>
+<p>Note: Another approach to part b is to consider the sample space to be only the women. If you do it that way, you can avoid mentioning any probabilities involving <span class="math inline">\(W\)</span>. (In the end, they factor out anyway.) Of course, you can do a similar thing for the men.</p>
+</div>
+<!-- end solution -->
+<div id="exr-bad-parts-by-day" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.11 </strong></span><strong>Parts by day</strong></p>
+<p>A manufacturing plant has kept records that show that the number of parts produced each day and on the proportion of parts that are defective.</p>
+<div class="enumerate">
+<ol type="1">
+<li>If you order a part from this company, what is the probability that it was produced on a Monday or a Thursday?</li>
+<li>If you order a part from this company and it is defective, what is the probability that it was produced on a Monday or a Thursday?</li>
+<li>If you order a part from this company and it functions properly, what is the probability that it was produced on a Monday or Thursday?</li>
+</ol>
+</div>
+<!-- end enumerate -->
+<p>Express your answers to 3 significant digits and avoid internal rounding.</p>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span>You may find a tree diagram useful here to visualize these probabilities.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part a</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>.<span class="dv">20</span> <span class="sc">+</span> .<span class="dv">27</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.47</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part b: P( Wed-Thur | defective ) = P( Wed-Thur and defective ) / P(defective)</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> .<span class="dv">20</span> <span class="sc">*</span> .<span class="dv">02</span> <span class="sc">+</span>       <span class="co"># Monday and defective</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>     .<span class="dv">27</span> <span class="sc">*</span> .<span class="dv">03</span>         <span class="co"># Thursday and defective</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> .<span class="dv">25</span> <span class="sc">*</span> .<span class="dv">015</span> <span class="sc">+</span>      <span class="co"># Tuesday and defective</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>     .<span class="dv">28</span> <span class="sc">*</span> .<span class="dv">01</span>         <span class="co"># Wednesday and defective </span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>a <span class="sc">/</span> (a <span class="sc">+</span> b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6487936</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part c: P( Wed-Thur | good ) = P( Wed-Thur and good ) / P(good)</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> .<span class="dv">20</span> <span class="sc">*</span> .<span class="dv">98</span> <span class="sc">+</span>       <span class="co"># Monday and good</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>     .<span class="dv">27</span> <span class="sc">*</span> .<span class="dv">97</span>         <span class="co"># Thursday and good</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> .<span class="dv">25</span> <span class="sc">*</span> .<span class="dv">985</span> <span class="sc">+</span>      <span class="co"># Tuesday and good</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>     .<span class="dv">28</span> <span class="sc">*</span> .<span class="dv">99</span>         <span class="co"># Wednesday and good </span></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>c <span class="sc">/</span> (c <span class="sc">+</span> d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4666021</code></pre>
+</div>
+</div>
+</div>
+<!-- end solution -->
+<!-- % \begin{problem} -->
+<!-- % %% modified from -->
+<!-- % %% http://allendowney.blogspot.com/2011/10/my-favorite-bayess-theorem-problems.html -->
+<!-- % %% Note: not a Bayes Theorem problem -->
+<!-- % John had a twin brother who died at birth.   -->
+<!-- % What is the probability that John was an identical twin? -->
+<!-- %  -->
+<!-- % To answer this one, you need some background information.  -->
+<!-- % According to a Wikipedia article on twins:   -->
+<!-- % ``Twins are estimated to be approximately 1.9% of the world population,  -->
+<!-- % with monozygotic [identical] twins making up 0.15% of the total population---and 8%  -->
+<!-- % of all twins.'' -->
+<!-- % \end{problem} -->
+<div id="exr-acceptanceSampling" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.12 </strong></span><strong>Acceptance sampling</strong></p>
+<p>An engineer orders a shipment of 100 identical parts.<br>
+Before accepting the shipment, he tests three of them.<br>
+If the they all test good, he accepts the entire shipment.<br>
+If any of them tests bad, he rejects the shipment.</p>
+<p>Given the good price he has gotten on these parts, the engineer would be satisfied if at least 95%</p>
+<div class="enumerate">
+<ol type="1">
+<li>Suppose that there are 5 bad parts in the shipment. What is the probability that the shipment is rejected (even though the engineer would actually have been satisfied with the shipment)?</li>
+<li>Suppose that there are 10 bad parts in the shipment. What is the probability that the shipment is accepted (even though the engineer would not be satisfied with this shipment)?</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="enumerate">
+<span class="proof-title"><em>Solution</em>. </span>
+<ol type="1">
+<li>The engineer will accept if all three are among the 95 good parts. The probability of accepting is</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="dv">95</span><span class="sc">/</span><span class="dv">100</span> <span class="sc">*</span> <span class="dv">94</span><span class="sc">/</span><span class="dv">99</span> <span class="sc">*</span> <span class="dv">93</span><span class="sc">/</span><span class="dv">98</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8559988</code></pre>
+</div>
+</div>
+<p>The probability of rejecting is</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="dv">95</span><span class="sc">/</span><span class="dv">100</span> <span class="sc">*</span> <span class="dv">94</span><span class="sc">/</span><span class="dv">99</span> <span class="sc">*</span> <span class="dv">93</span><span class="sc">/</span><span class="dv">98</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1440012</code></pre>
+</div>
+</div>
+<ol type="1">
+<li>Now we accept if all three are among the 90 good parts. The probability of accepting is</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="dv">90</span><span class="sc">/</span><span class="dv">100</span> <span class="sc">*</span> <span class="dv">89</span><span class="sc">/</span><span class="dv">99</span> <span class="sc">*</span> <span class="dv">88</span><span class="sc">/</span><span class="dv">98</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7265306</code></pre>
+</div>
+</div>
+</div>
+<!-- end enumerate -->
+<p>We see that this is not the most effective test. It could be improved by taking a larger sample, and similar arithmetic could be used to determine how well a new protocol works (perhaps one that takes a larger sample).</p>
+</div>
+<!-- end solution -->
+<div id="exr-MM" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.13 </strong></span><strong>M&amp;M’s</strong></p>
+<!-- %% http://allendowney.blogspot.com/2011/10/my-favorite-bayess-theorem-problems.html -->
+<p>The blue M&amp;M was introduced in 1995. Before then, the color mix in a bag of plain M&amp;Ms was 30% Brown, 20% Yellow, 20% Red, 10% Green, 10% Orange, 10% Tan. Afterward it was 24% Blue , 20% Green, 16% Orange, 14% Yellow, 13% Red, 13% Brown.</p>
+<p>A friend of mine has two bags of M&amp;Ms, and he tells me that one is from 1994 and one from 1996. He won’t tell me which is which, but he gives me one M&amp;M from each bag. One is yellow and one is green. What is the probability that the yellow M&amp;M came from the 1994 bag?</p>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span>Let’s use the following notation for events related to this problem:</p>
+<!-- begin itemize -->
+<div class="itemize">
+<ol type="1">
+<li><span class="math inline">\(G_4 =\)</span> green from 1994 bag</li>
+<li><span class="math inline">\(G_6 =\)</span> green from 1996 bag</li>
+<li><span class="math inline">\(Y_4 =\)</span> yellow from 1994 bag</li>
+<li><span class="math inline">\(Y_6 =\)</span> yellow from 1996 bag</li>
+</ol>
+</div>
+<!-- end itemize -->
+<p>Then our question becomes <span class="math display">\[
+\begin{aligned}
+\Prob( Y_4 \tand G_6 \mid
+       (Y_4 \tand G_6) \tor (Y_6 \tand G_4) )
+       &amp; =
+\frac{\Prob( Y_4 \tand G_6 ) }
+     {\Prob( Y_4 \tand G_6) \tor (Y_6 \tand G_4)}
+\\
+&amp; = \frac{\Prob( Y_4 \tand G_6 ) }
+     {\Prob(Y_4 \tand G_6) + \Prob(Y_6 \tand G_4)}
+\end{aligned}
+\]</span></p>
+<p>The individual probabilities can be worked out as <span class="math display">\[
+\Prob(Y_4 \tand
+G_6) = \Prob(Y_4) \cdot \Prob(G_6 \mid Y_4) = .20 \cdot .20 = 0.04
+\]</span></p>
+<p><span class="math display">\[
+\Prob(Y_6 \tand G_4) = \Prob(Y_6) \cdot \Prob(G_4 \mid Y_6) = .14
+\cdot .10 = 0.014
+\]</span></p>
+<p>Putting this all together we get</p>
+<p>% O: .20 Y, .10 G % N: .14 Y, .20 G</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>.<span class="dv">20</span> <span class="sc">*</span> .<span class="dv">20</span> <span class="sc">/</span> (.<span class="dv">20</span> <span class="sc">*</span> .<span class="dv">20</span> <span class="sc">+</span> .<span class="dv">14</span> <span class="sc">*</span> .<span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7407407</code></pre>
+</div>
+</div>
+<p>A tree diagram could be used to depict these probabilities as well.</p>
+</div>
+<!-- end solution -->
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/cigarettes-cartoon.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>This has actually been done a couple of times in history, including once by mathematician John Kerrich while he was a prisoner of war during World War II.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./02-numerical.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Numerical Summaries</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./04-random-variables.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Random Variables</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

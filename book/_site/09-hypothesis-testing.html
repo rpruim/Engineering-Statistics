@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics for the Physical Sciences and Engineering - 9&nbsp; Hypothesis Testing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./10-more-examples.html" rel="next">
+<link href="./08-nonlinear.html" rel="prev">
+<link href="./cover.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+</head><body class="nav-sidebar docked">$$
+\def\reals{\mathbb{R}}
+\def\card#1{| #1 |}
+\def\mean{\overline}
+\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
+\def\Prob{\operatorname{Prob}}
+\def\tand{\operatorname{and}}
+\def\tor{\operatorname{or}}
+\def\tnot{\operatorname{not}}
+\def\E{{\operatorname E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\union{\cup}
+\def\intersect{\cap}
+\def\Unif{\mathsf{Unif}}
+\def\Beta{\mathsf{Beta}}
+\def\Rayleigh{\mathsf{Rayleigh}}
+\def\Exp{\mathsf{Exp}}
+\def\Norm{\mathsf{Norm}}
+\def\Tri{\mathsf{Tri}}
+\def\Gamm{\mathsf{Gamma}}
+\def\Pois{\mathsf{Pois}}
+\def\Binom{\mathsf{Binom}}
+\def\Weibull{\mathsf{Weibull}}
+\def\Tdist{\mathsf{T}}
+\def\Fdist{\mathsf{F}}
+\def\Chisq{\mathsf{Chisq}}
+\def\boolval#1{[\![ #1 ]\!]}
+\def\simiid{\stackrel{\mathrm{iid}{\sim}}}
+
+\def\sfrac#1#2{{#1}/{#2}}
+\def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+\def\Partial#1#2{\frac{\partial}{\partial #2} #1}
+
+\def\myindex#1{\relax}
+$$
+
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="book.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for the Physical Sciences and Engineering</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Pruim-Stat-for-Phys-Sci-and-Engr.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-chap0.html" class="sidebar-item-text sidebar-link">Where do numbers come from?</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-graphical.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Graphical Summaries of Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-numerical.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Numerical Summaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-probability.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Probability</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-random-variables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-transformations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformation and Combinations of Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-propagation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Propagation of Uncertainty</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-simple-linear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-nonlinear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Beyond Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-hypothesis-testing.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-more-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">More Examples</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#experimental-design-in-statistics" id="toc-experimental-design-in-statistics" class="nav-link active" data-scroll-target="#experimental-design-in-statistics"><span class="toc-section-number">9.1</span>  Experimental Design in Statistics</a></li>
+  <li><a href="#coins-and-cups" id="toc-coins-and-cups" class="nav-link" data-scroll-target="#coins-and-cups"><span class="toc-section-number">9.2</span>  Coins and Cups</a></li>
+  <li><a href="#a-general-framework" id="toc-a-general-framework" class="nav-link" data-scroll-target="#a-general-framework"><span class="toc-section-number">9.3</span>  A General Framework</a>
+  <ul class="collapse">
+  <li><a href="#the-four-step-process" id="toc-the-four-step-process" class="nav-link" data-scroll-target="#the-four-step-process"><span class="toc-section-number">9.3.1</span>  The Four Step Process</a></li>
+  <li><a href="#interpret-the-results." id="toc-interpret-the-results." class="nav-link" data-scroll-target="#interpret-the-results.">4. Interpret the results.</a></li>
+  <li><a href="#the-lady-tasting-tea-revisted" id="toc-the-lady-tasting-tea-revisted" class="nav-link" data-scroll-target="#the-lady-tasting-tea-revisted"><span class="toc-section-number">9.3.2</span>  The Lady Tasting Tea, Revisted</a></li>
+  </ul></li>
+  <li><a href="#statistical-significance" id="toc-statistical-significance" class="nav-link" data-scroll-target="#statistical-significance"><span class="toc-section-number">9.4</span>  Statistical Significance</a></li>
+  <li><a href="#t-tests" id="toc-t-tests" class="nav-link" data-scroll-target="#t-tests"><span class="toc-section-number">9.5</span>  T-tests</a>
+  <ul class="collapse">
+  <li><a href="#the-1-sample-t-test" id="toc-the-1-sample-t-test" class="nav-link" data-scroll-target="#the-1-sample-t-test"><span class="toc-section-number">9.5.1</span>  The 1-sample t-test</a></li>
+  <li><a href="#the-paired-2-sample-t-test" id="toc-the-paired-2-sample-t-test" class="nav-link" data-scroll-target="#the-paired-2-sample-t-test"><span class="toc-section-number">9.5.2</span>  The paired 2-sample t-test</a></li>
+  <li><a href="#the-unpaired-2-sample-t-test" id="toc-the-unpaired-2-sample-t-test" class="nav-link" data-scroll-target="#the-unpaired-2-sample-t-test"><span class="toc-section-number">9.5.3</span>  The (unpaired) 2-sample t-test</a></li>
+  <li><a href="#testing-model-coefficients" id="toc-testing-model-coefficients" class="nav-link" data-scroll-target="#testing-model-coefficients"><span class="toc-section-number">9.5.4</span>  Testing Model Coefficients</a></li>
+  </ul></li>
+  <li><a href="#sec-ci-ht-duality" id="toc-sec-ci-ht-duality" class="nav-link" data-scroll-target="#sec-ci-ht-duality"><span class="toc-section-number">9.6</span>  Connection to Confidence Intervals</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">9.7</span>  Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-hypothesis-testing" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>This chapter is concerned with statistical hypothesis testing, and how we can use it to make inferences and draw conclusions from data about questions of scientific interest.</p>
+<section id="experimental-design-in-statistics" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="experimental-design-in-statistics"><span class="header-section-number">9.1</span> Experimental Design in Statistics</h2>
+<p>Before we begin to talk about hypothesis testing, let’s review the general process of designing and carrying out a statistical experiment.</p>
+<div class="enumerate">
+<ol>
+<li><p>Determine the question of interest.</p>
+<p>Just what is it we want to know? It may take some effort to make a vague idea precise. The precise questions may not exactly correspond to our vague questions, and the very exercise of stating the question precisely may modify our question. Sometimes we cannot come up with any way to answer the question we really want to answer, so we have to live with some other question that is not exactly what we wanted but is something we can study and will (we hope) give us some information about our original question.</p></li>
+<li><p>Determine the <strong>population</strong>.</p>
+<p>Just who or what do we want to know about? For example, are we only interested in one specific person, or women in general, or all women, or all people? Or, are we interested in the energy efficiency of one particular device, or all the machines in a certain factory, or all machines of a certain type, or all machines of a certain class, or all factories in a certain industry?</p></li>
+<li><p>Select <strong>measurements</strong>.</p>
+<p>We are going to need some data. We get our data by making some measurements. These might be physical measurements with some device (like a ruler or a scale). But there are other sorts of measurements too, like the answer to a question on a form. Sometimes it is tricky to figure out just what to measure. (How do we measure happiness or intelligence, for example?) Just how we do our measuring will have important consequences for the subsequent statistical analysis. The recorded values of these measurements are called <strong>variables</strong> (because the values vary from one individual to another).</p></li>
+<li><p>Determine the <strong>sample</strong>.</p>
+<p>Usually we cannot measure every individual in our population; we have to select some to measure. But how many and which ones? These are important questions that must be answered. Generally speaking, bigger is better, but it is also more expensive. Moreover, no size is large enough if the sample is selected inappropriately.</p>
+<p>For example, if we wanted to draw conclusions about energy use across a whole industry, we would have to be careful not to sample from just a single factory, or a single type of manufacturing device. If we wanted to draw conclusions about all people, we would have to be careful not to study only male college students. The sample should be a random selection from the whole population (or as close as we can get to that standard).</p></li>
+<li><p>Make and record the measurements.</p>
+<p>Once we have the design figured out, we have to do the legwork of data collection. This can be a time-consuming and tedious process. A study of public opinion may require many thousands of phone calls or personal interviews. In a laboratory setting, each measurement might be the result of a carefully performed laboratory experiment.</p></li>
+<li><p>Organize the data.</p>
+<p>Once the data have been collected, it is often necessary or useful to organize them. Data are typically stored in spreadsheets or in other formats that are convenient for processing with statistical packages. Very large data sets are often stored in databases.</p>
+<p>Part of the organization of the data may involve producing graphical and numerical summaries of the data. These summaries may give us initial insights into our questions or help us detect errors that may have occurred to this point.</p></li>
+<li><p>Draw conclusions from data.</p>
+<p>Once the data have been collected, organized, and analyzed, we need to reach a conclusion. What is the answer to our scientific question? Is our idea or hypothesis about the way things work incorrect, or do the data support it? How sure are we about these conclusions?</p></li>
+<li><p>Produce a report.</p>
+<p>Typically the results of a statistical study are reported in some manner. This may be as a refereed article in an academic journal, as an internal report to a company, or as a solution to a problem on a homework assignment. These reports may themselves be further distilled into press releases, newspaper articles, advertisements, and the like. The mark of a good report is that it provides the essential information about each of the steps of the study.</p></li>
+</ol>
+</div>
+<!-- end enumerate -->
+<p>At this point, you may be wondering who the innovative scientist was and what the results of the experiment were. The scientist was R. A. Fisher, who first described this situation as a pedagogical example in his 1925 book on statistical methodology <span class="citation" data-cites="Fisher:1925:Methods">Fisher (<a href="references.html#ref-Fisher:1925:Methods" role="doc-biblioref">1925</a>)</span>. Fisher developed statistical methods that are among the most important and widely used methods to this day, and most of his applications were biological. </p>
+</section>
+<section id="coins-and-cups" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="coins-and-cups"><span class="header-section-number">9.2</span> Coins and Cups</h2>
+<p>You might also be curious about how the experiment came out. How many cups of tea were prepared? How many did the woman correctly identify? What was the conclusion?</p>
+<p>Fisher never says. In his book he is interested in the method, not the particular results. But let’s suppose we decide to test the lady with ten cups of tea.<br>
+We’ll flip a coin to decide which way to prepare the cups.<br>
+If we flip a head, we will pour the milk in first; if tails, we put the tea in first. Then we present the ten cups to the lady and have her state which ones she thinks were prepared each way.</p>
+<p>It is easy to give her a score (9 out of 10, or 7 out of 10, or whatever it happens to be). It is trickier to figure out what to do with her score. Even if she is just guessing and has no idea, she could get lucky and get quite a few correct – maybe even all 10. But how likely is that?</p>
+<p>Here’s one way we could find out. Suppose I flip a coin ten times and record the pattern of heads and tails. Your job is to guess the sequence of heads and tails. To make it more interesting, we’ll get a lot of other people to guess too and see how everyone does.</p>
+<p><span class="math inline">\(\vdots\)</span></p>
+<p>If we compare all of the guessers, we will undoubtedly see that some did better and others worse.</p>
+<p>Now let’s suppose the lady gets 9 out of 10 correct. That’s not perfect, but it is better than we would expect for someone who was just guessing. On the other hand, it is not impossible to get 9 out of 10 just by guessing. So here is Fisher’s great idea: Let’s figure out how hard it is to get 9 out of 10 by guessing. If it’s not so hard to do, then perhaps that’s just what happened, so we won’t be too impressed with the lady’s tea tasting ability. On the other hand, if it is really unusual to get 9 out of 10 correct by guessing, then we will have some evidence that she must be able to tell something.</p>
+<p>But how do we figure out how unusual it is to get 9 out of 10 just by guessing? We’ll learn another method later, but for now, let’s just flip a bunch of coins and keep track. If the lady is just guessing, she might as well be flipping a coin.</p>
+<p>So here’s the plan. We’ll flip 10 coins. We’ll call the heads correct guesses and the tails incorrect guesses. Then we’ll flip 10 more coins, and 10 more, and 10 more, and . That would get pretty tedious. Fortunately, computers are good at tedious things, so we’ll let the computer do the flipping for us using a tool in the <strong><code>mosaic</code></strong> package.</p>
+<p>The <code>rflip()</code> function can flip one coin</p>
+<div class="cell" data-hash="09-hypothesis-testing_cache/html/flip1coin_b76fcde0abaca53ebc11e14b4bb4f66e">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rflip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Flipping 1 coin [ Prob(Heads) = 0.5 ] ...
+
+H
+
+Number of Heads: 1 [Proportion Heads: 1]</code></pre>
+</div>
+</div>
+<p>or a number of coins</p>
+<div class="cell" data-hash="09-hypothesis-testing_cache/html/flip10coins_472e140dbf986d5ec1fa958be332bd2c">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rflip</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Flipping 10 coins [ Prob(Heads) = 0.5 ] ...
+
+T H T T H T T T H T
+
+Number of Heads: 3 [Proportion Heads: 0.3]</code></pre>
+</div>
+</div>
+<p>and show us the results.</p>
+<p>Typing <code>rflip(10)</code> a bunch of times is almost as tedious as flipping all those coins. But it is not too hard to tell R to <code>do()</code> this a bunch of times.</p>
+<div class="cell" data-hash="09-hypothesis-testing_cache/html/flip2_24081fba7d5d5d6214a8f3d6c10fbbe8">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">2</span>) <span class="sc">*</span> <span class="fu">rflip</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["n"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["heads"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["tails"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["prop"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"10","2":"5","3":"5","4":"0.5"},{"1":"10","2":"7","3":"3","4":"0.7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Let’s get R to <code>do()</code> it for us 10,000 times and make a table and a histogram of the results.</p>
+<div class="cell">
+
+</div>
+<div class="cell" data-hash="09-hypothesis-testing_cache/html/flip4_0e5d2f1654f9e61faf687a359ef2ae3c">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>RandomLadies <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">10000</span>) <span class="sc">*</span> <span class="fu">rflip</span>(<span class="dv">10</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> heads, <span class="at">data =</span> RandomLadies, <span class="at">binwidth =</span> <span class="dv">1</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/flip4-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span> heads, <span class="at">data =</span> RandomLadies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>heads
+   0    1    2    3    4    5    6    7    8    9   10 
+   5  102  467 1203 2048 2470 2035 1140  415  108    7 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span> heads, <span class="at">data =</span> RandomLadies, <span class="at">format =</span> <span class="st">'percent'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>heads
+    0     1     2     3     4     5     6     7     8     9    10 
+ 0.05  1.02  4.67 12.03 20.48 24.70 20.35 11.40  4.15  1.08  0.07 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tally</span>( <span class="sc">~</span> heads, <span class="at">data =</span> RandomLadies, <span class="at">format =</span> <span class="st">'proportion'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>heads
+     0      1      2      3      4      5      6      7      8      9     10 
+0.0005 0.0102 0.0467 0.1203 0.2048 0.2470 0.2035 0.1140 0.0415 0.0108 0.0007 </code></pre>
+</div>
+</div>
+<p>You might be surprised to see that the number of correct guesses is exactly 5 (half of the 10 tries) only 25% of the time. But most of the results are quite close to 5 correct. 67% of the results are 4, 5, or 6, for example. And 90% of the results are between 3 and 7 (inclusive). But getting 8 correct is a bit unusual, and getting 9 or 10 correct is even more unusual.</p>
+<p>So what do we conclude? It is possible that the lady could get 9 or 10 correct just by guessing, but it is not very likely (it only happened in about 1.2% of our simulations). So <em>one of two things must be true</em>:</p>
+<div class="itemize">
+<ol>
+<li>The lady got unusually “lucky”, or</li>
+<li>The lady is not just guessing.</li>
+</ol>
+</div>
+<!-- end itemize -->
+<p>Although Fisher did not say how the experiment came out, others have reported that the lady correctly identified all 10 cups! <span class="citation" data-cites="salsburg">Salsburg (<a href="references.html#ref-salsburg" role="doc-biblioref">2001</a>)</span></p>
+<p>This same reasoning can be applied to answer a wide range of questions that have a similar form. For example, the question of whether dogs can smell cancer could be answered essentially the same way (although it would be a bit more involved than preparing tea and presenting cups to the Lady).</p>
+</section>
+<section id="a-general-framework" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="a-general-framework"><span class="header-section-number">9.3</span> A General Framework</h2>
+<p>In statistical hypothesis testing, we can follow the following general procedure. We usually begin with some idea about how the process we are studying should work. For example, we might have a hunch that highway bridges with higher traffic flows are in poorer condition, and therefore merit more frequent repairs. For statistical hypothesis testing, we must translate that “hunch” into a <em>testable</em> <strong>null hypothesis</strong>, often called <span class="math inline">\(H_0\)</span>: one that can be demonstrated to be very unlikely in light of our data. In the case of the bridges, a testable null hypothesis might be that bridge condition <em>does not</em> depend on traffic flow. Then, if our data shows a strong apparent relationship between condition and traffic, we have evidence to <em>reject</em> the null hypothesis, and the data support the idea that there is some relationship between condition and traffic.</p>
+<p>Null hypothesis are usually “boring,” no-result hypotheses: there is no pattern; there is no relationship between the variables of interest; there is no difference between the two samples of interest. If we can reject the null hypothesis in a certain case, we have some evidence – but <em>NOT</em> proof – that there <em>is</em> an interesting pattern in our data, and thus in the population we are trying to draw conclusions about.</p>
+<p>The alternative to the null hypothesis is called the alternative hypothesis, often called <span class="math inline">\(H_1\)</span>. The alternative hypothesis, stated most generally, is usually some form of “the null hypothesis is not true” – so there IS a pattern in the data, or a difference between the samples, etc.</p>
+<div class="description">
+<ul>
+<li>[hypothesis] A statement that can be true or false.</li>
+<li>[statistical hypothesis] A hypothesis about a parameter or parameters.</li>
+</ul>
+</div>
+<!-- end description -->
+<p>In our bridge example, a statistical null hypothesis <span class="math inline">\(H_0\)</span> might be: the true slope of the regression of condition as a function of traffic is 0.</p>
+<div id="exm-null-hypotheses" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.1 </strong></span>The following are examples of null hypotheses.</p>
+<div class="enumerate">
+<ol type="a">
+<li><span class="math inline">\(H_0: \mu = 0\)</span>. (The population mean is 0.)</li>
+<li><span class="math inline">\(H_0: \beta_1=0\)</span>. (The “true” slope is 0 – assuming a model like <span class="math inline">\(\E(Y) = \beta_0 + \beta_1 x\)</span>.)<br>
+</li>
+<li><span class="math inline">\(H_0: \beta_1 = \beta_2\)</span> (Two parameters in the model are equal.)</li>
+<li><span class="math inline">\(H_0: \beta_2 = \beta_3 = 0\)</span> (Two parameters in the model are both equal to 0.)</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end examples -->
+<section id="the-four-step-process" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="the-four-step-process"><span class="header-section-number">9.3.1</span> The Four Step Process</h3>
+<p>Hypothesis testing generally follows a four-step process.</p>
+<section id="state-the-null-h_0-and-alternative-h_1-hypotheses." class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="state-the-null-h_0-and-alternative-h_1-hypotheses.">1. State the null (<span class="math inline">\(H_0\)</span>) and alternative (<span class="math inline">\(H_1\)</span>) hypotheses.</h4>
+<p>The null hypothesis is on trial and innocent until proven guilty. We will render one of two verdicts: Reject the null hypothesis (guilty) or do not reject the null hypothesis (not guilty). *Important! We can never <strong>accept</strong> or <strong>prove</strong> either hypothesis – only reject the null (because it doesn’t seem compatible with the data), or fail to reject the null (since it appears plausibly compatible with teh data).</p>
+</section>
+<section id="compute-a-test-statistic." class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="compute-a-test-statistic.">2. Compute a test statistic.</h4>
+<p>For a statistical hypothesis test, all the evidence against the null hypothesis must be summarized in a single number called the test statistic. It is a statistic because it is a number computed from the data. It is called a test statistic because we are using it to do hypothesis testing.</p>
+</section>
+<section id="determine-the-p-value." class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="determine-the-p-value.">3. Determine the p-value.</h4>
+<p>The p-value is a probability: <em>Assuming</em> the null hypothesis is true, how likely are we to get at least as much evidence against it as we have in our data (i.e., <em>a test statistic at least as unusual as the one observed</em>) just by random chance?</p>
+</section>
+</section>
+<section id="interpret-the-results." class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="interpret-the-results.">4. Interpret the results.</h3>
+<p>If the p-value is small, then one of two things is true:</p>
+<ol type="a">
+<li>The null hypothesis is true and something very unlikely occurred in our sample, or</li>
+<li>The null hypothesis is false, so it is unsurprising that our observed data yield statistics that seem unlikely based on that (incorrect, untrue) hypothesis.</li>
+</ol>
+<p>For this reason we consider small p-values to provide evidence against the null hypothesis.</p>
+</section>
+<section id="the-lady-tasting-tea-revisted" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="the-lady-tasting-tea-revisted"><span class="header-section-number">9.3.2</span> The Lady Tasting Tea, Revisted</h3>
+<div id="exm-lady-binom" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.2 </strong></span>For the lady tasting tea, this process looks like</p>
+<section id="state-hypotheses" class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="state-hypotheses">1. State Hypotheses</h5>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: The probability of being correct is <span class="math inline">\(0.5\)</span> (she’s just guessing).</p></li>
+<li><p><span class="math inline">\(H_a\)</span> The probability of being correct is larger than <span class="math inline">\(0.5\)</span> (she can do better than someone who just guesses).</p></li>
+</ul>
+</section>
+<section id="compute-the-test-statistic" class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="compute-the-test-statistic">2. Compute the test statistic</h5>
+<ul>
+<li><span class="math inline">\(x = 9\)</span> (of <span class="math inline">\(n = 10\)</span>) were correct.</li>
+</ul>
+</section>
+<section id="determine-the-p-value" class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="determine-the-p-value">3. Determine the p-value</h5>
+<p>Based on our empirical method, we estimate a p-value of</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop</span>( <span class="sc">~</span> (heads <span class="sc">&gt;=</span> <span class="dv">9</span>), <span class="at">data =</span> RandomLadies)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop_TRUE 
+   0.0115 </code></pre>
+</div>
+</div>
+<p>The probabilities for the number of correct guesses can be worked out theoretically as well. The resulting distribution is called a <strong>binomial</strong> distribution. As with other distributions we have seen, R includes the functions <code>dbinom()</code>, <code>pbinom()</code>, <code>qbinom()</code>, and <code>rbinom()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dist</span>(<span class="st">"binom"</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>) <span class="co"># size = # of flips; prob = probability of heads</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">9</span>, <span class="dv">10</span>, .<span class="dv">5</span>) <span class="sc">+</span> <span class="fu">dbinom</span>(<span class="dv">10</span>, <span class="dv">10</span>, .<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01074219</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">8</span>, <span class="dv">10</span>, .<span class="dv">5</span>)                   <span class="co"># Note: P(X &gt;= 9) = 1 - P(X &lt;= 8)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01074219</code></pre>
+</div>
+</div>
+</section>
+<section id="interpret-the-p-value." class="level5 unnumbered">
+<h5 class="unnumbered anchored" data-anchor-id="interpret-the-p-value.">4. Interpret the p-value.</h5>
+<p>How small is “small”, and how small does a p-value have to be before we reject the null hypothesis? Often, a (usually called <span class="math inline">\(\alpha\)</span>) of 0.05 is used. Sometimes <span class="math inline">\(\alpha = 0.01\)</span> is used instead. Basically, this corresponds to a 5% chance of seeing results as extreme as those found in our data, were the null hypothesis really true. If we want to be more conservative about our judgement (not rejecting the null hypothesis unless the evidence in the data is stronger against it), we could use a smaller <span class="math inline">\(\alpha\)</span> value.</p>
+<p>It is also common for researchers to simply report the p-values they obtain from their analysis, allowing readers to draw conclusions on their own.</p>
+</section>
+</div>
+<!-- end example -->
+<!-- % If talking about the results of a statistical hypothesis test in a report, the following language may be useful.  It relates statements about the strength of the evidence found in the data with p-values (approximately -- there are no universal standards and rules here, just guidelines). -->
+<div id="exm-binom-test" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.3 </strong></span>This situation is so common that there is a function to do the calculations for us. We just need to provide the values of <span class="math inline">\(x\)</span> and <span class="math inline">\(n\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="at">x =</span> <span class="dv">9</span>, <span class="at">n =</span> <span class="dv">10</span>)           <span class="co"># default test is 2-sided</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+
+data:  9 out of 10
+number of successes = 9, number of trials = 10, p-value = 0.02148
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.5549839 0.9974714
+sample estimates:
+probability of success 
+                   0.9 </code></pre>
+</div>
+</div>
+<p>The output above doesn’t match what we obtained in <a href="#exm-lady-binom">Example&nbsp;<span>9.2</span></a> because the alternative hypothesis is different. It accepts both low number of correct identifications (0 or 1) and high numbers (9 or 10) as evidence against the null hypothesis. If we want a one-sided p-value, we just need to ask:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="at">x =</span> <span class="dv">9</span>, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+
+data:  9 out of 10
+number of successes = 9, number of trials = 10, p-value = 0.01074
+alternative hypothesis: true probability of success is greater than 0.5
+95 percent confidence interval:
+ 0.6058367 1.0000000
+sample estimates:
+probability of success 
+                   0.9 </code></pre>
+</div>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 71%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Approximate p-value</th>
+<th>Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(&gt; 0.10\)</span></td>
+<td>No convincing evidence against the null hypothesis</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(0.05-0.10\)</span></td>
+<td>Weak evidence against the null hypothesis</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(0.01-0.05\)</span></td>
+<td>Some evidence against the null hypothesis</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(&lt;0.01\)</span></td>
+<td>Strong evidence against the null hypothesis</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(&lt;0.001\)</span></td>
+<td>Very strong evidence against the null hypothesis</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- end example -->
+</section>
+</section>
+<section id="statistical-significance" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="statistical-significance"><span class="header-section-number">9.4</span> Statistical Significance</h2>
+<p>The word “significant” has a special meaning in statistics. If we say that a difference or relationship between variables is significant, that means that we have applied a hypothesis test, and have <em>failed</em> to reject the null hypothesis – in other words, we have data that provides some evidence against the null hypothesis, and supporting the alternative.</p>
+<p>So, a pattern strong enough cause us to reject a null hypothesis of “no difference” or “no pattern” or “no relationship” is called a <strong>statistically significant</strong> difference, pattern, or relationship. Differences or relationships may fail to be statistically significant if they are small or weak, if they are masked by underlying variability, or if there is too little data. Good studies will collect enough data and work to reduce variability (if that is possible) in order to have a reasonable expectation of detecting differences if they are large enough to be scientifically interesting.</p>
+</section>
+<section id="t-tests" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="t-tests"><span class="header-section-number">9.5</span> T-tests</h2>
+<!-- \authNote{Check the examples here.  Seems to be some mixing of two examples through each other.} -->
+<p>Many hypothesis tests are conducted based on a <span class="math inline">\(t\)</span>-distribution, and so they are called “t-tests”. This is because, according to the Central Limit Theorem, the sampling distributions of most of our statistics (parameter estimates calculated from data) follow Normal distributions. But just as we did when computing confidence intervals, we’ll always have to use the t-distribution rather than the normal distribution, since we don’t know <span class="math inline">\(\sigma\)</span> (the true population standard deviation), and since our sample size is finite. These t-tests all use a similar sort of test statistic:</p>
+<p><span class="math display">\[
+t = \frac{\mbox{estimate} - \mbox{hypothesized value}}{\mbox{standard error}}
+\]</span></p>
+<p>The numerator tells us that the more the estimate and the hypothesized value differ, the stronger the evidence. The denominator tells us that differences mean more when the standard deviation is small than when the standard deviation is large.</p>
+<p>The test statistic is converted to a p-value by comparing it to the t-distribution with appropriate degrees of freedom. For linear models, this is the degrees of freedom associated with the residual standard error. If considering some statistic (say, the mean value) for a single variable, the degrees of freedom will be n-1, where n is the sample size.</p>
+<section id="the-1-sample-t-test" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="the-1-sample-t-test"><span class="header-section-number">9.5.1</span> The 1-sample t-test</h3>
+<p>The 1-sample t-test tests the null hypothesis</p>
+<div class="itemize">
+<ul>
+<li><span class="math inline">\(H_0: \mu = \mu_0\)</span>, vs.</li>
+<li><span class="math inline">\(H_a: \mu \neq 0\)</span>.</li>
+</ul>
+</div>
+<!-- end itemize -->
+<p>That is, it tests whether there is evidence that the mean of some population (<span class="math inline">\(\mu\)</span>) is different from some hypothesized value (<span class="math inline">\(\mu_0\)</span>) – often <span class="math inline">\(\mu_0 = 0\)</span>.</p>
+<div id="exm-weight-loss" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.4 </strong></span>Let’s look at some data on weight loss programs. In this data set, there were two groups. One group received a monetary incentive if they lost weight while following a weight loss program. The controls did not receive a monetary incentive, but followed the same program otherwise. Our null hypothesis is that the control participants would not lose weight – that the true weight loss without incentives would average 0 pounds. Let’s see whether on average the controls lost weight:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Stat2Data)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(WeightLossIncentive)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>Controls <span class="ot">&lt;-</span> WeightLossIncentive <span class="sc">|&gt;</span> <span class="fu">filter</span>(Group <span class="sc">==</span> <span class="st">"Control"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>( <span class="sc">~</span> WeightLoss, <span class="at">data =</span> Controls )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["response"],"name":[1],"type":["chr"],"align":["left"]},{"label":["min"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Q1"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["median"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Q3"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[9],"type":["int"],"align":["right"]},{"label":["missing"],"name":[10],"type":["int"],"align":["right"]}],"data":[{"1":"WeightLoss","2":"-17","3":"-2","4":"3","5":"11.25","6":"20","7":"3.921053","8":"9.107785","9":"19","10":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>( <span class="sc">~</span> WeightLoss, <span class="at">data =</span> Controls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>The standard error when doing inference for a mean is <span class="math display">\[
+SE = \frac{s}{\sqrt{n}} =
+\frac{
+    9.1077854
+}{
+    \sqrt{ 19 }
+}
+=
+2.0894693
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">9.108</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">19</span>); SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.089519</code></pre>
+</div>
+</div>
+<p>If we want to test our null hypothesis, then we compute a t-statistic:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="fl">3.92</span> <span class="sc">-</span> <span class="dv">0</span>) <span class="sc">/</span> SE; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.87603</code></pre>
+</div>
+</div>
+<p>and from this a p-value, which is the tails probability for a t-distribution with 18 degrees of freedom. In other words, the p-value gives the probability of getting a test statistic at least as big as the one we really got, assuming that the test statistic follows a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
+<p>First, we find the probability of observing a test statistic of <span class="math inline">\(t= 1.8760303\)</span> or larger. Then, we have to double this value – it would be at least as unlikely to see a test statistic of <span class="math inline">\(-1.8760303\)</span> or smaller. Our p-value should give the area under the t-distribution curve for x-values smaller than <span class="math inline">\(-1.8760303\)</span> <em>and</em> larger than <span class="math inline">\(1.8760303\)</span>; it’s the shaded area in the figure below:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>( t, <span class="at">df =</span> <span class="dv">19-1</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03848197</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> ( <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>( t, <span class="at">df =</span> <span class="dv">19-1</span> ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.07696394</code></pre>
+</div>
+</div>
+<p>Our p-value is <span class="math inline">\(0.077\)</span> (1 or 2 significant digits are sufficient for reporting p-values). This is not compelling evidence that the weight loss program (without incentives) actually leads to a change in weight. A change this large could occur just by chance in nearly 8% of samples.</p>
+</div>
+<!-- end example -->
+<div id="exm-t-test" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.5 </strong></span>In R, there is also a function to automate this t-test:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>( <span class="sc">~</span> WeightLoss, <span class="at">data =</span> Controls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  WeightLoss
+t = 1.8766, df = 18, p-value = 0.07688
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ -0.4687594  8.3108647
+sample estimates:
+mean of x 
+ 3.921053 </code></pre>
+</div>
+</div>
+<p>If we don’t want so much out put, we can ask R to report only the p-value:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pval</span>(<span class="fu">t.test</span>( <span class="sc">~</span> WeightLoss, <span class="at">data =</span> Controls))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   p.value 
+0.07688493 </code></pre>
+</div>
+</div>
+<p>By default, <code>t.test()</code> uses a significance level <span class="math inline">\(\alpha = 0.05\)</span>. If we want to specify a different <span class="math inline">\(\alpha\)</span>, we can use the input <code>conf.level</code> as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>( <span class="sc">~</span> WeightLoss, <span class="at">data =</span> Controls, <span class="at">conf.level =</span> <span class="fl">0.01</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  WeightLoss
+t = 1.8766, df = 18, p-value = 0.07688
+alternative hypothesis: true mean is not equal to 0
+1 percent confidence interval:
+ 3.894498 3.947607
+sample estimates:
+mean of x 
+ 3.921053 </code></pre>
+</div>
+</div>
+</div>
+<!-- end example -->
+</section>
+<section id="the-paired-2-sample-t-test" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="the-paired-2-sample-t-test"><span class="header-section-number">9.5.2</span> The paired 2-sample t-test</h3>
+<p>Sometimes, a dataset contains <em>paired</em> observations. These might be, for example, two measurements on the same experimental subject before and after some experimental treatment; measurements on the same subject at two times, or in two different situations; (or others). In this case, we can not consider the measurements within a pair to be independent of each other. But what we are really interested in is the magnitude of the difference between the 2 observations in each pair. So this “paired t-test” problem reduces to a one-sample t-test, where the test statistic is constructed using the <em>differences</em> <span class="math inline">\(D\)</span> between the 2 measurements in each pair:</p>
+<p><span class="math display">\[
+t = \frac{\mbox{observed average difference} - \mbox{hypothesized average difference}}{\mbox{standard error}}
+\]</span></p>
+<p>Let’s consider an example.</p>
+<div id="exm-corneal-thickness" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.6 </strong></span>The following table provides the corneal thickness in microns of both eyes of patients who have glaucoma in one eye:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Healthy</th>
+<th>484</th>
+<th>478</th>
+<th>492</th>
+<th>444</th>
+<th>436</th>
+<th>398</th>
+<th>464</th>
+<th>476</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Glaucoma</td>
+<td>488</td>
+<td>478</td>
+<td>480</td>
+<td>426</td>
+<td>440</td>
+<td>410</td>
+<td>458</td>
+<td>460</td>
+</tr>
+<tr class="even">
+<td>Difference</td>
+<td>4</td>
+<td>0</td>
+<td>-12</td>
+<td>-18</td>
+<td>4</td>
+<td>12</td>
+<td>-6</td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+<p>The corneal thickness is likely to be similar in the two eyes of any single patient, so that the two observations on the same patient cannot be assumed to be independent. But maybe (after accounting for differences between people), there is some difference in corneal thickness that has to do with the presence or absence of glaucoma. First, we can have a look at the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>Glaucoma <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">subject =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">glaucoma =</span> <span class="fu">c</span>(<span class="dv">488</span>, <span class="dv">478</span>, <span class="dv">480</span>, <span class="dv">426</span>, <span class="dv">440</span>, <span class="dv">410</span>, <span class="dv">458</span>, <span class="dv">460</span>),</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">healthy =</span> <span class="fu">c</span>(<span class="dv">484</span>, <span class="dv">478</span>, <span class="dv">492</span>, <span class="dv">444</span>, <span class="dv">436</span>, <span class="dv">398</span>, <span class="dv">464</span>, <span class="dv">476</span>),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">diff =</span> glaucoma <span class="sc">-</span> healthy</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(glaucoma <span class="sc">~</span> subject, <span class="at">data =</span> Glaucoma, </span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="sc">~</span><span class="st">"glaucoma"</span>, <span class="at">shape =</span> <span class="sc">~</span><span class="st">"glaucoma"</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.9</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(healthy <span class="sc">~</span> subject, <span class="at">data =</span> Glaucoma, </span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="sc">~</span><span class="st">"healthy"</span>, <span class="at">shape =</span> <span class="sc">~</span><span class="st">"healthy"</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"status"</span>),  </span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_shape_discrete</span>(<span class="at">name =</span> <span class="st">"status"</span>)</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+<p>It looks like healthy corneas are often thicker. To try to quantify this, we consider the difference between each pair of observations, denoted by <span class="math inline">\(d_i\)</span>. We wish to test, <span class="math display">\[
+H_0: \mu = 0 \qquad \mbox{ vs } \qquad H_1: \mu \ne 0.
+\]</span> Under <span class="math inline">\(H_0\)</span>, <span class="math display">\[
+T = \frac{\bar{D}}{S/\sqrt{n}} \sim t_{n-1}.
+\]</span></p>
+<p>In R, we can compute <span class="math inline">\(D\)</span> (the average of <span class="math inline">\(d_i\)</span>) and its standard error to obtain the test statistic <span class="math inline">\(t\)</span> and the corresponding p-value:</p>
+<!-- \authNote{Check on this -- base plot? lm or t test?} -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(Glaucoma); n</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span> diff, <span class="at">data =</span> Glaucoma, mean, sd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["response"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"diff","2":"-4","3":"10.74377"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>meanD <span class="ot">&lt;-</span> <span class="fu">mean</span>( <span class="sc">~</span> diff, <span class="at">data =</span> Glaucoma); meanD</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fu">sd</span>( <span class="sc">~</span> diff, <span class="at">data =</span> Glaucoma) <span class="sc">/</span> <span class="fu">sqrt</span>(n); SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.798496</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (meanD <span class="sc">-</span> <span class="dv">0</span>) <span class="sc">/</span> SE; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.053048</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>pval <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(t, <span class="at">df=</span>n<span class="dv">-1</span>); pval</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3273053</code></pre>
+</div>
+</div>
+<p>Note that we used 2 * pt(…) because our test statistic <span class="math inline">\(t\)</span> was negative. If it had been positive, we would have used 2 * (1-pt(…)) instead. The illustration below may help make this clearer – the p-value we are computing corresponds to the shaded areas in the plot.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+<p>We can also let R make all the computations for us. Notice that we use the <em>differences</em> between pairs as the input data, rather than the raw data itself.</p>
+<!-- \authNote{lm or t test?} -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(WeightLoss <span class="sc">~</span> Group, <span class="at">data =</span> WeightLossIncentive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["response"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Group"],"name":[2],"type":["fct"],"align":["left"]},{"label":["min"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Q1"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["median"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Q3"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["max"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[10],"type":["int"],"align":["right"]},{"label":["missing"],"name":[11],"type":["int"],"align":["right"]}],"data":[{"1":"WeightLoss","2":"Control","3":"-17.0","4":"-2.0","5":"3","6":"11.25","7":"20","8":"3.921053","9":"9.107785","10":"19","11":"0"},{"1":"WeightLoss","2":"Incentive","3":"-0.5","4":"7.5","5":"18","6":"24.00","7":"30","8":"15.676471","9":"9.413988","10":"17","11":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(WeightLoss <span class="sc">~</span> Group, <span class="at">data =</span> WeightLossIncentive)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Estimate Std. Error  t value     Pr(&gt;|t|)
+(Intercept)     3.921053   2.122817 1.847099 0.0734505837
+GroupIncentive 11.755418   3.089152 3.805387 0.0005635376</code></pre>
+</div>
+</div>
+</div>
+<!-- end example -->
+</section>
+<section id="the-unpaired-2-sample-t-test" class="level3" data-number="9.5.3">
+<h3 data-number="9.5.3" class="anchored" data-anchor-id="the-unpaired-2-sample-t-test"><span class="header-section-number">9.5.3</span> The (unpaired) 2-sample t-test</h3>
+<p>In some cases, our research sample may contain data from 2 different categories of observational units. For example, in the weight loss data, there were the control participants we considered above; there were also a number of incentivized participants, who received money if they lost weight. We might be interested in considering whether the incentive made a difference. Before we begin, we can plot the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(WeightLoss <span class="sc">~</span> Group, <span class="at">data =</span> WeightLossIncentive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>It looks like the incentive group lost more weight. But how can we judge whether the difference between groups is really an effect of the incentive, and not just random variation?</p>
+<p>In this case, the null hypothesis <span class="math inline">\(H_0\)</span> would be that the average weight loss by control participants (<span class="math inline">\(\mu_c\)</span>) was the same as the average weight loss by incentivized participants (<span class="math inline">\(\mu_i\)</span>) – <span class="math inline">\(H_0: \mu_c = \mu_i\)</span>. The alternative hypothesis would be <span class="math inline">\(H_1: \mu_c \neq \mu_i\)</span> – there was a difference between the two groups.</p>
+<p>But in this case – with data from 2 different categories – how can we compute the appropriate standard error and test statistic for a t-test? We have to consider the fact that there may be different numbers of data points in the 2 categories. Let <span class="math inline">\(n\)</span> be the sample size within the first category <span class="math inline">\(X\)</span> (control participants in the example), and <span class="math inline">\(m\)</span> be the sample size in the other category <span class="math inline">\(Y\)</span> (incentive participants in the example). How can we compute a standard error for a difference in means between the two groups?</p>
+<p>In this case, if we assume that the sample variaces are equal between the two categories, then we can define the pooled sample variance <span class="math inline">\(s_p\)</span>:</p>
+<p><span class="math display">\[
+s^2_p = \frac{(n-1)s_X^2 + (m-1)s_Y^2}{(m+n-2)}
+\]</span></p>
+<p>Here, <span class="math inline">\(s_Y\)</span> and <span class="math inline">\(s_X\)</span> are the sample standard deviations within each category. We will not provide proof here, but it is known that in this case, the test statistic is:</p>
+<p><span class="math display">\[
+T = \frac{\bar{X}-\bar{Y}}{S_p\sqrt{\frac{1}{m}+\frac{1}{n}}}
+\sim t_{m+n-2}.
+\]</span></p>
+<p>As written in the equation above, this test statistic follows a t-distribution with <span class="math inline">\(m+n-2\)</span> degrees of freedom. We could carry out a two-sample t-test by hand using the test statistic defined above, or we can use the function <code>t.test()</code> and R will do the computations for us. For the weight loss example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(WeightLossIncentive, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["WeightLoss"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Group"],"name":[2],"type":["fct"],"align":["left"]},{"label":["Month7Loss"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"12.5","2":"Control","3":"-2.0","_rn_":"1"},{"1":"12.0","2":"Control","3":"7.0","_rn_":"2"},{"1":"1.0","2":"Control","3":"19.5","_rn_":"3"},{"1":"-5.0","2":"Control","3":"-0.5","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>( <span class="sc">~</span> WeightLoss, <span class="at">groups =</span> Group, <span class="at">data =</span> WeightLossIncentive,</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  WeightLoss by Group
+t = -3.8054, df = 34, p-value = 0.0005635
+alternative hypothesis: true difference in means between group Control and group Incentive is not equal to 0
+95 percent confidence interval:
+ -18.033330  -5.477506
+sample estimates:
+  mean in group Control mean in group Incentive 
+               3.921053               15.676471 </code></pre>
+</div>
+</div>
+<p>Note the “var.equal=TRUE” input argument. With this input, R will carry out the t-test assuming equal variance between the two categories. If we want to avoid making this assumption, there is a modified version of the two-sample t-test called the Welch two-sample t-test, which does not assume equal variances. If we omit the “var.equal” input, or set it to “var.equal=FALSE”, then R will do a Welch two-sample t-test for us. (We will not cover in this course how to do a Welch test by hand).</p>
+<p>We might be able to judge informally whether the equal-variance assumption is valid by looking at the distributions of our variable of interest grouped by category, and computing the sample standard deviations by groups:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>(<span class="sc">~</span> WeightLoss, <span class="at">color =</span> <span class="sc">~</span>Group, <span class="at">data =</span> WeightLossIncentive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_density()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>( <span class="sc">~</span> WeightLoss <span class="sc">|</span> Group, <span class="at">data =</span> WeightLossIncentive, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Control Incentive 
+ 9.107785  9.413988 </code></pre>
+</div>
+</div>
+<p>We don’t have an obvious indication of unequal variances. (This assumption can also be tested statistically, although we won’t learn how in this class, and it’s generally not recommended to do such a test prior to running a t-test). If we wanted to do the t-test without the equal variance assumption, in R, we would use:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>( <span class="sc">~</span> WeightLoss, <span class="at">groups =</span> Group, <span class="at">data =</span> WeightLossIncentive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  WeightLoss by Group
+t = -3.7982, df = 33.276, p-value = 0.0005889
+alternative hypothesis: true difference in means between group Control and group Incentive is not equal to 0
+95 percent confidence interval:
+ -18.05026  -5.46058
+sample estimates:
+  mean in group Control mean in group Incentive 
+               3.921053               15.676471 </code></pre>
+</div>
+</div>
+<p><em>In practice, there is no real disadvantage to simply using Welch’s test all the time.</em> So in general, if you are doing a 2-sample unpaired test, you should always use <code>var.equal=FALSE</code> (or omit the input <code>var.equal</code>, and it will default to FALSE).</p>
+</section>
+<section id="testing-model-coefficients" class="level3" data-number="9.5.4">
+<h3 data-number="9.5.4" class="anchored" data-anchor-id="testing-model-coefficients"><span class="header-section-number">9.5.4</span> Testing Model Coefficients</h3>
+<p>We can also use t-tests to test the null hypothesis that there is no relationship between the predictor and explanatory variables in a regression model. If we can’t reject that hypothesis, then we have evidence that there <em>is</em> really some relationship, and that the response can be predicted based upon the explanatory variable.</p>
+<div id="exm-drag-force" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.7 </strong></span>Suppose you suspect that drag force should be proportional to the square of velocity. Let’s see if that is consistent with the data collected by some physics students.<br>
+In this experiment, the students rigged up neutrally buoyant balloon and then loaded it with different amounts of weight and dropped it until and recorded its terminal velocity. At that point the force due to gravity (determined by the mass loaded to the balloon) is equal to the drag force (because there is no acceleration).</p>
+<p>We’ll fit a power law model <span class="math display">\[
+\texttt{force.drag} = A \cdot \texttt{velocity}^a
+\]</span> and test the hypothesis that <span class="math inline">\(a = 2\)</span>. We can fit this model using a log-log transformation: <span class="math display">\[
+\log(\texttt{force.drag}) = \log(A)  +  a \log( \texttt{velocity})
+\]</span> So <span class="math inline">\(a = \beta_1\)</span> in our usual linear model notation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastR2)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>drag.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(force.drag) <span class="sc">~</span> <span class="fu">log</span>(velocity), <span class="at">data =</span> Drag)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">log</span>(force.drag) <span class="sc">~</span> <span class="fu">log</span>(velocity), <span class="at">data =</span> Drag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/drag-again-1.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>The fit is not perfect, and in fact suggests a systematic problem with the way these data were collected.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> This is even clearer if we look at the residuals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">resid</span>(drag.model) <span class="sc">~</span> <span class="fu">fitted</span>(drag.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> <span class="fu">resid</span>(drag.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(drag.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(force.drag) ~ log(velocity), data = Drag)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.34162 -0.14967 -0.04673  0.06663  0.66155 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    2.47366    0.04425   55.91   &lt;2e-16 ***
+log(velocity)  2.05149    0.05366   38.23   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2451 on 40 degrees of freedom
+Multiple R-squared:  0.9734,    Adjusted R-squared:  0.9727 
+F-statistic:  1462 on 1 and 40 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>None of the p-values produced in this output is what we want.<br>
+They are testing the hypotheses that <span class="math inline">\(\beta_0 =\)</span> and that <span class="math inline">\(\beta_1 = 0\)</span>. <span class="math inline">\(\beta_1 = 0\)</span>.<br>
+But we can easily calculate the p-value we want since we have the standard error and degrees of freedom.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>beta1.hat <span class="ot">&lt;-</span> <span class="fl">2.051</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">0.05366</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span>  ( beta1.hat <span class="sc">-</span> <span class="dv">2</span> ) <span class="sc">/</span> SE; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9504286</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span> <span class="fu">abs</span>(t), <span class="at">df=</span> <span class="dv">40</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3476022</code></pre>
+</div>
+</div>
+<p>With this large a p-value, we cannot reject the null hypothesis that <span class="math inline">\(p = 2\)</span>. <strong>A large p-value does not prove that <span class="math inline">\(p = 2\)</span>, but it does say that our data are consistent with that value.</strong><br>
+Of course, our data may be consistent with many other values of <span class="math inline">\(p\)</span> as well.</p>
+</div>
+<!-- end example -->
+<div id="exm-drag-force-2" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.8 </strong></span>We could also do the previous example using a nonlinear model</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>drag.model2 <span class="ot">&lt;-</span> <span class="fu">nls</span>(force.drag <span class="sc">~</span> A <span class="sc">*</span> velocity<span class="sc">^</span>p, <span class="at">data =</span> Drag, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="dv">1</span>,<span class="at">p =</span> <span class="dv">2</span>))</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(drag.model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Formula: force.drag ~ A * velocity^p
+
+Parameters:
+  Estimate Std. Error t value Pr(&gt;|t|)    
+A 12.90528    1.61361   7.998 7.96e-10 ***
+p  1.92989    0.09442  20.440  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 12.48 on 40 degrees of freedom
+
+Number of iterations to convergence: 6 
+Achieved convergence tolerance: 3.737e-06</code></pre>
+</div>
+</div>
+<p>Again, the p-values listed are not of interest (they are testing the hypotheses that each coefficient is 0). But we can compute the p-value of interest as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="dv">2</span> <span class="sc">-</span> <span class="fl">1.92989</span>) <span class="sc">/</span> <span class="fl">0.0944</span>; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7426907</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span> <span class="fu">abs</span>(t), <span class="at">df =</span> <span class="dv">40</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4620085</code></pre>
+</div>
+</div>
+<p>Although the two p-values are different, the conclusion is the same using either model:<br>
+Our data are consistent with the hypothesis that <span class="math inline">\(p = 2\)</span>.</p>
+</div>
+<!-- end example -->
+<div id="exm-porche" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.9 </strong></span>&nbsp;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(PorschePrice, <span class="at">package =</span> <span class="st">"Stat2Data"</span>)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(PorschePrice)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Price"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Age"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mileage"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"69.4","2":"3","3":"21.5","_rn_":"1"},{"1":"56.9","2":"3","3":"43.0","_rn_":"2"},{"1":"49.9","2":"2","3":"19.9","_rn_":"3"},{"1":"47.4","2":"4","3":"36.0","_rn_":"4"},{"1":"42.9","2":"4","3":"44.0","_rn_":"5"},{"1":"36.9","2":"6","3":"49.8","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>porsche.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Mileage, <span class="at">data =</span> PorschePrice)</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(porsche.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Mileage, data = PorschePrice)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-19.3077  -4.0470  -0.3945   3.8374  12.6758 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 71.09045    2.36986    30.0  &lt; 2e-16 ***
+Mileage     -0.58940    0.05665   -10.4 3.98e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.17 on 28 degrees of freedom
+Multiple R-squared:  0.7945,    Adjusted R-squared:  0.7872 
+F-statistic: 108.3 on 1 and 28 DF,  p-value: 3.982e-11</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( <span class="fu">resid</span>(porsche.model) <span class="sc">~</span> <span class="fu">fitted</span>(porsche.model)) <span class="sc">|&gt;</span> <span class="fu">gf_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> <span class="fu">resid</span>(porsche.model) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-28-2.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>The model looks reasonable. What are the two hypotheses being tested?</p>
+<div class="enumerate">
+<ol type="1">
+<li><p><span class="math inline">\(H_0: \beta_0 = 0\)</span>.</p>
+<p>Often this is not an interesting test because often we are not so interested in the intercept <span class="math inline">\(\beta_0\)</span>, and especially not in whether it is 0. In this case, the intercept might be interesting because it tells us the price of a Porsche with no miles. On the other hand, we might not expect a used car, even one with very few miles to fit the same pattern as a new car. There is probably a loss in value that occurs as soon as a car is purchased.</p>
+<p>In any case, it is clear that the intercept will not be 0; we don’t need a hypothesis test to tell us that. Indeed, the evidence is incredibly strong.</p>
+<p>A confidence interval for the intercept is more interesting since it gives a sort of “starting price” for used Porches.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(porsche.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %     97.5 %
+(Intercept) 66.2360186 75.9448869
+Mileage     -0.7054401 -0.4733618</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li><p><span class="math inline">\(H_0: \beta_1 = 0\)</span>.</p>
+<p>There is strong evidence against this hypothesis as well. This is also not surprising. If <span class="math inline">\(\beta_1 = 0\)</span>, that would mean that the price of the cars does not depend on the mileage.</p>
+<p>A test of <span class="math inline">\(\beta_1 = 0\)</span> in a simple linear model is often called the <strong>model utility test</strong> because it is testing whether the predictor (without any others) is of any use to us or not.</p></li>
+</ol>
+<!-- \authNote{ -->
+<!--        A test of $\beta_1=0$ in a regression model is often used for *model selection* -- if we can not reject the null hypothesis of no relationship between the predictor and the response, then the predictor is not really a useful predictor at all. We might want to use (or *select*) a model without that predictor, instead.} -->
+<ol start="3" type="1">
+<li><p><span class="math inline">\(H_0: \beta_1 = \beta_{10}\)</span>.</p>
+<p>Although the output above doesn’t do all of the work for us, we can test other hypotheses as well. (The notation above is a bit tricky, <span class="math inline">\(\beta_{10}\)</span> should be read ``<span class="math inline">\(\beta_1\)</span> null” – it is a hypothesized value for <span class="math inline">\(\beta_1\)</span>.)</p>
+<p>For example, let’s test <span class="math inline">\(\beta_1 = -1\)</span>. That the hypothesis that the value drops one dollar per mile driven.</p>
+<p>While this example is interesting as an exercise, it is quite rare to have a sensible hypothesized value for a regression slope parameter that we want to test. It is much more common to ask, as we did above, “is there a pattern here indicating that the predictor is a useful predictor of the response”?</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="sc">-</span><span class="fl">0.5894</span> <span class="sc">-</span> (<span class="sc">-</span><span class="dv">1</span>) ) <span class="sc">/</span> <span class="fl">0.0566</span>; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.254417</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span> <span class="fu">abs</span>(t), <span class="at">df =</span> <span class="dv">28</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.748867e-08</code></pre>
+</div>
+</div>
+<p>This p-value is small enough to cause us to reject this value for <span class="math inline">\(\beta_1\)</span>.</p>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end example -->
+</section>
+</section>
+<section id="sec-ci-ht-duality" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="sec-ci-ht-duality"><span class="header-section-number">9.6</span> Connection to Confidence Intervals</h2>
+<p>There is a natural duality between t-based hypothesis tests and confidence intervals. Since the p-value is computed using tail probabilities of the t-distribution and confidence level describes the central probability, the p-value will be below 0.05 exactly when the hypothesized value is not contained in the 95% confidence interval. (Similar statements can be made for other confidence levels.) <!-- So a confidence interval generally conveys more information than a p-value in these situations. --></p>
+<div id="exm-ht-ci-duality" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.10 </strong></span>In the preceding example we rejected the null hypothesis that <span class="math inline">\(\beta_1 = -1\)</span>. In fact, we will reject (at the <span class="math inline">\(\alpha = 0.05\)</span> level) any hypothesized value not contained in the 95% confidence interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="sc">-</span><span class="fl">0.5894</span> <span class="sc">-</span> (<span class="sc">-</span> .<span class="dv">71</span>)) <span class="sc">/</span> <span class="fl">0.0566</span>; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.130742</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span> <span class="fu">abs</span>(t), <span class="at">df =</span> <span class="dv">28</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04203043</code></pre>
+</div>
+</div>
+<p>But we won’t reject values inside the confidence interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="sc">-</span><span class="fl">0.5894</span> <span class="sc">-</span> (<span class="sc">-</span> .<span class="dv">70</span>)) <span class="sc">/</span> <span class="fl">0.0566</span>; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.954064</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span> <span class="fu">abs</span>(t), <span class="at">df =</span> <span class="dv">28</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.06074829</code></pre>
+</div>
+</div>
+</div>
+<!-- end example -->
+<div id="exm-ht-ci-duality-2" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 9.11 </strong></span>The output below illustrates this duality.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>drag.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(force.drag) <span class="sc">~</span> <span class="fu">log</span>(velocity), <span class="at">data =</span> Drag)</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(drag.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Estimate Std. Error  t value     Pr(&gt;|t|)
+(Intercept)   2.473663 0.04424622 55.90677 1.358299e-39
+log(velocity) 2.051493 0.05365839 38.23248 4.103776e-33</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>beta1.hat <span class="ot">&lt;-</span> <span class="fl">2.051</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">0.05366</span></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span>  ( beta1.hat <span class="sc">-</span> <span class="dv">2</span> ) <span class="sc">/</span> SE; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9504286</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span> <span class="fu">abs</span>(t), <span class="at">df=</span> <span class="dv">40</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3476022</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(drag.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %   97.5 %
+(Intercept)   2.384238 2.563088
+log(velocity) 1.943045 2.159941</code></pre>
+</div>
+</div>
+<p>Since the confidence interval for <span class="math inline">\(p\)</span> (i.e., for <span class="math inline">\(\beta_1\)</span>) includes 2, 2 is a plausible value for the power (i.e., consistent with our data). A 2-sided p-value larger than 0.05 says the same thing at the same level of confidence.</p>
+</div>
+<!-- end example -->
+</section>
+<section id="exercises" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">9.7</span> Exercises</h2>
+<div id="exr-geiger" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.1 </strong></span><strong>Geiger counter</strong></p>
+<p>An experiment was conducted to see if the number of clicks on a Geiger counter in a 7.5 minute interval is related to the distance (in m) between a radioactive source and the detection device according to an inverse square law:</p>
+<p><span class="math display">\[
+    \mbox{clicks} = A + \frac{k}{\mbox{distance}^{2}}
+\]</span></p>
+<p>Answer the questions below using the following output</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>( clicks <span class="sc">~</span> <span class="fu">I</span>(<span class="dv">1</span><span class="sc">/</span>(distance<span class="sc">^</span><span class="dv">2</span>)), <span class="at">data =</span> Geiger)</span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = clicks ~ I(1/(distance^2)), data = Geiger)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-32.234 -15.817   4.027  10.899  34.091 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        114.281     10.787   10.59 5.51e-06 ***
+I(1/(distance^2))   31.477      1.001   31.46 1.13e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 22.51 on 8 degrees of freedom
+Multiple R-squared:  0.992, Adjusted R-squared:  0.991 
+F-statistic: 989.7 on 1 and 8 DF,  p-value: 1.134e-09</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model, <span class="at">w =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-35-2.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<div class="enumerate">
+<ol>
+<li>Are there are any reasons (from what you can tell in the output above) to be concerned about using this model?</li>
+<li>What does <span class="math inline">\(A\)</span> tell us about this situation?<br>
+What would it mean if <span class="math inline">\(A\)</span> were 0? What if <span class="math inline">\(A \neq 0\)</span>?</li>
+<li>What is the estimate for <span class="math inline">\(A\)</span>? Express this as an estimate <span class="math inline">\(\pm\)</span> uncertainty using our rules for numbers of digits.</li>
+<li>What is the p-value for the test of the null hypothesis that <span class="math inline">\(A = 0\)</span>? What conclusion do we draw from this?</li>
+<li>What does <span class="math inline">\(k\)</span> tell us about this situation? In what situations would <span class="math inline">\(k\)</span> be larger or smaller? What would it mean if <span class="math inline">\(k\)</span> were 0?</li>
+<li>Express the estimate for <span class="math inline">\(k\)</span> as an estimate <span class="math inline">\(\pm\)</span> uncertainty.</li>
+<li>What is the p-value for the test of the null hypothesis that <span class="math inline">\(k = 0\)</span>? What conclusion do we draw from this?</li>
+<li>A standard radioactive substance has a value of <span class="math inline">\(k = 29.812\)</span>. Might that be the substance we are using here? Conduct an appropriate hypothesis test to answer this question. Carefully show all four steps.</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="enumerate">
+<span class="proof-title"><em>Solution</em>. </span>
+<ol type="a">
+<li><p>The normal-quantile plot looks pretty good for a sample of this size. The residual plot is perhaps not quite as “noisy” as we would like (the first few residuals cluster above zero, then next few below), but it is not terrible either. Ideally we would like to have a larger data set to see whether this pattern persists or whether things look more noisy as we “fill-in” with more data.</p></li>
+<li><p><span class="math inline">\(A\)</span> is a measure of background radiation levels, it is the amount of clicks we would get if our test substance were “at infinity”, i.e., so far away (or beyond some shielding) that it does not affect the Geiger counter.</p></li>
+<li><p><span class="math inline">\(114 \pm 11\)</span></p></li>
+<li><p>5.5^{-6}. This gives strong evidence that there is some background radiation being measured by the Geiger counter.</p></li>
+<li><p><span class="math inline">\(k\)</span> measures the rate at which our test substance is emitting radioactive particles. If <span class="math inline">\(k\)</span> is 0, then our substance is not radioactive (or at least not being detected by the Geiger counter).</p></li>
+<li><p><span class="math inline">\(31.5 \pm 1.0\)</span></p></li>
+<li><p>1.1^{-9}. We have strong evidence that our substance is decaying and contributing to the Geiger counter clicks.</p></li>
+<li><p><span class="math inline">\(H_0: k = 29.812\)</span>; <span class="math inline">\(H_a: k \neq 29.812\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="fl">31.5</span> <span class="sc">-</span> <span class="fl">29.812</span>) <span class="sc">/</span> <span class="fl">1.0</span>; t     <span class="co"># test statistic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.688</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(t, <span class="at">df =</span> <span class="dv">8</span>))           <span class="co"># p -value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1298892</code></pre>
+</div>
+</div></li>
+</ol>
+<p>Conclusion. With a p-value this large, we cannot reject the null hypothesis. Our data are consistent with the hypothesis that our test substance is the same as the standard substance.</p>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end solution -->
+<div id="exr-gentleman-tasting-wine" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.2 </strong></span><strong>Gentleman tasting wine</strong></p>
+<p>A gentleman claims he can distinguish between four vintages of a particular wine. His friends, assuming he has probably just had too much of each, decide to test him. They prepare one glass of each vintage and present the gentleman with four unlabeled glasses of wine. What is the probability that the gentleman correctly identifies all four simply by guessing?</p>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span>We can use the product of conditional probabilities:</p>
+<p><span class="math display">\[
+\frac14 \cdot \frac13 \cdot \frac12 \cdot \frac11 = \frac1{24}
+\]</span> Since the probability of guessing the first glass correctly is <span class="math inline">\(\frac 14\)</span>, the probability of guess the second correctly – assuming the first was correctly guessed – is <span class="math inline">\(\frac13\)</span>; the probability of guessing the third correctly – assuming the first two were correctly guessed – is <span class="math inline">\(\frac 12\)</span>; and if the first three are guessed correctly, the last is guaranteed to be correct.</p>
+<p>Altnernative solution: The wines can be presented in <span class="math inline">\(4 \cdot 3 \cdot 2 \cdot 1 = 24\)</span> different orders, so the probability of guessing correctly is <span class="math inline">\(1/24\)</span>.</p>
+</div>
+<!-- end solution -->
+<div id="exr-drag-refit" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.3 </strong></span><strong>Drag refit</strong></p>
+<p>Redo the drag force analysis after removing observations that appear not to have reached terminal velocity.</p>
+<p>If you can describe the rows you want to remove logically, the <code>filter()</code> command works well for this. You can also remove rows by row number. For example, the following removes rows 1, 3, 5 and 7:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>Drag[ <span class="sc">-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>), ] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span>Let’s remove the fastest values at each height setting. Although they are the fastest, it appears that terminal velocity has not yet been reached. At least, these points would fit the overall pattern better if the velocity were larger.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( force.drag <span class="sc">~</span> velocity, <span class="at">data =</span> Drag,</span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> <span class="sc">~</span> (velocity <span class="sc">&lt;</span> <span class="fl">3.9</span>) <span class="sc">&amp;</span> <span class="sc">!</span>(velocity <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> velocity <span class="sc">&lt;</span> <span class="fl">1.5</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>Drag2 <span class="ot">&lt;-</span> Drag <span class="sc">|&gt;</span> <span class="fu">filter</span>((velocity <span class="sc">&lt;</span> <span class="fl">3.9</span>) <span class="sc">&amp;</span> <span class="sc">!</span>(velocity <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> velocity <span class="sc">&lt;</span> <span class="fl">1.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>drag2.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(force.drag) <span class="sc">~</span> <span class="fu">log</span>(velocity), <span class="at">data =</span> Drag2)</span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(drag2.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(force.drag) ~ log(velocity), data = Drag2)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.31581 -0.10503  0.01792  0.08009  0.25424 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    2.36586    0.02722   86.93   &lt;2e-16 ***
+log(velocity)  2.11416    0.03679   57.46   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1367 on 28 degrees of freedom
+Multiple R-squared:  0.9916,    Adjusted R-squared:  0.9913 
+F-statistic:  3302 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(drag2.model, <span class="at">w =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="09-hypothesis-testing_files/figure-html/unnamed-chunk-39-2.png" class="img-fluid" width="432"></p>
+</div>
+</div>
+<p>The model is still not as good as we might like, and it seams like the fit is different for the heavier objects than for the lighter ones. This could be due to some flaw in the design of the experiment or because drag force actually behaves differently at low speeds vs.&nbsp;higher speeds. Notice the data suggest an exponent on velocity that is just a tiny bit larger than 2:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(drag2.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %   97.5 %
+(Intercept)   2.310110 2.421611
+log(velocity) 2.038795 2.189534</code></pre>
+</div>
+</div>
+<p>So our data (for whichever reason, potentially still due to design issues) is not compatible with the hypothesis that this exponent should be 2.</p>
+</div>
+<!-- end solution -->
+<div id="exr-veg-oil" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.4 </strong></span><strong>Vegetable oil</strong></p>
+<p>Sixteen samples of a certain brand of hydrogenated vegetable oil were tested to determine their melting point. The mean melting point for the 16 samples was 94.32 degrees and the standard deviation was 1.2 degrees.</p>
+<div class="enumerate">
+<ol type="a">
+<li>Conduct a test of the hypothesis <span class="math inline">\(\mu = 95\)</span>. Follow the four step procedure.</li>
+<li>Will 95 be inside or outside of a 95% confidence interval for the melting point? How do you know?</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">1.2</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">16</span>); SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="fl">94.32</span> <span class="sc">-</span> <span class="dv">95</span>) <span class="sc">/</span> SE; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2.266667</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>p_val <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(t, <span class="at">df =</span> <span class="dv">15</span>); p_val    <span class="co"># p-value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03862989</code></pre>
+</div>
+</div>
+<p>95 will be outside the confidence interval because the p-value is<br>
+less than 0.05. As a double check, here is the 95% confidence interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>t_star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="at">df =</span> <span class="dv">11</span>); t_star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.200985</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fl">94.32</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> t_star <span class="sc">*</span> SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 93.6597 94.9803</code></pre>
+</div>
+</div>
+</div>
+<!-- end solution -->
+<div id="exr-v-notch" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.5 </strong></span><strong>Charpy V-notch impact test</strong></p>
+<p>The <a href="https://en.wikipedia.org/wiki/Charpy_impact_test">Charpy V-notch impact test</a> is a common way to test the toughness of a material. This test was applied to 42 specimens of a particular alloy at 110 degrees F. The mean amount of transverse lateral expansion was computed to be 73.1 mils with a sample standard deviation of 5.9 mils.</p>
+<p>To be suitable for a particular application, the true amount of expansion must be less than 75 mils. The alloy will not be used unless their is strong evidence (a p-value below 0.01) that this specification is met.</p>
+<div class="enumerate">
+<ol>
+<li>Use a p-value to decide whether this alloy may be used.</li>
+<li>Use a confidence interval to decide whether this alloy may be used.</li>
+<li>Are there advantages to one approach over the other? If you had to present an argument to your boss, which approach would you use?</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="enumerate">
+<span class="proof-title"><em>Solution</em>. </span>
+<ol>
+<li>In this situation it makes sense to do a one-sided test since we will reject the alloy only if the amount of expansion is to high, not if it is too low.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">5.9</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">42</span>); SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9103898</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="fl">73.1</span> <span class="sc">-</span> <span class="dv">75</span>) <span class="sc">/</span> SE; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2.087018</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(t, <span class="at">df =</span> <span class="dv">41</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02157239</code></pre>
+</div>
+</div>
+<ol>
+<li>Corresponding to a 1-sided test with a significance level of <span class="math inline">\(\alpha = 0.01\)</span>, we could make a 98% confidence interval (1% in each tail). The upper end of this would be the same as for a 1-sided 99% confidence interval</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>t_star <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.99</span>, <span class="at">df =</span> <span class="dv">41</span>)</span>
+<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fl">73.1</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> t_star <span class="sc">*</span> SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 70.89613 75.30387</code></pre>
+</div>
+</div>
+<ol>
+<li>If all we are interested in is a decision, the two methods are equivalent. I confidence interval might be easier to explain to someone less familiar with statistics.</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end solution -->
+<!-- % \begin{problem} -->
+<!-- %  Data from a 1993 study to see how well lichens serve as an indicator for air pollution are in the  -->
+<!-- %  \dataframe{ex12.20} data set in the \pkg{Devore7} package.  -->
+<!-- %  In that paper, a simple linear model was fit to see how the wet deposition of $NO^{-}_3$  -->
+<!-- %  related to the percentage dry weight of lichen. -->
+<!-- %  Using this model,  -->
+<!-- %  \begin{enumerate} -->
+<!-- %      \item -->
+<!-- %          Test the hypothesis that the slope of the linear relationship is 1. -->
+<!-- %      \item -->
+<!-- %          Compute a 90\% confidence interval for the slope of the linear relationship. -->
+<!-- %  \end{enumerate} -->
+<!-- % <<>>= -->
+<!-- % library(Devore7) -->
+<!-- % summary(lm( LichenN ~ deposition, data = ex12.20)) -->
+<!-- % @ -->
+<!-- % \end{problem} -->
+<!-- % \begin{solution} -->
+<!-- % <<tidy = FALSE>>= -->
+<!-- % t <- (0.967 - 1) / 0.183 -->
+<!-- % 2 * pt( -abs(t), df = 11 )           # p-value -->
+<!-- % @ -->
+<!-- % With such a large p-value, we do not reject the null hypothesis.  Our data are consistent  -->
+<!-- % with the hypothesis that the slope is 1. -->
+<!-- % <<>>= -->
+<!-- % t_star <- qt(.95, df = 11); t_star -->
+<!-- % .967 + c(-1,1) * t_star * 0.183    # 90% CI -->
+<!-- % @ -->
+<!-- % Notice that this interval includes 1.  We knew it would because 1 would not be rejected at the  -->
+<!-- % $\alpha = 0.10$ level. -->
+<!-- % <<>>= -->
+<!-- % t_star <- qt(.975, df = 11) -->
+<!-- % 95 + c(-1,1) * t_star * SE -->
+<!-- % @ -->
+<!-- % \end{solution} -->
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Fisher:1925:Methods" class="csl-entry" role="doc-biblioentry">
+Fisher, R. A. 1925. <em>Statistical Methods for Research Workers</em>. Oliver &amp; Boyd.
+</div>
+<div id="ref-salsburg" class="csl-entry" role="doc-biblioentry">
+Salsburg, D. 2001. <em>The Lady Tasting Tea: How Statistics Revolutionized Science in the Twentieth Century</em>. W.H. Freeman, New York.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>There is some evidence in these data that some of the observations did not reach critical velocity.<br>
+It would be good to refit this data with those observations removed from the data. See <a href="#exr-drag-refit">Exercise&nbsp;<span>9.3</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./08-nonlinear.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Beyond Linear Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./10-more-examples.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">More Examples</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

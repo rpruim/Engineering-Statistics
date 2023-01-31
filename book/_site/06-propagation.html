@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistics for the Physical Sciences and Engineering - 6&nbsp; Propagation of Uncertainty</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07-simple-linear.html" rel="next">
+<link href="./05-transformations.html" rel="prev">
+<link href="./cover.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+</head><body class="nav-sidebar docked">$$
+\def\reals{\mathbb{R}}
+\def\card#1{| #1 |}
+\def\mean{\overline}
+\def\evProb#1{\operatorname{Prob}(\mbox{#1})}
+\def\Prob{\operatorname{Prob}}
+\def\tand{\operatorname{and}}
+\def\tor{\operatorname{or}}
+\def\tnot{\operatorname{not}}
+\def\E{{\operatorname E}}
+\def\Var{\operatorname{Var}}
+\def\SD{\operatorname{SD}}
+\def\union{\cup}
+\def\intersect{\cap}
+\def\Unif{\mathsf{Unif}}
+\def\Beta{\mathsf{Beta}}
+\def\Rayleigh{\mathsf{Rayleigh}}
+\def\Exp{\mathsf{Exp}}
+\def\Norm{\mathsf{Norm}}
+\def\Tri{\mathsf{Tri}}
+\def\Gamm{\mathsf{Gamma}}
+\def\Pois{\mathsf{Pois}}
+\def\Binom{\mathsf{Binom}}
+\def\Weibull{\mathsf{Weibull}}
+\def\Tdist{\mathsf{T}}
+\def\Fdist{\mathsf{F}}
+\def\Chisq{\mathsf{Chisq}}
+\def\boolval#1{[\![ #1 ]\!]}
+\def\simiid{\stackrel{\mathrm{iid}{\sim}}}
+
+\def\sfrac#1#2{{#1}/{#2}}
+\def\PartialFrac#1#2{\frac{\partial #1}{\partial #2}}
+\def\Partial#1#2{\frac{\partial}{\partial #2} #1}
+
+\def\myindex#1{\relax}
+$$
+
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="book.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Propagation of Uncertainty</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics for the Physical Sciences and Engineering</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Pruim-Stat-for-Phys-Sci-and-Engr.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-chap0.html" class="sidebar-item-text sidebar-link">Where do numbers come from?</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-graphical.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Graphical Summaries of Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-numerical.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Numerical Summaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-probability.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Probability</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-random-variables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-transformations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformation and Combinations of Random Variables</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-propagation.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Propagation of Uncertainty</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-simple-linear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-nonlinear.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Beyond Linear Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-more-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">More Examples</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#error-and-uncertainty" id="toc-error-and-uncertainty" class="nav-link active" data-scroll-target="#error-and-uncertainty"><span class="toc-section-number">6.1</span>  Error and Uncertainty</a></li>
+  <li><a href="#an-example-estimating-the-number-of-dimes-in-a-sack-of-dimes" id="toc-an-example-estimating-the-number-of-dimes-in-a-sack-of-dimes" class="nav-link" data-scroll-target="#an-example-estimating-the-number-of-dimes-in-a-sack-of-dimes"><span class="toc-section-number">6.2</span>  An Example: Estimating the number of dimes in a sack of dimes</a>
+  <ul class="collapse">
+  <li><a href="#calculating-a-standard-uncertainty-without-using-data" id="toc-calculating-a-standard-uncertainty-without-using-data" class="nav-link" data-scroll-target="#calculating-a-standard-uncertainty-without-using-data"><span class="toc-section-number">6.2.1</span>  Calculating a Standard Uncertainty without Using Data</a></li>
+  <li><a href="#calculating-a-standard-uncertainty-using-data" id="toc-calculating-a-standard-uncertainty-using-data" class="nav-link" data-scroll-target="#calculating-a-standard-uncertainty-using-data"><span class="toc-section-number">6.2.2</span>  Calculating a Standard Uncertainty Using Data</a></li>
+  <li><a href="#propagating-error-by-the-delta-method" id="toc-propagating-error-by-the-delta-method" class="nav-link" data-scroll-target="#propagating-error-by-the-delta-method"><span class="toc-section-number">6.2.3</span>  Propagating Error by the Delta Method</a></li>
+  <li><a href="#the-delta-method-for-independent-estimates" id="toc-the-delta-method-for-independent-estimates" class="nav-link" data-scroll-target="#the-delta-method-for-independent-estimates">The Delta Method for independent estimates</a></li>
+  <li><a href="#estimating-uncertainty-via-simulations" id="toc-estimating-uncertainty-via-simulations" class="nav-link" data-scroll-target="#estimating-uncertainty-via-simulations"><span class="toc-section-number">6.2.4</span>  Estimating Uncertainty via Simulations</a></li>
+  </ul></li>
+  <li><a href="#reporting-measurements-and-estimates" id="toc-reporting-measurements-and-estimates" class="nav-link" data-scroll-target="#reporting-measurements-and-estimates"><span class="toc-section-number">6.3</span>  Reporting Measurements and Estimates</a>
+  <ul class="collapse">
+  <li><a href="#what-to-record-what-to-report" id="toc-what-to-record-what-to-report" class="nav-link" data-scroll-target="#what-to-record-what-to-report"><span class="toc-section-number">6.3.1</span>  What to record, What to report</a></li>
+  <li><a href="#how-many-decimal-places" id="toc-how-many-decimal-places" class="nav-link" data-scroll-target="#how-many-decimal-places"><span class="toc-section-number">6.3.2</span>  How many decimal places?</a></li>
+  <li><a href="#reporting-numbers-in-a-table" id="toc-reporting-numbers-in-a-table" class="nav-link" data-scroll-target="#reporting-numbers-in-a-table"><span class="toc-section-number">6.3.3</span>  Reporting numbers in a table</a></li>
+  </ul></li>
+  <li><a href="#sec-propagation-examples" id="toc-sec-propagation-examples" class="nav-link" data-scroll-target="#sec-propagation-examples"><span class="toc-section-number">6.4</span>  Additional Propagation of Uncertainty Examples</a></li>
+  <li><a href="#experimental-error-and-its-causes" id="toc-experimental-error-and-its-causes" class="nav-link" data-scroll-target="#experimental-error-and-its-causes"><span class="toc-section-number">6.5</span>  Experimental Error and Its Causes</a>
+  <ul class="collapse">
+  <li><a href="#random-error-same-procedure-different-results" id="toc-random-error-same-procedure-different-results" class="nav-link" data-scroll-target="#random-error-same-procedure-different-results"><span class="toc-section-number">6.5.1</span>  Random error: Same procedure, different results</a></li>
+  <li><a href="#systematic-error-a-tendency-to-over--or-under-estimate" id="toc-systematic-error-a-tendency-to-over--or-under-estimate" class="nav-link" data-scroll-target="#systematic-error-a-tendency-to-over--or-under-estimate"><span class="toc-section-number">6.5.2</span>  Systematic error: A tendency to over- or under-estimate</a></li>
+  <li><a href="#relative-magnitudes-of-errors-from-different-sources" id="toc-relative-magnitudes-of-errors-from-different-sources" class="nav-link" data-scroll-target="#relative-magnitudes-of-errors-from-different-sources"><span class="toc-section-number">6.5.3</span>  Relative Magnitudes of Errors from Different Sources</a></li>
+  </ul></li>
+  <li><a href="#uncertainty-how-much-error-might-there-be" id="toc-uncertainty-how-much-error-might-there-be" class="nav-link" data-scroll-target="#uncertainty-how-much-error-might-there-be"><span class="toc-section-number">6.6</span>  Uncertainty – How Much Error Might There Be?</a>
+  <ul class="collapse">
+  <li><a href="#looking-at-variability-in-your-data" id="toc-looking-at-variability-in-your-data" class="nav-link" data-scroll-target="#looking-at-variability-in-your-data"><span class="toc-section-number">6.6.1</span>  Looking at variability in your data</a></li>
+  <li><a href="#sec-uncertainty-from-data" id="toc-sec-uncertainty-from-data" class="nav-link" data-scroll-target="#sec-uncertainty-from-data"><span class="toc-section-number">6.6.2</span>  Estimating uncertainty from your data</a></li>
+  <li><a href="#estimating-uncertainty-in-other-ways-sec-uncertainty-without-data" id="toc-estimating-uncertainty-in-other-ways-sec-uncertainty-without-data" class="nav-link" data-scroll-target="#estimating-uncertainty-in-other-ways-sec-uncertainty-without-data"><span class="toc-section-number">6.6.3</span>  Estimating uncertainty in other ways {sec-uncertainty-without-data}</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">6.7</span>  Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-propagation" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Propagation of Uncertainty</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>You have probably been told (in physics labs, for example) to report all measurements along with an <strong>uncertainty</strong>. The reporting often uses the notation:</p>
+<p><span class="math display">\[
+\mbox{measurement} \pm \mbox{uncertainty} \;.
+\]</span> But what is uncertainty and how is it calculated? These are topics for this chapter.</p>
+<section id="error-and-uncertainty" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="error-and-uncertainty"><span class="header-section-number">6.1</span> Error and Uncertainty</h2>
+<p>Although many people mistakenly conflate the terms <strong>error</strong> and <strong>uncertainty</strong>, these are two different, but related concepts.<br>
+The word “error” in the context of scientific measurement has a rather different meaning from its use in everyday English. It does not mean blunder or goof (although a blunder or goof could increase the amount of experimental error). Instead, error refers to the unavoidable fact that the measurements scientists record are not exactly correct.</p>
+<p>Error is easily defined:</p>
+<div id="def-error" class="boxedText theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.1 </strong></span><span class="math display">\[
+\mbox{error} = \mbox{estimate} - \mbox{estimand}
+\]</span> or, equivalently, <span class="math display">\[
+\mbox{error} = \mbox{measurement} - \mbox{measurand}
+\]</span></p>
+</div>
+<!-- end boxedText -->
+<p>That is, error is the difference between the number we have measured or calculated and the number that calculation is attempting to estimate. In most applications, we do not know the error exactly, because we do not know the estimand. This is where uncertainty comes in.</p>
+<p><strong>Uncertainty</strong> is a numerical measure summarizing how large the error <em>might be</em>. There are several different types, or definitions, or uncertainty. The different definitions of uncertainty have in common that they are all trying to describe a statistical distribution of errors.<br>
+<!--  Typically, we arrange things so that the mean --> <!--  of this distribution is 0 (so that on average our estimates will be correct).   --> Knowing something about this distribution of the errors can tell us how close our estimates tend to be to the estimand.</p>
+<p>We will use <strong>standard uncertainty</strong> unless we say otherwise.</p>
+<div id="def-standard-uncertainty" class="boxedText theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.2 </strong></span><strong>Standard uncertainty</strong> is the (estimated) standard deviation of the distribution of errors.</p>
+</div>
+<!-- end boxedText -->
+<p>You may wonder how we can know the distribution of errors when we cannot know the error. That is a good question, which we will begin to address via an example.</p>
+</section>
+<section id="an-example-estimating-the-number-of-dimes-in-a-sack-of-dimes" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="an-example-estimating-the-number-of-dimes-in-a-sack-of-dimes"><span class="header-section-number">6.2</span> An Example: Estimating the number of dimes in a sack of dimes</h2>
+<p>Suppose you want to estimate the number of dimes in a large sack of dimes. Here is one method you could use:</p>
+<div class="enumerate">
+<ol>
+<li>Measure the weight of all the dimes in the bag by placing them (without the bag) on an appropriately sized scale. (Call this <span class="math inline">\(\hat B\)</span>, our estimate for <span class="math inline">\(B\)</span>, the actual weight of the dimes in the bag.)</li>
+<li>Measure the weight of 30 individual dimes and use those measurements to estimate the mean weight of dimes. (Call this <span class="math inline">\(\hat D\)</span>.)</li>
+<li>Combine these two estimates to compute an estimated number of dimes in the bag. (<span class="math inline">\(\hat N = \hat B / \hat D\)</span>.)</li>
+</ol>
+</div>
+<!-- end enumerate -->
+<p>Suppose that the dimes in our our bag together weigh 10.2 kg and the mean weight of our 30 measured dimes is 2.2582333. Then we would estimate the number of dimes to be <span class="math display">\[
+10200 / 2.2582333 = 4516.8051722 \;.
+\]</span> But how good is this estimate? Do we expect to be within a small handful of dimes? Might we be off by 100 or 500? Standard uncertainty provides a way to quantify this. But first, we need to calculate uncertainty for the two ingredients in this recipe: the total weight of all the dimes in the bag (<span class="math inline">\(\hat B\)</span>), and the mean weight of the 30 measured dimes (<span class="math inline">\(\hat D\)</span>).</p>
+<section id="calculating-a-standard-uncertainty-without-using-data" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="calculating-a-standard-uncertainty-without-using-data"><span class="header-section-number">6.2.1</span> Calculating a Standard Uncertainty without Using Data</h3>
+<p>We only measure the bag of dimes once (and might expect that the value observed on the digital read out would be the same if we measured it repeatedly anyway), so the distribution involved in our uncertainty calculation will be based on some assumptions about the workings of our scale. For example, we could model a reading of 10.2 kg with a <span class="math inline">\(\Unif(10.15, 10.25)\)</span>-distribution.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a><br>
+This model reflects the assumption that if the actual weight is anywhere between 10.15 and 10.25, the reading will be 10.2 and that the actual weight is equally likely to be anywhere within that range.</p>
+<p>If we interpret the 10.2 reading in this way, then the uncertainty can be calculated as the standard deviation of a <span class="math inline">\(\Unif(10.15, 10.25)\)</span>-distribution:</p>
+<p><span class="math display">\[
+u_{\hat B} = \frac{b-a}{\sqrt{12}}
+= \frac{10.25-10.15}{\sqrt{12}}
+= \frac{0.1}{\sqrt{12}}
+= 0.0288675 kg
+= 28.8675135 g
+\]</span></p>
+</section>
+<section id="calculating-a-standard-uncertainty-using-data" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="calculating-a-standard-uncertainty-using-data"><span class="header-section-number">6.2.2</span> Calculating a Standard Uncertainty Using Data</h3>
+<p>The situation for our estimated mean weight of a dime is a little different. We weighed 30 dimes, and calculated the mean mass of one dime from those data. But if we repeated the measurements many times – taking another 30 dimes, calculating the average…taking <em>another</em> 30 dimes, calculating <em>another</em> average…and so on many times…how much variability would there be in the <em>calculated averages</em>? We will learn how to estimate this quantity ourselves soon; for now, we will take it as a given that it is <span class="math inline">\(\frac{s}{\sqrt{n}}\)</span>, where <span class="math inline">\(s\)</span> is the standard deviation of one sample (the masses of 30 dimes), and <span class="math inline">\(n\)</span> is the sample size (here, 30). So the uncertainty in our mean dime weight is about: <!--  First, note that we measured the masses of 30 individual dimes, so --> <!--  we have data that can tell us something about the variability in the weights of dimes.   --> <!--  This would not be the case if we simply measured all 30 dimes at once and --> <!--  divided by 30 to get the average.  Second, we are interested in how accurately we can --> <!--  estimate the mean weight of the dimes in the sack,  --> <!--  not in how accurately we can estimate the weight of any particular dime.   --> <!--  df_stats( ~ mass, data = Dimes) --> <!--  --></p>
+<p><span class="math display">\[
+u_{\hat D} = \frac{s}{\sqrt{n}}
+= \frac{0.0220699}{\sqrt{30}}
+= 0.0040294\;.
+\]</span> So we would report our estimate for the mean weight of a dime as <span class="math display">\[
+2.2582333 \pm 0.0040294 \;.
+\]</span></p>
+<p>This notation looks like a confidence interval, and indeed it is a confidence interval. Since we are using <span class="math inline">\(t_* = 1\)</span>, this is approximately a 68% confidence interval:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(<span class="dv">1</span>, <span class="at">df =</span> <span class="dv">29</span>) <span class="sc">-</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="at">df =</span> <span class="dv">29</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.674418</code></pre>
+</div>
+</div>
+</section>
+<section id="propagating-error-by-the-delta-method" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="propagating-error-by-the-delta-method"><span class="header-section-number">6.2.3</span> Propagating Error by the Delta Method</h3>
+<p>Now that we have computed the uncertainties for <span class="math inline">\(B\)</span> and <span class="math inline">\(D\)</span>, we need to find a way to combine them to determine the uncertainty for <span class="math inline">\(B/D\)</span>. For this we use a linear approximation of the function <span class="math inline">\(f(B,D) = B/D\)</span>.</p>
+<p>Recall from calculus that <span class="math display">\[
+f(x,y) \approx f(a, b)
++
+\frac{\partial f}{\partial x} (x-a)
++
+\frac{\partial f}{\partial y} (y-b) \;,
+\]</span> where the partial derivatives are evaluated at <span class="math inline">\((x,y) = (a,b)\)</span>.</p>
+<p>If we apply this to our estimators <span class="math inline">\(\hat B\)</span> and <span class="math inline">\(\hat D\)</span>, we get <span class="math display">\[
+f(\hat B,\hat D) \approx f( B, D )
++
+\frac{\partial f}{\partial \hat B} (\hat B- B)
++
+\frac{\partial f}{\partial \hat D} (\hat D- D)
+\;.
+\]</span> <!-- \iffalse --> <!-- $$ --> <!-- f(\hat B,\hat D) \approx f( \mu_{\hat B}, \mu_{\hat D})  --> <!-- + --> <!-- \frac{\partial f}{\partial \hat B} (\hat B-\mu_{\hat B}) --> <!-- + --> <!-- \frac{\partial f}{\partial \hat D} (\hat D-\mu_{\hat D}) --> <!-- \;. --> <!-- $$ --> <!-- \fi --> <!-- where the partial derivatives are evaluated at $(\hat B, \hat D) = (B,D)$. --></p>
+<p>From this it follows that <span class="math display">\[
+\begin{aligned}
+    \E(f(\hat B,\hat D)) &amp;\approx
+    \E\left(f( B, D)\right)
++
+\E\left( \frac{\partial f}{\partial {\hat B}} (\hat B- B) \right)
++
+\E\left( \frac{\partial f}{\partial \hat D} (\hat D- D) \right)
+\\
+&amp;\approx f(B,D) + 0 + 0
+\\
+&amp;= f(B,D) \;.
+\end{aligned}
+\]</span></p>
+<p>(The 0’s come because our estimators are approximately unbiased: <span class="math inline">\(\E(\hat B) \approx B\)</span> and <span class="math inline">\(\E(\hat D) \approx D\)</span>.) This says that <span class="math inline">\(\hat B/ \hat D\)</span> is a reasonable estimate for <span class="math inline">\(B/D\)</span> – it is approximately unbiased.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>But we really want an expression for the uncertainty – the variance (which we will turn into a standard deviation). We use similar logic to the expectation calculation above, and we will need to use the finding (not proven here) that for constants <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> and random variable <span class="math inline">\(X\)</span>, <span class="math inline">\(Var(aX+b) = a^2 Var(X)\)</span>. Assuming <span class="math inline">\(\hat B\)</span> and <span class="math inline">\(\hat D\)</span> are independent,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> a reasonable assumption in this situation, we get</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \\[5mm]
+\Var(f(\hat B,\hat D))
+&amp;\approx
+\Var\left(f( B, D)\right)
++
+\Var\left( \frac{\partial f}{\partial \hat B} (\hat B - B) \right)
++
+\Var\left( \frac{\partial f}{\partial \hat D} (\hat D - D) \right)
+\\
+&amp;=
+0
++
+\left(\frac{\partial f}{\partial \hat B}\right)^2 \Var(\hat B)
++
+\left(\frac{\partial f}{\partial \hat D}\right)^2 \Var(\hat D)
+\end{aligned}
+\]</span></p>
+<p>where again we evaluate the partial derivatives with <span class="math inline">\(\hat{B}\)</span> and <span class="math inline">\(\hat{D}\)</span>.</p>
+<p>Applying this to <span class="math inline">\(f(\hat B,\hat D) = \hat B/\hat D\)</span>, we get <span class="math display">\[
+\begin{aligned}
+    \frac{\partial f}{\partial \hat B} &amp;= \frac{1}{\hat D}
+    \\
+    \frac{\partial f}{\partial \hat D} &amp;= \frac{-\hat B}{\hat D^2}
+\end{aligned}
+\]</span> So our uncertainty for the estimated number of dimes (remember, we want the standard deviation, which will be the square root of the variance estimate we just derived) is <span class="math display">\[
+\sqrt{
+\frac{1}{2.2582333^2} \cdot 28.8675135^2
++ \left(\frac{1.02\times 10^{4}}{2.2582333^2}\right)^2 \cdot 0.0040294^2}
+=
+15.1117467 \;,
+\]</span> and we would report our estimated number of dimes as <span class="math display">\[
+4517 \pm 15 \; \mbox{dimes} \;.
+\]</span></p>
+<p>The method described in this example is generally referred to as the <strong>Delta Method</strong>. Often scientists and engineers who are using this method don’t use the hat notation to distinguish between estimates/estimators and estimands. In the box below, we’ve dropped the hats.</p>
+</section>
+<section id="the-delta-method-for-independent-estimates" class="level3 unnumbered boxedText">
+<h3 class="unnumbered anchored" data-anchor-id="the-delta-method-for-independent-estimates">The Delta Method for independent estimates</h3>
+<p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be independent estimates with uncertainties <span class="math inline">\(u_{X}\)</span> and <span class="math inline">\(u_{Y}\)</span>,<br>
+and let <span class="math inline">\(W = f(X,Y)\)</span>. Then the uncertainty in the estimate for <span class="math inline">\(W\)</span> can be estimated as <span class="math display">\[
+    u_{W} \approx
+    \sqrt{
+\left(\frac{\partial f}{\partial X}\right)^2 u_X^2
++
+\left(\frac{\partial f}{\partial Y}\right)^2 u_Y^2
+    }
+\]</span> where the partial derivatives are evaluated using estimated values of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>The Delta Method can be extended to functions of more (or fewer) than two variables by adding (or removing) terms. Slightly more complicated formulas exist to handle situations where the estimators are not independent (but we will not cover those in this course).</p>
+<p>Because this method is based on using a linear approximation to <span class="math inline">\(f\)</span>, it works better when the linear approximation is better. In particular, when <span class="math inline">\(\frac{\partial^2 f}{\partial X^2}\)</span> or <span class="math inline">\(\frac{\partial^2 f}{\partial Y^2}\)</span> are large near the estimated values of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, the approximations might not be very good.</p>
+</section>
+<!-- end boxedText -->
+<section id="estimating-uncertainty-via-simulations" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="estimating-uncertainty-via-simulations"><span class="header-section-number">6.2.4</span> Estimating Uncertainty via Simulations</h3>
+<p>We can also estimate the uncertainty in the estimated number of dimes using simulations.</p>
+<div class="cell" data-hash="06-propagation_cache/html/dimes-sim_bdc9c429f67d09f230c6ad199225884b">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10000</span>, <span class="dv">10150</span>, <span class="dv">10250</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>SampleMeans <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">10000</span>) <span class="sc">*</span> <span class="fu">mean</span>( <span class="sc">~</span> mass, <span class="at">data =</span> <span class="fu">resample</span>(Dimes) )</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(SampleMeans ,<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.257933","_rn_":"1"},{"1":"2.262667","_rn_":"2"},{"1":"2.259167","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> SampleMeans<span class="sc">$</span>mean</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> B <span class="sc">/</span> D</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">histogram</span>( <span class="sc">~</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="06-propagation_files/figure-html/dimes-sim-1.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="06-propagation_files/figure-html/dimes-sim-2.png" class="img-fluid" width="432"></p>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15.06229</code></pre>
+</div>
+</div>
+<p>A few explanatory notes regarding the computation above.</p>
+<div class="enumerate">
+<ol>
+<li><code>resample()</code> samples from a data frame <em>with replacement</em>. That is, some of the rows may appear more than once, others not at all. Resampling is a common way to estimate a sampling distribution from a single sample. <code>resample()</code> can also be used on a “bare” vector (that is, a vector of data points not contained within a data frame, as exemplified below).</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)    <span class="co"># some items may be chosen more than once</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  7  8  6  1 10  9  8  9  6  1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)      <span class="co"># no item may be chosen more than once, so this just shuffles</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  5  9  4  1  6  3  7 10  2  8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shuffle</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)     <span class="co"># this also shuffles</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  8  9  2  5  4  1  6  7 10  3</code></pre>
+</div>
+</div>
+<ol>
+<li>When <code>do()</code> doesn’t know what to call the result of what it is “doing”, it calls it <code>result</code>. (Sometimes <code>do()</code> can figure out a better name.)</li>
+<li>The simulated distribution of <span class="math inline">\(N = B/D\)</span> is unimodal, roughly symmetric, and reasonably well approximated by a normal distribution (but clearly not exactly normal).<br>
+The Delta Method does not guarantee that the distribution will be approximately normal – it only estimates the variance. Sometimes the distribution will be skewed or have heavier or lighter tails than a normal distribution.</li>
+<li>The results of the Delta Method and simulation are very close. Each is an acceptable method for approximating the same thing, so this is not surprising.</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</section>
+</section>
+<section id="reporting-measurements-and-estimates" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="reporting-measurements-and-estimates"><span class="header-section-number">6.3</span> Reporting Measurements and Estimates</h2>
+<section id="what-to-record-what-to-report" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="what-to-record-what-to-report"><span class="header-section-number">6.3.1</span> What to record, What to report</h3>
+<p>When you record the results of a measurement for which there is an <em>a priori</em> estimate of uncertainty, the uncertainty should be recorded along with the measurement itself. Similarly, reports of quantities estimated from data should also include estimated uncertainties.</p>
+<p>As a general guideline, a properly reported scientific estimated quantity includes the following five elements:</p>
+<div class="enumerate">
+<ol>
+<li>A number (the estimate)</li>
+<li>Units (e.g., m or kg or seconds)</li>
+<li>A statement about how it was measured or calculated</li>
+<li>A statement about most likely sources of (the largest components of) error</li>
+<li>An estimate of the uncertainty</li>
+</ol>
+</div>
+<!-- end enumerate -->
+<div id="exm-pendulum" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 6.1 </strong></span>If you measured the length of a pendulum using a meter stick, you might report the measurement this way:</p>
+<div class="itemize">
+<ol>
+<li><p>Length <span class="math inline">\(= 0.834 \pm 0.002\)</span> m</p></li>
+<li><p>Measured with a meter stick from pivot point to the center of the steel weight.</p></li>
+<li><p>Uncertainty reflects the limited accuracy of measurement with a meter stick.</p></li>
+</ol>
+</div>
+<!-- end itemize -->
+</div>
+<!-- end example -->
+<p>In plots, the number is given by the scales of the plot, the units are typically included in the axes labels, uncertainties may be represented by “error bars”, and a statement describing the method of measurement or calculation should appear in the plot legend.</p>
+</section>
+<section id="how-many-decimal-places" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="how-many-decimal-places"><span class="header-section-number">6.3.2</span> How many decimal places?</h3>
+<p>Numerical values and their uncertainties should be recorded to the proper number of decimal places. Most software either reports too many significant digits or rounds numbers too much. For correct professional presentation of your data, follow these guidelines:</p>
+<div class="enumerate">
+<ol>
+<li>The experimental uncertainty should be rounded to one significant figure unless the leading digit is a 1, in which case, it is generally better to use two digits.</li>
+<li>A measurement should be displayed to the same number of decimal places as the uncertainty on that measurement.<br>
+</li>
+</ol>
+</div>
+<!-- end enumerate -->
+<p>Note carefully the difference between significant figure and decimal place.<br>
+The following examples will help:</p>
+<div id="exm-uncertainy-reporting-1" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 6.2 </strong></span>The timer reports a value of 0.3451 seconds. The uncertainty on the measurement is 0.0038 seconds. By Rule 1, the uncertainty should be reported to one significant figure, so we round it to 0.004 seconds. By Rule 2, the measurement must also be rounded to the third decimal place. Thus, the measurement should be reported as <span class="math inline">\(0.345\pm0.004\)</span> seconds.</p>
+</div>
+<!-- end example -->
+<div id="exm-uncertainy-reporting-2" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 6.3 </strong></span>The measured value is <span class="math inline">\(7.92538 \cdot 10^4\)</span>, and its uncertainty is <span class="math inline">\(2.3872 \cdot 10^2\)</span>. By Rule 1, the uncertainty should be rounded to one significant figure, so <span class="math inline">\(2 \cdot 10^2\)</span>. By Rule 2, we report the measurement to the same decimal place as the uncertainty, so <span class="math inline">\(7.93 \cdot 10^4\)</span>. Putting it together, the measurement should be reported as <span class="math inline">\((7.93\pm0.02) 10^4\)</span>.</p>
+</div>
+<!-- end example -->
+<div id="exm-uncertainty" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 6.4 </strong></span>The estimated value is <span class="math inline">\(89.231\)</span>, and its uncertainty is <span class="math inline">\(0.1472\)</span>. By Rule 1, the uncertainty should be rounded to two significant figures, so <span class="math inline">\(0.15\)</span>. By Rule 2, we report the estimate to the same decimal place as the uncertainty, so <span class="math inline">\(89.23 \pm 0.15\)</span>.</p>
+</div>
+<!-- end example -->
+<!-- %For more on reporting uncertainties and rounding, see section \ref{sec:3F} -->
+</section>
+<section id="reporting-numbers-in-a-table" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="reporting-numbers-in-a-table"><span class="header-section-number">6.3.3</span> Reporting numbers in a table</h3>
+<p>Multiple similar measurements should be reported in a table. The column headings should clearly and concisely indicate the quantity in each column; the column heading must include the units. Uncertainties should be listed in a separate column, located just to the right of the measurement column. (Sometimes, uncertainties are listed in parentheses after the estimate instead; just make sure the header and legend of the table makes it clear what values are being reported, and where.)</p>
+<div id="exm-kinetic-energy-uncertainty" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 6.5 </strong></span>A lab group calculated these numbers for kinetic energy and its uncertainty:</p>
+<p>Kinetic Energy | uncertainty |<br>
+0.8682 | 0.059 |<br>
+1.0661 | 0.071 |<br>
+1.0536 | 0.070 |<br>
+1.3881 | 0.058 |<br>
+0.8782 | 0.108 |</p>
+<p>This should be reported with appropriate rounding as</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Kinetic Energy</th>
+<th>uncertainty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.87</td>
+<td>0.06</td>
+</tr>
+<tr class="even">
+<td>1.07</td>
+<td>0.07</td>
+</tr>
+<tr class="odd">
+<td>1.05</td>
+<td>0.07</td>
+</tr>
+<tr class="even">
+<td>1.39</td>
+<td>0.06</td>
+</tr>
+<tr class="odd">
+<td>0.88</td>
+<td>0.11</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- end example -->
+</section>
+</section>
+<section id="sec-propagation-examples" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-propagation-examples"><span class="header-section-number">6.4</span> Additional Propagation of Uncertainty Examples</h2>
+<div class="example">
+<p><strong>Q.</strong> The side of a square is measured and reported as <span class="math inline">\(12.3 \pm 0.2\)</span> mm. How should the area be reported?</p>
+<p><strong>A.</strong> Our estimate for the area is <span class="math inline">\(12.3^2 = 151.29\)</span>. Our transformation is <span class="math inline">\(f(x) = x^2\)</span>, so <span class="math inline">\(\Partial{f}{x} = f'(x) = 2x\)</span>.<br>
+Applying the Delta Method, our uncertainty is</p>
+<p><span class="math display">\[
+    \sqrt{ (2 (12.3))^2 (0.2)^2 } = 2 (12.3)(0.2) = 4.92
+\]</span> and we report the area as <span class="math inline">\(151 \pm 5\)</span>.</p>
+<p>It is worth looking at the relative uncertainty of the linear and area measurements.</p>
+<p><span class="math display">\[
+\begin{aligned}
+        \frac{0.2}{12.3} &amp;= 0.0162602
+        \\
+        \frac{5}{151}
+        &amp;= 0.0325
+\end{aligned}
+\]</span></p>
+<p>So the relative uncertainty of the area measurement is twice the relative uncertainty of the linear measurement.</p>
+</div>
+<!-- end example -->
+<p>The preceding example demonstrates a simplified version of the Delta Method formula when we are dealing with only one estimator.</p>
+<div class="boxedText">
+<pre><code>%s{\textsf{\bfseries The Delta Method for one estimator}}</code></pre>
+<p>Let <span class="math inline">\(X\)</span> be an estimator with uncertainty <span class="math inline">\(u_{X}\)</span> and let <span class="math inline">\(\hat W = f(\hat X)\)</span>. Then the uncertainty in the estimate <span class="math inline">\(W\)</span> can be estimated as</p>
+<p><span class="math display">\[
+    u_{W} \approx
+\left|\frac{df}{dX}\right| u_X
+\]</span> where the derivative is evaluated using the estimated value of <span class="math inline">\(X\)</span>, <span class="math inline">\(\hat{X}\)</span>.</p>
+</div>
+<!-- end boxedText -->
+<div id="exm-box1" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 6.6 </strong></span><strong>Q.</strong> The sides of a rectangle are measured and reported as <span class="math inline">\(12.3 \pm 0.2\)</span> mm and <span class="math inline">\(6.3 \pm 0.1\)</span> mm. How should the area be reported?</p>
+<p><strong>A.</strong> Our estimate for the area is <span class="math inline">\(12.3 \cdot 6.3 = 77.49\)</span>.</p>
+<p>Now we need to estimate the uncertainty. Our transformation is <span class="math inline">\(f(x,y) = xy\)</span>, so <span class="math inline">\(\frac{\partial f}{\partial x} = y\)</span> and <span class="math inline">\(\frac{\partial f}{\partial y} = x\)</span>.</p>
+<p><span class="math display">\[
+\sqrt{ 6.3^2 \cdot 0.2^2 + 12.3^2 \cdot 0.1^2 } =
+1.7608237
+\]</span></p>
+<p>and we should report the area as</p>
+<p><span class="math display">\[
+77.5 \pm
+    1.8
+\]</span> <!-- or --> <!-- $$ --> <!-- 77 \pm 2  --> <!-- $$ --></p>
+</div>
+<!-- end example -->
+<p>Sometimes it is more convenient to think about <strong>relative uncertainty</strong>:</p>
+<div id="def-relative-uncertainty" class="boxedText theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.3 (Relative uncertainty) </strong></span><span class="math display">\[
+\mbox{relative uncertainty}
+= \frac{ \mbox{uncertainty of measurement} }{\mbox{magnitude of measurement}}
+\]</span> For example, if we measure a mass to be <span class="math inline">\(10.2\)</span> g with an uncertainty of <span class="math inline">\(0.3\)</span> g, the relative uncertainty is</p>
+<p><span class="math display">\[
+\frac{0.3}{10.2}
+= 0.0294118
+= 2.9 %
+\]</span> Often it is the case that uncertainty grows with the magnitude of the estimate, and relative uncertainty is a way of comparing the uncertainty in large measured values with the uncertainty of small measured values on a more equal basis. Relative uncertainty is also independent of the units used.</p>
+</div>
+<!-- end boxedText -->
+<p>In the example above, we get a nice formula if we compute relative uncertainty instead of absolute uncertainty. Let <span class="math inline">\(P = XY\)</span> where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have uncertainties <span class="math inline">\(u_X\)</span> and <span class="math inline">\(u_Y\)</span>. Then <span class="math inline">\(\Partial{P}{X} = Y\)</span> and <span class="math inline">\(\Partial{P}{Y} = X\)</span>, so</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{u_P}{P}
+&amp; = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{P^2} }
+\\
+&amp; = \sqrt{ \frac{ Y^2 u_X^2 + X^2 u_Y^2}{X^2Y^2} }
+\\
+&amp; = \sqrt{ \frac{ u_X^2}{X^2} + \frac{u_Y^2}{Y^2} }
+\\
+&amp; = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
+\end{aligned}
+\]</span> which gives a Pythagorean identity for the relative uncertainties.</p>
+<p>The computations are the same for any product.<br>
+So this Pythagorean identity for relative uncertainties can be applied to estimate uncertainties for quantities such as area (length <span class="math inline">\(\times\)</span> width), work (force <span class="math inline">\(\times\)</span> distance), distance (velocity <span class="math inline">\(\times\)</span> time), etc.</p>
+<div id="exm-relative-uncertainty-rectangle" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 6.7 </strong></span><strong>Q.</strong> Use relative uncertainty to estimate the area of the rectangle in <a href="#exm-box1">Example&nbsp;<span>6.6</span></a>.</p>
+<p><strong>A.</strong> The relative uncertainties in the length and width are <span class="math display">\[
+    \frac{0.2}{12.3} = 0.0162602 \ \tand \  
+    \frac{0.1}{6.3} = 0.015873
+    \;.
+\]</span> So the relative uncertainty in the area estimation is <span class="math display">\[
+    \sqrt{
+    (0.0162602)^2 +  (0.015873)^2 }
+    =
+    0.0227232
+    \;.
+\]</span> Now we solve <span class="math display">\[
+    \frac{u_A}{77.49} = 0.0227232
+\]</span> to get <span class="math display">\[
+    u_A = (77.49) (0.0227232) =
+    1.7608237
+    \;.
+\]</span> Notice that this matches the result from <a href="#exm-box1">Example&nbsp;<span>6.6</span></a>.</p>
+</div>
+<!-- end example -->
+<div id="exm-resistors" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 6.8 </strong></span><strong>Q.</strong> When two resistors with resistances <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> are connected in parallel, the combined resistance satisfies <span class="math display">\[
+R = \frac{R_1 R_2}{R_1 + R_2}
+\]</span> Suppose the resistances of the two resistors are reported as <span class="math inline">\(20 \pm 0.7\)</span> ohms and <span class="math inline">\(50 \pm 1.2\)</span> ohms. How should you report the combined resistance?</p>
+<p><strong>A.</strong> Our estimate is <span class="math inline">\(\hat R = \frac{ 20 \cdot 50}{ 20 + 50} = 14.2857143\)</span>. To estimate the uncertainty, we need the partial derivatives <span class="math inline">\(\Partial{R}{R_1}\)</span> and <span class="math inline">\(\partial{R}{R_2}\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+        \Partial{R}{R_1} &amp;= \frac{ (R_1+R_2)R_2 - (R_1 R_2) }{(R_1 + R_2)^2}
+        \\
+        &amp;= \left( \frac{ R_2}{R_1 + R_2}\right)^2
+        \\
+        &amp;= \left( \frac{ 50}{20 + 50}\right)^2  = 0.5102041
+\end{aligned}
+\]</span> Similarly, <span class="math display">\[
+\begin{aligned}
+\Partial{R}{R_2}
+&amp;= \left( \frac{ R_1}{R_1 + R_2}\right)^2
+\\
+&amp;= \left( \frac{ 20}{20 + 50}\right)^2 = 0.0816327
+\end{aligned}
+\]</span></p>
+<p>So our estimated uncertainty is given by <span class="math display">\[
+    u_R = \sqrt{ (0.5102041)^2 (0.7)^2 + (0.0816327)^2)(1.2^2) }
+    = 0.3703337 \;.
+\]</span> So we report the combined resistance as</p>
+<p><span class="math display">\[
+14.3 \pm 0.4
+\]</span></p>
+</div>
+<!-- end example -->
+</section>
+<section id="experimental-error-and-its-causes" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="experimental-error-and-its-causes"><span class="header-section-number">6.5</span> Experimental Error and Its Causes</h2>
+<p>There are many reasons for experimental error, and it is important to identify potential causes for experimental error, to reduce their effects when possible, and to handle them appropriately in any case.</p>
+<section id="random-error-same-procedure-different-results" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="random-error-same-procedure-different-results"><span class="header-section-number">6.5.1</span> Random error: Same procedure, different results</h3>
+<p>Even if measurements are taken by carefully trained scientists using highly precise instruments, repeated measurements of the “same thing” may not always give the same value.</p>
+<p>All data collection is done in the context of variability, and statistics allows us to interpret our data in this context.</p>
+<section id="the-moving-target" class="level4" data-number="6.5.1.1">
+<h4 data-number="6.5.1.1" class="anchored" data-anchor-id="the-moving-target"><span class="header-section-number">6.5.1.1</span> The moving target</h4>
+<p>One reason that a measurement may change is that what we are measuring may be changing. Some quantities depend on environmental factors (like temperature and atmospheric pressure, for example) that may change between measurements. This sort of variability can often be reduced by attempting to control factors that might lead to such variability. For example, a delicate experiment might be conducted in a climate controlled chamber. Another solution is to use a model that includes additional variables for these quantities. Often a combination of these two approaches is used.</p>
+<p>If measurements are made using similar (but not identical) objects, then differences among those objects may lead to variability in measurements. If measurements are made on a sample of living things, the variability from one individual to the next could be quite large. But even in the physical sciences, each run of an experiment may require the use of different ``consumables” that have slightly different properties that affect our measurements.</p>
+<!-- \iffalse -->
+<!-- \subsubsection{Measurement error} -->
+<!-- Another source of variability is the measuring process itself.  Every -->
+<!-- measurements are made on a sample of living things, the variability from one -->
+<!-- individual to the next could be quite large.  But even in the physical -->
+<!-- sciences, each run of an experiment may require the use of different -->
+<!-- "consumables" that have slightly different properties that affect  -->
+<!-- our measurements. -->
+<!-- \fi -->
+</section>
+<section id="measurement-error" class="level4" data-number="6.5.1.2">
+<h4 data-number="6.5.1.2" class="anchored" data-anchor-id="measurement-error"><span class="header-section-number">6.5.1.2</span> Measurement error</h4>
+<p>Another source of error is the measuring process itself. Every measuring device has its limits, as do the humans who are using them. If you repeatedly timed how long it takes for a steel ball to fall from a fixed height, it is quite likely that you would not get exactly the same result each time. The amount of variability would likely increase if several different students were each asked to measure the time as different students might employ slightly different methods, or be more or less skillful in their measuring.</p>
+<p>The variability from one measurement to another that would exist even if there were no moving target effect is called <strong>measurement error</strong>. In practice, it can be difficult or impossible to isolate the moving target effect from measurement error, so they may be combined into one source of variability which we will call <strong>random error</strong>. In physics, the moving target effect is often small – at least in carefully designed experiments – so that random error is dominated by the difficulties of measuring the quantity under study. In other disciplines, the relative magnitudes may be reversed.</p>
+<p>The best way to estimate the effects of random error is by making repeated measurements and comparing them. The <strong>discrepancies</strong> (differences between measurements) provide an indication of the amount of random error.</p>
+<p>Sometimes additional information can also be used to help us estimate random error. This can be especially important when our ability to take repeated measurements is limited or when limitations of our measurement apparatus make it impossible to directly observe the effects of random error.</p>
+</section>
+<section id="invisible-measurement-error" class="level4" data-number="6.5.1.3">
+<h4 data-number="6.5.1.3" class="anchored" data-anchor-id="invisible-measurement-error"><span class="header-section-number">6.5.1.3</span> Invisible measurement error</h4>
+<p>Although there is no theoretical limit to the precision of a numerical quantity like mass, time, velocity, etc., every measurement device has limited precision. Because of this lack of precision in our measurement device, it may well be that repeated measuremets will all look identical.<br>
+<em>But this does not mean that they are exactly correct.</em></p>
+<p>For example, if we measure temperature using a digital thermometer that has a display showing tenths of a degree C, then any temperature between 57.15 and 57.25 will be displayed as 57.2. Any variability within that range will be invisible to our thermometer. Similarly, if we meaure with a ruler with a 1/8 inch scale, we can use interpolation to get not only to the nearest 1/8 inch, but likely to the nearest 1/16 inch or (with some practice) perhaps to the nearest 1/32 inch. But beyond that, we really cannot tell. If more precise measurements are required, a different measuring tool will need to be used.</p>
+<p>If other sources of variability are small, this kind of measurement error may completely mask them.</p>
+</section>
+</section>
+<section id="systematic-error-a-tendency-to-over--or-under-estimate" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="systematic-error-a-tendency-to-over--or-under-estimate"><span class="header-section-number">6.5.2</span> Systematic error: A tendency to over- or under-estimate</h3>
+<p>Even if your target were not moving, and even if there were no variability in measurements from time to time, and even if our measurement apparatus were perfectly precise, there is still a chance that a measurement might not give the value we are searching for because the procedure used might tend to give results that over- or under-estimate the quantity being measured. This kind of error may be referred to as either <strong>bias</strong> or <strong>systematic error</strong>.</p>
+<div id="def-bias" class="boxedText theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.4 </strong></span><strong>Bias</strong> or <strong>Systematic error</strong> refers to the tendency to either over- or under-estimate a quantity. It is a tendency to “be off in a particular direction”.</p>
+</div>
+<!-- end boxedText -->
+<section id="calibration-errors" class="level4" data-number="6.5.2.1">
+<h4 data-number="6.5.2.1" class="anchored" data-anchor-id="calibration-errors"><span class="header-section-number">6.5.2.1</span> Calibration errors</h4>
+<p>Perhaps the easiest type of systematic error to understand is <strong>calibration error</strong>. If a measuring device is not properly calibrated, the resulting measurements may be too large or too small. For example, if a timing device uses an internal clock that runs a bit slow, it will tend to underestimate times. It might be possible to correct for this bias by performing calibration exercises comparing this timing device to another (more accurate) device. If several similar timing devices systematically disagree, but there is no reference to calibrate with, then we have evidence that at least some of the devices are introducing systematic error, but we may not know which ones or how much.</p>
+<p>Calibrating equipment and procedures by using them to measure or compute standard quantities is an important part of quality scientific experimentation because it helps reduce the effects of systematic bias.</p>
+</section>
+<section id="design-flaws" class="level4" data-number="6.5.2.2">
+<h4 data-number="6.5.2.2" class="anchored" data-anchor-id="design-flaws"><span class="header-section-number">6.5.2.2</span> Design flaws</h4>
+<p>Poorly designed experiments can also introduce systematic error. For example, imagine an experiment where a steel ball is dropped from a platform at different heights and the time is recorded until the ball hits the ground.<br>
+To save time, the researchers set the platform at a specified height and drop the ball multiple times before moving the platform to a new height and repeating. Using this method, any error in measuring the height of the platform will affect all the drops from that height <em>in the same way</em>. This introduces an unknown amount of systematic error into the measurements taken at each height. An alternative design in which the heights are done in random order and in which the platform height is reset before each drop would likely have somewhat more random error but would avoid this source of systematic error.</p>
+</section>
+<section id="dealing-with-systematic-error" class="level4" data-number="6.5.2.3">
+<h4 data-number="6.5.2.3" class="anchored" data-anchor-id="dealing-with-systematic-error"><span class="header-section-number">6.5.2.3</span> Dealing with systematic error</h4>
+<p>Systematic error is generally more difficult to handle than random error in part because there is often no good way to measure how large systematic error might be or even to detect that it is occurring.</p>
+</section>
+</section>
+<section id="relative-magnitudes-of-errors-from-different-sources" class="level3" data-number="6.5.3">
+<h3 data-number="6.5.3" class="anchored" data-anchor-id="relative-magnitudes-of-errors-from-different-sources"><span class="header-section-number">6.5.3</span> Relative Magnitudes of Errors from Different Sources</h3>
+<p>We have identified several potential sources of error.<br>
+<!-- In the next section we will learn --> <!-- how to quantify the uncertainty that results.  But even without quantified methods,  --> It is good to get in the habit of qualitatively determining which sources you expect to contribute relatively larger and smaller amounts of error. Often we can ignore the sources of relatively smaller potential error and focus our attention on the sources of relatively larger potential error.</p>
+</section>
+</section>
+<section id="uncertainty-how-much-error-might-there-be" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="uncertainty-how-much-error-might-there-be"><span class="header-section-number">6.6</span> Uncertainty – How Much Error Might There Be?</h2>
+<p>In <a href="#sec-propagation-examples"><span>Section&nbsp;6.4</span></a> we did several examples of propagation of uncertainty. But uncertainty cannot be propagated to derived estimates unless we already have estimated uncertainties for the components of the derivation. Where do these uncertainty estimates come from?</p>
+<p>As we have mentioned before, it is not possible to measure error directly.<br>
+<!--  This makes dealing with error a bit tricky.  In our dimes example we illustrated --> <!--  two common ways that uncertainty estimates are obtained.  --> If we knew the amount of an error exactly, we would correct for it and obtain the exact, correct estimate of the value we were trying to measure.<br>
+Since we do not know the error exactly, we have to try to use our data (and our prior knowledge about the situation) to try to estimate it. In this section we focus our attention on this part of the uncertainty calculation.</p>
+<section id="looking-at-variability-in-your-data" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="looking-at-variability-in-your-data"><span class="header-section-number">6.6.1</span> Looking at variability in your data</h3>
+<p>If you have repeated measurements, a histogram, boxplot, or density plot of these measurements can provide a visual representations that shows both what is “typical” or “average” and how much variability there is in the data.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-variability-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-propagation_files/figure-html/fig-variability-1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.1: Three graphical representations of the same 25 measurements</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-variability-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-propagation_files/figure-html/fig-variability-2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.2: Three graphical representations of the same 25 measurements</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-variability-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-propagation_files/figure-html/fig-variability-3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.3: Three graphical representations of the same 25 measurements</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In addition, graphical displays of your data may help isolate outliers – values that don’t seem to fit the pattern of the rest of the data. Outliers should not be removed from your data without furhter investigation. You need to know why these values are different from the rest. Was there a mistake in the measurement? Was the value recorded incorrectly (decimal point in the wrong place, wrong units, transposed digits, typo)? Or was there something different going on – so that the potential outlier is <em>really</em> an important, informative data point that is trying to tell you something about the process you are measuring? An outlier might be the key observation in your data set – don’t throw it away without investigating.</p>
+</section>
+<section id="sec-uncertainty-from-data" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="sec-uncertainty-from-data"><span class="header-section-number">6.6.2</span> Estimating uncertainty from your data</h3>
+<p>Whenever possible, you should make multiple measurements of the same phenomenon. The variability among these measurements allows us to estimate the uncertainty. If we are using the mean of multiple measurements as our estimate, then the uncertainty is the “standard error of the mean” (which we will derive in the following chapter):</p>
+<p><span class="math display">\[
+SE = \frac{s}{\sqrt{n}}
+\]</span> This is how we estimated the uncertainty in our estimate for the mean weight of a dime.</p>
+<p>In other more complicated study designs, some other standard error formula may be used.</p>
+</section>
+<section id="estimating-uncertainty-in-other-ways-sec-uncertainty-without-data" class="level3" data-number="6.6.3">
+<h3 data-number="6.6.3" class="anchored" data-anchor-id="estimating-uncertainty-in-other-ways-sec-uncertainty-without-data"><span class="header-section-number">6.6.3</span> Estimating uncertainty in other ways {sec-uncertainty-without-data}</h3>
+<p>Estimating uncertainty from data is only possible if</p>
+<div class="itemize">
+<ul>
+<li>You have multiple measurements from which to estimate the variability, and</li>
+<li>The measurements actually vary (aren’t masked by imprecise measuring devices, for example).</li>
+</ul>
+</div>
+<!-- end itemize -->
+<p>Frequently, these conditions are not met, but we still want to quantify the uncertainty.</p>
+<!-- #### Overcoming lack of measurement precision -->
+<section id="the-uniform-model-for-measurement-imprecision" class="level4" data-number="6.6.3.1">
+<h4 data-number="6.6.3.1" class="anchored" data-anchor-id="the-uniform-model-for-measurement-imprecision"><span class="header-section-number">6.6.3.1</span> The uniform model for measurement (im)precision</h4>
+<p>There are many measuring devises that provide limited precision so that the best we may be able to say is that we know the measured value to be in some interval <span class="math inline">\([a,b]\)</span>. This would be the case for measuring devices with digital displays, for example.<br>
+Imagine a device that displays 8.03 on its digital display.<br>
+Presumably, this means that the actual measurement can lie anywhere between 8.025 and 8.035. This value has been rounded for digital display, and we have no way of knowing where within that interval the value might be.</p>
+<p>We don’t want to report the uncertainty as <span class="math inline">\(b-a\)</span> or even <span class="math inline">\((b-a)/2\)</span>. These would be overestimates of the “average” amount of error. Here, we aren’t looking for an upper bound on the potential error; we want to estimate something like the average amount of error.</p>
+<p>In this case we can estiamte a standard uncertainty based on the <strong>uniform distribution</strong>.<br>
+Recall, a uniform distribution is one in which every value in some interval is “equally likely”. A uniform distribution has standard deviation <span class="math inline">\(s = \frac{b-a}{\sqrt{12}}\)</span>, so we will use this as our estimate for standard uncertainty as well. Notice that <span class="math inline">\(\frac{2}{\sqrt{12}} = \frac{1}{\sqrt{3}} = 0.5773503\)</span>. This means that adding and subtracting one standard uncertainty from the center of the interval <span class="math display">\[
+\frac{a+b}{2} \pm \frac{b-a}{\sqrt{12}}
+\]</span> will cover about 58% of the interval. This is quite a bit less than the 68% covered by the central portion of a normal distribution (within 1 standard deviation of the mean). For a “back of the envelope” computation, to use an uncertainty with a similar amount of “coverage” to the “coverage” that the standard deviation has for the normal distribution, we might choose to use the approximation <span class="math inline">\(\frac{b-a}{\sqrt{12}} \approx \frac{b-a}{3}\)</span>, since this will slightly over-estimate the uncertainty and lead to a central covering probability of <span class="math inline">\(2/3 \approx 68\)</span>%.</p>
+<p>This same idea can be used when working with analog scales, but in this case, we typically can see that the value is closer to one end than the other or closer to the center than to the edges. This reduces our uncertainty by a factor of 2. For example, given a ruler marked in mm, if we can tell than a reading is closer to 12.3 mm than it is to 12.4 mm, then we are saying we know the value is in the interval <span class="math inline">\([12.3, 12.35]\)</span>, which is only half as wide as the scale of the ruler. We can then use a uniform distribution as above, except that the limits <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> of the distribution are a bit narrower now.<br>
+(On some analog scales, it may be possible to do even better than this.)</p>
+<div id="exm-reading-scale" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 6.9 </strong></span>Measuring length on a ruler with a 1 mm scale, we could use <span class="math inline">\(\frac{1/2}{\sqrt{12}}\)</span> as the estimated uncertainty of the measurement if the primary source of error is reading the scale. Of course, it may be that lining up the scale with the object being measured introduces more uncertainty than reading the scale does. That may lead us to choose a larger value for our estimated uncertainty.</p>
+</div>
+<!-- end example -->
+</section>
+<section id="other-models-for-measurement-imprecision" class="level4" data-number="6.6.3.2">
+<h4 data-number="6.6.3.2" class="anchored" data-anchor-id="other-models-for-measurement-imprecision"><span class="header-section-number">6.6.3.2</span> Other models for measurement (im)precision</h4>
+<p>Other distributions, most notably the triangle and normal distributions, are sometimes used instead of the uniform distribution to model errors in measurements made with various devices. Each of these models produces a somewhat smaller estimate for the uncertainty than you would get using a uniform distribution. In the case of the normal distribution, typically one considers half the width of the interval to be spanned by 3 standard deviations of the normal distribution (since that would capture 99.7% of the distribution. If <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the lower and upper limits of plausible values corresponding to a measurement, the three uncertainty calculations are as follows:</p>
+<div id="tbl-uncertainties-from-distributions" class="anchored">
+<table class="table">
+<caption>Table&nbsp;6.1: Uncertainties based on 3 different distributions.</caption>
+<thead>
+<tr class="header">
+<th>distribution</th>
+<th>uncertainty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>uniform</td>
+<td><span class="math inline">\(\displaystyle \frac{b-a}{2 \sqrt{3}}\)</span></td>
+</tr>
+<tr class="even">
+<td>triangle</td>
+<td><span class="math inline">\(\displaystyle \frac{b-a}{2 \sqrt{6}}\)</span></td>
+</tr>
+<tr class="odd">
+<td>normal</td>
+<td><span class="math inline">\(\displaystyle \frac{b-a}{2 \cdot 3}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This makes the uniform distribution the most conservative and the normal distribution the least conservative.</p>
+<!-- Because our uncertainty is based on a standard deviation, we will be able to combine -->
+<!-- it with other uncertainties when we learn about propagation of uncertainty. -->
+</section>
+<section id="taking-advantage-of-other-data" class="level4" data-number="6.6.3.3">
+<h4 data-number="6.6.3.3" class="anchored" data-anchor-id="taking-advantage-of-other-data"><span class="header-section-number">6.6.3.3</span> Taking advantage of other data</h4>
+<p>Sometimes previous experience with a device or protocol may provide us with a good estimate for the uncertainty even before we collect our data. In such cases, we can use these <em>a priori</em> uncertainties both in planning and in analysis, but it is also good to check that the data collected are consistent with the estimated uncertainties.</p>
+</section>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.7</span> Exercises</h2>
+<div id="exr-diabetes-drug" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 6.1 </strong></span>A clinical trial with 30 patients has been performed in which the volume of distribution (the theoretical volume that would be necessary to contain the total amount of an administered drug at the same concentration that it is observed in the blood plasma) of a new anti-diabetes drug was measured for each patient. The sample mean was 10.2 L with a standard deviation of 1.9 L.</p>
+<div class="enumerate">
+<ol>
+<li>Calculate a 95% confidence interval for the the mean volume of distribution.</li>
+<li>Calculate a 99% confidence interval for the the mean volume of distribution.</li>
+<li>Calculate the standard uncertainty for the mean volume of distribution.</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95 &lt;!--  CI --&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="at">df =</span> <span class="dv">29</span>); t.star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.04523</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> t.star <span class="sc">*</span>  <span class="fl">1.9</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>); ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7094717</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.2</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4905283 1.9094717</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 99 &lt;!--  CI --&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">995</span>, <span class="at">df =</span> <span class="dv">29</span>); t.star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.756386</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> t.star <span class="sc">*</span>  <span class="fl">1.9</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>); ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9561653</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fl">10.2</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  9.243835 11.156165</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standard uncertainty = SE = s / sqrt(n)</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.9</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.346891</code></pre>
+</div>
+</div>
+</div>
+<!-- end solution -->
+<div id="exr-linear-thermal-expansion" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 6.2 </strong></span>A handbook gives the value of the coefficient of linear thermal expansion of pure copper at 20 degrees C, <span class="math inline">\(\alpha_{20}\)</span>(Cu), as <span class="math inline">\(16.52 \times 10^{-6} \ {}^\circ C^{-1}\)</span> and simply states that “the error in this value should not exceed <span class="math inline">\(0.40 \times 10^{-6} \ {}^{\circ} C^{-1}\)</span>.”</p>
+<div class="enumerate">
+<ol>
+<li>Based on this limited information, and assuming a rectangular distribution, compute the standard uncertainty.</li>
+<li>Based on this limited information, and assuming a triangular distribution, compute the standard uncertainty.</li>
+<li>Why might one prefer one of these over the other?</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rectangualr: sd = width / sqrt(12) = width / (2 * sqrt(3))</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2309401</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2309401</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># triangular: sd = width / (2 * sqrt(6))</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1632993</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1632993</code></pre>
+</div>
+</div>
+<p>The uniform distribution is a more conservative assumption. The trianlge distribution should only be used in situations where errors are more likely to be smaller than larger (with the the specified bounds).</p>
+</div>
+<!-- end solution -->
+<div id="exr-standard-solution" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 6.3 </strong></span>The following data are given in in the certificate of a standard solution: C(HCl) = (<span class="math inline">\(0.10000 \pm 0.00010\)</span>) mol/l. No additional information is given on the type of the uncertainty. (The <span class="math inline">\(\pm\)</span> part here is not the uncertainty but is supposed to indicate upper and lower bounds on the error.)</p>
+<div class="enumerate">
+<ol>
+<li>Convert the uncertainty to standard uncertainty assuming a rectangular distribution.</li>
+<li>Convert the uncertainty to standard uncertainty assuming a triangular distribution.</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<div class="cell">
+<span class="proof-title"><em>Solution</em>. </span>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rectangular</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0001</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.773503e-05</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># trianglular</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0001</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.082483e-05</code></pre>
+</div>
+</div>
+</div>
+<!-- end solution -->
+<div id="exr-uncertainty-circle" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 6.4 </strong></span>The area of a circle is to be calculated from a measured radius. The measurement and its standard uncertainty are reported as <span class="math display">\[
+12.5 \pm 0.3 \mbox{m} \;.
+\]</span> What should the researchers report as the area?</p>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span>Let <span class="math inline">\(f(R) = \pi R^2\)</span>. Then <span class="math inline">\(\Partial{f}{R} = 2\pi R\)</span>, so the uncertainty in the area estimation is <span class="math display">\[
+\sqrt{ (2 \pi R)^2 (0.3)^2 } = 2 \pi R \cdot 0.3  = 23.5619449
+\mathrm{m}^2
+\;.
+\]</span> We can report the area as <span class="math inline">\(490 \pm 20\)</span>.</p>
+</div>
+<!-- end solution -->
+<div id="exr-reporting-digits" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 6.5 </strong></span>&nbsp;</p>
+<pre><code>Below are some computer-computed estimates and uncertainties.  They are far too precise (there are way too
+many digits reported).  Use standard practice to report each estimate with the correct number of digits.</code></pre>
+<table class="table">
+<thead>
+<tr class="header">
+<th>estimate</th>
+<th>uncertainty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5.43210</td>
+<td>0.024135</td>
+</tr>
+<tr class="even">
+<td>1535.68</td>
+<td>12.7342</td>
+</tr>
+<tr class="odd">
+<td>576.3415</td>
+<td>3.453567</td>
+</tr>
+<tr class="even">
+<td>0.00148932</td>
+<td>0.0000278</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span></p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>estimate</th>
+<th>uncertainty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5.43</td>
+<td>0.02</td>
+</tr>
+<tr class="even">
+<td>1536</td>
+<td>13</td>
+</tr>
+<tr class="odd">
+<td>576</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>0.00149</td>
+<td>0.00003</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- end solution -->
+<div id="exr-volume-of-tank" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 6.6 </strong></span>&nbsp;</p>
+<pre><code>A student is calculating the volume of a rectangular tank by measuring 
+the length, width, and height.  These measurements are recorded as 
+ $L = 2.65 \pm 0.02$cm, $W = 3.10 \pm 0.02$cm, and $H = 4.61\pm 0.05$ cm.
+
+ How should the volume be reported?</code></pre>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span></p>
+<pre><code>In a product the relative uncertainties add, so</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fl">2.65</span>; W <span class="ot">&lt;-</span> <span class="fl">3.10</span>; H <span class="ot">&lt;-</span> <span class="fl">4.61</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>uL <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uW <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uH <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> L <span class="sc">*</span> W <span class="sc">*</span> H; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 37.87115</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (uL<span class="sc">/</span>L)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uW<span class="sc">/</span>W)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uH<span class="sc">/</span>H)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5568714</code></pre>
+</div>
+</div>
+<pre><code>So we report $37.9 \pm 0.6$</code></pre>
+</div>
+<!-- end solution -->
+<div id="exr-gasoline-consumption" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 6.7 </strong></span>Estimate (with uncertainty) the amount of gasoline burned by personal cars in a particular year in the US from the following estimates and uncertainties for that year:</p>
+<pre><code>&lt;!--  note: estimates found online for 2011.  uncertainties made  --&gt;
+&lt;!--  up but roughly based on the number of digits reported in online sources. --&gt;</code></pre>
+<table class="table">
+<colgroup>
+<col style="width: 66%">
+<col style="width: 14%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>quantity</th>
+<th>estimate</th>
+<th>uncertainty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>cars per person</td>
+<td>0.80</td>
+<td>0.12</td>
+</tr>
+<tr class="even">
+<td>population (millions of people)</td>
+<td>311.6</td>
+<td>.2</td>
+</tr>
+<tr class="odd">
+<td>fleet fuel efficiency (mpg)</td>
+<td>23.7</td>
+<td>1.7</td>
+</tr>
+<tr class="even">
+<td>average distance driven per vehicle (miles)</td>
+<td>12,000</td>
+<td>2,000</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Various estimates for these quantities are available online, but most do not report uncertainty. The uncertainties here reflect the number of significant figures used to report these numbers and the variability between estimates found at different web sites. Also, the methodology for determining these values is not always clear. So treat this as an exercise in propagation of error, but understand that better estimates of fuel consumption (and uncertainty) would be possible with better data.</p>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span>The total fuel consumed is given by <span class="math display">\[
+F = \frac{kPd}{E}
+\]</span> where <span class="math inline">\(k\)</span> is the cars per person, <span class="math inline">\(P\)</span> is total population, <span class="math inline">\(d\)</span> is average distance driven per car, and <span class="math inline">\(E\)</span> is the average efficiency.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\Partial{F}{k} &amp;= \frac{Pd}{E}
+\\
+\Partial{F}{P} &amp;= \frac{kd}{E}
+\\
+\Partial{F}{d} &amp;= \frac{kP}{E}
+\\
+\Partial{F}{E} &amp;= \frac{-kPd}{E^2}
+\end{aligned}
+\]</span></p>
+<p>So the estimated amount of fuel consumed (in millions of gallons) is <span class="math display">\[
+\frac{kPd}{E} = \frac{0.8 \cdot 311.6 \cdot 12000 }{23.7}
+= 1.2621772\times 10^{5}
+\]</span> and the uncertainty can be computed as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fl">0.8</span>; u_k <span class="ot">&lt;-</span> <span class="fl">0.12</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fl">311.6</span>; u_P <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">12000</span>; u_d <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fl">23.7</span>; u_E <span class="ot">&lt;-</span> <span class="fl">1.7</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>variances <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> , </span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> , </span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> , </span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>            (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>variances</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.584455e+08 6.563051e+03 4.425254e+08 8.196753e+07</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">&lt;-</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>( </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 29714.39</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(variances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 29714.39</code></pre>
+</div>
+</div>
+<p>So we might report fuel consumption as 1.3^{5} <span class="math inline">\(\pm\)</span> 3^{4} millions of gallons or 130 <span class="math inline">\(\pm\)</span> 30 billions of gallons.</p>
+<p>Note: This problem can also be done in stages. First we estimate the number of (millions of) cars using <span class="math display">\[
+C = k P \;.
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> k <span class="sc">*</span> P; C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 249.28</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>u_C <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( P<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> k<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span>); u_C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 37.39234</code></pre>
+</div>
+</div>
+<p>The number of (millions of) miles driven is estimated by <span class="math inline">\(M = C d\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> C <span class="sc">*</span> d; M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2991360</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>u_M <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( d<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_C<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> C<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span>); u_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 670746.6</code></pre>
+</div>
+</div>
+<p>Finally, the fuel used is <span class="math inline">\(F = M / E\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>F <span class="ot">=</span> M <span class="sc">/</span> E</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">=</span> <span class="fu">sqrt</span>( (<span class="dv">1</span><span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_M<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (M<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span>); u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 29714.39</code></pre>
+</div>
+</div>
+<p>This gives the same result (again in millions of gallons of gasoline).</p>
+<p>It would also be possible to relative uncertainty to do this problem, since we have nice formulas for the relative uncertainty in products and quotients.</p>
+</div>
+<!-- end solution -->
+<div id="exr-speed-propagation" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 6.8 </strong></span>A physics student is calculating the speed of a falling object by measuring the time it takes for the object to move between two timing sensors. If she records the time as <span class="math inline">\(0.43 \pm 0.02\)</span> seconds and the distance as <span class="math inline">\(1.637 \pm 0.006\)</span> m, how should she report the speed in <span class="math inline">\(m/s\)</span>?</p>
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span></p>
+<pre><code>See the next problem for the answer.</code></pre>
+</div>
+<!-- end solution -->
+<div id="exr-relative-uncertainty-quotient" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 6.9 </strong></span>&nbsp;</p>
+<div class="enumerate">
+<ol>
+<li>Work out a formula for the relative uncertainty of <span class="math inline">\(Q = X/Y\)</span> given relative uncertainties for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</li>
+<li>Redo <a href="#exr-speed-propagation">Exercise&nbsp;<span>6.8</span></a> using your new formula.</li>
+</ol>
+</div>
+<!-- end enumerate -->
+</div>
+<!-- end problem -->
+<div class="solution proof">
+<p><span class="proof-title"><em>Solution</em>. </span></p>
+<pre><code>Let $Q = X Y^{-1}$.  So 
+$\Partial{Q}{X} = Y^{-1}$ and 
+$\Partial{Q}{Y} = -X Y^{-2}$.  From this we get</code></pre>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{u_Q}{Q}
+&amp; = \sqrt{ \frac{ Y^{-2} u_X^2 + X^2 Y^{-4} u_Y^2}{Q^2} }
+\\
+&amp; = \sqrt{ \frac{ Y^{-2} u_X^2 + X^2 Y^{-4} u_Y^2}{X^2Y^{-2}} }
+\\
+&amp; = \sqrt{ \frac{ u_X^2}{X^2} + \frac{u_Y^2}{Y^2} }
+\\
+&amp; = \sqrt{ \left(\frac{ u_X}{X}\right)^2 + \left(\frac{u_Y}{Y}\right)^2 }
+\end{aligned}
+\]</span></p>
+<p>which gives a Pythagorean identity for the relative uncertainties just as it did for a product.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fl">1.637</span> <span class="sc">/</span> <span class="fl">0.43</span>; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.806977</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (<span class="fl">0.02</span><span class="sc">/</span>.<span class="dv">43</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="fl">0.006</span><span class="sc">/</span><span class="fl">1.637</span>)<span class="sc">^</span><span class="dv">2</span> ) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1776176</code></pre>
+</div>
+</div>
+<p>So we report <span class="math inline">\(3.81 \pm 0.18\)</span>.</p>
+</div>
+<!-- end solution -->
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Other models are possible, and the choice of model matters for the uncertainty calculation that will result.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>There is a small sleight of hand here. Technically, we should evaluate the partial derivatives at the unknown values <span class="math inline">\(B\)</span> and <span class="math inline">\(D\)</span>. We will instead plug in our particular estimates (from our data) for <span class="math inline">\(\hat B\)</span> and <span class="math inline">\(\hat D\)</span>. To denote all of this completely rigorously, we would need to have separate notation for <span class="math inline">\(\hat B\)</span> considered as a random variable (that has an expected value and variance) and as a number (the value computed from our particular data). We’re avoiding this extra layer of notation.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>A more general formula can approximate the propagation of uncertainty in cases where <span class="math inline">\(\hat B\)</span> and <span class="math inline">\(\hat D\)</span> cannot be assumed to be independent.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05-transformations.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformation and Combinations of Random Variables</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07-simple-linear.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

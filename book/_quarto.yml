@@ -16,6 +16,7 @@ format:
     fig-width: 4.5
     fig-align: center
   pdf: 
+    include-in-header: macros.tex
     geometry: 
       - "margin=0.9in"
 

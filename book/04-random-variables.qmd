@@ -1751,7 +1751,7 @@ tribble(
 	    r"($np$)",
 	    r"($np(1-p)$)",
   r"(Poisson)", r"($\Pois(\lambda)$)", 
-    r"($\displaystyle \frac{e^{-\lambda} \lambda^x} {x!}$)",
+    r"($\displaystyle \frac{e^{-\lambda} \lambda^x} {x!}$ for non-negative integers $x$)",
     r"($\lambda$)", r"($\lambda$)"
     ) |>
   pander::pander(split.table=Inf)

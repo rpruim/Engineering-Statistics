@@ -1699,6 +1699,11 @@ the fit for the data set at hand.
 <!-- end example -->
 
 
+
+::: {.boxedText}
+
+#### Important Families of Distributions
+
 Standard names for parameters that appear in several distributions in
 @tbl-distributions include \texttt{rate} ($\lambda$), \texttt{shape} ($\alpha$),
 and \texttt{scale}  ($\beta$). In the normal distributions, $\mu$ and $\sigma$
@@ -1752,114 +1757,7 @@ tribble(
   pander::pander(split.table=Inf)
 ```
 
-
-<!-- \begin{table} -->
-<!-- \begin{center} -->
-<!-- \small -->
-<!-- \begin{tabular}{|p{5mm}p{40mm}p{25mm}p{45mm}|} -->
-<!-- \hline -->
-<!-- \multicolumn{2}{|l}{\textbf{\sf distribution} } -->
-<!-- && -->
-<!-- \\ -->
-<!--   & \textbf{\sf pdf or pmf}  -->
-<!--   & \textbf{\sf mean}  -->
-<!--   & \textbf{\sf variance}  -->
-<!-- \\[.5mm] \hline -->
-<!-- &&& \\[-2mm] -->
-<!-- \multicolumn{2}{|l}{  Triangle: $\Tri(a,b,c)$} && \\ -->
-<!--   &  -->
-<!--   $\displaystyle  -->
-<!--  	 \begin{cases} -->
-<!-- 		 \frac{2(x-a)}{(b-a)(c-a)}  &  \mbox{if $x \in [a,c]$} \;,  \\ -->
-<!-- 		 \frac{2(b-x)}{(b-a)(b-c)}  &  \mbox{if $x \in [c,b]$} \;,  \\ -->
-<!-- 		0 & \mbox{otherwise} \\ -->
-<!-- 	  \end{cases}$ -->
-<!-- 	  & $\displaystyle \frac{a + b + c}{3}$  -->
-<!-- 	  & $\displaystyle \frac{a^2 + b^2 + c^2 - ab -ac -bc}{18}$ -->
-<!-- 	  \\[5.2mm] -->
-<!-- 	  \multicolumn{2}{|l}{  Uniform: $\Unif(a,b)$} && \\ -->
-<!--   &  -->
-<!--   $\displaystyle  -->
-<!--  	 \begin{cases} -->
-<!-- 		\frac{1}{b-a}  &  \mbox{if $x \in [a,b]$} \;,  \\ -->
-<!-- 		0 & \mbox{otherwise} \\ -->
-<!-- 	  \end{cases}$ -->
-<!-- 	  & $\displaystyle \frac{b+a}{2}$  -->
-<!-- 	  & $\displaystyle \frac{(b-a)^2}{12}$ -->
-<!-- 	  \\[5.2mm] -->
-<!-- \multicolumn{2}{|l}{  Standard normal: $\Norm(0,1)$ } && \\ -->
-<!--   &  -->
-<!--   $\displaystyle \frac{1}{\sqrt{2\pi}} {e^{-\frac{1}{2} z^2}}$ -->
-<!--   	& $0$ & $1$ -->
-<!-- \\[4.2mm] -->
-<!-- \multicolumn{2}{|l}{  Normal: $\Norm(\mu,\sigma)$ } && \\ -->
-<!--   & $ -->
-<!-- 	 \displaystyle \frac{1}{\sigma\sqrt{2\pi}} \cdot  -->
-<!--      		e^{-\frac{1}{2} (\frac{x-\mu} -->
-<!-- 			{\sigma})^2}$ -->
-<!--   	& $\mu$ & $\sigma^2$ -->
-<!-- \\[5.2mm] -->
-<!-- \multicolumn{2}{|l}{  Exponential: $\Exp(\lambda)$ }  && \\ -->
-<!-- %  	& $\lambda$ -->
-<!-- 	& $\lambda e^{-\lambda x}$ -->
-<!--   	& $1/\lambda$ & $1/\lambda^2$ -->
-<!-- \\[4.2mm] -->
-<!-- \multicolumn{2}{|l}{  Gamma: $\Gamm(\alpha, \lambda = \frac{1}{\beta})$ } && \\ -->
-<!-- %  	& $\lambda$ -->
-<!-- 	& $\displaystyle \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}$ -->
-<!--   	& $\alpha/\lambda = \alpha \beta$  -->
-<!-- 	& $\alpha/\lambda^2 = \alpha \beta^2$ -->
-<!-- \\[4.2mm] -->
-<!-- \multicolumn{2}{|l}{Weibull: $\Weibull(\alpha,\beta = \frac{1}{\lambda})$} && \\ -->
-<!-- & -->
-<!-- 	  $\displaystyle \frac{\alpha}{\beta^\alpha} x^{\alpha-1} e^{-(x/\beta)^\alpha}$ -->
-<!-- 	&  -->
-<!-- 	  $\beta \Gamma(1 + \frac1{\alpha})$ -->
-<!-- 	& -->
-<!-- 	  $\beta^2 \left[ \Gamma(1 + \frac{2}{\alpha})  -->
-<!-- 	  - \left[ \Gamma(1 + \frac{1}{\alpha}) \right]^2 \right] -->
-<!-- 	  $  -->
-<!-- \\[4.0mm] -->
-<!-- \multicolumn{2}{|l}{  Beta: $\Beta(\alpha, \beta)$ } && \\ -->
-<!-- 	&  -->
-<!--   $\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}  -->
-<!-- 		x^{\alpha-1}(1-x)^{\beta-1}$ -->
-<!--   	&  -->
-<!-- 	  $\displaystyle \frac{\alpha}{\alpha + \beta}$ -->
-<!-- 	  & -->
-<!-- 	  $\displaystyle \frac{\alpha \beta }{(\alpha + \beta)^2(\alpha + \beta + 1)}$ -->
-<!-- \\[4mm] -->
-<!-- \hline -->
-<!-- \multicolumn{2}{|l}{  Binomial: $\Binom(n, p)$ } && \\ -->
-<!-- 	&  -->
-<!-- 	$\displaystyle \binom{n}{x} p^x (1-p)^{n-x}$ -->
-<!-- 	& -->
-<!-- 	$np$ -->
-<!-- 	& -->
-<!-- 	$np(1-p)$ -->
-<!-- \\[4mm] -->
-<!-- \multicolumn{2}{|l}{  Poisson: $\Pois(\lambda)$ } && \\ -->
-<!-- 	&  -->
-<!-- 	$\displaystyle \frac{e^{-\lambda} \lambda^x} {x!}$ -->
-<!-- 	& -->
-<!-- 	$\lambda$ -->
-<!-- 	& -->
-<!-- 	$\lambda$ -->
-<!-- \\[4mm] -->
-<!-- \hline -->
-<!-- \end{tabular} -->
-<!-- \end{center} -->
-<!-- \caption{Some common continuous distributions. -->
-<!-- Standard names for parameters that appear in several distributions -->
-<!-- include \texttt{rate} ($\lambda$), \texttt{shape} ($\alpha$), and \texttt{scale} ($\beta$). -->
-<!-- In the normal distributions, $\mu$ and $\sigma$ are called \texttt{mean} and \texttt{sd} -->
-<!-- in \R, and in the uniform distributions, $a$ and $b$ are called \texttt{min} and \texttt{max}. -->
-<!-- The function $\Gamma(x)$ that appears in the formulas for the Weibull and Beta -->
-<!-- distributions is a kind of continuous extrapolation from the factorial function. -->
-<!-- The \texttt{gamma()} function will calculate these values.} -->
-<!-- \label{tbl-distributions} -->
-<!-- \end{table} -->
-
+:::
 
 ## Quantile-Quantile Plots
 

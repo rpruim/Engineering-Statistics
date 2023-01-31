@@ -629,38 +629,6 @@ $$
 $$ {#eq-var-shortcut}
 
 
-::: {.problem #exr-show-pdf}
- 
-Let $f(x) = 5/4 - x^3$  on $[0,1]$.  
-
-1. Show that $f$ is a pdf.
-2. Calculate $\Prob(X \le\frac{1}{2})$.
-3. Calculate $\Prob(X \ge\frac{1}{2})$.
-4. Calculate $\Prob(X = \frac{1}{2})$.
-
-
-::: 
-<!-- end problem -->
-
-
-::: {.solution}
-
-```{r }
-f <- makeFun( (5/4 - x^3) * ( abs(x-.5) <= .5 ) ~ x )
-plotFun(f(x) ~ x, x.lim = c(-1,2))  # quick plot to make sure things look correct.
-F <- antiD(f(x) ~x)  
-# part a:  f(x) >=0, so we just need to check that the total area is 1
-F(1) - F(0) == 1  
-F(1/2) - F(0)     # part b
-F(1) - F(1/2)     # part c
-F(1/2) - F(1/2)   # part d
-```
-
-::: 
-<!-- end solution -->
-
-
-
 
 ::: {.example #exm-compute-mean-var}
 
@@ -832,103 +800,6 @@ integrate( makeFun( x * dtriangle(x, 0,4,1) ~ x) , 0, 4)
 <!-- end example -->
 
 
-
-::: {.problem #exr-triangle-with-geometry}
-
-Repeat parts (2) -- (4) of @exm-triangle-in-R using geometry 
-rather than R
-
-::: 
-<!-- end problem -->
-
-
-
-::: {.solution}
-
-:::: {.itemize}
-
-* $\Prob(X \le 1) = \frac 12 \cdot 1 \cdot \frac{1}{2} = \frac 14$
-* $\Prob(X \le 2) = 1 - \Prob(X \ge 2) =  1 - \frac{1}{2} \cdot 2 \cdot \frac13  = 1 - \frac 13 = \frac23$.
-* The median $m$ is a number between 1 and 2 and satisfies
-			$\frac 12 = \Prob(X \ge m) = \frac{1}{2} (4-m) \frac{4-m}{6}$.  
-			Solving for $m$ we get $m = 4 - \sqrt{6} = `r 4 - sqrt(6)`$.
-:::: 
-<!-- end itemize -->
-
-::: 
-<!-- end solution -->
-
-
-::: {.problem #exr-pdf-from-kernel}
-
-Let 
-$$
-\displaystyle k(x) = (1 - x^2) \cdot\boolval{ x \in[-1,1] } = 
-\begin{cases}
-		1-x^2 & x \in[-1,1] \\ 
-		0 & \mbox{otherwise} 
-\end{cases}
-$$ 
-
-be the kernel of a continuous distribution.
-
-:::: {.enumerate}
-
-a. 			Determine the pdf for this distribution.
-a. 			Compute the mean and variance for this distribution
-:::: 
-<!-- end enumerate -->
-
-::: 
-<!-- end problem -->
-
-
-::: {.solution}
-
-	The integrals are easy enough to do by hand, but here is the R code 
-	to compute them.
-	
-<!-- TODO: originally had area as an argument, but changes to mosaicCalc seem to break this -->
-```{r tidy = FALSE}
-k <- makeFun( 1 - x^2 ~ x )
-K <- antiD( k(x) ~ x )
-area <- K(1) - K(-1); area 
-f <- makeFun( (1 - x^2)/area ~ x)
-F <- antiD(f(x) ~ x)
-F(1) - F(-1)    # this should be 1 if we have done things right
-G <- antiD( x * f(x) ~ x )
-H <- antiD( x^2 * f(x) ~ x )
-m <- G(1) - G(-1); m               # E(X)
-H(1) - H(-1)                       # E(X^2)
-H(1) - H(-1) - m^2                 # Var(X)
-```
-
-::: 
-<!-- end solution -->
-
-
-::: {.problem #exr-mean-median-triangle}
-
-Let $Y \sim\Tri(0,10,4)$.  Compute $\E(Y)$ and the median of $Y$.
-::: 
-<!-- end problem -->
-
-::: {.solution}
-
-```{r }
-# mean:
-m <- antiD( x * dtriangle(x,0,10,4) ~ x, lower.bound = 0)(10)
-m
-# variance:
-antiD( x^2 * dtriangle(x,0,10,4) ~ x, lower.bound = 0)(10) - m^2
-# median
-qtriangle( 0.5, 0, 10, 4 )
-```
-
-::: 
-<!-- end solution -->
-
-
 ### Uniform Distributions
 
 A uniform distribution is a described by a constant function over some interval.  Its 
@@ -989,25 +860,6 @@ We could also get the 80th percentile by solving the equation $\frac{x-1}{3} = 0
 From this we get $\frac{x}{3} = 0.8 + 1/3$, so $x = 3 ( 0.8 + 1/3) = 2.4 + 1 = 3.4$.
 ::: 
 <!-- end example -->
-
-
-::: {.problem #exr-exp-var-unif}
-Let $W \sim \Unif(0,10)$.  Compute $\E(W)$ and $\Var(W)$.
-::: 
-<!-- end problem -->
-
-
-::: {.solution}
-
-```{r }
-# mean:
-m <- antiD( x * dunif(x,0,10) ~ x, lower.bound = 0)(10)
-m
-# variance:
-antiD( x^2 * dunif(x,0,10) ~ x, lower.bound = 0)(10) - m^2
-```
-::: 
-<!-- end solution -->
 
 
 
@@ -1107,37 +959,6 @@ functions to make things even easier.
 #| fig-cap: An exponential distribution with rate = 4.
 gf_dist("exp", rate = 4)
 ```
-
-
-::: {.problem #exr-exp-of-exponential}
-
-:::: {.enumerate}
-
-a. Let $X \sim \Exp(4)$.  Use R to compute $\E(X)$.
-a. Let $X \sim \Exp(10)$.  Use R to compute $\E(X)$.
-a. Let $X \sim \Exp(1/5)$.  Use R to compute $\E(X)$.
-a. What pattern do you notice.  Explain in terms of the definition of the exponential 
-distribution why this makes sense.
-:::: 
-<!-- end enumerate -->
-
-::: 
-<!-- end problem -->
-
-
-::: {.solution}
-
-```{r }
-antiD( x * dexp(x, 4) ~ x, lower.bound = 0)(Inf)
-antiD( x * dexp(x, 10) ~ x, lower.bound = 0)(Inf)
-antiD( x * dexp(x, 1/5) ~ x, lower.bound = 0)(Inf)
-```
-
-It appears that the mean of an $\Exp(\lambda)$-distribution is $1/\lambda$.  This
-makes sense.  If events have at a rate of $30$ per hour, we would expect to wait
-$1/30$ of an hour (on average) for the first event to happen.
-::: 
-<!-- end solution -->
 
 
 ### Gamma and Weibull Distributions
@@ -1394,92 +1215,6 @@ gf_dist("beta", params = list(shape1 = 0.9, shape2 = 0.85), title = "Beta(0.9,0.
 
 : Beta distributions in R
 
-
-::: {.problem #exr-plot-pdf-and-compute-mean-var}
-
-Use R to plot the pdf and 
-compute the mean and variance of each of the following distributions.
-
-:::: {.enumerate}
-
-a.  $\Beta(2,3)$
-a.  $\Beta(20,30)$
-a.  $\Gamm(\texttt{shape} = 2, \texttt{scale} = 3)$
-a.  $\Weibull(\texttt{shape} = 2, \texttt{scale} = 3)$
-:::: 
-<!-- end enumerate -->
-
-::: 
-<!-- end problem -->
-
-
-
-::: {.solution}
-
-```{r }
-# Beta(2,3)
-m <- antiD( x * dbeta(x,2,3) ~ x, lower.bound = 0)(1)
-m
-antiD( x^2 * dbeta(x,2,3) ~ x, lower.bound = 0 )(1) - m^2
-```
-
-```{r }
-# Beta(20,30)
-m <- antiD( x * dbeta(x,20,30) ~ x, lower.bound = 0)(1)
-m
-antiD( x^2 * dbeta(x,20,30) ~ x, lower.bound = 0 )(1) - m^2
-```
-
-```{r }
-# Gamma(2,scale = 3)
-m <- antiD( x * dgamma(x,2,scale = 3) ~ x, lower.bound = 0)(Inf)
-m
-antiD( x^2 * dgamma(x,2,scale = 3) ~ x, lower.bound = 0 )(Inf) - m^2
-```
-
-```{r }
-# Weibull(2,scale = 3)
-m <- antiD( x * dweibull(x,2,scale = 3) ~ x, lower.bound = 0)(Inf)
-m
-antiD( x^2 * dweibull(x,2,scale = 3) ~ x, lower.bound = 0 )(Inf) - m^2
-```
-
-::: 
-<!-- end solution -->
-
-
-
-::: {.problem #exr-proportion-between}
-
-For each of the following distributions, determine the proportion 
-of the distribution that lies between 0.5 and 1.
-
-:::: {.enumerate}
-
-a.  $\Exp(\texttt{rate} = 2)$
-b.  $\Beta(\texttt{shape1} = 3, \texttt{shape2} = 2)$
-c.  $\Norm(\texttt{mean} = 1, \texttt{sd} = 2)$
-d.  $\Weibull(\texttt{shape} = 2, \texttt{scale} = 1/2)$
-e.  $\Gamm(\texttt{shape} = 2, \texttt{scale} = 1/2)$
-:::: 
-<!-- end enumerate -->
-
-::: 
-<!-- end problem -->
-
-
-::: {.solution}
-
-```{r }
-pexp(1, 2) - pexp(0.5, 2)
-pbeta(1, 3, 2) - pbeta(0.5, 3, 2)
-pnorm(1, 1, 2) - pnorm(0.5, 1, 2)
-pweibull(1, 2, scale = 1/2) - pweibull(0.5, 2, scale = 1/2)
-pgamma(1, 2, scale = 1/2)   - pgamma(0.5, 2, scale = 1/2)
-```
-
-::: 
-<!-- end solution -->
 
 
 ### Binomial Distributions
@@ -2276,6 +2011,271 @@ gf_qq( ~speed2, data = Wind, distribution = fittedqweibull )
 {{< pagebreak >}}
 
 ## Exercises
+
+::: {.problem #exr-show-pdf}
+ 
+Let $f(x) = 5/4 - x^3$  on $[0,1]$.  
+
+1. Show that $f$ is a pdf.
+2. Calculate $\Prob(X \le\frac{1}{2})$.
+3. Calculate $\Prob(X \ge\frac{1}{2})$.
+4. Calculate $\Prob(X = \frac{1}{2})$.
+
+
+::: 
+<!-- end problem -->
+
+
+::: {.solution}
+
+```{r }
+f <- makeFun( (5/4 - x^3) * ( abs(x-.5) <= .5 ) ~ x )
+plotFun(f(x) ~ x, x.lim = c(-1,2))  # quick plot to make sure things look correct.
+F <- antiD(f(x) ~x)  
+# part a:  f(x) >=0, so we just need to check that the total area is 1
+F(1) - F(0) == 1  
+F(1/2) - F(0)     # part b
+F(1) - F(1/2)     # part c
+F(1/2) - F(1/2)   # part d
+```
+
+::: 
+<!-- end solution -->
+
+
+
+::: {.problem #exr-triangle-with-geometry}
+
+Repeat parts (2) -- (4) of @exm-triangle-in-R using geometry 
+rather than R
+
+::: 
+<!-- end problem -->
+
+
+
+::: {.solution}
+
+:::: {.itemize}
+
+* $\Prob(X \le 1) = \frac 12 \cdot 1 \cdot \frac{1}{2} = \frac 14$
+* $\Prob(X \le 2) = 1 - \Prob(X \ge 2) =  1 - \frac{1}{2} \cdot 2 \cdot \frac13  = 1 - \frac 13 = \frac23$.
+* The median $m$ is a number between 1 and 2 and satisfies
+			$\frac 12 = \Prob(X \ge m) = \frac{1}{2} (4-m) \frac{4-m}{6}$.  
+			Solving for $m$ we get $m = 4 - \sqrt{6} = `r 4 - sqrt(6)`$.
+:::: 
+<!-- end itemize -->
+
+::: 
+<!-- end solution -->
+
+
+::: {.problem #exr-pdf-from-kernel}
+
+Let 
+$$
+\displaystyle k(x) = (1 - x^2) \cdot\boolval{ x \in[-1,1] } = 
+\begin{cases}
+		1-x^2 & x \in[-1,1] \\ 
+		0 & \mbox{otherwise} 
+\end{cases}
+$$ 
+
+be the kernel of a continuous distribution.
+
+:::: {.enumerate}
+
+a. 			Determine the pdf for this distribution.
+a. 			Compute the mean and variance for this distribution
+:::: 
+<!-- end enumerate -->
+
+::: 
+<!-- end problem -->
+
+
+::: {.solution}
+
+	The integrals are easy enough to do by hand, but here is the R code 
+	to compute them.
+	
+<!-- TODO: originally had area as an argument, but changes to mosaicCalc seem to break this -->
+```{r tidy = FALSE}
+k <- makeFun( 1 - x^2 ~ x )
+K <- antiD( k(x) ~ x )
+area <- K(1) - K(-1); area 
+f <- makeFun( (1 - x^2)/area ~ x)
+F <- antiD(f(x) ~ x)
+F(1) - F(-1)    # this should be 1 if we have done things right
+G <- antiD( x * f(x) ~ x )
+H <- antiD( x^2 * f(x) ~ x )
+m <- G(1) - G(-1); m               # E(X)
+H(1) - H(-1)                       # E(X^2)
+H(1) - H(-1) - m^2                 # Var(X)
+```
+
+::: 
+<!-- end solution -->
+
+::: {.problem #exr-mean-median-triangle}
+
+Let $Y \sim\Tri(0,10,4)$.  Compute $\E(Y)$ and the median of $Y$.
+::: 
+<!-- end problem -->
+
+::: {.solution}
+
+```{r }
+# mean:
+m <- antiD( x * dtriangle(x,0,10,4) ~ x, lower.bound = 0)(10)
+m
+# variance:
+antiD( x^2 * dtriangle(x,0,10,4) ~ x, lower.bound = 0)(10) - m^2
+# median
+qtriangle( 0.5, 0, 10, 4 )
+```
+
+::: 
+<!-- end solution -->
+
+
+::: {.problem #exr-exp-var-unif}
+Let $W \sim \Unif(0,10)$.  Compute $\E(W)$ and $\Var(W)$.
+::: 
+<!-- end problem -->
+
+
+::: {.solution}
+
+```{r }
+# mean:
+m <- antiD( x * dunif(x,0,10) ~ x, lower.bound = 0)(10)
+m
+# variance:
+antiD( x^2 * dunif(x,0,10) ~ x, lower.bound = 0)(10) - m^2
+```
+::: 
+<!-- end solution -->
+
+
+::: {.problem #exr-exp-of-exponential}
+
+:::: {.enumerate}
+
+a. Let $X \sim \Exp(4)$.  Use R to compute $\E(X)$.
+a. Let $X \sim \Exp(10)$.  Use R to compute $\E(X)$.
+a. Let $X \sim \Exp(1/5)$.  Use R to compute $\E(X)$.
+a. What pattern do you notice.  Explain in terms of the definition of the exponential 
+distribution why this makes sense.
+:::: 
+<!-- end enumerate -->
+
+::: 
+<!-- end problem -->
+
+
+::: {.solution}
+
+```{r }
+antiD( x * dexp(x, 4) ~ x, lower.bound = 0)(Inf)
+antiD( x * dexp(x, 10) ~ x, lower.bound = 0)(Inf)
+antiD( x * dexp(x, 1/5) ~ x, lower.bound = 0)(Inf)
+```
+
+It appears that the mean of an $\Exp(\lambda)$-distribution is $1/\lambda$.  This
+makes sense.  If events have at a rate of $30$ per hour, we would expect to wait
+$1/30$ of an hour (on average) for the first event to happen.
+::: 
+<!-- end solution -->
+
+
+
+::: {.problem #exr-plot-pdf-and-compute-mean-var}
+
+Use R to plot the pdf and 
+compute the mean and variance of each of the following distributions.
+
+:::: {.enumerate}
+
+a.  $\Beta(2,3)$
+a.  $\Beta(20,30)$
+a.  $\Gamm(\texttt{shape} = 2, \texttt{scale} = 3)$
+a.  $\Weibull(\texttt{shape} = 2, \texttt{scale} = 3)$
+:::: 
+<!-- end enumerate -->
+
+::: 
+<!-- end problem -->
+
+
+
+::: {.solution}
+
+```{r }
+# Beta(2,3)
+m <- antiD( x * dbeta(x,2,3) ~ x, lower.bound = 0)(1)
+m
+antiD( x^2 * dbeta(x,2,3) ~ x, lower.bound = 0 )(1) - m^2
+```
+
+```{r }
+# Beta(20,30)
+m <- antiD( x * dbeta(x,20,30) ~ x, lower.bound = 0)(1)
+m
+antiD( x^2 * dbeta(x,20,30) ~ x, lower.bound = 0 )(1) - m^2
+```
+
+```{r }
+# Gamma(2,scale = 3)
+m <- antiD( x * dgamma(x,2,scale = 3) ~ x, lower.bound = 0)(Inf)
+m
+antiD( x^2 * dgamma(x,2,scale = 3) ~ x, lower.bound = 0 )(Inf) - m^2
+```
+
+```{r }
+# Weibull(2,scale = 3)
+m <- antiD( x * dweibull(x,2,scale = 3) ~ x, lower.bound = 0)(Inf)
+m
+antiD( x^2 * dweibull(x,2,scale = 3) ~ x, lower.bound = 0 )(Inf) - m^2
+```
+
+::: 
+<!-- end solution -->
+
+
+
+::: {.problem #exr-proportion-between}
+
+For each of the following distributions, determine the proportion 
+of the distribution that lies between 0.5 and 1.
+
+:::: {.enumerate}
+
+a.  $\Exp(\texttt{rate} = 2)$
+b.  $\Beta(\texttt{shape1} = 3, \texttt{shape2} = 2)$
+c.  $\Norm(\texttt{mean} = 1, \texttt{sd} = 2)$
+d.  $\Weibull(\texttt{shape} = 2, \texttt{scale} = 1/2)$
+e.  $\Gamm(\texttt{shape} = 2, \texttt{scale} = 1/2)$
+:::: 
+<!-- end enumerate -->
+
+::: 
+<!-- end problem -->
+
+
+::: {.solution}
+
+```{r }
+pexp(1, 2) - pexp(0.5, 2)
+pbeta(1, 3, 2) - pbeta(0.5, 3, 2)
+pnorm(1, 1, 2) - pnorm(0.5, 1, 2)
+pweibull(1, 2, scale = 1/2) - pweibull(0.5, 2, scale = 1/2)
+pgamma(1, 2, scale = 1/2)   - pgamma(0.5, 2, scale = 1/2)
+```
+
+::: 
+<!-- end solution -->
+
 
 ::: {.problem #exr-twin-falls}
 

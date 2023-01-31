@@ -770,7 +770,7 @@ small.)]
 An obvious, but not quite correct solution to our unknown $\sigma$ dilemma is to use
 $s$ in pace of $\sigma$.  In fact this was routinely done until 1908 @Student1908, 
 when William Gosset, publishing under the pseudonym Student, pointed out that 
-when sampling from a $\Norm(\mu, \sigma)$ popoulation,
+when sampling from a $\Norm(\mu, \sigma)$ population,
 
 $$
 \frac{ \mean X - \mu}{\sigma/\sqrt{n}} \sim \Norm(0,1)
@@ -805,7 +805,7 @@ $$
 
 ### Standard Error
 
-The Central Limit Theorem tells us that (under certain condidtions), the standard 
+The Central Limit Theorem tells us that (under certain conditions), the standard 
 deviation of the sampling distribution for the sample mean is $\frac{\sigma}{\sqrt{n}}$.
 Typically we don't know $\sigma$ so we estimate this quantity with 
 $\frac{s}{\sqrt{n}}$.
@@ -1031,7 +1031,7 @@ For assistance in particular applications, we offer the following rules of thumb
 Let $X$ and $Y$ be independent $\Gamm(\texttt{shape} = 2, \texttt{scale} = 3)$ random 
 variables.  
 Let $S = X+Y$ and let $D = X - Y$.
-Use simulations (with 5000 replications) and quantile-quantile pltos 
+Use simulations (with 5000 replications) and quantile-quantile plots 
 to answer the following:
 
 :::: {.enumerate}
@@ -1094,7 +1094,7 @@ The density plot perhaps makes this clearer if you are not familiar with qq-plot
 **Normal probabilities**
 
 If $X \sim \Norm(110, 15)$ and $Y \sim \Norm(100, 20)$ are independent
-random varaibles:
+random variables:
 	
 :::: {.enumerate}
 
@@ -2043,7 +2043,7 @@ c. Create other similar problems using important terms from this class.
 
 Critical flicker frequency (called `Flicker` in the data set below) is the 
 lowest flicker rate at which the human eye
-can detect that a light source (from a flourenscent bulb or a computer screen, for example)
+can detect that a light source (from a florescent bulb or a computer screen, for example)
 is flickering.  Knowing the cff is important for product manufacturing (since detectable
 flickering is annoying for the consumer).  The command below loads data from 
 from a 1973 study that attempted to determine whether the cff, which varies 
@@ -2053,7 +2053,7 @@ Flicker <- read.file("http://www.statsci.org/data/general/flicker.txt")
 ```
 
 
-Create a plot that can be used to visualise the data.  What does your plot suggest
+Create a plot that can be used to visualize the data.  What does your plot suggest
 the answer might be? (Does eye color matter?)
 ::: 
 <!-- end problem -->
@@ -2080,8 +2080,8 @@ there is overlap among the groups.
 ::: {.problem #exr-difference-between-two-means}
 **Difference between two means**
 
-Let $\mean X_1$ be the distibution of sample means from a population with mean $\mu_1$ and standard deviation $\sigma_1$.
-Let $\mean X_2$ be the distibution of sample means from a population with mean $\mu_2$ and standard deviation $\sigma_2$.
+Let $\mean X_1$ be the distribution of sample means from a population with mean $\mu_1$ and standard deviation $\sigma_1$.
+Let $\mean X_2$ be the distribution of sample means from a population with mean $\mu_2$ and standard deviation $\sigma_2$.
 What is the distribution of $\mean X_1 - \mean X_2$? (Hint: start by determining the distributions of 
 $\mean X_1$ and $\mean X_2$, then use what we know about differences.)
 ::: 
@@ -2150,7 +2150,7 @@ df_stats(extensibility ~ quality, data = Fabric)
 
 :::: {.enumerate}
 
-a. Use the summary above to compute a 95% confidence interval for the difference in mean extensitibility
+a. Use the summary above to compute a 95% confidence interval for the difference in mean extensibility
 for the two types of fabric.
 b. Then use `t.test()` to compute the confidence interval.  How do the degrees of freedom
 from `t.test()` compare with the upper and lower bounds we have for degrees of freedom?

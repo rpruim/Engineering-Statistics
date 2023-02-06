@@ -1729,7 +1729,7 @@ tribble(
    r"(Normal)", r"($\Norm(\mu,\sigma)$)",
 	    r"($\displaystyle \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{1}{2} (\frac{x-\mu} {\sigma})^2}$)",
   	  r"($\mu$)",
-  	  r"($\sigma$)",
+  	  r"($\sigma^2$)",
    r"(Exponential)", r"($\Exp(\lambda)$)",
 	    r"($\lambda e^{-\lambda x}$ for $x > 0$)",
       r"($1/\lambda$)",

@@ -2132,55 +2132,62 @@ The choice of distributions is made based on a combination of theoretical consid
 <td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{(b-a)^2}{12}\)</span></td>
 </tr>
 <tr class="even">
+<td style="text-align: center;">Triangle</td>
+<td style="text-align: center;"><span class="math inline">\(\Tri(a, b, c)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \begin{cases} \frac{2(x-a)}{(b-a)(c-a)} &amp; \mbox{if } x \in [a,c] \\ \frac{2(b-x)}{(b-a)(b-c)} &amp; \mbox{if } x \in [c,b] \\ 0 &amp; \mbox{otherwise} \end{cases}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{a + b + c}{3}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{a^2 + b^2 + c^2 - ab -ac -bc}{18}\)</span></td>
+</tr>
+<tr class="odd">
 <td style="text-align: center;">Standard normal</td>
 <td style="text-align: center;"><span class="math inline">\(\Norm(0,1)\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{1}{\sqrt{2\pi}} {e^{-\frac{1}{2} z^2}}\)</span></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">Normal</td>
 <td style="text-align: center;"><span class="math inline">\(\Norm(\mu,\sigma)\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{1}{2} (\frac{x-\mu} {\sigma})^2}\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\mu\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\sigma^2\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">Exponential</td>
 <td style="text-align: center;"><span class="math inline">\(\Exp(\lambda)\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\lambda e^{-\lambda x}\)</span> for <span class="math inline">\(x &gt; 0\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(1/\lambda\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(1/\lambda^2\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">Gamma</td>
 <td style="text-align: center;"><span class="math inline">\(\Gamm(\alpha, \lambda = \frac{1}{\beta})\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}\)</span> for <span class="math inline">\(x &gt; 0\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\alpha/\lambda = \alpha \beta\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\alpha/\lambda^2 = \alpha \beta^2\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">Weibull</td>
 <td style="text-align: center;"><span class="math inline">\(\Weibull(\alpha,\beta = \frac{1}{\lambda})\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{\alpha}{\beta^\alpha} x^{\alpha-1} e^{-(x/\beta)^\alpha}\)</span> for <span class="math inline">\(x &gt; 0\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\beta \Gamma(1 + \frac1{\alpha})\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\beta^2 \left[ \Gamma(1 + \frac{2}{\alpha}) - \left[ \Gamma(1 + \frac{1}{\alpha}) \right]^2 \right]\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">Beta</td>
 <td style="text-align: center;"><span class="math inline">\(\Beta(\alpha, \beta)\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1}(1-x)^{\beta-1}\)</span> for <span class="math inline">\(x \in (0,1)\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{\alpha}{\alpha + \beta}\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{\alpha \beta }{(\alpha + \beta)^2(\alpha + \beta + 1)}\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: center;">Binomial</td>
 <td style="text-align: center;"><span class="math inline">\(\Binom(n, p)\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\displaystyle \binom{n}{x} p^x (1-p)^{n-x}\)</span> for integer <span class="math inline">\(x\)</span> with <span class="math inline">\(0 \le x \le n\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(np\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(np(1-p)\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: center;">Poisson</td>
 <td style="text-align: center;"><span class="math inline">\(\Pois(\lambda)\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(\displaystyle \frac{e^{-\lambda} \lambda^x} {x!}\)</span> for non-negative integers <span class="math inline">\(x\)</span></td>

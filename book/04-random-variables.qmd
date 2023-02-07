@@ -1712,6 +1712,9 @@ and $b$ are called \texttt{min} and \texttt{max}. The function $\Gamma(x)$ that
 appears in the formulas for the Weibull and Beta distributions is a kind of
 continuous extrapolation from the factorial function. The \texttt{gamma()}
 function will calculate these values in R."
+
+
+
   
 ```{r}
 #| echo: false
@@ -1723,6 +1726,10 @@ tribble(
       r"($\displaystyle  \frac{1}{b-a}$ for $x \in [a, b]$)",
       r"($\displaystyle \frac{b+a}{2}$)",
       r"($\displaystyle \frac{(b-a)^2}{12}$)",
+   r"(Triangle)", r"($\Tri(a, b, c)$)",
+     r"($\displaystyle \begin{cases} \frac{2(x-a)}{(b-a)(c-a)} & \mbox{if } x \in [a,c]  \\  \frac{2(b-x)}{(b-a)(b-c)} & \mbox{if } x \in [c,b]  \\  0 & \mbox{otherwise} \end{cases}$)",
+	  r"($\displaystyle \frac{a + b + c}{3}$)", 
+	  r"($\displaystyle \frac{a^2 + b^2 + c^2 - ab -ac -bc}{18}$)",
    r"(Standard normal)", r"($\Norm(0,1)$)",
      r"($\displaystyle \frac{1}{\sqrt{2\pi}} {e^{-\frac{1}{2} z^2}}$)",
      "0", "1",

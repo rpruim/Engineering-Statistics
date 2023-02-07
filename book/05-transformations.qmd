@@ -14,11 +14,11 @@ theme_set(theme_bw())
 
 
 We will often be interested in random variables that are formed by transformations
-or combinations other random variables.
+or combinations of other random variables.
 
 ::: {.itemize}
 
-* If we roll to dice and let $X$ and $Y$ be the results on each die,
+* If we roll two dice and let $X$ and $Y$ be the results on each die,
 		then the sum is $X+Y$.
 * If $R$ is the radius of a circle, then $A = \pi R^2$ is its area.
 * If $X$ and $Y$ are the length and width of a rectangle, then
@@ -49,7 +49,7 @@ Y = f(X_1, X_2, \dots, X_n)
 $$
 
 and we already know the distributions of $X_1, X_2, \dots, X_n$.
-There are methods for working out the distribution of $Y$ in many such situations, 
+There are methods for working out the distribution of $Y$ in many such situations. 
 Often it is possible to figure out the distribution of variables formed this way,
 but the methods require more techniques of probability than we will develop in this 
 course.  We will generally be satisfied with one of the following approaches:
@@ -203,11 +203,22 @@ $$
 
 **A.** $\E(3 X + 4) = 3 \E(X) + 4 = 3 \cdot 5 + 4 = `r 3*5 + 4`$
 
-$\Var(3 X + 4) = 3^2 \Var(X) = 3^2 \cdot 2^2 = 36$.  So he standard deviation of 
+$\Var(3 X + 4) = 3^2 \Var(X) = 3^2 \cdot 2^2 = 36$.  So the standard deviation of 
 $3X + 4$ is $\sqrt{36} = 6$.  Notice that $6 = 2 \cdot 3$.
 ::: 
 <!-- end example -->
 
+::: {.example #exm-mean-sd-of-linear-trans}
+
+**Q.** Suppose $X$ has a mean of 5 and a standard deviation of 2.  What are the mean
+	and standard deviation of $7 - 2 X $?
+
+**A.** $\E(7 - 2X) = \E(- 2 X + 7) = - 2 \E(X) + 7 = -2 \cdot 5 + 7 = `r -2 * 5 + 7`$
+
+$\Var(-2 X + 7) = (-2)^2 \Var(X) = 4 \cdot 2^2 = 16$.  So the standard deviation of 
+$7 - 2X$ is $\sqrt{16} = 4$.  Notice that $4 = |-2| \cdot 2$.
+::: 
+<!-- end example -->
 
 ### Sums
 
@@ -220,7 +231,7 @@ Let $X$ and $Y$ be two random variables with known means and variances, then
 	
 $$
 \begin{aligned}
-	\E(X + Y) &= a \E(X) + \E(Y) \; \mbox{, and}
+	\E(X + Y) &= \E(X) + \E(Y) \; \mbox{, and}
 	\\
 	\Var(X + Y) &= \Var (X)  + \Var(Y) \; \mbox{, provided $X$ and $Y$ are independent.}
 \end{aligned}
@@ -350,7 +361,7 @@ Determine the mean and standard deviation of $X + 2Y - 3Z$.
 
 The variance is 
 $1^2\cdot 15^2 + 2^2 \cdot 20^2 + (-3)^2 \cdot 25^2 = 
-`r  1^2 * 15^2 + 2^2 * 20^2 + (-3)^2 * 25^2`  $,
+`r  1^2 * 15^2 + 2^2 * 20^2 + (-3)^2 * 25^2`$,
 so the standard deviation is 
 $\sqrt{ `r  1^2 * 15^2 + 2^2 * 20^2 + (-3)^2 * 25^2`} =
 `r  round(sqrt(1^2 * 15^2 + 2^2 * 20^2 + (-3)^2 * 25^2), 1)`$.
@@ -441,7 +452,8 @@ gf_qq(~ Diff)
 
 ::: {.example #exm-sum-of-twelve-unifs}
 
-Let $X_i \simiid \Unif(0,1)$.  Consider $S = \sum_{i = 1}^{12} X_i$.  
+Let $X_1, X_2, \dots X_12$ be twelve independent $\Unif(0,1)$-random variables. 
+Consider $S = \sum_{i = 1}^{12} X_i$.  
 Since $\E(X_i) = \frac12$ and $\Var(X_i) = \frac{1^2}{12} = \frac1{12}$
 
 $$
@@ -467,7 +479,7 @@ gf_qq(~S)
 ```
 
 This means that $S - 6 \approx \Norm(0,1)$.  This has been used in computer software
-as a relatively easy way to simulate normal data given a good psuedorandom number generator
+as a relatively easy way to simulate normal data given a good pseudorandom number generator
 for $\Unif(0,1)$.
 ::: 
 <!-- end example -->
@@ -528,64 +540,41 @@ We begin by introducing some key terms:
 
 ::: {.example #exm-population-sample-param-stat}
 
-:::: {.enumerate}
-
 a.  Quality assurance engineers test a few parts to make a decision about 
 		whether the production process is working correctly for all the parts.  
 		
-::::: {.itemize}
-
     * population: all parts produced at the plant
     * sample: the parts tested in the quality control protocol
     * parameter: mean strength of all parts produced at the plant
     * statistic: mean strength of the tested parts
-::::: 
-<!-- end itemize -->
 
 b. Automobile manufacturers crash a small number of vehicles to learn how
 their (other) cars might perform in an accident.  
 
-::::: {.itemize}
-
     * population: all cars (of a certain model) produced
     * sample: the small number of cars that were used in the crash test
-    * paramter: average amount of force applied to crash dummy's head in all such crashes (not
+    * parameter: average amount of force applied to crash dummy's head in all such crashes (not
       just the crashes done in the lab)
     * statistic: average amount of force applied to crash dummy's head in the crashes
       that were tested
-::::: 
-<!-- end itemize -->
 
 c.  Public opinion pollsters survey a (relatively) small number of people in order to learn
 about the opinions of millions of people.
-
-::::: {.itemize}
 
     * population: all voters
     * sample: people actually contacted
     * parameter: proportion of all voters who will vote for candidate A
     * statistic: proportion of sample who claim they will vote for candidate A
-::::: 
-<!-- end itemize -->
 
 d. The mean weight of a dime can be estimated from the weights of 30 dimes.
-
-::::: {.itemize}
 
     * population: all dimes in the sack
     * sample: 30 dimes actually weighed
     * parameter: the mean weight of all the dimes in the sack
     * statistic: the mean weight of the 30 dimes actually weighed.
-::::: 
-<!-- end itemize -->
-
-
-:::: 
-<!-- end enumerate -->
 
 ::: 
 <!-- end example -->
-
 
 ::: {.boxedText #thm-central-limit}
 
@@ -659,7 +648,7 @@ following terminology:
 ::: 
 <!-- end description -->
 
-In this section, our estimand is the mean of the population ($mu$) and our estimator 
+In this section, our estimand is the mean of the population ($\mu$) and our estimator 
 is $\mean X$, the mean of a random sample.  We will use $\mean x$ to denote 
 the estimate computed from a particular sample; this is an estimate.
 
@@ -737,7 +726,7 @@ considering the random variable formed by taking a random sample and computing
 the sample mean.  $\mean X$ is a random variable with a distribution.
 When we are considering a specific data set, we write $\mean x$ instead.
 
-There is a subtly here that often gets people confused about the interpretation
+There is a subtlety here that often gets people confused about the interpretation
 of a confidence interval.  Although 95% of samples result in 95% confidence
 intervals that contain the true mean, it is not correct to say that a particular 
 confidence interval has a 95% chance of containing the true mean.  Neither the 
@@ -969,46 +958,44 @@ intervals are quite robust.
 Quantifying robustness precisely is difficult because how well a procedure works
 may depend on many factors. The general principles are
 
-::: {.itemize}
-
 * The bigger the better. 
 
-		The larger the sample size, the less it mattes what the population
+    The larger the sample size, the less it mattes what the population
 		distribution is.
+		
 * The more normal the better.  
 
-		The closer the population is to a normal distribution,
+    The closer the population is to a normal distribution,
 		the smaller the sample sizes may be.
-::: 
-<!-- end itemize -->
-
 
 For assistance in particular applications, we offer the following rules of thumb.
 
-::: {.enumerate}
+1. If the population is normal, the confidence intervals achieve
+the stated coverage rate for all sample sizes.
 
-#. If the population is normal, the confidence intervals achieve
-		the stated coverage rate for all sample sizes.
-
-		But since small data sets provide very little indication
+    But since small data sets provide very little indication
 		of the shape of the population distribution, the normality assumption
 		must be justified by something other than the data.
 		(Perhaps other larger data sets collected in a similar fashion 
 		have shown that normality is a good assumption or perhaps there
 		is some theoretical reason to accept the normality assumption.)
-#. For modestly sized samples ($15 \le n \le 40$), the $t$-based 
-		confidence is acceptable as long as the distribution appears 
-		to be unimodal and is not strongly skewed.
-#. For large sample size ($n \ge 40$), the $t$-procedure will work acceptably
-		well for most unimodal distributions.
+		
+2. For modestly sized samples ($15 \le n \le 40$), the $t$-based 
+confidence is acceptable as long as the distribution appears 
+to be unimodal and is not strongly skewed.
+		
+3. For large sample size ($n \ge 40$), the $t$-procedure will work acceptably
+well for most unimodal distributions.
 
-		But keep in mind, if the distribution is strongly skewed, the 
+    But keep in mind, if the distribution is strongly skewed, the 
 		mean might not be the best parameter to estimate.
-#. Because both the sample mean and the sample variance are sensitive
-		to outliers, one should proceed with caution when outliers 
-		are present.
+		
+4. Because both the sample mean and the sample variance are sensitive
+to outliers, one should proceed with caution when outliers 
+are present.
 
-		Outliers that are due to mistakes and can be corrected, should be.  Outliers that can be verified
+    Outliers that are due to mistakes and can be corrected, should be.  Outliers
+		that can be verified
 		to be incorrect but cannot be corrected should be removed.  It is not
 		acceptable to remove an outlier just because you don't want it in your data.
 		But sometimes statisticians do "leave one out analysis" where they run the 
@@ -1016,12 +1003,9 @@ For assistance in particular applications, we offer the following rules of thumb
 		the conclusions can be safely drawn.  But if the conclusions are different,
 		likely additional data will be needed to resolve the differences.
 
-		Don't forget: sometimes the outliers are the interesting part of the story.
+    Don't forget: sometimes the outliers are the interesting part of the story.
 		Determining what makes them different from the rest of the data may be 
 		the most important thing.
-
-::: 
-<!-- end enumerate -->
 
 ## Exercises
 
@@ -1569,7 +1553,7 @@ small standard deviation and Denise gets an unusually large standard deviation.
 
 
 ::: {.problem #exr-find-article-with-ci}
-**Find and article**
+**Find an article**
 
 Find an article from the engineering or science literature that computes a
 confidence interval for a mean (be careful, you may see confidence intervals
@@ -2093,9 +2077,8 @@ $\mean X_1$ and $\mean X_2$, then use what we know about differences.)
 
 Similar to the previous problem, we can work out the (approximate) sampling distribution for the difference 
 between two proportions. Use the fact that the sampling distribution for a sample proportion is approximately
-$\Norm(p, \sqrt{\frac{p(1-p)}{\sqrt{n}}})$ to work out the (approximate) sampling distribution for the 
+$\Norm\left(p, \sqrt{\frac{p(1-p)}{n}}\right)$ to work out the (approximate) sampling distribution for the 
 difference between two sample proportions.
-{{< pagebreak >}}
 
 ::: 
 <!-- end problem -->

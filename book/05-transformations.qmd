@@ -452,7 +452,7 @@ gf_qq(~ Diff)
 
 ::: {.example #exm-sum-of-twelve-unifs}
 
-Let $X_1, X_2, \dots X_12$ be twelve independent $\Unif(0,1)$-random variables. 
+Let $X_{1}, X_{2}, \dots X_{12}$ be twelve independent $\Unif(0,1)$-random variables. 
 Consider $S = \sum_{i = 1}^{12} X_i$.  
 Since $\E(X_i) = \frac12$ and $\Var(X_i) = \frac{1^2}{12} = \frac1{12}$
 

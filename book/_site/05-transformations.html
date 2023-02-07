@@ -686,13 +686,13 @@ X - Y \sim \Norm(10 - 12, \sqrt{2^2 + 4^2})
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  22.03553202    4.47711499 
- ( 0.06331597) ( 0.04477115)</code></pre>
+  22.11304146    4.52667098 
+ ( 0.06401679) ( 0.04526671)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  -1.99847417    4.48530938 
- ( 0.06343185) ( 0.04485309)</code></pre>
+  -2.04289940    4.49405723 
+ ( 0.06355557) ( 0.04494057)</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -716,7 +716,7 @@ X - Y \sim \Norm(10 - 12, \sqrt{2^2 + 4^2})
 </div>
 <!-- end example -->
 <div id="exm-sum-of-twelve-unifs" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 5.9 </strong></span>Let <span class="math inline">\(X_1, X_2, \dots X_12\)</span> be twelve independent <span class="math inline">\(\Unif(0,1)\)</span>-random variables. Consider <span class="math inline">\(S = \sum_{i = 1}^{12} X_i\)</span>.<br>
+<p><span class="theorem-title"><strong>Example 5.9 </strong></span>Let <span class="math inline">\(X_{1}, X_{2}, \dots X_{12}\)</span> be twelve independent <span class="math inline">\(\Unif(0,1)\)</span>-random variables. Consider <span class="math inline">\(S = \sum_{i = 1}^{12} X_i\)</span>.<br>
 Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="math inline">\(\Var(X_i) = \frac{1^2}{12} = \frac1{12}\)</span></p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -738,9 +738,9 @@ Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="ma
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<pre><code>      mean           sd     
-  5.988455838   0.993371474 
- (0.014048394) (0.009933715)</code></pre>
+<pre><code>      mean          sd    
+  5.98856051   0.99977899 
+ (0.01413901) (0.00999779)</code></pre>
 </div>
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="05-transformations_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="432"></p>
@@ -1165,8 +1165,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean           sd     
-  11.94894038    5.87822030 
- ( 0.08313059) ( 0.05878220)</code></pre>
+  12.08471395    6.01937009 
+ ( 0.08512675) ( 0.06019370)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1181,8 +1181,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"gamma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      shape         rate    
-  4.170131144   0.348995941 
- (0.080287640) (0.007140639)</code></pre>
+  3.988194295   0.330019780 
+ (0.076659646) (0.006760274)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S, <span class="at">distribution =</span> qgamma, <span class="at">dparams =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="fl">4.04</span>, <span class="at">rate =</span> <span class="fl">0.333</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1198,8 +1198,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(D, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean          sd    
-  0.03074848   5.93491349 
- (0.08393235) (0.05934913)</code></pre>
+  0.12504399   6.02395502 
+ (0.08519159) (0.06023955)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> D)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">

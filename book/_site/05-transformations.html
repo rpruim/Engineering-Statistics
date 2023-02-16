@@ -686,13 +686,13 @@ X - Y \sim \Norm(10 - 12, \sqrt{2^2 + 4^2})
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  22.11304146    4.52667098 
- ( 0.06401679) ( 0.04526671)</code></pre>
+  22.08368652    4.48952965 
+ ( 0.06349154) ( 0.04489530)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  -2.04289940    4.49405723 
- ( 0.06355557) ( 0.04494057)</code></pre>
+  -2.01478854    4.53154927 
+ ( 0.06408578) ( 0.04531549)</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -738,9 +738,9 @@ Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="ma
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<pre><code>      mean          sd    
-  5.98856051   0.99977899 
- (0.01413901) (0.00999779)</code></pre>
+<pre><code>      mean           sd     
+  5.979508274   0.992543814 
+ (0.014036689) (0.009925438)</code></pre>
 </div>
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="05-transformations_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="432"></p>
@@ -1165,8 +1165,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean           sd     
-  12.08471395    6.01937009 
- ( 0.08512675) ( 0.06019370)</code></pre>
+  11.94541779    5.97225107 
+ ( 0.08446038) ( 0.05972251)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1181,8 +1181,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"gamma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      shape         rate    
-  3.988194295   0.330019780 
- (0.076659646) (0.006760274)</code></pre>
+  4.037219907   0.337972313 
+ (0.077637198) (0.006920922)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S, <span class="at">distribution =</span> qgamma, <span class="at">dparams =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="fl">4.04</span>, <span class="at">rate =</span> <span class="fl">0.333</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1198,8 +1198,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(D, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean          sd    
-  0.12504399   6.02395502 
- (0.08519159) (0.06023955)</code></pre>
+  0.06274387   5.95804495 
+ (0.08425948) (0.05958045)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> D)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1617,8 +1617,8 @@ mean of x
 <!-- % @ -->
 <!-- % \end{enumerate} -->
 <!-- % \end{solution} -->
-<div id=".exr-e-glass-fiber" class="problem">
-<p><strong>E-glass fiber</strong></p>
+<div id="exr-e-glass-fiber" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.8 </strong></span><strong>E-glass fiber</strong></p>
 <!--  Devore7; prob 7.32 -->
 <p>A random sample of size <span class="math inline">\(n = 8\)</span> E-glass fiber test specimens of a certain type yielded a sample mean interfacial shear yield stress of 30.2 and a sample standard deviation of 3.1. Assuming that the population of interfacial shear yield stress measurements is approximately normal, compute a 95% confidence interval for the true average stress.</p>
 </div>
@@ -1646,7 +1646,7 @@ mean of x
 </div>
 <!-- end solution -->
 <div id="exr-polymerization-degree" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.8 </strong></span><strong>Polymerization of paper</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.9 </strong></span><strong>Polymerization of paper</strong></p>
 <!--  Devore7; prob 7.33 -->
 <p>The code below will create a data set containing a sample of observations of polymerization degree for some paper specimens. The data have been sorted to assist in typing. (If the data actually occurred in this order, we would probably be doing a different sort of analysis.)</p>
 <div class="cell">
@@ -1696,7 +1696,7 @@ mean of x
 </div>
 <!-- end solution -->
 <div id="exr-alice-and-bob-cis" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.9 </strong></span><strong>Alice and Bob</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.10 </strong></span><strong>Alice and Bob</strong></p>
 <p>Using the same data, Alice constructs a 95% confidence interval and Bob creates a 98% confidence interval. Which interval will be wider? Why?</p>
 </div>
 <!-- end problem -->
@@ -1705,7 +1705,7 @@ mean of x
 </div>
 <!-- end solution -->
 <div id="exr-charlie-and-denise-physics-lab" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.10 </strong></span><strong>Lab partners</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.11 </strong></span><strong>Lab partners</strong></p>
 <p>Charlie and Denise are working on the same physics lab. Charlie leaves lab early and only has a sample size of <span class="math inline">\(n = 15\)</span>. Denise stays longer and has a sample size of <span class="math inline">\(n = 45\)</span>. Each of them construct a 95% confidence interval from their samples.</p>
 <div class="enumerate">
 <ol>
@@ -1721,7 +1721,7 @@ mean of x
 </div>
 <!-- end solution -->
 <div id="exr-find-article-with-ci" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.11 </strong></span><strong>Find an article</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.12 </strong></span><strong>Find an article</strong></p>
 <p>Find an article from the engineering or science literature that computes a confidence interval for a mean (be careful, you may see confidence intervals for many other parameters) and also reports the sample mean and standard deviation. Check their computation to see if you both get the same confidence interval. Give a full citation for the article you used.</p>
 <p>Google scholar might be a useful tool for this. Or you might ask an engineering or physics professor for an appropriate engineering journal to page through in the library. Since the chances are small that two students will find the same article if working independently, I expect to see lots of different articles used for this problem.</p>
 <p>If your article looks particularly interesting or contains statistical things that you don’t understand but would like to understand, let me know, and perhaps we can do something later in the semester with your article. It’s easiest to do this if you can give me a URL for locating the paper online.</p>
@@ -1735,7 +1735,7 @@ mean of x
 <section id="review-exercises" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="review-exercises"><span class="header-section-number">5.6</span> {Review Exercises}</h2>
 <div id="exr-defective-parts" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.12 </strong></span><strong>Defective parts</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.13 </strong></span><strong>Defective parts</strong></p>
 <p>Even when things are running smoothly, 5% of the parts produced by a certain manufacturing process are defective.</p>
 <div class="enumerate">
 <ol type="a">
@@ -1812,7 +1812,7 @@ mean of x
 </div>
 <!-- end solution -->
 <div id="exr-qq-to-density" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.13 </strong></span><strong>What does the density look like?</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.14 </strong></span><strong>What does the density look like?</strong></p>
 <p>Here is a normal quantile plot from a data set.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1833,7 +1833,7 @@ mean of x
 </div>
 <!-- end solution -->
 <div id="exr-ci-template-problem" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.14 </strong></span><strong>Create your own practice problems</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.15 </strong></span><strong>Create your own practice problems</strong></p>
 <p>You should know how to compute confidence intervals for a single quantitative variable both “by hand” and using <code>t.test()</code> if you have data. Here is a template problem you can use to practice both of these.</p>
 <div class="enumerate">
 <ol type="a">
@@ -1939,7 +1939,7 @@ mean of x
 </div>
 <!-- end solution -->
 <div id="exr-working-with-pdf" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.15 </strong></span><strong>Working with a pdf</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.16 </strong></span><strong>Working with a pdf</strong></p>
 <p>The <strong>pdf</strong> for a continuous random variable <span class="math inline">\(X\)</span> is</p>
 <p><span class="math display">\[
 f(x) = \begin{cases}
@@ -1985,7 +1985,7 @@ f(x) = \begin{cases}
 </div>
 <!-- end solution -->
 <div id="exr-working-with-a-kernel" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.16 </strong></span><strong>Working with a kernel</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.17 </strong></span><strong>Working with a kernel</strong></p>
 <p>The kernel of a continuous distribution is given by <span class="math inline">\(k(x) = 4-x^2\)</span> on the interval <span class="math inline">\([-2,2]\)</span>.</p>
 <div class="enumerate">
 <ol type="a">
@@ -2031,7 +2031,7 @@ f(x) = \begin{cases}
 </div>
 <!-- end solution -->
 <div id="exr-working-with-gamma" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.17 </strong></span><strong>Gamma distributions</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.18 </strong></span><strong>Gamma distributions</strong></p>
 <p>Let <span class="math inline">\(X \sim \Gamm(\texttt{shape} = 3, \texttt{rate} = 2)\)</span>.</p>
 <div class="enumerate">
 <ol type="a">
@@ -2084,7 +2084,7 @@ f(x) = \begin{cases}
 </div>
 <!-- end solution -->
 <div id="exr-linear-combos" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.18 </strong></span><strong>Linear combinations</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.19 </strong></span><strong>Linear combinations</strong></p>
 <p>Suppose <span class="math inline">\(X\)</span> an <span class="math inline">\(Y\)</span> are independent random variables with means and standard deviations as given in the following table.</p>
 <table class="table">
 <thead>
@@ -2175,7 +2175,7 @@ f(x) = \begin{cases}
 <!-- \end{solution} -->
 <!-- \fi -->
 <div id="exr-vocab-review" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.19 </strong></span><strong>Terminology review</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.20 </strong></span><strong>Terminology review</strong></p>
 <div class="enumerate">
 <ol type="a">
 <li>What is the difference between a statistic and a parameter?</li>
@@ -2188,7 +2188,7 @@ f(x) = \begin{cases}
 <!-- end problem -->
 <!--  This data was among the CMU data sets that have been pulled from the mosaic package -->
 <div id="exr-flicker" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.20 </strong></span><strong>Critical flicker frequency</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.21 </strong></span><strong>Critical flicker frequency</strong></p>
 <p>Critical flicker frequency (called <code>Flicker</code> in the data set below) is the lowest flicker rate at which the human eye can detect that a light source (from a florescent bulb or a computer screen, for example) is flickering. Knowing the cff is important for product manufacturing (since detectable flickering is annoying for the consumer). The command below loads data from from a 1973 study that attempted to determine whether the cff, which varies from person to person, is partially determined by eye color.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a>Flicker <span class="ot">&lt;-</span> <span class="fu">read.file</span>(<span class="st">"http://www.statsci.org/data/general/flicker.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2217,17 +2217,17 @@ f(x) = \begin{cases}
 </div>
 <!-- end solution -->
 <div id="exr-difference-between-two-means" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.21 </strong></span><strong>Difference between two means</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.22 </strong></span><strong>Difference between two means</strong></p>
 <p>Let <span class="math inline">\(\mean X_1\)</span> be the distribution of sample means from a population with mean <span class="math inline">\(\mu_1\)</span> and standard deviation <span class="math inline">\(\sigma_1\)</span>. Let <span class="math inline">\(\mean X_2\)</span> be the distribution of sample means from a population with mean <span class="math inline">\(\mu_2\)</span> and standard deviation <span class="math inline">\(\sigma_2\)</span>. What is the distribution of <span class="math inline">\(\mean X_1 - \mean X_2\)</span>? (Hint: start by determining the distributions of <span class="math inline">\(\mean X_1\)</span> and <span class="math inline">\(\mean X_2\)</span>, then use what we know about differences.)</p>
 </div>
 <!-- end problem -->
 <div id="exr-difference-between-two-proportions" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.22 </strong></span><strong>Difference between two proportions</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.23 </strong></span><strong>Difference between two proportions</strong></p>
 <p>Similar to the previous problem, we can work out the (approximate) sampling distribution for the difference between two proportions. Use the fact that the sampling distribution for a sample proportion is approximately <span class="math inline">\(\Norm\left(p, \sqrt{\frac{p(1-p)}{n}}\right)\)</span> to work out the (approximate) sampling distribution for the difference between two sample proportions.</p>
 </div>
 <!-- end problem -->
 <div id="exr-concrete-beams-load" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.23 </strong></span><strong>Concrete beams</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.24 </strong></span><strong>Concrete beams</strong></p>
 <p>Below is the summary of some data from a study comparing two types of concrete beams by measuring their ultimate load (in kN).</p>
 <table class="table">
 <colgroup>
@@ -2281,7 +2281,7 @@ f(x) = \begin{cases}
 </div>
 <!-- end solution -->
 <div id="exr-fabric-extensibility" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.24 </strong></span><strong>Fabric extensibility</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.25 </strong></span><strong>Fabric extensibility</strong></p>
 <p>The <code>Devore7::ex9.23</code> data set has data on the extensibility (%) of two types of fabric, but it is arranged awkwardly. Let’s fix that:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
@@ -2363,7 +2363,7 @@ mean in group H mean in group P
 </div>
 <!-- end solution -->
 <div id="exr-part-diffprop" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 5.25 </strong></span><strong>A difference in proportions</strong></p>
+<p><span class="theorem-title"><strong>Exercise 5.26 </strong></span><strong>A difference in proportions</strong></p>
 <p>A sample of parts from two factories was inspected. At factory A, 172 out of 213 were rated “highest quality”. At factory B, 184 out of 207 were rated “highest quality”.</p>
 <div class="enumerate">
 <ol type="a">

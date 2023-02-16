@@ -1430,7 +1430,7 @@ any of those methods yet.)
 <!-- % \end{enumerate} -->
 <!-- % \end{solution} -->
 
-::: {.problem #.exr-e-glass-fiber}
+::: {.problem #exr-e-glass-fiber}
 **E-glass fiber**
 
 <!--  Devore7; prob 7.32 -->

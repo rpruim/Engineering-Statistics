@@ -1929,7 +1929,7 @@ Let $f(x) = 5/4 - x^3$  on $[0,1]$.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 f <- makeFun( (5/4 - x^3) * ( abs(x-.5) <= .5 ) ~ x )
@@ -1957,7 +1957,7 @@ rather than R
 
 
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.itemize}
 
@@ -1997,7 +1997,7 @@ a. 			Compute the mean and variance for this distribution
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 	The integrals are easy enough to do by hand, but here is the R code 
 	to compute them.
@@ -2026,7 +2026,7 @@ Let $Y \sim\Tri(0,10,4)$.  Compute $\E(Y)$ and the median of $Y$.
 ::: 
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 # mean:
@@ -2048,7 +2048,7 @@ Let $W \sim \Unif(0,10)$.  Compute $\E(W)$ and $\Var(W)$.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 # mean:
@@ -2077,7 +2077,7 @@ distribution why this makes sense.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 antiD( x * dexp(x, 4) ~ x, lower.bound = 0)(Inf)
@@ -2112,7 +2112,7 @@ a.  $\Weibull(\texttt{shape} = 2, \texttt{scale} = 3)$
 
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 # Beta(2,3)
@@ -2166,7 +2166,7 @@ e.  $\Gamm(\texttt{shape} = 2, \texttt{scale} = 1/2)$
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 pexp(1, 2) - pexp(0.5, 2)
@@ -2208,7 +2208,7 @@ d.  How well does an exponential distribution fit this data?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.enumerate}
 
@@ -2259,7 +2259,7 @@ b. How do the method of moments estimates for the parameters compare to the
 ::: 
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r tidy = FALSE,warning = FALSE}
 Wind <- Wind |> mutate(speed2 = ifelse( speed > 0, speed, 0.0025))
@@ -2322,7 +2322,7 @@ a. 	In principal, we could do the same for a Weibull distribution, but the
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 We can recycle some work from the previous problem to quickly obtain
 the method of moments fit for the Gamma distribution:
@@ -2369,7 +2369,7 @@ head(Baby)
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 	The distribution is skewed and non-negative, so a gamma or Weibull seems like 
 	a good thing to try.  
@@ -2412,7 +2412,7 @@ Create normal quantile plots for the ages of patients in the `HELPrct`
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 gf_qq( ~ age | substance, data = HELPrct)
@@ -2487,7 +2487,7 @@ gf_qq(~values | ind, data = sD2, as.table = TRUE)
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 a) Y  b) V c) Z d) W  e) X f) U
 ::: 
@@ -2507,7 +2507,7 @@ whenever $f$ is a pdf and all the integrals involved converge.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Some algebra and properties of integrals are all we need:
 
@@ -2570,7 +2570,7 @@ e.  How tall must a man be to join Big Joe's club?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.enumerate}
 
@@ -2624,7 +2624,7 @@ d.  If a woman is in the 30th percentile for height, how tall is she?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.enumerate}
 

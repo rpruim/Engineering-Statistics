@@ -1302,7 +1302,7 @@ that don't seem to fit the pattern of the rest of the data)?
 Compare the distribution of `i1` among men vs. among women.  Do the same for `i2`.
 :::
 
-:::{.solution}
+:::{.mysolution}
 
 ```{r }
 gf_dens( ~max_drinks, color = ~ sex, data = HELPrct )
@@ -1318,7 +1318,7 @@ Compare the distributions of `i1` among the three `substance` groups.
 Do the same for `i2`.
 :::
 
-:::{.solution}
+:::{.mysolution}
 
 ```{r }
 gf_dens( ~i1, color = ~ substance, data = HELPrct )
@@ -1350,7 +1350,7 @@ or little snow in February?  Make a scatter plot comparing January and February
 snowfall totals and comment on what you see there.
 :::
 
-:::{.solution}
+:::{.mysolution}
 
 ```{r }
 gf_histogram( ~ Jan, data = SnowGR)

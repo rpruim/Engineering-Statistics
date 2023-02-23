@@ -363,7 +363,7 @@ $$
 </ol>
 </div>
 <!-- end enumerate -->
-<p>At this point, you may be wondering who the innovative scientist was and what the results of the experiment were. The scientist was R. A. Fisher, who first described this situation as a pedagogical example in his 1925 book on statistical methodology <span class="citation" data-cites="Fisher:1925:Methods">Fisher (<a href="#ref-Fisher:1925:Methods" role="doc-biblioref">1925</a>)</span>. Fisher developed statistical methods that are among the most important and widely used methods to this day, and most of his applications were biological. </p>
+<p>At this point, you may be wondering who the innovative scientist was and what the results of the experiment were. The scientist was R. A. Fisher, who first described this situation as a pedagogical example in his 1925 book on statistical methodology <span class="citation" data-cites="Fisher:1925:Methods">Fisher (<a href="references.html#ref-Fisher:1925:Methods" role="doc-biblioref">1925</a>)</span>. Fisher developed statistical methods that are among the most important and widely used methods to this day, and most of his applications were biological. </p>
 </section>
 <section id="coins-and-cups" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="coins-and-cups"><span class="header-section-number">9.2</span> Coins and Cups</h2>
@@ -456,7 +456,7 @@ Number of Heads: 3 [Proportion Heads: 0.3]</code></pre>
 </ol>
 </div>
 <!-- end itemize -->
-<p>Although Fisher did not say how the experiment came out, others have reported that the lady correctly identified all 10 cups! <span class="citation" data-cites="salsburg">Salsburg (<a href="#ref-salsburg" role="doc-biblioref">2001</a>)</span></p>
+<p>Although Fisher did not say how the experiment came out, others have reported that the lady correctly identified all 10 cups! <span class="citation" data-cites="salsburg">Salsburg (<a href="references.html#ref-salsburg" role="doc-biblioref">2001</a>)</span></p>
 <p>This same reasoning can be applied to answer a wide range of questions that have a similar form. For example, the question of whether dogs can smell cancer could be answered essentially the same way (although it would be a bit more involved than preparing tea and presenting cups to the Lady).</p>
 </section>
 <section id="a-general-framework" class="level2" data-number="9.3">
@@ -580,7 +580,7 @@ probability of success
                    0.9 </code></pre>
 </div>
 </div>
-<p>The output above doesn’t match what we obtained in <a href="#exm-lady-binom">Example&nbsp;<span class="quarto-unresolved-ref">exm-lady-binom</span></a> because the alternative hypothesis is different. It accepts both low number of correct identifications (0 or 1) and high numbers (9 or 10) as evidence against the null hypothesis. If we want a one-sided p-value, we just need to ask:</p>
+<p>The output above doesn’t match what we obtained in <a href="#exm-lady-binom">Example&nbsp;<span>9.2</span></a> because the alternative hypothesis is different. It accepts both low number of correct identifications (0 or 1) and high numbers (9 or 10) as evidence against the null hypothesis. If we want a one-sided p-value, we just need to ask:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="at">x =</span> <span class="dv">9</span>, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1308,9 +1308,8 @@ What would it mean if <span class="math inline">\(A\)</span> were 0? What if <sp
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="enumerate">
-<span class="proof-title"><em>Solution</em>. </span>
 <ol type="a">
 <li><p>The normal-quantile plot looks pretty good for a sample of this size. The residual plot is perhaps not quite as “noisy” as we would like (the first few residuals cluster above zero, then next few below), but it is not terrible either. Ideally we would like to have a larger data set to see whether this pattern persists or whether things look more noisy as we “fill-in” with more data.</p></li>
 <li><p><span class="math inline">\(A\)</span> is a measure of background radiation levels, it is the amount of clicks we would get if our test substance were “at infinity”, i.e., so far away (or beyond some shielding) that it does not affect the Geiger counter.</p></li>
@@ -1341,8 +1340,8 @@ What would it mean if <span class="math inline">\(A\)</span> were 0? What if <sp
 <p>A gentleman claims he can distinguish between four vintages of a particular wine. His friends, assuming he has probably just had too much of each, decide to test him. They prepare one glass of each vintage and present the gentleman with four unlabeled glasses of wine. What is the probability that the gentleman correctly identifies all four simply by guessing?</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>We can use the product of conditional probabilities:</p>
+<div class="mysolution">
+<p>We can use the product of conditional probabilities:</p>
 <p><span class="math display">\[
 \frac14 \cdot \frac13 \cdot \frac12 \cdot \frac11 = \frac1{24}
 \]</span> Since the probability of guessing the first glass correctly is <span class="math inline">\(\frac 14\)</span>, the probability of guess the second correctly – assuming the first was correctly guessed – is <span class="math inline">\(\frac13\)</span>; the probability of guessing the third correctly – assuming the first two were correctly guessed – is <span class="math inline">\(\frac 12\)</span>; and if the first three are guessed correctly, the last is guaranteed to be correct.</p>
@@ -1358,8 +1357,8 @@ What would it mean if <span class="math inline">\(A\)</span> were 0? What if <sp
 </div>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>Let’s remove the fastest values at each height setting. Although they are the fastest, it appears that terminal velocity has not yet been reached. At least, these points would fit the overall pattern better if the velocity were larger.</p>
+<div class="mysolution">
+<p>Let’s remove the fastest values at each height setting. Although they are the fastest, it appears that terminal velocity has not yet been reached. At least, these points would fit the overall pattern better if the velocity were larger.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( force.drag <span class="sc">~</span> velocity, <span class="at">data =</span> Drag,</span>
 <span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
@@ -1435,9 +1434,8 @@ log(velocity) 2.038795 2.189534</code></pre>
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">1.2</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">16</span>); SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3</code></pre>
@@ -1479,9 +1477,8 @@ less than 0.05. As a double check, here is the 95% confidence interval.</p>
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="enumerate">
-<span class="proof-title"><em>Solution</em>. </span>
 <ol>
 <li>In this situation it makes sense to do a one-sided test since we will reject the alloy only if the amount of expansion is to high, not if it is too low.</li>
 </ol>
@@ -1553,7 +1550,7 @@ less than 0.05. As a double check, here is the 95% confidence interval.</p>
 <!-- % \end{solution} -->
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
 <div id="ref-Fisher:1925:Methods" class="csl-entry" role="doc-biblioentry">
 Fisher, R. A. 1925. <em>Statistical Methods for Research Workers</em>. Oliver &amp; Boyd.
 </div>
@@ -1566,7 +1563,7 @@ Salsburg, D. 2001. <em>The Lady Tasting Tea: How Statistics Revolutionized Scien
 <hr>
 <ol>
 <li id="fn1"><p>There is some evidence in these data that some of the observations did not reach critical velocity.<br>
-It would be good to refit this data with those observations removed from the data. See <a href="#exr-drag-refit">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-drag-refit</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+It would be good to refit this data with those observations removed from the data. See <a href="#exr-drag-refit">Exercise&nbsp;<span>9.3</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

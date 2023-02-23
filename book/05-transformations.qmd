@@ -1034,7 +1034,7 @@ d. Why is it not a good idea to fit a Gamma distribution to $D$?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r warning = FALSE}
 n <- 5000
@@ -1095,7 +1095,7 @@ f. What is $\Prob(X \ge Y)$? (Hint: $X \ge Y \Leftrightarrow X - Y \ge 0$.)
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 1 - pnorm(140, mean = 110, sd = 15) #  P(X > 140)
@@ -1148,7 +1148,7 @@ d. $2X - 3Y$
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 # part a
@@ -1187,7 +1187,7 @@ c. How large would your sample need to be to make this probability
 ::: 
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.enumerate}
 
@@ -1244,7 +1244,7 @@ $\sigma = 1.7$.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r tidy = FALSE}
 SE <- 1.7 / sqrt(25) ; SE # standard error
@@ -1278,7 +1278,7 @@ f. 95% confidence level; $n = 123$
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Here's a fancy version that gets all the answers at once.  (You didn't need to know
 you could do it this way, but R\ is pretty handy this way.)
@@ -1320,7 +1320,7 @@ c. Does the normal-quantile plot suggest any reasons to worry about the
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 t.test( ~ strideRate, data = ex07.37, conf.level = 0.98)
@@ -1443,7 +1443,7 @@ interval for the true average stress.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r tidy = FALSE}
 SE <- 3.1 / sqrt(8); SE              # standard error
@@ -1490,7 +1490,7 @@ c. Based on your confidence interval, is 440 a plausible value
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 gf_qq( ~ polymer, data = Paper)
@@ -1515,7 +1515,7 @@ and Bob creates a 98% confidence interval.  Which interval will be wider?  Why?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Bob's interval will be wider because he used a higher level of confidence.  (This will
 cause $t_*$ to be larger.  They will both have the same standard error.)
@@ -1542,7 +1542,7 @@ samples.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 We would expect the two standard deviations to be fairly close, but since Denise 
 has quite a bit more data, her standard error will be smaller.  This will make her
@@ -1575,7 +1575,7 @@ It's easiest to do this if you can give me a URL for locating the paper online.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Answers will vary.
 ::: 
@@ -1624,7 +1624,7 @@ d. The parts that fail inspection are sold as "seconds".
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.enumerate}
 
@@ -1696,7 +1696,7 @@ Sketch what a density plot of this same data would look like.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r echo=FALSE}
 gf_density( ~ x)
@@ -1743,7 +1743,7 @@ You won't run out of examples before you run out of energy for doing these.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r tidy = FALSE}
 df_stats( ~ length, data = KidsFeet)
@@ -1805,7 +1805,7 @@ b. Determine the mean and variance of $X$.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r tidy = FALSE}
 library(mosaicCalc)
@@ -1839,7 +1839,7 @@ b.  Compute the mean and variance of the distribution.
 ::: 
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r tidy = FALSE}
 F <- antiD(4 - x^2 ~ x)
@@ -1891,7 +1891,7 @@ f. Make up other problems like this for any of the distributions
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r tidy=FALSE}
 gf_dist("gamma", params = list(shape = 3, rate = 2))
@@ -1933,7 +1933,7 @@ Reminder: Expected value is another term for mean.
 
 
 
-::: {.solution}
+::: {.mysolution}
 
 $\E(X+Y) = \E(X) + \E(Y) = 40 + 50 = 90$.
 
@@ -2043,7 +2043,7 @@ the answer might be? (Does eye color matter?)
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Here are two possibilities:
 ```{r }
@@ -2102,7 +2102,7 @@ the two types of beam.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 SE <- sqrt( 2.2^2 / 26 + 4.3^2 / 26); SE
@@ -2149,7 +2149,7 @@ Extensibility is related to the shape and drape when fabric is used to make clot
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 library(tidyr)
@@ -2185,7 +2185,7 @@ c. Based on this data, can we be confident that one factory is better than the o
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 prop.test( c(172, 184), c(184, 207)) |> confint()

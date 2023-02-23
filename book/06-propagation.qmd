@@ -1083,7 +1083,7 @@ Calculate the standard uncertainty for the mean volume of distribution.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r some-solution}
 # 95% CI 
@@ -1127,7 +1127,7 @@ Why might one prefer one of these over the other?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 # rectangular: sd = width / sqrt(12) = width / (2 * sqrt(3))
@@ -1169,7 +1169,7 @@ triangular distribution.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 # rectangular
@@ -1194,7 +1194,7 @@ What should the researchers report as the area?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Let $f(R) = \pi R^2$.  Then $\PartialFrac{f}{R} = 2\pi R$, so the uncertainty in the area estimation
 is 
@@ -1226,7 +1226,7 @@ $`r round(pi * 12.5^2, -1)` \pm `r round(2 * pi * 12.5 * 0.3, -1)`$.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 
 | estimate   | uncertainty    |
@@ -1251,7 +1251,7 @@ How should the volume be reported?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 In a product the relative uncertainties add, so
 ```{r tidy = FALSE}
@@ -1299,7 +1299,7 @@ Note:  Various estimates for these quantities are available online, but
 
 
 
-::: {.solution}
+::: {.mysolution}
 
 The total fuel consumed is given by
 $$
@@ -1401,7 +1401,7 @@ $1.637 \pm 0.006$ m, how should she report the speed in $m/s$?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 	See the next problem for the answer.
 ::: 
@@ -1423,7 +1423,7 @@ $1.637 \pm 0.006$ m, how should she report the speed in $m/s$?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Let $Q = X Y^{-1}$.  So 
 $\PartialFrac{Q}{X} = Y^{-1}$ and 

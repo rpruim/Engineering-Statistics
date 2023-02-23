@@ -750,7 +750,7 @@ Applying the Delta Method, our uncertainty is</p>
 <p>The computations are the same for any product.<br>
 So this Pythagorean identity for relative uncertainties can be applied to estimate uncertainties for quantities such as area (length <span class="math inline">\(\times\)</span> width), work (force <span class="math inline">\(\times\)</span> distance), distance (velocity <span class="math inline">\(\times\)</span> time), etc.</p>
 <div id="exm-relative-uncertainty-rectangle" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 6.7 </strong></span><strong>Q.</strong> Use relative uncertainty to estimate the area of the rectangle in <a href="#exm-box1">Example&nbsp;<span class="quarto-unresolved-ref">exm-box1</span></a>.</p>
+<p><span class="theorem-title"><strong>Example 6.7 </strong></span><strong>Q.</strong> Use relative uncertainty to estimate the area of the rectangle in <a href="#exm-box1">Example&nbsp;<span>6.6</span></a>.</p>
 <p><strong>A.</strong> The relative uncertainties in the length and width are <span class="math display">\[
     \frac{0.2}{12.3} = 0.0162602 \ \tand \  
     \frac{0.1}{6.3} = 0.015873
@@ -767,7 +767,7 @@ So this Pythagorean identity for relative uncertainties can be applied to estima
     u_A = (77.49) (0.0227232) =
     1.7608237
     \;.
-\]</span> Notice that this matches the result from <a href="#exm-box1">Example&nbsp;<span class="quarto-unresolved-ref">exm-box1</span></a>.</p>
+\]</span> Notice that this matches the result from <a href="#exm-box1">Example&nbsp;<span>6.6</span></a>.</p>
 </div>
 <!-- end example -->
 <div id="exm-resistors" class="example theorem example">
@@ -867,7 +867,7 @@ To save time, the researchers set the platform at a specified height and drop th
 </section>
 <section id="uncertainty-how-much-error-might-there-be" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="uncertainty-how-much-error-might-there-be"><span class="header-section-number">6.6</span> Uncertainty â€“ How Much Error Might There Be?</h2>
-<p>In <a href="#sec-propagation-examples"><span class="quarto-unresolved-ref">sec-propagation-examples</span></a> we did several examples of propagation of uncertainty. But uncertainty cannot be propagated to derived estimates unless we already have estimated uncertainties for the components of the derivation. Where do these uncertainty estimates come from?</p>
+<p>In <a href="#sec-propagation-examples"><span>Section&nbsp;6.4</span></a> we did several examples of propagation of uncertainty. But uncertainty cannot be propagated to derived estimates unless we already have estimated uncertainties for the components of the derivation. Where do these uncertainty estimates come from?</p>
 <p>As we have mentioned before, it is not possible to measure error directly.<br>
 <!--  This makes dealing with error a bit tricky.  In our dimes example we illustrated --> <!--  two common ways that uncertainty estimates are obtained.  --> If we knew the amount of an error exactly, we would correct for it and obtain the exact, correct estimate of the value we were trying to measure.<br>
 Since we do not know the error exactly, we have to try to use our data (and our prior knowledge about the situation) to try to estimate it. In this section we focus our attention on this part of the uncertainty calculation.</p>
@@ -991,9 +991,8 @@ Recall, a uniform distribution is one in which every value in some interval is â
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% CI </span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="at">df =</span> <span class="dv">29</span>); t.star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1040,9 +1039,8 @@ Recall, a uniform distribution is one in which every value in some interval is â
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rectangular: sd = width / sqrt(12) = width / (2 * sqrt(3))</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1076,9 +1074,8 @@ Recall, a uniform distribution is one in which every value in some interval is â
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rectangular</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0001</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1098,8 +1095,8 @@ Recall, a uniform distribution is one in which every value in some interval is â
 \]</span> What should the researchers report as the area?</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>Let <span class="math inline">\(f(R) = \pi R^2\)</span>. Then <span class="math inline">\(\PartialFrac{f}{R} = 2\pi R\)</span>, so the uncertainty in the area estimation is <span class="math display">\[
+<div class="mysolution">
+<p>Let <span class="math inline">\(f(R) = \pi R^2\)</span>. Then <span class="math inline">\(\PartialFrac{f}{R} = 2\pi R\)</span>, so the uncertainty in the area estimation is <span class="math display">\[
 \sqrt{ (2 \pi R)^2 (0.3)^2 } = 2 \pi R \cdot 0.3  = 23.5619449
 \mathrm{m}^2
 \;.
@@ -1138,8 +1135,7 @@ many digits reported).  Use standard practice to report each estimate with the c
 </table>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span></p>
+<div class="mysolution">
 <table class="table">
 <thead>
 <tr class="header">
@@ -1173,8 +1169,8 @@ many digits reported).  Use standard practice to report each estimate with the c
 <p>How should the volume be reported?</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>In a product the relative uncertainties add, so</p>
+<div class="mysolution">
+<p>In a product the relative uncertainties add, so</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fl">2.65</span>; W <span class="ot">&lt;-</span> <span class="fl">3.10</span>; H <span class="ot">&lt;-</span> <span class="fl">4.61</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>uL <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uW <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uH <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
@@ -1233,8 +1229,8 @@ many digits reported).  Use standard practice to report each estimate with the c
 <p>Note: Various estimates for these quantities are available online, but most do not report uncertainty. The uncertainties here reflect the number of significant figures used to report these numbers and the variability between estimates found at different web sites. Also, the methodology for determining these values is not always clear. So treat this as an exercise in propagation of error, but understand that better estimates of fuel consumption (and uncertainty) would be possible with better data.</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>The total fuel consumed is given by <span class="math display">\[
+<div class="mysolution">
+<p>The total fuel consumed is given by <span class="math display">\[
 F = \frac{kPd}{E}
 \]</span> where <span class="math inline">\(k\)</span> is the cars per person, <span class="math inline">\(P\)</span> is total population, <span class="math inline">\(d\)</span> is average distance driven per car, and <span class="math inline">\(E\)</span> is the average efficiency.</p>
 <p><span class="math display">\[
@@ -1324,8 +1320,7 @@ C = k P \;.
 <p><span class="theorem-title"><strong>Exercise 6.8 </strong></span>A physics student is calculating the speed of a falling object by measuring the time it takes for the object to move between two timing sensors. If she records the time as <span class="math inline">\(0.43 \pm 0.02\)</span> seconds and the distance as <span class="math inline">\(1.637 \pm 0.006\)</span> m, how should she report the speed in <span class="math inline">\(m/s\)</span>?</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span></p>
+<div class="mysolution">
 <pre><code>See the next problem for the answer.</code></pre>
 </div>
 <!-- end solution -->
@@ -1334,14 +1329,14 @@ C = k P \;.
 <div class="enumerate">
 <ol>
 <li>Work out a formula for the relative uncertainty of <span class="math inline">\(Q = X/Y\)</span> given relative uncertainties for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</li>
-<li>Redo <a href="#exr-speed-propagation">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-speed-propagation</span></a> using your new formula.</li>
+<li>Redo <a href="#exr-speed-propagation">Exercise&nbsp;<span>6.8</span></a> using your new formula.</li>
 </ol>
 </div>
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>Let <span class="math inline">\(Q = X Y^{-1}\)</span>. So <span class="math inline">\(\PartialFrac{Q}{X} = Y^{-1}\)</span> and <span class="math inline">\(\PartialFrac{Q}{Y} = -X Y^{-2}\)</span>. From this we get</p>
+<div class="mysolution">
+<p>Let <span class="math inline">\(Q = X Y^{-1}\)</span>. So <span class="math inline">\(\PartialFrac{Q}{X} = Y^{-1}\)</span> and <span class="math inline">\(\PartialFrac{Q}{Y} = -X Y^{-2}\)</span>. From this we get</p>
 <p><span class="math display">\[
 \begin{aligned}
 \frac{u_Q}{Q}

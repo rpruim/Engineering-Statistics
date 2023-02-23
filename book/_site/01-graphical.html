@@ -1769,9 +1769,8 @@ dbl (3): Year, Fires, Acres
 <p><span class="theorem-title"><strong>Exercise 1.12 </strong></span><strong>i1 and i2 among men and among women</strong></p>
 <p>Compare the distribution of <code>i1</code> among men vs.&nbsp;among women. Do the same for <code>i2</code>.</p>
 </div>
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>max_drinks, <span class="at">color =</span> <span class="sc">~</span> sex, <span class="at">data =</span> HELPrct )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="01-graphical_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="432"></p>
@@ -1786,9 +1785,8 @@ dbl (3): Year, Fires, Acres
 <p><span class="theorem-title"><strong>Exercise 1.13 </strong></span><strong>i1 and i2 among different treatment groups</strong></p>
 <p>Compare the distributions of <code>i1</code> among the three <code>substance</code> groups. Do the same for <code>i2</code>.</p>
 </div>
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dens</span>( <span class="sc">~</span>i1, <span class="at">color =</span> <span class="sc">~</span> substance, <span class="at">data =</span> HELPrct )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="01-graphical_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="432"></p>
@@ -1823,9 +1821,8 @@ dbl (3): Year, Fires, Acres
 <li><p>If there is a lot of snow in January, should we expect to have unusually much or little snow in February? Make a scatter plot comparing January and February snowfall totals and comment on what you see there.</p></li>
 </ol>
 </div>
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>( <span class="sc">~</span> Jan, <span class="at">data =</span> SnowGR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 1 rows containing non-finite values (`stat_bin()`).</code></pre>

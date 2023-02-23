@@ -19,7 +19,11 @@ format:
     include-in-header:
       - text: |
           \usepackage{verbatim}
-      - file: macros.text
+      - file: macros.tex
+    environments:
+      - mysolution: mysolution
+      - problem: exercise
+      - center: center
     geometry: 
       - "margin=0.9in"
 
@@ -29,10 +33,6 @@ tbl-cap-location: bottom
 
 filters: 
   - latex-environment
-  
-environments:
-  - center: center
-  - problem: exercise
   
 commands: 
   - blue: blue

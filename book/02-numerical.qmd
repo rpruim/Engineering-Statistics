@@ -437,7 +437,7 @@ in R or similar features on a calculator).
 You can check your hand calculation using R, but show the hand calculation.
 :::
 
-::: {.solution}
+::: {.mysolution}
 The variance will be smallest if all the values are equal to the mean value.
 In that case the variance will be 0.
 
@@ -459,7 +459,7 @@ Compute the variance of this data set "by hand"
 You can check your hand calculation using R, but show the hand calculation.
 :::
 
-::: {.solution}
+::: {.mysolution}
 The variance will be largest if all the values are far from the mean.
 If we have a data set with three 0's and 3 10's, then the mean is 5 and the 
 variance is
@@ -485,7 +485,7 @@ boxplots whether the mean will be larger than the median or the median
 larger than the mean.
 :::
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 gf_boxplot(i1 ~ substance , data = HELPrct)
@@ -503,7 +503,7 @@ drinks per day) for each of the `substance` groups in the
 `HELPrct` data frame.
 :::
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 mean(i1 ~ substance, data = HELPrct)

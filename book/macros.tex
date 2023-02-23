@@ -44,8 +44,4 @@
 
 \def\myindex#1{\relax}
 
-\renewenvironment{solution}{%
-\expandafter\comment
-}{%
-\expandafter\endcomment
-}
+\newenvironment{mysolution}{\comment}{\endcomment}

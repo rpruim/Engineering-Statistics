@@ -919,7 +919,7 @@ missed free throw.)
 
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 ```{r }
 set.seed(123)    # so we get the same simulated results each time we compile.
 sims <- do(1000) * rflip(100, prob = 0.92)
@@ -948,7 +948,7 @@ approximately
 :::
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 ```{r }
 d <- die1 - die2
 tally( ~ d )
@@ -998,7 +998,7 @@ do(3) * sum( sample( 1:52, 5 ) < 14 )
 
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 ```{r }
 tally( ~ sum, do(10000) * sum(sample(1:52, 5) < 14) )
 ```
@@ -1016,7 +1016,7 @@ What percentage of parts pass both inspections?
 :::
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
     $\Prob(\mbox{fail at least one}) = \Prob(\mbox{fail A or fail B}) =
     \Prob(\mbox{fail A}) + \Prob(\mbox{fail B}) - \Prob(\mbox{fail both})
     = 0.01 + 0.02 - 0.05 = 0.025$.
@@ -1039,7 +1039,7 @@ Let $X$ be the sum of the results of rolling two fair six-sided dice.
 :::
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 The probability that $X$ is even and less than five is 
 $\Prob(X = 2 \tor X = 4) = 1/36 + 3/36 = 4/36 = `r 4/36`$.
 
@@ -1066,7 +1066,7 @@ is 2.)
 :::
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 $Y = 2$ for rolls of $(3,1)$, $(4,2)$, $(5,3)$, and $(6,4)$. Each of
 these can also happen in the other order, so the probability is
 $8/36 = 2/9 = `r 2/9`$.
@@ -1104,7 +1104,7 @@ independent of other births.
 <!-- end problem -->
 
 ::: {.problem #exr-device-with-two-parts}
-**A device with two parts
+**A device with two parts**
 
 A device is assembled from two primary parts. 2% of the first type of
 part are defective and 3% of the other type of part are defective. The
@@ -1123,7 +1123,7 @@ device only functions properly if both parts are functioning properly.
 :::
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 Assuming failure of each part is independent of failure of the other,
 the probability that both function properly is 
 $0.98 \cdot 0.97 = `r 0.98 * 0.97`$.
@@ -1152,7 +1152,7 @@ exhibiting symptoms, for example.)
 :::
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 ```{r }
 # P(D) = 0.001
 0.001 * 0.99 / (0.001 * 0.99 + 0.999 * 0.02)
@@ -1190,7 +1190,7 @@ compared to 24.8 million (23.1%) men."
 
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 ```{r }
 # a)
 21.1 / ( 21.1 + 24.8)
@@ -1281,7 +1281,7 @@ rounding.
 :::
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 You may find a tree diagram useful here to visualize these
 probabilities.
 
@@ -1356,7 +1356,7 @@ satisfied if at least 95%
 :::
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 :::: {.enumerate}
 1.  The engineer will accept if all three are among the 95 good parts.
     The probability of accepting is
@@ -1404,7 +1404,7 @@ What is the probability that the yellow M&M came from the 1994 bag?
 :::
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 Let's use the following notation for events related to this problem:
 
 <!-- begin itemize --> 

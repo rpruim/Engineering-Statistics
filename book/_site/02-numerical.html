@@ -823,8 +823,8 @@ sex      alcohol cocaine heroin
 <p><span class="theorem-title"><strong>Exercise 2.1 </strong></span><strong>Small variance</strong></p>
 <p>Create a data set with <span class="math inline">\(n = 6\)</span> values, each an integer between 0 and 10 (inclusive) that has the smallest possible variance. Compute the mean and variance of this data set “by hand” (that is, without using <code>mean()</code> or <code>sd()</code> or <code>var()</code> or `df_stats(), etc. in R or similar features on a calculator). You can check your hand calculation using R, but show the hand calculation.</p>
 </div>
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>The variance will be smallest if all the values are equal to the mean value. In that case the variance will be 0.</p>
+<div class="mysolution">
+<p>The variance will be smallest if all the values are equal to the mean value. In that case the variance will be 0.</p>
 <p>If you require all of the numbers to be distinct, the best you can do is 6 consecutive numbers</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="fu">df_stats</span>(<span class="sc">~</span> x, mean, var, sd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -842,8 +842,8 @@ sex      alcohol cocaine heroin
 <p><span class="theorem-title"><strong>Exercise 2.2 </strong></span><strong>Large variance</strong></p>
 <p>Create a data set with <span class="math inline">\(n = 6\)</span> values, each an integer between 0 and 10 (inclusive) that has the largest possible variance. Compute the variance of this data set “by hand” (that is, without using <code>mean()</code> or <code>sd()</code> or <code>var()</code> or <code>df_stats()</code>, etc. in R or similar features on a calculator). You can check your hand calculation using R, but show the hand calculation.</p>
 </div>
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>The variance will be largest if all the values are far from the mean. If we have a data set with three 0’s and 3 10’s, then the mean is 5 and the variance is</p>
+<div class="mysolution">
+<p>The variance will be largest if all the values are far from the mean. If we have a data set with three 0’s and 3 10’s, then the mean is 5 and the variance is</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>( <span class="dv">3</span><span class="sc">*</span>(<span class="dv">0-5</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>(<span class="dv">10-5</span>)<span class="sc">^</span><span class="dv">2</span> ) <span class="sc">/</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -868,9 +868,8 @@ sex      alcohol cocaine heroin
 <p>Create side-by-side boxplots of the variable <code>i1</code> (average number of drinks per day) comparing the different <code>substance</code> groups in the <code>HELPrct</code> data frame.</p>
 <p>For each <code>variable</code> substance group, explain how you can tell from the boxplots whether the mean will be larger than the median or the median larger than the mean.</p>
 </div>
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(i1 <span class="sc">~</span> substance , <span class="at">data =</span> HELPrct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="02-numerical_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="432"></p>
@@ -882,9 +881,8 @@ sex      alcohol cocaine heroin
 <p><span class="theorem-title"><strong>Exercise 2.4 </strong></span><strong>Drinks per day, numerical summary</strong></p>
 <p>Compute the mean and median values of <code>i1</code> (average number of drinks per day) for each of the <code>substance</code> groups in the <code>HELPrct</code> data frame.</p>
 </div>
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(i1 <span class="sc">~</span> substance, <span class="at">data =</span> HELPrct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  alcohol   cocaine    heroin 

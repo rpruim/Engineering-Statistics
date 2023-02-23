@@ -42,7 +42,7 @@ div.problem {
 }
 
 
-div.solution {
+div.mysolution, div.solution {
   border-radius: 8px;
   border-style: solid;
   border-color: red;

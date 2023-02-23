@@ -778,7 +778,7 @@ summary(rain.model)
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.enumerate}
 
@@ -836,7 +836,7 @@ of feet of some grade school kids.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r fig.height = 3.5}
 foot.model <- lm(width ~ length, data = KidsFeet)
@@ -890,7 +890,7 @@ the **`Devore7`** package.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 bike.model <- lm( distance ~ space, data = Devore7::ex12.21 )
@@ -946,7 +946,7 @@ a large genetics study.  You can find out more about the data set with
 ::: 
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.enumerate}
 
@@ -1059,7 +1059,7 @@ These data were constructed by Anscombe (@Anscombe:1973:Graphs).
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Anscombe's data show that it is not sufficient to look only at the 
 numerical summaries produced by regression software.  His four data
@@ -1155,7 +1155,7 @@ e.  Give a 95% confidence interval for the mean moisture content
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 ```{r }
 data(xmp12.06, package = "Devore7")

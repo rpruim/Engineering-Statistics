@@ -686,13 +686,13 @@ X - Y \sim \Norm(10 - 12, \sqrt{2^2 + 4^2})
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  21.92388499    4.44989818 
- ( 0.06293106) ( 0.04449898)</code></pre>
+  22.00840738    4.45871243 
+ ( 0.06305572) ( 0.04458712)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  -1.91871505    4.45710149 
- ( 0.06303293) ( 0.04457101)</code></pre>
+  -1.95699827    4.46837105 
+ ( 0.06319231) ( 0.04468371)</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -739,8 +739,8 @@ Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="ma
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean          sd    
-  6.00157499   1.01166110 
- (0.01430705) (0.01011661)</code></pre>
+  5.98434332   0.99410496 
+ (0.01405877) (0.00994105)</code></pre>
 </div>
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="05-transformations_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="432"></p>
@@ -919,7 +919,7 @@ Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="ma
 <p><span class="math display">\[
 S^2 = \frac{ \sum_{i = 1}^n (X_i - \mean X)^2 }{n-1}
 \]</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> This explains the reason for the <span class="math inline">\(n-1\)</span> in the denominator of the sample variance.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>An obvious, but not quite correct solution to our unknown <span class="math inline">\(\sigma\)</span> dilemma is to use <span class="math inline">\(s\)</span> in pace of <span class="math inline">\(\sigma\)</span>. In fact this was routinely done until 1908 <span class="citation" data-cites="Student1908">Student (<a href="#ref-Student1908" role="doc-biblioref">1908</a>)</span>, when William Gosset, publishing under the pseudonym Student, pointed out that when sampling from a <span class="math inline">\(\Norm(\mu, \sigma)\)</span> population,</p>
+<p>An obvious, but not quite correct solution to our unknown <span class="math inline">\(\sigma\)</span> dilemma is to use <span class="math inline">\(s\)</span> in pace of <span class="math inline">\(\sigma\)</span>. In fact this was routinely done until 1908 <span class="citation" data-cites="Student1908">Student (<a href="references.html#ref-Student1908" role="doc-biblioref">1908</a>)</span>, when William Gosset, publishing under the pseudonym Student, pointed out that when sampling from a <span class="math inline">\(\Norm(\mu, \sigma)\)</span> population,</p>
 <p><span class="math display">\[
 \frac{ \mean X - \mu}{\sigma/\sqrt{n}} \sim \Norm(0,1)
 \mbox{\;\ but\ }
@@ -1152,9 +1152,8 @@ Is the normal distribution a good fit?</li>
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(n,  <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">3</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(n,  <span class="at">shape =</span> <span class="dv">2</span>, <span class="at">scale =</span> <span class="dv">3</span>)</span>
@@ -1165,8 +1164,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean           sd     
-  12.03111425    5.98150410 
- ( 0.08459124) ( 0.05981504)</code></pre>
+  12.09552472    6.09025925 
+ ( 0.08612927) ( 0.06090259)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1180,9 +1179,9 @@ Is the normal distribution a good fit?</li>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"gamma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     shape         rate   
-  3.99110223   0.33173169 
- (0.07671764) (0.00679521)</code></pre>
+<pre><code>      shape         rate    
+  3.926370516   0.324613536 
+ (0.075427072) (0.006652355)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S, <span class="at">distribution =</span> qgamma, <span class="at">dparams =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="fl">4.04</span>, <span class="at">rate =</span> <span class="fl">0.333</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1197,9 +1196,9 @@ Is the normal distribution a good fit?</li>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(D, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      mean           sd     
-  -0.05460492    6.15168032 
- ( 0.08699790) ( 0.06151680)</code></pre>
+<pre><code>      mean          sd    
+  0.05630832   6.04565202 
+ (0.08549843) (0.06045652)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> D)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1230,9 +1229,8 @@ The density plot perhaps makes this clearer if you are not familiar with qq-plot
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">140</span>, <span class="at">mean =</span> <span class="dv">110</span>, <span class="at">sd =</span> <span class="dv">15</span>) <span class="co">#  P(X &gt; 140)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.02275013</code></pre>
@@ -1304,9 +1302,8 @@ So <span class="math inline">\(\Prob(X - Y \ge 0)\)</span> is</p>
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part a</span></span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">mean =</span> <span class="dv">54</span> <span class="sc">+</span> <span class="dv">48</span>, <span class="at">sd=</span> <span class="fu">sqrt</span>(<span class="dv">12</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">9</span><span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1347,9 +1344,8 @@ So <span class="math inline">\(\Prob(X - Y \ge 0)\)</span> is</p>
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="enumerate">
-<span class="proof-title"><em>Solution</em>. </span>
 <ol type="a">
 <li><span class="math inline">\(\Norm(0, \frac{\sigma}{\sqrt{n}}) =  \Norm(0, \frac{2.8}{\sqrt{n}})\)</span></li>
 <li></li>
@@ -1435,9 +1431,8 @@ $estim.prec
 <p>Give an approximate 95% confidence interval for a population mean <span class="math inline">\(\mu\)</span> if the sample of size <span class="math inline">\(n = 25\)</span> has mean <span class="math inline">\(\mean x = 8.5\)</span> and the population standard deviation is <span class="math inline">\(\sigma = 1.7\)</span>.</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">1.7</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">25</span>) ; SE <span class="co"># standard error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.34</code></pre>
@@ -1469,8 +1464,8 @@ $estim.prec
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>Here’s a fancy version that gets all the answers at once. (You didn’t need to know you could do it this way, but R&nbsp;is pretty handy this way.)</p>
+<div class="mysolution">
+<p>Here’s a fancy version that gets all the answers at once. (You didn’t need to know you could do it this way, but R&nbsp;is pretty handy this way.)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>answers <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fu">c</span>(.<span class="dv">975</span>, .<span class="dv">975</span>, .<span class="dv">99</span>, .<span class="dv">95</span>, .<span class="dv">995</span>, .<span class="dv">975</span>), <span class="at">df =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">23</span>,<span class="dv">14</span>,<span class="dv">19</span>,<span class="dv">11</span>,<span class="dv">122</span>))</span>
 <span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(answers) <span class="ot">&lt;-</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(answers)]</span>
@@ -1508,9 +1503,8 @@ $estim.prec
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>( <span class="sc">~</span> strideRate, <span class="at">data =</span> ex07<span class="fl">.37</span>, <span class="at">conf.level =</span> <span class="fl">0.98</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1623,9 +1617,8 @@ mean of x
 <p>A random sample of size <span class="math inline">\(n = 8\)</span> E-glass fiber test specimens of a certain type yielded a sample mean interfacial shear yield stress of 30.2 and a sample standard deviation of 3.1. Assuming that the population of interfacial shear yield stress measurements is approximately normal, compute a 95% confidence interval for the true average stress.</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">3.1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">8</span>); SE              <span class="co"># standard error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.096016</code></pre>
@@ -1666,9 +1659,8 @@ mean of x
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> polymer, <span class="at">data =</span> Paper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="05-transformations_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="432"></p>
@@ -1700,8 +1692,8 @@ mean of x
 <p>Using the same data, Alice constructs a 95% confidence interval and Bob creates a 98% confidence interval. Which interval will be wider? Why?</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>Bob’s interval will be wider because he used a higher level of confidence. (This will cause <span class="math inline">\(t_*\)</span> to be larger. They will both have the same standard error.)</p>
+<div class="mysolution">
+<p>Bob’s interval will be wider because he used a higher level of confidence. (This will cause <span class="math inline">\(t_*\)</span> to be larger. They will both have the same standard error.)</p>
 </div>
 <!-- end solution -->
 <div id="exr-charlie-and-denise-physics-lab" class="problem theorem exercise">
@@ -1716,8 +1708,8 @@ mean of x
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>We would expect the two standard deviations to be fairly close, but since Denise has quite a bit more data, her standard error will be smaller. This will make her interval narrower. So Charlie’s interval will be wider, unless Charlie gets an unusually small standard deviation and Denise gets an unusually large standard deviation.</p>
+<div class="mysolution">
+<p>We would expect the two standard deviations to be fairly close, but since Denise has quite a bit more data, her standard error will be smaller. This will make her interval narrower. So Charlie’s interval will be wider, unless Charlie gets an unusually small standard deviation and Denise gets an unusually large standard deviation.</p>
 </div>
 <!-- end solution -->
 <div id="exr-find-article-with-ci" class="problem theorem exercise">
@@ -1727,8 +1719,8 @@ mean of x
 <p>If your article looks particularly interesting or contains statistical things that you don’t understand but would like to understand, let me know, and perhaps we can do something later in the semester with your article. It’s easiest to do this if you can give me a URL for locating the paper online.</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>Answers will vary.</p>
+<div class="mysolution">
+<p>Answers will vary.</p>
 </div>
 <!-- end solution -->
 </section>
@@ -1761,9 +1753,8 @@ mean of x
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="enumerate">
-<span class="proof-title"><em>Solution</em>. </span>
 <ol type="a">
 <li><span class="math inline">\(\Prob(\mbox{none defective}) = \Prob(\mbox{all are good}) = 0.95^{10} = 0.599 = 59.9%\)</span></li>
 <li>Even though only <span class="math inline">\(5\)</span>% are defective, nearly <span class="math inline">\(14\)</span>% fail the quality control:</li>
@@ -1822,9 +1813,8 @@ mean of x
 <p>Sketch what a density plot of this same data would look like.</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="cell-output-display">
 <p><img src="05-transformations_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="432"></p>
 </div>
@@ -1866,9 +1856,8 @@ mean of x
 <p>You won’t run out of examples before you run out of energy for doing these.</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>( <span class="sc">~</span> length, <span class="at">data =</span> KidsFeet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
@@ -1961,9 +1950,8 @@ f(x) = \begin{cases}
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaicCalc)</span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>  f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="dv">4</span><span class="sc">*</span>(x<span class="sc">-</span>x<span class="sc">^</span><span class="dv">3</span>) <span class="sc">~</span> x)</span>
 <span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>  F <span class="ot">&lt;-</span> <span class="fu">antiD</span>(<span class="fu">f</span>(x) <span class="sc">~</span> x)</span>
@@ -1996,9 +1984,8 @@ f(x) = \begin{cases}
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> <span class="fu">antiD</span>(<span class="dv">4</span> <span class="sc">-</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> x)</span>
 <span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="fu">F</span>(<span class="dv">2</span>) <span class="sc">-</span> <span class="fu">F</span>(<span class="sc">-</span><span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2046,9 +2033,8 @@ f(x) = \begin{cases}
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_dist</span>(<span class="st">"gamma"</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="dv">3</span>, <span class="at">rate =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="05-transformations_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="432"></p>
@@ -2116,8 +2102,8 @@ f(x) = \begin{cases}
 <p>Reminder: Expected value is another term for mean.</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span><span class="math inline">\(\E(X+Y) = \E(X) + \E(Y) = 40 + 50 = 90\)</span>.</p>
+<div class="mysolution">
+<p><span class="math inline">\(\E(X+Y) = \E(X) + \E(Y) = 40 + 50 = 90\)</span>.</p>
 <p><span class="math inline">\(\Var(X+Y) = \Var(X) + \Var(Y) = 3^2 + 4^2 = 5^2\)</span>. So standard deviation = <span class="math inline">\(5\)</span>.</p>
 <p><span class="math inline">\(\E(X-Y) = \E(X) - \E(Y) = 40 - 50 = -10\)</span>.</p>
 <p><span class="math inline">\(\Var(X-Y) = \Var(X + (-Y)) = \Var(X) + \Var(-Y) = 3^2 + 4^2 = 5^2\)</span>. So standard deviation = <span class="math inline">\(5\)</span>.</p>
@@ -2199,8 +2185,8 @@ f(x) = \begin{cases}
 <p>Create a plot that can be used to visualize the data. What does your plot suggest the answer might be? (Does eye color matter?)</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>Here are two possibilities:</p>
+<div class="mysolution">
+<p>Here are two possibilities:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(Flicker <span class="sc">~</span> Colour, <span class="at">data =</span> Flicker)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2262,9 +2248,8 @@ f(x) = \begin{cases}
 <p>Create a 95% confidence interval for the difference in the mean ultimate load for the two types of beam.</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( <span class="fl">2.2</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">26</span> <span class="sc">+</span> <span class="fl">4.3</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">26</span>); SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9472633</code></pre>
@@ -2319,9 +2304,8 @@ f(x) = \begin{cases}
 <p>Extensibility is related to the shape and drape when fabric is used to make clothing.</p>
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb174-2"><a href="#cb174-2" aria-hidden="true" tabindex="-1"></a>Fabric <span class="ot">&lt;-</span> </span>
 <span id="cb174-3"><a href="#cb174-3" aria-hidden="true" tabindex="-1"></a>  Devore7<span class="sc">::</span>ex09<span class="fl">.23</span> <span class="sc">|&gt;</span> </span>
@@ -2375,9 +2359,8 @@ mean in group H mean in group P
 <!-- end enumerate -->
 </div>
 <!-- end problem -->
-<div class="solution proof">
+<div class="mysolution">
 <div class="cell">
-<span class="proof-title"><em>Solution</em>. </span>
 <div class="sourceCode cell-code" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>( <span class="fu">c</span>(<span class="dv">172</span>, <span class="dv">184</span>), <span class="fu">c</span>(<span class="dv">184</span>, <span class="dv">207</span>)) <span class="sc">|&gt;</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
@@ -2401,7 +2384,7 @@ mean in group H mean in group P
 <!-- end solution -->
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
 <div id="ref-Student1908" class="csl-entry" role="doc-biblioentry">
 Student. 1908. <span>“<span class="nocase">The Probable Error of a Mean</span>.”</span> <em>Biometrika</em> 6 (1): 1–25. <a href="https://doi.org/10.2307/2331554">https://doi.org/10.2307/2331554</a>.
 </div>

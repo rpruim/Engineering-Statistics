@@ -1311,7 +1311,7 @@ a. $\displaystyle y = \frac{100}{1+e^{a+bx}}$.
 ::::
 :::
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.enumerate}
 
@@ -1399,7 +1399,7 @@ make the distribution more symmetric?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Moving up the ladder will spread the larger values more than the 
 smaller values, resulting in a distribution that is right skewed.
@@ -1442,7 +1442,7 @@ What is the estimated power in the power law based on this model?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 	At first glance, the two models might appear equally good.  In each case the 
 	power is a bit below 2 and the fits look good on top of the raw data.  
@@ -1505,7 +1505,7 @@ pressure and temperature?
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 Using Tukey's buldge rules it is pretty easy to land at something like one of the following
 
@@ -1584,7 +1584,7 @@ e.  Are there any reasons to be concerned about the analyses you
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 :::: {.enumerate}
 
@@ -1695,7 +1695,7 @@ a. Drag is proportional to velocity.
 ::: 
 <!-- end problem -->
 
-::: {.solution}
+::: {.mysolution}
 
 The best of these four models is a model that says drag is proportional
 to the square of velocity.
@@ -1763,7 +1763,7 @@ Speculate about a potential cause for this.
 <!-- end problem -->
 
 
-::: {.solution}
+::: {.mysolution}
 
 See previous problem.
 ::: 

@@ -44,7 +44,7 @@ That is, error is the difference between the number we have measured or calculat
 number that calculation is attempting to estimate.  In most applications, we do not know 
 the error exactly, because we do not know the estimand.  This is where uncertainty comes in.
 
-**Uncertainty** is a numerical measure summarizing how large the error *might be*.  There are several different types, or definitions, or uncertainty.  The different definitions of uncertainty have in common that they are all trying to describe a statistical distribution of errors.  
+**Uncertainty** is a numerical measure summarizing how large the error *might be*.  There are several different types, or definitions, of uncertainty.  The different definitions of uncertainty have in common that they are all trying to describe a statistical distribution of errors.  
 <!--  Typically, we arrange things so that the mean -->
 <!--  of this distribution is 0 (so that on average our estimates will be correct).   -->
 Knowing something about this distribution
@@ -466,7 +466,8 @@ separate column, located just to the right of the measurement column.  (Sometime
 
 A lab group calculated these numbers for kinetic energy and its uncertainty: 
 
-| Kinetic Energy | uncertainty |
+| Kinetic Energy | uncertainty   |
+|----------------|---------------|
 | 0.8682 | 0.059 |
 | 1.0661 | 0.071 |
 | 1.0536 | 0.070 |
@@ -499,7 +500,7 @@ This should be reported with appropriate rounding as
 
 **A.** 
 Our estimate for the area is $12.3^2 = `r 12.3^2`$. 
-Our transformation is $f(x) = x^2$, so $\Partial{f}{x} = f'(x) = 2x$.  
+Our transformation is $f(x) = x^2$, so $\PartialFrac{f}{x} = f'(x) = 2x$.  
 Applying the Delta Method, our uncertainty is
 
 $$
@@ -530,7 +531,7 @@ when we are dealing with only one estimator.
 
 ::: {.boxedText}
 
-	%s{\textsf{\bfseries The Delta Method for one estimator}}
+### The Delta Method for one estimator
 
 Let $X$ be an estimator with uncertainty $u_{X}$ and let $\hat W = f(\hat X)$.
 Then the uncertainty in the estimate $W$ can be estimated as 
@@ -595,7 +596,7 @@ relative uncertainty is
 $$
 \frac{0.3}{10.2} 
 = `r 0.3/10.2`
-= `r round(100 * 0.3/10.2,1)` %
+= `r round(100 * 0.3/10.2,1)` \%
 $$
 Often it is the case that uncertainty grows with the magnitude of the estimate, and relative uncertainty
 is a way of comparing the uncertainty in large measured values with the uncertainty of 
@@ -607,7 +608,7 @@ of the units used.
 
 In the example above, we get a nice formula if we compute relative uncertainty
 instead of absolute uncertainty.  Let $P = XY$ where $X$ and $Y$ have
-uncertainties $u_X$ and $u_Y$.  Then $\Partial{P}{X} = Y$ and $\Partial{P}{Y} =
+uncertainties $u_X$ and $u_Y$.  Then $\PartialFrac{P}{X} = Y$ and $\PartialFrac{P}{Y} =
 X$, so
 
 $$
@@ -682,11 +683,11 @@ $20 \pm 0.7$ ohms and $50 \pm 1.2$ ohms.  How should you report the combined res
 **A.** 
 Our estimate is $\hat R = \frac{ 20 \cdot 50}{ 20 + 50} = `r 20*50/(20 + 50)`$.
 To estimate the uncertainty, we need the partial derivatives 
-$\Partial{R}{R_1}$ and $\partial{R}{R_2}$.
+$\PartialFrac{R}{R_1}$ and $\PartialFrac{R}{R_2}$.
 
 $$
 \begin{aligned}
-		\Partial{R}{R_1} &= \frac{ (R_1+R_2)R_2 - (R_1 R_2) }{(R_1 + R_2)^2}
+		\PartialFrac{R}{R_1} &= \frac{ (R_1+R_2)R_2 - (R_1 R_2) }{(R_1 + R_2)^2}
 		\\
 		&= \left( \frac{ R_2}{R_1 + R_2}\right)^2 
 		\\
@@ -696,7 +697,7 @@ $$
 Similarly,
 $$
 \begin{aligned}
-\Partial{R}{R_2} 
+\PartialFrac{R}{R_2} 
 &= \left( \frac{ R_1}{R_1 + R_2}\right)^2
 \\
 &= \left( \frac{ 20}{20 + 50}\right)^2 = `r ( 20 / 70 )^2`
@@ -810,7 +811,7 @@ to directly observe the effects of random error.
 Although there is no theoretical limit to the precision of a numerical quantity 
 like mass, time, velocity, etc., every measurement device has limited precision.
 Because of this lack of precision in our measurement device, it may well be 
-that repeated measuremets will all look identical.  
+that repeated measurements will all look identical.  
 *But this does not mean that they are exactly correct.*  
 
 For example,
@@ -818,7 +819,7 @@ if we measure temperature using a digital thermometer that has a display
 showing tenths of a degree C, then any temperature between 57.15 and 57.25 will
 be displayed as 57.2.  Any variability within that range will be invisible to
 our thermometer.
-Similarly, if we meaure with a ruler with a 1/8 inch scale, we can
+Similarly, if we measure with a ruler with a 1/8 inch scale, we can
 use interpolation to get not only to the nearest 1/8 inch, but likely to the 
 nearest 1/16 inch or (with some practice) perhaps to the nearest 1/32 inch.  But
 beyond that, we really cannot tell.  If more precise measurements are required,
@@ -876,7 +877,7 @@ reset before each drop would likely have somewhat more random error but would av
 source of systematic error.
 
 #### Dealing with systematic error
-Systematic error is generally more difficult to handle than random error in
+Systematic error is generally more difficult to handle than random error, in
 part because there is often no good way to measure how large systematic error
 might be or even to detect that it is occurring.
 
@@ -929,7 +930,7 @@ gf_boxplot( ~ x) |> gf_labs(x = "")
 
 In addition, graphical displays of your data may help isolate outliers -- values
 that don't seem to fit the pattern of the rest of the data.  Outliers should not be removed
-from your data without furhter investigation.  You need to know why these values are 
+from your data without further investigation.  You need to know why these values are 
 different from the rest.  Was there a mistake in the measurement?  Was the value recorded
 incorrectly (decimal point in the wrong place, wrong units, transposed digits, typo)?
 Or was there something different going on -- so that the potential outlier is *really* an important, informative data point that is trying to tell you something about the process you are measuring?  An outlier might be the key observation in 
@@ -940,7 +941,7 @@ your data set -- don't throw it away without investigating.
 Whenever possible, you should make multiple measurements of the same phenomenon.
 The variability among these measurements allows us to estimate the uncertainty.
 If we are using the mean of multiple measurements as our estimate, then the uncertainty
-is the "standard error of the mean" (which we will derive in the following chapter):
+is the "standard error of the mean":
 
 $$ 
 SE = \frac{s}{\sqrt{n}} 
@@ -949,7 +950,7 @@ This is how we estimated the uncertainty in our estimate for the mean weight of 
 
 In other more complicated study designs, some other standard error formula may be used.
 
-### Estimating uncertainty in other ways {sec-uncertainty-without-data}
+### Estimating uncertainty in other ways {#sec-uncertainty-without-data}
 
 Estimating uncertainty from data is only possible if 
 
@@ -967,7 +968,7 @@ Frequently, these conditions are not met, but we still want to quantify the unce
 
 #### The uniform model for measurement (im)precision
 
-There are many measuring devises that provide limited precision so that the 
+There are many measuring devices that provide limited precision so that the 
 best we may be able to say is that we know the measured value to be in some interval $[a,b]$.
 This would be the case for measuring devices with digital displays, for example.  
 Imagine a device that displays 8.03 on its digital display.  
@@ -980,7 +981,7 @@ overestimates of the "average" amount of error.
 Here, we aren't looking for an upper bound on the potential error; we want to estimate something 
 like the average amount of error.
 
-In this case we can estiamte a standard uncertainty based on the **uniform distribution**.  
+In this case we can estimate a standard uncertainty based on the **uniform distribution**.  
 Recall, a uniform
 distribution is one in which every value in some interval is "equally likely".
 A uniform distribution has standard deviation $s = \frac{b-a}{\sqrt{12}}$, so we will
@@ -1003,7 +1004,7 @@ probability of $2/3 \approx 68$%.
 This same idea can be used when working with analog scales, but in this case, we typically
 can see that the value is closer to one end than the other or closer to the center than
 to the edges.  This reduces our uncertainty by a factor of 2.  For example, given a ruler
-marked in mm, if we can tell than a reading is closer to 12.3 mm than it is to 12.4 mm, then we 
+marked in mm, if we can tell that a reading is closer to 12.3 mm than it is to 12.4 mm, then we 
 are saying we know the value is in the interval $[12.3, 12.35]$, which is only half as 
 wide as the scale of the ruler.  We can then use a uniform distribution as above, except that the limits $a$ and $b$ of the distribution are a bit narrower now.  
 (On some analog scales, it may be possible to do even better than this.)
@@ -1085,11 +1086,11 @@ Calculate the standard uncertainty for the mean volume of distribution.
 ::: {.solution}
 
 ```{r some-solution}
-# 95 <!--  CI -->
+# 95% CI 
 t.star <- qt(.975, df = 29); t.star
 ME <- t.star *  1.9 / sqrt(30); ME
 1.2 + c(-1,1) * ME
-# 99 <!--  CI -->
+# 99% CI
 t.star <- qt(.995, df = 29); t.star
 ME <- t.star *  1.9 / sqrt(30); ME
 10.2 + c(-1,1) * ME
@@ -1129,7 +1130,7 @@ Why might one prefer one of these over the other?
 ::: {.solution}
 
 ```{r }
-# rectangualr: sd = width / sqrt(12) = width / (2 * sqrt(3))
+# rectangular: sd = width / sqrt(12) = width / (2 * sqrt(3))
 0.4 * 2 / sqrt(12)
 0.4 / sqrt(3)
 # triangular: sd = width / (2 * sqrt(6))
@@ -1138,7 +1139,7 @@ Why might one prefer one of these over the other?
 ```
 
 
-The uniform distribution is a more conservative assumption.  The trianlge distribution should only
+The uniform distribution is a more conservative assumption.  The triangle distribution should only
 be used in situations where errors are more likely to be smaller than larger 
 (with the the specified bounds).
 ::: 
@@ -1173,7 +1174,7 @@ triangular distribution.
 ```{r }
 # rectangular
 0.0001 / sqrt(3)
-# trianglular
+# triangular
 0.0001 / sqrt(6)
 ```
 
@@ -1195,7 +1196,7 @@ What should the researchers report as the area?
 
 ::: {.solution}
 
-Let $f(R) = \pi R^2$.  Then $\Partial{f}{R} = 2\pi R$, so the uncertainty in the area estimation
+Let $f(R) = \pi R^2$.  Then $\PartialFrac{f}{R} = 2\pi R$, so the uncertainty in the area estimation
 is 
 $$
 \sqrt{ (2 \pi R)^2 (0.3)^2 } = 2 \pi R \cdot 0.3  = `r 2 * pi * 12.5 * 0.3` 
@@ -1273,8 +1274,8 @@ the amount of gasoline burned by personal cars in a particular
 year in the US from the following estimates and uncertainties for that
 year:
 
-	<!--  note: estimates found online for 2011.  uncertainties made  -->
-	<!--  up but roughly based on the number of digits reported in online sources. -->
+<!--  note: estimates found online for 2011.  uncertainties made  -->
+<!--  up but roughly based on the number of digits reported in online sources. -->
 	
 	
 | quantity                                    | estimate | uncertainty |
@@ -1309,13 +1310,13 @@ driven per car, and $E$ is the average efficiency.
 
 $$
 \begin{aligned}
-\Partial{F}{k} &= \frac{Pd}{E} 
+\PartialFrac{F}{k} &= \frac{Pd}{E} 
 \\
-\Partial{F}{P} &= \frac{kd}{E}
+\PartialFrac{F}{P} &= \frac{kd}{E}
 \\
-\Partial{F}{d} &= \frac{kP}{E}
+\PartialFrac{F}{d} &= \frac{kP}{E}
 \\
-\Partial{F}{E} &= \frac{-kPd}{E^2}
+\PartialFrac{F}{E} &= \frac{-kPd}{E^2}
 \end{aligned}
 $$
 
@@ -1425,8 +1426,8 @@ A physics student is calculating the speed of a falling object by measuring the 
 ::: {.solution}
 
 	Let $Q = X Y^{-1}$.  So 
-	$\Partial{Q}{X} = Y^{-1}$ and 
-	$\Partial{Q}{Y} = -X Y^{-2}$.  From this we get
+	$\PartialFrac{Q}{X} = Y^{-1}$ and 
+	$\PartialFrac{Q}{Y} = -X Y^{-2}$.  From this we get
 $$
 \begin{aligned}
 \frac{u_Q}{Q} 

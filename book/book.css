@@ -31,16 +31,18 @@ div.example {
 }
 
 
-div.problem{
+
+div.problem {
   border-radius: 8px;
   border-style: solid;
   border-color: navy;
   padding: 5px;
   margin: 10px;
+  display: block;
 }
 
 
-div.solution{
+div.solution {
   border-radius: 8px;
   border-style: solid;
   border-color: red;
@@ -48,3 +50,5 @@ div.solution{
   margin: 10px;
   display: none;
 }
+
+

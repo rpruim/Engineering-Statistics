@@ -291,7 +291,10 @@ $$
   <li><a href="#how-many-decimal-places" id="toc-how-many-decimal-places" class="nav-link" data-scroll-target="#how-many-decimal-places"><span class="toc-section-number">6.3.2</span>  How many decimal places?</a></li>
   <li><a href="#reporting-numbers-in-a-table" id="toc-reporting-numbers-in-a-table" class="nav-link" data-scroll-target="#reporting-numbers-in-a-table"><span class="toc-section-number">6.3.3</span>  Reporting numbers in a table</a></li>
   </ul></li>
-  <li><a href="#sec-propagation-examples" id="toc-sec-propagation-examples" class="nav-link" data-scroll-target="#sec-propagation-examples"><span class="toc-section-number">6.4</span>  Additional Propagation of Uncertainty Examples</a></li>
+  <li><a href="#sec-propagation-examples" id="toc-sec-propagation-examples" class="nav-link" data-scroll-target="#sec-propagation-examples"><span class="toc-section-number">6.4</span>  Additional Propagation of Uncertainty Examples</a>
+  <ul class="collapse">
+  <li><a href="#the-delta-method-for-one-estimator" id="toc-the-delta-method-for-one-estimator" class="nav-link" data-scroll-target="#the-delta-method-for-one-estimator"><span class="toc-section-number">6.4.1</span>  The Delta Method for one estimator</a></li>
+  </ul></li>
   <li><a href="#experimental-error-and-its-causes" id="toc-experimental-error-and-its-causes" class="nav-link" data-scroll-target="#experimental-error-and-its-causes"><span class="toc-section-number">6.5</span>  Experimental Error and Its Causes</a>
   <ul class="collapse">
   <li><a href="#random-error-same-procedure-different-results" id="toc-random-error-same-procedure-different-results" class="nav-link" data-scroll-target="#random-error-same-procedure-different-results"><span class="toc-section-number">6.5.1</span>  Random error: Same procedure, different results</a></li>
@@ -302,7 +305,7 @@ $$
   <ul class="collapse">
   <li><a href="#looking-at-variability-in-your-data" id="toc-looking-at-variability-in-your-data" class="nav-link" data-scroll-target="#looking-at-variability-in-your-data"><span class="toc-section-number">6.6.1</span>  Looking at variability in your data</a></li>
   <li><a href="#sec-uncertainty-from-data" id="toc-sec-uncertainty-from-data" class="nav-link" data-scroll-target="#sec-uncertainty-from-data"><span class="toc-section-number">6.6.2</span>  Estimating uncertainty from your data</a></li>
-  <li><a href="#estimating-uncertainty-in-other-ways-sec-uncertainty-without-data" id="toc-estimating-uncertainty-in-other-ways-sec-uncertainty-without-data" class="nav-link" data-scroll-target="#estimating-uncertainty-in-other-ways-sec-uncertainty-without-data"><span class="toc-section-number">6.6.3</span>  Estimating uncertainty in other ways {sec-uncertainty-without-data}</a></li>
+  <li><a href="#sec-uncertainty-without-data" id="toc-sec-uncertainty-without-data" class="nav-link" data-scroll-target="#sec-uncertainty-without-data"><span class="toc-section-number">6.6.3</span>  Estimating uncertainty in other ways</a></li>
   </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">6.7</span>  Exercises</a></li>
   </ul>
@@ -346,7 +349,7 @@ The word “error” in the context of scientific measurement has a rather diffe
 </div>
 <!-- end boxedText -->
 <p>That is, error is the difference between the number we have measured or calculated and the number that calculation is attempting to estimate. In most applications, we do not know the error exactly, because we do not know the estimand. This is where uncertainty comes in.</p>
-<p><strong>Uncertainty</strong> is a numerical measure summarizing how large the error <em>might be</em>. There are several different types, or definitions, or uncertainty. The different definitions of uncertainty have in common that they are all trying to describe a statistical distribution of errors.<br>
+<p><strong>Uncertainty</strong> is a numerical measure summarizing how large the error <em>might be</em>. There are several different types, or definitions, of uncertainty. The different definitions of uncertainty have in common that they are all trying to describe a statistical distribution of errors.<br>
 <!--  Typically, we arrange things so that the mean --> <!--  of this distribution is 0 (so that on average our estimates will be correct).   --> Knowing something about this distribution of the errors can tell us how close our estimates tend to be to the estimand.</p>
 <p>We will use <strong>standard uncertainty</strong> unless we say otherwise.</p>
 <div id="def-standard-uncertainty" class="boxedText theorem definition">
@@ -607,12 +610,36 @@ The following examples will help:</p>
 <p>Multiple similar measurements should be reported in a table. The column headings should clearly and concisely indicate the quantity in each column; the column heading must include the units. Uncertainties should be listed in a separate column, located just to the right of the measurement column. (Sometimes, uncertainties are listed in parentheses after the estimate instead; just make sure the header and legend of the table makes it clear what values are being reported, and where.)</p>
 <div id="exm-kinetic-energy-uncertainty" class="example theorem example">
 <p><span class="theorem-title"><strong>Example 6.5 </strong></span>A lab group calculated these numbers for kinetic energy and its uncertainty:</p>
-<p>Kinetic Energy | uncertainty |<br>
-0.8682 | 0.059 |<br>
-1.0661 | 0.071 |<br>
-1.0536 | 0.070 |<br>
-1.3881 | 0.058 |<br>
-0.8782 | 0.108 |</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Kinetic Energy</th>
+<th>uncertainty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.8682</td>
+<td>0.059</td>
+</tr>
+<tr class="even">
+<td>1.0661</td>
+<td>0.071</td>
+</tr>
+<tr class="odd">
+<td>1.0536</td>
+<td>0.070</td>
+</tr>
+<tr class="even">
+<td>1.3881</td>
+<td>0.058</td>
+</tr>
+<tr class="odd">
+<td>0.8782</td>
+<td>0.108</td>
+</tr>
+</tbody>
+</table>
 <p>This should be reported with appropriate rounding as</p>
 <table class="table">
 <thead>
@@ -652,7 +679,7 @@ The following examples will help:</p>
 <h2 data-number="6.4" class="anchored" data-anchor-id="sec-propagation-examples"><span class="header-section-number">6.4</span> Additional Propagation of Uncertainty Examples</h2>
 <div class="example">
 <p><strong>Q.</strong> The side of a square is measured and reported as <span class="math inline">\(12.3 \pm 0.2\)</span> mm. How should the area be reported?</p>
-<p><strong>A.</strong> Our estimate for the area is <span class="math inline">\(12.3^2 = 151.29\)</span>. Our transformation is <span class="math inline">\(f(x) = x^2\)</span>, so <span class="math inline">\(\Partial{f}{x} = f'(x) = 2x\)</span>.<br>
+<p><strong>A.</strong> Our estimate for the area is <span class="math inline">\(12.3^2 = 151.29\)</span>. Our transformation is <span class="math inline">\(f(x) = x^2\)</span>, so <span class="math inline">\(\PartialFrac{f}{x} = f'(x) = 2x\)</span>.<br>
 Applying the Delta Method, our uncertainty is</p>
 <p><span class="math display">\[
     \sqrt{ (2 (12.3))^2 (0.2)^2 } = 2 (12.3)(0.2) = 4.92
@@ -670,14 +697,14 @@ Applying the Delta Method, our uncertainty is</p>
 </div>
 <!-- end example -->
 <p>The preceding example demonstrates a simplified version of the Delta Method formula when we are dealing with only one estimator.</p>
-<div class="boxedText">
-<pre><code>%s{\textsf{\bfseries The Delta Method for one estimator}}</code></pre>
+<section id="the-delta-method-for-one-estimator" class="level3 boxedText" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="the-delta-method-for-one-estimator"><span class="header-section-number">6.4.1</span> The Delta Method for one estimator</h3>
 <p>Let <span class="math inline">\(X\)</span> be an estimator with uncertainty <span class="math inline">\(u_{X}\)</span> and let <span class="math inline">\(\hat W = f(\hat X)\)</span>. Then the uncertainty in the estimate <span class="math inline">\(W\)</span> can be estimated as</p>
 <p><span class="math display">\[
     u_{W} \approx
 \left|\frac{df}{dX}\right| u_X
 \]</span> where the derivative is evaluated using the estimated value of <span class="math inline">\(X\)</span>, <span class="math inline">\(\hat{X}\)</span>.</p>
-</div>
+</section>
 <!-- end boxedText -->
 <div id="exm-box1" class="example theorem example">
 <p><span class="theorem-title"><strong>Example 6.6 </strong></span><strong>Q.</strong> The sides of a rectangle are measured and reported as <span class="math inline">\(12.3 \pm 0.2\)</span> mm and <span class="math inline">\(6.3 \pm 0.1\)</span> mm. How should the area be reported?</p>
@@ -703,11 +730,11 @@ Applying the Delta Method, our uncertainty is</p>
 <p><span class="math display">\[
 \frac{0.3}{10.2}
 = 0.0294118
-= 2.9 %
+= 2.9 \%
 \]</span> Often it is the case that uncertainty grows with the magnitude of the estimate, and relative uncertainty is a way of comparing the uncertainty in large measured values with the uncertainty of small measured values on a more equal basis. Relative uncertainty is also independent of the units used.</p>
 </div>
 <!-- end boxedText -->
-<p>In the example above, we get a nice formula if we compute relative uncertainty instead of absolute uncertainty. Let <span class="math inline">\(P = XY\)</span> where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have uncertainties <span class="math inline">\(u_X\)</span> and <span class="math inline">\(u_Y\)</span>. Then <span class="math inline">\(\Partial{P}{X} = Y\)</span> and <span class="math inline">\(\Partial{P}{Y} = X\)</span>, so</p>
+<p>In the example above, we get a nice formula if we compute relative uncertainty instead of absolute uncertainty. Let <span class="math inline">\(P = XY\)</span> where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have uncertainties <span class="math inline">\(u_X\)</span> and <span class="math inline">\(u_Y\)</span>. Then <span class="math inline">\(\PartialFrac{P}{X} = Y\)</span> and <span class="math inline">\(\PartialFrac{P}{Y} = X\)</span>, so</p>
 <p><span class="math display">\[
 \begin{aligned}
 \frac{u_P}{P}
@@ -747,10 +774,10 @@ So this Pythagorean identity for relative uncertainties can be applied to estima
 <p><span class="theorem-title"><strong>Example 6.8 </strong></span><strong>Q.</strong> When two resistors with resistances <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> are connected in parallel, the combined resistance satisfies <span class="math display">\[
 R = \frac{R_1 R_2}{R_1 + R_2}
 \]</span> Suppose the resistances of the two resistors are reported as <span class="math inline">\(20 \pm 0.7\)</span> ohms and <span class="math inline">\(50 \pm 1.2\)</span> ohms. How should you report the combined resistance?</p>
-<p><strong>A.</strong> Our estimate is <span class="math inline">\(\hat R = \frac{ 20 \cdot 50}{ 20 + 50} = 14.2857143\)</span>. To estimate the uncertainty, we need the partial derivatives <span class="math inline">\(\Partial{R}{R_1}\)</span> and <span class="math inline">\(\partial{R}{R_2}\)</span>.</p>
+<p><strong>A.</strong> Our estimate is <span class="math inline">\(\hat R = \frac{ 20 \cdot 50}{ 20 + 50} = 14.2857143\)</span>. To estimate the uncertainty, we need the partial derivatives <span class="math inline">\(\PartialFrac{R}{R_1}\)</span> and <span class="math inline">\(\PartialFrac{R}{R_2}\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
-        \Partial{R}{R_1} &amp;= \frac{ (R_1+R_2)R_2 - (R_1 R_2) }{(R_1 + R_2)^2}
+        \PartialFrac{R}{R_1} &amp;= \frac{ (R_1+R_2)R_2 - (R_1 R_2) }{(R_1 + R_2)^2}
         \\
         &amp;= \left( \frac{ R_2}{R_1 + R_2}\right)^2
         \\
@@ -758,7 +785,7 @@ R = \frac{R_1 R_2}{R_1 + R_2}
 \end{aligned}
 \]</span> Similarly, <span class="math display">\[
 \begin{aligned}
-\Partial{R}{R_2}
+\PartialFrac{R}{R_2}
 &amp;= \left( \frac{ R_1}{R_1 + R_2}\right)^2
 \\
 &amp;= \left( \frac{ 20}{20 + 50}\right)^2 = 0.0816327
@@ -804,9 +831,9 @@ R = \frac{R_1 R_2}{R_1 + R_2}
 </section>
 <section id="invisible-measurement-error" class="level4" data-number="6.5.1.3">
 <h4 data-number="6.5.1.3" class="anchored" data-anchor-id="invisible-measurement-error"><span class="header-section-number">6.5.1.3</span> Invisible measurement error</h4>
-<p>Although there is no theoretical limit to the precision of a numerical quantity like mass, time, velocity, etc., every measurement device has limited precision. Because of this lack of precision in our measurement device, it may well be that repeated measuremets will all look identical.<br>
+<p>Although there is no theoretical limit to the precision of a numerical quantity like mass, time, velocity, etc., every measurement device has limited precision. Because of this lack of precision in our measurement device, it may well be that repeated measurements will all look identical.<br>
 <em>But this does not mean that they are exactly correct.</em></p>
-<p>For example, if we measure temperature using a digital thermometer that has a display showing tenths of a degree C, then any temperature between 57.15 and 57.25 will be displayed as 57.2. Any variability within that range will be invisible to our thermometer. Similarly, if we meaure with a ruler with a 1/8 inch scale, we can use interpolation to get not only to the nearest 1/8 inch, but likely to the nearest 1/16 inch or (with some practice) perhaps to the nearest 1/32 inch. But beyond that, we really cannot tell. If more precise measurements are required, a different measuring tool will need to be used.</p>
+<p>For example, if we measure temperature using a digital thermometer that has a display showing tenths of a degree C, then any temperature between 57.15 and 57.25 will be displayed as 57.2. Any variability within that range will be invisible to our thermometer. Similarly, if we measure with a ruler with a 1/8 inch scale, we can use interpolation to get not only to the nearest 1/8 inch, but likely to the nearest 1/16 inch or (with some practice) perhaps to the nearest 1/32 inch. But beyond that, we really cannot tell. If more precise measurements are required, a different measuring tool will need to be used.</p>
 <p>If other sources of variability are small, this kind of measurement error may completely mask them.</p>
 </section>
 </section>
@@ -829,7 +856,7 @@ To save time, the researchers set the platform at a specified height and drop th
 </section>
 <section id="dealing-with-systematic-error" class="level4" data-number="6.5.2.3">
 <h4 data-number="6.5.2.3" class="anchored" data-anchor-id="dealing-with-systematic-error"><span class="header-section-number">6.5.2.3</span> Dealing with systematic error</h4>
-<p>Systematic error is generally more difficult to handle than random error in part because there is often no good way to measure how large systematic error might be or even to detect that it is occurring.</p>
+<p>Systematic error is generally more difficult to handle than random error, in part because there is often no good way to measure how large systematic error might be or even to detect that it is occurring.</p>
 </section>
 </section>
 <section id="relative-magnitudes-of-errors-from-different-sources" class="level3" data-number="6.5.3">
@@ -873,18 +900,18 @@ Since we do not know the error exactly, we have to try to use our data (and our 
 </div>
 </div>
 </div>
-<p>In addition, graphical displays of your data may help isolate outliers – values that don’t seem to fit the pattern of the rest of the data. Outliers should not be removed from your data without furhter investigation. You need to know why these values are different from the rest. Was there a mistake in the measurement? Was the value recorded incorrectly (decimal point in the wrong place, wrong units, transposed digits, typo)? Or was there something different going on – so that the potential outlier is <em>really</em> an important, informative data point that is trying to tell you something about the process you are measuring? An outlier might be the key observation in your data set – don’t throw it away without investigating.</p>
+<p>In addition, graphical displays of your data may help isolate outliers – values that don’t seem to fit the pattern of the rest of the data. Outliers should not be removed from your data without further investigation. You need to know why these values are different from the rest. Was there a mistake in the measurement? Was the value recorded incorrectly (decimal point in the wrong place, wrong units, transposed digits, typo)? Or was there something different going on – so that the potential outlier is <em>really</em> an important, informative data point that is trying to tell you something about the process you are measuring? An outlier might be the key observation in your data set – don’t throw it away without investigating.</p>
 </section>
 <section id="sec-uncertainty-from-data" class="level3" data-number="6.6.2">
 <h3 data-number="6.6.2" class="anchored" data-anchor-id="sec-uncertainty-from-data"><span class="header-section-number">6.6.2</span> Estimating uncertainty from your data</h3>
-<p>Whenever possible, you should make multiple measurements of the same phenomenon. The variability among these measurements allows us to estimate the uncertainty. If we are using the mean of multiple measurements as our estimate, then the uncertainty is the “standard error of the mean” (which we will derive in the following chapter):</p>
+<p>Whenever possible, you should make multiple measurements of the same phenomenon. The variability among these measurements allows us to estimate the uncertainty. If we are using the mean of multiple measurements as our estimate, then the uncertainty is the “standard error of the mean”:</p>
 <p><span class="math display">\[
 SE = \frac{s}{\sqrt{n}}
 \]</span> This is how we estimated the uncertainty in our estimate for the mean weight of a dime.</p>
 <p>In other more complicated study designs, some other standard error formula may be used.</p>
 </section>
-<section id="estimating-uncertainty-in-other-ways-sec-uncertainty-without-data" class="level3" data-number="6.6.3">
-<h3 data-number="6.6.3" class="anchored" data-anchor-id="estimating-uncertainty-in-other-ways-sec-uncertainty-without-data"><span class="header-section-number">6.6.3</span> Estimating uncertainty in other ways {sec-uncertainty-without-data}</h3>
+<section id="sec-uncertainty-without-data" class="level3" data-number="6.6.3">
+<h3 data-number="6.6.3" class="anchored" data-anchor-id="sec-uncertainty-without-data"><span class="header-section-number">6.6.3</span> Estimating uncertainty in other ways</h3>
 <p>Estimating uncertainty from data is only possible if</p>
 <div class="itemize">
 <ul>
@@ -897,15 +924,15 @@ SE = \frac{s}{\sqrt{n}}
 <!-- #### Overcoming lack of measurement precision -->
 <section id="the-uniform-model-for-measurement-imprecision" class="level4" data-number="6.6.3.1">
 <h4 data-number="6.6.3.1" class="anchored" data-anchor-id="the-uniform-model-for-measurement-imprecision"><span class="header-section-number">6.6.3.1</span> The uniform model for measurement (im)precision</h4>
-<p>There are many measuring devises that provide limited precision so that the best we may be able to say is that we know the measured value to be in some interval <span class="math inline">\([a,b]\)</span>. This would be the case for measuring devices with digital displays, for example.<br>
+<p>There are many measuring devices that provide limited precision so that the best we may be able to say is that we know the measured value to be in some interval <span class="math inline">\([a,b]\)</span>. This would be the case for measuring devices with digital displays, for example.<br>
 Imagine a device that displays 8.03 on its digital display.<br>
 Presumably, this means that the actual measurement can lie anywhere between 8.025 and 8.035. This value has been rounded for digital display, and we have no way of knowing where within that interval the value might be.</p>
 <p>We don’t want to report the uncertainty as <span class="math inline">\(b-a\)</span> or even <span class="math inline">\((b-a)/2\)</span>. These would be overestimates of the “average” amount of error. Here, we aren’t looking for an upper bound on the potential error; we want to estimate something like the average amount of error.</p>
-<p>In this case we can estiamte a standard uncertainty based on the <strong>uniform distribution</strong>.<br>
+<p>In this case we can estimate a standard uncertainty based on the <strong>uniform distribution</strong>.<br>
 Recall, a uniform distribution is one in which every value in some interval is “equally likely”. A uniform distribution has standard deviation <span class="math inline">\(s = \frac{b-a}{\sqrt{12}}\)</span>, so we will use this as our estimate for standard uncertainty as well. Notice that <span class="math inline">\(\frac{2}{\sqrt{12}} = \frac{1}{\sqrt{3}} = 0.5773503\)</span>. This means that adding and subtracting one standard uncertainty from the center of the interval <span class="math display">\[
 \frac{a+b}{2} \pm \frac{b-a}{\sqrt{12}}
 \]</span> will cover about 58% of the interval. This is quite a bit less than the 68% covered by the central portion of a normal distribution (within 1 standard deviation of the mean). For a “back of the envelope” computation, to use an uncertainty with a similar amount of “coverage” to the “coverage” that the standard deviation has for the normal distribution, we might choose to use the approximation <span class="math inline">\(\frac{b-a}{\sqrt{12}} \approx \frac{b-a}{3}\)</span>, since this will slightly over-estimate the uncertainty and lead to a central covering probability of <span class="math inline">\(2/3 \approx 68\)</span>%.</p>
-<p>This same idea can be used when working with analog scales, but in this case, we typically can see that the value is closer to one end than the other or closer to the center than to the edges. This reduces our uncertainty by a factor of 2. For example, given a ruler marked in mm, if we can tell than a reading is closer to 12.3 mm than it is to 12.4 mm, then we are saying we know the value is in the interval <span class="math inline">\([12.3, 12.35]\)</span>, which is only half as wide as the scale of the ruler. We can then use a uniform distribution as above, except that the limits <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> of the distribution are a bit narrower now.<br>
+<p>This same idea can be used when working with analog scales, but in this case, we typically can see that the value is closer to one end than the other or closer to the center than to the edges. This reduces our uncertainty by a factor of 2. For example, given a ruler marked in mm, if we can tell that a reading is closer to 12.3 mm than it is to 12.4 mm, then we are saying we know the value is in the interval <span class="math inline">\([12.3, 12.35]\)</span>, which is only half as wide as the scale of the ruler. We can then use a uniform distribution as above, except that the limits <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> of the distribution are a bit narrower now.<br>
 (On some analog scales, it may be possible to do even better than this.)</p>
 <div id="exm-reading-scale" class="example theorem example">
 <p><span class="theorem-title"><strong>Example 6.9 </strong></span>Measuring length on a ruler with a 1 mm scale, we could use <span class="math inline">\(\frac{1/2}{\sqrt{12}}\)</span> as the estimated uncertainty of the measurement if the primary source of error is reading the scale. Of course, it may be that lining up the scale with the object being measured introduces more uncertainty than reading the scale does. That may lead us to choose a larger value for our estimated uncertainty.</p>
@@ -967,34 +994,34 @@ Recall, a uniform distribution is one in which every value in some interval is �
 <div class="solution proof">
 <div class="cell">
 <span class="proof-title"><em>Solution</em>. </span>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95 &lt;!--  CI --&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="at">df =</span> <span class="dv">29</span>); t.star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% CI </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="at">df =</span> <span class="dv">29</span>); t.star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.04523</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> t.star <span class="sc">*</span>  <span class="fl">1.9</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>); ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> t.star <span class="sc">*</span>  <span class="fl">1.9</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>); ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7094717</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.2</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fl">1.2</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.4905283 1.9094717</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 99 &lt;!--  CI --&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">995</span>, <span class="at">df =</span> <span class="dv">29</span>); t.star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 99% CI</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">995</span>, <span class="at">df =</span> <span class="dv">29</span>); t.star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.756386</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> t.star <span class="sc">*</span>  <span class="fl">1.9</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>); ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> t.star <span class="sc">*</span>  <span class="fl">1.9</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>); ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9561653</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fl">10.2</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fl">10.2</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> ME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  9.243835 11.156165</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standard uncertainty = SE = s / sqrt(n)</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.9</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standard uncertainty = SE = s / sqrt(n)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.9</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.346891</code></pre>
 </div>
@@ -1016,26 +1043,26 @@ Recall, a uniform distribution is one in which every value in some interval is �
 <div class="solution proof">
 <div class="cell">
 <span class="proof-title"><em>Solution</em>. </span>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rectangualr: sd = width / sqrt(12) = width / (2 * sqrt(3))</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rectangular: sd = width / sqrt(12) = width / (2 * sqrt(3))</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.2309401</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.2309401</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># triangular: sd = width / (2 * sqrt(6))</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># triangular: sd = width / (2 * sqrt(6))</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1632993</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.4</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1632993</code></pre>
 </div>
 </div>
-<p>The uniform distribution is a more conservative assumption. The trianlge distribution should only be used in situations where errors are more likely to be smaller than larger (with the the specified bounds).</p>
+<p>The uniform distribution is a more conservative assumption. The triangle distribution should only be used in situations where errors are more likely to be smaller than larger (with the the specified bounds).</p>
 </div>
 <!-- end solution -->
 <div id="exr-standard-solution" class="problem theorem exercise">
@@ -1052,13 +1079,13 @@ Recall, a uniform distribution is one in which every value in some interval is �
 <div class="solution proof">
 <div class="cell">
 <span class="proof-title"><em>Solution</em>. </span>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rectangular</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0001</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rectangular</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0001</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.773503e-05</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># trianglular</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0001</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># triangular</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fl">0.0001</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.082483e-05</code></pre>
 </div>
@@ -1072,7 +1099,7 @@ Recall, a uniform distribution is one in which every value in some interval is �
 </div>
 <!-- end problem -->
 <div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span>Let <span class="math inline">\(f(R) = \pi R^2\)</span>. Then <span class="math inline">\(\Partial{f}{R} = 2\pi R\)</span>, so the uncertainty in the area estimation is <span class="math display">\[
+<p><span class="proof-title"><em>Solution</em>. </span>Let <span class="math inline">\(f(R) = \pi R^2\)</span>. Then <span class="math inline">\(\PartialFrac{f}{R} = 2\pi R\)</span>, so the uncertainty in the area estimation is <span class="math display">\[
 \sqrt{ (2 \pi R)^2 (0.3)^2 } = 2 \pi R \cdot 0.3  = 23.5619449
 \mathrm{m}^2
 \;.
@@ -1154,13 +1181,13 @@ the length, width, and height.  These measurements are recorded as
 <p><span class="proof-title"><em>Solution</em>. </span></p>
 <pre><code>In a product the relative uncertainties add, so</code></pre>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fl">2.65</span>; W <span class="ot">&lt;-</span> <span class="fl">3.10</span>; H <span class="ot">&lt;-</span> <span class="fl">4.61</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>uL <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uW <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uH <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> L <span class="sc">*</span> W <span class="sc">*</span> H; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fl">2.65</span>; W <span class="ot">&lt;-</span> <span class="fl">3.10</span>; H <span class="ot">&lt;-</span> <span class="fl">4.61</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>uL <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uW <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uH <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> L <span class="sc">*</span> W <span class="sc">*</span> H; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 37.87115</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (uL<span class="sc">/</span>L)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uW<span class="sc">/</span>W)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uH<span class="sc">/</span>H)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (uL<span class="sc">/</span>L)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uW<span class="sc">/</span>W)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uH<span class="sc">/</span>H)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5568714</code></pre>
 </div>
@@ -1170,8 +1197,8 @@ the length, width, and height.  These measurements are recorded as
 <!-- end solution -->
 <div id="exr-gasoline-consumption" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 6.7 </strong></span>Estimate (with uncertainty) the amount of gasoline burned by personal cars in a particular year in the US from the following estimates and uncertainties for that year:</p>
-<pre><code>&lt;!--  note: estimates found online for 2011.  uncertainties made  --&gt;
-&lt;!--  up but roughly based on the number of digits reported in online sources. --&gt;</code></pre>
+<!--  note: estimates found online for 2011.  uncertainties made  -->
+<!--  up but roughly based on the number of digits reported in online sources. -->
 <table class="table">
 <colgroup>
 <col style="width: 66%">
@@ -1217,13 +1244,13 @@ F = \frac{kPd}{E}
 \]</span> where <span class="math inline">\(k\)</span> is the cars per person, <span class="math inline">\(P\)</span> is total population, <span class="math inline">\(d\)</span> is average distance driven per car, and <span class="math inline">\(E\)</span> is the average efficiency.</p>
 <p><span class="math display">\[
 \begin{aligned}
-\Partial{F}{k} &amp;= \frac{Pd}{E}
+\PartialFrac{F}{k} &amp;= \frac{Pd}{E}
 \\
-\Partial{F}{P} &amp;= \frac{kd}{E}
+\PartialFrac{F}{P} &amp;= \frac{kd}{E}
 \\
-\Partial{F}{d} &amp;= \frac{kP}{E}
+\PartialFrac{F}{d} &amp;= \frac{kP}{E}
 \\
-\Partial{F}{E} &amp;= \frac{-kPd}{E^2}
+\PartialFrac{F}{E} &amp;= \frac{-kPd}{E^2}
 \end{aligned}
 \]</span></p>
 <p>So the estimated amount of fuel consumed (in millions of gallons) is <span class="math display">\[
@@ -1231,32 +1258,32 @@ F = \frac{kPd}{E}
 = 1.2621772\times 10^{5}
 \]</span> and the uncertainty can be computed as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fl">0.8</span>; u_k <span class="ot">&lt;-</span> <span class="fl">0.12</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fl">311.6</span>; u_P <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">12000</span>; u_d <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fl">23.7</span>; u_E <span class="ot">&lt;-</span> <span class="fl">1.7</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>variances <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> , </span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> , </span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> , </span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>            (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>variances</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fl">0.8</span>; u_k <span class="ot">&lt;-</span> <span class="fl">0.12</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fl">311.6</span>; u_P <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">12000</span>; u_d <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fl">23.7</span>; u_E <span class="ot">&lt;-</span> <span class="fl">1.7</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>variances <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> , </span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> , </span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> , </span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>            (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>variances</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.584455e+08 6.563051e+03 4.425254e+08 8.196753e+07</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">&lt;-</span> </span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>( </span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">&lt;-</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>( </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 29714.39</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(variances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(variances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 29714.39</code></pre>
 </div>
@@ -1266,30 +1293,30 @@ F = \frac{kPd}{E}
 C = k P \;.
 \]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> k <span class="sc">*</span> P; C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> k <span class="sc">*</span> P; C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 249.28</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>u_C <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( P<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> k<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span>); u_C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>u_C <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( P<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> k<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span>); u_C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 37.39234</code></pre>
 </div>
 </div>
 <p>The number of (millions of) miles driven is estimated by <span class="math inline">\(M = C d\)</span>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> C <span class="sc">*</span> d; M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> C <span class="sc">*</span> d; M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2991360</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>u_M <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( d<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_C<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> C<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span>); u_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>u_M <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( d<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_C<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> C<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span>); u_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 670746.6</code></pre>
 </div>
 </div>
 <p>Finally, the fuel used is <span class="math inline">\(F = M / E\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>F <span class="ot">=</span> M <span class="sc">/</span> E</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">=</span> <span class="fu">sqrt</span>( (<span class="dv">1</span><span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_M<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (M<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span>); u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>F <span class="ot">=</span> M <span class="sc">/</span> E</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">=</span> <span class="fu">sqrt</span>( (<span class="dv">1</span><span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_M<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (M<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span>); u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 29714.39</code></pre>
 </div>
@@ -1321,8 +1348,8 @@ C = k P \;.
 <div class="solution proof">
 <p><span class="proof-title"><em>Solution</em>. </span></p>
 <pre><code>Let $Q = X Y^{-1}$.  So 
-$\Partial{Q}{X} = Y^{-1}$ and 
-$\Partial{Q}{Y} = -X Y^{-2}$.  From this we get</code></pre>
+$\PartialFrac{Q}{X} = Y^{-1}$ and 
+$\PartialFrac{Q}{Y} = -X Y^{-2}$.  From this we get</code></pre>
 <p><span class="math display">\[
 \begin{aligned}
 \frac{u_Q}{Q}
@@ -1337,11 +1364,11 @@ $\Partial{Q}{Y} = -X Y^{-2}$.  From this we get</code></pre>
 \]</span></p>
 <p>which gives a Pythagorean identity for the relative uncertainties just as it did for a product.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fl">1.637</span> <span class="sc">/</span> <span class="fl">0.43</span>; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fl">1.637</span> <span class="sc">/</span> <span class="fl">0.43</span>; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.806977</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (<span class="fl">0.02</span><span class="sc">/</span>.<span class="dv">43</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="fl">0.006</span><span class="sc">/</span><span class="fl">1.637</span>)<span class="sc">^</span><span class="dv">2</span> ) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (<span class="fl">0.02</span><span class="sc">/</span>.<span class="dv">43</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="fl">0.006</span><span class="sc">/</span><span class="fl">1.637</span>)<span class="sc">^</span><span class="dv">2</span> ) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1776176</code></pre>
 </div>

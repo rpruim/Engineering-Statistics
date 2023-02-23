@@ -1583,7 +1583,7 @@ Answers will vary.
 
 
 
-## {Review Exercises}
+## Review Exercises
 
 ::: {.problem #exr-defective-parts}
 **Defective parts**

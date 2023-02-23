@@ -1169,30 +1169,25 @@ many digits reported).  Use standard practice to report each estimate with the c
 </div>
 <!-- end solution -->
 <div id="exr-volume-of-tank" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 6.6 </strong></span>&nbsp;</p>
-<pre><code>A student is calculating the volume of a rectangular tank by measuring 
-the length, width, and height.  These measurements are recorded as 
- $L = 2.65 \pm 0.02$cm, $W = 3.10 \pm 0.02$cm, and $H = 4.61\pm 0.05$ cm.
-
- How should the volume be reported?</code></pre>
+<p><span class="theorem-title"><strong>Exercise 6.6 </strong></span>A student is calculating the volume of a rectangular tank by measuring the length, width, and height. These measurements are recorded as <span class="math inline">\(L = 2.65 \pm 0.02\)</span>cm, <span class="math inline">\(W = 3.10 \pm 0.02\)</span>cm, and <span class="math inline">\(H = 4.61\pm 0.05\)</span> cm.</p>
+<p>How should the volume be reported?</p>
 </div>
 <!-- end problem -->
 <div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span></p>
-<pre><code>In a product the relative uncertainties add, so</code></pre>
+<p><span class="proof-title"><em>Solution</em>. </span>In a product the relative uncertainties add, so</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fl">2.65</span>; W <span class="ot">&lt;-</span> <span class="fl">3.10</span>; H <span class="ot">&lt;-</span> <span class="fl">4.61</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>uL <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uW <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uH <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> L <span class="sc">*</span> W <span class="sc">*</span> H; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fl">2.65</span>; W <span class="ot">&lt;-</span> <span class="fl">3.10</span>; H <span class="ot">&lt;-</span> <span class="fl">4.61</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>uL <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uW <span class="ot">&lt;-</span> <span class="fl">0.02</span>; uH <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> L <span class="sc">*</span> W <span class="sc">*</span> H; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 37.87115</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (uL<span class="sc">/</span>L)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uW<span class="sc">/</span>W)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uH<span class="sc">/</span>H)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (uL<span class="sc">/</span>L)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uW<span class="sc">/</span>W)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (uH<span class="sc">/</span>H)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5568714</code></pre>
 </div>
 </div>
-<pre><code>So we report $37.9 \pm 0.6$</code></pre>
+<p>So we report <span class="math inline">\(37.9 \pm 0.6\)</span></p>
 </div>
 <!-- end solution -->
 <div id="exr-gasoline-consumption" class="problem theorem exercise">
@@ -1258,32 +1253,32 @@ F = \frac{kPd}{E}
 = 1.2621772\times 10^{5}
 \]</span> and the uncertainty can be computed as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fl">0.8</span>; u_k <span class="ot">&lt;-</span> <span class="fl">0.12</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fl">311.6</span>; u_P <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">12000</span>; u_d <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fl">23.7</span>; u_E <span class="ot">&lt;-</span> <span class="fl">1.7</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>variances <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> , </span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> , </span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> , </span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>            (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>variances</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fl">0.8</span>; u_k <span class="ot">&lt;-</span> <span class="fl">0.12</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fl">311.6</span>; u_P <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">12000</span>; u_d <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fl">23.7</span>; u_E <span class="ot">&lt;-</span> <span class="fl">1.7</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>variances <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> , </span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> , </span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> , </span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>            (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>variances</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.584455e+08 6.563051e+03 4.425254e+08 8.196753e+07</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">&lt;-</span> </span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>( </span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">&lt;-</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>( </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>            (P<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>d<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>            (k<span class="sc">*</span>P<span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    (k <span class="sc">*</span> P <span class="sc">*</span> d<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 29714.39</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(variances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>(variances))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 29714.39</code></pre>
 </div>
@@ -1293,30 +1288,30 @@ F = \frac{kPd}{E}
 C = k P \;.
 \]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> k <span class="sc">*</span> P; C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> k <span class="sc">*</span> P; C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 249.28</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>u_C <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( P<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> k<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span>); u_C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>u_C <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( P<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_k<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> k<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_P<span class="sc">^</span><span class="dv">2</span>); u_C</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 37.39234</code></pre>
 </div>
 </div>
 <p>The number of (millions of) miles driven is estimated by <span class="math inline">\(M = C d\)</span>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> C <span class="sc">*</span> d; M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> C <span class="sc">*</span> d; M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2991360</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>u_M <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( d<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_C<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> C<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span>); u_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>u_M <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( d<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_C<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> C<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_d<span class="sc">^</span><span class="dv">2</span>); u_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 670746.6</code></pre>
 </div>
 </div>
 <p>Finally, the fuel used is <span class="math inline">\(F = M / E\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>F <span class="ot">=</span> M <span class="sc">/</span> E</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">=</span> <span class="fu">sqrt</span>( (<span class="dv">1</span><span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_M<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (M<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span>); u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>F <span class="ot">=</span> M <span class="sc">/</span> E</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>u_F <span class="ot">=</span> <span class="fu">sqrt</span>( (<span class="dv">1</span><span class="sc">/</span>E)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_M<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (M<span class="sc">/</span>E<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> u_E<span class="sc">^</span><span class="dv">2</span>); u_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 29714.39</code></pre>
 </div>
@@ -1346,10 +1341,7 @@ C = k P \;.
 </div>
 <!-- end problem -->
 <div class="solution proof">
-<p><span class="proof-title"><em>Solution</em>. </span></p>
-<pre><code>Let $Q = X Y^{-1}$.  So 
-$\PartialFrac{Q}{X} = Y^{-1}$ and 
-$\PartialFrac{Q}{Y} = -X Y^{-2}$.  From this we get</code></pre>
+<p><span class="proof-title"><em>Solution</em>. </span>Let <span class="math inline">\(Q = X Y^{-1}\)</span>. So <span class="math inline">\(\PartialFrac{Q}{X} = Y^{-1}\)</span> and <span class="math inline">\(\PartialFrac{Q}{Y} = -X Y^{-2}\)</span>. From this we get</p>
 <p><span class="math display">\[
 \begin{aligned}
 \frac{u_Q}{Q}
@@ -1364,11 +1356,11 @@ $\PartialFrac{Q}{Y} = -X Y^{-2}$.  From this we get</code></pre>
 \]</span></p>
 <p>which gives a Pythagorean identity for the relative uncertainties just as it did for a product.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fl">1.637</span> <span class="sc">/</span> <span class="fl">0.43</span>; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fl">1.637</span> <span class="sc">/</span> <span class="fl">0.43</span>; V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.806977</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (<span class="fl">0.02</span><span class="sc">/</span>.<span class="dv">43</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="fl">0.006</span><span class="sc">/</span><span class="fl">1.637</span>)<span class="sc">^</span><span class="dv">2</span> ) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>uV <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (<span class="fl">0.02</span><span class="sc">/</span>.<span class="dv">43</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="fl">0.006</span><span class="sc">/</span><span class="fl">1.637</span>)<span class="sc">^</span><span class="dv">2</span> ) <span class="sc">*</span> V; uV</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1776176</code></pre>
 </div>

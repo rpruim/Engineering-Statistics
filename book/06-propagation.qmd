@@ -1242,18 +1242,18 @@ $`r round(pi * 12.5^2, -1)` \pm `r round(2 * pi * 12.5 * 0.3, -1)`$.
 
 ::: {.problem #exr-volume-of-tank}
 
-	A student is calculating the volume of a rectangular tank by measuring 
-	the length, width, and height.  These measurements are recorded as 
-	 $L = 2.65 \pm 0.02$cm, $W = 3.10 \pm 0.02$cm, and $H = 4.61\pm 0.05$ cm.
+A student is calculating the volume of a rectangular tank by measuring 
+the length, width, and height.  These measurements are recorded as 
+$L = 2.65 \pm 0.02$cm, $W = 3.10 \pm 0.02$cm, and $H = 4.61\pm 0.05$ cm.
 
-	 How should the volume be reported?
+How should the volume be reported?
 ::: 
 <!-- end problem -->
 
 
 ::: {.solution}
 
-	In a product the relative uncertainties add, so
+In a product the relative uncertainties add, so
 ```{r tidy = FALSE}
 L <- 2.65; W <- 3.10; H <- 4.61
 uL <- 0.02; uW <- 0.02; uH <- 0.05
@@ -1261,7 +1261,7 @@ V <- L * W * H; V
 uV <- sqrt( (uL/L)^2 + (uW/W)^2 + (uH/H)^2) * V; uV
 ```
 
-	So we report $`r round(V,1)` \pm `r round(uV,1)`$
+So we report $`r round(V,1)` \pm `r round(uV,1)`$
 
 ::: 
 <!-- end solution -->
@@ -1394,9 +1394,9 @@ we have nice formulas for the relative uncertainty in products and quotients.
 ::: {.problem #exr-speed-propagation}
 
 A physics student is calculating the speed of a falling object by measuring the time
-	it takes for the object to move between two timing sensors.
-	If she records the time as $0.43 \pm 0.02$ seconds and the distance as 
-	$1.637 \pm 0.006$ m, how should she report the speed in $m/s$?
+it takes for the object to move between two timing sensors.
+If she records the time as $0.43 \pm 0.02$ seconds and the distance as 
+$1.637 \pm 0.006$ m, how should she report the speed in $m/s$?
 ::: 
 <!-- end problem -->
 
@@ -1425,9 +1425,10 @@ A physics student is calculating the speed of a falling object by measuring the 
 
 ::: {.solution}
 
-	Let $Q = X Y^{-1}$.  So 
-	$\PartialFrac{Q}{X} = Y^{-1}$ and 
-	$\PartialFrac{Q}{Y} = -X Y^{-2}$.  From this we get
+Let $Q = X Y^{-1}$.  So 
+$\PartialFrac{Q}{X} = Y^{-1}$ and 
+$\PartialFrac{Q}{Y} = -X Y^{-2}$.  From this we get
+
 $$
 \begin{aligned}
 \frac{u_Q}{Q} 

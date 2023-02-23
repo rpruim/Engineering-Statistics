@@ -686,13 +686,13 @@ X - Y \sim \Norm(10 - 12, \sqrt{2^2 + 4^2})
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  22.13018066    4.48607018 
- ( 0.06344261) ( 0.04486070)</code></pre>
+  22.03293087    4.49414261 
+ ( 0.06355677) ( 0.04494143)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  -2.07799805    4.48953368 
- ( 0.06349159) ( 0.04489534)</code></pre>
+  -2.00405594    4.48686292 
+ ( 0.06345382) ( 0.04486863)</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -739,8 +739,8 @@ Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="ma
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  6.006364109   0.990562066 
- (0.014008663) (0.009905621)</code></pre>
+  5.984574197   0.983230820 
+ (0.013904984) (0.009832308)</code></pre>
 </div>
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="05-transformations_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="432"></p>
@@ -1165,8 +1165,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean           sd     
-  12.05461056    6.07903715 
- ( 0.08597057) ( 0.06079037)</code></pre>
+  12.23213257    6.00964969 
+ ( 0.08498928) ( 0.06009650)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1181,8 +1181,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"gamma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      shape         rate    
-  3.940899785   0.326920615 
- (0.075716743) (0.006698958)</code></pre>
+  4.068254534   0.332587557 
+ (0.078255934) (0.006809267)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S, <span class="at">distribution =</span> qgamma, <span class="at">dparams =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="fl">4.04</span>, <span class="at">rate =</span> <span class="fl">0.333</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1198,8 +1198,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(D, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean          sd    
-  0.08189598   5.97676104 
- (0.08452417) (0.05976761)</code></pre>
+  0.06314118   6.16273416 
+ (0.08715422) (0.06162734)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> D)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">

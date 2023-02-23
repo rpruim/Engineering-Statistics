@@ -43,3 +43,9 @@
 \def\Partial#1#2{\frac{\partial}{\partial #2} #1}
 
 \def\myindex#1{\relax}
+
+\renewenvironment{solution}{%
+\expandafter\comment
+}{%
+\expandafter\endcomment
+}

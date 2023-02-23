@@ -16,7 +16,10 @@ format:
     fig-width: 4.5
     fig-align: center
   pdf: 
-    include-in-header: macros.tex
+    include-in-header:
+      - text: |
+          \usepackage{verbatim}
+      - file: macros.text
     geometry: 
       - "margin=0.9in"
 

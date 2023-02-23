@@ -819,7 +819,7 @@ F(x) = \Prob(X \le x)
 <p>If you recall doing center of mass problems you may recognize this integral as the first moment. (For pdfs, we don’t need to divide by the “mass” because the total “mass” is the area under the curve, which will always be 1 for a random variable).</p>
 <p>Note: It is possible that the integral used to define the mean will fail to converge. In that case, we say that the random variable has no mean or that the mean fails to exist.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div id="exm-mean-triangle" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 4.9 </strong></span><strong>Q.</strong> Compute the mean of our triangle distribution from <a href="#exm-triangle-in-R">Example&nbsp;<span>4.13</span></a>.</p>
+<p><span class="theorem-title"><strong>Example 4.9 </strong></span><strong>Q.</strong> Compute the mean of our triangle distribution from <a href="#exm-triangle-in-R">Example&nbsp;<span class="quarto-unresolved-ref">exm-triangle-in-R</span></a>.</p>
 <p><strong>A.</strong> We simply compute the integral from the definition.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -872,7 +872,7 @@ F(x) = \Prob(X \le x)
 \]</span></p>
 <p>Note: It is possible that the sum or integral used to define the mean (or the variance) will fail to converge. In that case, we say that the random variable has no mean (or variance) or that the mean (or variance) fails to exist.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <div id="exm-var-triangle" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 4.10 </strong></span><strong>Q.</strong> Compute the variance of the triangle random variable from the <a href="#exm-triangle">Example&nbsp;<span>4.3</span></a>.</p>
+<p><span class="theorem-title"><strong>Example 4.10 </strong></span><strong>Q.</strong> Compute the variance of the triangle random variable from the <a href="#exm-triangle">Example&nbsp;<span class="quarto-unresolved-ref">exm-triangle</span></a>.</p>
 <p><strong>A.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">abs</span>(x)) <span class="sc">*</span> (<span class="fu">abs</span>(x) <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="sc">~</span> x)</span>
@@ -900,7 +900,7 @@ F(x) = \Prob(X \le x)
 <p><span class="math display">\[
 g(x) = \frac{3x^2}{8} \boolval{x \in[0,2]} \;.
 \]</span></p>
-<p>This is the pdf computed in <a href="#exm-kernel">Example&nbsp;<span>4.4</span></a>.</p>
+<p>This is the pdf computed in <a href="#exm-kernel">Example&nbsp;<span class="quarto-unresolved-ref">exm-kernel</span></a>.</p>
 <p><strong>A.</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( (<span class="dv">3</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">8</span> ) <span class="sc">*</span> (<span class="dv">0</span> <span class="sc">&lt;=</span> x <span class="sc">&amp;</span> x <span class="sc">&lt;=</span> <span class="dv">2</span>) <span class="sc">~</span> x )</span>
@@ -935,7 +935,7 @@ g(x) = \frac{3x^2}{8} \boolval{x \in[0,2]} \;.
 \Prob(X \le x) = 0.5 \;.
 \]</span></p>
 <div id="exm-triangle-quantiles" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 4.12 </strong></span><strong>Q.</strong> What is the 25th percentile of the triangle distribution in <a href="#exm-triangle">Example&nbsp;<span>4.3</span></a>?</p>
+<p><span class="theorem-title"><strong>Example 4.12 </strong></span><strong>Q.</strong> What is the 25th percentile of the triangle distribution in <a href="#exm-triangle">Example&nbsp;<span class="quarto-unresolved-ref">exm-triangle</span></a>?</p>
 <p><strong>A.</strong> We need to solve for <span class="math inline">\(x\)</span> in the following equation:</p>
 <p><span class="math display">\[
 0.25 = \Prob(X \le x)  \; .
@@ -1934,7 +1934,7 @@ f(x) = \frac{ e^{-\lambda} \lambda^x}{x!}
 </div>
 </div>
 <p>By eye, it appears that the Gamma distribution fits this data set slightly better, but there may be other reasons to prefer the Weibull distribution. In fact, there has been a good deal of research done regarding which distributions to use for wind speed data fitting. The answer to the question of which distributions should be used seems to be that it depends on the purpose for your modeling:<br>
-``The fact that different distributions excel under different applications motivates further research on model selection based upon the engineering parameter of interest.” <span class="citation" data-cites="Morgan2011:WindSpeed">Morgan et al. (<a href="references.html#ref-Morgan2011:WindSpeed" role="doc-biblioref">2011</a>)</span></p>
+``The fact that different distributions excel under different applications motivates further research on model selection based upon the engineering parameter of interest.” <span class="citation" data-cites="Morgan2011:WindSpeed">Morgan et al. (<a href="#ref-Morgan2011:WindSpeed" role="doc-biblioref">2011</a>)</span></p>
 </div>
 <!-- end example -->
 <div id="exm-jordan" class="example theorem example">
@@ -2018,11 +2018,11 @@ f(x) = \frac{ e^{-\lambda} \lambda^x}{x!}
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="the-method-of-moments"><span class="header-section-number">4.5.2</span> The method of moments</h3>
 <p>An easy (but sometimes fairly crude) way to estimate the parameters of a distribution is the method of moments. You will often see this method used in engineering textbooks, especially if they do not rely on software that implements other methods (like the maximum likelihood method).</p>
 <p>The basic idea is to set up a system of equations where we set the mean of the data equal to the mean of the distribution, the variance of the data equal to the variance of the distribution, etc.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
-<p>To employ this method, we need to know the means and variances of our favorite families of distributions (in terms of the parameters of the distributions). For all of the distributions we have seen, one can work out formulas for the means and variances in terms of the parameters involved. These are listed in <a href="#tbl-distributions">Table&nbsp;<span>4.5</span></a></p>
+<p>To employ this method, we need to know the means and variances of our favorite families of distributions (in terms of the parameters of the distributions). For all of the distributions we have seen, one can work out formulas for the means and variances in terms of the parameters involved. These are listed in <a href="#tbl-distributions">Table&nbsp;<span class="quarto-unresolved-ref">tbl-distributions</span></a></p>
 <div id="exm-windspeed-2" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 4.24 </strong></span>Let’s return to the wind speeds in <a href="#exm-windspeed">Example&nbsp;<span>4.20</span></a>. The formulas for the mean and variance of a Weibull distribution involve the gamma function <span class="math inline">\(\Gamma()\)</span>, which might be unfamiliar to you. So let’s simplify things.</p>
+<p><span class="theorem-title"><strong>Example 4.24 </strong></span>Let’s return to the wind speeds in <a href="#exm-windspeed">Example&nbsp;<span class="quarto-unresolved-ref">exm-windspeed</span></a>. The formulas for the mean and variance of a Weibull distribution involve the gamma function <span class="math inline">\(\Gamma()\)</span>, which might be unfamiliar to you. So let’s simplify things.</p>
 <p>Theoretical properties and observations of wind speeds at other locations suggest that using a shape parameter of <span class="math inline">\(\alpha = 2\)</span> is often a good choice (but shape does differ from location to location depending on how consistent or variable the wind speeds are). The Weibull distributions with <span class="math inline">\(\alpha = 2\)</span> have a special name, they are called the <strong>Rayleigh</strong> distributions.<br>
-So <span class="math inline">\(\Rayleigh(\beta) = \Weibull(\alpha = 2, \beta)\)</span>. In this case, from <a href="#tbl-distributions">Table&nbsp;<span>4.5</span></a>, we see that to calculate the mean we need the value of <span class="math inline">\(\Gamma(1 + \frac{1}{2}) = \Gamma(1.5) = \sqrt{\pi}/2\)</span>.</p>
+So <span class="math inline">\(\Rayleigh(\beta) = \Weibull(\alpha = 2, \beta)\)</span>. In this case, from <a href="#tbl-distributions">Table&nbsp;<span class="quarto-unresolved-ref">tbl-distributions</span></a>, we see that to calculate the mean we need the value of <span class="math inline">\(\Gamma(1 + \frac{1}{2}) = \Gamma(1.5) = \sqrt{\pi}/2\)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gamma</span>(<span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2033,7 +2033,7 @@ So <span class="math inline">\(\Rayleigh(\beta) = \Weibull(\alpha = 2, \beta)\)<
 <pre><code>[1] 0.8862269</code></pre>
 </div>
 </div>
-<p>From <a href="#tbl-distributions">Table&nbsp;<span>4.5</span></a> we see that the mean of a <span class="math inline">\(\Rayleigh(\beta)\)</span>-distribution is <span class="math display">\[
+<p>From <a href="#tbl-distributions">Table&nbsp;<span class="quarto-unresolved-ref">tbl-distributions</span></a> we see that the mean of a <span class="math inline">\(\Rayleigh(\beta)\)</span>-distribution is <span class="math display">\[
 \E(X) = \beta \frac{\sqrt{\pi}}{2}
 \]</span></p>
 <p>Now we can choose our estimate <span class="math inline">\(\hat \beta\)</span> for <span class="math inline">\(\beta\)</span> so that <span class="math display">\[
@@ -2101,7 +2101,7 @@ The choice of distributions is made based on a combination of theoretical consid
 <!-- end example -->
 <section id="important-families-of-distributions" class="level4 boxedText" data-number="4.5.2.1">
 <h4 data-number="4.5.2.1" class="anchored" data-anchor-id="important-families-of-distributions"><span class="header-section-number">4.5.2.1</span> Important Families of Distributions</h4>
-<p>Standard names for parameters that appear in several distributions in <a href="#tbl-distributions">Table&nbsp;<span>4.5</span></a> include (<span class="math inline">\(\lambda\)</span>), (<span class="math inline">\(\alpha\)</span>), and (<span class="math inline">\(\beta\)</span>). In the normal distributions, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are called <code>mean</code> and in R, and in the uniform distributions, <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are called and . The function <span class="math inline">\(\Gamma(x)\)</span> that appears in the formulas for the Weibull and Beta distributions is a kind of continuous extrapolation from the factorial function. The function will calculate these values in R.”</p>
+<p>Standard names for parameters that appear in several distributions in <a href="#tbl-distributions">Table&nbsp;<span class="quarto-unresolved-ref">tbl-distributions</span></a> include (<span class="math inline">\(\lambda\)</span>), (<span class="math inline">\(\alpha\)</span>), and (<span class="math inline">\(\beta\)</span>). In the normal distributions, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are called <code>mean</code> and in R, and in the uniform distributions, <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are called and . The function <span class="math inline">\(\Gamma(x)\)</span> that appears in the formulas for the Weibull and Beta distributions is a kind of continuous extrapolation from the factorial function. The function will calculate these values in R.”</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="tbl-distributions" class="anchored">
@@ -2395,7 +2395,7 @@ to normal, gamma and Weibull distributions.</code></pre>
 </div>
 <!-- end solution -->
 <div id="exr-triangle-with-geometry" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 4.2 </strong></span>Repeat parts (2) – (4) of <a href="#exm-triangle-in-R">Example&nbsp;<span>4.13</span></a> using geometry rather than R</p>
+<p><span class="theorem-title"><strong>Exercise 4.2 </strong></span>Repeat parts (2) – (4) of <a href="#exm-triangle-in-R">Example&nbsp;<span class="quarto-unresolved-ref">exm-triangle-in-R</span></a> using geometry rather than R</p>
 </div>
 <!-- end problem -->
 <div class="solution proof">
@@ -2652,7 +2652,7 @@ to compute them.</code></pre>
 <p><span class="theorem-title"><strong>Exercise 4.9 </strong></span>&nbsp;</p>
 <div class="enumerate">
 <ol type="a">
-<li>Using <a href="#tbl-distributions">Table&nbsp;<span>4.5</span></a> and the method of moments, fit an exponential distribution to the Twin Falls wind speed data.</li>
+<li>Using <a href="#tbl-distributions">Table&nbsp;<span class="quarto-unresolved-ref">tbl-distributions</span></a> and the method of moments, fit an exponential distribution to the Twin Falls wind speed data.</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb221"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb221-1"><a href="#cb221-1" aria-hidden="true" tabindex="-1"></a>Wind <span class="ot">&lt;-</span> </span>
@@ -2717,7 +2717,7 @@ Because there are two parameters (shape and rate or shape and scale),
 you will need to solve a system of two equations with two unknowns.</code></pre>
 <div class="enumerate">
 <ol type="a">
-<li>Using <a href="#tbl-distributions">Table&nbsp;<span>4.5</span></a> and the method of moments, fit a Gamma distribution to the Twin Falls wind speed data. What are the estimated values of the shape and rate parameters?</li>
+<li>Using <a href="#tbl-distributions">Table&nbsp;<span class="quarto-unresolved-ref">tbl-distributions</span></a> and the method of moments, fit a Gamma distribution to the Twin Falls wind speed data. What are the estimated values of the shape and rate parameters?</li>
 <li>How do the method of moments estimates for the parameters compare to the maximum likelihood estimates from <code>fitdistr()</code>?</li>
 </ol>
 </div>
@@ -3054,7 +3054,7 @@ a good thing to try.  </code></pre>
 </div>
 <!-- end solution -->
 <div id="exr-heights-more" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 4.17 </strong></span>Use the information from <a href="#exr-heights">Exercise&nbsp;<span>4.16</span></a> to answer the following questions.</p>
+<p><span class="theorem-title"><strong>Exercise 4.17 </strong></span>Use the information from <a href="#exr-heights">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-heights</span></a> to answer the following questions.</p>
 <div class="enumerate">
 <ol type="a">
 <li>What proportion of women are 5’10” or taller?</li>
@@ -3111,7 +3111,7 @@ a good thing to try.  </code></pre>
 <!-- end solution -->
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-Morgan2011:WindSpeed" class="csl-entry" role="doc-biblioentry">
 Morgan, Eugene C., Matthew Lackner, Richard M. Vogel, and Laurie G. Baise. 2011. <span>“Probability Distributions for Offshore Wind Speeds.”</span> <em>Energy Conversion and Management</em> 52 (1): 15–26. <a href="https://doi.org/10.1016/j.enconman.2010.06.015">https://doi.org/10.1016/j.enconman.2010.06.015</a>.
 </div>

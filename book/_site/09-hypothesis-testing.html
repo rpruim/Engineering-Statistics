@@ -363,7 +363,7 @@ $$
 </ol>
 </div>
 <!-- end enumerate -->
-<p>At this point, you may be wondering who the innovative scientist was and what the results of the experiment were. The scientist was R. A. Fisher, who first described this situation as a pedagogical example in his 1925 book on statistical methodology <span class="citation" data-cites="Fisher:1925:Methods">Fisher (<a href="references.html#ref-Fisher:1925:Methods" role="doc-biblioref">1925</a>)</span>. Fisher developed statistical methods that are among the most important and widely used methods to this day, and most of his applications were biological. </p>
+<p>At this point, you may be wondering who the innovative scientist was and what the results of the experiment were. The scientist was R. A. Fisher, who first described this situation as a pedagogical example in his 1925 book on statistical methodology <span class="citation" data-cites="Fisher:1925:Methods">Fisher (<a href="#ref-Fisher:1925:Methods" role="doc-biblioref">1925</a>)</span>. Fisher developed statistical methods that are among the most important and widely used methods to this day, and most of his applications were biological. </p>
 </section>
 <section id="coins-and-cups" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="coins-and-cups"><span class="header-section-number">9.2</span> Coins and Cups</h2>
@@ -456,7 +456,7 @@ Number of Heads: 3 [Proportion Heads: 0.3]</code></pre>
 </ol>
 </div>
 <!-- end itemize -->
-<p>Although Fisher did not say how the experiment came out, others have reported that the lady correctly identified all 10 cups! <span class="citation" data-cites="salsburg">Salsburg (<a href="references.html#ref-salsburg" role="doc-biblioref">2001</a>)</span></p>
+<p>Although Fisher did not say how the experiment came out, others have reported that the lady correctly identified all 10 cups! <span class="citation" data-cites="salsburg">Salsburg (<a href="#ref-salsburg" role="doc-biblioref">2001</a>)</span></p>
 <p>This same reasoning can be applied to answer a wide range of questions that have a similar form. For example, the question of whether dogs can smell cancer could be answered essentially the same way (although it would be a bit more involved than preparing tea and presenting cups to the Lady).</p>
 </section>
 <section id="a-general-framework" class="level2" data-number="9.3">
@@ -580,7 +580,7 @@ probability of success
                    0.9 </code></pre>
 </div>
 </div>
-<p>The output above doesn’t match what we obtained in <a href="#exm-lady-binom">Example&nbsp;<span>9.2</span></a> because the alternative hypothesis is different. It accepts both low number of correct identifications (0 or 1) and high numbers (9 or 10) as evidence against the null hypothesis. If we want a one-sided p-value, we just need to ask:</p>
+<p>The output above doesn’t match what we obtained in <a href="#exm-lady-binom">Example&nbsp;<span class="quarto-unresolved-ref">exm-lady-binom</span></a> because the alternative hypothesis is different. It accepts both low number of correct identifications (0 or 1) and high numbers (9 or 10) as evidence against the null hypothesis. If we want a one-sided p-value, we just need to ask:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="at">x =</span> <span class="dv">9</span>, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1553,7 +1553,7 @@ less than 0.05. As a double check, here is the 95% confidence interval.</p>
 <!-- % \end{solution} -->
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-Fisher:1925:Methods" class="csl-entry" role="doc-biblioentry">
 Fisher, R. A. 1925. <em>Statistical Methods for Research Workers</em>. Oliver &amp; Boyd.
 </div>
@@ -1566,7 +1566,7 @@ Salsburg, D. 2001. <em>The Lady Tasting Tea: How Statistics Revolutionized Scien
 <hr>
 <ol>
 <li id="fn1"><p>There is some evidence in these data that some of the observations did not reach critical velocity.<br>
-It would be good to refit this data with those observations removed from the data. See <a href="#exr-drag-refit">Exercise&nbsp;<span>9.3</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+It would be good to refit this data with those observations removed from the data. See <a href="#exr-drag-refit">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-drag-refit</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

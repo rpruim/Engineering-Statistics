@@ -343,7 +343,7 @@ That is, a set of outcomes (possibly all or none of the outcomes).</p>
 <div class="center">
 <p>Let <span class="math inline">\(X\)</span> be the number of heads in 10 flips of a fair coin. What is <span class="math inline">\(\Prob(X = 5)\)</span>?</p>
 </div>
-<p>As an example of a probability distribution, we can first consider a <em>discrete</em> random variable. Most of the examples of random variables given above are discrete. In other words, the values they can take on come from a set containing a finite number of possible values. For example, if you roll a 6-sided die and record the number that comes up, there are only size possible outcomes, which are equally likely: the integers 1, 2, 3, 4, 5 and 6. For discrete random variables, the probability distribution shows all the possible values on the x-axis, and the likelihood of observing each of those values on the y-axis. Since there are a finite number of possible values that can be observed, these likelihoods are actually the <em>probabilities</em> of observing each outcome, and the sum of all the probabilities must be 1 (see <a href="#sec-theoretical-prob"><span>Section&nbsp;3.3</span></a> for details). For our example, where we rolled a die and recorded the value:</p>
+<p>As an example of a probability distribution, we can first consider a <em>discrete</em> random variable. Most of the examples of random variables given above are discrete. In other words, the values they can take on come from a set containing a finite number of possible values. For example, if you roll a 6-sided die and record the number that comes up, there are only size possible outcomes, which are equally likely: the integers 1, 2, 3, 4, 5 and 6. For discrete random variables, the probability distribution shows all the possible values on the x-axis, and the likelihood of observing each of those values on the y-axis. Since there are a finite number of possible values that can be observed, these likelihoods are actually the <em>probabilities</em> of observing each outcome, and the sum of all the probabilities must be 1 (see <a href="#sec-theoretical-prob"><span class="quarto-unresolved-ref">sec-theoretical-prob</span></a> for details). For our example, where we rolled a die and recorded the value:</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="03-probability_files/figure-html/discrete-pmf-1.png" class="img-fluid" width="624"></p>
@@ -378,9 +378,9 @@ That is, a set of outcomes (possibly all or none of the outcomes).</p>
 <pre><code>
 Flipping 10 coins [ Prob(Heads) = 0.5 ] ...
 
-H H T H H T T T H H
+H H H T H H H T H H
 
-Number of Heads: 6 [Proportion Heads: 0.6]</code></pre>
+Number of Heads: 8 [Proportion Heads: 0.8]</code></pre>
 </div>
 </div>
 <p>The <code>do()</code> function allows us to execute an R command (“do” something in R) over and over, as many times as we choose. Here, our <code>rflip()</code> command simulates 10 coin-flips. First we’ll “do” our command three times and show the results. Then we’ll do it 10,000 times and store the results in a variable called <code>tosses</code>, so we can create a table and a plot showing the empirical distribution.</p>
@@ -622,7 +622,7 @@ Number of Heads: 6 [Proportion Heads: 0.6]</code></pre>
 <div id="exm-cond-kids" class="example theorem example">
 <p><span class="theorem-title"><strong>Example 3.5 </strong></span><strong>Q.</strong> Suppose a family has two children and one of them is a boy. What is the probability that the other is a girl?</p>
 <p><strong>A.</strong> <!--  First we introduce some notation.  Let $X$ be a random variable --> <!--  that counts the number of girls and let $Y$ be a random variable --> <!--  that counts the number of boys (since they have Y chromosomes). --> <!--  We'll also  --> We’ll make the simplifying assumption that boys and girls are equally likely (which is not exactly true). Under that assumption, there are four equally likely families: BB, BG, GB, and GG. But only three of these have at least one boy, and we already know our family has at least one boy, so our sample space is really <span class="math inline">\(\{BB, BG, GB\}\)</span>. Of these, two have a girl as well as a boy. So the probability is <span class="math inline">\(2/3\)</span>.</p>
-<p>We illustrate the restricted sample space (3 outcomes in a box) in the figure below. Two of these three outcomes have at least one girl. (See <a href="#eq-cond-kids">Equation&nbsp;<span>3.1</span></a>.)</p>
+<p>We illustrate the restricted sample space (3 outcomes in a box) in the figure below. Two of these three outcomes have at least one girl. (See <a href="#eq-cond-kids">Equation&nbsp;<span class="quarto-unresolved-ref">eq-cond-kids</span></a>.)</p>
 <p><span id="eq-cond-kids"><span class="math display">\[
 \mbox{GG} \ \ \  \fbox{BG \ \ \ GB \ \ \ BB}
 \tag{3.1}\]</span></span></p>
@@ -634,7 +634,7 @@ Number of Heads: 6 [Proportion Heads: 0.6]</code></pre>
 \frac{2/4}{3/4} &amp; =  2/3 \; ;
 \end{aligned}
 \]</span></p>
-<p>so <span class="math inline">\(2/3\)</span> of the time when there is at least one boy, there is also a girl. We will denote this probability as <span class="math inline">\(\Prob(\mbox{at least one girl} \mid \mbox{at least one boy})\)</span>. We’ll read this as “the probability that there is at least one girl <em>given that</em> there is at least one boy”. See <a href="#fig-VennConditional">Figure&nbsp;<span>3.1</span></a> and <a href="#def-condProb">Definition&nbsp;<span>3.1</span></a>.</p>
+<p>so <span class="math inline">\(2/3\)</span> of the time when there is at least one boy, there is also a girl. We will denote this probability as <span class="math inline">\(\Prob(\mbox{at least one girl} \mid \mbox{at least one boy})\)</span>. We’ll read this as “the probability that there is at least one girl <em>given that</em> there is at least one boy”. See <a href="#fig-VennConditional">Figure&nbsp;<span class="quarto-unresolved-ref">fig-VennConditional</span></a> and <a href="#def-condProb">Definition&nbsp;<span class="quarto-unresolved-ref">def-condProb</span></a>.</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -848,7 +848,7 @@ Express each of the following probabilities in words and determine their values:
 </div>
 </div>
 <p>This low probability surprises most people the first time they see it. This means that if the test result of a random person comes back positive, the probability that that person has the disease is less than <span class="math inline">\(5\)</span>%, even though the test is “highly accurate”. This is one reason why we do not routinely screen an entire population for a rare disease – such screening would produce many more false positives than true positives.</p>
-<p>Of course, if a doctor orders a test, it is usually because there are some other symptoms. This changes the <em>a priori</em> probability that the patient has the disease. <a href="#exr-bayesDisease">Exercise&nbsp;<span>3.9</span></a> gives you a chance to explore this further.</p>
+<p>Of course, if a doctor orders a test, it is usually because there are some other symptoms. This changes the <em>a priori</em> probability that the patient has the disease. <a href="#exr-bayesDisease">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-bayesDisease</span></a> gives you a chance to explore this further.</p>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1128,7 +1128,7 @@ So $\Prob(\mbox{pass both}) = 1 - 0.025 = 0.975$.</code></pre>
 <!-- end solution -->
 <div id="exr-bayesDisease" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 3.9 </strong></span><strong>Testing for a disease, revisited</strong></p>
-<p>In the situation of Example <a href="#exm-sensitivitySpecificity">Example&nbsp;<span>3.10</span></a>, how does the answer change if the baseline probability of having the disease is <span class="math inline">\(1/10\)</span> instead of <span class="math inline">\(1/1000\)</span>? (This might be the case if a person is exhibiting symptoms, for example.)</p>
+<p>In the situation of Example <a href="#exm-sensitivitySpecificity">Example&nbsp;<span class="quarto-unresolved-ref">exm-sensitivitySpecificity</span></a>, how does the answer change if the baseline probability of having the disease is <span class="math inline">\(1/10\)</span> instead of <span class="math inline">\(1/1000\)</span>? (This might be the case if a person is exhibiting symptoms, for example.)</p>
 </div>
 <!-- end problem -->
 <div class="solution proof">

@@ -686,13 +686,13 @@ X - Y \sim \Norm(10 - 12, \sqrt{2^2 + 4^2})
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  22.03293087    4.49414261 
- ( 0.06355677) ( 0.04494143)</code></pre>
+  21.92388499    4.44989818 
+ ( 0.06293106) ( 0.04449898)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>      mean           sd     
-  -2.00405594    4.48686292 
- ( 0.06345382) ( 0.04486863)</code></pre>
+  -1.91871505    4.45710149 
+ ( 0.06303293) ( 0.04457101)</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -738,9 +738,9 @@ Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="ma
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<pre><code>      mean           sd     
-  5.984574197   0.983230820 
- (0.013904984) (0.009832308)</code></pre>
+<pre><code>      mean          sd    
+  6.00157499   1.01166110 
+ (0.01430705) (0.01011661)</code></pre>
 </div>
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="05-transformations_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="432"></p>
@@ -919,7 +919,7 @@ Since <span class="math inline">\(\E(X_i) = \frac12\)</span> and <span class="ma
 <p><span class="math display">\[
 S^2 = \frac{ \sum_{i = 1}^n (X_i - \mean X)^2 }{n-1}
 \]</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> This explains the reason for the <span class="math inline">\(n-1\)</span> in the denominator of the sample variance.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>An obvious, but not quite correct solution to our unknown <span class="math inline">\(\sigma\)</span> dilemma is to use <span class="math inline">\(s\)</span> in pace of <span class="math inline">\(\sigma\)</span>. In fact this was routinely done until 1908 <span class="citation" data-cites="Student1908">Student (<a href="references.html#ref-Student1908" role="doc-biblioref">1908</a>)</span>, when William Gosset, publishing under the pseudonym Student, pointed out that when sampling from a <span class="math inline">\(\Norm(\mu, \sigma)\)</span> population,</p>
+<p>An obvious, but not quite correct solution to our unknown <span class="math inline">\(\sigma\)</span> dilemma is to use <span class="math inline">\(s\)</span> in pace of <span class="math inline">\(\sigma\)</span>. In fact this was routinely done until 1908 <span class="citation" data-cites="Student1908">Student (<a href="#ref-Student1908" role="doc-biblioref">1908</a>)</span>, when William Gosset, publishing under the pseudonym Student, pointed out that when sampling from a <span class="math inline">\(\Norm(\mu, \sigma)\)</span> population,</p>
 <p><span class="math display">\[
 \frac{ \mean X - \mu}{\sigma/\sqrt{n}} \sim \Norm(0,1)
 \mbox{\;\ but\ }
@@ -1165,8 +1165,8 @@ Is the normal distribution a good fit?</li>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean           sd     
-  12.23213257    6.00964969 
- ( 0.08498928) ( 0.06009650)</code></pre>
+  12.03111425    5.98150410 
+ ( 0.08459124) ( 0.05981504)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1180,9 +1180,9 @@ Is the normal distribution a good fit?</li>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(S, <span class="st">"gamma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      shape         rate    
-  4.068254534   0.332587557 
- (0.078255934) (0.006809267)</code></pre>
+<pre><code>     shape         rate   
+  3.99110223   0.33173169 
+ (0.07671764) (0.00679521)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> S, <span class="at">distribution =</span> qgamma, <span class="at">dparams =</span> <span class="fu">list</span>(<span class="at">shape =</span> <span class="fl">4.04</span>, <span class="at">rate =</span> <span class="fl">0.333</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1197,9 +1197,9 @@ Is the normal distribution a good fit?</li>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitdistr</span>(D, <span class="st">"normal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      mean          sd    
-  0.06314118   6.16273416 
- (0.08715422) (0.06162734)</code></pre>
+<pre><code>      mean           sd     
+  -0.05460492    6.15168032 
+ ( 0.08699790) ( 0.06151680)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> D)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2401,7 +2401,7 @@ mean in group H mean in group P
 <!-- end solution -->
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-Student1908" class="csl-entry" role="doc-biblioentry">
 Student. 1908. <span>“<span class="nocase">The Probable Error of a Mean</span>.”</span> <em>Biometrika</em> 6 (1): 1–25. <a href="https://doi.org/10.2307/2331554">https://doi.org/10.2307/2331554</a>.
 </div>

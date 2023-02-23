@@ -619,7 +619,7 @@ and asks you to determine a suitable transformation.</code></pre>
 <ol>
 <li><p>To obtain a better fit.</p>
 <p>If a scatterplot or residual plot shows a clearly non-linear pattern to the data, then it would be inappropriate to fit a linear regression (and conclusions drawn from that model would be incorrect and misleading).<br>
-In the absence of theoretical reasons to expect a particular mathematical relationship between the variables being studied, we may select transformations based on the shape of the relationship as revealed in a scatterplot. <a href="#sec-ladder-of-re-expression"><span>Section&nbsp;8.7.3</span></a> provides some guidance for selecting transformations in this situation.</p></li>
+In the absence of theoretical reasons to expect a particular mathematical relationship between the variables being studied, we may select transformations based on the shape of the relationship as revealed in a scatterplot. <a href="#sec-ladder-of-re-expression"><span class="quarto-unresolved-ref">sec-ladder-of-re-expression</span></a> provides some guidance for selecting transformations in this situation.</p></li>
 <li><p>To obtain better residual behavior.</p>
 <p>Sometimes transformations are used to improve the agreement between the data and the assumptions about the error terms in the model. For example, if the variance in the response appears to increases as the predictor increases, a logarithmic or square root transformation of the response may decrease the disparity in variance.<br>
 Some transformations are used to improve the agreement between the data and the assumptions about the error terms in the model. For example, if data are heteroscedastic – for example, if the variance in the response appears to increase as the predictor increases – a logarithmic or square root transformation of the response may help.<br>
@@ -826,11 +826,11 @@ As is, even if there is some systematic problem, it is roughly five orders of ma
 <section id="sec-ladder-of-re-expression" class="level3" data-number="8.7.3">
 <h3 data-number="8.7.3" class="anchored" data-anchor-id="sec-ladder-of-re-expression"><span class="header-section-number">8.7.3</span> The Ladder of Re-expression</h3>
 <p>Sometimes we have data for which there is no theory (yet) to suggest the form of a model. In such a case, we may let the data help suggest a model. If we find a model that fits well, we can return to the question of whether there is an explanation for that type of model.</p>
-<p>In the 1970s, Mosteller and Tukey introduced what they called the <strong>ladder of re-expression</strong> and <strong>bulge rules</strong> <span class="citation" data-cites="Tukey:1977:EDA">Tukey (<a href="references.html#ref-Tukey:1977:EDA" role="doc-biblioref">1977</a>)</span>,Mosteller:1977:DataAnalysis that can be used to suggest an appropriate transformation to improve the fit when the relationship between two variables (<span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> in our examples) is monotonic and has a single bend.<br>
+<p>In the 1970s, Mosteller and Tukey introduced what they called the <strong>ladder of re-expression</strong> and <strong>bulge rules</strong> <span class="citation" data-cites="Tukey:1977:EDA">Tukey (<a href="#ref-Tukey:1977:EDA" role="doc-biblioref">1977</a>)</span>,Mosteller:1977:DataAnalysis that can be used to suggest an appropriate transformation to improve the fit when the relationship between two variables (<span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> in our examples) is monotonic and has a single bend.<br>
 Their idea was to apply a power transformation to <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> or both – that is, to work with <span class="math inline">\(x^a\)</span> and <span class="math inline">\(y^b\)</span> for an appropriate choice of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>. Tukey called this ordered list of transformations the <em>ladder of re-expression</em>. The identity transformation has power~<span class="math inline">\(1\)</span>. The logarithmic transformation is a special case and is included in the list associated with a power of <span class="math inline">\(0\)</span>.<br>
-The direction of the required transformation can be obtained from <a href="#fig-tukey-bulge">Figure&nbsp;<span>8.2</span></a> and <a href="#tbl-ladder">Table&nbsp;<span>8.1</span></a>, which shows four bulge types, represented by the curves in each of the four quadrants.<br>
+The direction of the required transformation can be obtained from <a href="#fig-tukey-bulge">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tukey-bulge</span></a> and <a href="#tbl-ladder">Table&nbsp;<span class="quarto-unresolved-ref">tbl-ladder</span></a>, which shows four bulge types, represented by the curves in each of the four quadrants.<br>
 A bulge can potentially be straightened by applying a transformation to one or both variables, moving up or down the ladder as indicated by the arrows. More severe bulges require moving farther up or down the ladder.<br>
-<!-- \authNote{ed: There is a standard ordering of quadrants in mathematics, so labeling --> <!-- isn't needed.  We could use directions (upper right), but I don't want to add  --> <!-- quadrant numbers to the figure.  Also in next example.  --- 2010-11-8}<!--  --> –&gt; A curve bulging in the same direction as the one in the first quadrant of <a href="#fig-tukey-bulge">Figure&nbsp;<span>8.2</span></a>, for example, might be straightened by moving up the ladder of transformations for <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> (or both), while a curve like the one in the second quadrant, might be straightened by moving up the ladder for <span class="math inline">\(y\)</span> or down the ladder for <span class="math inline">\(x\)</span>.</p>
+<!-- \authNote{ed: There is a standard ordering of quadrants in mathematics, so labeling --> <!-- isn't needed.  We could use directions (upper right), but I don't want to add  --> <!-- quadrant numbers to the figure.  Also in next example.  --- 2010-11-8}<!--  --> –&gt; A curve bulging in the same direction as the one in the first quadrant of <a href="#fig-tukey-bulge">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tukey-bulge</span></a>, for example, might be straightened by moving up the ladder of transformations for <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> (or both), while a curve like the one in the second quadrant, might be straightened by moving up the ladder for <span class="math inline">\(y\)</span> or down the ladder for <span class="math inline">\(x\)</span>.</p>
 <div class="columns">
 <div class="column" style="width:45%;">
 <div class="cell">
@@ -898,9 +898,9 @@ A bulge can potentially be straightened by applying a transformation to one or b
 </div>
 </div>
 <p>This method focuses primarily on transformations designed to improve the overall fit. The resulting models may or may not have a natural, or obvious, interpretation. These transformations also affect the shape of the distributions of the explanatory and response variables and, more importantly, of the residuals from the linear model<br>
-(see <a href="#exr-tukey-bulge-skew">Exercise&nbsp;<span>8.3</span></a>). When several different transformations lead to reasonable linear fits, these other factors may lead us to prefer one over another.</p>
+(see <a href="#exr-tukey-bulge-skew">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-tukey-bulge-skew</span></a>). When several different transformations lead to reasonable linear fits, these other factors may lead us to prefer one over another.</p>
 <div id="exm-tukey-bulge" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 8.1 </strong></span><strong>Q.</strong> The scatterplot in <a href="#fig-tukey-bulge-example">Figure&nbsp;<span>8.3</span></a> shows a curved relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. What transformations of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> improve the linear fit?</p>
+<p><span class="theorem-title"><strong>Example 8.1 </strong></span><strong>Q.</strong> The scatterplot in <a href="#fig-tukey-bulge-example">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tukey-bulge-example</span></a> shows a curved relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. What transformations of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> improve the linear fit?</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-tukey-bulge-example" class="quarto-figure quarto-figure-center anchored">
@@ -911,7 +911,7 @@ A bulge can potentially be straightened by applying a transformation to one or b
 </div>
 </div>
 </div>
-<p><strong>A.</strong> This type of bulge appears in quadrant IV of <a href="#fig-tukey-bulge">Figure&nbsp;<span>8.2</span></a>, so we can hope to improve the fit by moving up the ladder for <span class="math inline">\(x\)</span> or down the ladder for <span class="math inline">\(y\)</span>. As we see in <a href="#fig-tukey-bulge-many">Figure&nbsp;<span>8.4</span></a>, the fit generally improves as we move down and to the right – but not too far, lest we over-correct. A <span class="math inline">\(\log\)</span>-transformation of the response (<span class="math inline">\(a = 1\)</span>, <span class="math inline">\(b = 0\)</span>) seems to be especially good in this case. Not only is the resulting relationship quite linear, but the residuals appear to have a better distribution as well.</p>
+<p><strong>A.</strong> This type of bulge appears in quadrant IV of <a href="#fig-tukey-bulge">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tukey-bulge</span></a>, so we can hope to improve the fit by moving up the ladder for <span class="math inline">\(x\)</span> or down the ladder for <span class="math inline">\(y\)</span>. As we see in <a href="#fig-tukey-bulge-many">Figure&nbsp;<span class="quarto-unresolved-ref">fig-tukey-bulge-many</span></a>, the fit generally improves as we move down and to the right – but not too far, lest we over-correct. A <span class="math inline">\(\log\)</span>-transformation of the response (<span class="math inline">\(a = 1\)</span>, <span class="math inline">\(b = 0\)</span>) seems to be especially good in this case. Not only is the resulting relationship quite linear, but the residuals appear to have a better distribution as well.</p>
 </div>
 <!-- end example -->
 <div class="cell">
@@ -995,7 +995,7 @@ F-statistic:  7846 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>This model does indeed fit better, but the residual plot indicates that there may be some inaccuracy in the measurement of the height.<br>
-In this experiment, the apparatus was set up once for each height and then several observations were made. So any error in this set-up affected all time measurements for that height in the same way. This could explain why the residuals for each height are clustered the way they are since it violates the assumption that the errors are <em>independent</em>. (See <a href="#exm-balldrop-rm">Example&nbsp;<span>8.3</span></a> for a simple attempt to deal with this problem.)</p>
+In this experiment, the apparatus was set up once for each height and then several observations were made. So any error in this set-up affected all time measurements for that height in the same way. This could explain why the residuals for each height are clustered the way they are since it violates the assumption that the errors are <em>independent</em>. (See <a href="#exm-balldrop-rm">Example&nbsp;<span class="quarto-unresolved-ref">exm-balldrop-rm</span></a> for a simple attempt to deal with this problem.)</p>
 </div>
 <!-- end example -->
 <!-- It is also important to note that although $r^2$ is very large in this model, -->
@@ -1092,7 +1092,7 @@ Multiple R-squared:  0.9953,    Adjusted R-squared:  0.9949
 F-statistic:  2724 on 1 and 13 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>The scatterplot in <a href="#fig-soap">Figure&nbsp;<span>8.5</span></a> (darker line) indicate that the untransformed model is already a good fit.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The scatterplot in <a href="#fig-soap">Figure&nbsp;<span class="quarto-unresolved-ref">fig-soap</span></a> (darker line) indicate that the untransformed model is already a good fit.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>soap.model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">I</span>(weight<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)) <span class="sc">~</span> day, <span class="at">data =</span> Soap)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(soap.model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1129,10 +1129,10 @@ F-statistic:   515 on 1 and 13 DF,  p-value: 7.669e-12</code></pre>
 </div>
 <!--  -->
 <p>The transformed model in this case actually fits worse. The higher value of <span class="math inline">\(r^2\)</span> for the untransformed model is an indication that the untransformed model explains a larger proportion of the variance in soap weights. It is left as an exercise for you to examine diagnostic plots of the model residuals in both cases; you should see that neither one looks markedly better than the other. (There is perhaps an issue with a small amount of non-independence, or correlation over time, of the residuals; we might expect that with data collected over time. However, the dataset is so small that it is hard to tell for sure if the problem is real and worth worrying about.)<br>
-<a href="#fig-soap">Figure&nbsp;<span>8.5</span></a> shows a scatterplot with both fits.<br>
+<a href="#fig-soap">Figure&nbsp;<span class="quarto-unresolved-ref">fig-soap</span></a> shows a scatterplot with both fits.<br>
 The data do not support Rex’s assumption that a transformation is necessary.<br>
-<!--  We can also fit a quadratic model of the form \verb!Weight ~ I(Day^2)!, --> <!-- % but this model is worse still.  Fitting a full quadratic model requires  --> <!--  two predictors (\verb!Day! and \verb!Day^2!) and so will have to wait --> <!-- % until our discussion of multiple linear regression.   --> The scatterplot and especially the residual plots both show that the residuals are mostly positive near the ends of the data and negative near the center. Part of this is driven by a flattening of the pattern of data points near the end of the measurement period. Perhaps as the soap became very small, Rex used slightly less soap than when the soap was larger. <a href="#exr-soap">Exercise&nbsp;<span>8.1</span></a> asks you to remove the last few observations and see how that affects the models.</p>
-<p>Finally, since a linear model appears to fit at least reasonably well (but see <a href="#exr-soap">Exercise&nbsp;<span>8.1</span></a>), we can give a confidence interval for <span class="math inline">\(\beta_1\)</span>, the mean amount of soap Rex uses each shower. <!-- \authNoted{check regression diagnostics for soap models -- some cause for worry}<!--  --> –&gt; <!-- \authNote{in text reference for quote from Rex? --2010-11-27}<!--  --> –&gt;</p>
+<!--  We can also fit a quadratic model of the form \verb!Weight ~ I(Day^2)!, --> <!-- % but this model is worse still.  Fitting a full quadratic model requires  --> <!--  two predictors (\verb!Day! and \verb!Day^2!) and so will have to wait --> <!-- % until our discussion of multiple linear regression.   --> The scatterplot and especially the residual plots both show that the residuals are mostly positive near the ends of the data and negative near the center. Part of this is driven by a flattening of the pattern of data points near the end of the measurement period. Perhaps as the soap became very small, Rex used slightly less soap than when the soap was larger. <a href="#exr-soap">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-soap</span></a> asks you to remove the last few observations and see how that affects the models.</p>
+<p>Finally, since a linear model appears to fit at least reasonably well (but see <a href="#exr-soap">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-soap</span></a>), we can give a confidence interval for <span class="math inline">\(\beta_1\)</span>, the mean amount of soap Rex uses each shower. <!-- \authNoted{check regression diagnostics for soap models -- some cause for worry}<!--  --> –&gt; <!-- \authNote{in text reference for quote from Rex? --2010-11-27}<!--  --> –&gt;</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(soap.model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1431,12 +1431,12 @@ It suggests that Newton’s Law of Cooling does not take into account all that i
 <h2 data-number="8.9" class="anchored" data-anchor-id="exercises"><span class="header-section-number">8.9</span> Exercises</h2>
 <div class="problem">
 <p><strong>Ball drop, revisited</strong></p>
-<p>In <a href="#exm-balldrop">Example&nbsp;<span>8.5</span></a>, we applied a square root transformation to the height. Is there another transformation that yields an even better fit?</p>
+<p>In <a href="#exm-balldrop">Example&nbsp;<span class="quarto-unresolved-ref">exm-balldrop</span></a>, we applied a square root transformation to the height. Is there another transformation that yields an even better fit?</p>
 </div>
 <!-- end problem -->
 <div id="exr-soap" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 8.1 </strong></span><strong>Soap, revisited</strong></p>
-<p>Remove the last few days from the <code>Soap</code> data set and refit the models in <a href="#exm-soap">Example&nbsp;<span>8.4</span></a>. How much do things change? Do the residuals look better, or is there still some cause for concern?</p>
+<p>Remove the last few days from the <code>Soap</code> data set and refit the models in <a href="#exm-soap">Example&nbsp;<span class="quarto-unresolved-ref">exm-soap</span></a>. How much do things change? Do the residuals look better, or is there still some cause for concern?</p>
 </div>
 <!-- end problem -->
 <div id="exr-transformations" class="problem theorem exercise">
@@ -1478,7 +1478,7 @@ It suggests that Newton’s Law of Cooling does not take into account all that i
 </div>
 <!-- end solution -->
 <div class="problem">
-<p><strong>Errors and transformations</strong> <!-- \probNote{Would make a good partial solution for students.}% --> What happens to the role of the error terms (<span class="math inline">\(\varepsilon\)</span>) when we transform the data? For each transformation from <a href="#exr-transformations">Exercise&nbsp;<span>8.2</span></a>, start with the form <span class="math display">\[
+<p><strong>Errors and transformations</strong> <!-- \probNote{Would make a good partial solution for students.}% --> What happens to the role of the error terms (<span class="math inline">\(\varepsilon\)</span>) when we transform the data? For each transformation from <a href="#exr-transformations">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-transformations</span></a>, start with the form <span class="math display">\[
   g(y) = \beta_0 + \beta_1 f(x) + \varepsilon
 \]</span> and transform back into a form involving the untransformed <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> to see how the error terms are involved in these transformed linear regression models.</p>
 <p>It is important to remember that when we fit a linear model to transformed data, the usual assumptions of the model are that the errors in the (transformed) linear form are additive and normally distributed. The errors may appear differently in the untransformed relationship.</p>
@@ -1901,7 +1901,7 @@ log(force.drag)  0.4744661 0.01241003  38.23248 4.103776e-33</code></pre>
 <!-- end solution -->
 <div id="exr-drag-problems" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 8.9 </strong></span><strong>Drag force, revisited</strong></p>
-<p>Construct a plot that reveals a likely systematic problem with the <code>Drag</code> (see <a href="#exr-drag1">Exercise&nbsp;<span>8.8</span></a>) data set. Speculate about a potential cause for this.</p>
+<p>Construct a plot that reveals a likely systematic problem with the <code>Drag</code> (see <a href="#exr-drag1">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-drag1</span></a>) data set. Speculate about a potential cause for this.</p>
 </div>
 <!-- end problem -->
 <div class="solution proof">
@@ -1910,7 +1910,7 @@ log(force.drag)  0.4744661 0.01241003  38.23248 4.103776e-33</code></pre>
 <!-- end solution -->
 <div id="exr-drag-subset" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 8.10 </strong></span><strong>Drag force, subsetting the data</strong></p>
-<p><a href="#exr-drag-problems">Exercise&nbsp;<span>8.9</span></a> suggests that some of the data should be removed before analyzing the <code>Drag</code> data set. Redo <a href="#exr-drag1">Exercise&nbsp;<span>8.8</span></a> after removing this data.</p>
+<p><a href="#exr-drag-problems">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-drag-problems</span></a> suggests that some of the data should be removed before analyzing the <code>Drag</code> data set. Redo <a href="#exr-drag1">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-drag1</span></a> after removing this data.</p>
 </div>
 <!-- end problem -->
 <div id="exr-spheres-1" class="problem theorem exercise">
@@ -1943,7 +1943,7 @@ What does it say about the relationship between average monthly temperature and 
 <!-- end problem -->
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-Tukey:1977:EDA" class="csl-entry" role="doc-biblioentry">
 Tukey, John W. 1977. <em>Exploratory Data Analysis</em>. pub-aw:adr: pub-aw.
 </div>
@@ -1952,7 +1952,7 @@ Tukey, John W. 1977. <em>Exploratory Data Analysis</em>. pub-aw:adr: pub-aw.
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>For now, it suffices to know that larger values of <span class="math inline">\(r^2\)</span> generally indicate a better fit. We will discuss <span class="math inline">\(r^2\)</span> and what it measures <a href="10-more-examples.html#sec-r-squared"><span>Section&nbsp;10.3</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>For now, it suffices to know that larger values of <span class="math inline">\(r^2\)</span> generally indicate a better fit. We will discuss <span class="math inline">\(r^2\)</span> and what it measures <a href="#sec-r-squared"><span class="quarto-unresolved-ref">sec-r-squared</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p> The model with evaporation adds another complication in that the resulting differential equation cannot be solved algebraically, so there is no algebraic formula to fit with <code>nls()</code>.<br>
 But the method of least squares can still be used by creating a parameterized numerical function that computes the sum of squares and using a numerical minimizer to find the optimal parameter values. Since the use of numerical differential equation solvers is a bit beyond the scope of this course, we’ll leave that discussion for another day.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>

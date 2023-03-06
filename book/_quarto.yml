@@ -41,7 +41,7 @@ book:
   title: "Statistics for the Physical Sciences and Engineering"
   output-file: "Pruim-Stat-for-Phys-Sci-and-Engr"
   author: "Randall Pruim"
-  date: last_modified
+  date: last-modified
   favicon: cover.png
   search: true
   downloads: [pdf]

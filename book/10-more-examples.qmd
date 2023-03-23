@@ -18,9 +18,8 @@ theme_set(theme_bw())
 
 ## Heat Exchanger Example {#sec-hxer}
 
-In this section will discuss several parts of the statistical
+In this section we discuss several parts of the statistical
 analysis of a laboratory experiment involving a heat exchanger.
-
 
 ### Apparatus and Measurements
 
@@ -30,7 +29,7 @@ heat exchanger.  Fluids of different temperatures flow in the annulus
 The entire apparatus is insulated, 
 so we expect little or no heat to be exchanged with the surroundings.
 
-![Heat exchanger with statepoints.](images/HXerFig.png){#fig-hxer height="3.0in"}
+![Heat exchanger with statepoints.](images/HXerFig.png){#fig-hxer height="4.0in"}
 
 
 Mass flow rates ($\dot{m}$) are controlled via valves.
@@ -44,8 +43,8 @@ Temperatures ($T_{1}$--$T_{4}$) are measured by thermocouples.^[See
 
 <!-- ## Observations -->
 
-Each observation consists of four~(4) temperature measurements 
-and two~(2) mass flow rate measurements. 
+Each observation consists of four temperature measurements 
+and two mass flow rate measurements. 
 Here is an example data set with one set of measurements at each of 6
 experimental conditions:
 <!-- %<<include = FALSE>>= -->
@@ -75,7 +74,7 @@ gf_point(m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations", siz
 ### Standardizing Units
 
 The recorded flow rates are in L/min.  We will convert them to L/sec and use seconds as
-our standard unit of time troughout the analyses.
+our standard unit of time throughout the analyses.
 ```{r tidy = FALSE}
 HeatX <- HeatX |>
   mutate(
@@ -115,7 +114,7 @@ involved in the heat exchanger experiment.
 | $\mu$            | dynamic viscosity            | $\mathrm{kg}/(\mathrm{m} \cdot \mathrm{s})$ | $0.00102 \pm 0.00001$ |
 | $k$              | water thermal conductivity   | $\mathrm{W}/(\mathrm{m} \cdot \mathrm{K})$  | $0.598 \pm 0.004$     |
 
-: Notation for quantities involved in the heat exchanger experiment.  Note, some of the physical "constants" are actually temperature dependant.   In these cases, a value has been chosen that reflects the temperature range  (approx. 15--35 degrees C) seen in the data. {#tbl-hxer-definitions}
+: Notation for quantities involved in the heat exchanger experiment.  Note, some of the physical "constants" are actually temperature dependent.   In these cases, a value has been chosen that reflects the temperature range  (approx. 15--35 degrees C) seen in the data. {#tbl-hxer-definitions}
 
 
 
@@ -144,7 +143,7 @@ $$
     \dot{Q}_{3} = \dot{m}_{3} C_{p} (T_{4} - T_{3})
 $$ {#eq-hxer2}
 
-We can estimate the values of $\dot{Q}$ from our data by direct caclulation:
+We can estimate the values of $\dot{Q}$ from our data by direct calculation:
 ```{r tidy = FALSE}
 C_p <- 4.18
 HeatX2 <- HeatX |>
@@ -167,7 +166,8 @@ the apparatus over the experimental conditions analysed, we can use our 6
 observations to estimate the amount of heat exchanged with the environment:
 ```{r }
 df_stats( ~ Q.env, data = HeatX2)
-gf_point( "" ~ Q.env, data = HeatX2, alpha = .6, cex = 3, jitter.data = TRUE)
+gf_point( "" ~ Q.env, data = HeatX2, alpha = .6, cex = 3, 
+          position = "jitter", width = 0, height = 0.05)
 ```
 
 From this we can compute either a p-value for the hypothesis test that the mean 
@@ -177,10 +177,11 @@ The information above is enough to do this "by hand" using the standard error
 formula $SE = \frac{s}{\sqrt{n}}$ and a t-distribution with $n-1 = 5$ degrees of freedom.
 
 ```{r tidy = FALSE}
+xbar <- 0.08999
 SE = 0.08274 /sqrt(6); SE
-0.09003 + c(-1,1) * qt(0.975, df = 5) * SE       # 95<!--  CI -->
+xbar + c(-1,1) * qt(0.975, df = 5) * SE       # 95% CI
 t <- (0.08999 - 0) / SE; t
-2 * pt( -abs(t), df = 5 )                        # p-value
+2 * pt( -abs(t), df = 5 )                     # p-value
 ```
 
 
@@ -196,7 +197,7 @@ t.test( ~ Q.env, data = HeatX2)
 
 In our example data, there is modest evidence for exchange with the environment, but
 the estimated amount of heat gained from the environment is not very precisely 
-estimated.  Even at the highest end of the confidence interval, the heat exchanged 
+estimated.  But even at the highest end of the confidence interval, the heat exchanged 
 with the environment is an order of magnitude smaller than the heat exchanged 
 within in the apparatus.
 
@@ -204,26 +205,30 @@ Notes:
 
 ::: {.enumerate}
 
-#. The fact that heat is gained to the system suggests that the cold water was in the
+#.  The fact that heat is gained to the system suggests that the cold water was in the
 outer pipe and hot water in the inner pipe.
-#. This analysis assumes that the amount of heat gained/lost is constant over 
+#.  This analysis assumes that the amount of heat gained/lost is constant over 
 the different set-ups.  From this small data set, there is not clear evidence 
 of some other relationship between heat exchanged with the environment
 and the experimental set up:
-```{r fig.height = 2.5, fig.width = 6}
-gf_point(Q.env ~ m.cold, data = HeatX2, color = ~ paste("m.hot =", round(m.hot,2)))
-```
 
-#. 
-The t-test and interval are based on the assumption that the distribution
+    ```{r fig.height = 2.5, fig.width = 6}
+    gf_point(Q.env ~ m.cold, data = HeatX2, 
+             color = ~ paste("m.hot =", round(m.hot,2))) |>
+      gf_labs(color = "")
+      
+    ```
+
+#.  The t-test and interval are based on the assumption that the distribution
 of deviations between the measured environment heat exchange and the actual
 is normally distributed.  The data set is too small to provide much evidence
 upon which to judge whether this is a reasonable assumption.  The largest value is 
 quite a bit larger than the rest, but even if we remove that observation, our 
 conclusions don't change dramatically:
-```{r }
-t.test( ~ Q.env, data = subset(HeatX2, Q.env < max(Q.env)) )
-```
+
+    ```{r }
+    t.test( ~ Q.env, data = subset(HeatX2, Q.env < max(Q.env)) )
+    ```
 
 ::: 
 <!-- end enumerate -->
@@ -235,7 +240,7 @@ appears to be at most a small factor in this situation.
 
 ### Estimating heat transfer between hot and cold water, $\dot{Q}$
 
-Estimating $\dot{Q}$ with uncertainty is not possible from this data alone since since 
+Estimating $\dot{Q}$ with uncertainty is not possible from this data alone since 
 $\dot{Q}$ is not measured directly, and we have only one measurement for each experimental
 condition (so no way to look at how variable such measurements are without additional information.
 Furthermore, the design doesn't provide a method for estimating the 
@@ -252,7 +257,7 @@ For example, suppose that the uncertainties in temperature and flow rate
 measurements  are approximately constant (over the range of temperatures involved): 
 $u_T$, and  $u_{\dot{m}}$.  Then the uncertainty in the difference between two
 independent temperatures is 
-$\sqrt{ u_T^2 + u_T^2 } = \sqrt{2} u_T$, and we can estimate the uncertainty in
+$\sqrt{ u_T^2 + u_T^2 } = \sqrt{2} \cdot u_T$, and we can estimate the uncertainty in
 $\dot Q$ using the delta method.
 
 ::: {.itemize}
@@ -262,6 +267,7 @@ $\dot Q$ using the delta method.
 $\displaystyle \Partial{\dot{Q}}{\Delta T} = C_p \dot{m}$, so
 * $\displaystyle u_{\dot Q} \approx C_p \sqrt{ (\Delta T)^2 u^2_{\dot m}  + \dot{m}^2 u_{\Delta T}^2 }$
 ::: 
+
 <!-- end itemize -->
 
 
@@ -281,7 +287,7 @@ HeatX2
 Note: We are using the fact that $u_{\Delta T} = \sqrt{2} u_T$.
 
 We can also use `deltaMethod()` in the **`car`** package to do this
-arithmetic for us.  In fact, `deltaMathod()` can even handle cases
+arithmetic for us.  In fact, `deltaMethod()` can even handle cases
 where the estimates are not independent.  To do it's job,
 `deltaMethod()` requires
 
@@ -398,11 +404,12 @@ For example, using the values in the first row of the data set.
 * $\displaystyle \frac{u_{\Delta T}}{\Delta T} = \frac{\sqrt{2}}{4.5} = `r sqrt(2)/4.5`$
 * $\displaystyle \frac{u_{C_p}}{C_p} = \frac{0.1}{4.18} = `r 0.1/4.18`$
 ::: 
+
 <!-- end itemize -->
 
 From this we can see that it is the imprecise temperature measurements that are our biggest
 problem.  Even if we eliminated the other uncertainties, we would still have a relative uncertainty
-of over $30$%.   The details vary a bit from row to row, but the uncertainty in in temperature 
+of over $30$%.   The details vary a bit from row to row, but the uncertainty in temperature 
 is our biggest obstacle.  In addition to increasing the precision of our temperature sensors, we could 
 also potentially improve things by designing a heat exchanger with more dramatic changes in 
 temperature.
@@ -518,7 +525,7 @@ To complete our uncertainty calculation we must
 #.  Create a named vector of uncertainties.  The names should correspond 
 		to the variables names in the data frame, the values are the uncertainties.
 		(Alternatively, the uncertainties can be put inside the data frame and 
-		the arguments `estimtates` and `uncertainties` can be 
+		the arguments `estimates` and `uncertainties` can be 
 		used to specify which columns are the estimates and which are the
 		corresponding uncertainties.)
 #.  Create a list that contains the value of any constants (or values for which
@@ -560,8 +567,8 @@ sd( ~ points, data = Jordan8687) / sqrt(82)
 <!-- end center -->
 
 
-Recall that linear models are fit by minimizing the sum of the squares of the residuals:%
-\footnote{$RSS$ stands for Residual Sum of Squares; $SSE$ stands for Error Sum of Squares.}
+Recall that linear models are fit by minimizing the sum of the squares of the 
+residuals:[^ $RSS$ stands for Residual Sum of Squares; $SSE$ stands for Error Sum of Squares.]
 $$
 RSS = SSE = \sum_{i = 1}^{n} ( y_i - \hat y)^2
 $$
@@ -589,7 +596,7 @@ that we saw earlier.
 summary(lm(sat ~ expend, data = SAT))  # how does the average SAT score depend on money spent?
 ```
 
-Notice that $R^2 < 15%$ and that the coefficient on `expend` is negative -- indicating 
+Notice that $R^2 < 15$% and that the coefficient on `expend` is negative -- indicating 
 that spending more is associated with *worse* scores on the SAT.
 
 One reason for this is that in some states most college bound students take the SAT, but in 
@@ -600,7 +607,7 @@ summary(lm(sat ~ expend + frac, data = SAT))
 ```
 
 Notice how much larger $R^2$ is now, and that the sign of the coefficient on `expend`
-is not positive -- as we would have expected.
+is now positive -- as we would have expected.
 
 It is important to note that adding in the additional variable `frac` gives a very
 different impression of the effect of `expend` on `sat`.  Most of our examples 

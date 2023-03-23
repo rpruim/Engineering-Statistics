@@ -16,11 +16,12 @@ theme_set(theme_bw())
 This chapter is concerned with statistical hypothesis testing, and how we can use it to make inferences and draw conclusions from data about questions of scientific interest.
 
 ## Experimental Design in Statistics
-Before we begin to talk about hypothesis testing, let's review the general process of designing and carrying out a statistical experiment.
+Before we begin to talk about hypothesis testing, let's review the general process of designing and carrying out a statistical experiment. To give the discussion a specific context,
+consider a situation where 
 
 ::: {.enumerate}
 
-#. Determine the question of interest.
+#. Determine the **question of interest**.
 
     Just what is it we want to know?  It may take some effort to make a vague idea
 precise.  The precise questions may not exactly correspond to our vague
@@ -29,6 +30,7 @@ our question.  Sometimes we cannot come up with any way to answer the question
 we really want to answer, so we have to live with some other question that is
 not exactly what we wanted but is something we can study and will (we hope) give
 us some information about our original question.
+
 
 
 #. Determine the **population**. 
@@ -66,7 +68,7 @@ students.  The sample should be a random selection from the whole population (or
 as close as we can get to that standard).
 
 
-#. Make and record the measurements.
+#. Make and **record the measurements**.
 
     Once we have the design figured out, we have to do the legwork of data
 collection.  This can be a time-consuming and tedious process. A study of public
@@ -74,7 +76,7 @@ opinion may require many thousands of phone calls or personal interviews. In a
 laboratory setting, each measurement might be the result of a carefully
 performed laboratory experiment.
 
-#. Organize the data.
+#. **Organize the data**.
 
     Once the data have been collected, it is often necessary or useful
 	to organize them.  Data are typically stored in spreadsheets or 
@@ -87,14 +89,14 @@ performed laboratory experiment.
 	insights into our questions or help us detect errors that may have occurred
 	to this point.
 
-#. Draw conclusions from data.
+#. **Draw conclusions** from data.
 
     Once the data have been collected, organized, and analyzed, we need to reach a
 conclusion. What is the answer to our scientific question? Is our idea or
 hypothesis about the way things work incorrect, or do the data support it? How
 sure are we about these conclusions?
 
-#. Produce a report.
+#. Produce a **report**.
 
     Typically the results of a statistical study are reported in 
 		some manner.  This may be as a refereed article in an academic 
@@ -109,6 +111,27 @@ sure are we about these conclusions?
 <!-- end enumerate -->
 
 
+
+## The Lady Tasting Tea
+
+### A Famous Story
+
+There is a famous story about a lady who claimed that
+tea with milk tasted different depending on whether the milk was 
+added to the tea or the tea added to the milk.
+The story is famous because of the setting in which she made this claim.  
+She was attending a party in Cambridge, England, in the $1920$s.
+Also in attendance were a number of university dons and their wives.
+The scientists in attendance scoffed at the woman and her claim.
+What, after all, could be the difference?
+
+All the scientists but one, that is.  Rather than simply dismiss the 
+woman's claim, he proposed that they decide how one 
+should *test* the claim.  The tenor of the conversation changed at 
+this suggestion, and the scientists began to discuss how the claim should be 
+tested.  Within a few minutes cups of tea with milk had been prepared and 
+presented to the woman for tasting.
+
 At this point, you may be wondering who the innovative scientist was and 
 what the results of the experiment were.
 The scientist was R. A. Fisher, who first described this situation
@@ -117,10 +140,8 @@ statistical methodology @Fisher:1925:Methods.
 Fisher developed statistical methods that are among the most
 important and widely used methods to this day, and most of his 
 applications were biological.
-\nocite{Fisher:1970:Methods}
 
-
-## Coins and Cups
+### Coins and Cups
 
 You might also be curious about how the experiment came out.
 How many cups of tea were prepared?  How many did the woman 
@@ -261,7 +282,7 @@ apparent relationship between condition and traffic, we have evidence to
 *reject* the null hypothesis, and the data support the idea that there is
 some relationship between condition and traffic.
 
-Null hypothesis are usually "boring," no-result hypotheses:  there is no pattern; there is no relationship between the variables of interest; there is no difference between the two samples of interest.  If we can reject the null hypothesis in a certain case, we have some evidence -- but *NOT* proof -- that there *is* an interesting pattern in our data, and thus in the population we are trying to draw conclusions about. 
+Null hypotheses are usually "boring," no-result hypotheses:  there is no pattern; there is no relationship between the variables of interest; there is no difference between the two populations of interest.  If we can reject the null hypothesis in a certain case, we have some evidence -- but *NOT* proof -- that there *is* an interesting pattern in our data, and thus in the population we are trying to draw conclusions about. 
 
 The alternative to the null hypothesis is called the alternative hypothesis, often called $H_1$.  The alternative hypothesis, stated most generally, is usually some form of "the null hypothesis is not true" -- so there IS a pattern in the data, or a difference between the samples, etc.
 
@@ -297,30 +318,30 @@ a.  $H_0: \mu = 0$.  (The population mean is 0.)
 Hypothesis testing generally follows a four-step process.
 
 
-#### 1. State the null ($H_0$) and alternative ($H_1$) hypotheses. {-}
+##### 1. State the null ($H_0$) and alternative ($H_1$) hypotheses. {-}
 
 The null hypothesis is on trial and innocent until proven guilty.  We will
 		render one of two verdicts:  Reject the null hypothesis (guilty) or do not
 		reject the null hypothesis (not guilty).  *Important!  We can never **accept**
 		or **prove** either hypothesis -- only reject the null (because it doesn't 
 		seem compatible with the data), or fail to
-		reject the null (since it appears plausibly compatible with teh data).
+		reject the null (since it appears plausibly compatible with the data).
 
-#### 2. Compute a test statistic. {-}
+##### 2. Compute a test statistic. {-}
 
 For a statistical hypothesis test, all the evidence against the null
 		hypothesis must be summarized in a single number called the test statistic.
 		It is a statistic because it is a number computed from the data.  It is called
 		a test statistic because we are using it to do hypothesis testing.
 
-#### 3. Determine the p-value. {-}
+##### 3. Determine the p-value. {-}
 
 The p-value is a probability:  *Assuming* the null hypothesis is true, how
 		likely are we to get at least as much evidence against it as we have in our
 		data (i.e., *a test statistic at least as unusual as the one observed*) just
 		by random chance?
 
-### 4. Interpret the results. {-}
+##### 4. Interpret the results. {-}
 
 If the p-value is small, then one of two things is true:
 		
@@ -375,10 +396,10 @@ dbinom(9, 10, .5) + dbinom(10, 10, .5)
 ##### 4. Interpret the p-value.
 
 How small is "small", and how small does a p-value have to be before we
-reject the null hypothesis?  Often, a \textbf{significance level} (usually
-called $\alpha$) of 0.05 is used.  Sometimes $\alpha = 0.01$ is used
-instead.  Basically, this corresponds to a 5\% chance of seeing results as
-extreme as those found in our data, were the null hypothesis really true.
+reject the null hypothesis?  Often, a treshhold (called the **significance level**,
+and usually denoted $\alpha$) of 0.05 is used.  Sometimes $\alpha = 0.01$ is used
+instead.  Basically, this corresponds to a 5% (or 1%) chance of seeing results 
+at least as extreme as those found in our data, were the null hypothesis really true.
 If we want to be more conservative about our judgement (not rejecting the
 null hypothesis unless the evidence in the data is stronger against it), we
 could use a smaller $\alpha$ value.
@@ -390,7 +411,26 @@ from their analysis, allowing readers to draw conclusions on their own.
 <!-- end example -->
 
 
-<!-- % If talking about the results of a statistical hypothesis test in a report, the following language may be useful.  It relates statements about the strength of the evidence found in the data with p-values (approximately -- there are no universal standards and rules here, just guidelines). -->
+:::{.callout-note }
+
+##### Interpretting p-values {-}
+
+When talking about the results of a statistical hypothesis test in a report,
+@tbl-p-value-interpretation may be useful.  It relates statements about the
+strength of the evidence found in the data with p-values (approximately -- there
+are no universal standards and rules here, just guidelines).
+
+| Approximate p-value | Translation                                        |
+|---------------------|----------------------------------------------------|
+| $> 0.10$            | No convincing evidence against the null hypothesis |
+| $0.05-0.10$         | Weak evidence against the null hypothesis          |
+| $0.01-0.05$         | Some evidence against the null hypothesis          |
+| $<0.01$             | Strong evidence against the null hypothesis        |
+| $<0.001$            | Very strong evidence against the null hypothesis   |
+
+: Interpreting p-values. How small is small? {#tbl-p-value-interpretation}
+
+:::
 
 ::: {.example #exm-binom-test}
 
@@ -398,7 +438,7 @@ This situation is so common that there is a function to do the calculations for 
 We just need to provide the values of $x$ and $n$:
 
 ```{r }
-binom.test(x = 9, n = 10)           # default test is 2-sided
+binom.test(x = 9, n = 10)     # default test is 2-sided
 ```
 
 The output above doesn't match what we obtained in @exm-lady-binom
@@ -412,13 +452,6 @@ binom.test(x = 9, n = 10, alternative = "greater")
 
 
 
-| Approximate p-value | Translation                                        |
-|---------------------|----------------------------------------------------|
-| $> 0.10$            | No convincing evidence against the null hypothesis |
-| $0.05-0.10$         | Weak evidence against the null hypothesis          |
-| $0.01-0.05$         | Some evidence against the null hypothesis          |
-| $<0.01$             | Strong evidence against the null hypothesis        |
-| $<0.001$            | Very strong evidence against the null hypothesis   |
 
 ::: 
 <!-- end example -->
@@ -428,11 +461,11 @@ binom.test(x = 9, n = 10, alternative = "greater")
 
 The word "significant" has a special meaning in statistics.  If we say that a
 difference or relationship between variables is significant, that means that we
-have applied a hypothesis test, and have *failed* to reject the null
+have applied a hypothesis test, and have rejected the null
 hypothesis -- in other words, we have data that provides some evidence against
 the null hypothesis, and supporting the alternative.
 
-So, a pattern strong enough cause us to reject a null hypothesis of "no
+A pattern strong enough to cause us to reject a null hypothesis of "no
 difference" or "no pattern" or "no relationship" is called a
 **statistically significant** difference, pattern, or relationship.
 Differences or relationships may fail to be statistically significant if they
@@ -449,7 +482,7 @@ Many hypothesis tests are conducted based on a $t$-distribution, and so they are
 called "t-tests". This is because, according to the Central Limit Theorem, the
 sampling distributions of most of our statistics (parameter estimates calculated
 from data) follow Normal distributions.  But just as we did when computing
-confidence intervals, we'll always have to use the t-distribution rather than
+confidence intervals, we'll use the t-distribution rather than
 the normal distribution, since we don't know $\sigma$ (the true population
 standard deviation), and since our sample size is finite.   These t-tests all
 use a similar sort of test statistic:
@@ -519,22 +552,39 @@ If we want to test our null hypothesis, then we compute a t-statistic:
 t <- (3.92 - 0) / SE; t
 ```
 
-and from this a p-value, which is the tails probability for a t-distribution with 18 degrees of freedom.  In other words, the p-value gives the probability of getting a test statistic at least as big as the one we really got, assuming that the test statistic follows a t-distribution with $n-1$ degrees of freedom.
+and from this a p-value, which is the tail probability for a t-distribution with
+18 degrees of freedom.  In other words, the p-value gives the probability of
+getting a test statistic at least as big as the one we really got, assuming that
+the test statistic follows a t-distribution with $n-1$ degrees of freedom.
 
-First, we find the probability of observing a test statistic of $t= `r t`$ or larger.  Then, we have to double this value -- it would be at least as unlikely to see a test statistic of $`r -t`$ or smaller.  Our p-value should give the area under the t-distribution curve for x-values smaller than $`r -t`$ *and* larger than $`r t`$; it's the shaded area in the figure below:
-```{r echo=FALSE, fig.width=6, fig.height=5}
-x <- seq(from=-5, by=0.01, to=5)
-dtvals <- dt(x, df=18)
-par(lwd=2.5, cex=1.25, cex.lab=1.25, cex.axis=1.25, cex.main=1.25)
-plot(x,dtvals, type="l", xlab="Test Statistic T", ylab="Probability Density", lwd=2.5)
-points(x=c(-t,t), y=dt(c(-t,t),df=18), pch=19, cex=1.5)
-text(x=c(-t,t)+ c(-0.2, 0.2), y=dt(c(-t,t),df=18)+0.04, labels=c("-t", "t"), cex=1.27)
-lines(x=c(-t,-t), y=c(0,dt(-t,df=18) ), lwd=3)
-lines(x=c(t,t), y=c(0,dt(t,df=18) ), lwd=3)
-xspots <- seq(from=t, by=0.025, to=5)
-for (k in 1:length(xspots)){
-  lines(x=c(-xspots[k], -xspots[k]), y=c(0,dt(-xspots[k],df=18) ), lwd=1, lty=3)
-  lines(x=c(xspots[k], xspots[k]), y=c(0,dt(xspots[k],df=18) ), lwd=1, lty=3)
+First, we find the probability of observing a test statistic of $t= `r round(t, 3)`$ or larger.  Then, we have to double this value -- it would be at least as unlikely to see a test statistic of $`r round(-t, 3)`$ or smaller.  Our p-value should give the area under the t-distribution curve for x-values smaller than $`r round(-t, 3)`$ *and* larger than $`r round(t, 3)`$; it's the shaded area in the @fig-tails-of-t:
+
+```{r echo=FALSE, fig.width=7, fig.height=3}
+#| label: fig-tails-of-t
+#| fig-cap: Tails of a t distribution with 18 degrees of freedom.
+#| warning: false
+#| message: false
+if (FALSE) {
+  x <- seq(from=-5, by=0.01, to=5)
+  dtvals <- dt(x, df=18)
+  par(lwd=2.5, cex=1.25, cex.lab=1.25, cex.axis=1.25, cex.main=1.25)
+  plot(x,dtvals, type="l", xlab="Test Statistic T", ylab="Probability Density", lwd=2.5)
+  points(x=c(-t,t), y=dt(c(-t,t),df=18), pch=19, cex=1.5)
+  text(x=c(-t,t)+ c(-0.2, 0.2), y=dt(c(-t,t),df=18)+0.04, labels=c("-t", "t"), cex=1.27)
+  lines(x=c(-t,-t), y=c(0,dt(-t,df=18) ), lwd=3)
+  lines(x=c(t,t), y=c(0,dt(t,df=18) ), lwd=3)
+  xspots <- seq(from=t, by=0.025, to=5)
+  for (k in 1:length(xspots)){
+    lines(x=c(-xspots[k], -xspots[k]), y=c(0,dt(-xspots[k],df=18) ), lwd=1, lty=3)
+    lines(x=c(xspots[k], xspots[k]), y=c(0,dt(xspots[k],df=18) ), lwd=1, lty=3)
+  }
+} else {
+  xpt(c(-1.876, 1.876), df = 18, return = "plot", alpha = 0.5) |> 
+    gf_text(0.1 ~ -1.8, label = ~ "t = -1.876", hjust = 1, vjust = 0, inherit = FALSE) |>
+    gf_text(0.1 ~ 1.8, label = ~ "t = 1.876", hjust = 0, vjust = 0, inherit = FALSE) |>
+    gf_segment(0 + 0.094 ~ -1.876 + -1.876, inherit = FALSE) |>
+    gf_segment(0 + 0.094 ~ 1.876 + 1.876, inherit = FALSE) |>
+    gf_refine(scale_fill_manual(values = c('steelblue', 'lightsteelblue', 'steelblue')))
 }
 ```
 
@@ -559,15 +609,11 @@ t.test( ~ WeightLoss, data = Controls)
 ```
 
 
-If we don't want so much out put, we can ask R to report only the p-value:
+If we don't want so much output, we can ask R to report only the p-value:
 ```{r }
 pval(t.test( ~ WeightLoss, data = Controls))
 ```
 
-By default, `t.test()` uses a significance level $\alpha = 0.05$. If we want to specify a different $\alpha$, we can use the input `conf.level` as follows:
-```{r }
-t.test( ~ WeightLoss, data = Controls, conf.level = 0.01)
-```
 
 ::: 
 <!-- end example -->
@@ -578,7 +624,7 @@ t.test( ~ WeightLoss, data = Controls, conf.level = 0.01)
 Sometimes, a dataset contains *paired* observations.  These might be, for
 example, two measurements on the same experimental subject before and after some
 experimental treatment; measurements on the same subject at two times, or in two
-different situations; (or others).  In this case, we can not consider the
+different situations; (or others).  In this case, we cannot consider the
 measurements within a pair to be independent of each other.  But what we are
 really interested in is the magnitude of the difference between the 2
 observations in each pair.  So this "paired t-test" problem reduces to a
@@ -594,12 +640,13 @@ Let's consider an example.
 ::: {.example #exm-corneal-thickness}
 
 The following table provides the corneal thickness in microns of
-both eyes of patients who have glaucoma in one eye:
+both eyes for eight patients who have glaucoma in one eye:
 
-Healthy    | 484 | 478 | 492 | 444 | 436 | 398 | 464 | 476 |
------------|-----|-----|-----|-----|-----|-----|-----|-----|
-Glaucoma   | 488 | 478 | 480 | 426 | 440 | 410 | 458 | 460 |
-Difference | 4   | 0   | -12 | -18 | 4   | 12  |  -6 |  -1 |
+subject     | 1   | 2   | 2   | 4   | 5   | 6   | 7   | 8   |
+------------|-----|-----|-----|-----|-----|-----|-----|-----|
+Healthy     | 484 | 478 | 492 | 444 | 436 | 398 | 464 | 476 |
+Glaucoma    | 488 | 478 | 480 | 426 | 440 | 410 | 458 | 460 |
+Difference  | 4   | 0   | -12 | -18 | 4   | 12  |  -6 |  -1 |
 
 ```{r include = FALSE, include = FALSE}
 glaucoma <- c(488 , 478 , 480 , 426 , 440 , 410 , 458 , 460)
@@ -657,7 +704,7 @@ $$
 T = \frac{\bar{D}}{S/\sqrt{n}} \sim t_{n-1}.
 $$
 
-In R, we can compute $D$ (the average of $d_i$) and its standard error to obtain the test statistic $t$ and the corresponding p-value:
+In R, we can compute $\overline{D}$ (the average of $d_i$) and its standard error to obtain the test statistic $t$ and the corresponding p-value:
 
 <!-- \authNote{Check on this -- base plot? lm or t test?} -->
 
@@ -672,29 +719,56 @@ pval <- 2 * pt(t, df=n-1); pval
 
 
 
-Note that we used 2 * pt(...) because our test statistic $t$ was negative.  If it had been positive, we would have used 2 * (1-pt(...)) instead.  The illustration below may help make this clearer -- the p-value we are computing corresponds to the shaded areas in the plot. 
-```{r echo=FALSE, fig.width=6, fig.height=5}
-x <- seq(from=-5, by=0.01, to=5)
-dtvals <- dt(x, df=7)
-par(lwd=2.5, cex=1.25, cex.lab=1.25, cex.axis=1.25, cex.main=1.25)
-plot(x,dtvals, type="l", xlab="Test Statistic T", ylab="Probability Density", lwd=2.5)
-points(x=c(-t,t), y=dt(c(-t,t),df=7), pch=19, cex=1.5)
-text(x=c(-t,t)+ c(0.2, -0.2), y=dt(c(-t,t),df=7)+0.04, labels=c("-t", "t"), cex=1.27)
-lines(x=c(-t,-t), y=c(0,dt(-t,df=7) ), lwd=3)
-lines(x=c(t,t), y=c(0,dt(t,df=7) ), lwd=3)
-xspots <- seq(from=-t, by=0.025, to=5)
-for (k in 1:length(xspots)){
-  lines(x=c(-xspots[k], -xspots[k]), y=c(0,dt(-xspots[k],df=7) ), lwd=1, lty=3)
-  lines(x=c(xspots[k], xspots[k]), y=c(0,dt(xspots[k],df=7) ), lwd=1, lty=3)
+Note that we used 2 * pt(...) because our test statistic $t$ was negative.  If it had been positive, we would have used 2 * (1-pt(...)) instead.  The illustration below may help make this clearer -- the p-value we are computing corresponds to the shaded areas in 
+@fig-tails-of-t-2.
+
+```{r echo=FALSE, fig.width=7, fig.height=3}
+#| label: fig-tails-of-t-2
+#| fig-cap: Tails of a t distribution with 7 degrees of freedom.
+#| warning: false
+#| message: false
+if (FALSE) {
+  x <- seq(from=-5, by=0.01, to=5)
+  dtvals <- dt(x, df=7)
+  par(lwd=2.5, cex=1.25, cex.lab=1.25, cex.axis=1.25, cex.main=1.25)
+  plot(x,dtvals, type="l", xlab="Test Statistic T", ylab="Probability Density", lwd=2.5)
+  points(x=c(-t,t), y=dt(c(-t,t),df=7), pch=19, cex=1.5)
+  text(x=c(-t,t)+ c(0.2, -0.2), y=dt(c(-t,t),df=7)+0.04, labels=c("-t", "t"), cex=1.27)
+  lines(x=c(-t,-t), y=c(0,dt(-t,df=7) ), lwd=3)
+  lines(x=c(t,t), y=c(0,dt(t,df=7) ), lwd=3)
+  xspots <- seq(from=-t, by=0.025, to=5)
+  for (k in 1:length(xspots)){
+    lines(x=c(-xspots[k], -xspots[k]), y=c(0,dt(-xspots[k],df=7) ), lwd=1, lty=3)
+    lines(x=c(xspots[k], xspots[k]), y=c(0,dt(xspots[k],df=7) ), lwd=1, lty=3)
+  }
+} else {
+  t <- 1.053
+  xpt(c(-t, t), df = 7, return = "plot", alpha = 0.5) |> 
+    gf_text(0.255 ~ -t, label = ~ "t = -1.053", hjust = 1, vjust = 0, inherit = FALSE) |>
+    gf_text(0.255 ~ t, label = ~ "t = 1.053", hjust = 0, vjust = 0, inherit = FALSE) |>
+    gf_segment(0 + 0.24 ~ -t + -t, inherit = FALSE) |>
+    gf_segment(0 + 0.24 ~ t + t, inherit = FALSE) |>
+    gf_refine(scale_fill_manual(values = c('steelblue', 'lightsteelblue', 'steelblue')))
 }
 ```
 
 
-We can also let R make all the computations for us. Notice that we use the *differences* between pairs as the input data, rather than the raw data itself.
+We can also let R make all the computations for us. Notice that we use the *differences* between pairs as the input data, rather than the raw data itself. We can either
+pre-compute this (as we did with `diff` above), or we can compute the differences
+in the call to `t.test()`.
+
+```{r}
+t.test( ~ diff, data = Glaucoma)
+```
+
+```{r}
+t.test( ~ (glaucoma - healthy), data = Glaucoma)
+```
 
 <!-- \authNote{lm or t test?} -->
 
 ```{r }
+#| include: false
 df_stats(WeightLoss ~ Group, data = WeightLossIncentive)
 model2 <- lm(WeightLoss ~ Group, data = WeightLossIncentive)
 coef(summary(model2))
@@ -720,11 +794,22 @@ gf_boxplot(WeightLoss ~ Group, data = WeightLossIncentive)
 
 It looks like the incentive group lost more weight.  But how can we judge whether the difference between groups is really an effect of the incentive, and not just random variation?
 
-In this case, the null hypothesis $H_0$ would be that the average weight loss by control participants ($\mu_c$) was the same as the average weight loss by incentivized participants ($\mu_i$) -- $H_0: \mu_c = \mu_i$.  The alternative hypothesis would be $H_1: \mu_c \neq \mu_i$ -- there was a difference between the two groups.
+In this case, 
+
+the null hypothesis $H_0$ would be that the average weight loss by
+control participants ($\mu_c$) was the same as the average weight loss by
+incentivized participants ($\mu_i$).
+
+* $H_0: \mu_c = \mu_i$.
+
+The alternative hypothesis would be 
+that there is a difference between the two groups.
+
+* $H_1: \mu_c \neq \mu_i$ 
 
 But in this case -- with data from 2 different categories -- how can we compute the appropriate standard error and test statistic for a t-test?  We have to consider the fact that there may be different numbers of data points in the 2 categories.  Let $n$ be the sample size within the first category $X$ (control participants in the example), and $m$ be the sample size in the other category $Y$ (incentive participants in the example). How can we compute a standard error for a difference in means between the two groups?
 
-In this case, if we assume that the sample variaces are equal between the two categories, then we can define the pooled sample variance $s_p$:
+In this case, if we assume that the sample variances are equal between the two categories, then we can define the pooled sample variance $s_p$:
 
 $$
 s^2_p = \frac{(n-1)s_X^2 + (m-1)s_Y^2}{(m+n-2)}
@@ -753,12 +838,18 @@ Note the "var.equal=TRUE" input argument.  With this input, R will carry out the
 We might be able to judge informally whether the equal-variance assumption is valid by looking at the distributions of our variable of interest grouped by category, and computing the sample standard deviations by groups:
 ```{r }
 #| fig.height: 2
+#| warning: false
 gf_dens(~ WeightLoss, color = ~Group, data = WeightLossIncentive)
 sd( ~ WeightLoss | Group, data = WeightLossIncentive, na.rm = TRUE)
 ```
 
 
-We don't have an obvious indication of unequal variances. (This assumption can also be tested statistically, although we won't learn how in this class, and it's generally not recommended to do such a test prior to running a t-test).  If we wanted to do the t-test without the equal variance assumption, in R, we would use:
+We don't have an obvious indication of unequal variances. (This assumption can
+also be tested statistically, although we won't learn how here, and it's
+generally not recommended to do such a test prior to running a t-test).  If we
+wanted to do the t-test without the equal variance assumption, in R, we would
+use:
+
 ```{r }
 t.test( ~ WeightLoss, groups = Group, data = WeightLossIncentive)
 ```
@@ -771,7 +862,7 @@ t.test( ~ WeightLoss, groups = Group, data = WeightLossIncentive)
 
 We can also use t-tests to test the null hypothesis that there is no
 relationship between the predictor and explanatory variables in a regression
-model.  If we can't reject that hypothesis, then we have evidence that there
+model.  If we can reject that hypothesis, then we have evidence that there
 *is* really some relationship, and that the response can be predicted based upon
 the explanatory variable.
 
@@ -781,8 +872,8 @@ the explanatory variable.
 
 Suppose you suspect that drag force should be proportional to the square of velocity.  Let's see
 if that is consistent with the data collected by some physics students.  
-In this experiment, the students rigged up neutrally buoyant balloon and then loaded it 
-with different amounts of weight and dropped it until and recorded its terminal velocity.
+In this experiment, the students rigged up a neutrally buoyant balloon and then loaded it 
+with different amounts of weight, dropped it, and recorded its terminal velocity.[^ At least that was the plan. There is some evidence in the data that the ballons had not always reached terminal velocity at the time the measurement was taken.]
 At that point the force due to gravity (determined by the mass loaded to the balloon) 
 is equal to the drag force (because there is no acceleration).
 
@@ -818,9 +909,8 @@ gf_qq( ~ resid(drag.model))
 summary(drag.model)
 ```
 
-None of the p-values produced in this output is what we want.  
-They are testing the hypotheses that $\beta_0 =$ and that $\beta_1 = 0$.
-$\beta_1 = 0$.  
+None of the p-values produced in this output is what we want.
+They are testing the hypotheses that $\beta_0 =0$ and that $\beta_1 = 0$.
 But we can easily calculate the p-value we want since we have the standard error
 and degrees of freedom.
 
@@ -832,10 +922,30 @@ t <-  ( beta1.hat - 2 ) / SE; t
 2 * pt( - abs(t), df= 40 )
 ```
 
-With this large a p-value, we cannot reject the null hypothesis that $p = 2$.
-**A large p-value does not prove that $p = 2$, 
+With this large a p-value, we cannot reject the null hypothesis that $a = 2$.
+**A large p-value does not prove that $a = 2$, 
 but it does say that our data are consistent with that value.**  
-Of course, our data may be consistent with many other values of $p$ as well.
+Of course, our data may be consistent with many other values of $a$ as well.
+
+As an example, let's test $H_0: \beta_1 = 2.1$.
+
+```{r more-drag-pvalue, tidy = FALSE}
+beta1.hat <- 2.051
+SE <- 0.05366
+t <-  ( beta1.hat - 2.1 ) / SE; t
+2 * pt( - abs(t), df= 40 )
+```
+
+This value is also consistent with our data. But $a = 2.5$ is not:
+
+
+```{r still-more-drag-pvalue, tidy = FALSE}
+beta1.hat <- 2.051
+SE <- 0.05366
+t <-  ( beta1.hat - 2.5 ) / SE; t
+2 * pt( - abs(t), df= 40 )
+```
+
 ::: 
 <!-- end example -->
 
@@ -844,7 +954,7 @@ Of course, our data may be consistent with many other values of $p$ as well.
 
 We could also do the previous example using a nonlinear model
 ```{r }
-drag.model2 <- nls(force.drag ~ A * velocity^p, data = Drag, start = list(A = 1,p = 2))
+drag.model2 <- nls(force.drag ~ A * velocity^a, data = Drag, start = list(A = 1, a = 2))
 summary(drag.model2)
 ```
 
@@ -856,7 +966,7 @@ t <- (2 - 1.92989) / 0.0944; t
 ```
 
 Although the two p-values are different, the conclusion is the same using either model:  
-Our data are consistent with the hypothesis that $p = 2$.
+Our data are consistent with the hypothesis that $a = 2$.
 ::: 
 <!-- end example -->
 
@@ -904,13 +1014,15 @@ confint(porsche.model)
 		because it is testing whether the predictor (without any others) is of any use to us or not.
 		
 <!-- \authNote{ -->
-<!-- 		A test of $\beta_1=0$ in a regression model is often used for *model selection* -- if we can not reject the null hypothesis of no relationship between the predictor and the response, then the predictor is not really a useful predictor at all. We might want to use (or *select*) a model without that predictor, instead.} -->
+<!-- 		A test of $\beta_1=0$ in a regression model is often used for *model selection* -- if we cannot reject the null hypothesis of no relationship between the predictor and the response, then the predictor is not really a useful predictor at all. We might want to use (or *select*) a model without that predictor, instead.} -->
 
-3. $H_0: \beta_1 = \beta_{10}$.
+Although the output above doesn't do all of the work for us, we can test other
+hypotheses as well.  
 
-    Although the output above doesn't do all of the work for us, we can test other
-		hypotheses as well.  (The notation above is a bit tricky, $\beta_{10}$ should be read
-		``$\beta_1$ null" -- it is a hypothesized value for $\beta_1$.)
+3.  $H_0: \beta_1 = \beta_{10}$.
+
+    (The notation above is a bit tricky, $\beta_{10}$ should be read
+		"$\beta_1$ null" -- it is a hypothesized value for $\beta_1$.)
 		
     For example, let's test $\beta_1 = -1$.  That the hypothesis that the value 
 		drops one dollar per mile driven.
@@ -970,7 +1082,7 @@ coef(summary(drag.model))
 confint(drag.model)
 ```
 
-Since the confidence interval for $p$ (i.e., for $\beta_1$) includes 2, 
+Since the confidence interval for $a$ (i.e., for $\beta_1$) includes 2, 
 2 is a plausible value for the power (i.e., consistent with our data).
 A 2-sided p-value larger than 0.05 says the same thing at the same level of confidence.  
 ::: 
@@ -1097,7 +1209,7 @@ guessed -- is $\frac13$; the probability of guessing the third correctly --
 assuming the first two were correctly guessed -- is $\frac 12$; and if the
 first three are guessed correctly, the last is guaranteed to be correct.
 
-Altnernative solution: The wines can be presented in 
+Alternative solution: The wines can be presented in 
 $4 \cdot 3 \cdot 2 \cdot 1 = 24$ different orders, 
 so the probability of guessing correctly is $1/24$.
 ::: 

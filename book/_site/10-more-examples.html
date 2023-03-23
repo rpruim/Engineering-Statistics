@@ -316,19 +316,19 @@ $$
 
 <section id="sec-hxer" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="sec-hxer"><span class="header-section-number">10.1</span> Heat Exchanger Example</h2>
-<p>In this section will discuss several parts of the statistical analysis of a laboratory experiment involving a heat exchanger.</p>
+<p>In this section we discuss several parts of the statistical analysis of a laboratory experiment involving a heat exchanger.</p>
 <section id="apparatus-and-measurements" class="level3" data-number="10.1.1">
 <h3 data-number="10.1.1" class="anchored" data-anchor-id="apparatus-and-measurements"><span class="header-section-number">10.1.1</span> Apparatus and Measurements</h3>
 <p><a href="#fig-hxer">Figure&nbsp;<span>10.1</span></a> shows a diagram illustrating the heat exchanger. Fluids of different temperatures flow in the annulus (<span class="math inline">\(\dot{m}_{3}\)</span>) and in the inner tube (<span class="math inline">\(\dot{m}_{1}\)</span>). The entire apparatus is insulated, so we expect little or no heat to be exchanged with the surroundings.</p>
 <div id="fig-hxer" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="images/HXerFig.png" style="height:3in" class="figure-img"></p>
+<p><img src="images/HXerFig.png" style="height:4in" class="figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;10.1: Heat exchanger with statepoints.</figcaption><p></p>
 </figure>
 </div>
 <p>Mass flow rates (<span class="math inline">\(\dot{m}\)</span>) are controlled via valves. Two mass flow rates (<span class="math inline">\(\dot{m}_{1}\)</span> and <span class="math inline">\(\dot{m}_{3}\)</span>) are measured by rotameters.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Temperatures (<span class="math inline">\(T_{1}\)</span>–<span class="math inline">\(T_{4}\)</span>) are measured by thermocouples.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <!-- ## Observations -->
-<p>Each observation consists of four~(4) temperature measurements and two~(2) mass flow rate measurements. Here is an example data set with one set of measurements at each of 6 experimental conditions: <!-- %<<include = FALSE>>= --> <!-- %HeatX <- data.frame( --> <!-- %  trial = 1:6, --> <!-- %  T.cold.in = c(14.3, 14.1, 14.1, 14.2, 14.1, 14.1), --> <!-- %  T.cold.out = c(18.6, 18.7, 19.4, 18.4, 17.4, 16.9), --> <!-- %  # T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8), --> <!-- %  T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8), --> <!-- %  T.hot.out = c(33.9, 32.8, 33.4, 31.8, 30.9, 30.4), --> <!-- %  m.cold = c(10, 7.5, 5, 5, 7.5, 10), --> <!-- %  m.hot = c(10, 10, 10, 5, 5, 5) --> <!-- %)   --> <!-- %@ --></p>
+<p>Each observation consists of four temperature measurements and two mass flow rate measurements. Here is an example data set with one set of measurements at each of 6 experimental conditions: <!-- %<<include = FALSE>>= --> <!-- %HeatX <- data.frame( --> <!-- %  trial = 1:6, --> <!-- %  T.cold.in = c(14.3, 14.1, 14.1, 14.2, 14.1, 14.1), --> <!-- %  T.cold.out = c(18.6, 18.7, 19.4, 18.4, 17.4, 16.9), --> <!-- %  # T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8), --> <!-- %  T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8), --> <!-- %  T.hot.out = c(33.9, 32.8, 33.4, 31.8, 30.9, 30.4), --> <!-- %  m.cold = c(10, 7.5, 5, 5, 7.5, 10), --> <!-- %  m.hot = c(10, 10, 10, 5, 5, 5) --> <!-- %)   --> <!-- %@ --></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastR2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>HeatX   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -351,7 +351,7 @@ $$
 </section>
 <section id="standardizing-units" class="level3" data-number="10.1.2">
 <h3 data-number="10.1.2" class="anchored" data-anchor-id="standardizing-units"><span class="header-section-number">10.1.2</span> Standardizing Units</h3>
-<p>The recorded flow rates are in L/min. We will convert them to L/sec and use seconds as our standard unit of time troughout the analyses.</p>
+<p>The recorded flow rates are in L/min. We will convert them to L/sec and use seconds as our standard unit of time throughout the analyses.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>HeatX <span class="ot">&lt;-</span> HeatX <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -364,7 +364,7 @@ $$
 <p>Table <a href="#tbl-hxer-definitions">Table&nbsp;<span>10.1</span></a> contains notation and definitions of important quantities involved in the heat exchanger experiment.</p>
 <div id="tbl-hxer-definitions" class="anchored">
 <table class="table">
-<caption>Table&nbsp;10.1: Notation for quantities involved in the heat exchanger experiment. Note, some of the physical “constants” are actually temperature dependant. In these cases, a value has been chosen that reflects the temperature range (approx. 15–35 degrees C) seen in the data.</caption>
+<caption>Table&nbsp;10.1: Notation for quantities involved in the heat exchanger experiment. Note, some of the physical “constants” are actually temperature dependent. In these cases, a value has been chosen that reflects the temperature range (approx. 15–35 degrees C) seen in the data.</caption>
 <colgroup>
 <col style="width: 16%">
 <col style="width: 27%">
@@ -503,7 +503,7 @@ $$
 <p><span id="eq-hxer2"><span class="math display">\[
     \dot{Q}_{3} = \dot{m}_{3} C_{p} (T_{4} - T_{3})
 \tag{10.2}\]</span></span></p>
-<p>We can estimate the values of <span class="math inline">\(\dot{Q}\)</span> from our data by direct caclulation:</p>
+<p>We can estimate the values of <span class="math inline">\(\dot{Q}\)</span> from our data by direct calculation:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>C_p <span class="ot">&lt;-</span> <span class="fl">4.18</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>HeatX2 <span class="ot">&lt;-</span> HeatX <span class="sc">|&gt;</span></span>
@@ -537,26 +537,28 @@ $$
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( <span class="st">""</span> <span class="sc">~</span> Q.env, <span class="at">data =</span> HeatX2, <span class="at">alpha =</span> .<span class="dv">6</span>, <span class="at">cex =</span> <span class="dv">3</span>, <span class="at">jitter.data =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( <span class="st">""</span> <span class="sc">~</span> Q.env, <span class="at">data =</span> HeatX2, <span class="at">alpha =</span> .<span class="dv">6</span>, <span class="at">cex =</span> <span class="dv">3</span>, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">position =</span> <span class="st">"jitter"</span>, <span class="at">width =</span> <span class="dv">0</span>, <span class="at">height =</span> <span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="10-more-examples_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="432"></p>
 </div>
 </div>
 <p>From this we can compute either a p-value for the hypothesis test that the mean difference in heat change is 0 or create a confidence interval for the mean difference in heat change. The information above is enough to do this “by hand” using the standard error formula <span class="math inline">\(SE = \frac{s}{\sqrt{n}}\)</span> and a t-distribution with <span class="math inline">\(n-1 = 5\)</span> degrees of freedom.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">=</span> <span class="fl">0.08274</span> <span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">6</span>); SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">&lt;-</span> <span class="fl">0.08999</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">=</span> <span class="fl">0.08274</span> <span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">6</span>); SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.03377846</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.09003</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">5</span>) <span class="sc">*</span> SE       <span class="co"># 95&lt;!--  CI --&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">5</span>) <span class="sc">*</span> SE       <span class="co"># 95% CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.003199695 0.176860305</code></pre>
+<pre><code>[1] 0.003159695 0.176820305</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (<span class="fl">0.08999</span> <span class="sc">-</span> <span class="dv">0</span>) <span class="sc">/</span> SE; t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.664124</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span><span class="fu">abs</span>(t), <span class="at">df =</span> <span class="dv">5</span> )                        <span class="co"># p-value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>( <span class="sc">-</span><span class="fu">abs</span>(t), <span class="at">df =</span> <span class="dv">5</span> )                     <span class="co"># p-value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.04466228</code></pre>
 </div>
@@ -581,22 +583,21 @@ sample estimates:
 0.08998611 </code></pre>
 </div>
 </div>
-<p>In our example data, there is modest evidence for exchange with the environment, but the estimated amount of heat gained from the environment is not very precisely estimated. Even at the highest end of the confidence interval, the heat exchanged with the environment is an order of magnitude smaller than the heat exchanged within in the apparatus.</p>
+<p>In our example data, there is modest evidence for exchange with the environment, but the estimated amount of heat gained from the environment is not very precisely estimated. But even at the highest end of the confidence interval, the heat exchanged with the environment is an order of magnitude smaller than the heat exchanged within in the apparatus.</p>
 <p>Notes:</p>
 <div class="enumerate">
 <ol>
-<li>The fact that heat is gained to the system suggests that the cold water was in the outer pipe and hot water in the inner pipe.</li>
-<li>This analysis assumes that the amount of heat gained/lost is constant over the different set-ups. From this small data set, there is not clear evidence of some other relationship between heat exchanged with the environment and the experimental set up:</li>
-</ol>
+<li><p>The fact that heat is gained to the system suggests that the cold water was in the outer pipe and hot water in the inner pipe.</p></li>
+<li><p>This analysis assumes that the amount of heat gained/lost is constant over the different set-ups. From this small data set, there is not clear evidence of some other relationship between heat exchanged with the environment and the experimental set up:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Q.env <span class="sc">~</span> m.cold, <span class="at">data =</span> HeatX2, <span class="at">color =</span> <span class="sc">~</span> <span class="fu">paste</span>(<span class="st">"m.hot ="</span>, <span class="fu">round</span>(m.hot,<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Q.env <span class="sc">~</span> m.cold, <span class="at">data =</span> HeatX2, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="sc">~</span> <span class="fu">paste</span>(<span class="st">"m.hot ="</span>, <span class="fu">round</span>(m.hot,<span class="dv">2</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>(<span class="at">color =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="10-more-examples_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="576"></p>
 </div>
-</div>
-<ol>
-<li>The t-test and interval are based on the assumption that the distribution of deviations between the measured environment heat exchange and the actual is normally distributed. The data set is too small to provide much evidence upon which to judge whether this is a reasonable assumption. The largest value is quite a bit larger than the rest, but even if we remove that observation, our conclusions don’t change dramatically:</li>
-</ol>
+</div></li>
+<li><p>The t-test and interval are based on the assumption that the distribution of deviations between the measured environment heat exchange and the actual is normally distributed. The data set is too small to provide much evidence upon which to judge whether this is a reasonable assumption. The largest value is quite a bit larger than the rest, but even if we remove that observation, our conclusions don’t change dramatically:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>( <span class="sc">~</span> Q.env, <span class="at">data =</span> <span class="fu">subset</span>(HeatX2, Q.env <span class="sc">&lt;</span> <span class="fu">max</span>(Q.env)) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -612,16 +613,17 @@ sample estimates:
  mean of x 
 0.05921667 </code></pre>
 </div>
-</div>
+</div></li>
+</ol>
 </div>
 <!-- end enumerate -->
 <p>Overall, we conclude that there is likely some heat exchanged with the environment, but the amount of heat exchange with the environment appears to be at most a small factor in this situation.</p>
 </section>
 <section id="estimating-heat-transfer-between-hot-and-cold-water-dotq" class="level3" data-number="10.1.5">
 <h3 data-number="10.1.5" class="anchored" data-anchor-id="estimating-heat-transfer-between-hot-and-cold-water-dotq"><span class="header-section-number">10.1.5</span> Estimating heat transfer between hot and cold water, <span class="math inline">\(\dot{Q}\)</span></h3>
-<p>Estimating <span class="math inline">\(\dot{Q}\)</span> with uncertainty is not possible from this data alone since since <span class="math inline">\(\dot{Q}\)</span> is not measured directly, and we have only one measurement for each experimental condition (so no way to look at how variable such measurements are without additional information. Furthermore, the design doesn’t provide a method for estimating the uncertainty in <span class="math inline">\(\dot{m}\)</span> and <span class="math inline">\(T\)</span>.</p>
+<p>Estimating <span class="math inline">\(\dot{Q}\)</span> with uncertainty is not possible from this data alone since <span class="math inline">\(\dot{Q}\)</span> is not measured directly, and we have only one measurement for each experimental condition (so no way to look at how variable such measurements are without additional information. Furthermore, the design doesn’t provide a method for estimating the uncertainty in <span class="math inline">\(\dot{m}\)</span> and <span class="math inline">\(T\)</span>.</p>
 <p>If, however, there are external estimates of the uncertainties for temperature and flow rate, and if we can assume these uncertainties are approximately independent, then we can use propagation of uncertainty to estimate the uncertainty in our estimates for heat exchanged. Such uncertainties might come from specifications of the equipment used or be based on past experience of the researcher.</p>
-<p>For example, suppose that the uncertainties in temperature and flow rate measurements are approximately constant (over the range of temperatures involved): <span class="math inline">\(u_T\)</span>, and <span class="math inline">\(u_{\dot{m}}\)</span>. Then the uncertainty in the difference between two independent temperatures is <span class="math inline">\(\sqrt{ u_T^2 + u_T^2 } = \sqrt{2} u_T\)</span>, and we can estimate the uncertainty in <span class="math inline">\(\dot Q\)</span> using the delta method.</p>
+<p>For example, suppose that the uncertainties in temperature and flow rate measurements are approximately constant (over the range of temperatures involved): <span class="math inline">\(u_T\)</span>, and <span class="math inline">\(u_{\dot{m}}\)</span>. Then the uncertainty in the difference between two independent temperatures is <span class="math inline">\(\sqrt{ u_T^2 + u_T^2 } = \sqrt{2} \cdot u_T\)</span>, and we can estimate the uncertainty in <span class="math inline">\(\dot Q\)</span> using the delta method.</p>
 <div class="itemize">
 <ul>
 <li>Let <span class="math inline">\(\dot{Q}(\dot{m}, \Delta T) = C_p \dot{m} \Delta T\)</span></li>
@@ -648,7 +650,7 @@ sample estimates:
 </div>
 </div>
 <p>Note: We are using the fact that <span class="math inline">\(u_{\Delta T} = \sqrt{2} u_T\)</span>.</p>
-<p>We can also use <code>deltaMethod()</code> in the <strong><code>car</code></strong> package to do this arithmetic for us. In fact, <code>deltaMathod()</code> can even handle cases where the estimates are not independent. To do it’s job, <code>deltaMethod()</code> requires</p>
+<p>We can also use <code>deltaMethod()</code> in the <strong><code>car</code></strong> package to do this arithmetic for us. In fact, <code>deltaMethod()</code> can even handle cases where the estimates are not independent. To do it’s job, <code>deltaMethod()</code> requires</p>
 <div class="itemize">
 <ul>
 <li>A named vector of estimates,</li>
@@ -795,7 +797,7 @@ But this number is also known experimentally and has an uncertainty associated w
 </ul>
 </div>
 <!-- end itemize -->
-<p>From this we can see that it is the imprecise temperature measurements that are our biggest problem. Even if we eliminated the other uncertainties, we would still have a relative uncertainty of over <span class="math inline">\(30\)</span>%. The details vary a bit from row to row, but the uncertainty in in temperature is our biggest obstacle. In addition to increasing the precision of our temperature sensors, we could also potentially improve things by designing a heat exchanger with more dramatic changes in temperature.</p>
+<p>From this we can see that it is the imprecise temperature measurements that are our biggest problem. Even if we eliminated the other uncertainties, we would still have a relative uncertainty of over <span class="math inline">\(30\)</span>%. The details vary a bit from row to row, but the uncertainty in temperature is our biggest obstacle. In addition to increasing the precision of our temperature sensors, we could also potentially improve things by designing a heat exchanger with more dramatic changes in temperature.</p>
 <p>Suppose, for example, we could estimate temperature with an uncertainty of 0.1 degrees (ten times better than we have been assuming). Then our uncertainties for <span class="math inline">\(\dot{Q}\)</span> would change pretty dramatically.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>HeatX <span class="sc">|&gt;</span></span>
@@ -908,7 +910,7 @@ We could also have specified <span class="math inline">\(C_p\)</span> this way i
 <ol>
 <li>Create an expression for the quantity we are interested in (as a quoted string).</li>
 <li>Create a data frame that has all of the components of this expression that have uncertainties.</li>
-<li>Create a named vector of uncertainties. The names should correspond to the variables names in the data frame, the values are the uncertainties. (Alternatively, the uncertainties can be put inside the data frame and the arguments <code>estimtates</code> and <code>uncertainties</code> can be used to specify which columns are the estimates and which are the corresponding uncertainties.)</li>
+<li>Create a named vector of uncertainties. The names should correspond to the variables names in the data frame, the values are the uncertainties. (Alternatively, the uncertainties can be put inside the data frame and the arguments <code>estimates</code> and <code>uncertainties</code> can be used to specify which columns are the estimates and which are the corresponding uncertainties.)</li>
 <li>Create a list that contains the value of any constants (or values for which we are ignoring that there is uncertainty because the uncertainty is so small that it doesn’t affect the analysis).</li>
 </ol>
 </div>
@@ -942,7 +944,7 @@ We could also have specified <span class="math inline">\(C_p\)</span> this way i
 <p><em>Note: the methods in this section assume a linear model with an intercept term.</em></p>
 </div>
 <!-- end center -->
-<p>Recall that linear models are fit by minimizing the sum of the squares of the residuals:% <span class="math display">\[
+<p>Recall that linear models are fit by minimizing the sum of the squares of the residuals:[^ <span class="math inline">\(RSS\)</span> stands for Residual Sum of Squares; <span class="math inline">\(SSE\)</span> stands for Error Sum of Squares.] <span class="math display">\[
 RSS = SSE = \sum_{i = 1}^{n} ( y_i - \hat y)^2
 \]</span> This expression reminds us of<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <span class="math display">\[
 SST = \sum_{i = 1}^{n} ( y_i - \mean y)^2 \;,
@@ -977,7 +979,7 @@ Multiple R-squared:  0.1448,    Adjusted R-squared:  0.127
 F-statistic: 8.128 on 1 and 48 DF,  p-value: 0.006408</code></pre>
 </div>
 </div>
-<p>Notice that <span class="math inline">\(R^2 &lt; 15%\)</span> and that the coefficient on <code>expend</code> is negative – indicating that spending more is associated with <em>worse</em> scores on the SAT.</p>
+<p>Notice that <span class="math inline">\(R^2 &lt; 15\)</span>% and that the coefficient on <code>expend</code> is negative – indicating that spending more is associated with <em>worse</em> scores on the SAT.</p>
 <p>One reason for this is that in some states most college bound students take the SAT, but in other states, the ACT is more common so the pool of students taking the SAT is stronger. If we add <code>frac</code> – the fraction of students in a given state who took the SAT.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(sat <span class="sc">~</span> expend <span class="sc">+</span> frac, <span class="at">data =</span> SAT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1003,7 +1005,7 @@ Multiple R-squared:  0.8195,    Adjusted R-squared:  0.8118
 F-statistic: 106.7 on 2 and 47 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>Notice how much larger <span class="math inline">\(R^2\)</span> is now, and that the sign of the coefficient on <code>expend</code> is not positive – as we would have expected.</p>
+<p>Notice how much larger <span class="math inline">\(R^2\)</span> is now, and that the sign of the coefficient on <code>expend</code> is now positive – as we would have expected.</p>
 <p>It is important to note that adding in the additional variable <code>frac</code> gives a very different impression of the effect of <code>expend</code> on <code>sat</code>. Most of our examples have dealt with one response to one predictor, but in many situations, this is too simplistic and the inclusion of multiple predictors in the model is required to understand their impact on the response.</p>
 </section>
 <section id="exercises" class="level2" data-number="10.4">

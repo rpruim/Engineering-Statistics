@@ -62,7 +62,7 @@ experimental conditions:
 
 ```{r fig.height = 2.25}
 library(fastR2)
-HeatX   
+HeatX
 gf_point(m.hot ~ m.cold, data = HeatX, main = "Experimental Configurations", size = 3)
 ```
 
@@ -159,7 +159,7 @@ HeatX2
 ### Estimating heat exchanged with environment
 If no heat were exchanged with the environment and all measurements were without error,
 then our two estimates of $\dot Q$ would sum to 0.  (Heat lost to one fluid is gained by the 
-other.)  
+other.) 
 
 Assuming any loss to (or gain from) the environment is essentially constant for
 the apparatus over the experimental conditions analysed, we can use our 6
@@ -216,7 +216,7 @@ and the experimental set up:
     gf_point(Q.env ~ m.cold, data = HeatX2, 
              color = ~ paste("m.hot =", round(m.hot,2))) |>
       gf_labs(color = "")
-      
+
     ```
 
 #.  The t-test and interval are based on the assumption that the distribution
@@ -278,7 +278,7 @@ the $\dot{Q}$ values as follows
 ```{r tidy = FALSE}
 HeatX2<- HeatX2 |>
   mutate(
-    u.Q.cold = C_p *sqrt( (T.cold.out - T.cold.in)^2 * (0.5/60)^2  + m.cold^2 * 2),  
+    u.Q.cold = C_p *sqrt( (T.cold.out - T.cold.in)^2 * (0.5/60)^2  + m.cold^2 * 2), 
     u.Q.hot =  C_p *sqrt( (T.hot.out  - T.hot.in)^2  * (0.5/60)^2  +  m.hot^2 * 2) 
   ) 
 HeatX2
@@ -361,7 +361,7 @@ to be specified separately for each row of the data.
 
 ### Does the uncertainty in $C_p$ matter?
 
-In the analysis above, we treated $C_p$ as a constant (with arbitrary precision).  
+In the analysis above, we treated $C_p$ as a constant (with arbitrary precision). 
 But this number is also known experimentally and has an uncertainty associated with it.
 Do our results change if we include this uncertainty in our calculations?
 
@@ -422,7 +422,7 @@ dramatically.
 HeatX |>
   mutate(C_p = 4.18) |>  # add in a column for C_p
   deltaMethod(
-    exprforQ,      
+    exprforQ, 
     uncertainties = c(T.cold.in = 0.1, T.cold.out = 0.1, m.cold = 0.5/60, C_p = 0.1))
 ```
 
@@ -434,7 +434,7 @@ modest impact on our uncertainty for $\dot{Q}$.
 HeatX |>
   mutate(C_p = 4.18) |>  # add in a column for C_p
   deltaMethod(
-    exprforQ,      
+    exprforQ, 
     uncertainties = c(T.cold.in = 1.0, T.cold.out = 1.0, m.cold = 0.5/600, C_p = 0.1))
 ```
 
@@ -478,7 +478,7 @@ deltaMethod(
 ```
 
 
-Note the use of the `constants` argument here to specify the value of `pi`.  
+Note the use of the `constants` argument here to specify the value of `pi`. 
 We could also have specified $C_p$ this way if we decided to ignore the uncertainty
 in that value.  But since it is no harder to include that uncertainty, we included it.
 

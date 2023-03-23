@@ -470,8 +470,7 @@ Y = \beta_0 + \beta_1 x + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Nor
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="432"></p>
 </div>
 </div>
-<p>If your line is a good fit, then <span class="math inline">\(SSE\)</span> will be small. The best fitting line will have the smallest possible <span class="math inline">\(SSE\)</span>.<br>
-The <code>lm()</code> function will find this best fitting line for us.</p>
+<p>If your line is a good fit, then <span class="math inline">\(SSE\)</span> will be small. The best fitting line will have the smallest possible <span class="math inline">\(SSE\)</span>. The <code>lm()</code> function will find this best fitting line for us.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>( y <span class="sc">~</span> x, <span class="at">data =</span> SomeData ); model1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -514,8 +513,7 @@ Coefficients:
 e_i = y_i - (\hat\beta_0 + \hat\beta_1 x)
 \]</span> and the sum of the squares of the residuals is <span class="math display">\[
 SSE = \sum e_i^2  = \sum (y_i - (\hat\beta_0 + \hat\beta_1 x) )^2
-\]</span> Simple calculus (which we won’t do here) allows us to compute the best <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> possible.<br>
-These best values define the least squares regression line. We always compute these values using software, but it is good to note that the least squares line satisfies two very nice properties.</p>
+\]</span> Simple calculus (which we won’t do here) allows us to compute the best <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> possible. These best values define the least squares regression line. We always compute these values using software, but it is good to note that the least squares line satisfies two very nice properties.</p>
 <div class="enumerate">
 <ol type="1">
 <li><p>The point <span class="math inline">\((\mean x, \mean y)\)</span> is on the line.</p>
@@ -549,7 +547,7 @@ r = \frac{1}{n-1} \sum \frac{ x_i - \mean x }{s_x} \cdot \frac{ y_i - \mean y }{
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x.bar <span class="ot">&lt;-</span> <span class="fu">mean</span>( <span class="sc">~</span> palpebral, <span class="at">data =</span> Eyes)  </span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x.bar <span class="ot">&lt;-</span> <span class="fu">mean</span>( <span class="sc">~</span> palpebral, <span class="at">data =</span> Eyes) </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>y.bar <span class="ot">&lt;-</span> <span class="fu">mean</span>( <span class="sc">~</span> OSA, <span class="at">data =</span> Eyes)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>s_x <span class="ot">&lt;-</span> <span class="fu">sd</span>( <span class="sc">~</span> palpebral, <span class="at">data =</span> Eyes)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>s_y <span class="ot">&lt;-</span> <span class="fu">sd</span>( <span class="sc">~</span> OSA, <span class="at">data =</span> Eyes)</span>
@@ -623,12 +621,11 @@ Coefficients:
 <div id="exm-osa-3" class="example theorem example">
 <p><span class="theorem-title"><strong>Example 7.4 </strong></span>If the palpebral width is 1.2 cm, then we would estimate OSA to be</p>
 <p><span class="math display">\[
-\hat{`osa`} =
+\hat{\texttt{osa}} =
 -0.398 + 3.08 \cdot 1.2
 = 3.298
 \]</span></p>
-<p>R can automate this for us too. The <code>makeFun()</code> function will create a function from our model.<br>
-If we input a palpebral measurement into this function, the function will return the estimated OSA.</p>
+<p>R can automate this for us too. The <code>makeFun()</code> function will create a function from our model. If we input a palpebral measurement into this function, the function will return the estimated OSA.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>estimated.osa <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(osa.model)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.osa</span>(<span class="fl">1.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -651,7 +648,7 @@ If we input a palpebral measurement into this function, the function will return
 </div>
 <p>The corresponding OSA of 3.76 means that the residual for this observation is <span class="math display">\[
 \mbox{observed} - \mbox{predicted} = 3.76 - 3.2982218 =
-0.4617782  
+0.4617782
 \]</span></p>
 </div>
 <!-- end example -->
@@ -711,8 +708,7 @@ F-statistic: 418.3 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="itemize">
 <ul>
 <li><span class="math inline">\(\hat \sigma^2\)</span> is unbiased (on average it is <span class="math inline">\(\sigma^2\)</span>), and</li>
-<li>the sampling distribution is related to a Chi-Squared distribution with <span class="math inline">\(n-2\)</span> degrees of freedom.<br>
-(Chi-Squared distributions are a special case of Gamma distributions.) More specifically, <span class="math display">\[
+<li>the sampling distribution is related to a Chi-Squared distribution with <span class="math inline">\(n-2\)</span> degrees of freedom. (Chi-Squared distributions are a special case of Gamma distributions.) More specifically, <span class="math display">\[
      \frac{SSE}{\sigma^2} = \frac{(n - 2) \hat \sigma^2}{\sigma^2} \sim \Chisq(n-2) \;.
 \]</span></li>
 </ul>
@@ -869,7 +865,7 @@ palpebral    3.0799672  0.1505882 20.452918 2.252825e-18</code></pre>
     \beta_0: -0.40 \pm
         0.17
     \qquad
-    \beta_1: 3.08 \pm  
+    \beta_1: 3.08 \pm
         0.15
 \]</span></p>
 <p>A confidence interval can be computed using <span class="math display">\[
@@ -952,8 +948,7 @@ palpebral 2.927507 3.232428</code></pre>
 1 2.066235 1.420209 2.71226</code></pre>
 </div>
 </div>
-<p>Prediction intervals are typically much wider than confidence intervals.<br>
-We have to “cast a wider net” to create an interval that is highly likely to contain a new observation (which might be quite a bit above or below the mean).</p>
+<p>Prediction intervals are typically much wider than confidence intervals. We have to “cast a wider net” to create an interval that is highly likely to contain a new observation (which might be quite a bit above or below the mean).</p>
 <p>The widths of both types of intervals depend on the value(s) of the explanatory variable(s) from which we are making the estimate. Estimates are more precise near the mean of the predictor variable and become less precise as we move away from there. Extrapolation beyond the observed data range is both less precise, and risky, because we don’t have data to know whether the linear pattern seen in the data extends into that region.</p>
 <p>The plot below illustrates both confidence (narrower) and prediction (wider) intervals. Notice how most of the dots are within the prediction bands, but not within the confidence bands.</p>
 <div class="cell">
@@ -1052,8 +1047,7 @@ rainfall 0.7480677 0.9058786</code></pre>
 <p>The <code>KidsFeet</code> data set contains variables giving the widths and lengths of feet of some grade school kids.</p>
 <ol type="1">
 <li>Perform our usual diagnostics to see whether there are any reasons to be concerned about using a simple linear model in this situation.</li>
-<li>Based on this data, what estimate would you give for the width of a Billy’s foot if Billy’s foot is 24 cm long?<br>
-(Use a 95% confidence level.)</li>
+<li>Based on this data, what estimate would you give for the width of a Billy’s foot if Billy’s foot is 24 cm long? (Use a 95% confidence level.)</li>
 <li>Based on this data, what estimate would you give for the average width of a kids’ feet that 24 cm long? (Use a 95% confidence level.)</li>
 </ol>
 </div>
@@ -1257,7 +1251,7 @@ height      0.0108067 0.0008344117 12.95128 8.626095e-34</code></pre>
 \log( `weight` )
     = 2.51 + 0.0108 \cdot `height`
 \]</span> So <span class="math display">\[
-`weight`  
+`weight`
 = 12.3
         \cdot (1.011)^{`height`}
 \]</span></p>
@@ -1270,8 +1264,7 @@ height      0.0108067 0.0008344117 12.95128 8.626095e-34</code></pre>
 <p>The <code>anscombe</code> data set contains four pairs of explanatory (<code>x1</code>, <code>x2</code>, <code>x3</code>, and <code>x4</code>) and response (<code>y1</code>, <code>y2</code>, <code>y3</code>, and <code>y4</code>) variables. These data were constructed by Anscombe (<span class="citation" data-cites="Anscombe:1973:Graphs">Anscombe (<a href="references.html#ref-Anscombe:1973:Graphs" role="doc-biblioref">1973</a>)</span>).</p>
 <div class="enumerate">
 <ol type="1">
-<li><p>For each of the four pairs, use R to fit a linear model and compare the results.<br>
-Briefly describe what you notice looking at this output. (You do not have to submit the output itself – let’s save some paper.)</p>
+<li><p>For each of the four pairs, use R to fit a linear model and compare the results. Briefly describe what you notice looking at this output. (You do not have to submit the output itself – let’s save some paper.)</p>
 <p>Use, for example,</p></li>
 </ol>
 <div class="cell">

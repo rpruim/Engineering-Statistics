@@ -331,7 +331,7 @@ $$
 <p>Each observation consists of four temperature measurements and two mass flow rate measurements. Here is an example data set with one set of measurements at each of 6 experimental conditions: <!-- %<<include = FALSE>>= --> <!-- %HeatX <- data.frame( --> <!-- %  trial = 1:6, --> <!-- %  T.cold.in = c(14.3, 14.1, 14.1, 14.2, 14.1, 14.1), --> <!-- %  T.cold.out = c(18.6, 18.7, 19.4, 18.4, 17.4, 16.9), --> <!-- %  # T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8), --> <!-- %  T.hot.in = c(38.2, 35.9, 35.9, 35.8, 35.7, 35.8), --> <!-- %  T.hot.out = c(33.9, 32.8, 33.4, 31.8, 30.9, 30.4), --> <!-- %  m.cold = c(10, 7.5, 5, 5, 7.5, 10), --> <!-- %  m.hot = c(10, 10, 10, 5, 5, 5) --> <!-- %)   --> <!-- %@ --></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastR2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>HeatX   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>HeatX</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -636,7 +636,7 @@ sample estimates:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>HeatX2<span class="ot">&lt;-</span> HeatX2 <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">u.Q.cold =</span> C_p <span class="sc">*</span><span class="fu">sqrt</span>( (T.cold.out <span class="sc">-</span> T.cold.in)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>)<span class="sc">^</span><span class="dv">2</span>  <span class="sc">+</span> m.cold<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>),  </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">u.Q.cold =</span> C_p <span class="sc">*</span><span class="fu">sqrt</span>( (T.cold.out <span class="sc">-</span> T.cold.in)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>)<span class="sc">^</span><span class="dv">2</span>  <span class="sc">+</span> m.cold<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>), </span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">u.Q.hot =</span>  C_p <span class="sc">*</span><span class="fu">sqrt</span>( (T.hot.out  <span class="sc">-</span> T.hot.in)<span class="sc">^</span><span class="dv">2</span>  <span class="sc">*</span> (<span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>)<span class="sc">^</span><span class="dv">2</span>  <span class="sc">+</span>  m.hot<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span>) </span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  ) </span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>HeatX2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -756,8 +756,7 @@ sample estimates:
 </section>
 <section id="does-the-uncertainty-in-c_p-matter" class="level3" data-number="10.1.6">
 <h3 data-number="10.1.6" class="anchored" data-anchor-id="does-the-uncertainty-in-c_p-matter"><span class="header-section-number">10.1.6</span> Does the uncertainty in <span class="math inline">\(C_p\)</span> matter?</h3>
-<p>In the analysis above, we treated <span class="math inline">\(C_p\)</span> as a constant (with arbitrary precision).<br>
-But this number is also known experimentally and has an uncertainty associated with it. Do our results change if we include this uncertainty in our calculations?</p>
+<p>In the analysis above, we treated <span class="math inline">\(C_p\)</span> as a constant (with arbitrary precision). But this number is also known experimentally and has an uncertainty associated with it. Do our results change if we include this uncertainty in our calculations?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deltaMethod</span>( HeatX <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">C_p =</span> <span class="fl">4.18</span>), exprforQ,      <span class="co"># add in a column for C_p</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">uncertainties =</span> <span class="fu">c</span>(<span class="at">T.cold.in =</span> <span class="fl">1.0</span>, <span class="at">T.cold.out =</span> <span class="fl">1.0</span>, <span class="at">m.cold =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>, <span class="at">C_p =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -803,7 +802,7 @@ But this number is also known experimentally and has an uncertainty associated w
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>HeatX <span class="sc">|&gt;</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">C_p =</span> <span class="fl">4.18</span>) <span class="sc">|&gt;</span>  <span class="co"># add in a column for C_p</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">deltaMethod</span>(</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    exprforQ,      </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    exprforQ, </span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">uncertainties =</span> <span class="fu">c</span>(<span class="at">T.cold.in =</span> <span class="fl">0.1</span>, <span class="at">T.cold.out =</span> <span class="fl">0.1</span>, <span class="at">m.cold =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">60</span>, <span class="at">C_p =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Converting uncertainties to a covariance matrix assuming independence ...</code></pre>
@@ -822,7 +821,7 @@ But this number is also known experimentally and has an uncertainty associated w
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>HeatX <span class="sc">|&gt;</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">C_p =</span> <span class="fl">4.18</span>) <span class="sc">|&gt;</span>  <span class="co"># add in a column for C_p</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">deltaMethod</span>(</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    exprforQ,      </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    exprforQ, </span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">uncertainties =</span> <span class="fu">c</span>(<span class="at">T.cold.in =</span> <span class="fl">1.0</span>, <span class="at">T.cold.out =</span> <span class="fl">1.0</span>, <span class="at">m.cold =</span> <span class="fl">0.5</span><span class="sc">/</span><span class="dv">600</span>, <span class="at">C_p =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Converting uncertainties to a covariance matrix assuming independence ...</code></pre>
@@ -884,8 +883,7 @@ U = \frac{\dot{Q}}{A \Delta T_{lm}},
 </div>
 </div>
 </div>
-<p>Note the use of the <code>constants</code> argument here to specify the value of <code>pi</code>.<br>
-We could also have specified <span class="math inline">\(C_p\)</span> this way if we decided to ignore the uncertainty in that value. But since it is no harder to include that uncertainty, we included it.</p>
+<p>Note the use of the <code>constants</code> argument here to specify the value of <code>pi</code>. We could also have specified <span class="math inline">\(C_p\)</span> this way if we decided to ignore the uncertainty in that value. But since it is no harder to include that uncertainty, we included it.</p>
 </section>
 <section id="estimating-the-nusselt-number-correlation-a" class="level3" data-number="10.1.9">
 <h3 data-number="10.1.9" class="anchored" data-anchor-id="estimating-the-nusselt-number-correlation-a"><span class="header-section-number">10.1.9</span> Estimating the Nusselt number correlation, <span class="math inline">\(a\)</span></h3>

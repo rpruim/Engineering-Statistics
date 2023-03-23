@@ -82,7 +82,7 @@ performed laboratory experiment.
 	to organize them.  Data are typically stored in spreadsheets or 
 	in other formats that are convenient for processing with 
 	statistical packages.  Very large data sets are often stored in 
-	databases.  
+	databases.
 	
 	  Part of the organization of the data may involve producing graphical and
 	numerical summaries of the data.  These summaries may give us initial
@@ -119,7 +119,7 @@ sure are we about these conclusions?
 There is a famous story about a lady who claimed that
 tea with milk tasted different depending on whether the milk was 
 added to the tea or the tea added to the milk.
-The story is famous because of the setting in which she made this claim.  
+The story is famous because of the setting in which she made this claim.
 She was attending a party in Cambridge, England, in the $1920$s.
 Also in attendance were a number of university dons and their wives.
 The scientists in attendance scoffed at the woman and her claim.
@@ -149,12 +149,12 @@ correctly identify?  What was the conclusion?
 
 Fisher never says.  In his book he is interested in the method, not the 
 particular results.  But let's suppose we decide to test the lady with
-ten cups of tea.  
-We'll flip a coin to decide which way to prepare the cups.  
+ten cups of tea.
+We'll flip a coin to decide which way to prepare the cups.
 If we flip a head, we will pour the milk in first; if tails, we 
 put the tea in first.
 Then we present the ten cups to the lady and have her state which ones she
-thinks were prepared each way.  
+thinks were prepared each way.
 
 It is easy to give her a score (9 out of 10, or 7 out of 10, or whatever
 it happens to be).  It is trickier to figure out what to do with her score.
@@ -223,7 +223,7 @@ set.seed(123)
 ```{r flip4, cache = TRUE}
 #| fig.height: 2
 RandomLadies <- do(10000) * rflip(10)
-gf_histogram( ~ heads, data = RandomLadies, binwidth = 1)  
+gf_histogram( ~ heads, data = RandomLadies, binwidth = 1) 
 ```
 
 ```{r tally}
@@ -242,7 +242,7 @@ of the time.  But most of the results are quite close to 5 correct.
 And `r round(sum(table(RandomLadies$heads)[4:8]/100,1))`% of the results 
 are  between 3 and 7 (inclusive).
 But getting 8 correct is a bit unusual, and getting 9 or 10 correct is even 
-more unusual.  
+more unusual.
 
 So what do we conclude?  It is possible that the lady could get 9 or 10 correct
 just by guessing, but it is not very likely (it only happened in about
@@ -303,7 +303,7 @@ The following are examples of null hypotheses.
 :::: {.enumerate}
 
 a.  $H_0: \mu = 0$.  (The population mean is 0.)
-#.  $H_0: \beta_1=0$.  (The "true" slope is 0 -- assuming a model like $\E(Y) = \beta_0 + \beta_1 x$.)  
+#.  $H_0: \beta_1=0$.  (The "true" slope is 0 -- assuming a model like $\E(Y) = \beta_0 + \beta_1 x$.) 
 #.  $H_0: \beta_1 = \beta_2$ (Two parameters in the model are equal.)
 #.  $H_0: \beta_2 = \beta_3 = 0$ (Two parameters in the model are both equal to 0.)
 :::: 
@@ -406,7 +406,7 @@ could use a smaller $\alpha$ value.
 
 It is also common for researchers to simply report the p-values they obtain
 from their analysis, allowing readers to draw conclusions on their own.
-    
+
 ::: 
 <!-- end example -->
 
@@ -447,7 +447,7 @@ identifications (0 or 1) and high numbers (9 or 10) as evidence against the null
 hypothesis.  If we want a one-sided p-value, we just need to ask:
 
 ```{r }
-binom.test(x = 9, n = 10, alternative = "greater")        
+binom.test(x = 9, n = 10, alternative = "greater") 
 ```
 
 
@@ -672,7 +672,7 @@ gf_point(glaucoma ~ subject, data = Glaucoma,
 gf_point(healthy ~ subject, data = Glaucoma, 
          color = ~"healthy", shape = ~"healthy", size = 3, alpha = 0.6) |>
   gf_refine(
-    scale_color_discrete(name = "status"),  
+    scale_color_discrete(name = "status"), 
     scale_shape_discrete(name = "status")
   )
 ```
@@ -871,7 +871,7 @@ the explanatory variable.
 ::: {.example #exm-drag-force}
 
 Suppose you suspect that drag force should be proportional to the square of velocity.  Let's see
-if that is consistent with the data collected by some physics students.  
+if that is consistent with the data collected by some physics students.
 In this experiment, the students rigged up a neutrally buoyant balloon and then loaded it 
 with different amounts of weight, dropped it, and recorded its terminal velocity.[^ At least that was the plan. There is some evidence in the data that the ballons had not always reached terminal velocity at the time the measurement was taken.]
 At that point the force due to gravity (determined by the mass loaded to the balloon) 
@@ -895,7 +895,7 @@ gf_point(log(force.drag) ~ log(velocity), data = Drag)
 
 The fit is not perfect, and in fact suggests a systematic problem with the way
 these data were collected.^[There is some evidence in these data that some of the 
-observations did not reach critical velocity.  
+observations did not reach critical velocity.
 It would be good to refit this data with those observations removed from the data.
 See @exr-drag-refit.] This is even clearer if we look at the residuals.
 
@@ -924,7 +924,7 @@ t <-  ( beta1.hat - 2 ) / SE; t
 
 With this large a p-value, we cannot reject the null hypothesis that $a = 2$.
 **A large p-value does not prove that $a = 2$, 
-but it does say that our data are consistent with that value.**  
+but it does say that our data are consistent with that value.**
 Of course, our data may be consistent with many other values of $a$ as well.
 
 As an example, let's test $H_0: \beta_1 = 2.1$.
@@ -965,7 +965,7 @@ t <- (2 - 1.92989) / 0.0944; t
 2 * pt( - abs(t), df = 40) 
 ```
 
-Although the two p-values are different, the conclusion is the same using either model:  
+Although the two p-values are different, the conclusion is the same using either model: 
 Our data are consistent with the hypothesis that $a = 2$.
 ::: 
 <!-- end example -->
@@ -1017,7 +1017,7 @@ confint(porsche.model)
 <!-- 		A test of $\beta_1=0$ in a regression model is often used for *model selection* -- if we cannot reject the null hypothesis of no relationship between the predictor and the response, then the predictor is not really a useful predictor at all. We might want to use (or *select*) a model without that predictor, instead.} -->
 
 Although the output above doesn't do all of the work for us, we can test other
-hypotheses as well.  
+hypotheses as well. 
 
 3.  $H_0: \beta_1 = \beta_{10}$.
 
@@ -1026,7 +1026,7 @@ hypotheses as well.
 		
     For example, let's test $\beta_1 = -1$.  That the hypothesis that the value 
 		drops one dollar per mile driven.
-    
+ 
     While this example is interesting as an exercise, it is quite rare to have a sensible hypothesized value for a regression slope parameter that we want to test.  It is much more common to ask, as we did above, "is there a pattern here indicating that the predictor is a useful predictor of the response"?
 
 ```{r tidy = FALSE}
@@ -1084,7 +1084,7 @@ confint(drag.model)
 
 Since the confidence interval for $a$ (i.e., for $\beta_1$) includes 2, 
 2 is a plausible value for the power (i.e., consistent with our data).
-A 2-sided p-value larger than 0.05 says the same thing at the same level of confidence.  
+A 2-sided p-value larger than 0.05 says the same thing at the same level of confidence. 
 ::: 
 <!-- end example -->
 
@@ -1121,7 +1121,7 @@ plot(model, w = 1:2)
 
 #. Are there are any reasons (from what you can tell in the output
 		above) to be concerned about using this model?
-#. What does $A$ tell us about this situation?  
+#. What does $A$ tell us about this situation? 
 		What would it mean if $A$ were 0?  What if $A \neq 0$?
 #. What is the estimate for $A$?  Express this as an estimate $\pm$ uncertainty
 	using our rules for numbers of digits.
@@ -1199,7 +1199,7 @@ A gentleman claims he can distinguish between four vintages of
 ::: {.mysolution}
 
 We can use the product of conditional probabilities:
-  
+
 $$
 \frac14 \cdot \frac13 \cdot \frac12 \cdot \frac11 = \frac1{24}
 $$
@@ -1294,7 +1294,7 @@ p_val <- 2 * pt(t, df = 15); p_val    # p-value
 ```
 
 95 will be  `r  if( p_val < 0.05 ) "outside" else "inside" ` 
-the confidence interval because the p-value is  
+the confidence interval because the p-value is
 `r  if( p_val < 0.05 ) "less than" else "greater than"` 0.05. 
 As a double check, here is the 95% confidence interval.
 ```{r }

@@ -157,7 +157,8 @@ fitLine <- function(intercept = 0, slope = 1,
     geom_abline(slope = slope, intercept = intercept) +
     geom_point() +
     labs(title = paste0("SSE = ", signif(sse, 4))) +
-    theme(plot.title = element_text(colour = "red", size = rel(1.4)))
+    theme(plot.title = element_text(colour = "red", size = rel(1.4))) +
+    coord_equal()
 
   print(p) 
   c(slope = slope, intercept = intercept, sse = sum(resids^2))
@@ -201,8 +202,7 @@ sum(resids^2)
 
 The following plot provides a way to visualize the sum of the squared residuals (SSE).
 ```{r echo = FALSE, results = "hide", fig.height = 2.8}
-fitLine(1.2, 0.8, squares = TRUE) |>
-  gf_refine(coord_equal())
+fitLine(1.2, 0.8, squares = TRUE) 
 ```
 
 
@@ -219,8 +219,10 @@ $$
 $$
 
 ```{r fig.height = 2.8}
+#| warning: false
 gf_point(y ~ x, data = SomeData) |>
-  gf_lm()
+  gf_lm() |>
+  gf_refine(coord_equal())
 ```
 
 We can compute $SSE$ using the `resid()` function.
@@ -355,6 +357,7 @@ R can add a regression line to our scatter plot if we ask it to.
 ::: {.center}
 
 ```{r osa-scatter}
+#| warning: false
 gf_point( OSA ~ palpebral, data = Eyes) |> 
   gf_lm()
 ```

@@ -323,6 +323,7 @@ $$
   <li><a href="#estimating-the-betas" id="toc-estimating-the-betas" class="nav-link" data-scroll-target="#estimating-the-betas"><span class="toc-section-number">7.6.1</span>  Estimating the <span class="math inline">\(\beta\)</span>s</a></li>
   <li><a href="#confidence-and-prediction-intervals-for-the-response-value" id="toc-confidence-and-prediction-intervals-for-the-response-value" class="nav-link" data-scroll-target="#confidence-and-prediction-intervals-for-the-response-value"><span class="toc-section-number">7.6.2</span>  Confidence and Prediction Intervals for the Response Value</a></li>
   </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="toc-section-number">7.7</span>  Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -356,7 +357,7 @@ Y = f(x_1, x_2, \dots, x_k) + \varepsilon
 <li><p><span class="math inline">\(Y\)</span> is the <strong>response</strong> variable that we are trying to estimate from <span class="math inline">\(k\)</span> <strong>explanatory</strong> or <strong>predictor</strong> variables <span class="math inline">\(x_1, x_2, \dots, x_k\)</span>.</p></li>
 <li><p>The relationship between the explanatory variables and the response variables is described by a function <span class="math inline">\(f\)</span>.</p></li>
 <li><p>The relationship described by <span class="math inline">\(f\)</span> need not be a perfect fit. The <strong>error</strong> term in the model, <span class="math inline">\(\varepsilon\)</span>, describes how individual responses differ from the value given by <span class="math inline">\(f\)</span>.</p>
-<p>We will model <span class="math inline">\(\varepsilon\)</span> with a distribution – typically a distribution with a mean of 0 – so another way to think about this model is the for a given values of the predictors, the values of <span class="math inline">\(Y\)</span> have a distribution. The mean of this distribution is specified by <span class="math inline">\(f\)</span> and the shape by <span class="math inline">\(\varepsilon\)</span>.</p></li>
+<p>We will model <span class="math inline">\(\varepsilon\)</span> with a distribution – typically a distribution with a mean of 0 – so another way to think about this model is that for given values of the predictors, the values of <span class="math inline">\(Y\)</span> have a distribution. The mean of this distribution is specified by <span class="math inline">\(f\)</span> and the shape by <span class="math inline">\(\varepsilon\)</span>.</p></li>
 </ul>
 </div>
 <!-- end itemize -->
@@ -398,8 +399,8 @@ Y = \beta_0 + \beta_1 x + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Nor
 <p><span class="math display">\[
 \mbox{residual} = \mbox{observed} - \mbox{predicted}
 \]</span></p>
-<div class="example">
-<p>Consider the following small data set.</p>
+<div id="exm-small-data" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 7.1 </strong></span>Consider the following small data set.</p>
 <div class="columns">
 <div class="columnn" width="45%">
 <div class="cell">
@@ -420,7 +421,8 @@ Y = \beta_0 + \beta_1 x + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Nor
 </div><div class="columnn" width="45%">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( y <span class="sc">~</span> x, <span class="at">data =</span> SomeData) <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">7</span>), <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">7</span>), <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">7</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">coord_equal</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="432"></p>
 </div>
@@ -442,7 +444,8 @@ Y = \beta_0 + \beta_1 x + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Nor
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( <span class="fl">1.2</span> <span class="sc">+</span> <span class="fl">0.8</span> <span class="sc">*</span> x <span class="sc">~</span> x)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(y <span class="sc">~</span> x, <span class="at">data =</span> SomeData) <span class="sc">|&gt;</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lims</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">7</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">7</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_fun</span>( <span class="fu">f</span>(x) <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"gray50"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_fun</span>( <span class="fu">f</span>(x) <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"gray50"</span> ) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">coord_equal</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="432"></p>
 </div>
@@ -467,8 +470,7 @@ Y = \beta_0 + \beta_1 x + \varepsilon  \qquad \mbox{where $\varepsilon \sim \Nor
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="432"></p>
 </div>
 </div>
-<p>If your line is a good fit, then <span class="math inline">\(SSE\)</span> will be small.<br>
-The best fitting line will have the smallest possible <span class="math inline">\(SSE\)</span>.<br>
+<p>If your line is a good fit, then <span class="math inline">\(SSE\)</span> will be small. The best fitting line will have the smallest possible <span class="math inline">\(SSE\)</span>.<br>
 The <code>lm()</code> function will find this best fitting line for us.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>( y <span class="sc">~</span> x, <span class="at">data =</span> SomeData ); model1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -508,7 +510,7 @@ Coefficients:
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="432"></p>
 </div>
 </div>
-<p>As we see, this is a better fit than our first attempt – at least according to the least squares criterion. It will better than <em>any</em> other attempt – it is the least squares regression line.</p>
+<p>As we see, this is a better fit than our first attempt – at least according to the least squares criterion. It will be better than <em>any</em> other attempt – it is the least squares regression line.</p>
 </div>
 <!-- end example -->
 <p>For a line with equation <span class="math inline">\(y = \hat\beta_0 + \hat\beta_1 x\)</span>, the residuals are <span class="math display">\[
@@ -518,20 +520,24 @@ SSE = \sum e_i^2  = \sum (y_i - (\hat\beta_0 + \hat\beta_1 x) )^2
 \]</span> Simple calculus (which we won’t do here) allows us to compute the best <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> possible.<br>
 These best values define the least squares regression line. We always compute these values using software, but it is good to note that the least squares line satisfies two very nice properties.</p>
 <div class="enumerate">
-<ol>
-<li>The point <span class="math inline">\((\mean x, \mean y)\)</span> is on the line.</li>
-</ol>
-<p>This means that <span class="math inline">\(\mean y = \hat\beta_0 + \hat\beta_1 \mean x\)</span> (and <span class="math inline">\(\hat\beta_0 = \mean y - \hat\beta_1 \mean x\)</span>) #. The slope of the line is <span class="math inline">\(\displaystyle b = r \frac{s_y}{s_x}\)</span> where <span class="math inline">\(r\)</span> is the <strong>correlation coefficient</strong>: <!--  --> <span class="math display">\[
+<ol type="1">
+<li><p>The point <span class="math inline">\((\mean x, \mean y)\)</span> is on the line.</p>
+<p>This means that <span class="math inline">\(\mean y = \hat\beta_0 + \hat\beta_1 \mean x\)</span> (and <span class="math inline">\(\hat\beta_0 = \mean y - \hat\beta_1 \mean x\)</span>)</p></li>
+<li><p>The slope of the line is</p>
+<p><span class="math display">\[\displaystyle b = r \frac{s_y}{s_x}\]</span>,</p>
+<p>where <span class="math inline">\(r\)</span> is the <strong>correlation coefficient</strong>:</p>
+<p><span class="math display">\[
 r = \frac{1}{n-1} \sum \frac{ x_i - \mean x }{s_x} \cdot \frac{ y_i - \mean y }{s_y}
-\]</span></p>
+\]</span></p></li>
+</ol>
 </div>
 <!-- end enumerate -->
 <p>Since we have a point and the slope, it is easy to compute the equation for the line if we know <span class="math inline">\(\mean x\)</span>, <span class="math inline">\(s_x\)</span>, <span class="math inline">\(\mean y\)</span>, <span class="math inline">\(s_y\)</span>, and <span class="math inline">\(r\)</span>.</p>
 </section>
 <section id="an-example-estimating-osa" class="level3" data-number="7.2.2">
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="an-example-estimating-osa"><span class="header-section-number">7.2.2</span> An Example: Estimating OSA</h3>
-<div class="example">
-<p>In a study of eye strain caused by visual display terminals, researchers wanted to be able to estimate ocular surface area (OSA) from palpebral fissure (the horizontal width of the eye opening in cm) because palpebral fissue is easier to measure than OSA.</p>
+<div id="exm-osa-1" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 7.2 </strong></span>In a study of eye strain caused by visual display terminals, researchers wanted to be able to estimate ocular surface area (OSA) from palpebral fissure (the horizontal width of the eye opening in cm) because palpebral fissure is easier to measure than OSA.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Eyes <span class="ot">&lt;-</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.table</span>(</span>
@@ -567,8 +573,8 @@ r = \frac{1}{n-1} \sum \frac{ x_i - \mean x }{s_x} \cdot \frac{ y_i - \mean y }{
 </div>
 <!-- end example -->
 <p>Fortunately, statistical software packages do all this work for us, so the calculations of the preceding example don’t need to be done in practice.</p>
-<div class="example">
-<p>In a study of eye strain caused by visual display terminals, researchers wanted to be able to estimate ocular surface area (OSA) from palpebral fissure (the horizontal width of the eye opening in cm) because palpebral fissue is easier to measure than OSA.</p>
+<div id="exm-osa-2" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 7.3 </strong></span>In a study of eye strain caused by visual display terminals, researchers wanted to be able to estimate ocular surface area (OSA) from palpebral fissure (the horizontal width of the eye opening in cm) because palpebral fissure is easier to measure than OSA.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>osa.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(OSA <span class="sc">~</span> palpebral, <span class="at">data =</span> Eyes) </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>osa.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -594,7 +600,7 @@ Coefficients:
 \hat y = -0.398 + 3.08 x
 \]</span></p>
 <p>We use <span class="math inline">\(\hat y\)</span> to indicate that this is not an observed value of the response variable but an estimated value (based on the linear equation given).</p>
-<p>R&nbsp;can add a regression line to our scatter plot if we ask it to.</p>
+<p>R can add a regression line to our scatter plot if we ask it to.</p>
 <div class="center">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( OSA <span class="sc">~</span> palpebral, <span class="at">data =</span> Eyes) <span class="sc">|&gt;</span> </span>
@@ -617,14 +623,14 @@ Coefficients:
 <section id="estimating-the-response" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="estimating-the-response"><span class="header-section-number">7.3</span> Estimating the Response</h2>
 <p>We can use our least squares regression line to estimate the value of the response variable from the value of the explanatory variable.</p>
-<div class="example">
-<p>If the palpebral width is 1.2 cm, then we would estimate OSA to be</p>
+<div id="exm-osa-3" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 7.4 </strong></span>If the palpebral width is 1.2 cm, then we would estimate OSA to be</p>
 <p><span class="math display">\[
 \hat{`osa`} =
 -0.398 + 3.08 \cdot 1.2
 = 3.298
 \]</span></p>
-<p>R&nbsp;can automate this for us too. The <code>makeFun()</code> function will create a function from our model.<br>
+<p>R can automate this for us too. The <code>makeFun()</code> function will create a function from our model.<br>
 If we input a palpebral measurement into this function, the function will return the estimated OSA.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>estimated.osa <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(osa.model)</span>
@@ -739,22 +745,22 @@ F-statistic: 418.3 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="checking-the-residuals" class="level3" data-number="7.5.3">
 <h3 data-number="7.5.3" class="anchored" data-anchor-id="checking-the-residuals"><span class="header-section-number">7.5.3</span> Checking the Residuals</h3>
 <p>We look at the residuals (not just the data scatter plot) because some of our assumptions refer specifically to them. Also, often, it is easier to assess the linear fit by looking at a plot of the residuals than by looking at the natural scatter plot, because on the scale of the residuals, violations of our assumptions are easier to see.</p>
-<p>So, to verify that our linear regression assumptions are sensible, we can examine the model residuals. Residuals should be checked to see that their distribution looks approximately normal and that thier standard deviation (the spread of the residuals) remains consistent across the range of our data (and across time).</p>
-<p>In addition, especially if the data were collected over time (measurements made in order during an experiment; data points collected at a series of time points), it is important to verify that the residuals are <em>independent</em> of one another over time. To look for this problem, we can look at a scatter plot of the residuals as a function of time, and suspect a problem if we see series of very large, or very small, residuals all in a row. Another plot that can help us look for non-independence in the residuals is a plot of the autocorrelation function (ACF), obtained using the <code>acf()</code> function in R. This function computes and plots the correlation coefficient R for the residuals at various “lags”. For example, the correlation coefficient for lag 1 is the correlation coefficient between each residual (corresponding to the <em>i</em>th datapoint) and the preceding one (the <em>i-1</em>th data point). Lag 2 is between the <em>i</em>th and <em>i-2</em>th data point, and so on. If the residuals are not independent, then these coefficients will have large absolute values. (Note: the “lag 0” coefficient measures the correlation of the <em>i</em>th residual with itself, so it is always 1. This does NOT indicate any problem with the linear regression model.)</p>
+<p>So, to verify that our linear regression assumptions are sensible, we can examine the model residuals. Residuals should be checked to see that their distribution looks approximately normal and that their standard deviation (the spread of the residuals) remains consistent across the range of our data (and across time).</p>
+<p>In addition, especially if the data were collected over time (measurements made in order during an experiment; data points collected at a series of time points), it is important to verify that the residuals are <em>independent</em> of one another over time. To look for this problem, we can look at a scatter plot of the residuals as a function of time, and suspect a problem if we see series of very large, or very small, residuals all in a row. Another plot that can help us look for non-independence in the residuals is a plot of the autocorrelation function (ACF), obtained using the <code>acf()</code> function in R. This function computes and plots the correlation coefficient R for the residuals at various “lags”. For example, the correlation coefficient for lag 1 is the correlation coefficient between each residual (corresponding to the <em>i</em>th data point) and the preceding one (the <em>i-1</em>th data point). Lag 2 is between the <em>i</em>th and <em>i-2</em>th data point, and so on. If the residuals are not independent, then these coefficients will have large absolute values. (Note: the “lag 0” coefficient measures the correlation of the <em>i</em>th residual with itself, so it is always 1. This does NOT indicate any problem with the linear regression model.)</p>
 <p>In general, we might want to check the following plots of the residuals:</p>
 <div class="itemize">
 <ul>
-<li>Residuals as a function of “fitted values”, or model predictions for the x-values obseved in the actual data set.</li>
+<li>Residuals as a function of “fitted values”, or model predictions for the x-values observed in the actual data set.</li>
 <li>Residuals as a function of the observed values of the explanatory variable (from the actual data set).</li>
-<li>Normal quantile-quantile plot of the residuals (note: in Chapter 4, we made these by hand for any distribution; you may also use the shortcut function qqmath() as illustrated below, to make them for the Normal distribution.)</li>
+<li>Normal quantile-quantile plot of the residuals (note: in Chapter 4, we discussed to to make these by hand for any distribution; you may also use the shortcut function <code>gf_qq()</code> as illustrated below, to make them for the Normal distribution.)</li>
 <li>Residuals as a function of time (if you know the order in which they were collected, or if the explanatory variable is a time-related one).</li>
 <li>Residual autocorrelation function plot (if the data points were collected over time, or if the explanatory variable is a time-related one).</li>
 </ul>
 </div>
 <!-- end itemize -->
 <p>For all the scatter plots, we want to make sure the residuals “look random” – the extent of the spread of the residuals should not vary with time or x or y (``trumpet”-shaped plot). If there is a pattern, it suggests a problem with the homoscedasticity assumption. There should not be long runs of similar residuals, especially over time; if there are, it suggests non-independence of the residuals. There should also be no apparent trends in the plot, linear or non-linear; if there are, it suggests that the relationship between the predictor and response variables was not linear. In an autocorrelation plot, the correlation coefficients (except for lag 0) should not be too large, far exceeding the dotted guide-lines on the plot; if they are, there is probably a problem with the independence assumption.</p>
-<div class="example">
-<p>Returning to our OSA data, we can obtain the residuals using the <code>resid()</code> function and plot them.</p>
+<div id="exm-osa-4" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 7.5 </strong></span>Returning to our OSA data, we can obtain the residuals using the <code>resid()</code> function and plot them.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>osa.hat <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(osa.model)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>preds <span class="ot">&lt;-</span> <span class="fu">osa.hat</span>(Eyes<span class="sc">$</span>palpebral)</span>
@@ -803,7 +809,7 @@ F-statistic: 418.3 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid" width="432"></p>
 </div>
 </div>
-<p>The “standardized” residuals are the residuals that have been adjusted to have an expected variance (and hence also standard deviation) of 1. Roughly, they are the residuals divided by <span class="math inline">\(\hat \sigma\)</span>, but there is an additional adjustment that is made as well. This gives us a kind of unitless version of the residual and the normal-quantile plot using standardized residuals does a better job of indicating whether the normality assumption is compatibly with the data. (Remember, the normality assumption is about the <em>errors</em> not the residuals. The standardized residuals should behave roughly like a normal distribution if the errors are normally distributed.) Typically the shape of the normal-quantile plot made with raw residuals and the one made with standarized residuals will be very similar.</p>
+<p>The “standardized” residuals are the residuals that have been adjusted to have an expected variance (and hence also standard deviation) of 1. Roughly, they are the residuals divided by <span class="math inline">\(\hat \sigma\)</span>, but there is an additional adjustment that is made as well. This gives us a kind of unitless version of the residual and the normal-quantile plot using standardized residuals does a better job of indicating whether the normality assumption is compatibly with the data. (Remember, the normality assumption is about the <em>errors</em> not the residuals. The standardized residuals should behave roughly like a normal distribution if the errors are normally distributed.) Typically the shape of the normal-quantile plot made with raw residuals and the one made with standardized residuals will be very similar.</p>
 </section>
 <section id="outliers-in-regression" class="level3" data-number="7.5.4">
 <h3 data-number="7.5.4" class="anchored" data-anchor-id="outliers-in-regression"><span class="header-section-number">7.5.4</span> Outliers in Regression</h3>
@@ -823,11 +829,11 @@ F-statistic: 418.3 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 </div>
 <!-- end itemize -->
-<p>We would like to be able to compute uncertainties and confidence intervals for these. Fortunately, R&nbsp;makes this straightforward.</p>
+<p>We would like to be able to compute uncertainties and confidence intervals for these. Fortunately, R makes this straightforward.</p>
 <section id="estimating-the-betas" class="level3" data-number="7.6.1">
 <h3 data-number="7.6.1" class="anchored" data-anchor-id="estimating-the-betas"><span class="header-section-number">7.6.1</span> Estimating the <span class="math inline">\(\beta\)</span>s</h3>
-<div class="example">
-<p><strong>Q.</strong> Returning to the OSA data, compute standard uncertainties and 95% confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<div id="exm-osa-5" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 7.6 </strong></span><strong>Q.</strong> Returning to the OSA data, compute standard uncertainties and 95% confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
 <p><strong>A.</strong> The <code>summary()</code> function provides additional information about the model:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(osa.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -852,11 +858,9 @@ Multiple R-squared:  0.9373,    Adjusted R-squared:  0.935
 F-statistic: 418.3 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<pre><code>We don't know what to do with all of the information displayed here, but we can see
-some familiar things in the coefficient table.  </code></pre>
-<p>If we only want the coefficients part of the summary output we can get that using</p>
+<p>We don’t know what to do with all of the information displayed here, but we can see some familiar things in the coefficient table. If we only want the coefficients part of the summary output we can get that using</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(osa.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(osa.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Estimate Std. Error   t value     Pr(&gt;|t|)
 (Intercept) -0.3977389  0.1680090 -2.367367 2.506081e-02
@@ -865,7 +869,7 @@ palpebral    3.0799672  0.1505882 20.452918 2.252825e-18</code></pre>
 </div>
 <p>From this we see the estimates (<span class="math inline">\(\hat \beta\)</span>’s) displayed again. Next to each of those is a standard error. That is the standard uncertainty for these estimates. So we could report our estimated coefficients as</p>
 <p><span class="math display">\[
-    \beta_0: -0.40 \pm  --&gt;
+    \beta_0: -0.40 \pm
         0.17
     \qquad
     \beta_1: 3.08 \pm  
@@ -884,23 +888,21 @@ palpebral    3.0799672  0.1505882 20.452918 2.252825e-18</code></pre>
 </div>
 <!-- end itemize -->
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="at">df =</span> <span class="dv">28</span>); t.star    <span class="co"># n-2 degrees of freedom for simple linear regression</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="at">df =</span> <span class="dv">28</span>); t.star    <span class="co"># n-2 degrees of freedom for simple linear regression</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.048407</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>t.star <span class="sc">*</span> <span class="fl">0.151</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>t.star <span class="sc">*</span> <span class="fl">0.151</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3093095</code></pre>
 </div>
 </div>
-<pre><code>So a 95% confidence interval for $\beta_1$ is </code></pre>
-<p><span class="math display">\[
+<p>So a 95% confidence interval for <span class="math inline">\(\beta_1\)</span> is <span class="math display">\[
     3.08 \pm 0.31
 \]</span> The degrees of freedom used are <span class="math inline">\(DFE = n-2\)</span>, the same as used in the estimate of <span class="math inline">\(\sigma^2\)</span>. (We are using a t-distribution instead of a normal distribution because we don’t know <span class="math inline">\(\sigma\)</span>. The degrees of freedom are those associated with using <span class="math inline">\(RMSE = \sqrt{MSE}\)</span> as our estimate for <span class="math inline">\(\sigma\)</span>.)</p>
-<pre><code>R\ can compute confidence intervals for both parameters using the function
-`confint()`:</code></pre>
+<p>R can compute confidence intervals for both parameters using the function <code>confint()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(osa.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(osa.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 2.5 %      97.5 %
 (Intercept) -0.7418897 -0.05358811
@@ -909,36 +911,31 @@ palpebral    2.7715014  3.38843310</code></pre>
 </div>
 <p>A 68% confidence interval should have a margin of error of approximately 1 standard uncertainty:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(osa.model, <span class="at">level =</span> <span class="fl">0.68</span>, <span class="st">"palpebral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(osa.model, <span class="at">level =</span> <span class="fl">0.68</span>, <span class="st">"palpebral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              16 %     84 %
 palpebral 2.927507 3.232428</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">3.2325</span> <span class="sc">-</span> <span class="fl">2.9275</span>) <span class="sc">/</span> <span class="dv">2</span>   <span class="co"># margin of error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">3.2325</span> <span class="sc">-</span> <span class="fl">2.9275</span>) <span class="sc">/</span> <span class="dv">2</span>   <span class="co"># margin of error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1525</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(osa.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>              Estimate Std. Error   t value     Pr(&gt;|t|)
-(Intercept) -0.3977389  0.1680090 -2.367367 2.506081e-02
-palpebral    3.0799672  0.1505882 20.452918 2.252825e-18</code></pre>
 </div>
-</div>
+<p>Notice the margin of error is very close to the standard error for <span class="math inline">\(\beta_1\)</span> in our coefficient table above.</p>
 </div>
 <!-- end example -->
 </section>
 <section id="confidence-and-prediction-intervals-for-the-response-value" class="level3" data-number="7.6.2">
 <h3 data-number="7.6.2" class="anchored" data-anchor-id="confidence-and-prediction-intervals-for-the-response-value"><span class="header-section-number">7.6.2</span> Confidence and Prediction Intervals for the Response Value</h3>
-<p>We can also create interval estimates for the response. R&nbsp;will compute this if we simply ask:</p>
+<p>We can also create interval estimates for the response. R will compute this if we simply ask:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>estimated.osa <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(osa.model)</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.osa</span>(<span class="fl">1.2</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>estimated.osa <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(osa.model)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.osa</span>(<span class="fl">1.2</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 3.298222 3.174238 3.422206</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.osa</span>(<span class="fl">0.8</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.osa</span>(<span class="fl">0.8</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 2.066235 1.927384 2.205086</code></pre>
@@ -946,13 +943,13 @@ palpebral    3.0799672  0.1505882 20.452918 2.252825e-18</code></pre>
 </div>
 <p>These intervals are confidence intervals for the <em>mean</em> response. Sometimes it is desirable to create an interval that will have a 95% chance of containing a new <em>observation</em> – that is, including the anticipated error as well as the mean response. These intervals are called <strong>prediction intervals</strong> to distinguish them from the usual confidence interval.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>estimated.osa <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(osa.model)</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.osa</span>(<span class="fl">1.2</span>, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>estimated.osa <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(osa.model)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.osa</span>(<span class="fl">1.2</span>, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 3.298222 2.655228 3.941216</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.osa</span>(<span class="fl">0.8</span>, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.osa</span>(<span class="fl">0.8</span>, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr     upr
 1 2.066235 1.420209 2.71226</code></pre>
@@ -961,15 +958,11 @@ palpebral    3.0799672  0.1505882 20.452918 2.252825e-18</code></pre>
 <p>Prediction intervals are typically much wider than confidence intervals.<br>
 We have to “cast a wider net” to create an interval that is highly likely to contain a new observation (which might be quite a bit above or below the mean).</p>
 <p>The widths of both types of intervals depend on the value(s) of the explanatory variable(s) from which we are making the estimate. Estimates are more precise near the mean of the predictor variable and become less precise as we move away from there. Extrapolation beyond the observed data range is both less precise, and risky, because we don’t have data to know whether the linear pattern seen in the data extends into that region.</p>
-<p>The plot below illustrates both confidence (dotted) and prediction (dashed) intervals. Notice how most of the dots are within the prediction bands, but not within the confidence bands.</p>
+<p>The plot below illustrates both confidence (narrower) and prediction (wider) intervals. Notice how most of the dots are within the prediction bands, but not within the confidence bands.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(OSA <span class="sc">~</span> palpebral, <span class="at">data =</span> Eyes) <span class="sc">|&gt;</span></span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>(<span class="at">interval =</span> <span class="st">"confidence"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>(<span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using the `size` aesthietic with geom_ribbon was deprecated in ggplot2 3.4.0.
-ℹ Please use the `linewidth` aesthetic instead.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(OSA <span class="sc">~</span> palpebral, <span class="at">data =</span> Eyes) <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>(<span class="at">interval =</span> <span class="st">"confidence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>(<span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid"></p>
 </div>
@@ -977,6 +970,11 @@ We have to “cast a wider net” to create an interval that is highly likely to
 <section id="a-caution-regarding-prediction-intervals" class="level4" data-number="7.6.2.1">
 <h4 data-number="7.6.2.1" class="anchored" data-anchor-id="a-caution-regarding-prediction-intervals"><span class="header-section-number">7.6.2.1</span> A Caution Regarding Prediction Intervals</h4>
 <p>Prediction intervals are much more sensitive to the normality assumption than confidence intervals are because the Central Limit Theorem does not help when we are thinking about individual observations (essentially samples of size 1). So if the true distribution of errors is not really normal, then the prediction intervals we compute using the normality assumption will not be accurate.</p>
+</section>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">7.7</span> Exercises</h2>
 <div id="exr-rainfall" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 7.1 </strong></span><strong>Rainfall</strong></p>
 <p>Use the output below to answer some questions about rainfall volume and runoff volume (both in <span class="math inline">\(m^3\)</span>) for a particular stretch of a Texas highway.</p>
@@ -1024,7 +1022,7 @@ F-statistic: 512.7 on 1 and 13 DF,  p-value: 7.896e-12</code></pre>
 <li></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>( rain.model, <span class="st">"rainfall"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>( rain.model, <span class="st">"rainfall"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             2.5 %    97.5 %
 rainfall 0.7480677 0.9058786</code></pre>
@@ -1032,17 +1030,17 @@ rainfall 0.7480677 0.9058786</code></pre>
 </div>
 <pre><code>We can compute this from the information displayed:</code></pre>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>( .<span class="dv">975</span>, <span class="at">df =</span> <span class="dv">13</span> ) <span class="co"># 13 df listed for residual standard error</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>t.star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>t.star <span class="ot">&lt;-</span> <span class="fu">qt</span>( .<span class="dv">975</span>, <span class="at">df =</span> <span class="dv">13</span> ) <span class="co"># 13 df listed for residual standard error</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>t.star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.160369</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">0.0365</span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> t.star <span class="sc">*</span> SE; SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fl">0.0365</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>ME <span class="ot">&lt;-</span> t.star <span class="sc">*</span> SE; SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0365</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.8270</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> ME  <span class="co"># CI as an interval</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.8270</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">*</span> ME  <span class="co"># CI as an interval</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7481465 0.9058535</code></pre>
 </div>
@@ -1065,28 +1063,28 @@ rainfall 0.7480677 0.9058786</code></pre>
 <!-- end problem -->
 <div class="mysolution">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>foot.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(width <span class="sc">~</span> length, <span class="at">data =</span> KidsFeet)</span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(foot.model, <span class="at">w =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>foot.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(width <span class="sc">~</span> length, <span class="at">data =</span> KidsFeet)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(foot.model, <span class="at">w =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="432"></p>
 </div>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(foot.model, <span class="at">w =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(foot.model, <span class="at">w =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-33-2.png" class="img-fluid" width="432"></p>
 </div>
 </div>
 <p>Our diagnostics look pretty good. The residuals look randomly distributed with similar amounts of variability throughout the plot. The normal-quantile plot is nearly linear.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(foot.model)</span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">24</span>, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(foot.model)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">24</span>, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 8.813022 7.996604 9.629441</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">24</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">24</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 8.813022 8.665894 8.960151</code></pre>
@@ -1097,7 +1095,7 @@ rainfall 0.7480677 0.9058786</code></pre>
 <!-- end solution -->
 <div id="exr-bike-space" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 7.3 </strong></span><strong>Space for bicycles</strong></p>
-<p>Some traffic engineers were interested to study interactions between bicycle and automobile traffic. One part of the study involved comparing the amount of “available space” for a bicyclist (distance in feet from bicycle to centerline of the roadway) and “separation distance” (the average distance between cyclists and passing car, also measured in feet, determined by averaging based on photography over an extend period of time). Data were collected at 10 different sites with bicycle lanes. The data are available in the <code>ex12.21</code> data set in the <strong><code>Devore7</code></strong> package.</p>
+<p>Some traffic engineers were interested to study interactions between bicycle and automobile traffic. One part of the study involved comparing the amount of “available space” for a bicyclist (distance in feet from bicycle to center line of the roadway) and “separation distance” (the average distance between cyclists and passing car, also measured in feet, determined by averaging based on photography over an extend period of time). Data were collected at 10 different sites with bicycle lanes. The data are available in the <code>ex12.21</code> data set in the <strong><code>Devore7</code></strong> package.</p>
 <ol type="1">
 <li>Write out an equation for the least squares regression line for predicting separation distance from available space.</li>
 <li>Give an estimate (with uncertainty) for the slope and interpret it.</li>
@@ -1108,15 +1106,15 @@ rainfall 0.7480677 0.9058786</code></pre>
 <!-- end problem -->
 <div class="mysolution">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>bike.model <span class="ot">&lt;-</span> <span class="fu">lm</span>( distance <span class="sc">~</span> space, <span class="at">data =</span> Devore7<span class="sc">::</span>ex12<span class="fl">.21</span> )</span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(bike.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>bike.model <span class="ot">&lt;-</span> <span class="fu">lm</span>( distance <span class="sc">~</span> space, <span class="at">data =</span> Devore7<span class="sc">::</span>ex12<span class="fl">.21</span> )</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(bike.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Estimate Std. Error   t value     Pr(&gt;|t|)
 (Intercept) -2.1824715 1.05668813 -2.065388 7.274847e-02
 space        0.6603419 0.06747931  9.785841 9.974851e-06</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(bike.model)</span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>( <span class="dv">15</span>, <span class="at">interval =</span> <span class="st">"prediction"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(bike.model)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>( <span class="dv">15</span>, <span class="at">interval =</span> <span class="st">"prediction"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 7.722656 6.313278 9.132035</code></pre>
@@ -1124,7 +1122,7 @@ space        0.6603419 0.06747931  9.785841 9.974851e-06</code></pre>
 </div>
 <p>We would use a confidence interval to estimate the average separation distance for all streets with 15 feet of available space.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>( <span class="dv">15</span>, <span class="at">interval =</span> <span class="st">"confidence"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>( <span class="dv">15</span>, <span class="at">interval =</span> <span class="st">"confidence"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 7.722656 7.293168 8.152145</code></pre>
@@ -1136,9 +1134,9 @@ space        0.6603419 0.06747931  9.785841 9.974851e-06</code></pre>
 <p><span class="theorem-title"><strong>Exercise 7.4 </strong></span><strong>Biometrics</strong></p>
 <p>Select only the non-diabetic men from the <code>pheno</code> data set using</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastR2)</span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>Men <span class="ot">&lt;-</span> Pheno <span class="sc">|&gt;</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> t2d<span class="sc">==</span><span class="st">"control"</span>)  <span class="co"># note the double == and quotes here</span></span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Men, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastR2)</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>Men <span class="ot">&lt;-</span> Pheno <span class="sc">|&gt;</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> t2d<span class="sc">==</span><span class="st">"control"</span>)  <span class="co"># note the double == and quotes here</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Men, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1150,13 +1148,13 @@ space        0.6603419 0.06747931  9.785841 9.974851e-06</code></pre>
 </div>
 <p>This data set contains some phenotype information for subjects in a large genetics study. You can find out more about the data set with</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>?pheno</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>?pheno</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="enumerate">
 <ol>
 <li><p>Using this data, fit a linear model that can be used to predict weight from height. What is the equation of the least squares regression line?</p></li>
 <li><p>Give a 95% confidence interval for the slope of this regression and interpret it in context. (Hint: what are the units?)</p></li>
-<li><p>Give a 95% confidence interval for the mean weight of all non-diabetic men who are 6 feet tall.</p>
+<li><p>Give a 95% confidence interval for the mean weight (in pounds) of all non-diabetic men who are 6 feet tall.</p>
 <p>Note the heights are in cm and the weights are in kg, so you will need to convert units to use inches and pounds. (2.54 cm per inch, 2.2 pounds per kg)</p></li>
 <li><p>Perform regression diagnostics. Is there any reason to be concerned about this analysis?</p></li>
 </ol>
@@ -1170,8 +1168,8 @@ space        0.6603419 0.06747931  9.785841 9.974851e-06</code></pre>
 <li></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>( weight <span class="sc">~</span> height, <span class="at">data =</span> Men )</span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>( weight <span class="sc">~</span> height, <span class="at">data =</span> Men )</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Estimate  Std. Error   t value     Pr(&gt;|t|)
 (Intercept) -69.6988584 12.14450332 -5.739128 1.551023e-08
@@ -1186,8 +1184,8 @@ height        0.8706793  0.06994051 12.448856 1.277243e-31</code></pre>
 <li></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can ask for just the parameter we want, if we like</span></span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model, <span class="at">parm =</span> <span class="st">"height"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can ask for just the parameter we want, if we like</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model, <span class="at">parm =</span> <span class="st">"height"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           2.5 %   97.5 %
 height 0.7333052 1.008053</code></pre>
@@ -1198,15 +1196,15 @@ height 0.7333052 1.008053</code></pre>
 <li></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(model)</span>
-<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in kg</span></span>
-<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">12</span> <span class="sc">*</span> <span class="fl">2.54</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(model)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in kg</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">12</span> <span class="sc">*</span> <span class="fl">2.54</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 89.53098 87.97557 91.08639</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in pounds</span></span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">12</span> <span class="sc">*</span> <span class="fl">2.54</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>) <span class="sc">*</span> <span class="fl">2.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in pounds</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">6</span> <span class="sc">*</span> <span class="dv">12</span> <span class="sc">*</span> <span class="fl">2.54</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>) <span class="sc">*</span> <span class="fl">2.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 196.9682 193.5463 200.3901</code></pre>
@@ -1216,25 +1214,25 @@ height 0.7333052 1.008053</code></pre>
 <li></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">resid</span>(model) <span class="sc">~</span> <span class="fu">fitted</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">resid</span>(model) <span class="sc">~</span> <span class="fu">fitted</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="432"></p>
 </div>
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> <span class="fu">resid</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> <span class="fu">resid</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-42-2.png" class="img-fluid" width="432"></p>
 </div>
 </div>
 <p>We could also have used</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(model, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(model, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="432"></p>
 </div>
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(model, <span class="at">which =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(model, <span class="at">which =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-43-2.png" class="img-fluid" width="432"></p>
 </div>
@@ -1242,18 +1240,18 @@ height 0.7333052 1.008053</code></pre>
 <p>The residual plot looks fine. There is bit of a bend to the normal-quantile plot, indicating that the distribution of residuals is a bit skewed (to the right – the heaviest men are farther above the mean weight for their height than the lightest men are below).</p>
 <p>In this particular case, a log transformation of the weights improves the residual distribution. There is still one man whose weight is quite high for his height, but otherwise things look quite good.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="fu">log</span>(weight) <span class="sc">~</span> height, <span class="at">data =</span> Men)</span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="fu">log</span>(weight) <span class="sc">~</span> height, <span class="at">data =</span> Men)</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate   Std. Error  t value     Pr(&gt;|t|)
 (Intercept) 2.5134829 0.1448876368 17.34781 2.145773e-54
 height      0.0108067 0.0008344117 12.95128 8.626095e-34</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">resid</span>(model2) <span class="sc">~</span> <span class="fu">fitted</span>(model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">resid</span>(model2) <span class="sc">~</span> <span class="fu">fitted</span>(model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="432"></p>
 </div>
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> <span class="fu">resid</span>(model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>( <span class="sc">~</span> <span class="fu">resid</span>(model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="07-simple-linear_files/figure-html/unnamed-chunk-44-2.png" class="img-fluid" width="432"></p>
 </div>
@@ -1275,12 +1273,12 @@ height      0.0108067 0.0008344117 12.95128 8.626095e-34</code></pre>
 <p>The <code>anscombe</code> data set contains four pairs of explanatory (<code>x1</code>, <code>x2</code>, <code>x3</code>, and <code>x4</code>) and response (<code>y1</code>, <code>y2</code>, <code>y3</code>, and <code>y4</code>) variables. These data were constructed by Anscombe (<span class="citation" data-cites="Anscombe:1973:Graphs">Anscombe (<a href="references.html#ref-Anscombe:1973:Graphs" role="doc-biblioref">1973</a>)</span>).</p>
 <div class="enumerate">
 <ol type="1">
-<li><p>For each of the four pairs, us R&nbsp;to fit a linear model and compare the results.<br>
+<li><p>For each of the four pairs, use R to fit a linear model and compare the results.<br>
 Briefly describe what you notice looking at this output. (You do not have to submit the output itself – let’s save some paper.)</p>
 <p>Use, for example,</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>    model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y1 <span class="sc">~</span> x1, <span class="at">data =</span> anscombe); <span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>    model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y1 <span class="sc">~</span> x1, <span class="at">data =</span> anscombe); <span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
 <li><p>For each model, create a scatterplot that includes the regression line. (Make the plots fairly small and submit them.)</p></li>
@@ -1299,7 +1297,7 @@ Briefly describe what you notice looking at this output. (You do not have to sub
 <p>Find an article from the engineering or science literature that uses a simple linear model and report the following information:</p>
 <div class="enumerate">
 <ol type="a">
-<li>Print the first page of the article (with title and abstract) and write a full citation for the article on it. Staple this at the end of your assigment.</li>
+<li>Print the first page of the article (with title and abstract) and write a full citation for the article on it. Staple this at the end of your assignment.</li>
 <li>If the article is available online, provide a URL where it can be found. (You can write that on the printout of the first page of the article, too.)</li>
 <li>How large was the data set used to fit the linear model? How do you know? (How did the authors communicate this information?)</li>
 <li>What are the explanatory and response variables?</li>
@@ -1321,9 +1319,9 @@ Briefly describe what you notice looking at this output. (You do not have to sub
 <!-- end problem -->
 <div id="exr-human-waste-in-japan" class="problem theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 7.7 </strong></span><strong>Human waste in Japan</strong></p>
-<p>High population density in Japan leads to many resource usage problems, including human waste removal. In a study of a new (in the 1990’s) copression machine for processing sewage sludge, researchers measures the moisture content of the compressed pellets (%) and the machines filtration rate (kg-DS/m/hr). You can load the data using</p>
+<p>High population density in Japan leads to many resource usage problems, including human waste removal. In a study of a new (in the 1990’s) compression machine for processing sewage sludge, researchers measured the moisture content of the compressed pellets (%) and the machines filtration rate (kg-DS/m/hr). You can load the data using</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(xmp12<span class="fl">.06</span>, <span class="at">package =</span> <span class="st">"Devore7"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(xmp12<span class="fl">.06</span>, <span class="at">package =</span> <span class="st">"Devore7"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="enumerate">
 <ol type="a">
@@ -1331,7 +1329,7 @@ Briefly describe what you notice looking at this output. (You do not have to sub
 <li>The first row of the data is</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(xmp12<span class="fl">.06</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(xmp12<span class="fl">.06</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1353,35 +1351,35 @@ Briefly describe what you notice looking at this output. (You do not have to sub
 <!-- end problem -->
 <div class="mysolution">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(xmp12<span class="fl">.06</span>, <span class="at">package =</span> <span class="st">"Devore7"</span>)</span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>sewage.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(moistcon <span class="sc">~</span> filtrate, <span class="at">data =</span> xmp12<span class="fl">.06</span>)</span>
-<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="co"># a)</span></span>
-<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(sewage.model))  <span class="co"># this includes standard errors; could also use summary() </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(xmp12<span class="fl">.06</span>, <span class="at">package =</span> <span class="st">"Devore7"</span>)</span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>sewage.model <span class="ot">&lt;-</span> <span class="fu">lm</span>(moistcon <span class="sc">~</span> filtrate, <span class="at">data =</span> xmp12<span class="fl">.06</span>)</span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co"># a)</span></span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(sewage.model))  <span class="co"># this includes standard errors; could also use summary() </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Estimate  Std. Error    t value     Pr(&gt;|t|)
 (Intercept) 72.95854697 0.697528488 104.595795 1.615724e-26
 filtrate     0.04103377 0.004836781   8.483693 1.051720e-07</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># b)</span></span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(sewage.model)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># b)</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(sewage.model)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         1 
 -0.2000784 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># c)</span></span>
-<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sigma</span>(sewage.model)  <span class="co"># can also be read off of the summary() output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># c)</span></span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sigma</span>(sewage.model)  <span class="co"># can also be read off of the summary() output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6653314</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># d)</span></span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(sewage.model)[<span class="dv">2</span>, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># d)</span></span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(sewage.model)[<span class="dv">2</span>, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              2.5 %     97.5 %
 filtrate 0.03087207 0.05119547</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># e) </span></span>
-<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>estimated.moisture <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(sewage.model)</span>
-<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.moisture</span>(<span class="dv">170</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># e) </span></span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>estimated.moisture <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(sewage.model)</span>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="fu">estimated.moisture</span>(<span class="dv">170</span>, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr     upr
 1 79.93429 79.50398 80.3646</code></pre>
@@ -1396,8 +1394,6 @@ filtrate 0.03087207 0.05119547</code></pre>
 Anscombe, F. J. 1973. <span>“Graphs in Statistical Analysis.”</span> <em>The American Statistician</em> 27 (1): 17.
 </div>
 </div>
-</section>
-</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

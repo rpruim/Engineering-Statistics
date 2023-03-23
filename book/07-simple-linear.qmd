@@ -35,7 +35,7 @@ differ from the value given by $f$.
 		
     We will model $\varepsilon$ with a 
 		distribution -- typically a distribution with a mean of 0 -- 
-		so another way to think about this model is the for a given 
+		so another way to think about this model is that for given 
 		values of the predictors, the values of $Y$ have a distribution.  The mean
 		of this distribution is specified by $f$ and the shape by $\varepsilon$.
 ::: 
@@ -96,7 +96,7 @@ $$
 \mbox{residual} = \mbox{observed} - \mbox{predicted}
 $$
 
-::: {.example}
+::: {#exm-small-data .example}
 
 Consider the following small data set.
 
@@ -116,7 +116,8 @@ SomeData
 ::::{.columnn width="45%"}
 ```{r tidy = FALSE,fig.height = 3.2}
 gf_point( y ~ x, data = SomeData) |>
-  gf_lims(y = c(0, 7), x = c(0, 7))
+  gf_lims(y = c(0, 7), x = c(0, 7)) |>
+  gf_refine(coord_equal())
 ```
 
 ::::
@@ -184,7 +185,8 @@ the equation for this line is $y = 1.2 + 0.8 x$, and it looks like a pretty good
 f <- makeFun( 1.2 + 0.8 * x ~ x)
 gf_point(y ~ x, data = SomeData) |> 
   gf_lims(x = c(0, 7), y = c(0, 7)) |>
-  gf_fun( f(x) ~ x, col = "gray50" )
+  gf_fun( f(x) ~ x, col = "gray50" ) |>
+  gf_refine(coord_equal())
 ```
 
 The residuals for this function are 
@@ -199,11 +201,12 @@ sum(resids^2)
 
 The following plot provides a way to visualize the sum of the squared residuals (SSE).
 ```{r echo = FALSE, results = "hide", fig.height = 2.8}
-fitLine(1.2, 0.8, squares = TRUE)
+fitLine(1.2, 0.8, squares = TRUE) |>
+  gf_refine(coord_equal())
 ```
 
 
-If your line is a good fit, then $SSE$ will be small.  
+If your line is a good fit, then $SSE$ will be small.
 The best fitting line will have the smallest possible $SSE$.   
 The `lm()` function will find this best fitting line for us.
 ```{r tidy = FALSE}
@@ -231,7 +234,7 @@ fitLine(coef(model1)[1], coef(model1)[2], squares = TRUE)
 
 As we see, this is a better fit than our first attempt -- 
 at least according to the least squares criterion.
-It will better than *any* other attempt -- it is the least 
+It will be better than *any* other attempt -- it is the least 
 squares regression line.
 ::: 
 <!-- end example -->
@@ -254,18 +257,21 @@ the least squares line satisfies two very nice properties.
 
 ::: {.enumerate}
 
-#. 
-The point $(\mean x, \mean y)$ is on the line. 
+1.  The point $(\mean x, \mean y)$ is on the line. 
 
-This means that $\mean y = \hat\beta_0 + \hat\beta_1 \mean x$  (and $\hat\beta_0 = \mean y - \hat\beta_1 \mean x$)
-#. 
-The slope of the line is $\displaystyle b = r \frac{s_y}{s_x}$ where $r$ is the 
-**correlation coefficient**:
-\myindex{correlation coefficient}<!--  -->
-$$
-r = \frac{1}{n-1} \sum \frac{ x_i - \mean x }{s_x} \cdot \frac{ y_i - \mean y }{s_y}
-$$
+    This means that $\mean y = \hat\beta_0 + \hat\beta_1 \mean x$  (and $\hat\beta_0 = \mean y - \hat\beta_1 \mean x$)
+    
+2.  The slope of the line is 
+
+    $$\displaystyle b = r \frac{s_y}{s_x}$$, 
+    
+    where $r$ is the **correlation coefficient**:
+
+    $$
+    r = \frac{1}{n-1} \sum \frac{ x_i - \mean x }{s_x} \cdot \frac{ y_i - \mean y }{s_y}
+    $$
 ::: 
+
 <!-- end enumerate -->
 
 Since we have a point and the slope, it is easy to compute the equation for the line
@@ -273,11 +279,11 @@ if we know $\mean x$, $s_x$, $\mean y$, $s_y$, and $r$.
 
 ### An Example: Estimating OSA
 
-::: {.example}
+::: {#exm-osa-1 .example}
 
 In a study of eye strain caused by visual display terminals, researchers wanted
 to be able to estimate ocular surface area (OSA) from palpebral fissure (the
-horizontal width of the eye opening in cm) because palpebral fissue is easier
+horizontal width of the eye opening in cm) because palpebral fissure is easier
 to measure than OSA.
 ```{r include = !onLine, eval = !onLine}
 Eyes <- read.file("docs/data/PalpebralFissure.txt", header = TRUE)
@@ -317,11 +323,11 @@ c(intercept = intercept, slope = slope)
 Fortunately, statistical software packages do all this work for us, so the
 calculations of the preceding example don't need to be done in practice.
 
-::: {.example}
+::: {#exm-osa-2 .example}
 
 In a study of eye strain caused by visual display terminals, researchers wanted
 to be able to estimate ocular surface area (OSA) from palpebral fissure (the
-horizontal width of the eye opening in cm) because palpebral fissue is easier
+horizontal width of the eye opening in cm) because palpebral fissure is easier
 to measure than OSA.
 ```{r }
 osa.model <- lm(OSA ~ palpebral, data = Eyes) 
@@ -344,7 +350,7 @@ $$
 We use $\hat y$ to indicate that this is not an observed value of the response variable
 but an estimated value (based on the linear equation given).
 
-R\ can add a regression line to our scatter plot if we ask it to.
+R can add a regression line to our scatter plot if we ask it to.
 
 ::: {.center}
 
@@ -378,7 +384,7 @@ we do not get the same model.  This is because the residuals are measured vertic
 We can use our least squares regression line to estimate the value of the response
 variable from the value of the explanatory variable.
 
-::: {.example}
+::: {#exm-osa-3 .example}
 
 If the palpebral width is 1.2 cm, then we would estimate OSA to be 
 
@@ -388,7 +394,7 @@ $$
 = `r round(coef(osa.model)[1],3) + round(coef(osa.model)[2],3) * 1.2` 
 $$
 
-R\ can automate this for us too.  The `makeFun()` function will
+R can automate this for us too.  The `makeFun()` function will
 create a function from our model.  
 If we input a palpebral measurement into this function, the function
 will return the estimated OSA.
@@ -519,17 +525,18 @@ residuals than by looking at the natural scatter plot, because on the scale
 of the residuals, violations of our assumptions are easier to see.
 
 So, to verify that our linear regression assumptions are sensible, we can examine the model residuals. Residuals should be checked to see that their distribution looks approximately
-normal and that thier standard deviation (the spread of the residuals) remains consistent across the range of our data (and across time).
+normal and that their standard deviation (the spread of the residuals) remains consistent across the range of our data (and across time).
 
-In addition, especially if the data were collected over time (measurements made in order during an experiment; data points collected at a series of time points), it is important to verify that the residuals are *independent* of one another over time.  To look for this problem, we can look at a scatter plot of the residuals as a function of time, and suspect a problem if we see series of very large, or very small, residuals all in a row.  Another plot that can help us look for non-independence in the residuals is a plot of the autocorrelation function (ACF), obtained using the `acf()` function in R.  This function computes and plots the correlation coefficient R for the residuals at various "lags".  For example, the correlation coefficient for lag 1 is the correlation coefficient between each residual (corresponding to the *i*th datapoint) and the preceding one (the *i-1*th data point).  Lag 2 is between the *i*th and *i-2*th data point, and so on.  If the residuals are not independent, then these coefficients will have large absolute values.  (Note: the "lag 0" coefficient measures the correlation of the *i*th residual with itself, so it is always 1.  This does NOT indicate any problem with the linear regression model.)
+In addition, especially if the data were collected over time (measurements made in order during an experiment; data points collected at a series of time points), it is important to verify that the residuals are *independent* of one another over time.  To look for this problem, we can look at a scatter plot of the residuals as a function of time, and suspect a problem if we see series of very large, or very small, residuals all in a row.  Another plot that can help us look for non-independence in the residuals is a plot of the autocorrelation function (ACF), obtained using the `acf()` function in R.  This function computes and plots the correlation coefficient R for the residuals at various "lags".  For example, the correlation coefficient for lag 1 is the correlation coefficient between each residual (corresponding to the *i*th data point) and the preceding one (the *i-1*th data point).  Lag 2 is between the *i*th and *i-2*th data point, and so on.  If the residuals are not independent, then these coefficients will have large absolute values.  (Note: the "lag 0" coefficient measures the correlation of the *i*th residual with itself, so it is always 1.  This does NOT indicate any problem with the linear regression model.)
 
 In general, we might want to check the following plots of the residuals:
 
 ::: {.itemize}
 
-*  Residuals as a function of "fitted values", or model predictions for the x-values obseved in the actual data set.
+*  Residuals as a function of "fitted values", or model predictions for the x-values observed in the actual data set.
 *  Residuals as a function of the observed values of the explanatory variable (from the actual data set).
-*  Normal quantile-quantile plot of the residuals (note: in Chapter 4, we made these by hand for any distribution; you may also use the shortcut function qqmath() as illustrated below, to make them for the Normal distribution.)
+*  Normal quantile-quantile plot of the residuals (note: in Chapter 4, we discussed to to
+make these by hand for any distribution; you may also use the shortcut function `gf_qq()` as illustrated below, to make them for the Normal distribution.)
 *  Residuals as a function of time (if you know the order in which they were collected, or if the explanatory variable is a time-related one).
 *  Residual autocorrelation function plot (if the data points were collected over time, or if the explanatory variable is a time-related one).
 ::: 
@@ -538,7 +545,7 @@ In general, we might want to check the following plots of the residuals:
 
 For all the scatter plots, we want to make sure the residuals "look random" -- the extent of the spread of the residuals should not vary with time or x or y (``trumpet"-shaped plot).  If there is a pattern, it suggests a problem with the homoscedasticity assumption.  There should not be long runs of similar residuals, especially over time; if there are, it suggests non-independence of the residuals.  There should also be no apparent trends in the plot, linear or non-linear; if there are, it suggests that the relationship between the predictor and response variables was not linear.  In an autocorrelation plot, the correlation coefficients (except for lag 0) should not be too large, far exceeding the dotted guide-lines on the plot; if they are, there is probably a problem with the independence assumption.
 
-::: {.example}
+::: {#exm-osa-4 .example}
 
 Returning to our OSA data, we can obtain the residuals using the 
 `resid()` function and plot them.
@@ -584,7 +591,7 @@ better job of indicating whether the normality assumption is compatibly with
 the data.  (Remember, the normality assumption is about the *errors* not 
 the residuals.  The standardized residuals should behave roughly like a normal
 distribution if the errors are normally distributed.)  Typically the shape of
-the normal-quantile plot made with raw residuals and the one made with standarized
+the normal-quantile plot made with raw residuals and the one made with standardized
 residuals will be very similar.
 
 ### Outliers in Regression
@@ -618,11 +625,11 @@ Notice that there are several things we have estimated:
 
 
 We would like to be able to compute uncertainties and confidence intervals for these.
-Fortunately, R\ makes this straightforward.
+Fortunately, R makes this straightforward.
 
 ### Estimating the $\beta$s
 
-::: {.example}
+::: {#exm-osa-5 .example}
 
 **Q.** 
 Returning to the OSA data, compute standard uncertainties and 95% confidence intervals
@@ -635,9 +642,9 @@ model:
 summary(osa.model)
 ```
 
-	We don't know what to do with all of the information displayed here, but we can see
-	some familiar things in the coefficient table.  
-If we only want the coefficients part of the summary output we can get that using
+We don't know what to do with all of the information displayed here, but we can
+see some familiar things in the coefficient table. If we only want the
+coefficients part of the summary output we can get that using
 ```{r }
 coef(summary(osa.model))
 ```
@@ -647,7 +654,7 @@ displayed again.  Next to each of those is a standard error.  That is the standa
 uncertainty for these estimates.  So we could report our estimated coefficients as 
 
 $$
-	\beta_0: `r sprintf("%.2f", coef(osa.model)[1])` \pm  -->
+	\beta_0: `r sprintf("%.2f", coef(osa.model)[1])` \pm 
 		`r round(sqrt(diag(vcov(osa.model))[1]), 2)`
 	\qquad
 	\beta_1: `r sprintf("%.2f", coef(osa.model)[2])` \pm  
@@ -674,17 +681,18 @@ t.star <- qt(.975, df = 28); t.star    # n-2 degrees of freedom for simple linea
 t.star * 0.151
 ```
 
-	So a 95% confidence interval for $\beta_1$ is 
+So a 95% confidence interval for $\beta_1$ is 
 $$
 	3.08 \pm `r round(t.star * 0.151, 2)`
 $$
-	The degrees of freedom used are $DFE = n-2$, the same as used in the estimate of $\sigma^2$.
-	(We are using a t-distribution instead of a normal distribution because we don't know 
-	$\sigma$.  The degrees of freedom are those associated with using $RMSE = \sqrt{MSE}$
-	as our estimate for $\sigma$.)
+The degrees of freedom used are $DFE = n-2$, the same as used in the estimate of $\sigma^2$.
+(We are using a t-distribution instead of a normal distribution because we don't know 
+$\sigma$.  The degrees of freedom are those associated with using $RMSE = \sqrt{MSE}$
+as our estimate for $\sigma$.)
 
-	R\ can compute confidence intervals for both parameters using the function
-	`confint()`:
+R can compute confidence intervals for both parameters using the function
+`confint()`:
+
 ```{r }
 confint(osa.model)
 ```
@@ -694,16 +702,17 @@ uncertainty:
 ```{r }
 confint(osa.model, level = 0.68, "palpebral")
 (3.2325 - 2.9275) / 2   # margin of error
-coef(summary(osa.model))
 ```
 
+Notice the margin of error is very close to the standard error for $\beta_1$ 
+in our coefficient table above.
 
 ::: 
 <!-- end example -->
 
 
 ### Confidence and Prediction Intervals for the Response Value
-We can also create interval estimates for the response.    R\ will compute
+We can also create interval estimates for the response. R will compute
 this if we simply ask:
 ```{r }
 estimated.osa <- makeFun(osa.model)
@@ -732,11 +741,13 @@ away from there.  Extrapolation beyond the observed data range is both less prec
 because we don't have data to know whether the linear pattern seen in the data
 extends into that region.
 
-The plot below illustrates both confidence (dotted) and prediction (dashed) 
+The plot below illustrates both confidence (narrower) and prediction (wider) 
 intervals.
 Notice how most of the dots are within the prediction bands, but not within the 
 confidence bands.
+
 ```{r fig.width = 6, out.width = ".9\\textwidth", fig.height = 3}
+#| warning: false
 gf_point(OSA ~ palpebral, data = Eyes) |>
   gf_lm(interval = "confidence") |>
   gf_lm(interval = "prediction")
@@ -744,10 +755,13 @@ gf_point(OSA ~ palpebral, data = Eyes) |>
 
 
 #### A Caution Regarding Prediction Intervals
+
 Prediction intervals are much more sensitive to the normality assumption
 than confidence intervals are because the Central Limit Theorem does not 
 help when we are thinking about individual observations (essentially samples of 
 size 1).  So if the true distribution of errors is not really normal, then the prediction intervals we compute using the normality assumption will not be accurate.
+
+## Exercises
 
 ::: {.problem #exr-rainfall}
 **Rainfall**
@@ -869,7 +883,7 @@ but we can estimate the average foot width for all kids with a foot length of
 Some traffic engineers were interested to study interactions between bicycle and 
 automobile traffic.  One part of the study involved comparing the amount of 
 "available space" for a bicyclist 
-(distance in feet from bicycle to centerline of the roadway) and 
+(distance in feet from bicycle to center line of the roadway) and 
 "separation distance" 
 (the average distance between cyclists and passing car, also measured in feet, 
 determined by averaging based on photography over an extend period of time).
@@ -927,18 +941,20 @@ a large genetics study.  You can find out more about the data set with
 
 ::: {.enumerate}
 
-#. Using this data, fit a linear model that can be used 
+#.  Using this data, fit a linear model that can be used 
 		to predict weight from height.  What is the equation 
 		of the least squares regression line?
-#. Give a 95% confidence interval for the slope of this regression
+		
+#.  Give a 95% confidence interval for the slope of this regression
 		and interpret it in context.  (Hint: what are the units?)
-#. Give a 95% confidence interval for the mean weight of all 
+		
+#.  Give a 95% confidence interval for the mean weight (in pounds) of all 
 		non-diabetic men who are 6 feet tall.  
 		
     Note the heights are in cm and the weights are in kg, so you will need to convert 
 		units to use inches and pounds.  (2.54 cm per inch, 2.2 pounds per kg)
 		
-#. Perform regression diagnostics.  Is there any reason to be concerned
+#.  Perform regression diagnostics.  Is there any reason to be concerned
 		about this analysis?
 ::: 
 <!-- end enumerate -->
@@ -1036,7 +1052,7 @@ These data were constructed by Anscombe (@Anscombe:1973:Graphs).
 
 :::: {.enumerate}
 
-1. For each of the four pairs, us R\ to fit a linear model and compare the results.  
+1. For each of the four pairs, use R to fit a linear model and compare the results.  
     Briefly describe what you notice looking at this output.  (You do not have
 		to submit the output itself -- let's save some paper.)
 
@@ -1080,7 +1096,7 @@ a simple linear model and report the following information:
 
 a.  Print the first page of the article (with title and abstract) and write
 a full citation for the article on it.  Staple this at the end of your
-assigment.
+assignment.
 #.  If the article is available online, provide a URL where it can be found.
 (You can write that on the printout of the first page of the article, too.)
 #.  How large was the data set used to fit the linear model?  How do you know?  (How 
@@ -1121,8 +1137,8 @@ independently, I expect to see lots of different articles used for this problem.
 **Human waste in Japan**
 
 High population density in Japan leads to many resource usage problems, including
-human waste removal.  In a study of a new (in the 1990's) copression machine for 
-processing sewage sludge, researchers measures the moisture content of the 
+human waste removal.  In a study of a new (in the 1990's) compression machine for 
+processing sewage sludge, researchers measured the moisture content of the 
 compressed pellets (%) and the machines filtration rate (kg-DS/m/hr).
 You can load the data using
 ```{r }

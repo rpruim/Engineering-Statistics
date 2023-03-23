@@ -776,7 +776,8 @@ F-statistic: 6.593e+04 on 1 and 5 DF,  p-value: 1.7e-11</code></pre>
 time        0.0001235447 0.0001260434</code></pre>
 </div>
 </div>
-<p>This provides estimates for the intercept <span class="math inline">\(\beta d\)</span> and the slope <span class="math inline">\(\beta k\)</span> of our model. We can divide by <span class="math inline">\(\beta\)</span> to obtain estimates for <span class="math inline">\(d\)</span> and <span class="math inline">\(k\)</span>.</p>
+<p>This provides estimates for the intercept <span class="math inline">\(\beta d = d\)</span> and the slope <span class="math inline">\(\beta k = k\)</span><br>
+of our model (because we are assuming that <span class="math inline">\(\beta = 1\)</span>; in the general case, we could divide by <span class="math inline">\(\beta\)</span> to obtain estimates for <span class="math inline">\(d\)</span> and <span class="math inline">\(k\)</span>.)</p>
 <p>Of course, we should always look to see whether the fit is a good fit. <!--  mplot(conc.model, w = 1:2)  # residual plot and qq-plot of residuals --></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">resid</span>(conc.model) <span class="sc">~</span> <span class="fu">fitted</span>(conc.model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

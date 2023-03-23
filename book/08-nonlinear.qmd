@@ -522,10 +522,10 @@ confint(conc.model)
 ```
 
 This provides estimates for 
-the intercept $\beta d$ 
-and the slope $\beta k$ 
-of our model.
-We can divide by $\beta$ to obtain estimates for $d$ and $k$.
+the intercept $\beta d = d$ 
+and the slope $\beta k = k$  
+of our model (because we are assuming that $\beta = 1$; 
+in the general case, we could divide by $\beta$ to obtain estimates for $d$ and $k$.)
 
 Of course, we should always look to see whether the fit is a good fit.
 <!--  mplot(conc.model, w = 1:2)  # residual plot and qq-plot of residuals -->

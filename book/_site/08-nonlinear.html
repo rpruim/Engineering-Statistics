@@ -612,7 +612,7 @@ Degrees of freedom: 70 total; 68 residual</code></pre>
 </div>
 <p>We need to wrap <code>1/lambda</code> in <code>I()</code> because the arithmetic symbols (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, and <code>^</code>) have special meanings inside the formula for a model. <code>I()</code> stands for <em>inhibit</em> special interpretation.</p>
 <p>Notice that the intercept is not directly involved in estimating <span class="math inline">\(\hbar\)</span>, but that we can’t fit the line and obtain our slope without it.</p>
-<p>Many non-linear relationships can be transformed to linearity. <a href="#exr-transformations">Exercise&nbsp;<span>8.2</span></a> presents several more examples and asks you to determine a suitable transformation.</p></li>
+<p>Many non-linear relationships can be transformed to linearity. <a href="#exr-transformations">Exercise&nbsp;<span>8.3</span></a> presents several more examples and asks you to determine a suitable transformation.</p></li>
 <li><p>To obtain a better fit.</p>
 <p>If a scatterplot or residual plot shows a clearly non-linear pattern to the data, then it would be inappropriate to fit a linear regression (and conclusions drawn from that model would be incorrect and misleading). In the absence of theoretical reasons to expect a particular mathematical relationship between the variables being studied, we may select transformations based on the shape of the relationship as revealed in a scatterplot. <a href="#sec-ladder-of-re-expression"><span>Section&nbsp;8.7.4</span></a> provides some guidance for selecting transformations in this situation.</p></li>
 <li><p>To obtain better residual behavior.</p>
@@ -872,7 +872,7 @@ of our model (because we are assuming that <span class="math inline">\(\beta = 1
 </div>
 </div>
 </div>
-<p>This method focuses primarily on transformations designed to improve the overall fit. The resulting models may or may not have a natural, or obvious, interpretation. These transformations also affect the shape of the distributions of the explanatory and response variables and, more importantly, of the residuals from the linear model (see <a href="#exr-tukey-bulge-skew">Exercise&nbsp;<span>8.3</span></a>). When several different transformations lead to reasonable linear fits, these other factors may lead us to prefer one over another.</p>
+<p>This method focuses primarily on transformations designed to improve the overall fit. The resulting models may or may not have a natural, or obvious, interpretation. These transformations also affect the shape of the distributions of the explanatory and response variables and, more importantly, of the residuals from the linear model (see <a href="#exr-tukey-bulge-skew">Exercise&nbsp;<span>8.5</span></a>). When several different transformations lead to reasonable linear fits, these other factors may lead us to prefer one over another.</p>
 <div id="exm-tukey-bulge" class="example theorem example">
 <p><span class="theorem-title"><strong>Example 8.3 </strong></span><strong>Q.</strong> The scatterplot in <a href="#fig-tukey-bulge-example">Figure&nbsp;<span>8.3</span></a> shows a curved relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. What transformations of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> improve the linear fit?</p>
 <div class="cell">
@@ -1098,8 +1098,8 @@ F-statistic:   515 on 1 and 13 DF,  p-value: 7.669e-12</code></pre>
 </div>
 </div>
 <!--  -->
-<p>The transformed model in this case actually fits worse. The higher value of <span class="math inline">\(r^2\)</span> for the untransformed model is an indication that the untransformed model explains a larger proportion of the variance in soap weights. It is left as an exercise for you to examine diagnostic plots of the model residuals in both cases; you should see that neither one looks markedly better than the other. (There is perhaps an issue with a small amount of non-independence, or correlation over time, of the residuals; we might expect that with data collected over time. However, the dataset is so small that it is hard to tell for sure if the problem is real and worth worrying about.) <a href="#fig-soap">Figure&nbsp;<span>8.5</span></a> shows a scatterplot with both fits. The data do not support Rex’s assumption that a transformation is necessary. <!--  We can also fit a quadratic model of the form \verb!Weight ~ I(Day^2)!, --> <!-- % but this model is worse still.  Fitting a full quadratic model requires  --> <!--  two predictors (\verb!Day! and \verb!Day^2!) and so will have to wait --> <!-- % until our discussion of multiple linear regression.   --> The scatterplot and especially the residual plots both show that the residuals are mostly positive near the ends of the data and negative near the center. Part of this is driven by a flattening of the pattern of data points near the end of the measurement period. Perhaps as the soap became very small, Rex used slightly less soap than when the soap was larger. <a href="#exr-soap">Exercise&nbsp;<span>8.1</span></a> asks you to remove the last few observations and see how that affects the models.</p>
-<p>Finally, since a linear model appears to fit at least reasonably well (but see <a href="#exr-soap">Exercise&nbsp;<span>8.1</span></a>), we can give a confidence interval for <span class="math inline">\(\beta_1\)</span>, the mean amount of soap Rex uses each shower. <!-- \authNoted{check regression diagnostics for soap models -- some cause for worry}<!--  --> –&gt; <!-- \authNote{in text reference for quote from Rex? --2010-11-27}<!--  --> –&gt;</p>
+<p>The transformed model in this case actually fits worse. The higher value of <span class="math inline">\(r^2\)</span> for the untransformed model is an indication that the untransformed model explains a larger proportion of the variance in soap weights. It is left as an exercise for you to examine diagnostic plots of the model residuals in both cases; you should see that neither one looks markedly better than the other. (There is perhaps an issue with a small amount of non-independence, or correlation over time, of the residuals; we might expect that with data collected over time. However, the dataset is so small that it is hard to tell for sure if the problem is real and worth worrying about.) <a href="#fig-soap">Figure&nbsp;<span>8.5</span></a> shows a scatterplot with both fits. The data do not support Rex’s assumption that a transformation is necessary. <!--  We can also fit a quadratic model of the form \verb!Weight ~ I(Day^2)!, --> <!-- % but this model is worse still.  Fitting a full quadratic model requires  --> <!--  two predictors (\verb!Day! and \verb!Day^2!) and so will have to wait --> <!-- % until our discussion of multiple linear regression.   --> The scatterplot and especially the residual plots both show that the residuals are mostly positive near the ends of the data and negative near the center. Part of this is driven by a flattening of the pattern of data points near the end of the measurement period. Perhaps as the soap became very small, Rex used slightly less soap than when the soap was larger. <a href="#exr-soap">Exercise&nbsp;<span>8.2</span></a> asks you to remove the last few observations and see how that affects the models.</p>
+<p>Finally, since a linear model appears to fit at least reasonably well (but see <a href="#exr-soap">Exercise&nbsp;<span>8.2</span></a>), we can give a confidence interval for <span class="math inline">\(\beta_1\)</span>, the mean amount of soap Rex uses each shower. <!-- \authNoted{check regression diagnostics for soap models -- some cause for worry}<!--  --> –&gt; <!-- \authNote{in text reference for quote from Rex? --2010-11-27}<!--  --> –&gt;</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(soap.model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1398,18 +1398,18 @@ log(height)  0.471911 0.006424548   73.45435 1.431476e-33</code></pre>
 </section>
 <section id="exercises" class="level2" data-number="8.9">
 <h2 data-number="8.9" class="anchored" data-anchor-id="exercises"><span class="header-section-number">8.9</span> Exercises</h2>
-<div class="problem">
-<p><strong>Ball drop, revisited</strong></p>
+<div id="exr-balldrop-more" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 8.1 </strong></span><strong>Ball drop, revisited</strong></p>
 <p>In <a href="#exm-balldrop">Example&nbsp;<span>8.7</span></a>, we applied a square root transformation to the height. Is there another transformation that yields an even better fit?</p>
 </div>
 <!-- end problem -->
 <div id="exr-soap" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.1 </strong></span><strong>Soap, revisited</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.2 </strong></span><strong>Soap, revisited</strong></p>
 <p>Remove the last few days from the <code>Soap</code> data set and refit the models in <a href="#exm-soap">Example&nbsp;<span>8.6</span></a>. How much do things change? Do the residuals look better, or is there still some cause for concern?</p>
 </div>
 <!-- end problem -->
 <div id="exr-transformations" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.2 </strong></span><strong>Transformations</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.3 </strong></span><strong>Transformations</strong></p>
 <p>For each of the following relationships between a response <span class="math inline">\(y\)</span> and an explanatory variable <span class="math inline">\(x\)</span>, if possible find a pair of transformations <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> so that <span class="math inline">\(g(y)\)</span> is a linear function of <span class="math inline">\(f(x)\)</span>: <span class="math display">\[
   g(y) = \beta_0 + \beta_1 f(x) \;.
 \]</span> For example, if <span class="math inline">\(y = a e^{bx}\)</span>, then <span class="math inline">\(\log(y) = \log(a) + bx\)</span>, so <span class="math inline">\(g(y) = \log(y)\)</span>, <span class="math inline">\(f(x) = x\)</span>, <span class="math inline">\(\beta_0= \log(a)\)</span>, and <span class="math inline">\(\beta_1 = b\)</span>.</p>
@@ -1445,15 +1445,15 @@ log(height)  0.471911 0.006424548   73.45435 1.431476e-33</code></pre>
 <!-- end enumerate -->
 </div>
 <!-- end solution -->
-<div class="problem">
-<p><strong>Errors and transformations</strong> <!-- \probNote{Would make a good partial solution for students.}% --> What happens to the role of the error terms (<span class="math inline">\(\varepsilon\)</span>) when we transform the data? For each transformation from <a href="#exr-transformations">Exercise&nbsp;<span>8.2</span></a>, start with the form <span class="math display">\[
+<div id="exr-errors-and-transformations" class="problem theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 8.4 </strong></span><strong>Errors and transformations</strong> <!-- \probNote{Would make a good partial solution for students.}% --> What happens to the role of the error terms (<span class="math inline">\(\varepsilon\)</span>) when we transform the data? For each transformation from <a href="#exr-transformations">Exercise&nbsp;<span>8.3</span></a>, start with the form <span class="math display">\[
   g(y) = \beta_0 + \beta_1 f(x) + \varepsilon
 \]</span> and transform back into a form involving the untransformed <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> to see how the error terms are involved in these transformed linear regression models.</p>
 <p>It is important to remember that when we fit a linear model to transformed data, the usual assumptions of the model are that the errors in the (transformed) linear form are additive and normally distributed. The errors may appear differently in the untransformed relationship.</p>
 </div>
 <!-- end problem -->
 <div id="exr-tukey-bulge-skew" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.3 </strong></span><strong>Tukey bulge and skew</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.5 </strong></span><strong>Tukey bulge and skew</strong></p>
 <p>The transformations in the ladder of re-expression also affects the shape of a distribution.</p>
 <div class="enumerate">
 <ol type="a">
@@ -1471,7 +1471,7 @@ log(height)  0.471911 0.006424548   73.45435 1.431476e-33</code></pre>
 </div>
 <!-- end solution -->
 <div id="exr-pendulum" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.4 </strong></span><strong>Pendulum</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.6 </strong></span><strong>Pendulum</strong></p>
 <p>By attaching a heavy object to the end of a string, it is easy to construct pendulums of different lengths. Some physics students did this to see how the period (time in seconds until a pendulum returns to the same location) depends on the length (in meters) of the pendulum. The students constructed pendulums of lengths varying from <span class="math inline">\(10\)</span> cm to <span class="math inline">\(16\)</span> m and recorded the period length (averaged over several swings of the pendulum). The resulting data are in the <code>Pendulum</code> data set in the <strong><code>fastR2</code></strong> package.</p>
 <div class="enumerate">
 <ol type="a">
@@ -1556,7 +1556,7 @@ might have the preferred residual distribution.)</code></pre>
 </div>
 <!-- end solution -->
 <div id="exr-pressure" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.5 </strong></span><strong>Vapor pressure</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.7 </strong></span><strong>Vapor pressure</strong></p>
 <p>The <code>pressure</code> data set contains data on the relation between temperature in degrees Celsius and vapor pressure in millimeters (of mercury). With temperature as the predictor and pressure as the response, use transformations or nonlinear models as needed to obtain a good fit. Make a list of all the models you considered and explain how you chose your best model. What does your model say about the relationship between pressure and temperature?</p>
 </div>
 <!-- end problem -->
@@ -1623,12 +1623,12 @@ might have the preferred residual distribution.)</code></pre>
 </div>
 <!-- end solution -->
 <div id="exr-cornit" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.6 </strong></span><strong>Fertilizing corn</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.8 </strong></span><strong>Fertilizing corn</strong></p>
 <p>The <code>cornnit</code> data set in the package <strong><code>faraway</code></strong> contains data from a study investigating the relationship between corn yield (bushels per acre) and nitrogen (pounds per acre) fertilizer application in Wisconsin. Using nitrogen as the predictor and corn yield as the response, use transformations (if necessary) to obtain a good fit. Make a list of all the models you considered and explain how you chose your best model.</p>
 </div>
 <!-- end problem -->
 <div id="exr-act-gpa" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.7 </strong></span><strong>ACT and GPA</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.9 </strong></span><strong>ACT and GPA</strong></p>
 <p>The data set <code>ACTgpa</code> (in the <strong><code>fastR2</code></strong> package) <!--   <http://www.calvin.edu/~stob/courses/m344/S07/data/actgpanona.csv> --> contains the ACT composite scores and GPAs of some randomly selected seniors at a Midwest liberal arts college.</p>
 <div class="enumerate">
 <ol type="a">
@@ -1734,7 +1734,7 @@ mean of x
 </div>
 <!-- end solution -->
 <div id="exr-drag1" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.8 </strong></span><strong>Drag force</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.10 </strong></span><strong>Drag force</strong></p>
 <p>In the absence of air resistance, a dropped object will continue to accelerate as it falls. But if there is air resistance, the situation is different. The drag force due to air resistance depends on the velocity of an object and operates in the opposite direction of motion. Thus as the object’s velocity increases, so does the drag force until it eventually equals the force due to gravity. At this point the net force is <span class="math inline">\(0\)</span> and the object ceases to accelerate, remaining at a constant velocity called the terminal velocity.</p>
 <p>Now consider the following experiment to determine how terminal velocity depends on the mass (and therefore on the downward force of gravity) of the falling object. A helium balloon is rigged with a small basket and just the right ballast to make it neutrally buoyant. Mass is then added and the terminal velocity is calculated by measuring the time it takes to fall between two sensors once terminal velocity has been reached.</p>
 <p>The <code>Drag</code> data set (in the <strong><code>fastR2</code></strong> package) contains the results of such an experiment conducted by some undergraduate physics students. Mass is measured in grams and velocity in meters per second. (The distance between the two sensors used for determining terminal velocity is given in the <code>height</code> variable.)</p>
@@ -1827,8 +1827,8 @@ log(force.drag)  0.4744661 0.01241003  38.23248 4.103776e-33</code></pre>
 </div>
 <!-- end solution -->
 <div id="exr-drag-problems" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.9 </strong></span><strong>Drag force, revisited</strong></p>
-<p>Construct a plot that reveals a likely systematic problem with the <code>Drag</code> (see <a href="#exr-drag1">Exercise&nbsp;<span>8.8</span></a>) data set. Speculate about a potential cause for this.</p>
+<p><span class="theorem-title"><strong>Exercise 8.11 </strong></span><strong>Drag force, revisited</strong></p>
+<p>Construct a plot that reveals a likely systematic problem with the <code>Drag</code> (see <a href="#exr-drag1">Exercise&nbsp;<span>8.10</span></a>) data set. Speculate about a potential cause for this.</p>
 </div>
 <!-- end problem -->
 <div class="mysolution">
@@ -1836,22 +1836,22 @@ log(force.drag)  0.4744661 0.01241003  38.23248 4.103776e-33</code></pre>
 </div>
 <!-- end solution -->
 <div id="exr-drag-subset" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.10 </strong></span><strong>Drag force, subsetting the data</strong></p>
-<p><a href="#exr-drag-problems">Exercise&nbsp;<span>8.9</span></a> suggests that some of the data should be removed before analyzing the <code>Drag</code> data set. Redo <a href="#exr-drag1">Exercise&nbsp;<span>8.8</span></a> after removing this data.</p>
+<p><span class="theorem-title"><strong>Exercise 8.12 </strong></span><strong>Drag force, subsetting the data</strong></p>
+<p><a href="#exr-drag-problems">Exercise&nbsp;<span>8.11</span></a> suggests that some of the data should be removed before analyzing the <code>Drag</code> data set. Redo <a href="#exr-drag1">Exercise&nbsp;<span>8.10</span></a> after removing this data.</p>
 </div>
 <!-- end problem -->
 <div id="exr-spheres-1" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.11 </strong></span><strong>Spheres</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.13 </strong></span><strong>Spheres</strong></p>
 <p>The <code>Spheres</code> data set (in the <strong><code>fastR2</code></strong> package) contains measurements of the diameter (in meters) and mass (in kilograms) of a set of steel ball bearings. We would expect the mass to be proportional to the cube of the diameter. Fit a model and see if the data reflect this.</p>
 </div>
 <!-- end problem -->
 <div id="exr-spheres-2" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.12 </strong></span><strong>More spheres</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.14 </strong></span><strong>More spheres</strong></p>
 <p>The <code>Spheres</code> data set (in the <strong><code>fastR2</code></strong> package) contains measurements of the diameter (in meters) and mass (in kilograms) of a set of steel ball bearings. We would expect the mass to be proportional to the cube of the diameter. Using appropriate transformations fit two models: one that predicts mass from diameter and one that predicts diameter from mass. How do the two models compare?</p>
 </div>
 <!-- end problem -->
 <div id="exr-utilities-therms-by-temp" class="problem theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 8.13 </strong></span><strong>Utilities</strong></p>
+<p><span class="theorem-title"><strong>Exercise 8.15 </strong></span><strong>Utilities</strong></p>
 <p>The <code>Utilities</code> data set has information from utilities bills at a Minnesota residence. Fit a linear model that predicts <code>thermsPerDay</code> from <code>temp</code>.</p>
 <div class="enumerate">
 <ol type="a">

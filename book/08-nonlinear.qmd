@@ -1264,7 +1264,7 @@ of the differences between them:
 
 ## Exercises
 
-::: {.problem}
+::: {#exr-balldrop-more .problem}
 **Ball drop, revisited**
 
 In @exm-balldrop, we applied a square root transformation
@@ -1364,7 +1364,7 @@ a. $\frac{100}{y} = 1 + e^{a + bx}$, so
 <!-- end solution -->
 
 
-::: {.problem}
+::: {#exr-errors-and-transformations .problem}
 **Errors and transformations**
 <!-- \probNote{Would make a good partial solution for students.}% -->
   What happens to the role of the error terms ($\varepsilon$) when we transform 

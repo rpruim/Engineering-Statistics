@@ -579,7 +579,7 @@ $$
 the numerator of the variance of $y$.  $SST$ is a measure
 of the total variation in the response variable.
 
-A little algebra shows that^[SSM stands for Model Sum of Squares.]
+A little algebra shows that^[$SSM$ stands for Model Sum of Squares.]
 $$
 SSM = SST - SSE = 
 \sum_{i = 1}^{n} ( \hat y - \mean y)^2 \;,

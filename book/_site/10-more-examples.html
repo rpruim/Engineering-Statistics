@@ -942,12 +942,12 @@ U = \frac{\dot{Q}}{A \Delta T_{lm}},
 <p><em>Note: the methods in this section assume a linear model with an intercept term.</em></p>
 </div>
 <!-- end center -->
-<p>Recall that linear models are fit by minimizing the sum of the squares of the residuals:[^ <span class="math inline">\(RSS\)</span> stands for Residual Sum of Squares; <span class="math inline">\(SSE\)</span> stands for Error Sum of Squares.] <span class="math display">\[
+<p>Recall that linear models are fit by minimizing the sum of the squares of the residuals:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <span class="math display">\[
 RSS = SSE = \sum_{i = 1}^{n} ( y_i - \hat y)^2
-\]</span> This expression reminds us of<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <span class="math display">\[
+\]</span> This expression reminds us of<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> <span class="math display">\[
 SST = \sum_{i = 1}^{n} ( y_i - \mean y)^2 \;,
 \]</span> the numerator of the variance of <span class="math inline">\(y\)</span>. <span class="math inline">\(SST\)</span> is a measure of the total variation in the response variable.</p>
-<p>A little algebra shows that<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> <span class="math display">\[
+<p>A little algebra shows that<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <span class="math display">\[
 SSM = SST - SSE =
 \sum_{i = 1}^{n} ( \hat y - \mean y)^2 \;,
 \]</span> We can now define <span class="math inline">\(R^2\)</span> by <span class="math display">\[
@@ -1020,8 +1020,9 @@ F-statistic: 106.7 on 2 and 47 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ol>
 <li id="fn1"><p>See <a href="http://www.omega.com/prodinfo/rotameters.html" class="uri">http://www.omega.com/prodinfo/rotameters.html</a> for an introduction.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>See <a href="http://www.omega.com/techref/themointro.html" class="uri">http://www.omega.com/techref/themointro.html</a> for an introduction.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><span class="math inline">\(SST\)</span> stands for Total Sum of Squares.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>SSM stands for Model Sum of Squares.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><span class="math inline">\(RSS\)</span> stands for Residual Sum of Squares; <span class="math inline">\(SSE\)</span> stands for Error Sum of Squares.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><span class="math inline">\(SST\)</span> stands for Total Sum of Squares.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>SSM stands for Model Sum of Squares.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

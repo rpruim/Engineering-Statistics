@@ -568,7 +568,7 @@ sd( ~ points, data = Jordan8687) / sqrt(82)
 
 
 Recall that linear models are fit by minimizing the sum of the squares of the 
-residuals:[^ $RSS$ stands for Residual Sum of Squares; $SSE$ stands for Error Sum of Squares.]
+residuals:^[$RSS$ stands for Residual Sum of Squares; $SSE$ stands for Error Sum of Squares.]
 $$
 RSS = SSE = \sum_{i = 1}^{n} ( y_i - \hat y)^2
 $$
